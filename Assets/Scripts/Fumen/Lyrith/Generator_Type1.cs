@@ -26,7 +26,7 @@ namespace NoteGenerating
         /// ノーツの初期生成地点
         /// </summary>
         protected float StartBase => 2f * Speed + From + 0.2f;
-        protected virtual float From => -4f;
+        protected virtual float From => 0f;
         protected float CurrentTime => Helper.Metronome.CurrentTime;         
 
         float GetInterval(float lpb, int num = 1)

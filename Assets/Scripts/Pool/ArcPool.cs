@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ArcPool : PoolBase<ArcNote>
 {
+    [SerializeField] GameObject lane3D;
+
     public ArcNote GetNote()
     {
-        return GetInstance();
+        var arc = GetInstance();
+        arc.transform.parent = lane3D.transform;
+        return arc;
     }
 }

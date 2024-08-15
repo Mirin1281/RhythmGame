@@ -12,6 +12,7 @@ public class ArcNote : NoteBase
 
     public enum ColorType
     {
+        None,
         Red,
         Blue,
     }
@@ -54,12 +55,12 @@ public class ArcNote : NoteBase
         JudgeIndex = 0;
 
         // 頂点を追加
-        float posZ = 0;
+        float vectorZ = 0;
         for(int i = 0; i < datas.Length; i++)
         {
             var data = datas[i];
-            posZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, posZ));
+            vectorZ += GetInterval(data.Pos.z, bpm, speed);
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : vectorZ));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
@@ -114,7 +115,7 @@ public class ArcNote : NoteBase
         {
             var data = datas[i];
             vecterZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, vecterZ));
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : vecterZ));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
@@ -237,20 +238,35 @@ public class ArcNote : NoteBase
         }
     }
 
-    public void SetColor(ColorType colorType)
+    public void SetColor(ColorType colorType, bool isInverse = false)
     {
-        meshRenderer.sharedMaterial.color = colorType switch
+        ColorType type = ColorType.None;
+        if(isInverse)
         {
-            ColorType.Red => new Color32(224, 45, 126, 161),
-            ColorType.Blue => new Color32(25, 117, 229, 161),
+            if(colorType == ColorType.Red)
+            {
+                type = ColorType.Blue;
+            }
+            else if(colorType == ColorType.Blue)
+            {
+                type = ColorType.Red;
+            }
+        }
+        else
+        {
+            type = colorType;
+        }
+        meshRenderer.sharedMaterial.color = type switch
+        {
+            ColorType.Red => new Color32(233, 76, 160, 200),
+            ColorType.Blue => new Color32(23, 127, 217, 200),
             _ => throw new Exception()
         };
     }
-
-    public void SetColor(bool isHold)
+    public void SetAlpha(bool isHold)
     {
         var c = meshRenderer.material.color;
-        meshRenderer.material.color = new Color(c.r, c.g, c.b, isHold ? 0.6f : 0.4f);
+        meshRenderer.material.color = new Color(c.r, c.g, c.b, isHold ? 0.8f : 0.6f);
     }
 
     /// <summary>
@@ -264,7 +280,7 @@ public class ArcNote : NoteBase
 }
 
 // 設置範囲
-// -4(下端) < y < 4(上端)
+// 0(下端) < y < 4(上端)
 // y = 下端の時、-8 < x < 8
 // 上端の時、-4 < x < 4
 // zと手前判定、奥判定はLPB換算

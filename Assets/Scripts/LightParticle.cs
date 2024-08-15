@@ -20,6 +20,6 @@ public class LightParticle : MonoBehaviour
 
     public void SetPos(Vector2 pos)
     {
-        transform.localPosition = pos;
+        transform.localPosition = pos + ArcNote.Height * Vector2.up;
     }
 }

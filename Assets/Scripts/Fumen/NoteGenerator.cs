@@ -47,7 +47,8 @@ namespace NoteGenerating
         async UniTask CreateLine(float delta)
         {
             Line line = linePool.GetLine();
-            await LinearMoveAsync(line, new Vector3(0, GetStartBase(-4f, RhythmGameManager.Speed)), RhythmGameManager.Speed, 3f);
+            var speed = RhythmGameManager.Speed;
+            await LinearMoveAsync(line, new Vector3(0f, GetStartBase(0f, speed)), speed, 3f);
             line.gameObject.SetActive(false);
 
 
@@ -68,7 +69,8 @@ namespace NoteGenerating
         async UniTask Create3DLine(float delta)
         {
             Line line = linePool.GetLine(1);
-            await LinearMoveAsync(line, new Vector3(0, -4f, GetStartBase(0f, RhythmGameManager.Speed * 3f)), RhythmGameManager.Speed * 3f, 3f);
+            var speed = RhythmGameManager.Speed * 5f;
+            await LinearMoveAsync(line, new Vector3(0f, 0f, GetStartBase(0f, speed)), speed, 3f);
             line.gameObject.SetActive(false);
 
 
@@ -76,7 +78,7 @@ namespace NoteGenerating
             {
                 float baseTime = metronome.CurrentTime - delta;
                 float time = 0;
-                var vec = speed * new Vector3(0, 0, -1f);
+                var vec = speed * Vector3.back;
                 while (line.IsActive && time < moveTime)
                 {
                     time = metronome.CurrentTime - baseTime;

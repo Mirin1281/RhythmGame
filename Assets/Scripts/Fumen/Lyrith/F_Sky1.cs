@@ -7,8 +7,7 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/スカイサンプル"), System.Serializable]
     public class F_Sky1: Generator_Type1
     {
-        protected override float Speed => base.Speed * 3f;
-        protected override float From => 0f;
+        protected override float Speed => base.Speed * 5f;
 
         protected override async UniTask GenerateAsync()
         {
@@ -57,15 +56,15 @@ namespace NoteGenerating
             await SkyNote(1).Wait(4);
         }
 
-        Generator_Type1 SkyNote(float x, float y = 0f)
+        Generator_Type1 SkyNote(float x, float y = 4f)
         {
-            NoteBase skyNote = Helper.NormalNotePool.GetNote(1);
+            var skyNote = Helper.NormalNotePool.GetNote(1);
             var startPos = new Vector3(GetInverse(x), y, StartBase);
             DropAsync(skyNote, startPos).Forget();
 
             float distance = startPos.z - From - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
-            var expect = new NoteExpect(skyNote, startPos, expectTime);
+            var expect = new NoteExpect(skyNote, skyNote.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);
             return this;
 
@@ -74,7 +73,7 @@ namespace NoteGenerating
             {
                 float baseTime = CurrentTime - Delta;
                 float time = 0f;
-                var vec = Speed * new Vector3(0f, 0f, -1f);
+                var vec = Speed * Vector3.back;
                 while (note.IsActive && time < 5f)
                 {
                     time = CurrentTime - baseTime;

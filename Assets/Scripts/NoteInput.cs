@@ -235,19 +235,22 @@ public class NoteInput : MonoBehaviour
                     continue;
                 }
 
-                bool isHold = false;
+                bool isHold = isAuto;
                 var currentPos = arc.GetAnyPointOnZPlane(0);
                 foreach(var inputPos in inputPoses)
                 {
                     if(judge.IsNearPosition(inputPos, currentPos, 1.7f))
                     {
-                        judge.SetLightPos(arc, currentPos);
                         isHold = true;
                         break;
                     }
                 }
-                arc.SetColor(isHold);
+                if(isHold)
+                {
+                    judge.SetLightPos(arc, currentPos);
+                }
                 judge.SetShowLight(arc, isHold);
+                arc.SetAlpha(isHold);
 
                 var arcJudge = arc.GetCurrentJudge();
                 if (arcJudge == null) continue; // 最後の判定を終えた
@@ -266,7 +269,7 @@ public class NoteInput : MonoBehaviour
                 }
                 else if(arcJudge.State is ArcJudgeState.Idle)
                 {
-                    if(isHold || isAuto)
+                    if(isHold)
                     {
                         arcJudge.State = ArcJudgeState.Got;
                         judge.PlayParticle(NoteGrade.Perfect, currentPos);
