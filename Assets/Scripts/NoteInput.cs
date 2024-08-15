@@ -50,11 +50,8 @@ public class NoteInput : MonoBehaviour
 {
     [SerializeField] Metronome metronome;
     [SerializeField] InputManager inputManager;
-    [SerializeField] TMP_Text comboText;
-    [SerializeField] TMP_Text deltaText;
-    [SerializeField] ParticleManager particleManager;
-    [SerializeField] ParticleSystem particle;
-    int listcount;
+    [SerializeField] Judgement judge;
+
     readonly List<NoteExpect> allExpects = new(50);
     readonly List<(HoldNote hold, float endTime)> holds = new(4);
     readonly List<ArcNote> arcs = new(4);
@@ -63,11 +60,10 @@ public class NoteInput : MonoBehaviour
 #else
     bool isAuto = false;
 #endif
-    int combo;
 
     void Start()
     {
-        ResetCombo();
+        judge.ResetCombo();
         if(isAuto) return;
         inputManager.OnInput += OnInput;
         inputManager.OnHold += OnHold;
@@ -127,7 +123,7 @@ public class NoteInput : MonoBehaviour
             {
                 if(expect.Note.Type == NoteType.Hold)
                 {
-                    particleManager.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     HoldNote hold = AddHold(expect);
                     hold.Grade = NoteGrade.Perfect;
                     RemoveExpect(expect, false);
@@ -139,9 +135,9 @@ public class NoteInput : MonoBehaviour
                 }
                 else
                 {
-                    particleManager.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     RemoveExpect(expect);
-                    AddCombo();
+                    judge.AddCombo();
                 }
             }
         }
@@ -155,12 +151,12 @@ public class NoteInput : MonoBehaviour
                 {
                     AddHold(expect);
                     RemoveExpect(expect, false);
-                    ResetCombo();
+                    judge.ResetCombo();
                 }
                 else
                 {
                     RemoveExpect(expect);
-                    ResetCombo();
+                    judge.ResetCombo();
                 }
             }
         }
@@ -180,7 +176,7 @@ public class NoteInput : MonoBehaviour
                     bool isInput = false;
                     for(int k = 0; k < inputPoses.Length; k++)
                     {
-                        if(IsNearPosition(inputPoses[k], hold.GetLandingPos()))
+                        if(judge.IsNearPosition(inputPoses[k], hold.GetLandingPos()))
                         {
                             isInput = true;
                             break;
@@ -192,14 +188,14 @@ public class NoteInput : MonoBehaviour
                         // ギリギリまで取らなくても判定されるように
                         if(metronome.CurrentTime > holds[i].endTime - 0.16f)
                         {
-                            AddCombo();
+                            judge.AddCombo();
                             hold.State = HoldState.Got;
                         }
                     }
                     else
                     {
                         hold.State = HoldState.Missed;
-                        ResetCombo();
+                        judge.ResetCombo();
                     }
                 }
                 else if(hold.State == HoldState.Missed)
@@ -217,7 +213,7 @@ public class NoteInput : MonoBehaviour
                     {
                         hold.gameObject.SetActive(false);
                         holds.RemoveAt(i);
-                        particleManager.PlayParticle(hold.Grade, hold.GetLandingPos());
+                        judge.PlayParticle(hold.Grade, hold.GetLandingPos());
                     }
                 }
             }
@@ -230,52 +226,52 @@ public class NoteInput : MonoBehaviour
             {
                 var arc = arcs[i];
                 var arcPos = arc.GetPos();
-                if(arcPos.z < 0) return; // まだ到達していない
+                if(arcPos.z < 0) continue; // まだ到達していない
                 if(arcPos.z > arc.LastZ + 1) // アークが完全に通り過ぎた
                 {
                     arcs.RemoveAt(i);
                     arc.SetActive(false);
-                    particle.gameObject.SetActive(false);
-                    return;
+                    judge.RemoveLink(arc);
+                    continue;
                 }
 
                 bool isHold = false;
                 var currentPos = arc.GetAnyPointOnZPlane(0);
                 foreach(var inputPos in inputPoses)
                 {
-                    if(IsNearPosition(inputPos, currentPos, 1f, 1f))
+                    if(judge.IsNearPosition(inputPos, currentPos, 1.7f))
                     {
-                        particle.transform.localPosition = new Vector2(currentPos.x, currentPos.y);
+                        judge.SetLightPos(arc, currentPos);
                         isHold = true;
                         break;
                     }
                 }
                 arc.SetColor(isHold);
-                particle.gameObject.SetActive(isHold);
+                judge.SetShowLight(arc, isHold);
 
-                var judge = arc.GetCurrentJudge();
-                if (judge == null) return; // 最後の判定を終えた
-                if (judge.EndPos.z < arcPos.z)
+                var arcJudge = arc.GetCurrentJudge();
+                if (arcJudge == null) continue; // 最後の判定を終えた
+                if (arcJudge.EndPos.z < arcPos.z)
                 {
-                    judge.State = ArcJudgeState.Miss;
+                    arcJudge.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;
-                    ResetCombo();
+                    judge.ResetCombo();
                 }
 
-                if ((judge.StartPos.z < arcPos.z && arcPos.z < judge.EndPos.z) == false) return; // 判定の範囲外
+                if ((arcJudge.StartPos.z < arcPos.z && arcPos.z < arcJudge.EndPos.z) == false) continue; // 判定の範囲外
 
-                if(judge.State is ArcJudgeState.None)
+                if(arcJudge.State is ArcJudgeState.None)
                 {
                     throw new System.Exception();
                 }
-                else if(judge.State is ArcJudgeState.Idle)
+                else if(arcJudge.State is ArcJudgeState.Idle)
                 {
                     if(isHold || isAuto)
                     {
-                        judge.State = ArcJudgeState.Got;
-                        particleManager.PlayParticle(NoteGrade.Perfect, currentPos);
+                        arcJudge.State = ArcJudgeState.Got;
+                        judge.PlayParticle(NoteGrade.Perfect, currentPos);
                         arc.JudgeIndex++;
-                        AddCombo();
+                        judge.AddCombo();
                     }
                 }
             }
@@ -287,11 +283,10 @@ public class NoteInput : MonoBehaviour
         (NoteExpect expect, float delta) = FetchNearestNote(pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold);
         if(expect == null) return;
 
-        NoteGrade grade = GetGrade(delta);
-        deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
+        NoteGrade grade = judge.GetGradeApplyText(delta);
         if(grade == NoteGrade.Miss)
         {
-            ResetCombo();
+            judge.ResetCombo();
             RemoveExpect(expect);
             return;
         }
@@ -300,13 +295,13 @@ public class NoteInput : MonoBehaviour
             var hold = AddHold(expect);
             hold.Grade = grade;
             RemoveExpect(expect, false);
-            AddCombo();
-            particleManager.PlayParticle(grade, expect.Pos);
+            judge.AddCombo();
+            judge.PlayParticle(grade, expect.Pos);
             return;
         }
         RemoveExpect(expect);
-        AddCombo();
-        particleManager.PlayParticle(grade, expect.Pos);
+        judge.AddCombo();
+        judge.PlayParticle(grade, expect.Pos);
     }
 
     void OnHold(Vector2[] poses)
@@ -327,9 +322,9 @@ public class NoteInput : MonoBehaviour
                         await MyStatic.WaitSeconds(-delta);
                     }
                     
-                    particleManager.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     expect.Note.gameObject.SetActive(false);
-                    AddCombo();
+                    judge.AddCombo();
                 });
             }
         }
@@ -350,9 +345,9 @@ public class NoteInput : MonoBehaviour
                     await MyStatic.WaitSeconds(-delta);
                 }
                 
-                particleManager.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 expect.Note.gameObject.SetActive(false);
-                AddCombo();
+                judge.AddCombo();
             });
         }
     }
@@ -380,7 +375,7 @@ public class NoteInput : MonoBehaviour
             if(isMatch == false) continue;
 
             // inputPosに近いノーツを選定
-            if(IsNearPosition(inputPos, expect.Pos) == false) continue;
+            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
 
             // より早く落ちてくるノーツを判定(複数あればよりinputPosに近いノーツを返す)
             if(fetchedExpect == null)
@@ -419,63 +414,10 @@ public class NoteInput : MonoBehaviour
             }
             if(isMatch == false) continue;
 
-            if(IsNearPosition(inputPos, expect.Pos) == false) continue;
+            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
             fetchedExpects.Add((expect, delta));
         }
         if(fetchedExpects.Count == 0) return default;
         return fetchedExpects;
-    }
-
-    void AddCombo()
-    {
-        combo++;
-        comboText.SetText(combo.ToString());
-    }
-    void ResetCombo()
-    {
-        combo = 0;
-        comboText.SetText(combo.ToString());
-    }
-
-    const float rangeWidth = 2.1f;
-    const float rangeHeight = 2.1f;
-    bool IsNearPosition(Vector2 pos1, Vector2 pos2, float rangeW = rangeWidth, float rangeH = rangeHeight)
-    {
-        var deltaPos = pos1 - pos2;
-        return Mathf.Abs(deltaPos.x) < rangeWidth && Mathf.Abs(deltaPos.y) < rangeHeight;
-    }
-
-    static NoteGrade GetGrade(float delta)
-    {
-        if(Mathf.Abs(delta) < 0.03f)
-        {
-            return NoteGrade.Perfect;
-        }
-        else if(Mathf.Abs(delta) < 0.06f)
-        {
-            if(delta > 0)
-            {
-                return NoteGrade.LateGreat;
-            }
-            else
-            {
-                return NoteGrade.FastGreat;
-            }
-        }
-        else if(Mathf.Abs(delta) < 0.12f)
-        {
-            if(delta > 0)
-            {
-                return NoteGrade.LateFar;
-            }
-            else
-            {
-                return NoteGrade.FastFar;
-            }
-        }
-        else
-        {
-            return NoteGrade.Miss;
-        }
     }
 }

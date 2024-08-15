@@ -8,6 +8,7 @@ public class ArcNote : NoteBase
 {
     [SerializeField] SplineContainer splineContainer;
     [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] MeshFilter meshFilter;
 
     public enum ColorType
     {
@@ -38,12 +39,13 @@ public class ArcNote : NoteBase
     void Awake()
     {
         meshRenderer.material = new Material(meshRenderer.material);
+        meshFilter.mesh = meshFilter.mesh.Duplicate();
     }
 
     /// <summary>
     /// アークを作成します
     /// </summary>
-    public void CreateNewArc(ArcCreateData[] datas, float bpm, float speed)
+    public void CreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse = false)
     {
         // 初期化
         splineContainer.Spline.Clear();
@@ -57,7 +59,7 @@ public class ArcNote : NoteBase
         {
             var data = datas[i];
             posZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3(data.Pos.x, data.Pos.y, posZ));
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, posZ));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
@@ -96,7 +98,7 @@ public class ArcNote : NoteBase
         }
     }
 
-    public void DebugCreateNewArc(ArcCreateData[] datas, float bpm, float speed, DebugSphere debugSphere)
+    public void DebugCreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
     {
         splineContainer.Spline.Clear();
         var spline = splineContainer.Spline;
@@ -112,7 +114,7 @@ public class ArcNote : NoteBase
         {
             var data = datas[i];
             vecterZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3(data.Pos.x, data.Pos.y, vecterZ));
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, vecterZ));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
@@ -124,7 +126,7 @@ public class ArcNote : NoteBase
             if(data.IsJudgeDisable == false)
             {
                 var sphere = Instantiate(debugSphere, transform);
-                sphere.transform.localPosition = new Vector3(data.Pos.x, data.Pos.y, vecterZ);
+                sphere.transform.localPosition = new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, vecterZ);
                 sphere.transform.localScale = Vector3.one;
                 sphere.SetColor(new Color(1, 1, 1, 0.5f));
             }
@@ -237,7 +239,7 @@ public class ArcNote : NoteBase
 
     public void SetColor(ColorType colorType)
     {
-        meshRenderer.material.color = colorType switch
+        meshRenderer.sharedMaterial.color = colorType switch
         {
             ColorType.Red => new Color32(224, 45, 126, 161),
             ColorType.Blue => new Color32(25, 117, 229, 161),

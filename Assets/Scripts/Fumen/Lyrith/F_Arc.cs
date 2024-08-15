@@ -10,16 +10,32 @@ namespace NoteGenerating
     public class F_Arc : Generator_Type1
     {
         [SerializeField] DebugSphere prefab;
+        [SerializeField] ArcNote.ColorType defaultColor = ArcNote.ColorType.Red;
         [SerializeField] ArcCreateData[] datas;
 
-        protected override float Speed => base.Speed * 3f;
+        protected override float Speed => base.Speed * 5f;
         protected override float From => 0f;
 
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
-            var arc = Helper.ArcNotePool.GetNote(datas, Helper.Metronome.Bpm, Speed);
-            arc.SetColor(ArcNote.ColorType.Blue);
+            var arc = Helper.ArcNotePool.GetNote();
+            arc.CreateNewArc(datas, Helper.Metronome.Bpm, Speed, IsInverse);
+            if(IsInverse)
+            {
+                if(defaultColor == ArcNote.ColorType.Red)
+                {
+                    arc.SetColor(ArcNote.ColorType.Blue);
+                }
+                else if(defaultColor == ArcNote.ColorType.Blue)
+                {
+                    arc.SetColor(ArcNote.ColorType.Red);
+                }
+            }
+            else
+            {
+                arc.SetColor(defaultColor);
+            }
             var startPos = new Vector3(0, 0f, StartBase);
             LinearMoveAsync(arc, startPos).Forget();
             Helper.NoteInput.AddArc(arc);
@@ -57,7 +73,22 @@ namespace NoteGenerating
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
             Selection.activeGameObject = arc.gameObject;
             arc.SetActive(true);
-            arc.DebugCreateNewArc(datas, 177f, Speed, prefab);
+            if(IsInverse)
+            {
+                if(defaultColor == ArcNote.ColorType.Red)
+                {
+                    arc.SetColor(ArcNote.ColorType.Blue);
+                }
+                else if(defaultColor == ArcNote.ColorType.Blue)
+                {
+                    arc.SetColor(ArcNote.ColorType.Red);
+                }
+            }
+            else
+            {
+                arc.SetColor(defaultColor);
+            }
+            arc.DebugCreateNewArc(datas, 177f, Speed, IsInverse, prefab);
             SceneView.RepaintAll();
 #endif
         }

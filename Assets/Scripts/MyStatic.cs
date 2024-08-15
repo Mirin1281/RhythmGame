@@ -5,33 +5,8 @@ using UnityEditor; // AssetDatabaseを使うために必要
 using Cysharp.Threading.Tasks;
 using System;
 
-/// <summary>
-/// 定数で名前を保管する
-/// </summary>
-public static class NameContainer
-{
-    public const string Player = "Player";
-    public const string Enemy = "Enemy";
-    public const string Magic = "Magic";
-}
-
 public static class MyStatic
 {
-    /// <summary>
-    /// BGMを流す瞬間だけ使用すること
-    /// </summary>
-    public static readonly float BGMMasterVolume = 1.5f;
-    public static readonly float SEMasterVolume = 0.15f;
-
-    public static readonly LayerMask WallLayer = 1 << 6;
-
-    /*/// <summary>
-    /// Tilemap用、z成分は0になります
-    /// </summary>
-    public static Vector3Int ToVector3Int(Vector3 pos)
-        => new Vector3Int(Mathf.RoundToInt(pos.x - 1), Mathf.RoundToInt(pos.y - 1));
-    */
-
     /// <summary>
     /// await句で指定した秒数待てます
     /// </summary>

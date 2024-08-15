@@ -6,6 +6,6 @@ namespace NoteGenerating
     /// </summary>
     public static class ConstContainer
     {
-        public static readonly string DATA_PATH = "Assets/RhythmGame/Window/GeneratorData";
+        public static readonly string DATA_PATH = "Assets/Scriptable/GeneratorData";
     }
 }

@@ -7,6 +7,7 @@ namespace NoteGenerating
     public abstract class Generator_Type1 : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
+        protected bool IsInverse => isInverse;
 
         /// <summary>
         /// 反転に対応した値にします
