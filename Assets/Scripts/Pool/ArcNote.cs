@@ -51,7 +51,8 @@ public class ArcNote : NoteBase
         // 初期化
         splineContainer.Spline.Clear();
         var spline = splineContainer.Spline;
-        judges = new(datas.Length);
+        judges ??= new(datas.Length);
+        judges.Clear();
         JudgeIndex = 0;
 
         // 頂点を追加

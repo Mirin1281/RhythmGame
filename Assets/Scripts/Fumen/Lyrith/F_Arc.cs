@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("Lyrith/アークテスト"), System.Serializable]
+    [AddTypeMenu("Lyrith/◆アーク"), System.Serializable]
     public class F_Arc : Generator_Type1
     {
         [SerializeField] DebugSphere prefab;

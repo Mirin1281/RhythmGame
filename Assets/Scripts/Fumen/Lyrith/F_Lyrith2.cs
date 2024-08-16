@@ -15,7 +15,7 @@ namespace NoteGenerating
             Create(new Vector2(-2f, 2f), 720f);
             Create(new Vector2(2f, 2f), -720f);
             var camera = Camera.main;
-            await MyStatic.WaitSeconds(moveTime);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(moveTime), cancellationToken: Helper.Token);
             _ = camera.DOShakePosition(0.3f, 1, 20);
             _ = camera.DOShakeRotation(0.3f, 1, 20);
         }

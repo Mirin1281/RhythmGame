@@ -4,12 +4,8 @@ public class FlickNotePool : PoolBase<FlickNote>
 {
     public FlickNote GetNote()
     {
-        return InitNote(GetInstance());
-
-
-        static FlickNote InitNote(FlickNote note)
-        {
-            return note;
-        }
+        var flickNote = GetInstance();
+        flickNote.SetWidth(3f);
+        return flickNote;
     }
 }

@@ -119,18 +119,13 @@ public class NoteInput : MonoBehaviour
         
         void AutoGet(NoteExpect expect)
         {
-            if(metronome.CurrentTime > expect.Time - 0.02f)
+            if(metronome.CurrentTime > expect.Time - 0.00f)
             {
                 if(expect.Note.Type == NoteType.Hold)
                 {
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     HoldNote hold = AddHold(expect);
                     hold.Grade = NoteGrade.Perfect;
-                    RemoveExpect(expect, false);
-                }
-                else if(expect.Note.Type == NoteType.Arc)
-                {
-                    AddArc(expect.Note as ArcNote);
                     RemoveExpect(expect, false);
                 }
                 else
@@ -322,7 +317,7 @@ public class NoteInput : MonoBehaviour
                 {
                     if(delta < 0)
                     {
-                        await MyStatic.WaitSeconds(-delta);
+                        await UniTask.Delay(System.TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
                     }
                     
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
@@ -345,7 +340,7 @@ public class NoteInput : MonoBehaviour
             {
                 if(delta < 0)
                 {
-                    await MyStatic.WaitSeconds(-delta);
+                    await UniTask.Delay(System.TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
                 }
                 
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);

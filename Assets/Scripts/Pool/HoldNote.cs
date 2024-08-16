@@ -16,12 +16,21 @@ public class HoldNote : NoteBase
     [SerializeField] SpriteMask spriteMask;
     public NoteGrade Grade { get; set; }
     public InputState State { get; set; }
-    static readonly float width = 2.5f;
 
+    public void SetWidth(float width)
+    {
+        spriteRenderer.size = new Vector2(width, spriteRenderer.size.y);
+        spriteMask.transform.localScale = new Vector3(spriteMask.transform.localScale.x, spriteRenderer.size.y);
+    }
     public void SetLength(float length)
     {
-        spriteRenderer.size = new Vector2(width, length);
-        spriteMask.transform.localScale = new Vector3(width, spriteMask.transform.localScale.y);
+        spriteRenderer.size = new Vector2(spriteRenderer.size.x, length);
+        spriteMask.transform.localScale = new Vector3(spriteRenderer.size.x, spriteMask.transform.localScale.y);
+    }
+    public void SetScale(Vector2 scale)
+    {
+        spriteRenderer.size = scale;
+        spriteMask.transform.localScale = new Vector3(scale.x, scale.y);
     }
 
     public void SetSortingOrder(int order)

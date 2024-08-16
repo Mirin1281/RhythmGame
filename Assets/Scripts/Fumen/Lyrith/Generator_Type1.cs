@@ -26,7 +26,7 @@ namespace NoteGenerating
         /// ノーツの初期生成地点
         /// </summary>
         protected float StartBase => 2f * Speed + From + 0.2f;
-        protected virtual float From => 0f;
+        protected float From => 0f;
         protected float CurrentTime => Helper.Metronome.CurrentTime;         
 
         float GetInterval(float lpb, int num = 1)
@@ -97,13 +97,16 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            NoteBase note = type switch
+            /*NoteBase note = type switch
             {
                 NoteType.Normal => Helper.NormalNotePool.GetNote(),
                 NoteType.Slide => Helper.SlideNotePool.GetNote(),
                 NoteType.Flick => Helper.FlickNotePool.GetNote(),
                 _ => throw new ArgumentOutOfRangeException()
-            };
+            };*/
+            NormalNote note = Helper.NormalNotePool.GetNote();
+            note.SetWidth(4f);
+            
             var startPos = new Vector3(GetInverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 

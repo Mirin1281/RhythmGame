@@ -8,10 +8,14 @@ public class NormalNotePool : PoolBase<NormalNote>
     {
         if(index == 1)
         {
-            var note = GetInstance(index);
-            note.transform.parent = lane3D.transform;
-            return note;
+            var skyNote = GetInstance(index);
+            skyNote.transform.parent = lane3D.transform;
+            skyNote.SetWidth(3.5f);
+            return skyNote;
         }
-        return GetInstance(index);
+
+        var normalNote = GetInstance(index);
+        normalNote.SetWidth(3f);
+        return normalNote;
     }
 }

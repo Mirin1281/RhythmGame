@@ -8,8 +8,8 @@ public class ArcPool : PoolBase<ArcNote>
 
     public ArcNote GetNote()
     {
-        var arc = GetInstance();
-        arc.transform.parent = lane3D.transform;
-        return arc;
+        var arcNote = GetInstance();
+        arcNote.transform.parent = lane3D.transform;
+        return arcNote;
     }
 }

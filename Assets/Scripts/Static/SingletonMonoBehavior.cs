@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// シングルトンなMonoBehaviourの基底クラス
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
     [SerializeField] bool activeOnAwake;
