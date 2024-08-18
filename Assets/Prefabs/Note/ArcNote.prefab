@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 592733306534651277}
   - component: {fileID: 1287889567377016902}
   - component: {fileID: 8259857555807457460}
-  - component: {fileID: 7043132223184226425}
+  - component: {fileID: 347542508510782695}
   m_Layer: 0
   m_Name: ArcNote
   m_TagString: Untagged
@@ -219,10 +219,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 5
-  splineExtrude: {fileID: 7043132223184226425}
+  splineExtrude: {fileID: 347542508510782695}
   meshRenderer: {fileID: 592733306534651277}
   meshFilter: {fileID: 1287889567377016902}
---- !u!114 &7043132223184226425
+--- !u!114 &347542508510782695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,15 +231,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5791181920714164328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
+  m_Script: {fileID: 11500000, guid: e5f60e2bcf91f1f468dc93313d599e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Container: {fileID: 268693219378288984}
-  m_RebuildOnSplineChange: 0
   m_RebuildFrequency: 30
-  m_UpdateColliders: 1
   m_Sides: 4
-  m_SegmentsPerUnit: 8
+  m_SegmentsPerUnit: 4
   m_Capped: 1
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Range: {x: 0, y: 1}

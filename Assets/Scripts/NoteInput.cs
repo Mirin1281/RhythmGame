@@ -4,6 +4,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using HoldState = HoldNote.InputState;
 using ArcJudgeState = ArcJudge.InputState;
+using InputStatus = InputManager.InputStatus;
+using System.Linq;
 
 #region Note Parameters
 
@@ -55,7 +57,6 @@ public class NoteInput : MonoBehaviour
     readonly List<NoteExpect> allExpects = new(50);
     readonly List<(HoldNote hold, float endTime)> holds = new(4);
     readonly List<ArcNote> arcs = new(4);
-    readonly Dictionary<int, ArcColorType> fingerParameters = new(4);
 #if UNITY_EDITOR
     [SerializeField] bool isAuto;
 #else
@@ -79,13 +80,15 @@ public class NoteInput : MonoBehaviour
         inputManager.OnUp -= OnUp;
     }
 
-    void OnUp(int index)
+    void OnUp(int fingerIndex)
     {
-        UniTask.Void(async () => 
+        for(int i = 0; i < arcs.Count; i++)
         {
-            await UniTask.Yield(PlayerLoopTiming.LastUpdate, destroyCancellationToken);
-            fingerParameters.Remove(index);
-        });
+            if(arcs[i].FingerIndex == fingerIndex)
+            {
+                arcs[i].InvalidArcJudgeAsync(1f).Forget();
+            }
+        }
     }
 
     public void AddExpect(NoteExpect expect)
@@ -192,13 +195,13 @@ public class NoteInput : MonoBehaviour
         judge.PlayParticle(grade, expect.Pos);
     }
 
-    void OnHold(Vector2[] poses)
+    void OnHold(List<InputStatus> inputStatuses)
     {
-        CheckHold(poses);
-        CheckArc(inputManager.GetWorldPositionAndIndices());
-        foreach(var pos in poses)
+        CheckHold(inputStatuses);
+        CheckArc(inputStatuses);
+        foreach(var status in inputStatuses)
         {
-            List<(NoteExpect, float)> expects = FetchSomeNotes(pos, metronome.CurrentTime, NoteType.Slide);
+            List<(NoteExpect, float)> expects = FetchSomeNotes(status.Position, metronome.CurrentTime, NoteType.Slide);
             if(expects == null) return;
 
             foreach(var (expect, delta) in expects)
@@ -220,7 +223,7 @@ public class NoteInput : MonoBehaviour
         }
 
 
-        void CheckHold(Vector2[] inputPoses)
+        void CheckHold(List<InputStatus> inputStatuses)
         {
             if(holds.Count == 0) return;
             for(int i = 0; i < holds.Count; i++)
@@ -233,9 +236,9 @@ public class NoteInput : MonoBehaviour
                 else if(hold.State is HoldState.Holding)
                 {
                     bool isInput = false;
-                    for(int k = 0; k < inputPoses.Length; k++)
+                    for(int k = 0; k < inputStatuses.Count; k++)
                     {
-                        if(judge.IsNearPosition(inputPoses[k], hold.GetLandingPos()))
+                        if(judge.IsNearPosition(inputStatuses[k].Position, hold.GetLandingPos()))
                         {
                             isInput = true;
                             break;
@@ -278,7 +281,7 @@ public class NoteInput : MonoBehaviour
             }
         }
 
-        void CheckArc((Vector2 pos, int index)[] inputPoses)
+        void CheckArc(List<InputStatus> inputStatuses)
         {
             if(arcs.Count == 0) return;
             for(int i = 0; i < arcs.Count; i++)
@@ -294,61 +297,51 @@ public class NoteInput : MonoBehaviour
                     continue;
                 }
 
-                bool isHold = isAuto;
+                // 距離の近いアークを調べる
                 arc.IsPosDuplicated = false;
                 var currentPos = arc.GetAnyPointOnZPlane(0);
-                foreach(var a in arcs)
+                foreach(var otherArc in arcs)
                 {
-                    if(a == arc || a.GetPos().z < 0 || a.GetPos().z > arc.LastZ) continue;
-                    var otherPos = a.GetAnyPointOnZPlane(0);
-                    float sqrDistance = Vector2.SqrMagnitude(currentPos - otherPos);
-                    
-                    if(sqrDistance < 8f)
+                    if(otherArc == arc || otherArc.IsArcRange() == false) continue;
+                    var otherPos = otherArc.GetAnyPointOnZPlane(0);       
+                    if(Vector2.SqrMagnitude(currentPos - otherPos) < 8f)
                     {
                         arc.IsPosDuplicated = true;
-                        a.IsPosDuplicated = true;
+                        otherArc.IsPosDuplicated = true;
                     }
                 }
                 
-                foreach(var (pos, index) in inputPoses)
+                bool isHold = isAuto;
+                foreach(var status in inputStatuses)
                 {
-                    if(judge.IsNearPosition(pos, currentPos, 1.7f) == false) continue;
+                    if(judge.IsNearPosition(status.Position, currentPos, 1.7f) == false) continue;
                     
                     if(arc.IsPosDuplicated)
                     {
-                        
                         isHold = true;
+                        status.SetArcColorType(ArcColorType.None);
+                        arc.FingerIndex = -1;
                         break;
                     }
 
-                    ArcColorType colorType = ArcColorType.None;
-                    foreach(var (ind, type) in fingerParameters)
+                    if(arc.IsInvalid)
                     {
-                        if(index == ind)
-                        {
-                            colorType = type;
-                        }
+                        break;
                     }
 
-                    if(colorType == ArcColorType.None)
+                    if(status.ArcColorType == ArcColorType.None)
                     {
                         isHold = true;
-                        fingerParameters.Add(index, arc.ColorType);
-                        break;
+                        status.SetArcColorType(arc.ColorType);
+                        arc.FingerIndex = status.FingerIndex;
                     }
-                    else if(arc.IsInvalid)
-                    {
-                        break;
-                    }
-                    else if(colorType == arc.ColorType)
+                    else if(status.ArcColorType == arc.ColorType)
                     {
                         isHold = true;
-                        break;
                     }
                     else
                     {
                         arc.InvalidArcJudgeAsync(1f).Forget();
-                        break;
                     }
                 }
 

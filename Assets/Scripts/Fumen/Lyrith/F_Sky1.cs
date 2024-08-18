@@ -7,7 +7,7 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/スカイサンプル"), System.Serializable]
     public class F_Sky1: Generator_Type1
     {
-        protected override float Speed => base.Speed * 5f;
+        protected override float Speed => RhythmGameManager.Speed3D;
 
         protected override async UniTask GenerateAsync()
         {

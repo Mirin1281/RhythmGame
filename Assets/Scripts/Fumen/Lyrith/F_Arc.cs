@@ -13,13 +13,13 @@ namespace NoteGenerating
         [SerializeField] ArcColorType defaultColor = ArcColorType.Red;
         [SerializeField] ArcCreateData[] datas;
 
-        protected override float Speed => base.Speed * 5f;
+        protected override float Speed => RhythmGameManager.Speed3D;
 
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
             var arc = Helper.ArcNotePool.GetNote();
-            arc.CreateNewArc(datas, Helper.Metronome.Bpm, Speed, IsInverse);
+            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
             arc.SetColor(defaultColor, IsInverse);
 
             var startPos = new Vector3(0, 0f, StartBase);
@@ -37,6 +37,32 @@ namespace NoteGenerating
                 arc.SetPos(startPos + time * vec);
                 await UniTask.Yield(Helper.Token);
             }
+        }
+
+        protected override Color GetCommandColor()
+        {
+            ArcColorType type = ArcColorType.None;
+            if(IsInverse)
+            {
+                if(defaultColor == ArcColorType.Red)
+                {
+                    type = ArcColorType.Blue;
+                }
+                else if(defaultColor == ArcColorType.Blue)
+                {
+                    type = ArcColorType.Red;
+                }
+            }
+            else
+            {
+                type = defaultColor;
+            }
+            return type switch
+            {
+                ArcColorType.Red => new Color32(240, 180, 200, 255),
+                ArcColorType.Blue => new Color32(160, 200, 255, 255),
+                _ => base.GetCommandColor()
+            };
         }
 
         protected override string GetSummary()

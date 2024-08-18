@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Splines;
 
 public class ArcNote : NoteBase
 {
-    [SerializeField] SplineExtrude splineExtrude;
+    [SerializeField] MySplineExtrude splineExtrude;
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] MeshFilter meshFilter;
 
@@ -19,6 +20,7 @@ public class ArcNote : NoteBase
     public bool IsInvalid { get; private set; }
 
     public bool IsPosDuplicated { get; set; }
+    public int FingerIndex { get; set; }
 
     /// <summary>
     /// 現在扱っている判定のインデックス
@@ -48,7 +50,7 @@ public class ArcNote : NoteBase
     /// <summary>
     /// アークを作成します
     /// </summary>
-    public void CreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse = false)
+    public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float bpm, float speed, bool isInverse = false)
     {
         // 初期化
         Spline.Clear();
@@ -56,6 +58,8 @@ public class ArcNote : NoteBase
         judges ??= new(datas.Length);
         judges.Clear();
         IsInvalid = false;
+        FingerIndex = -1;
+        await UniTask.Yield(destroyCancellationToken);
 
         // 頂点を追加
         float vectorZ = 0;
@@ -71,6 +75,11 @@ public class ArcNote : NoteBase
                 _ => throw new ArgumentOutOfRangeException(),
             };
             spline.Add(knot, tangentMode);
+
+            if(i % 3 == 0)
+            {
+                await UniTask.Yield(destroyCancellationToken);
+            }
         }
 
         // 判定を追加
@@ -100,7 +109,8 @@ public class ArcNote : NoteBase
             judges.Add(new ArcJudge(startPos, endPos, k));
             k++;
         }
-        splineExtrude.Rebuild();
+
+        splineExtrude.RebuildAsync().Forget();
     }
 
     public void DebugCreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
@@ -176,6 +186,8 @@ public class ArcNote : NoteBase
             k++;
         }
 
+        splineExtrude.RebuildAsync().Forget();
+
 #if UNITY_EDITOR
         for(int i = 0; i < judges.Count; i++)
         {
@@ -231,6 +243,8 @@ public class ArcNote : NoteBase
         return judges[JudgeIndex];
     }
 
+    public bool IsArcRange() => GetPos().z >= 0 && GetPos().z <= LastZ;
+
     public void SetOnHold(bool enabled)
     {
         if(enabled)
@@ -251,6 +265,7 @@ public class ArcNote : NoteBase
         await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: destroyCancellationToken);
         IsInvalid = false;
         SetColor(tmpColor);
+        FingerIndex = -1;
     }
 
     public void SetColor(ArcColorType colorType, bool isInverse = false)

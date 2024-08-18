@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using System;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using System.Linq;
 using System.Collections.Generic;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Cysharp.Threading.Tasks;
 
 public class InputManager : MonoBehaviour
 {
@@ -16,11 +18,29 @@ public class InputManager : MonoBehaviour
         public bool isPrepared;
     }
     readonly List<FlickParameter> flickParameters = new(4);
+
+    public class InputStatus
+    {
+        public readonly int FingerIndex;
+        public Vector2 Position { get; private set; }
+        public ArcColorType ArcColorType { get; private set; }
+
+        public InputStatus(int index, Vector2 pos)
+        {
+            FingerIndex = index;
+            Position = pos;
+            ArcColorType = ArcColorType.None;
+        }
+
+        public void SetPosition(Vector2 position) => Position = position;
+        public void SetArcColorType(ArcColorType type) => ArcColorType = type;
+    }
+    List<InputStatus> inputStatuses = new(4);
     
     const float posDiff = 30f; // フリックの感度
 
     public event Action<Vector2> OnInput;
-    public event Action<Vector2[]> OnHold;
+    public event Action<List<InputStatus>> OnHold;
     public event Action<Vector2> OnFlick;
     public event Action<int> OnUp;
 
@@ -42,10 +62,8 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        foreach (Vector2 pos in GetWorldPositions())
-        {
-            OnInput?.Invoke(pos);
-        }
+        inputStatuses = FetchInputStatuses();
+        inputStatuses.ForEach(inputStatus => OnInput?.Invoke(inputStatus.Position));
 
         var flickParam = new FlickParameter()
         {
@@ -66,9 +84,8 @@ public class InputManager : MonoBehaviour
                (Mathf.Abs(p.currentPos.y - p.startPos.y) >= posDiff || Mathf.Abs(p.currentPos.x - p.startPos.x) >= posDiff))
             {
                 OnFlick?.Invoke(GetWorldPosition(p.startPos));
+                //PulseFlash().Forget();
                 p.isPrepared = false;
-                p.startPos = p.currentPos;
-                //flickParameters.Remove(p);
             }
         }
 
@@ -76,46 +93,47 @@ public class InputManager : MonoBehaviour
         /*async UniTask PulseFlash()
         {
             mainCamera.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
-            await MyStatic.WaitSeconds(0.1f);
+            await UniTask.Delay(100);
             mainCamera.backgroundColor = Color.black;
         }*/
     }
     void OnFingerUp(Finger finger)
     {
+        OnUp?.Invoke(finger.index);
         for(int i = 0; i < flickParameters.Count; i++)
         {
             if(flickParameters[i].index != finger.index) continue;
-            OnUp?.Invoke(flickParameters[i].index);
             flickParameters.RemoveAt(i);
+        }
+        for(int i = 0; i < inputStatuses.Count; i++)
+        {
+            if(finger.index == inputStatuses[i].FingerIndex)
+            {
+                
+                inputStatuses.RemoveAt(i);
+            }
         }
     }
 
     void Update()
     {
-        OnHold?.Invoke(GetWorldPositions());
+        var touches = Touch.activeTouches;
+        for(int i = 0; i < inputStatuses.Count; i++)
+        {
+            for(int k = 0; k < touches.Count; k++)
+            {
+                if(touches[k].finger.index == inputStatuses[i].FingerIndex)
+                {
+                    inputStatuses[i].SetPosition(GetWorldPosition(touches[k].screenPosition));
+                    break;
+                }
+            }
+        }
+        OnHold?.Invoke(inputStatuses);
     }
 
-    public Vector2[] GetWorldPositions()
-    {
-        var touches = Touch.activeTouches;
-        Vector2[] poses = new Vector2[touches.Count];
-        for(int i = 0; i < touches.Count; i++)
-        {
-            poses[i] = GetWorldPosition(touches[i].screenPosition);
-        }
-        return poses;
-    }
-
-    public (Vector2 pos, int fingerIndex)[] GetWorldPositionAndIndices()
-    {
-        var touches = Touch.activeTouches;
-        (Vector2, int)[] poses = new (Vector2, int)[touches.Count];
-        for(int i = 0; i < touches.Count; i++)
-        {
-            poses[i] = (GetWorldPosition(touches[i].screenPosition), touches[i].finger.index);
-        }
-        return poses;
-    }
+    List<InputStatus> FetchInputStatuses()
+        => Touch.activeTouches.Select(touch => new InputStatus(touch.finger.index, GetWorldPosition(touch.screenPosition))).ToList();
 
     Vector2 GetWorldPosition(Vector2 screenPos)
     {

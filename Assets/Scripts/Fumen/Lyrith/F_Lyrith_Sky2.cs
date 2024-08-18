@@ -7,27 +7,74 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/スカイ2"), System.Serializable]
     public class F_Lyrith_Sky2: Generator_Type1
     {
-        protected override float Speed => base.Speed * 5f;
+        protected override float Speed => RhythmGameManager.Speed3D;
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4);
-            await SkyNote(4).Wait(4);
-            await SkyNote(1).Wait(4);
-            await SkyNote(2).Wait(4);
-            await SkyNote(1).Wait(4);
-            await Wait(4);
-            await SkyNote(-3).Wait(4);
-            await Wait(4);
-
-            await Wait(4);
-            await SkyNote(-2).Wait(4);
-            await SkyNote(-3).Wait(4);
-            await SkyNote(-2).Wait(4);
-            await SkyNote(3).Wait(4);
-            await Wait(8);
-            await SkyNote(-4, 0f).Wait(8);
-            await SkyNote(-4, 0f).Wait(4);
+            await SkyLoop(16,
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4),
+                (0, 4)
+            );
         }
 
         Generator_Type1 SkyNote(float x, float y = 4f)
@@ -55,6 +102,19 @@ namespace NoteGenerating
                     await UniTask.Yield(Helper.Token);
                 }
             }
+        }
+
+        async UniTask<float> SkyLoop(float lpb, params (float x, float y)?[] poses)
+        {
+            for(int i = 0; i < poses.Length; i++)
+            {
+                if(poses[i] is (float, float) pos)
+                {
+                    SkyNote(pos.x, pos.y);
+                }
+                await Wait(lpb);
+            }
+            return Delta;
         }
     }
 }

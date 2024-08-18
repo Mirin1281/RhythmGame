@@ -9,6 +9,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     /// 通常は6～15程度を想定
     /// </summary>
     public static float Speed = 12f;
+    public static float Speed3D = 80f;
     public static float Offset;
 
     protected override void Awake()
