@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using HoldState = HoldNote.InputState;
@@ -55,6 +55,7 @@ public class NoteInput : MonoBehaviour
     readonly List<NoteExpect> allExpects = new(50);
     readonly List<(HoldNote hold, float endTime)> holds = new(4);
     readonly List<ArcNote> arcs = new(4);
+    readonly Dictionary<int, ArcColorType> fingerParameters = new(4);
 #if UNITY_EDITOR
     [SerializeField] bool isAuto;
 #else
@@ -68,12 +69,23 @@ public class NoteInput : MonoBehaviour
         inputManager.OnInput += OnInput;
         inputManager.OnHold += OnHold;
         inputManager.OnFlick += OnFlick;
+        inputManager.OnUp += OnUp;
     }
     void OnDestroy()
     {
         inputManager.OnInput -= OnInput;
         inputManager.OnHold -= OnHold;
         inputManager.OnFlick -= OnFlick;
+        inputManager.OnUp -= OnUp;
+    }
+
+    void OnUp(int index)
+    {
+        UniTask.Void(async () => 
+        {
+            await UniTask.Yield(PlayerLoopTiming.LastUpdate, destroyCancellationToken);
+            fingerParameters.Remove(index);
+        });
     }
 
     public void AddExpect(NoteExpect expect)
@@ -112,9 +124,6 @@ public class NoteInput : MonoBehaviour
                 Miss(allExpects[i]);
             }
         }
-        var poses = inputManager.GetScreenPositions();
-        CheckHold(poses);
-        CheckArc(poses);
 
         
         void AutoGet(NoteExpect expect)
@@ -155,6 +164,61 @@ public class NoteInput : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnInput(Vector2 pos)
+    {
+        (NoteExpect expect, float delta) = FetchNearestNote(pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold);
+        if(expect == null) return;
+
+        NoteGrade grade = judge.GetGradeApplyText(delta);
+        if(grade == NoteGrade.Miss)
+        {
+            judge.ResetCombo();
+            RemoveExpect(expect);
+            return;
+        }
+        if(expect.Note.Type == NoteType.Hold)
+        {
+            var hold = AddHold(expect);
+            hold.Grade = grade;
+            RemoveExpect(expect, false);
+            judge.AddCombo();
+            judge.PlayParticle(grade, expect.Pos);
+            return;
+        }
+        RemoveExpect(expect);
+        judge.AddCombo();
+        judge.PlayParticle(grade, expect.Pos);
+    }
+
+    void OnHold(Vector2[] poses)
+    {
+        CheckHold(poses);
+        CheckArc(inputManager.GetWorldPositionAndIndices());
+        foreach(var pos in poses)
+        {
+            List<(NoteExpect, float)> expects = FetchSomeNotes(pos, metronome.CurrentTime, NoteType.Slide);
+            if(expects == null) return;
+
+            foreach(var (expect, delta) in expects)
+            {
+
+                RemoveExpect(expect, false);
+                UniTask.Void(async () => 
+                {
+                    if(delta < 0)
+                    {
+                        await UniTask.Delay(TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
+                    }
+                    
+                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    expect.Note.gameObject.SetActive(false);
+                    judge.AddCombo();
+                });
+            }
+        }
+
 
         void CheckHold(Vector2[] inputPoses)
         {
@@ -164,7 +228,7 @@ public class NoteInput : MonoBehaviour
                 var hold = holds[i].hold;
                 if(hold.State is HoldState.None or HoldState.Idle)
                 {
-                    throw new System.Exception();
+                    throw new Exception();
                 }
                 else if(hold.State is HoldState.Holding)
                 {
@@ -214,7 +278,7 @@ public class NoteInput : MonoBehaviour
             }
         }
 
-        void CheckArc(Vector2[] inputPoses)
+        void CheckArc((Vector2 pos, int index)[] inputPoses)
         {
             if(arcs.Count == 0) return;
             for(int i = 0; i < arcs.Count; i++)
@@ -231,15 +295,63 @@ public class NoteInput : MonoBehaviour
                 }
 
                 bool isHold = isAuto;
+                arc.IsPosDuplicated = false;
                 var currentPos = arc.GetAnyPointOnZPlane(0);
-                foreach(var inputPos in inputPoses)
+                foreach(var a in arcs)
                 {
-                    if(judge.IsNearPosition(inputPos, currentPos, 1.7f))
+                    if(a == arc || a.GetPos().z < 0 || a.GetPos().z > arc.LastZ) continue;
+                    var otherPos = a.GetAnyPointOnZPlane(0);
+                    float sqrDistance = Vector2.SqrMagnitude(currentPos - otherPos);
+                    
+                    if(sqrDistance < 8f)
+                    {
+                        arc.IsPosDuplicated = true;
+                        a.IsPosDuplicated = true;
+                    }
+                }
+                
+                foreach(var (pos, index) in inputPoses)
+                {
+                    if(judge.IsNearPosition(pos, currentPos, 1.7f) == false) continue;
+                    
+                    if(arc.IsPosDuplicated)
+                    {
+                        
+                        isHold = true;
+                        break;
+                    }
+
+                    ArcColorType colorType = ArcColorType.None;
+                    foreach(var (ind, type) in fingerParameters)
+                    {
+                        if(index == ind)
+                        {
+                            colorType = type;
+                        }
+                    }
+
+                    if(colorType == ArcColorType.None)
+                    {
+                        isHold = true;
+                        fingerParameters.Add(index, arc.ColorType);
+                        break;
+                    }
+                    else if(arc.IsInvalid)
+                    {
+                        break;
+                    }
+                    else if(colorType == arc.ColorType)
                     {
                         isHold = true;
                         break;
                     }
+                    else
+                    {
+                        arc.InvalidArcJudgeAsync(1f).Forget();
+                        break;
+                    }
                 }
+
                 if(isHold)
                 {
                     judge.SetLightPos(arc, currentPos);
@@ -260,7 +372,7 @@ public class NoteInput : MonoBehaviour
 
                 if(arcJudge.State is ArcJudgeState.None)
                 {
-                    throw new System.Exception();
+                    throw new Exception();
                 }
                 else if(arcJudge.State is ArcJudgeState.Idle)
                 {
@@ -272,58 +384,6 @@ public class NoteInput : MonoBehaviour
                         judge.AddCombo();
                     }
                 }
-            }
-        }
-    }
-
-    void OnInput(Vector2 pos)
-    {
-        (NoteExpect expect, float delta) = FetchNearestNote(pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold);
-        if(expect == null) return;
-
-        NoteGrade grade = judge.GetGradeApplyText(delta);
-        if(grade == NoteGrade.Miss)
-        {
-            judge.ResetCombo();
-            RemoveExpect(expect);
-            return;
-        }
-        if(expect.Note.Type == NoteType.Hold)
-        {
-            var hold = AddHold(expect);
-            hold.Grade = grade;
-            RemoveExpect(expect, false);
-            judge.AddCombo();
-            judge.PlayParticle(grade, expect.Pos);
-            return;
-        }
-        RemoveExpect(expect);
-        judge.AddCombo();
-        judge.PlayParticle(grade, expect.Pos);
-    }
-
-    void OnHold(Vector2[] poses)
-    {
-        foreach(var pos in poses)
-        {
-            List<(NoteExpect, float)> expects = FetchSomeNotes(pos, metronome.CurrentTime, NoteType.Slide);
-            if(expects == null) return;
-
-            foreach(var (expect, delta) in expects)
-            {
-
-                RemoveExpect(expect, false);
-                UniTask.Void(async () => 
-                {
-                    if(delta < 0)
-                    {
-                        await UniTask.Delay(System.TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
-                    }
-                    
-                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                    expect.Note.gameObject.SetActive(false);
-                    judge.AddCombo();
-                });
             }
         }
     }
@@ -340,7 +400,7 @@ public class NoteInput : MonoBehaviour
             {
                 if(delta < 0)
                 {
-                    await UniTask.Delay(System.TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
+                    await UniTask.Delay(TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
                 }
                 
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);

@@ -10,21 +10,18 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
-        [SerializeField] Fumen fumen;
+        #pragma warning disable 0414
+        [SerializeField, TextArea] string description;
+        #pragma warning restore 0414
+        [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }
 
     [System.Serializable]
     public class Fumen
     {
-        #pragma warning disable 0414
-        [SerializeField, TextArea] string description = "Explain";
-        #pragma warning restore 0414
-        [SerializeField] int startBeatOffset = 5;
-        public int StartBeatOffset => startBeatOffset;
-
         // シリアライズする
-        [SerializeField, HideInInspector] List<GenerateData> generateDataList = new();
+        [SerializeField] List<GenerateData> generateDataList = new();
         public IReadOnlyList<GenerateData> GetReadOnlyGenerateDataList() => generateDataList;
 
 #if UNITY_EDITOR

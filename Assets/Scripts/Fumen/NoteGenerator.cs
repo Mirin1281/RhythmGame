@@ -11,11 +11,14 @@ namespace NoteGenerating
         [SerializeField] bool isCreateLine = true;
         [SerializeField] bool isCreate3DLine = false;
         [SerializeField] LinePool linePool;
-        Fumen Fumen => fumenData.Fumen;
 
         void Start()
         {
             metronome.OnBeat += GenerateProcessAsync;
+        }
+        void OnDestroy()
+        {
+            metronome.OnBeat -= GenerateProcessAsync;
         }
 
         void GenerateProcessAsync(int beatCount, float delta)
@@ -33,9 +36,9 @@ namespace NoteGenerating
 
             void TryGenerate()
             {
-                foreach(var generateData in Fumen.GetReadOnlyGenerateDataList())
+                foreach(var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
                 {
-                    if(beatCount == Fumen.StartBeatOffset + generateData.BeatTiming)
+                    if(beatCount == metronome.StartBeatOffset + generateData.BeatTiming)
                     {
                         generateData.Generate(noteGenerateHelper, delta);
                     }
@@ -43,12 +46,12 @@ namespace NoteGenerating
             }
         }
 
-        float GetStartBase(float from, float speed) => 2f * speed + from + 0.2f;
+        float GetStartBase(float speed) => 2f * speed + 0.2f;
         async UniTask CreateLine(float delta)
         {
             Line line = linePool.GetLine();
             var speed = RhythmGameManager.Speed;
-            await LinearMoveAsync(line, new Vector3(0f, GetStartBase(0f, speed)), speed, 3f);
+            await LinearMoveAsync(line, new Vector3(0f, GetStartBase(speed)), speed, 3f);
             line.gameObject.SetActive(false);
 
 
@@ -70,7 +73,7 @@ namespace NoteGenerating
         {
             Line line = linePool.GetLine(1);
             var speed = RhythmGameManager.Speed * 5f;
-            await LinearMoveAsync(line, new Vector3(0f, 0f, GetStartBase(0f, speed)), speed, 3f);
+            await LinearMoveAsync(line, new Vector3(0f, 0f, GetStartBase(speed)), speed, 3f);
             line.gameObject.SetActive(false);
 
 

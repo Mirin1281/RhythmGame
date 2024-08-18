@@ -10,7 +10,7 @@ namespace NoteGenerating
     public class F_Arc : Generator_Type1
     {
         [SerializeField] DebugSphere prefab;
-        [SerializeField] ArcNote.ColorType defaultColor = ArcNote.ColorType.Red;
+        [SerializeField] ArcColorType defaultColor = ArcColorType.Red;
         [SerializeField] ArcCreateData[] datas;
 
         protected override float Speed => base.Speed * 5f;

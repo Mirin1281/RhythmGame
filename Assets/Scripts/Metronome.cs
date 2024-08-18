@@ -10,11 +10,13 @@ public class Metronome : MonoBehaviour
     [Space(10)]
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
-    
-    double currentTime;
-    public float CurrentTime => (float)currentTime + musicData.Offset + RhythmGameManager.Offset;
 
     bool addTime;
+    float bpm;
+    double currentTime;
+    double interval;
+    int bpmChangeCount;
+
     public bool AddTime
     {
         set
@@ -25,8 +27,25 @@ public class Metronome : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// (ビートの回数, 誤差)
+    /// </summary>
+    public event Action<int, float> OnBeat;
+    public int StartBeatOffset => musicData.StartBeatOffset;
+    public float CurrentTime => (float)currentTime + musicData.Offset + RhythmGameManager.Offset;
+    public float Bpm
+    {
+        get => bpm;
+        private set
+        {
+            bpm = value;
+            interval = 60d / bpm;
+        }
+    }
+
     void Start()
     {
+        Bpm = musicData.Bpm;
         audioSource.clip = musicData.MusicClip;
 
         if(skipOnStart)
@@ -39,13 +58,6 @@ public class Metronome : MonoBehaviour
         AddTime = autoStart;
     }
 
-    /// <summary>
-    /// (ビートの回数, 誤差)
-    /// </summary>
-    public event Action<int, float> OnBeat;
-    public float Bpm => musicData.Bpm;
-    double interval => 60d / Bpm;
-
     async UniTask UpdateTimerAsync()
     {
         double baseTime = Time.timeAsDouble - currentTime;
@@ -56,7 +68,13 @@ public class Metronome : MonoBehaviour
             currentTime = Time.timeAsDouble - baseTime;
             if(CurrentTime > nextBeat)
             {
+                if(musicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
+                {
+                    Bpm = musicData.GetChangeBPM(bpmChangeCount);
+                    bpmChangeCount++;
+                }
                 OnBeat?.Invoke(beatCount, (float)(CurrentTime - nextBeat));
+                
                 beatCount++;
                 nextBeat += interval;
             }

@@ -1,26 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Splines;
 
 public class ArcNote : NoteBase
 {
-    [SerializeField] SplineContainer splineContainer;
+    [SerializeField] SplineExtrude splineExtrude;
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] MeshFilter meshFilter;
-
-    public enum ColorType
-    {
-        None,
-        Red,
-        Blue,
-    }
 
     /// <summary>
     /// アークの判定
     /// </summary>
     List<ArcJudge> judges = new();
+
+    public bool IsInvalid { get; private set; }
+
+    public bool IsPosDuplicated { get; set; }
 
     /// <summary>
     /// 現在扱っている判定のインデックス
@@ -30,12 +28,16 @@ public class ArcNote : NoteBase
     /// <summary>
     /// 最後尾のz座標
     /// </summary>
-    public float LastZ => splineContainer.Spline.Knots.Last().Position.z;
+    public float LastZ => Spline.Knots.Last().Position.z;
 
     /// <summary>
     /// 上の判定線の高さ
     /// </summary>
     public static readonly float Height = 0.3f;
+
+    public ArcColorType ColorType { get; set; }
+
+    Spline Spline => splineExtrude.Spline;
 
     void Awake()
     {
@@ -49,11 +51,11 @@ public class ArcNote : NoteBase
     public void CreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse = false)
     {
         // 初期化
-        splineContainer.Spline.Clear();
-        var spline = splineContainer.Spline;
+        Spline.Clear();
+        var spline = Spline;
         judges ??= new(datas.Length);
         judges.Clear();
-        JudgeIndex = 0;
+        IsInvalid = false;
 
         // 頂点を追加
         float vectorZ = 0;
@@ -98,12 +100,14 @@ public class ArcNote : NoteBase
             judges.Add(new ArcJudge(startPos, endPos, k));
             k++;
         }
+        splineExtrude.Rebuild();
     }
 
     public void DebugCreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
     {
-        splineContainer.Spline.Clear();
-        var spline = splineContainer.Spline;
+        meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
+        Spline.Clear();
+        var spline = Spline;
         judges = new(datas.Length);
         JudgeIndex = 0;
         foreach(var child in transform.OfType<Transform>().ToArray())
@@ -195,10 +199,10 @@ public class ArcNote : NoteBase
     /// </summary>
     public Vector3 GetAnyPointOnZPlane(float targetZ)
     {
-        BezierKnot behindKnot = splineContainer.Spline[0];
-        BezierKnot aheadKnot = splineContainer.Spline[0];
+        BezierKnot behindKnot = Spline[0];
+        BezierKnot aheadKnot = Spline[0];
         var z = GetPos().z;
-        foreach(BezierKnot knot in splineContainer.Spline)
+        foreach(BezierKnot knot in Spline)
         {
             if(knot.Position.z < targetZ + z)
             {
@@ -239,31 +243,47 @@ public class ArcNote : NoteBase
         }
     }
 
-    public void SetColor(ColorType colorType, bool isInverse = false)
+    public async UniTask InvalidArcJudgeAsync(float time)
     {
-        ColorType type = ColorType.None;
+        IsInvalid = true;
+        var tmpColor = meshRenderer.sharedMaterial.color;
+        SetColor(new Color(0.9f, 0f, 0f, 1f));
+        await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: destroyCancellationToken);
+        IsInvalid = false;
+        SetColor(tmpColor);
+    }
+
+    public void SetColor(ArcColorType colorType, bool isInverse = false)
+    {
+        ArcColorType type = ArcColorType.None;
         if(isInverse)
         {
-            if(colorType == ColorType.Red)
+            if(colorType == ArcColorType.Red)
             {
-                type = ColorType.Blue;
+                type = ArcColorType.Blue;
             }
-            else if(colorType == ColorType.Blue)
+            else if(colorType == ArcColorType.Blue)
             {
-                type = ColorType.Red;
+                type = ArcColorType.Red;
             }
         }
         else
         {
             type = colorType;
         }
-        meshRenderer.sharedMaterial.color = type switch
+        ColorType = type;
+        SetColor(ColorType switch
         {
-            ColorType.Red => new Color32(233, 76, 160, 200),
-            ColorType.Blue => new Color32(23, 127, 217, 200),
+            ArcColorType.Red => new Color32(233, 124, 187, 200),
+            ArcColorType.Blue => new Color32(91, 179, 255, 200),
             _ => throw new Exception()
-        };
+        });
     }
+    void SetColor(Color color)
+    {
+        meshRenderer.sharedMaterial.color = color;
+    }
+
     public void SetAlpha(bool isHold)
     {
         var c = meshRenderer.material.color;
@@ -278,6 +298,13 @@ public class ArcNote : NoteBase
         var pos = base.GetPos();
         return new Vector3(pos.x, pos.y, -pos.z);
     }
+}
+
+public enum ArcColorType
+{
+    None,
+    Red,
+    Blue,
 }
 
 // 設置範囲

@@ -7,14 +7,7 @@ using System.Collections.Generic;
 public class InputManager : MonoBehaviour
 {
     Camera mainCamera;
-    [SerializeField] LayerMask layer;
-
-    public event Action<Vector2> OnInput;
-    public event Action<Vector2[]> OnHold;
-    public event Action<Vector2> OnFlick;
     
-    // フリックの感度
-    const float posDiff = 30f;
     class FlickParameter
     {
         public int index;
@@ -23,6 +16,13 @@ public class InputManager : MonoBehaviour
         public bool isPrepared;
     }
     readonly List<FlickParameter> flickParameters = new(4);
+    
+    const float posDiff = 30f; // フリックの感度
+
+    public event Action<Vector2> OnInput;
+    public event Action<Vector2[]> OnHold;
+    public event Action<Vector2> OnFlick;
+    public event Action<int> OnUp;
 
     void Start()
     {
@@ -42,13 +42,14 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        foreach (Vector2 pos in GetScreenPositions())
+        foreach (Vector2 pos in GetWorldPositions())
         {
             OnInput?.Invoke(pos);
         }
 
         var flickParam = new FlickParameter()
         {
+            index = finger.index,
             startPos = finger.screenPosition,
             isPrepared = true,
         };
@@ -64,13 +65,10 @@ public class InputManager : MonoBehaviour
             if (p.isPrepared && 
                (Mathf.Abs(p.currentPos.y - p.startPos.y) >= posDiff || Mathf.Abs(p.currentPos.x - p.startPos.x) >= posDiff))
             {
-                Ray ray = mainCamera.ScreenPointToRay(p.startPos);
-                if (Physics.Raycast(ray, out var hit, 20f, layer))
-                {
-                    OnFlick?.Invoke(hit.point);
-                }
+                OnFlick?.Invoke(GetWorldPosition(p.startPos));
                 p.isPrepared = false;
-                flickParameters.Remove(p);
+                p.startPos = p.currentPos;
+                //flickParameters.Remove(p);
             }
         }
 
@@ -87,29 +85,46 @@ public class InputManager : MonoBehaviour
         for(int i = 0; i < flickParameters.Count; i++)
         {
             if(flickParameters[i].index != finger.index) continue;
+            OnUp?.Invoke(flickParameters[i].index);
             flickParameters.RemoveAt(i);
         }
     }
 
     void Update()
     {
-        OnHold?.Invoke(GetScreenPositions());
+        OnHold?.Invoke(GetWorldPositions());
     }
 
-    public Vector2[] GetScreenPositions()
+    public Vector2[] GetWorldPositions()
     {
         var touches = Touch.activeTouches;
         Vector2[] poses = new Vector2[touches.Count];
-        
         for(int i = 0; i < touches.Count; i++)
         {
-            var sPos = touches[i].screenPosition;
-            Ray ray = mainCamera.ScreenPointToRay(sPos);
-            if (Physics.Raycast(ray, out var hit, 20f, layer))
-            {
-                poses[i] = new Vector2(hit.point.x, hit.point.y);
-            }
+            poses[i] = GetWorldPosition(touches[i].screenPosition);
         }
         return poses;
+    }
+
+    public (Vector2 pos, int fingerIndex)[] GetWorldPositionAndIndices()
+    {
+        var touches = Touch.activeTouches;
+        (Vector2, int)[] poses = new (Vector2, int)[touches.Count];
+        for(int i = 0; i < touches.Count; i++)
+        {
+            poses[i] = (GetWorldPosition(touches[i].screenPosition), touches[i].finger.index);
+        }
+        return poses;
+    }
+
+    Vector2 GetWorldPosition(Vector2 screenPos)
+    {
+        Ray ray = mainCamera.ScreenPointToRay(screenPos);
+        if (ray.direction.z != 0)
+        {
+            float t = -ray.origin.z / ray.direction.z; // z=0の平面との交点を求める
+            return ray.origin + ray.direction * t;
+        }
+        return Vector2.zero;
     }
 }

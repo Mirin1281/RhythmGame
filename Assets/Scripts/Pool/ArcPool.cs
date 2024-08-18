@@ -10,6 +10,7 @@ public class ArcPool : PoolBase<ArcNote>
     {
         var arcNote = GetInstance();
         arcNote.transform.parent = lane3D.transform;
+        arcNote.JudgeIndex = 0;
         return arcNote;
     }
 }

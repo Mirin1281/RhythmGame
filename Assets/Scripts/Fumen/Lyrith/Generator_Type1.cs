@@ -97,15 +97,13 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            /*NoteBase note = type switch
+            NoteBase note = type switch
             {
                 NoteType.Normal => Helper.NormalNotePool.GetNote(),
                 NoteType.Slide => Helper.SlideNotePool.GetNote(),
                 NoteType.Flick => Helper.FlickNotePool.GetNote(),
                 _ => throw new ArgumentOutOfRangeException()
-            };*/
-            NormalNote note = Helper.NormalNotePool.GetNote();
-            note.SetWidth(4f);
+            };
             
             var startPos = new Vector3(GetInverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
