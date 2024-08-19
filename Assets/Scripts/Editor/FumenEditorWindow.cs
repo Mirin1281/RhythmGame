@@ -26,7 +26,7 @@ namespace NoteGenerating.Editor
         Vector2 listScrollPos;
         Vector2 commandScrollPos;
 
-        static readonly float SplitMenuRatio = 0.5f;
+        static readonly float SplitMenuRatio = 0.4f;
 
         void OnEnable()
         {
@@ -335,6 +335,7 @@ namespace NoteGenerating.Editor
                 {
                     selectedCommandList.Add(commandList[i]);
                 }
+                LastSelectedCommand.Select();
             }
 
             void OnReorder(ReorderableList list)

@@ -75,7 +75,7 @@ namespace NoteGenerating.Editor
             var originalColor = GUI.color;
 
             // Alpha値を小さくしないと文字が見えないので下げる
-            GUI.color = new Color(color.r, color.g, color.b, 0.1f);
+            GUI.color = new Color(color.r, color.g, color.b, 0.07f);
             var style = new GUIStyle
             {
                 normal =

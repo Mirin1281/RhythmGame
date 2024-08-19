@@ -15,6 +15,8 @@ public class ArcNote : NoteBase
     /// アークの判定
     /// </summary>
     List<ArcJudge> judges = new();
+    float noInputTime;
+    Spline Spline => splineExtrude.Spline;
 
     public bool IsInvalid { get; private set; }
 
@@ -38,12 +40,18 @@ public class ArcNote : NoteBase
 
     public ArcColorType ColorType { get; set; }
 
-    Spline Spline => splineExtrude.Spline;
+    
 
     void Awake()
     {
         meshRenderer.material = new Material(meshRenderer.material);
         meshFilter.mesh = meshFilter.mesh.Duplicate();
+    }
+
+    void Update()
+    {
+        noInputTime += Time.deltaTime;
+        meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime, 0f, 5f) * RhythmGameManager.Speed3D);
     }
 
     /// <summary>
@@ -212,18 +220,6 @@ public class ArcNote : NoteBase
 
     public bool IsArcRange() => GetPos().z >= 0 && GetPos().z <= LastZ;
 
-    public void SetOnHold(bool enabled)
-    {
-        if(enabled)
-        {
-            meshRenderer.material.SetFloat("_ZThreshold", 0f);
-        }
-        else
-        {
-            meshRenderer.material.SetFloat("_ZThreshold", -3f);
-        }
-    }
-
     public async UniTask InvalidArcJudgeAsync(float time)
     {
         IsInvalid = true;
@@ -233,6 +229,16 @@ public class ArcNote : NoteBase
         IsInvalid = false;
         SetColor(tmpColor);
         FingerIndex = -1;
+    }
+
+    public void SetInput(bool enabled)
+    {
+        if(enabled)
+        {
+            noInputTime = 0f;
+        }
+        var c = meshRenderer.material.color;
+        meshRenderer.material.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
     }
 
     public void SetColor(ArcColorType colorType, bool isInverse = false)
@@ -264,12 +270,6 @@ public class ArcNote : NoteBase
     void SetColor(Color color)
     {
         meshRenderer.sharedMaterial.color = color;
-    }
-
-    public void SetAlpha(bool isHold)
-    {
-        var c = meshRenderer.material.color;
-        meshRenderer.material.color = new Color(c.r, c.g, c.b, isHold ? 0.8f : 0.6f);
     }
 
     /// <summary>

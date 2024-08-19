@@ -11,6 +11,7 @@ namespace NoteGenerating
         string GetSummary();
         Color GetCommandColor();
         void Preview();
+        void Select();
     }
 
     [Serializable]
@@ -31,12 +32,13 @@ namespace NoteGenerating
         string INoteGeneratable.GetSummary() => GetSummary();
         Color INoteGeneratable.GetCommandColor() => GetCommandColor();
         void INoteGeneratable.Preview() => Preview();
+        void INoteGeneratable.Select() => Preview();
         string INoteGeneratable.GetName()
         {
             if(GetName() == null)
             {
                 var tmpArray = this.ToString().Split('.');
-                return tmpArray[tmpArray.Length - 1];
+                return tmpArray[^1];
             }
             else
             {
@@ -60,5 +62,7 @@ namespace NoteGenerating
         protected virtual Color GetCommandColor() => new Color(0.9f, 0.9f, 0.9f, 1f);
 
         protected virtual void Preview() {}
+
+        protected virtual void OnSelect() {}
     }
 }

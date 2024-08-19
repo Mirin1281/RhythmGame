@@ -73,22 +73,6 @@ public class Metronome : MonoBehaviour
 #endif
     }
 
-    public void Stop()
-    {
-        addTime = false;
-        playback.Stop();
-    }
-    public void Pause()
-    {
-        addTime = false;
-        playback.Pause();
-    }
-    public void Resume()
-    {
-        addTime = true;
-        playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
-    }
-
     async UniTask UpdateTimerAsync()
     {
         addTime = true;
@@ -114,6 +98,23 @@ public class Metronome : MonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        addTime = false;
+        playback.Stop();
+    }
+    public void Pause()
+    {
+        addTime = false;
+        playback.Pause();
+    }
+    public void Resume()
+    {
+        addTime = true;
+        playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
+    }
+    
+#if UNITY_EDITOR
     void SwitchMusic(PauseState state)
     {
         if(state == PauseState.Paused)
@@ -125,4 +126,5 @@ public class Metronome : MonoBehaviour
             Resume();
         }
     }
+#endif
 }

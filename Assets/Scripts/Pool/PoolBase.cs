@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
 {
@@ -25,6 +27,16 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
 
     protected T GetInstance(int index = 0)
     {
+#if UNITY_EDITOR
+        // エディタ上かつ実行中でない時に呼ばれた際は生成のみ行う
+        if(EditorApplication.isPlaying == false)
+        {
+            var t = GameObject.Instantiate(prepareStatuses[0].Prefab);
+            t.SetActive(true);  
+            return t;
+        }
+#endif
+        
         var pooledList = PooledTable[index];
         var status = prepareStatuses[index];
         var listCount = pooledList.Count;

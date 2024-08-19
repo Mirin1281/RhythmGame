@@ -17,6 +17,7 @@ namespace NoteGenerating.Editor
 
             if(type == F_Common.CreateNoteType._None)
             {
+                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, EditorGUIUtility.singleLineHeight + 4), Color.cyan);
                 position.x += width * 0.525f;
                 EditorGUI.LabelField(position, "待ち:");
                 position.x += width * 0.08f;
@@ -37,8 +38,14 @@ namespace NoteGenerating.Editor
             EditorGUI.LabelField(position, "待ち:");
             position.x += width * 0.08f;
             position.width = width * 0.13f;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("wait"), GUIContent.none);
+            var waitProp = property.FindPropertyRelative("wait");
+            EditorGUI.PropertyField(position, waitProp, GUIContent.none);
             position.width = width * 0.25f;
+
+            if(waitProp.floatValue == 0f)
+            {
+                DrawBoxLayout(new Rect(19, position.y -2, width + 40, 2 * (EditorGUIUtility.singleLineHeight + 4)), Color.yellow);
+            }
 
             if(type == F_Common.CreateNoteType.Hold)
             {
@@ -48,6 +55,24 @@ namespace NoteGenerating.Editor
                 position.width = width * 0.13f;
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("length"), GUIContent.none);
             }
+        }
+
+        void DrawBoxLayout(Rect position, Color color)
+        {
+            var originalColor = GUI.color;
+
+            // Alpha値を小さくしないと文字が見えないので下げる
+            GUI.color = new Color(color.r, color.g, color.b, 0.1f);
+            var style = new GUIStyle
+            {
+                normal =
+                {
+                    background = Texture2D.whiteTexture
+                }
+            };
+            GUI.Box(position, string.Empty, style);
+
+            GUI.color = originalColor;
         }
     }
 
@@ -80,26 +105,7 @@ namespace NoteGenerating.Editor
                 if (SerializedProperty.EqualContents(noteDatasProp, endProperty)) break;
                 if (noteDatasProp.propertyType == SerializedPropertyType.ArraySize
                  || i % 2 == 0) continue;
-                DrawBoxLayout(position, Color.white);
             }
-        }
-
-        void DrawBoxLayout(Rect position, Color color)
-        {
-            var originalColor = GUI.color;
-
-            // Alpha値を小さくしないと文字が見えないので下げる
-            GUI.color = new Color(color.r, color.g, color.b, 0.1f);
-            var style = new GUIStyle
-            {
-                normal =
-                {
-                    background = Texture2D.whiteTexture
-                }
-            };
-            GUI.Box(new Rect(position.x + 16, position.y, position.width, position.height), string.Empty, style);
-
-            GUI.color = originalColor;
         }
     }
 }

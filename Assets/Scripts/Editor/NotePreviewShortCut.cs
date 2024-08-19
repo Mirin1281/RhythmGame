@@ -17,7 +17,7 @@ namespace NoteGenerating
                 {
                     keyDown = true;
 
-                    if (Event.current.keyCode == KeyCode.Period && FumenEditorWindow.LastSelectedCommand != null)
+                    if ((Event.current.keyCode == KeyCode.Period || Event.current.keyCode == KeyCode.Slash) && FumenEditorWindow.LastSelectedCommand != null)
                     {
                         FumenEditorWindow.LastSelectedCommand.Preview();
                         Undo.RecordObject(FumenEditorWindow.LastSelectedCommand, "NotePreview");

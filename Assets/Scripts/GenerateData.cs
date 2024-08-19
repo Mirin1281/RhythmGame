@@ -1,4 +1,7 @@
 ﻿using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace NoteGenerating
@@ -49,7 +52,17 @@ namespace NoteGenerating
         /// </summary>
         public string GetName() => generatable?.GetName();
 
-        public void Preview() => generatable.Preview();
+        public void Preview()
+        {
+            if(EditorApplication.isPlaying == false)
+                generatable.Preview();
+        }
+
+        public void Select()
+        {
+            if(EditorApplication.isPlaying == false)
+                generatable.Select();
+        }
 #endif
     }
 }

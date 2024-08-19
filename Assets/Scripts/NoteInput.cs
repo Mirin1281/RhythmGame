@@ -82,11 +82,11 @@ public class NoteInput : MonoBehaviour
 
     void OnUp(int fingerIndex)
     {
-        for(int i = 0; i < arcs.Count; i++)
+        foreach(var arc in arcs)
         {
-            if(arcs[i].FingerIndex == fingerIndex)
+            if(arc.FingerIndex == fingerIndex && arc.IsInvalid == false)
             {
-                arcs[i].InvalidArcJudgeAsync(1f).Forget();
+                arc.InvalidArcJudgeAsync(1f).Forget();
             }
         }
     }
@@ -118,8 +118,8 @@ public class NoteInput : MonoBehaviour
     {
         if(isAuto)
         {
-            CheckHold(inputManager.InputStatuses);
-            CheckArc(inputManager.InputStatuses);
+            ProcessHold(inputManager.InputStatuses);
+            ProcessArc(inputManager.InputStatuses);
         }
 
         for(int i = 0; i < allExpects.Count; i++)
@@ -134,6 +134,7 @@ public class NoteInput : MonoBehaviour
                     HoldNote hold = AddHold(expect);
                     hold.Grade = NoteGrade.Perfect;
                     RemoveExpect(expect, false);
+                    judge.AddCombo();
                 }
                 else
                 {
@@ -190,18 +191,17 @@ public class NoteInput : MonoBehaviour
     {
         if(isAuto == false)
         {
-            CheckHold(inputStatuses);
-            CheckArc(inputStatuses);
+            ProcessHold(inputStatuses);
+            ProcessArc(inputStatuses);
         }
         
         foreach(var status in inputStatuses)
         {
             List<(NoteExpect, float)> expects = FetchSomeNotes(status.Position, metronome.CurrentTime, NoteType.Slide);
-            if(expects == null) return;
+            if(expects == null) continue;
 
             foreach(var (expect, delta) in expects)
             {
-
                 RemoveExpect(expect, false);
                 UniTask.Void(async () => 
                 {
@@ -217,8 +217,99 @@ public class NoteInput : MonoBehaviour
             }
         }
     }
+    
+    void OnFlick(Vector2 pos)
+    {
+        List<(NoteExpect, float)> expects = FetchSomeNotes(pos, metronome.CurrentTime, NoteType.Flick);
+        if(expects == null) return;
 
-    void CheckHold(List<InputStatus> inputStatuses)
+        foreach(var (expect, delta) in expects)
+        {
+            RemoveExpect(expect, false);
+            UniTask.Void(async () => 
+            {
+                if(delta < 0)
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
+                }
+                
+                judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                expect.Note.gameObject.SetActive(false);
+                judge.AddCombo();
+            });
+        }
+    }
+
+    (NoteExpect, float) FetchNearestNote(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
+    {
+        NoteExpect fetchedExpect = null;
+        float time = Mathf.Infinity;
+        foreach(var expect in allExpects)
+        {
+            // inputTimeSampleと落ちてくる時間を比較、近いものを選定
+            float delta = inputTime - expect.Time;
+            if (Mathf.Abs(delta) > 0.1f) continue;
+
+            // 指定した種類を選定
+            bool isMatch = false;
+            foreach(var type in fetchTypes)
+            {
+                if(expect.Note.Type == type)
+                {
+                    isMatch = true;
+                    break;
+                }
+            }
+            if(isMatch == false) continue;
+
+            // inputPosに近いノーツを選定
+            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
+
+            // より早く落ちてくるノーツを判定(複数あればよりinputPosに近いノーツを返す)
+            if(fetchedExpect == null)
+            {
+                fetchedExpect = expect;
+            }
+            float t = expect.Time;
+            if (t <= time
+             && Vector2.SqrMagnitude(inputPos - expect.Pos) < Vector2.SqrMagnitude(inputPos - fetchedExpect.Pos))
+            {
+                time = t;
+                fetchedExpect = expect;
+            }
+        }
+        if(fetchedExpect == null) return default;
+
+        return (fetchedExpect, inputTime - fetchedExpect.Time);
+    }
+
+    List<(NoteExpect, float)> FetchSomeNotes(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
+    {
+        List<(NoteExpect, float)> fetchedExpects = new(4);
+        foreach(var expect in allExpects)
+        {
+            float delta = inputTime - expect.Time;
+            if(Mathf.Abs(delta) > 0.25f) continue;
+
+            bool isMatch = false;
+            foreach(var type in fetchTypes)
+            {
+                if(expect.Note.Type == type)
+                {
+                    isMatch = true;
+                    break;
+                }
+            }
+            if(isMatch == false) continue;
+
+            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
+            fetchedExpects.Add((expect, delta));
+        }
+        if(fetchedExpects.Count == 0) return default;
+        return fetchedExpects;
+    }
+
+    void ProcessHold(List<InputStatus> inputStatuses)
     {
         if(holds.Count == 0) return;
         for(int i = 0; i < holds.Count; i++)
@@ -276,7 +367,7 @@ public class NoteInput : MonoBehaviour
         }
     }
 
-    void CheckArc(List<InputStatus> inputStatuses)
+    void ProcessArc(List<InputStatus> inputStatuses)
     {
         if(arcs.Count == 0) return;
         for(int i = 0; i < arcs.Count; i++)
@@ -345,8 +436,7 @@ public class NoteInput : MonoBehaviour
                 judge.SetLightPos(arc, currentPos);
             }
             judge.SetShowLight(arc, isHold);
-            arc.SetAlpha(isHold);
-            arc.SetOnHold(isHold);
+            arc.SetInput(isHold);
 
             var arcJudge = arc.GetCurrentJudge();
             if (arcJudge == null) continue; // 最後の判定を終えた
@@ -374,96 +464,5 @@ public class NoteInput : MonoBehaviour
                 }
             }
         }
-    }
-
-    void OnFlick(Vector2 pos)
-    {
-        List<(NoteExpect, float)> expects = FetchSomeNotes(pos, metronome.CurrentTime, NoteType.Flick);
-        if(expects == null) return;
-
-        foreach(var (expect, delta) in expects)
-        {
-            RemoveExpect(expect, false);
-            UniTask.Void(async () => 
-            {
-                if(delta < 0)
-                {
-                    await UniTask.Delay(TimeSpan.FromSeconds(-delta), cancellationToken: destroyCancellationToken);
-                }
-                
-                judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                expect.Note.gameObject.SetActive(false);
-                judge.AddCombo();
-            });
-        }
-    }
-
-    (NoteExpect, float) FetchNearestNote(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
-    {
-        NoteExpect fetchedExpect = null;
-        float timeSample = Mathf.Infinity;
-        foreach(var expect in allExpects)
-        {
-            // inputTimeSampleと落ちてくる時間を比較、近いものを選定
-            float delta = inputTime - expect.Time;
-            if (Mathf.Abs(delta) > 0.1f) continue;
-
-            // 指定した種類を選定
-            bool isMatch = false;
-            foreach(var type in fetchTypes)
-            {
-                if(expect.Note.Type == type)
-                {
-                    isMatch = true;
-                    break;
-                }
-            }
-            if(isMatch == false) continue;
-
-            // inputPosに近いノーツを選定
-            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
-
-            // より早く落ちてくるノーツを判定(複数あればよりinputPosに近いノーツを返す)
-            if(fetchedExpect == null)
-            {
-                fetchedExpect = expect;
-            }
-            float t = expect.Time;
-            if(t <= timeSample
-            && Vector2.SqrMagnitude(inputPos - expect.Pos) < Vector2.SqrMagnitude(inputPos - fetchedExpect.Pos))
-            {
-                timeSample = t;
-                fetchedExpect = expect;
-            }
-        }
-        if(fetchedExpect == null) return default;
-
-        return (fetchedExpect, inputTime - fetchedExpect.Time);
-    }
-
-    List<(NoteExpect, float)> FetchSomeNotes(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
-    {
-        List<(NoteExpect, float)> fetchedExpects = new(4);
-        foreach(var expect in allExpects)
-        {
-            float delta = inputTime - expect.Time;
-            if(Mathf.Abs(delta) > 0.25f) continue;
-
-            bool isMatch = false;
-            foreach(var type in fetchTypes)
-            {
-                if(expect.Note.Type == type)
-                {
-                    isMatch = true;
-                    break;
-                }
-            }
-            if(isMatch == false) continue;
-
-            if(judge.IsNearPosition(inputPos, expect.Pos) == false) continue;
-            fetchedExpects.Add((expect, delta));
-        }
-        if(fetchedExpects.Count == 0) return default;
-        return fetchedExpects;
     }
 }
