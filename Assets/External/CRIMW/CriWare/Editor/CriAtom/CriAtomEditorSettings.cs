@@ -36,7 +36,7 @@ namespace CriWare.Editor {
 
 	public class CriAtomEditorSettings : ScriptableObject
 	{
-		static readonly string SettingsDirPath = "Assets/CriData/Settings";
+		static readonly string SettingsDirPath = "Assets/External/CriData/Settings";
 		static CriAtomEditorSettings instance = null;
 
 		private UnityEditor.Editor editorInstance = null;

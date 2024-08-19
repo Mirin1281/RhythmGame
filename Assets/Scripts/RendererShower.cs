@@ -5,27 +5,16 @@ public class RendererShower : MonoBehaviour
 {
     [SerializeField] SpriteRenderer[] spriteRenderers;
     [SerializeField] MeshRenderer[] meshRenderers;
-    [SerializeField] bool startShow;
 
-    void Start()
+    public async UniTask ShowLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
     {
-        if(startShow)
-        {
-            ShowLaneAsync(0f);
-        }
-        else
-        {
-            HideLaneAsync(0f);
-        }
+        gameObject.SetActive(true);
+        await FadeLaneAsync(0, 1, time, easeType);
     }
-
-    public UniTask ShowLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
+    public async UniTask HideLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
     {
-        return FadeLaneAsync(0, 1, time, easeType);
-    }
-    public UniTask HideLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
-    {
-        return FadeLaneAsync(1, 0, time, easeType);
+        await FadeLaneAsync(1, 0, time, easeType);
+        gameObject.SetActive(false);
     }
 
     async UniTask FadeLaneAsync(float start, float from, float time, EaseType easeType)

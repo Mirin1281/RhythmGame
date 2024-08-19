@@ -17,7 +17,7 @@ namespace NoteGenerating
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
-            var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Exclude);
+            var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             if(fadeType == FadeType.Show)
             {
                 rendererShower.ShowLaneAsync(time).Forget();

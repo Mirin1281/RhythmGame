@@ -2,6 +2,9 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 using CriWare;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Metronome : MonoBehaviour
 {
@@ -37,6 +40,9 @@ public class Metronome : MonoBehaviour
 
     void Start()
     {
+#if UNITY_EDITOR
+        EditorApplication.pauseStateChanged += SwitchMusic;
+#endif
         Bpm = musicData.Bpm;
 
         if(string.IsNullOrEmpty(musicData.SheetName))
@@ -54,9 +60,17 @@ public class Metronome : MonoBehaviour
             criAtomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
         }
-        playback = criAtomSource.Play();
-        addTime = autoStart;
-        UpdateTimerAsync().Forget();
+        if(autoStart)
+        {
+            playback = criAtomSource.Play();
+            UpdateTimerAsync().Forget();
+        }
+    }
+    void OnDestroy()
+    {
+#if UNITY_EDITOR
+        EditorApplication.pauseStateChanged -= SwitchMusic;
+#endif
     }
 
     public void Stop()
@@ -64,16 +78,27 @@ public class Metronome : MonoBehaviour
         addTime = false;
         playback.Stop();
     }
+    public void Pause()
+    {
+        addTime = false;
+        playback.Pause();
+    }
+    public void Resume()
+    {
+        addTime = true;
+        playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
+    }
 
     async UniTask UpdateTimerAsync()
     {
+        addTime = true;
         double baseTime = Time.timeAsDouble - currentTime;
         int beatCount = 0;
         double nextBeat = interval;
-        while(addTime)
+        while(true)
         {
             currentTime = Time.timeAsDouble - baseTime;
-            if(CurrentTime > nextBeat)
+            if(CurrentTime > nextBeat && addTime)
             {
                 if(musicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
                 {
@@ -86,6 +111,18 @@ public class Metronome : MonoBehaviour
                 nextBeat += interval;
             }
             await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, destroyCancellationToken);
+        }
+    }
+
+    void SwitchMusic(PauseState state)
+    {
+        if(state == PauseState.Paused)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
         }
     }
 }

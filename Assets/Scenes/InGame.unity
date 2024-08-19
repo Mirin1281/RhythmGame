@@ -709,7 +709,7 @@ MonoBehaviour:
   metronome: {fileID: 1748492940}
   noteGenerateHelper: {fileID: 111858075}
   isCreateLine: 0
-  isCreate3DLine: 1
+  isCreate3DLine: 0
   linePool: {fileID: 794246940}
 --- !u!4 &111858077
 Transform:
@@ -2672,10 +2672,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1974785494}
   - {fileID: 688916134}
   - {fileID: 1179811582}
-  - {fileID: 1514421732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &620527999
@@ -2691,14 +2689,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderers:
-  - {fileID: 1974785493}
   - {fileID: 10570262}
   - {fileID: 1467279298}
   - {fileID: 1439123885}
   - {fileID: 1179811581}
   meshRenderers:
   - {fileID: 688916132}
-  startShow: 1
 --- !u!1 &658383511
 GameObject:
   m_ObjectHideFlags: 0
@@ -4504,7 +4500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &848794732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5956,7 +5952,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7907f15a5ad488946956383fbf0b7369, type: 3}
-  m_Color: {r: 0.77359176, g: 0.50863296, b: 0.8490566, a: 0.36862746}
+  m_Color: {r: 0.77359176, g: 0.50863296, b: 0.8490566, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7253,7 +7249,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 65525632}
-  m_Father: {fileID: 620527998}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &1533681051
 Material:
@@ -7895,7 +7891,7 @@ MonoBehaviour:
   _use3dPositioning: 0
   _freezeOrientation: 0
   _loop: 0
-  _volume: 0.5
+  _volume: 1
   _pitch: 0
   _androidUseLowLatencyVoicePool: 0
   need_to_player_update_all: 1
@@ -8643,7 +8639,7 @@ GameObject:
   - component: {fileID: 1974785494}
   - component: {fileID: 1974785493}
   m_Layer: 0
-  m_Name: JudgeLine
+  m_Name: JudgeLine3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8711,10 +8707,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 12.5, y: 0.10000001, z: 1}
+  m_LocalScale: {x: 12.5, y: 0.10000004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 620527998}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &2004568440 stripped
 Transform:
@@ -9253,6 +9249,8 @@ SceneRoots:
   - {fileID: 572760321}
   - {fileID: 695934163}
   - {fileID: 848794733}
+  - {fileID: 1974785494}
   - {fileID: 620527998}
+  - {fileID: 1514421732}
   - {fileID: 3533125501216490232}
   - {fileID: 5133376915745917508}

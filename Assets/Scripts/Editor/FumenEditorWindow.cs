@@ -354,10 +354,22 @@ namespace NoteGenerating.Editor
                 GUI.color = Color.black;
 
                 var command = commandList[index];
-                EditorGUI.LabelField(rect, $"<size=12>{command.GetName() ?? "Null"}</size>", style);
+                var cmdName = command.GetName();
+                if(cmdName == null)
+                {
+                    cmdName = "Null";
+                }
+                else if(cmdName.StartsWith("F_"))
+                {
+                    cmdName = cmdName[2..];
+                }
+                EditorGUI.LabelField(rect, $"<size=12>{cmdName}</size>", style);
                 EditorGUI.LabelField(new Rect(
                     rect.x + 90, rect.y, rect.width, rect.height),
-                    $"<size=10>{command.BeatTiming} ▷ {command.GetSummary()}</size>", style);
+                    command.BeatTiming.ToString(), style);
+                EditorGUI.LabelField(new Rect(
+                    rect.x + 110, rect.y, rect.width, rect.height),
+                    $" ▷  {command.GetSummary()}", style);
 
                 GUI.color = tmpColor;
             }
