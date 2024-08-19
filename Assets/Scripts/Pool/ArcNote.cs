@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.Splines;
 
 public class ArcNote : NoteBase
@@ -54,27 +53,27 @@ public class ArcNote : NoteBase
     {
         // 初期化
         Spline.Clear();
-        var spline = Spline;
         judges ??= new(datas.Length);
         judges.Clear();
         IsInvalid = false;
         FingerIndex = -1;
+        JudgeIndex = 0;
         await UniTask.Yield(destroyCancellationToken);
 
         // 頂点を追加
-        float vectorZ = 0;
+        float z = 0;
         for(int i = 0; i < datas.Length; i++)
         {
             var data = datas[i];
-            vectorZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : vectorZ));
+            z += GetInterval(data.Pos.z, bpm, speed);
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : z));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
                 ArcCreateData.ArcVertexMode.Linear => TangentMode.Linear,
                 _ => throw new ArgumentOutOfRangeException(),
             };
-            spline.Add(knot, tangentMode);
+            Spline.Add(knot, tangentMode);
 
             if(i % 3 == 0)
             {
@@ -82,119 +81,87 @@ public class ArcNote : NoteBase
             }
         }
 
+        await splineExtrude.RebuildAsync();
+
         // 判定を追加
         int k = 0;
-        foreach(var knot in spline.Knots)
+        foreach(var knot in Spline.Knots)
         {
-            if(datas[k].IsJudgeDisable || k == spline.Knots.Count() - 1)
+            if(datas[k].IsJudgeDisable || k == Spline.Knots.Count() - 1)
             {
                 k++;
                 continue;
             }
-            float lastZ = LastZ;
-            float knotZ = knot.Position.z;
+            float knotZ = knot.Position.z - GetPos().z;
 
             var startPos = Vector3.zero;
             if(k != 0)
             {
-                float behindInterval = GetInterval(datas[k].BehindJudgeRange, bpm, speed);
-                float behindRate = (knotZ - behindInterval) / lastZ;
-                startPos = GetAnyPointOnZPlane(behindRate * lastZ);
+                float behindJudgePosZ = knotZ - GetInterval(datas[k].BehindJudgeRange, bpm, speed);
+                startPos = GetAnyPointOnZPlane(behindJudgePosZ);
             }
-
-            float aheadInterval = GetInterval(datas[k].AheadJudgeRange, bpm, speed);
-            float aheadRate = (knotZ + aheadInterval) / lastZ;
-            var endPos = GetAnyPointOnZPlane(aheadRate * lastZ);
+            float aheadJudgePosZ = knotZ + GetInterval(datas[k].AheadJudgeRange, bpm, speed);
+            var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
         
-            judges.Add(new ArcJudge(startPos, endPos, k));
+            judges.Add(new ArcJudge(startPos, endPos));
             k++;
         }
-
-        splineExtrude.RebuildAsync().Forget();
     }
 
-    public void DebugCreateNewArc(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
+    public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
     {
         meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
-        Spline.Clear();
-        var spline = Spline;
-        judges = new(datas.Length);
-        JudgeIndex = 0;
+        await CreateNewArcAsync(datas, bpm, speed, isInverse);
         foreach(var child in transform.OfType<Transform>().ToArray())
         {
             DestroyImmediate(child.gameObject);
         }
 
-        float vecterZ = 0;
-        for(int i = 0; i < datas.Length; i++)
+        int i = 0;
+        foreach(var knot in Spline)
         {
-            var data = datas[i];
-            vecterZ += GetInterval(data.Pos.z, bpm, speed);
-            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : vecterZ));
-            TangentMode tangentMode = data.VertexMode switch
+            if(datas[i].IsJudgeDisable)
             {
-                ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
-                ArcCreateData.ArcVertexMode.Linear => TangentMode.Linear,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-            spline.Add(knot, tangentMode);
-
-            if(data.IsJudgeDisable == false)
+                i++;
+                continue;
+            }
+            else
             {
                 var sphere = Instantiate(debugSphere, transform);
-                sphere.transform.localPosition = new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, vecterZ);
+                sphere.transform.localPosition = knot.Position;
                 sphere.transform.localScale = Vector3.one;
                 sphere.SetColor(new Color(1, 1, 1, 0.5f));
             }
-        }
 
-        int k = 0;
-        foreach(var knot in spline.Knots)
-        {
-            if(datas[k].IsJudgeDisable)
+            if(i == Spline.Knots.Count() - 1) break;
+            float knotZ = knot.Position.z - GetPos().z;
+
+            if(i != 0)
             {
-                k++;
-                continue;
-            }
-            if(k == spline.Knots.Count() - 1) break;
-            float lastZ = LastZ;
-            float knotZ = knot.Position.z;
-
-            var startPos = Vector3.zero;
-            if(k != 0)
-            {
-                float behindInterval = GetInterval(datas[k].BehindJudgeRange, bpm, speed);
-                float behindRate = (knotZ - behindInterval) / lastZ;
-                startPos = GetAnyPointOnZPlane(behindRate * lastZ);
-
+                float behindDistance = knotZ - GetInterval(datas[i].BehindJudgeRange, bpm, speed);
+                var startPos = GetAnyPointOnZPlane(behindDistance);
                 var blueSphere = Instantiate(debugSphere, transform);
                 blueSphere.transform.localPosition = startPos;
                 blueSphere.transform.localScale = 0.9f * Vector3.one;
                 blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
             }
 
-            float aheadInterval = GetInterval(datas[k].AheadJudgeRange, bpm, speed);
-            float aheadRate = (knotZ + aheadInterval) / lastZ;
-            var endPos = GetAnyPointOnZPlane(aheadRate * lastZ);
-
+            float aheadDistance = knotZ + GetInterval(datas[i].AheadJudgeRange, bpm, speed);
+            var endPos = GetAnyPointOnZPlane(aheadDistance);
             var redSphere = Instantiate(debugSphere, transform);
             redSphere.transform.localPosition = endPos;
             redSphere.transform.localScale = 0.9f * Vector3.one;
             redSphere.SetColor(new Color(1, 0, 0, 0.5f));
-
-            judges.Add(new ArcJudge(startPos, endPos, k));
-            k++;
+            i++;
         }
 
-        splineExtrude.RebuildAsync().Forget();
-
 #if UNITY_EDITOR
-        for(int i = 0; i < judges.Count; i++)
+        for(int k = 0; k < judges.Count; k++)
         {
-            if(i == judges.Count - 1) break;
-            if(judges[i].EndPos.z - 0.01f > judges[i + 1].StartPos.z)
+            if(k == judges.Count - 1) break;
+            if(judges[k].EndPos.z - 0.01f > judges[k + 1].StartPos.z)
             {
-                Debug.LogWarning($"{i} end: {judges[i].EndPos.z}  next: {judges[i + 1].StartPos.z}");
+                Debug.LogWarning($"{k} end: {judges[k].EndPos.z}  next: {judges[k + 1].StartPos.z}");
             }
         }
 #endif
@@ -253,7 +220,7 @@ public class ArcNote : NoteBase
         }
         else
         {
-            meshRenderer.material.SetFloat("_ZThreshold", -5f);
+            meshRenderer.material.SetFloat("_ZThreshold", -3f);
         }
     }
 
@@ -360,13 +327,11 @@ public class ArcJudge
     public Vector3 StartPos;
     public Vector3 EndPos;
     public InputState State;
-    public int Index;
 
-    public ArcJudge(Vector3 start, Vector3 end, int index)
+    public ArcJudge(Vector3 start, Vector3 end)
     {
         StartPos = start;
         EndPos = end;
         State = InputState.Idle;
-        Index = index;
     }
 }

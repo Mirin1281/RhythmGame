@@ -36,6 +36,7 @@ public class InputManager : MonoBehaviour
         public void SetArcColorType(ArcColorType type) => ArcColorType = type;
     }
     List<InputStatus> inputStatuses = new(4);
+    public List<InputStatus> InputStatuses => inputStatuses;
     
     const float posDiff = 30f; // フリックの感度
 
@@ -63,7 +64,7 @@ public class InputManager : MonoBehaviour
     void OnFingerDown(Finger finger)
     {
         inputStatuses = FetchInputStatuses();
-        inputStatuses.ForEach(inputStatus => OnInput?.Invoke(inputStatus.Position));
+        inputStatuses.ForEach(status => OnInput?.Invoke(status.Position));
 
         var flickParam = new FlickParameter()
         {
@@ -102,14 +103,15 @@ public class InputManager : MonoBehaviour
         OnUp?.Invoke(finger.index);
         for(int i = 0; i < flickParameters.Count; i++)
         {
-            if(flickParameters[i].index != finger.index) continue;
-            flickParameters.RemoveAt(i);
+            if(finger.index == flickParameters[i].index)
+            {
+                flickParameters.RemoveAt(i);
+            }
         }
         for(int i = 0; i < inputStatuses.Count; i++)
         {
             if(finger.index == inputStatuses[i].FingerIndex)
             {
-                
                 inputStatuses.RemoveAt(i);
             }
         }
@@ -129,7 +131,10 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
-        OnHold?.Invoke(inputStatuses);
+        if(inputStatuses != null)
+        {
+            OnHold?.Invoke(inputStatuses);
+        }
     }
 
     List<InputStatus> FetchInputStatuses()

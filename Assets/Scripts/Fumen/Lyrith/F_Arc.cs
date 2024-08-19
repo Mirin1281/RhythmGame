@@ -85,9 +85,9 @@ namespace NoteGenerating
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
             Selection.activeGameObject = arc.gameObject;
             arc.SetActive(true);
-            arc.DebugCreateNewArc(datas, 177f, Speed, IsInverse, prefab);
+            arc.DebugCreateNewArcAsync(datas, 177f, Speed, IsInverse, prefab).Forget();
             arc.SetColor(defaultColor, IsInverse);
-            SceneView.RepaintAll();
+            //SceneView.RepaintAll();
 #endif
         }
     }

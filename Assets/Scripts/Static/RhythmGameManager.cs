@@ -15,7 +15,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     protected override void Awake()
     {
         base.Awake();
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         
         //DontDestroyOnLoad(this);
     }

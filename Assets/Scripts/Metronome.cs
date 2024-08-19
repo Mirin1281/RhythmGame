@@ -1,10 +1,11 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using CriWare;
 
 public class Metronome : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] CriAtomSource criAtomSource;
     [SerializeField] MusicData musicData;
     [SerializeField] bool autoStart;
     [Space(10)]
@@ -16,16 +17,7 @@ public class Metronome : MonoBehaviour
     double currentTime;
     double interval;
     int bpmChangeCount;
-
-    public bool AddTime
-    {
-        set
-        {
-            addTime = value;
-            if (value == false) return;
-            UpdateTimerAsync().Forget();
-        }
-    }
+    CriAtomExPlayback playback;
 
     /// <summary>
     /// (ビートの回数, 誤差)
@@ -46,16 +38,31 @@ public class Metronome : MonoBehaviour
     void Start()
     {
         Bpm = musicData.Bpm;
-        audioSource.clip = musicData.MusicClip;
+
+        if(string.IsNullOrEmpty(musicData.SheetName))
+        {
+            criAtomSource.cueSheet = musicData.SheetName;
+        }
+        if(string.IsNullOrEmpty(musicData.CueName))
+        {
+            criAtomSource.cueSheet = musicData.CueName;
+        }
 
         if(skipOnStart)
         {
-            float skipTime = audioSource.clip.length * timeRate;
-            audioSource.time = skipTime;
+            float skipTime = criAtomSource.GetLength() * timeRate;
+            criAtomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
         }
-        audioSource.Play();
-        AddTime = autoStart;
+        playback = criAtomSource.Play();
+        addTime = autoStart;
+        UpdateTimerAsync().Forget();
+    }
+
+    public void Stop()
+    {
+        addTime = false;
+        playback.Stop();
     }
 
     async UniTask UpdateTimerAsync()

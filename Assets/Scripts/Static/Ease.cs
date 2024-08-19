@@ -171,7 +171,7 @@ readonly struct Easing
     }
 }
 
-enum EaseType
+public enum EaseType
 {
     None,
     InQuad,

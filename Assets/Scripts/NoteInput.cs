@@ -116,23 +116,18 @@ public class NoteInput : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < allExpects.Count; i++)
+        if(isAuto)
         {
-            if(isAuto)
-            {
-                AutoGet(allExpects[i]);
-            }
-            else
-            {
-                Miss(allExpects[i]);
-            }
+            CheckHold(inputManager.InputStatuses);
+            CheckArc(inputManager.InputStatuses);
         }
 
-        
-        void AutoGet(NoteExpect expect)
+        for(int i = 0; i < allExpects.Count; i++)
         {
-            if(metronome.CurrentTime > expect.Time - 0.00f)
+            var expect = allExpects[i];
+            if(isAuto && metronome.CurrentTime > expect.Time - 0.00f)
             {
+                // オート
                 if(expect.Note.Type == NoteType.Hold)
                 {
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
@@ -147,13 +142,9 @@ public class NoteInput : MonoBehaviour
                     judge.AddCombo();
                 }
             }
-        }
-
-        void Miss(NoteExpect expect)
-        {
-            // 遅れたらノーツを除去
-            if(metronome.CurrentTime > expect.Time + 0.18f)
+            else if(metronome.CurrentTime > expect.Time + 0.18f)
             {
+                // 遅れたらノーツを除去
                 if(expect.Note.Type == NoteType.Hold)
                 {
                     AddHold(expect);
@@ -197,8 +188,12 @@ public class NoteInput : MonoBehaviour
 
     void OnHold(List<InputStatus> inputStatuses)
     {
-        CheckHold(inputStatuses);
-        CheckArc(inputStatuses);
+        if(isAuto == false)
+        {
+            CheckHold(inputStatuses);
+            CheckArc(inputStatuses);
+        }
+        
         foreach(var status in inputStatuses)
         {
             List<(NoteExpect, float)> expects = FetchSomeNotes(status.Position, metronome.CurrentTime, NoteType.Slide);
@@ -221,161 +216,161 @@ public class NoteInput : MonoBehaviour
                 });
             }
         }
+    }
 
-
-        void CheckHold(List<InputStatus> inputStatuses)
+    void CheckHold(List<InputStatus> inputStatuses)
+    {
+        if(holds.Count == 0) return;
+        for(int i = 0; i < holds.Count; i++)
         {
-            if(holds.Count == 0) return;
-            for(int i = 0; i < holds.Count; i++)
+            var hold = holds[i].hold;
+            if(hold.State is HoldState.None or HoldState.Idle)
             {
-                var hold = holds[i].hold;
-                if(hold.State is HoldState.None or HoldState.Idle)
+                throw new Exception();
+            }
+            else if(hold.State is HoldState.Holding)
+            {
+                bool isInput = false;
+                for(int k = 0; k < inputStatuses.Count; k++)
                 {
-                    throw new Exception();
-                }
-                else if(hold.State is HoldState.Holding)
-                {
-                    bool isInput = false;
-                    for(int k = 0; k < inputStatuses.Count; k++)
+                    if(judge.IsNearPosition(inputStatuses[k].Position, hold.GetLandingPos()))
                     {
-                        if(judge.IsNearPosition(inputStatuses[k].Position, hold.GetLandingPos()))
-                        {
-                            isInput = true;
-                            break;
-                        }
-                    }
-                                
-                    if(isInput || isAuto)
-                    {
-                        // ギリギリまで取らなくても判定されるように
-                        if(metronome.CurrentTime > holds[i].endTime - 0.16f)
-                        {
-                            judge.AddCombo();
-                            hold.State = HoldState.Got;
-                        }
-                    }
-                    else
-                    {
-                        hold.State = HoldState.Missed;
-                        judge.ResetCombo();
+                        isInput = true;
+                        break;
                     }
                 }
-                else if(hold.State == HoldState.Missed)
+                            
+                if(isInput || isAuto)
                 {
-                    if(metronome.CurrentTime > holds[i].endTime)
+                    // ギリギリまで取らなくても判定されるように
+                    if(metronome.CurrentTime > holds[i].endTime - 0.16f)
                     {
-                        hold.gameObject.SetActive(false);
-                        holds.RemoveAt(i);
+                        judge.AddCombo();
+                        hold.State = HoldState.Got;
                     }
                 }
-                else if(hold.State == HoldState.Got)
+                else
                 {
-                    // ちょっと早めに表示
-                    if(metronome.CurrentTime > holds[i].endTime - 0.02f)
-                    {
-                        hold.gameObject.SetActive(false);
-                        holds.RemoveAt(i);
-                        judge.PlayParticle(hold.Grade, hold.GetLandingPos());
-                    }
+                    hold.State = HoldState.Missed;
+                    judge.ResetCombo();
+                }
+            }
+            else if(hold.State == HoldState.Missed)
+            {
+                if(metronome.CurrentTime > holds[i].endTime)
+                {
+                    hold.gameObject.SetActive(false);
+                    holds.RemoveAt(i);
+                }
+            }
+            else if(hold.State == HoldState.Got)
+            {
+                // ちょっと早めに表示
+                if(metronome.CurrentTime > holds[i].endTime - 0.02f)
+                {
+                    hold.gameObject.SetActive(false);
+                    holds.RemoveAt(i);
+                    judge.PlayParticle(hold.Grade, hold.GetLandingPos());
                 }
             }
         }
+    }
 
-        void CheckArc(List<InputStatus> inputStatuses)
+    void CheckArc(List<InputStatus> inputStatuses)
+    {
+        if(arcs.Count == 0) return;
+        for(int i = 0; i < arcs.Count; i++)
         {
-            if(arcs.Count == 0) return;
-            for(int i = 0; i < arcs.Count; i++)
+            var arc = arcs[i];
+            var arcPos = arc.GetPos();
+            if(arcPos.z < 0) continue; // まだ到達していない
+            if(arcPos.z > arc.LastZ + 1) // アークが完全に通り過ぎた
             {
-                var arc = arcs[i];
-                var arcPos = arc.GetPos();
-                if(arcPos.z < 0) continue; // まだ到達していない
-                if(arcPos.z > arc.LastZ + 1) // アークが完全に通り過ぎた
-                {
-                    arcs.RemoveAt(i);
-                    arc.SetActive(false);
-                    judge.RemoveLink(arc);
-                    continue;
-                }
+                arcs.RemoveAt(i);
+                arc.SetActive(false);
+                judge.RemoveLink(arc);
+                continue;
+            }
 
-                // 距離の近いアークを調べる
-                arc.IsPosDuplicated = false;
-                var currentPos = arc.GetAnyPointOnZPlane(0);
-                foreach(var otherArc in arcs)
+            // 距離の近いアークを調べる
+            arc.IsPosDuplicated = false;
+            var currentPos = arc.GetAnyPointOnZPlane(0);
+            foreach(var otherArc in arcs)
+            {
+                if(otherArc == arc || otherArc.IsArcRange() == false) continue;
+                var otherPos = otherArc.GetAnyPointOnZPlane(0);       
+                if(Vector2.SqrMagnitude(currentPos - otherPos) < 8f)
                 {
-                    if(otherArc == arc || otherArc.IsArcRange() == false) continue;
-                    var otherPos = otherArc.GetAnyPointOnZPlane(0);       
-                    if(Vector2.SqrMagnitude(currentPos - otherPos) < 8f)
-                    {
-                        arc.IsPosDuplicated = true;
-                        otherArc.IsPosDuplicated = true;
-                    }
+                    arc.IsPosDuplicated = true;
+                    otherArc.IsPosDuplicated = true;
                 }
+            }
+            
+            bool isHold = isAuto;
+            foreach(var status in inputStatuses)
+            {
+                if(judge.IsNearPosition(status.Position, currentPos, 1.7f) == false) continue;
                 
-                bool isHold = isAuto;
-                foreach(var status in inputStatuses)
+                if(arc.IsPosDuplicated)
                 {
-                    if(judge.IsNearPosition(status.Position, currentPos, 1.7f) == false) continue;
-                    
-                    if(arc.IsPosDuplicated)
-                    {
-                        isHold = true;
-                        status.SetArcColorType(ArcColorType.None);
-                        arc.FingerIndex = -1;
-                        break;
-                    }
-
-                    if(arc.IsInvalid)
-                    {
-                        break;
-                    }
-
-                    if(status.ArcColorType == ArcColorType.None)
-                    {
-                        isHold = true;
-                        status.SetArcColorType(arc.ColorType);
-                        arc.FingerIndex = status.FingerIndex;
-                    }
-                    else if(status.ArcColorType == arc.ColorType)
-                    {
-                        isHold = true;
-                    }
-                    else
-                    {
-                        arc.InvalidArcJudgeAsync(1f).Forget();
-                    }
+                    isHold = true;
+                    status.SetArcColorType(ArcColorType.None);
+                    arc.FingerIndex = -1;
+                    break;
                 }
 
+                if(arc.IsInvalid)
+                {
+                    break;
+                }
+
+                if(status.ArcColorType == ArcColorType.None)
+                {
+                    isHold = true;
+                    status.SetArcColorType(arc.ColorType);
+                    arc.FingerIndex = status.FingerIndex;
+                }
+                else if(status.ArcColorType == arc.ColorType)
+                {
+                    isHold = true;
+                }
+                else
+                {
+                    arc.InvalidArcJudgeAsync(1f).Forget();
+                }
+            }
+
+            if(isHold)
+            {
+                judge.SetLightPos(arc, currentPos);
+            }
+            judge.SetShowLight(arc, isHold);
+            arc.SetAlpha(isHold);
+            arc.SetOnHold(isHold);
+
+            var arcJudge = arc.GetCurrentJudge();
+            if (arcJudge == null) continue; // 最後の判定を終えた
+            if (arcJudge.EndPos.z < arcPos.z)
+            {
+                arcJudge.State = ArcJudgeState.Miss;
+                arc.JudgeIndex++;
+                judge.ResetCombo();
+            }
+
+            if ((arcJudge.StartPos.z < arcPos.z && arcPos.z < arcJudge.EndPos.z) == false) continue; // 判定の範囲外
+
+            if(arcJudge.State is ArcJudgeState.None)
+            {
+                throw new Exception();
+            }
+            else if(arcJudge.State is ArcJudgeState.Idle)
+            {
                 if(isHold)
                 {
-                    judge.SetLightPos(arc, currentPos);
-                }
-                judge.SetShowLight(arc, isHold);
-                arc.SetAlpha(isHold);
-
-                var arcJudge = arc.GetCurrentJudge();
-                if (arcJudge == null) continue; // 最後の判定を終えた
-                if (arcJudge.EndPos.z < arcPos.z)
-                {
-                    arcJudge.State = ArcJudgeState.Miss;
+                    arcJudge.State = ArcJudgeState.Got;
+                    judge.PlayParticle(NoteGrade.Perfect, currentPos);
                     arc.JudgeIndex++;
-                    judge.ResetCombo();
-                }
-
-                if ((arcJudge.StartPos.z < arcPos.z && arcPos.z < arcJudge.EndPos.z) == false) continue; // 判定の範囲外
-
-                if(arcJudge.State is ArcJudgeState.None)
-                {
-                    throw new Exception();
-                }
-                else if(arcJudge.State is ArcJudgeState.Idle)
-                {
-                    if(isHold)
-                    {
-                        arcJudge.State = ArcJudgeState.Got;
-                        judge.PlayParticle(NoteGrade.Perfect, currentPos);
-                        arc.JudgeIndex++;
-                        judge.AddCombo();
-                    }
+                    judge.AddCombo();
                 }
             }
         }

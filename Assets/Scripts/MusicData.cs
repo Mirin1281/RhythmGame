@@ -8,6 +8,8 @@ using UnityEngine;
 public class MusicData : ScriptableObject
 {
     [SerializeField] AudioClip musicClip;
+    [SerializeField] string sheetName;
+    [SerializeField] string cueName;
 
     [SerializeField] float bpm;
 
@@ -19,6 +21,8 @@ public class MusicData : ScriptableObject
     [SerializeField] BPMChangePoint[] bpmChangePoints;
     
     public AudioClip MusicClip => musicClip;
+    public string SheetName => sheetName;
+    public string CueName => cueName;
     public float Bpm => bpm;
     public float Offset => offset;
     public int StartBeatOffset => startBeatOffset;

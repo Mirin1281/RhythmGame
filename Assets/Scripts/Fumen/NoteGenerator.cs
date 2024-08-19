@@ -73,7 +73,7 @@ namespace NoteGenerating
         {
             Line line = linePool.GetLine(1);
             var speed = RhythmGameManager.Speed3D;
-            await LinearMoveAsync(line, new Vector3(0f, 0f, GetStartBase(speed)), speed, 3f);
+            await LinearMoveAsync(line, new Vector3(0f, 0.01f, GetStartBase(speed)), speed, 3f);
             line.gameObject.SetActive(false);
 
 
