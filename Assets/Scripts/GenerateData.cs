@@ -61,7 +61,7 @@ namespace NoteGenerating
         public void Select()
         {
             if(EditorApplication.isPlaying == false)
-                generatable.Select();
+                generatable?.Select();
         }
 #endif
     }

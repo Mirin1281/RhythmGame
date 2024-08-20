@@ -17,7 +17,22 @@ namespace NoteGenerating
     [Serializable]
     public abstract class NoteGeneratorBase : INoteGeneratable
     {
-        protected NoteGenerateHelper Helper { get; private set; }
+        NoteGenerateHelper helper;
+        protected NoteGenerateHelper Helper
+        {
+            get
+            {
+                if(helper == null)
+                {
+                    helper = GameObject.FindAnyObjectByType<NoteGenerateHelper>();
+                }
+                return helper;
+            }
+            private set
+            {
+                helper = value;
+            }
+        }
         protected float Delta { get; set; }
 
         protected abstract UniTask GenerateAsync();
