@@ -63,6 +63,22 @@ namespace NoteGenerating
             if(EditorApplication.isPlaying == false)
                 generatable?.Select();
         }
+
+        /// <summary>
+        /// CSV用
+        /// </summary>
+        public void SetGeneratable(Type type)
+        {
+            if (type == null)
+            {
+                generatable = null;
+                return;
+            }
+            generatable = Activator.CreateInstance(type) as NoteGeneratorBase;
+        }
+
+        public void SetEnable(bool e) => enable = e;
+        public void SetBeatTiming(int t) => beatTiming = t;
 #endif
     }
 }

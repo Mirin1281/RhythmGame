@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
+using Cysharp.Threading.Tasks;
 
 namespace NoteGenerating.Editor
 {
@@ -25,10 +26,10 @@ namespace NoteGenerating.Editor
             {
                 if (GUILayout.Button("複製する"))
                 {
-                    var FumenData = target as FumenData;
-                    var copiedFumenData = Instantiate(FumenData);
+                    var fumenData = target as FumenData;
+                    var copiedFumenData = Instantiate(fumenData);
                     copiedFumenData.name = target.name;
-                    var folderPath = FumenEditorUtility.GetExistFolderPath(FumenData);
+                    var folderPath = FumenEditorUtility.GetExistFolderPath(fumenData);
 
                     var dataName = FumenEditorUtility.GetFileName(folderPath, copiedFumenData.name, "asset");
                     AssetDatabase.CreateAsset(copiedFumenData, Path.Combine(folderPath, dataName));
@@ -73,6 +74,20 @@ namespace NoteGenerating.Editor
                         }
                     }
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                }
+            }
+
+            EditorGUILayout.Space(10);
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("CSV形式でエクスポートする"))
+                {
+                    FumenCSVIO.ExportFumenDataAsync(target as FumenData).Forget();
+                }
+                if (GUILayout.Button("CSVをインポートする"))
+                {
+                    FumenCSVIO.ImportFumenDataAsync(target as FumenData).Forget();
                 }
             }
         }        

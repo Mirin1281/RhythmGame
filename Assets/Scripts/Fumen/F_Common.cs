@@ -28,6 +28,14 @@ namespace NoteGenerating
             public readonly float X => x;
             public readonly float Wait => wait;
             public readonly float Length => length;
+
+            public NoteData(CreateNoteType type, float x, float wait, float length)
+            {
+                this.type = type;
+                this.x = x;
+                this.wait = wait;
+                this.length = length;
+            }
         }
 
         [SerializeField] string summary;
@@ -191,6 +199,40 @@ namespace NoteGenerating
             {
                 if(lpb == 0) return 0;
                 return 240f / interval / lpb;
+            }
+        }
+
+        public override string CSVContent1
+        {
+            get
+            {
+                string text = string.Empty;
+                for(int i = 0; i < noteDatas.Length; i++)
+                {
+                    var data = noteDatas[i];
+                    text += data.Type + " ";
+                    text += data.X + " ";
+                    text += data.Wait + " ";
+                    text += data.Length;
+                    if(i == noteDatas.Length - 1) break;
+                    text += "\n";
+                }
+                return text;
+            }
+            set
+            {
+                var dataTexts = value.Split("\n");
+                var noteDatas = new NoteData[dataTexts.Length];
+                for(int i = 0; i < dataTexts.Length; i++)
+                {
+                    var contents = dataTexts[i].Split(' ');
+                    noteDatas[i] = new NoteData(
+                        Enum.Parse<CreateNoteType>(contents[0]),
+                        float.Parse(contents[1]),
+                        float.Parse(contents[2]),
+                        float.Parse(contents[3]));
+                }
+                this.noteDatas = noteDatas;
             }
         }
     }

@@ -66,11 +66,11 @@ namespace NoteGenerating.Editor
         /// <summary>
         /// GenerateDataを作成します
         /// </summary>
-        /// <param name="path">生成するフォルダのパス</param>
         /// <param name="baseName">名前</param>
         /// <returns></returns>
-        public static GenerateData CreateGenerateData(string path, string baseName)
+        public static GenerateData CreateGenerateData(string baseName)
         {
+            string path =ConstContainer.DATA_PATH;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

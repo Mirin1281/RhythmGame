@@ -47,7 +47,7 @@ namespace NoteGenerating
         string INoteGeneratable.GetSummary() => GetSummary();
         Color INoteGeneratable.GetCommandColor() => GetCommandColor();
         void INoteGeneratable.Preview() => Preview();
-        void INoteGeneratable.Select() => Preview();
+        void INoteGeneratable.Select() => OnSelect();
         string INoteGeneratable.GetName()
         {
             if(GetName() == null)
@@ -79,5 +79,8 @@ namespace NoteGenerating
         protected virtual void Preview() {}
 
         protected virtual void OnSelect() {}
+
+        public virtual string CSVContent1 { get; set; } = string.Empty;
+        public virtual string CSVContent2 { get; set; } = string.Empty;
     }
 }
