@@ -51,7 +51,7 @@ public class ArcNote : NoteBase
     void Update()
     {
         noInputTime += Time.deltaTime;
-        meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime, 0f, 5f) * RhythmGameManager.Speed3D);
+        meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
     }
 
     /// <summary>
@@ -272,6 +272,11 @@ public class ArcNote : NoteBase
         meshRenderer.sharedMaterial.color = color;
     }
 
+    public void SetRendererEnabled(bool enabled)
+    {
+        meshRenderer.enabled = enabled;
+    }
+
     /// <summary>
     /// 利便性のため、Z座標に-1をかけています
     /// </summary>
@@ -313,6 +318,15 @@ public struct ArcCreateData
     public readonly bool IsJudgeDisable => isJudgeDisable;
     public readonly float BehindJudgeRange => behindJudgeRange;
     public readonly float AheadJudgeRange => aheadJudgeRange;
+
+    public ArcCreateData(Vector3 pos, ArcVertexMode vertexMode, bool isJudgeDisable = true, float behindJudgeRange = 0, float aheadJudgeRange = 8)
+    {
+        this.pos = pos;
+        this.vertexMode = vertexMode;
+        this.isJudgeDisable = isJudgeDisable;
+        this.behindJudgeRange = behindJudgeRange;
+        this.aheadJudgeRange = aheadJudgeRange;
+    }
 }
 
 public class ArcJudge

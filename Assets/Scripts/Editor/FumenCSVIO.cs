@@ -220,6 +220,10 @@ namespace NoteGenerating.Editor
                     else // コマンドがある場合、名前が一致してるか調べる
                     {
                         data = list[i];
+                        if(data == null)
+                        {
+                            data = FumenEditorUtility.CreateGenerateData($"CommandData_{fumenData.name}");
+                        }
                         colomn_base = data.GetNoteGeneratorBase();
                         var cmdName = GetCommandName(colomn_base);
 

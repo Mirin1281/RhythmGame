@@ -12,77 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: GenerateData_F_Lyrith
   m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 8
+  enable: 1
+  beatTiming: 116
   generatable:
-    rid: 932862278339133445
+    rid: 932862415563390996
   references:
     version: 2
     RefIds:
-    - rid: 932862278339133445
-      type: {class: F_Arc, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 932862415563390996
+      type: {class: F_Sky, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
-        isInverse: 0
-        prefab: {fileID: 5643117694010497363, guid: 1fb39ba2b1a66d641afab6e8e3e34377, type: 3}
-        defaultColor: 2
-        datas:
-        - pos: {x: -4, y: 4, z: 0}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: 0, y: 0, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: -4, y: 0, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: 2, y: 0, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: -3, y: 0, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: 0, y: 2, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 8
-        - pos: {x: 3, y: 4, z: 8}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 16
-        - pos: {x: 0, y: 4, z: 16}
-          vertexMode: 0
-          isJudgeDisable: 0
-          behindJudgeRange: 0
-          aheadJudgeRange: 8
-        - pos: {x: 2, y: 4, z: 16}
-          vertexMode: 0
-          isJudgeDisable: 1
-          behindJudgeRange: 0
-          aheadJudgeRange: 8
-        - pos: {x: 0, y: 4, z: 8}
-          vertexMode: 0
-          isJudgeDisable: 1
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: 0, y: 4, z: 4}
-          vertexMode: 0
-          isJudgeDisable: 1
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
-        - pos: {x: 0, y: 4, z: 8}
-          vertexMode: 0
-          isJudgeDisable: 1
-          behindJudgeRange: 0
-          aheadJudgeRange: 4
+        isInverse: 1
+        summary: 
+        noteDatas:
+        - pos: {x: 4, y: 4}
+          wait: 8
+          disable: 0
+        - pos: {x: 0, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: 6, y: 2}
+          wait: 8
+          disable: 0
+        - pos: {x: 2, y: 2}
+          wait: 8
+          disable: 0
+        - pos: {x: 4, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: 4, y: 0}
+          wait: 0
+          disable: 1
+        - pos: {x: -4, y: 4}
+          wait: 8
+          disable: 0
+        - pos: {x: 0, y: 4}
+          wait: 8
+          disable: 0
+        - pos: {x: 4, y: 4}
+          wait: 8
+          disable: 0

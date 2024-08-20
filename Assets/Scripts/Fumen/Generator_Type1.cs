@@ -190,6 +190,31 @@ namespace NoteGenerating
             }
         }
 
+        protected ArcNote CreateArc(ArcCreateData[] datas, ArcColorType colorType)
+        {
+            var arc = Helper.ArcNotePool.GetNote();
+            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
+            arc.SetColor(colorType, IsInverse);
+
+            var startPos = new Vector3(0, 0f, StartBase);
+            DropAsync(arc, startPos).Forget();
+            Helper.NoteInput.AddArc(arc);
+            return arc;
+
+
+            async UniTask DropAsync(ArcNote arc, Vector3 startPos)
+            {
+                float baseTime = CurrentTime - Delta;
+                var vec = Speed * Vector3.back;
+                while (arc.IsActive)
+                {
+                    float time = CurrentTime - baseTime;
+                    arc.SetPos(startPos + time * vec);
+                    await UniTask.Yield(Helper.Token);
+                }
+            }
+        }
+
         protected string GetInverseSummary()
         {
             if(isInverse)

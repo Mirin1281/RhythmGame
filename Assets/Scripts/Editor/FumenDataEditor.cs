@@ -39,6 +39,7 @@ namespace NoteGenerating.Editor
                     var copiedCmdList = new List<GenerateData>();
                     foreach (var cmdData in Fumen.GetReadOnlyGenerateDataList())
                     {
+                        if(cmdData == null) continue;
                         var copiedCmdData = Instantiate(cmdData);
                         var path = FumenEditorUtility.GetExistFolderPath(cmdData);
                         var cmdName = FumenEditorUtility.GetFileName(path, $"NoteGeneratorData_{copiedFumenData.name}", "asset");

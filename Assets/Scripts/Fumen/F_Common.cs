@@ -125,7 +125,7 @@ namespace NoteGenerating
             {
                 var data = noteDatas[i];
                 Create(data, y);
-                y += GetInterval(data.Wait) * 16f;
+                y += GetInterval(data.Wait) * Speed;
             }
 
             float lineY = 0f;
@@ -136,7 +136,7 @@ namespace NoteGenerating
                 line.transform.localPosition = new Vector3(0, lineY);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewParent.transform;
-                lineY += GetInterval(4) * 16f;
+                lineY += GetInterval(4) * Speed;
             }
 
 

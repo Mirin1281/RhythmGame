@@ -10,4 +10,9 @@ public class SlideNote : NoteBase
     {
         spriteRenderer.size = new Vector2(width, spriteRenderer.size.y);
     }
+
+    public void SetRendererEnabled(bool enabled)
+    {
+        spriteRenderer.enabled = enabled;
+    }
 }

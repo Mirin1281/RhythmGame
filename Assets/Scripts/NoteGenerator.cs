@@ -24,11 +24,11 @@ namespace NoteGenerating
         void GenerateProcessAsync(int beatCount, float delta)
         {
             TryGenerate();
-            if(isCreateLine && beatCount > 2)
+            if(isCreateLine && beatCount >= 0)
             {
                 CreateLine(delta).Forget();
             }
-            if(isCreate3DLine && beatCount > 2)
+            if(isCreate3DLine && beatCount >= 0)
             {
                 Create3DLine(delta).Forget();
             }
@@ -38,7 +38,7 @@ namespace NoteGenerating
             {
                 foreach(var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
                 {
-                    if(beatCount == metronome.StartBeatOffset + generateData.BeatTiming)
+                    if(beatCount == generateData.BeatTiming)
                     {
                         generateData.Generate(noteGenerateHelper, delta);
                     }

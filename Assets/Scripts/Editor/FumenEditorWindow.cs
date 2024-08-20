@@ -17,7 +17,8 @@ namespace NoteGenerating.Editor
 
         [SerializeField] List<GenerateData> commandList = new();
         ReorderableList reorderableList;
-        public static GenerateData LastSelectedCommand;
+        GenerateData lastSelectedCommand;
+        public GenerateData LastSelectedCommand => lastSelectedCommand;
 
         List<GenerateData> selectedCommandList;
         List<GenerateData> copiedCommandList;
@@ -152,11 +153,11 @@ namespace NoteGenerating.Editor
 
                         menu.AddSeparator(string.Empty);
 
-                        if (selectedCommandList.Count == 1 && LastSelectedCommand.GetNoteGeneratorBase() != null)
+                        if (selectedCommandList.Count == 1 && lastSelectedCommand.GetNoteGeneratorBase() != null)
                         {
                             menu.AddItem(new GUIContent("Edit Script"), false, () =>
                             {
-                                var commandName = LastSelectedCommand.GetName();
+                                var commandName = lastSelectedCommand.GetName();
                                 var scriptPath = GetScriptPath(commandName);
                                 Object scriptAsset = AssetDatabase.LoadAssetAtPath<Object>(scriptPath);
                                 AssetDatabase.OpenAsset(scriptAsset, 7);
@@ -219,8 +220,8 @@ namespace NoteGenerating.Editor
             using (GUILayout.ScrollViewScope scroll = new(commandScrollPos, EditorStyles.helpBox))
             {
                 commandScrollPos = scroll.scrollPosition;
-                if (LastSelectedCommand == null) return;
-                UnityEditor.Editor.CreateEditor(LastSelectedCommand).OnInspectorGUI();
+                if (lastSelectedCommand == null) return;
+                UnityEditor.Editor.CreateEditor(lastSelectedCommand).OnInspectorGUI();
             }
         }
 
@@ -240,7 +241,7 @@ namespace NoteGenerating.Editor
         {
             Undo.RecordObject(this, "Paste Command");
             selectedCommandList.Clear();
-            int currentIndex = commandList.IndexOf(LastSelectedCommand);
+            int currentIndex = commandList.IndexOf(lastSelectedCommand);
             Event.current?.Use();
             if (GUIUtility.keyboardControl <= 0) return;
 
@@ -274,7 +275,7 @@ namespace NoteGenerating.Editor
 
                 if(i == copiedCommandList.Count - 1)
                 {
-                    LastSelectedCommand = createCommand;
+                    lastSelectedCommand = createCommand;
                 }
             }
             beforeSelectedIndices = new();
@@ -324,7 +325,7 @@ namespace NoteGenerating.Editor
                     if (i >= beforeSelectedIndices.Count ||
                         index != beforeSelectedIndices[i])
                     {
-                        LastSelectedCommand = commandList[index];
+                        lastSelectedCommand = commandList[index];
                         break;
                     }
                 }
@@ -335,7 +336,7 @@ namespace NoteGenerating.Editor
                 {
                     selectedCommandList.Add(commandList[i]);
                 }
-                LastSelectedCommand.Select();
+                lastSelectedCommand.Select();
             }
 
             void OnReorder(ReorderableList list)
@@ -412,7 +413,7 @@ namespace NoteGenerating.Editor
             selectedCommandList.Clear();
             GenerateData newCommand = FumenEditorUtility.CreateGenerateData($"CommandData_{activeFumenData.name}");
 
-            int insertIndex = commandList.IndexOf(LastSelectedCommand) + 1;
+            int insertIndex = commandList.IndexOf(lastSelectedCommand) + 1;
             if (commandList == null || commandList.Count == 0)
             {
                 insertIndex = 0;
@@ -451,7 +452,7 @@ namespace NoteGenerating.Editor
         /// </summary>
         void SelectOneCommand(GenerateData command)
         {
-            LastSelectedCommand = command;
+            lastSelectedCommand = command;
             selectedCommandList.Add(command);
             reorderableList.Select(commandList.IndexOf(command));
         }

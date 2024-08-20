@@ -16,11 +16,15 @@ namespace NoteGenerating
                 if (!keyDown && Event.current.type == EventType.KeyDown)
                 {
                     keyDown = true;
-
-                    if ((Event.current.keyCode == KeyCode.Period || Event.current.keyCode == KeyCode.Slash) && FumenEditorWindow.LastSelectedCommand != null)
+                    if (Event.current.keyCode == KeyCode.Period || Event.current.keyCode == KeyCode.Slash)
                     {
-                        FumenEditorWindow.LastSelectedCommand.Preview();
-                        Undo.RecordObject(FumenEditorWindow.LastSelectedCommand, "NotePreview");
+                        var window = EditorWindow.GetWindow<FumenEditorWindow>();
+                        var command = window.LastSelectedCommand;
+                        if(command != null)
+                        {
+                            command.Preview();
+                            Undo.RecordObject(command, "NotePreview");
+                        }
                     }
                 }
 

@@ -97,12 +97,18 @@ public class Judgement : MonoBehaviour
     public void SetLightPos(ArcNote arcNote, Vector2 pos)
     {
         LightParticle light = GetLight(arcNote);
-        light.SetPos(pos);
+        if(light != null)
+        {
+            light.SetPos(pos);
+        }
     }
     public void SetShowLight(ArcNote arcNote, bool enabled)
     {
         LightParticle light = GetLight(arcNote);
-        light.IsActive = enabled;
+        if(light != null)
+        {
+            light.IsActive = enabled;
+        }
     }
     public void RemoveLink(ArcNote arcNote)
     {

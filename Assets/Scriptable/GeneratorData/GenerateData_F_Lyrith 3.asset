@@ -12,18 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: GenerateData_F_Lyrith 3
   m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 20
+  enable: 1
+  beatTiming: 146
   generatable:
-    rid: 932862386101026818
+    rid: 932862415563391025
   references:
     version: 2
     RefIds:
-    - rid: 932862386101026818
-      type: {class: F_Dimension, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 932862415563391025
+      type: {class: F_Sky, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
-        isInverse: 0
-        moveType: 0
-        time: 0.3
-        easeType: 2
-        delay: 0
+        isInverse: 1
+        summary: 
+        noteDatas:
+        - pos: {x: 0, y: 0}
+          wait: 8
+          disable: 1
+        - pos: {x: -4, y: 4}
+          wait: 8
+          disable: 0
+        - pos: {x: -2, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: -6, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: -6, y: 0}
+          wait: 8
+          disable: 1
+        - pos: {x: -6, y: 0}
+          wait: 8
+          disable: 1
+        - pos: {x: 2, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: -4, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: 4, y: 0}
+          wait: 8
+          disable: 0
+        - pos: {x: 4, y: 0}
+          wait: 8
+          disable: 1
+        - pos: {x: -6, y: 4}
+          wait: 8
+          disable: 0
+        - pos: {x: 0, y: 4}
+          wait: 8
+          disable: 0

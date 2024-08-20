@@ -20,13 +20,13 @@ public class Metronome : MonoBehaviour
     double currentTime;
     double interval;
     int bpmChangeCount;
+    int beatCount;
     CriAtomExPlayback playback;
 
     /// <summary>
     /// (ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
-    public int StartBeatOffset => musicData.StartBeatOffset;
     public float CurrentTime => (float)currentTime + musicData.Offset + RhythmGameManager.Offset;
     public float Bpm
     {
@@ -37,6 +37,7 @@ public class Metronome : MonoBehaviour
             interval = 60d / bpm;
         }
     }
+    public int BeatCount => beatCount - musicData.StartBeatOffset;
 
     void Start()
     {
@@ -77,7 +78,7 @@ public class Metronome : MonoBehaviour
     {
         addTime = true;
         double baseTime = Time.timeAsDouble - currentTime;
-        int beatCount = 0;
+        beatCount = 0;
         double nextBeat = interval;
         while(true)
         {
@@ -89,7 +90,7 @@ public class Metronome : MonoBehaviour
                     Bpm = musicData.GetChangeBPM(bpmChangeCount);
                     bpmChangeCount++;
                 }
-                OnBeat?.Invoke(beatCount, (float)(CurrentTime - nextBeat));
+                OnBeat?.Invoke(beatCount - musicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
                 
                 beatCount++;
                 nextBeat += interval;

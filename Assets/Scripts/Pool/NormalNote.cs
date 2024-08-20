@@ -6,7 +6,11 @@ public class NormalNote : NoteBase
 
     public void SetWidth(float width)
     {
-        if(spriteRenderer == null) return;
         spriteRenderer.size = new Vector2(width, spriteRenderer.size.y);
+    }
+
+    public void SetRendererEnabled(bool enabled)
+    {
+        spriteRenderer.enabled = enabled;
     }
 }
