@@ -92,6 +92,10 @@ namespace NoteGenerating.Editor
 
             // セーブ
             EditorUtility.SetDirty(fumenData);
+            foreach(var data in fumenData.Fumen.GetReadOnlyGenerateDataList())
+            {
+                EditorUtility.SetDirty(data);
+            }
             AssetDatabase.SaveAssets();
 			Debug.Log("<color=lightblue>CSVを読み込みました！</color>");
 
@@ -207,7 +211,7 @@ namespace NoteGenerating.Editor
                     if (i >= list.Count)
                     {
                         if (notExistCell) continue;
-                        data = FumenEditorUtility.CreateGenerateData($"CommandData_{fumenData.name}");
+                        data = FumenEditorUtility.CreateGenerateData($"GenerateData_{fumenData.name}");
                         if (cellName is not ("<Null>" or "Null"))
                         {
                             Type type = GetTypeByClassName(cellName);
@@ -222,7 +226,7 @@ namespace NoteGenerating.Editor
                         data = list[i];
                         if(data == null)
                         {
-                            data = FumenEditorUtility.CreateGenerateData($"CommandData_{fumenData.name}");
+                            data = FumenEditorUtility.CreateGenerateData($"GenerateData_{fumenData.name}");
                         }
                         colomn_base = data.GetNoteGeneratorBase();
                         var cmdName = GetCommandName(colomn_base);

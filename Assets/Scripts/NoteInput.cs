@@ -7,29 +7,6 @@ using ArcJudgeState = ArcJudge.InputState;
 using InputStatus = InputManager.InputStatus;
 using System.Linq;
 
-#region Note Parameters
-
-public enum NoteType
-{
-    _None, // Normalと間違えやすいため
-    Normal,
-    Slide,
-    Hold,
-    Flick,
-    Arc,
-}
-
-public enum NoteGrade
-{
-    None,
-    Perfect,
-    FastGreat,
-    LateGreat,
-    FastFar,
-    LateFar,
-    Miss,
-}
-
 public class NoteExpect
 {
     public readonly NoteBase Note;
@@ -46,22 +23,21 @@ public class NoteExpect
     }
 }
 
-#endregion
-
 public class NoteInput : MonoBehaviour
 {
     [SerializeField] Metronome metronome;
     [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
-
-    readonly List<NoteExpect> allExpects = new(50);
-    readonly List<(HoldNote hold, float endTime)> holds = new(4);
-    readonly List<ArcNote> arcs = new(4);
+    
 #if UNITY_EDITOR
     [SerializeField] bool isAuto;
 #else
     bool isAuto = false;
 #endif
+
+    readonly List<NoteExpect> allExpects = new(63);
+    readonly List<HoldNote> holds = new(4);
+    readonly List<ArcNote> arcs = new(4);
 
     void Start()
     {
@@ -105,7 +81,8 @@ public class NoteInput : MonoBehaviour
     {
         var hold = expect.Note as HoldNote;
         hold.State = HoldState.Holding;
-        holds.Add((hold, expect.HoldEndTime));
+        hold.EndTime = expect.HoldEndTime;
+        holds.Add(hold);
         return hold;
     }
 
@@ -125,11 +102,40 @@ public class NoteInput : MonoBehaviour
         for(int i = 0; i < allExpects.Count; i++)
         {
             var expect = allExpects[i];
-            if(isAuto && metronome.CurrentTime > expect.Time - 0.00f)
+            /*if(isAuto && metronome.CurrentTime > expect.Time - 0.02f)
             {
                 // オート
                 if(expect.Note.Type == NoteType.Hold)
                 {
+                    var delta = metronome.CurrentTime - expect.Time;
+                    NoteGrade grade = judge.GetGradeApplyText(delta);
+                    judge.PlayParticle(grade, expect.Pos);
+                    HoldNote hold = AddHold(expect);
+                    hold.Grade = grade;
+                    RemoveExpect(expect, false);
+                    judge.AddCombo();
+                }
+                else if(expect.Note.Type == NoteType.Normal)
+                {
+                    var delta = metronome.CurrentTime - expect.Time;
+                    NoteGrade grade = judge.GetGradeApplyText(delta);
+                    judge.PlayParticle(grade, expect.Pos);
+                    RemoveExpect(expect);
+                    judge.AddCombo();
+                }
+                else
+                {
+                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    RemoveExpect(expect);
+                    judge.AddCombo();
+                }
+            }*/
+            if(isAuto && metronome.CurrentTime > expect.Time)
+            {
+                // オート
+                if(expect.Note.Type == NoteType.Hold)
+                {
+                    var delta = metronome.CurrentTime - expect.Time;
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     HoldNote hold = AddHold(expect);
                     hold.Grade = NoteGrade.Perfect;
@@ -166,7 +172,7 @@ public class NoteInput : MonoBehaviour
         (NoteExpect expect, float delta) = FetchNearestNote(pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold);
         if(expect == null) return;
 
-        NoteGrade grade = judge.GetGradeApplyText(delta);
+        NoteGrade grade = judge.GetGradeAndSetText(delta);
         if(grade == NoteGrade.Miss)
         {
             judge.ResetCombo();
@@ -283,9 +289,10 @@ public class NoteInput : MonoBehaviour
         return (fetchedExpect, inputTime - fetchedExpect.Time);
     }
 
+    readonly List<(NoteExpect, float)> fetchedExpects = new(8);
     List<(NoteExpect, float)> FetchSomeNotes(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
     {
-        List<(NoteExpect, float)> fetchedExpects = new(4);
+        fetchedExpects.Clear();
         foreach(var expect in allExpects)
         {
             float delta = inputTime - expect.Time;
@@ -314,27 +321,18 @@ public class NoteInput : MonoBehaviour
         if(holds.Count == 0) return;
         for(int i = 0; i < holds.Count; i++)
         {
-            var hold = holds[i].hold;
+            var hold = holds[i];
             if(hold.State is HoldState.None or HoldState.Idle)
             {
                 throw new Exception();
             }
             else if(hold.State is HoldState.Holding)
             {
-                bool isInput = false;
-                for(int k = 0; k < inputStatuses.Count; k++)
-                {
-                    if(judge.IsNearPosition(inputStatuses[k].Position, hold.GetLandingPos()))
-                    {
-                        isInput = true;
-                        break;
-                    }
-                }
-                            
+                bool isInput = inputStatuses.Any(status => judge.IsNearPosition(status.Position, hold.GetLandingPos()));
                 if(isInput || isAuto)
                 {
                     // ギリギリまで取らなくても判定されるように
-                    if(metronome.CurrentTime > holds[i].endTime - 0.16f)
+                    if(metronome.CurrentTime > hold.EndTime - 0.16f)
                     {
                         judge.AddCombo();
                         hold.State = HoldState.Got;
@@ -348,7 +346,7 @@ public class NoteInput : MonoBehaviour
             }
             else if(hold.State == HoldState.Missed)
             {
-                if(metronome.CurrentTime > holds[i].endTime)
+                if(metronome.CurrentTime > hold.EndTime)
                 {
                     hold.gameObject.SetActive(false);
                     holds.RemoveAt(i);
@@ -357,7 +355,7 @@ public class NoteInput : MonoBehaviour
             else if(hold.State == HoldState.Got)
             {
                 // ちょっと早めに表示
-                if(metronome.CurrentTime > holds[i].endTime - 0.02f)
+                if(metronome.CurrentTime > hold.EndTime - 0.02f)
                 {
                     hold.gameObject.SetActive(false);
                     holds.RemoveAt(i);
@@ -369,7 +367,6 @@ public class NoteInput : MonoBehaviour
 
     void ProcessArc(List<InputStatus> inputStatuses)
     {
-        if(arcs.Count == 0) return;
         for(int i = 0; i < arcs.Count; i++)
         {
             var arc = arcs[i];
@@ -385,12 +382,13 @@ public class NoteInput : MonoBehaviour
 
             // 距離の近いアークを調べる
             arc.IsPosDuplicated = false;
-            var currentPos = arc.GetAnyPointOnZPlane(0);
+            var worldPos = arc.GetAnyPointOnZPlane(0);
             foreach(var otherArc in arcs)
             {
-                if(otherArc == arc || otherArc.IsArcRange() == false) continue;
-                var otherPos = otherArc.GetAnyPointOnZPlane(0);       
-                if(Vector2.SqrMagnitude(currentPos - otherPos) < 8f)
+                var otherArcZ = otherArc.GetPos().z;
+                if(otherArc == arc || otherArcZ < 0 || otherArcZ > otherArc.LastZ) continue;
+                var otherWorldPos = otherArc.GetAnyPointOnZPlane(0);       
+                if(Vector2.SqrMagnitude(worldPos - otherWorldPos) < 8f)
                 {
                     arc.IsPosDuplicated = true;
                     otherArc.IsPosDuplicated = true;
@@ -400,7 +398,7 @@ public class NoteInput : MonoBehaviour
             bool isHold = isAuto;
             foreach(var status in inputStatuses)
             {
-                if(judge.IsNearPosition(status.Position, currentPos, 1.7f) == false) continue;
+                if(judge.IsNearPosition(status.Position, worldPos, 1.7f) == false) continue;
                 
                 if(arc.IsPosDuplicated)
                 {
@@ -431,37 +429,30 @@ public class NoteInput : MonoBehaviour
                 }
             }
 
-            if(isHold)
-            {
-                judge.SetLightPos(arc, currentPos);
-            }
-            judge.SetShowLight(arc, isHold);
+            judge.SetShowLight(arc, worldPos, isHold);
             arc.SetInput(isHold);
 
-            var arcJudge = arc.GetCurrentJudge();
-            if (arcJudge == null) continue; // 最後の判定を終えた
-            if (arcJudge.EndPos.z < arcPos.z)
+            var arcJ = arc.GetCurrentJudge();
+            if (arcJ == null) continue; // 最後の判定を終えた
+            if (arcJ.EndPos.z < arcPos.z)
             {
-                arcJudge.State = ArcJudgeState.Miss;
+                arcJ.State = ArcJudgeState.Miss;
                 arc.JudgeIndex++;
                 judge.ResetCombo();
             }
 
-            if ((arcJudge.StartPos.z < arcPos.z && arcPos.z < arcJudge.EndPos.z) == false) continue; // 判定の範囲外
+            if ((arcJ.StartPos.z < arcPos.z && arcPos.z < arcJ.EndPos.z) == false) continue; // 判定の範囲外
 
-            if(arcJudge.State is ArcJudgeState.None)
+            if(arcJ.State is ArcJudgeState.None)
             {
                 throw new Exception();
             }
-            else if(arcJudge.State is ArcJudgeState.Idle)
+            else if(arcJ.State is ArcJudgeState.Idle && isHold)
             {
-                if(isHold)
-                {
-                    arcJudge.State = ArcJudgeState.Got;
-                    judge.PlayParticle(NoteGrade.Perfect, currentPos);
-                    arc.JudgeIndex++;
-                    judge.AddCombo();
-                }
+                arcJ.State = ArcJudgeState.Got;
+                judge.PlayParticle(NoteGrade.Perfect, worldPos);
+                arc.JudgeIndex++;
+                judge.AddCombo();
             }
         }
     }

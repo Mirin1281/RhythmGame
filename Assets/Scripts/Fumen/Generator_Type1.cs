@@ -8,17 +8,12 @@ namespace NoteGenerating
     {
         [SerializeField] bool isInverse;
         protected bool IsInverse => isInverse;
+        protected void SetInverse(bool inverse) => isInverse = inverse;
 
         /// <summary>
         /// 反転に対応した値にします
         /// </summary>
         protected float GetInverse(float x) => x * (isInverse ? -1 : 1);
-
-        /// <summary>
-        /// この値を大きくするとWaitの待機ループが
-        /// 生成速度に追いつかなくなる現象が改善されます
-        /// </summary>
-        const float intervalRange = 0.008f;
 
         protected virtual float Speed => RhythmGameManager.Speed;
 
@@ -29,28 +24,49 @@ namespace NoteGenerating
         protected float From => 0f;
         protected float CurrentTime => Helper.Metronome.CurrentTime;         
 
-        float GetInterval(float lpb, int num = 1)
+        protected float GetTimeInterval(float lpb, int num = 1)
         {
             if(lpb == 0) return 0;
             return 240f / Helper.Metronome.Bpm / lpb * num;
         }
-        public async UniTask<float> Wait(float lpb, int num = 1)
+
+        /// <summary>
+        /// この値を大きくするとWaitの待機ループが
+        /// 生成速度に追いつかなくなる現象が改善されます
+        /// </summary>
+        const float intervalRange = 0.008f;
+
+        protected UniTask WaitSeconds(float time) => UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: Helper.Token);
+
+        protected async UniTask<float> Wait(float lpb, int num = 1)
         {
-            if(lpb == 0) return 0;
+            if(lpb == 0) return Delta;
             float baseTime = CurrentTime;
-            float interval = GetInterval(lpb, num);
-            while (true)
-            {
-                float currentTime = CurrentTime - baseTime;
-                if (currentTime >= interval - intervalRange)
-                {
-                    Delta = currentTime - interval + Delta;
-                    return Delta;
-                }
-                await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, Helper.Token);
-            }
+            float interval = GetTimeInterval(lpb, num);
+            await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);
+            Delta += CurrentTime - baseTime - interval;
+            return Delta;
         }
-        public async UniTask<float> WaitPlane(float lpb, float delta, int num = 1)
+
+        protected void WhileYield(float time, Action<float> action, float delta = -1)
+            => WhileYieldAsync(time, action, delta).Forget();
+        protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)
+        {
+            if(delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = CurrentTime - Delta;
+            float t = 0f;
+            while(t < time)
+            {
+                t = CurrentTime - baseTime;
+                action?.Invoke(t);
+                await UniTask.Yield(Helper.Token);
+            }
+            action?.Invoke(time);
+        }
+        /*public async UniTask<float> WaitPlane(float lpb, float delta, int num = 1)
         {
             if(lpb == 0) return 0;
             float baseTime = CurrentTime;
@@ -64,13 +80,13 @@ namespace NoteGenerating
                 }
                 await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, Helper.Token);
             }
-        }
+        }*/
 
-        protected async UniTask<float> Loop(float lpb, NoteType type, params float?[] xs)
+        protected async UniTask<float> Loop(float lpb, NoteType type, params float?[] nullableXs)
         {
-            for(int i = 0; i < xs.Length; i++)
+            foreach(var nullableX in nullableXs)
             {
-                if(xs[i] is float x)
+                if(nullableX is float x)
                 {
                     Note(x, type, Delta);
                 }
@@ -78,7 +94,7 @@ namespace NoteGenerating
             }
             return Delta;
         }
-        protected async UniTask<float> LoopPlane(float lpb, NoteType type, float delta, params float?[] xs)
+        /*protected async UniTask<float> LoopPlane(float lpb, NoteType type, float delta, params float?[] xs)
         {
             for(int i = 0; i < xs.Length; i++)
             {
@@ -89,9 +105,9 @@ namespace NoteGenerating
                 delta = await Wait(lpb);
             }
             return delta;
-        }
+        }*/
 
-        public Generator_Type1 Note(float x, NoteType type, float delta = -1)
+        protected NoteBase Note(float x, NoteType type, float delta = -1)
         {
             if(delta == -1)
             {
@@ -104,61 +120,38 @@ namespace NoteGenerating
                 NoteType.Flick => Helper.FlickNotePool.GetNote(),
                 _ => throw new ArgumentOutOfRangeException()
             };
-            
-            var startPos = new Vector3(GetInverse(x), StartBase);
+            Vector3 startPos = new Vector3(GetInverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 
             float distance = startPos.y - From - Speed * delta;
-            float expectTime = distance / Speed + CurrentTime;
-            var expect = new NoteExpect(note, new Vector2(startPos.x, From), expectTime);
+            float expectTime = CurrentTime + distance / Speed;
+            NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, From), expectTime);
             Helper.NoteInput.AddExpect(expect);
-            return this;
+            return note;
         }
-        public Generator_Type1 Double(float x1, float x2, NoteType type = NoteType.Normal, NoteType type2 = NoteType._None, float delta = -1)
-        {
-            if(type2 == NoteType._None)
-            {
-                type2 = type;
-            }
-            Note(x1, type, delta).Note(x2, type2, delta);
-            return this;
-        }
-        public Generator_Type1 Hold(float x, float length, float delta = -1)
+        protected HoldNote Hold(float x, float length, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
-            var hold = Helper.HoldNotePool.GetNote();
-            var holdTime = GetInterval(length);
+            HoldNote hold = Helper.HoldNotePool.GetNote();
+            float holdTime = GetTimeInterval(length);
             hold.SetLength(holdTime * Speed);
-            hold.SetMaskLocalPos(new Vector2(GetInverse(x), From));
-            var startPos = new Vector3(GetInverse(x), StartBase);
+            Vector3 startPos = new Vector3(GetInverse(x), StartBase);
+            hold.SetMaskLocalPos(new Vector2(startPos.x, From));
             DropAsync(hold, startPos, delta).Forget();
 
             float distance = startPos.y - From - Speed * delta;
-            float expectTime = distance / Speed + CurrentTime;
-            float holdEndTime = holdTime + expectTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x, From), expectTime, holdEndTime);
+            float expectTime = CurrentTime + distance / Speed;
+            float holdEndTime = expectTime + holdTime;
+            NoteExpect expect = new NoteExpect(hold, new Vector2(startPos.x, From), expectTime, holdEndTime);
             Helper.NoteInput.AddExpect(expect);
-            return this;
+            return hold;
         }
 
-        public void WhileYield(float time, Action<float> action)
-            => WhileYieldAsync(time, action).Forget();
-        public async UniTask WhileYieldAsync(float time, Action<float> action)
-        {
-            float baseTime = CurrentTime - Delta;
-            float t = 0f;
-            while(t < time)
-            {
-                t = CurrentTime - baseTime;
-                action?.Invoke(t);
-                await UniTask.Yield(Helper.Token);
-            }
-            action?.Invoke(time);
-        }
-        public void WhileYieldPlane(float time, float delta, Action<float> action)
+        
+        /*public void WhileYieldPlane(float time, float delta, Action<float> action)
             => WhileYieldAsyncPlane(time, delta, action).Forget();
         public async UniTask WhileYieldAsyncPlane(float time, float delta, Action<float> action)
         {
@@ -171,7 +164,7 @@ namespace NoteGenerating
                 await UniTask.Yield(Helper.Token);
             }
             action?.Invoke(time);
-        }
+        }*/
 
         protected async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
         {
@@ -181,37 +174,12 @@ namespace NoteGenerating
             }
             float baseTime = CurrentTime - delta;
             float time = 0f;
-            var vec = Speed * Vector3.down;
+            var vec = new Vector3(0, -Speed, 0);
             while (note.IsActive && time < 5f)
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
                 await UniTask.Yield(Helper.Token);
-            }
-        }
-
-        protected ArcNote CreateArc(ArcCreateData[] datas, ArcColorType colorType)
-        {
-            var arc = Helper.ArcNotePool.GetNote();
-            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
-            arc.SetColor(colorType, IsInverse);
-
-            var startPos = new Vector3(0, 0f, StartBase);
-            DropAsync(arc, startPos).Forget();
-            Helper.NoteInput.AddArc(arc);
-            return arc;
-
-
-            async UniTask DropAsync(ArcNote arc, Vector3 startPos)
-            {
-                float baseTime = CurrentTime - Delta;
-                var vec = Speed * Vector3.back;
-                while (arc.IsActive)
-                {
-                    float time = CurrentTime - baseTime;
-                    arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
-                }
             }
         }
 

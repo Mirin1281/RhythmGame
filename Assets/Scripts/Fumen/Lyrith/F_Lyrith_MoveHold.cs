@@ -3,16 +3,47 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("Lyrith/3 移動ホールド"), System.Serializable]
-    public class F_Lyrith3 : Generator_Type1
+    [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
+    public class F_Lyrith_MoveHold : Generator_Type1
     {
-        [SerializeField] float moveX = 0.15f;
-        [SerializeField] float speedRate = 1f;
-        protected override float Speed => base.Speed * speedRate;
+        float MoveX => 0.15f;
+
         protected override async UniTask GenerateAsync()
         {
-            await UniTask.CompletedTask;
-            MoveHold(-9, 2, moveX / speedRate);
+            MoveHold(-9, 4, MoveX);
+            await Loop(8, NoteType.Normal,
+                3,
+                5,
+                3
+            );
+
+            MoveHold(9, 4, -MoveX);
+            await Loop(8, NoteType.Normal,
+                -3,
+                -5,
+                -3
+            );
+
+            MoveHold(-11, 4, MoveX);
+            await Loop(8, NoteType.Normal,
+                1,
+                3,
+                5
+            );
+
+            MoveHold(11, 4, -MoveX);
+            await Loop(8, NoteType.Normal,
+                -1,
+                -3,
+                -5
+            );
+
+            await Loop(16, NoteType.Normal,
+                0.5f,
+                -0.5f,
+                0.5f,
+                -0.5f
+            );
         }
 
         void MoveHold(float x, float length, float moveX)
@@ -27,7 +58,7 @@ namespace NoteGenerating
             float distance = startPos.y - From - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
             float holdEndTime = holdTime + expectTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * moveX, From), expectTime, holdEndTime);
+            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * GetInverse(moveX), From), expectTime, holdEndTime);
             Helper.NoteInput.AddExpect(expect);
         }
 

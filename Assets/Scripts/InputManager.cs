@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
         public void SetPosition(Vector2 position) => Position = position;
         public void SetArcColorType(ArcColorType type) => ArcColorType = type;
     }
-    List<InputStatus> inputStatuses = new(4);
+    List<InputStatus> inputStatuses = new(8);
     public List<InputStatus> InputStatuses => inputStatuses;
     
     const float posDiff = 30f; // フリックの感度
@@ -85,7 +85,6 @@ public class InputManager : MonoBehaviour
                (Mathf.Abs(p.currentPos.y - p.startPos.y) >= posDiff || Mathf.Abs(p.currentPos.x - p.startPos.x) >= posDiff))
             {
                 OnFlick?.Invoke(GetWorldPosition(p.startPos));
-                //PulseFlash().Forget();
                 p.isPrepared = false;
             }
         }
@@ -131,14 +130,16 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
-        if(inputStatuses != null)
-        {
+        //if(inputStatuses.Count != 0)
+        //{
             OnHold?.Invoke(inputStatuses);
-        }
+        //}
     }
 
     List<InputStatus> FetchInputStatuses()
-        => Touch.activeTouches.Select(touch => new InputStatus(touch.finger.index, GetWorldPosition(touch.screenPosition))).ToList();
+        => Touch.activeTouches
+        .Select(touch => new InputStatus(touch.finger.index, GetWorldPosition(touch.screenPosition)))
+        .ToList();
 
     Vector2 GetWorldPosition(Vector2 screenPos)
     {

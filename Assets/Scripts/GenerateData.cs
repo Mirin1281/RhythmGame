@@ -1,18 +1,20 @@
 ﻿using System;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
 
 namespace NoteGenerating
 {
     [Serializable]
     public class GenerateData : ScriptableObject
     {
-        [SerializeField, Tooltip("OFFにすると無視されます")] bool enable = true;
+        [SerializeField, Tooltip("OFFにすると無視されます")]
+        bool enable = true;
         public bool Enable => enable;
 
-        [SerializeField, Tooltip("発火されるタイミング")] int beatTiming;
+        [SerializeField, Tooltip("発火されるタイミング")]
+        int beatTiming;
         public int BeatTiming => beatTiming;
 
         [SerializeField, SerializeReference, SubclassSelector]
@@ -31,7 +33,6 @@ namespace NoteGenerating
         /// </summary>
         public NoteGeneratorBase GetNoteGeneratorBase()
         {
-            if (generatable == null) return null;
             return generatable as NoteGeneratorBase;
         }
 

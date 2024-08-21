@@ -18,9 +18,19 @@ public class ArcNote : NoteBase
     float noInputTime;
     Spline Spline => splineExtrude.Spline;
 
+    /// <summary>
+    /// 取得が無効か
+    /// </summary>
     public bool IsInvalid { get; private set; }
 
+    /// <summary>
+    /// 他のアークと位置が近い
+    /// </summary>
     public bool IsPosDuplicated { get; set; }
+
+    /// <summary>
+    /// 押された指のインデックス
+    /// </summary>
     public int FingerIndex { get; set; }
 
     /// <summary>
@@ -31,16 +41,24 @@ public class ArcNote : NoteBase
     /// <summary>
     /// 最後尾のz座標
     /// </summary>
-    public float LastZ => Spline.Knots.Last().Position.z;
+    public float LastZ
+    {
+        get
+        {
+            if(Spline == null) return 0;
+            return Spline.Knots.Last().Position.z;
+        }
+    }
 
     /// <summary>
     /// 上の判定線の高さ
     /// </summary>
     public static readonly float Height = 0.3f;
 
+    /// <summary>
+    /// アークの色
+    /// </summary>
     public ArcColorType ColorType { get; set; }
-
-    
 
     void Awake()
     {
@@ -61,11 +79,18 @@ public class ArcNote : NoteBase
     {
         // 初期化
         Spline.Clear();
-        judges ??= new(datas.Length);
-        judges.Clear();
+        if(judges == null)
+        {
+            judges = new(datas.Length);
+        }
+        else
+        {
+            judges.Clear();
+        }
         IsInvalid = false;
         FingerIndex = -1;
         JudgeIndex = 0;
+
         await UniTask.Yield(destroyCancellationToken);
 
         // 頂点を追加
@@ -73,7 +98,7 @@ public class ArcNote : NoteBase
         for(int i = 0; i < datas.Length; i++)
         {
             var data = datas[i];
-            z += GetInterval(data.Pos.z, bpm, speed);
+            z += GetDistanceInterval(data.Pos.z, bpm, speed);
             var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : z));
             TangentMode tangentMode = data.VertexMode switch
             {
@@ -100,15 +125,12 @@ public class ArcNote : NoteBase
                 k++;
                 continue;
             }
-            float knotZ = knot.Position.z - GetPos().z;
 
-            var startPos = Vector3.zero;
-            if(k != 0)
-            {
-                float behindJudgePosZ = knotZ - GetInterval(datas[k].BehindJudgeRange, bpm, speed);
-                startPos = GetAnyPointOnZPlane(behindJudgePosZ);
-            }
-            float aheadJudgePosZ = knotZ + GetInterval(datas[k].AheadJudgeRange, bpm, speed);
+            float knotZ = knot.Position.z - GetPos().z;
+            float behindJudgePosZ = knotZ - GetDistanceInterval(datas[k].BehindJudgeRange, bpm, speed);
+            var startPos = GetAnyPointOnZPlane(behindJudgePosZ);
+            if(k == 0) startPos = Vector3.zero;
+            float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange, bpm, speed);
             var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
         
             judges.Add(new ArcJudge(startPos, endPos));
@@ -125,9 +147,10 @@ public class ArcNote : NoteBase
             DestroyImmediate(child.gameObject);
         }
 
-        int i = 0;
-        foreach(var knot in Spline)
+        for(int i = 0; i < Spline.Count; i++)
         {
+            var data = datas[i];
+            var knot = Spline[i];
             if(datas[i].IsJudgeDisable)
             {
                 i++;
@@ -146,7 +169,7 @@ public class ArcNote : NoteBase
 
             if(i != 0)
             {
-                float behindDistance = knotZ - GetInterval(datas[i].BehindJudgeRange, bpm, speed);
+                float behindDistance = knotZ - GetDistanceInterval(datas[i].BehindJudgeRange, bpm, speed);
                 var startPos = GetAnyPointOnZPlane(behindDistance);
                 var blueSphere = Instantiate(debugSphere, transform);
                 blueSphere.transform.localPosition = startPos;
@@ -154,7 +177,7 @@ public class ArcNote : NoteBase
                 blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
             }
 
-            float aheadDistance = knotZ + GetInterval(datas[i].AheadJudgeRange, bpm, speed);
+            float aheadDistance = knotZ + GetDistanceInterval(datas[i].AheadJudgeRange, bpm, speed);
             var endPos = GetAnyPointOnZPlane(aheadDistance);
             var redSphere = Instantiate(debugSphere, transform);
             redSphere.transform.localPosition = endPos;
@@ -175,7 +198,7 @@ public class ArcNote : NoteBase
 #endif
     }
 
-    static float GetInterval(float lpb, float bpm, float speed)
+    static float GetDistanceInterval(float lpb, float bpm, float speed)
     {
         if(lpb == 0f) return 0f;
         return 240f / bpm * speed / lpb;
@@ -218,14 +241,12 @@ public class ArcNote : NoteBase
         return judges[JudgeIndex];
     }
 
-    public bool IsArcRange() => GetPos().z >= 0 && GetPos().z <= LastZ;
-
     public async UniTask InvalidArcJudgeAsync(float time)
     {
         IsInvalid = true;
         var tmpColor = meshRenderer.sharedMaterial.color;
         SetColor(new Color(0.9f, 0f, 0f, 1f));
-        await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: destroyCancellationToken);
+        await MyUtility.WaitSeconds(time, destroyCancellationToken);
         IsInvalid = false;
         SetColor(tmpColor);
         FingerIndex = -1;
@@ -272,6 +293,9 @@ public class ArcNote : NoteBase
         meshRenderer.sharedMaterial.color = color;
     }
 
+    /// <summary>
+    /// 表示を切り替えます(判定等は変化しません)
+    /// </summary>
     public void SetRendererEnabled(bool enabled)
     {
         meshRenderer.enabled = enabled;
@@ -284,6 +308,27 @@ public class ArcNote : NoteBase
     {
         var pos = base.GetPos();
         return new Vector3(pos.x, pos.y, -pos.z);
+    }
+}
+
+public class ArcJudge
+{
+    public enum InputState
+    {
+        None,
+        Idle,
+        Got,
+        Miss,
+    }
+    public Vector3 StartPos;
+    public Vector3 EndPos;
+    public InputState State;
+
+    public ArcJudge(Vector3 start, Vector3 end)
+    {
+        StartPos = start;
+        EndPos = end;
+        State = InputState.Idle;
     }
 }
 
@@ -326,26 +371,5 @@ public struct ArcCreateData
         this.isJudgeDisable = isJudgeDisable;
         this.behindJudgeRange = behindJudgeRange;
         this.aheadJudgeRange = aheadJudgeRange;
-    }
-}
-
-public class ArcJudge
-{
-    public enum InputState
-    {
-        None,
-        Idle,
-        Got,
-        Miss,
-    }
-    public Vector3 StartPos;
-    public Vector3 EndPos;
-    public InputState State;
-
-    public ArcJudge(Vector3 start, Vector3 end)
-    {
-        StartPos = start;
-        EndPos = end;
-        State = InputState.Idle;
     }
 }

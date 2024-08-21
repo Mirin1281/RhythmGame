@@ -18,7 +18,7 @@ public abstract class PooledBase : MonoBehaviour
     async UniTask OnDisable()
     {
         isActive = false;
-        await UniTask.DelayFrame(2);
+        await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
         isActiveForPool = false;
     }
 

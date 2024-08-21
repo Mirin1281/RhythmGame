@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("汎用ジェネレータ"), System.Serializable]
+    [AddTypeMenu("◆汎用ジェネレータ"), System.Serializable]
     public class F_Common : Generator_Type1
     {
         public enum CreateNoteType
@@ -43,22 +43,10 @@ namespace NoteGenerating
         
         protected override async UniTask GenerateAsync()
         {
-            for(int i = 0; i < noteDatas.Length; i++)
-            {
-                var data = noteDatas[i];
-                Create(data);
-                await Wait(data.Wait);
-            }
-
-
-            void Create(NoteData data)
+            foreach(var data in noteDatas)
             {
                 var type = data.Type;
-                if(type == CreateNoteType._None)
-                {
-                    return;
-                }
-                else if(type == CreateNoteType.Normal)
+                if(type == CreateNoteType.Normal)
                 {
                     Note(data.X, NoteType.Normal);
                 }
@@ -75,10 +63,11 @@ namespace NoteGenerating
                     if(data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
-                        return;
+                        continue;
                     }
                     Hold(data.X, data.Length);
                 }
+                await Wait(data.Wait);
             }
         }
 
@@ -89,17 +78,14 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return new Color32(255, 226, 200, 255);
+            return ConstContainer.VersatileCommandColor;
         }
 
         protected override string GetSummary()
         {
-            string s = string.Empty;
-            if(noteDatas == null) return s;
-            s += noteDatas.Length;
+            string s = noteDatas.Length.ToString();
             if(string.IsNullOrEmpty(summary)) return s + GetInverseSummary();
-            s += " : " + summary;
-            return s + GetInverseSummary();
+            return $"{s} : {summary}{GetInverseSummary()}";
         }
 
         protected override void OnSelect()
@@ -109,45 +95,12 @@ namespace NoteGenerating
 
         protected override void Preview()
         {
-            float interval = RhythmGameManager.DebugNoteInterval;
-            string findName = RhythmGameManager.DebugNotePreviewObjName;
-            GameObject previewParent = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-                .Where(obj => obj.name == findName)
-                .FirstOrDefault();
-            previewParent.SetActive(true);
-            foreach(var child in previewParent.transform.OfType<Transform>().ToArray())
-            {
-                GameObject.DestroyImmediate(child.gameObject);
-            }
-
+            GameObject previewObj = MyUtility.GetPreviewObject();
             float y = 0f;
-            for(int i = 0; i < noteDatas.Length; i++)
-            {
-                var data = noteDatas[i];
-                Create(data, y);
-                y += GetInterval(data.Wait) * Speed;
-            }
-
-            float lineY = 0f;
-            for(int i = 0; i < 10000; i++)
-            {
-                if(lineY > y) break;
-                var line = Helper.LinePool.GetLine();
-                line.transform.localPosition = new Vector3(0, lineY);
-                line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
-                line.transform.parent = previewParent.transform;
-                lineY += GetInterval(4) * Speed;
-            }
-
-
-            void Create(NoteData data, float y)
+            foreach(var data in noteDatas)
             {
                 var type = data.Type;
-                if(type == CreateNoteType._None)
-                {
-                    return;
-                }
-                else if(type == CreateNoteType.Normal)
+                if(type == CreateNoteType.Normal)
                 {
                     Note(data.X, y, NoteType.Normal);
                 }
@@ -164,10 +117,22 @@ namespace NoteGenerating
                     if(data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
-                        return;
+                        continue;
                     }
                     Hold(data.X, y, data.Length);
                 }
+                y += GetTimeInterval(data.Wait) * Speed;
+            }
+
+            float lineY = 0f;
+            for(int i = 0; i < 10000; i++)
+            {
+                if(lineY > y) break;
+                var line = Helper.LinePool.GetLine();
+                line.transform.localPosition = new Vector3(0, lineY);
+                line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
+                line.transform.parent = previewObj.transform;
+                lineY += GetTimeInterval(4) * Speed;
             }
 
             void Note(float x, float y, NoteType type)
@@ -181,24 +146,24 @@ namespace NoteGenerating
                 };
                 var startPos = new Vector3(GetInverse(x), y);
                 note.SetPos(startPos);
-                note.transform.parent = previewParent.transform;
+                note.transform.parent = previewObj.transform;
             }
 
             void Hold(float x, float y, float length)
             {
                 var hold = Helper.HoldNotePool.GetNote();
-                var holdTime = GetInterval(length);
+                var holdTime = GetTimeInterval(length);
                 hold.SetLength(holdTime * Speed);
                 hold.SetMaskLocalPos(new Vector2(GetInverse(x), From));
                 var startPos = new Vector3(GetInverse(x), y);
                 hold.SetPos(startPos);
-                hold.transform.parent = previewParent.transform;
+                hold.transform.parent = previewObj.transform;
             }
 
-            float GetInterval(float lpb)
+            float GetTimeInterval(float lpb)
             {
                 if(lpb == 0) return 0;
-                return 240f / interval / lpb;
+                return 240f / RhythmGameManager.DebugBpm / lpb;
             }
         }
 
@@ -207,6 +172,7 @@ namespace NoteGenerating
             get
             {
                 string text = string.Empty;
+                text += IsInverse + "\n";
                 for(int i = 0; i < noteDatas.Length; i++)
                 {
                     var data = noteDatas[i];
@@ -222,10 +188,11 @@ namespace NoteGenerating
             set
             {
                 var dataTexts = value.Split("\n");
-                var noteDatas = new NoteData[dataTexts.Length];
-                for(int i = 0; i < dataTexts.Length; i++)
+                SetInverse(bool.Parse(dataTexts[0]));
+                var noteDatas = new NoteData[dataTexts.Length - 1];
+                for(int i = 0; i < dataTexts.Length - 1; i++)
                 {
-                    var contents = dataTexts[i].Split(' ');
+                    var contents = dataTexts[i + 1].Split(' ');
                     noteDatas[i] = new NoteData(
                         Enum.Parse<CreateNoteType>(contents[0]),
                         float.Parse(contents[1]),

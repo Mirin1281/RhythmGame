@@ -13,7 +13,7 @@ namespace NoteGenerating
         #pragma warning disable 0414
         [SerializeField, TextArea] string description;
         #pragma warning restore 0414
-        [SerializeField] Fumen fumen;
+        [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }
 

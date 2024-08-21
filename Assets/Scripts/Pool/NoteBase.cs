@@ -1,16 +1,22 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
+public enum NoteType
+{
+    _None, // Normalと間違えやすいため
+    Normal,
+    Slide,
+    Hold,
+    Flick,
+    Arc,
+}
+
 public abstract class NoteBase : PooledBase
 {
     [SerializeField] NoteType type;
     public NoteType Type => type;
 
     public virtual Vector3 GetPos() => transform.localPosition;
-    public virtual void SetPos(Vector2 pos)
-    {
-        transform.localPosition = new Vector3(pos.x, pos.y);
-    }
     public virtual void SetPos(Vector3 pos)
     {
         transform.localPosition = pos;

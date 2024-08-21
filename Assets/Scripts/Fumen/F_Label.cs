@@ -3,8 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("ラベル"), System.Serializable]
-    public class F_Label : Generator_Type1
+    [AddTypeMenu("◆ラベル"), System.Serializable]
+    public class F_Label : NoteGeneratorBase
     {
         [SerializeField] string summary;
 

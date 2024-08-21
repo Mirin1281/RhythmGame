@@ -1,6 +1,5 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System;
 
 namespace NoteGenerating
@@ -20,9 +19,8 @@ namespace NoteGenerating
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
             var camera = Camera.main;
-            await UniTask.Delay(System.TimeSpan.FromSeconds(moveTime), cancellationToken: Helper.Token);
-            _ = camera.DOShakePosition(0.3f, 1, 20);
-            _ = camera.DOShakeRotation(0.3f, 1, 20);
+            await WaitSeconds(moveTime);
+            CameraShake(camera, 10, 0.4f);
         }
 
         void Create(Vector2 startPos, float rotationSpeed)
@@ -41,6 +39,15 @@ namespace NoteGenerating
             });
             float expectTime = CurrentTime + moveTime;
             Helper.NoteInput.AddExpect(new NoteExpect(note, new Vector2(startPos.x, From), expectTime));
+        }
+
+        void CameraShake(Camera camera, float strength, float time)
+        {
+            camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
+            WhileYield(time, t => 
+            {
+                camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
+            });
         }
     }
 }

@@ -3,32 +3,19 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 namespace NoteGenerating
 {
-    [AddTypeMenu("アーク"), System.Serializable]
-    public class F_Arc : Generator_Type1
+    [AddTypeMenu("◆アーク"), System.Serializable]
+    public class F_Arc : Generator_3D
     {
-        [SerializeField] DebugSphere prefab;
+        [SerializeField] DebugSphere debugSpherePrefab;
         [SerializeField] ArcColorType defaultColor = ArcColorType.Red;
         [SerializeField] ArcCreateData[] datas;
 
-        protected override float Speed => RhythmGameManager.Speed3D;
-
         protected override async UniTask GenerateAsync()
         {
-            CreateArc(datas, defaultColor);
+            Arc(datas, defaultColor);
             await UniTask.CompletedTask;
-            /*var arc = Helper.ArcNotePool.GetNote();
-            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
-            arc.SetColor(defaultColor, IsInverse);
-
-            var startPos = new Vector3(0, 0f, StartBase);
-            DropAsync(arc, startPos).Forget();
-            Helper.NoteInput.AddArc(arc);*/
         }
 
         protected override Color GetCommandColor()
@@ -59,37 +46,22 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            int judgeCount = 0;
-            for(int i = 0; i < datas.Length; i++)
-            {
-                if(i == datas.Length - 1) break;
-                if(datas[i].IsJudgeDisable == false)
-                {
-                    judgeCount++;
-                }
-            }
-            return $"判定数: {judgeCount}";
+            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}";
         }
 
         protected override async void Preview()
         {
-            float interval = RhythmGameManager.DebugNoteInterval;
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
-            Selection.activeGameObject = arc.gameObject;
-            arc.SetActive(true);
-            await arc.DebugCreateNewArcAsync(datas, interval, Speed, IsInverse, prefab);
-            arc.SetColor(defaultColor, IsInverse);
-
-            string findName = RhythmGameManager.DebugNotePreviewObjName;
-            GameObject previewParent = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-                .Where(obj => obj.name == findName)
-                .FirstOrDefault();
-            previewParent.SetActive(true);
-            foreach(var child in previewParent.transform.OfType<Transform>().ToArray())
+            if(arc == null)
             {
-                GameObject.DestroyImmediate(child.gameObject);
+                Debug.LogWarning("ヒエラルキー上にアークノーツを設置してください");
+                return;
             }
+            arc.SetActive(true);
+            arc.SetColor(defaultColor, IsInverse);
+            await arc.DebugCreateNewArcAsync(datas, RhythmGameManager.DebugBpm, Speed, IsInverse, debugSpherePrefab);
 
+            GameObject previewObj = MyUtility.GetPreviewObject();
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
@@ -97,15 +69,15 @@ namespace NoteGenerating
                 var line = Helper.LinePool.GetLine();
                 line.transform.localPosition = new Vector3(0, 0, lineY);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
-                line.transform.parent = previewParent.transform;
-                lineY += GetInterval(4) * Speed;
+                line.transform.parent = previewObj.transform;
+                lineY += GetDistanceInterval(4);
             }
 
 
-            float GetInterval(float lpb)
+            float GetDistanceInterval(float lpb)
             {
                 if(lpb == 0) return 0;
-                return 240f / interval / lpb;
+                return 240f / RhythmGameManager.DebugBpm / lpb * Speed;
             }
         }
 
@@ -114,14 +86,15 @@ namespace NoteGenerating
             get
             {
                 string text = string.Empty;
+                text += IsInverse + "\n";
                 for(int i = 0; i < datas.Length; i++)
                 {
-                    var data = datas[i];
-                    text += data.Pos + "|";
-                    text += data.VertexMode + "|";
-                    text += data.IsJudgeDisable + "|";
-                    text += data.BehindJudgeRange + "|";
-                    text += data.AheadJudgeRange;
+                    var d = datas[i];
+                    text += d.Pos + "|";
+                    text += d.VertexMode + "|";
+                    text += d.IsJudgeDisable + "|";
+                    text += d.BehindJudgeRange + "|";
+                    text += d.AheadJudgeRange;
                     if(i == datas.Length - 1) break;
                     text += "\n";
                 }
@@ -130,12 +103,13 @@ namespace NoteGenerating
             set
             {
                 var dataTexts = value.Split("\n");
-                var datas = new ArcCreateData[dataTexts.Length];
-                for(int i = 0; i < dataTexts.Length; i++)
+                SetInverse(bool.Parse(dataTexts[0]));
+                var datas = new ArcCreateData[dataTexts.Length - 1];
+                for(int i = 0; i < dataTexts.Length - 1;  i++)
                 {
-                    var contents = dataTexts[i].Split('|');
+                    var contents = dataTexts[i + 1].Split('|');
                     datas[i] = new ArcCreateData(
-                        StringToVector3(contents[0]),
+                        contents[1].ToVector3(),
                         Enum.Parse<ArcCreateData.ArcVertexMode>(contents[1]),
                         bool.Parse(contents[2]),
                         float.Parse(contents[3]),
@@ -143,21 +117,6 @@ namespace NoteGenerating
                 }
                 this.datas = datas;
             }
-        }
-
-        static Vector3 StringToVector3(string input)
-        {
-            var elements = input.Trim('(', ')').Split(',');
-            var result = Vector3.zero;
-            var elementCount = Mathf.Min(elements.Length, 3);
-
-            for (var i = 0; i < elementCount; i++)
-            {
-                float.TryParse(elements[i], out float value);
-                result[i] = value;
-            }
-
-            return result;
         }
     }
 }

@@ -15,36 +15,29 @@ public class Metronome : MonoBehaviour
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
 
-    bool addTime;
     float bpm;
+    bool addTime;
     double currentTime;
-    double interval;
-    int bpmChangeCount;
-    int beatCount;
+    
     CriAtomExPlayback playback;
+    int bpmChangeCount;
+    double BeatInterval => 60d / bpm;
 
     /// <summary>
     /// (ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
     public float CurrentTime => (float)currentTime + musicData.Offset + RhythmGameManager.Offset;
-    public float Bpm
-    {
-        get => bpm;
-        private set
-        {
-            bpm = value;
-            interval = 60d / bpm;
-        }
-    }
-    public int BeatCount => beatCount - musicData.StartBeatOffset;
+    public float Bpm => bpm;
 
     void Start()
     {
 #if UNITY_EDITOR
         EditorApplication.pauseStateChanged += SwitchMusic;
+#else
+        skipOnStart = false;
 #endif
-        Bpm = musicData.Bpm;
+        bpm = musicData.Bpm;
 
         if(string.IsNullOrEmpty(musicData.SheetName))
         {
@@ -67,19 +60,19 @@ public class Metronome : MonoBehaviour
             UpdateTimerAsync().Forget();
         }
     }
+#if UNITY_EDITOR
     void OnDestroy()
     {
-#if UNITY_EDITOR
         EditorApplication.pauseStateChanged -= SwitchMusic;
-#endif
     }
+#endif
 
     async UniTask UpdateTimerAsync()
     {
         addTime = true;
+        int beatCount = 0;
         double baseTime = Time.timeAsDouble - currentTime;
-        beatCount = 0;
-        double nextBeat = interval;
+        double nextBeat = BeatInterval;
         while(true)
         {
             currentTime = Time.timeAsDouble - baseTime;
@@ -87,13 +80,13 @@ public class Metronome : MonoBehaviour
             {
                 if(musicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
                 {
-                    Bpm = musicData.GetChangeBPM(bpmChangeCount);
+                    bpm = musicData.GetChangeBPM(bpmChangeCount);
                     bpmChangeCount++;
                 }
                 OnBeat?.Invoke(beatCount - musicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
                 
                 beatCount++;
-                nextBeat += interval;
+                nextBeat += BeatInterval;
             }
             await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, destroyCancellationToken);
         }
@@ -113,6 +106,7 @@ public class Metronome : MonoBehaviour
     {
         addTime = true;
         playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
+        UpdateTimerAsync().Forget();
     }
     
 #if UNITY_EDITOR

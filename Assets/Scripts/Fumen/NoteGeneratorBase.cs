@@ -33,6 +33,10 @@ namespace NoteGenerating
                 helper = value;
             }
         }
+
+        /// <summary>
+        /// 発火された時間と理想の発火時間との誤差(通常は負の値を取る)
+        /// </summary>
         protected float Delta { get; set; }
 
         protected abstract UniTask GenerateAsync();

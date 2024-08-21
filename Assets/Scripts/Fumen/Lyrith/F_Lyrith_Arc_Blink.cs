@@ -6,24 +6,22 @@ using ArcVertexMode = ArcCreateData.ArcVertexMode;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/アークとスカイ 点滅"), System.Serializable]
-    public class F_Lyrith_Arc_Blink : Generator_Type1
+    public class F_Lyrith_Arc_Blink : Generator_3D
     {
         [SerializeField] float decay = 3f;
         List<ArcNote> arcs;
         List<SkyNote> skys;
-        protected override float Speed => RhythmGameManager.Speed3D;
-
         protected override async UniTask GenerateAsync()
         {
             arcs = new(2);
             skys = new(4);
 
-            CreateArc(new ArcCreateData[]
+            MyArc(new ArcCreateData[]
             {
                 new(new(6, 0, 0), ArcVertexMode.Linear, false, 0, 3),
                 new(new(0, 0, 3), ArcVertexMode.Linear),
             }, ArcColorType.Red, true).Forget();
-            CreateArc(new ArcCreateData[]
+            MyArc(new ArcCreateData[]
             {
                 new(new(-6, 0, 0), ArcVertexMode.Linear, false, 0, 3),
                 new(new(0, 0, 3), ArcVertexMode.Linear),
@@ -31,13 +29,13 @@ namespace NoteGenerating
 
             await Wait(2);
 
-            SkyNote(-2, 0, true).Forget();
-            SkyNote(2, 0).Forget();
+            MySky(-2, 0, true).Forget();
+            MySky(2, 0).Forget();
 
             await Wait(4);
 
-            SkyNote(-4, 0).Forget();
-            SkyNote(4, 0).Forget();
+            MySky(-4, 0).Forget();
+            MySky(4, 0).Forget();
         }
 
         async UniTask BlinkLoop()
@@ -59,7 +57,7 @@ namespace NoteGenerating
             }
         }
 
-        async UniTask CreateArc(ArcCreateData[] datas, ArcColorType colorType, bool first = false)
+        async UniTask MyArc(ArcCreateData[] datas, ArcColorType colorType, bool first = false)
         {
             var arc = Helper.ArcNotePool.GetNote();
             arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed / decay, IsInverse).Forget();
@@ -105,7 +103,7 @@ namespace NoteGenerating
             }
         }
 
-        async UniTask SkyNote(float x, float y = 4f, bool first = false)
+        async UniTask MySky(float x, float y = 4f, bool first = false)
         {
             var skyNote = Helper.SkyNotePool.GetNote();
             var startPos = new Vector3(GetInverse(x), y, StartBase);
@@ -122,19 +120,6 @@ namespace NoteGenerating
             {
                 skys.ForEach(sky => sky.SetRendererEnabled(true));
                 skys.Clear();
-            }
-
-            async UniTask DropAsync(SkyNote sky, Vector3 startPos)
-            {
-                float baseTime = CurrentTime - Delta;
-                float time = 0f;
-                var vec = Speed * Vector3.back;
-                while (sky.IsActive && time < 5f)
-                {
-                    time = CurrentTime - baseTime;
-                    sky.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
-                }
             }
         }
 

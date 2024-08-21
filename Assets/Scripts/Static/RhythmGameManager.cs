@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using NoteGenerating;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,13 +14,14 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static float Speed3D = 80f;
     public static float Offset;
 
-    public static readonly float DebugNoteInterval = 200;
-    public static readonly string DebugNotePreviewObjName = "Preview2D";
+    public static readonly float DebugBpm = 200;
 
     protected override void Awake()
     {
         base.Awake();
         Application.targetFrameRate = 60;
+        Speed = 16f;
+        Speed3D = 80f;
         
         //DontDestroyOnLoad(this);
     }
@@ -27,5 +30,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     static void ResetOffset()
     {
         Offset = 0;
+    }
+
+    void OnApplicationQuit()
+    {
+        Speed = 16f;
+        Speed3D = 80f;
     }
 }

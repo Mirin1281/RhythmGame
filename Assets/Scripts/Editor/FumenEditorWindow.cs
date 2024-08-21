@@ -411,7 +411,7 @@ namespace NoteGenerating.Editor
         {
             Undo.RecordObject(this, "Add Command");
             selectedCommandList.Clear();
-            GenerateData newCommand = FumenEditorUtility.CreateGenerateData($"CommandData_{activeFumenData.name}");
+            GenerateData newCommand = FumenEditorUtility.CreateGenerateData($"GenerateData_{activeFumenData.name}");
 
             int insertIndex = commandList.IndexOf(lastSelectedCommand) + 1;
             if (commandList == null || commandList.Count == 0)

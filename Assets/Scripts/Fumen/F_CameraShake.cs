@@ -1,13 +1,14 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System;
 
 namespace NoteGenerating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_CameraShake")]
-    [AddTypeMenu("カメラを揺らす"), System.Serializable]
+    [AddTypeMenu("◆カメラを揺らす"), System.Serializable]
     public class F_CameraShake : Generator_Type1
     {
-        [System.Serializable]
+        [Serializable]
         class CameraShakeStatus
         {
             public bool enable = true;
@@ -21,32 +22,30 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            if(statuses == null) return;
-            Camera camera = Camera.main;
+            var camera = Camera.main;
             int count = 0;
-            int startBeatCount = Helper.Metronome.BeatCount;
-            Beat(startBeatCount, default);
+            int beatCount = 0;
+            Beat(default, default);
             Helper.Metronome.OnBeat += Beat;
             await UniTask.CompletedTask;
 
 
-            void Beat(int beatCount, float _)
+            void Beat(int _, float __)
             {
                 var status = statuses[count];
-                if(beatCount >= startBeatCount + status.beatTiming)
+                if(beatCount == status.beatTiming)
                 {
                     if(status.enable)
                     {
                         CameraShake(camera, status.strength, status.time);
                     }
-                    
                     count++;
                     if(count == statuses.Length)
                     {
                         Helper.Metronome.OnBeat -= Beat;
-                        return;
                     }
                 }
+                beatCount++;
             }
         }
 
@@ -61,8 +60,12 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            if(statuses == null) return null;
             return statuses.Length.ToString();
+        }
+
+        protected override Color GetCommandColor()
+        {
+            return ConstContainer.UnNoteCommandColor;
         }
     }
 }

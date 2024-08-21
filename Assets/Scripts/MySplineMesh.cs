@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using UnityEngine.Profiling;
 
 public static class MySplineMesh
 {
@@ -64,9 +63,7 @@ public static class MySplineMesh
     static void ExtrudeRing<T, K>(T spline, float t, NativeArray<K> data, int start, int count, float radius) where T : ISpline where K : struct, ISplineVertexData
     {
         float num = math.clamp(t, 0f, 1f);
-        Profiler.BeginSample("Test");
         spline.Evaluate(num, out var position, out var tangent, out var upVector);
-        Profiler.EndSample();
         
         float num2 = math.lengthsq(tangent);
         if (num2 == 0f || float.IsNaN(num2))

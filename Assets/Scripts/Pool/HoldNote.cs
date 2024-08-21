@@ -12,10 +12,12 @@ public class HoldNote : NoteBase
         Missed, // ミスが確定している
         Got, // 終点を取得できている
     }
+
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SpriteMask spriteMask;
-    public NoteGrade Grade { get; set; }
     public InputState State { get; set; }
+    public NoteGrade Grade { get; set; }
+    public float EndTime { get; set; }
 
     public void SetWidth(float width)
     {
@@ -26,11 +28,6 @@ public class HoldNote : NoteBase
     {
         spriteRenderer.size = new Vector2(spriteRenderer.size.x, length);
         spriteMask.transform.localScale = new Vector3(spriteRenderer.size.x, spriteMask.transform.localScale.y);
-    }
-    public void SetScale(Vector2 scale)
-    {
-        spriteRenderer.size = scale;
-        spriteMask.transform.localScale = new Vector3(scale.x, scale.y);
     }
 
     public void SetSortingOrder(int order)
@@ -45,10 +42,6 @@ public class HoldNote : NoteBase
     /// ホールドの着地地点の座標
     /// </summary>
     public Vector2 GetLandingPos() => spriteMask.transform.position;
-    public override void SetPos(Vector2 pos)
-    {
-        spriteRenderer.transform.localPosition = new Vector3(pos.x, pos.y);
-    }
     public override void SetPos(Vector3 pos)
     {
         spriteRenderer.transform.localPosition = pos;

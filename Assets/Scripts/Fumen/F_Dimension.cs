@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("3D 2D変更"), System.Serializable]
+    [AddTypeMenu("◆3D 2D変更"), System.Serializable]
     public class F_Dimension : Generator_Type1
     {
         enum MoveType
@@ -14,27 +14,29 @@ namespace NoteGenerating
         [SerializeField] MoveType moveType;
         [SerializeField] float time = 1f;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
-        [SerializeField] float delay = 0f;
+        [SerializeField, Min(0)] float delay = 0f;
 
         protected override async UniTask GenerateAsync()
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(delay), cancellationToken: Helper.Token);
+            if(delay > 0)
+            {
+                await UniTask.Delay(System.TimeSpan.FromSeconds(delay), cancellationToken: Helper.Token);
+            }
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             if(moveType == MoveType.Move2DTo3D)
             {
                 rendererShower.ShowLaneAsync(time).Forget();
-                Move2DTo3D();
+                Move2DTo3D(Camera.main);
             }
             else if(moveType == MoveType.Move3DTo2D)
             {
                 rendererShower.HideLaneAsync(time).Forget();
-                Move3DTo2D();
+                Move3DTo2D(Camera.main);
             }
         }
 
-        void Move2DTo3D()
+        void Move2DTo3D(Camera camera)
         {
-            var camera = Camera.main;
             var startPos = camera.transform.localPosition;
             var startRotate = camera.transform.localEulerAngles;
             WhileYield(time, t => 
@@ -51,9 +53,8 @@ namespace NoteGenerating
             });
         }
 
-        void Move3DTo2D()
+        void Move3DTo2D(Camera camera)
         {
-            var camera = Camera.main;
             var startPos = camera.transform.localPosition;
             var startRotate = camera.transform.localEulerAngles;
             WhileYield(time, t => 
@@ -74,7 +75,7 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return new Color(0.8f, 0.5f, 0.7f);
+            return ConstContainer.UnNoteCommandColor;
         }
 
         protected override string GetSummary()

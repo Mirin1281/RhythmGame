@@ -3,6 +3,17 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
+public enum NoteGrade
+{
+    None,
+    Perfect,
+    FastGreat,
+    LateGreat,
+    FastFar,
+    LateFar,
+    Miss,
+}
+
 public class Judgement : MonoBehaviour
 {
     [SerializeField] TMP_Text comboText;
@@ -13,7 +24,7 @@ public class Judgement : MonoBehaviour
 
     int combo;
 
-    const float Range = 2.1f;
+    const float Range = 2.2f;
     public bool IsNearPosition(Vector2 pos1, Vector2 pos2, float rangeW = Range)
     {
         var sqrDistance = Vector2.SqrMagnitude(pos1 - pos2);
@@ -36,7 +47,7 @@ public class Judgement : MonoBehaviour
         comboText.SetText(combo.ToString());
     }
 
-    public NoteGrade GetGradeApplyText(float delta)
+    public NoteGrade GetGradeAndSetText(float delta)
     {
         var grade = GetGrade(delta);
         deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
@@ -94,20 +105,16 @@ public class Judgement : MonoBehaviour
         }
         return null;
     }
-    public void SetLightPos(ArcNote arcNote, Vector2 pos)
-    {
-        LightParticle light = GetLight(arcNote);
-        if(light != null)
-        {
-            light.SetPos(pos);
-        }
-    }
-    public void SetShowLight(ArcNote arcNote, bool enabled)
+    public void SetShowLight(ArcNote arcNote, Vector2 pos, bool enabled)
     {
         LightParticle light = GetLight(arcNote);
         if(light != null)
         {
             light.IsActive = enabled;
+            if(enabled)
+            {
+                light.SetPos(pos);
+            }
         }
     }
     public void RemoveLink(ArcNote arcNote)

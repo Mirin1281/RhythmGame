@@ -5,8 +5,7 @@ public class NoteParticle : PooledBase
 {
     [SerializeField] ParticleSystem particle;
 
-    public void Play() => PlayAsync().Forget();
-    async UniTask PlayAsync()
+    public async UniTask PlayAsync()
     {
         particle.Play();
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f), cancellationToken: destroyCancellationToken);
