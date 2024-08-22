@@ -42,7 +42,6 @@ namespace NoteGenerating
         protected abstract UniTask GenerateAsync();
         void INoteGeneratable.Generate(NoteGenerateHelper helper, float delta)
         {
-            if(delta > 3) return;
             Helper = helper;
             Delta = delta;
             GenerateAsync().Forget();

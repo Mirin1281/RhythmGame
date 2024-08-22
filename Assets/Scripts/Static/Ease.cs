@@ -30,15 +30,19 @@ readonly struct Easing
 
     public Easing(float start, float from, float easeTime, EaseType type)
     {
-        this.type = type;
+        this.type = easeTime == 0 ? EaseType.INTERNAL_Zero : type;
         this.start = start;
-        this.inversedEaseTime = 1f / easeTime;
+        this.inversedEaseTime = 1f / easeTime == 0 ? 0.001f : easeTime;
         this.delta = from - start;
     }
 
     public static float Ease(float start, float from, float easeTime, EaseType type, float time)
     {
         float t = time / easeTime;
+        if(easeTime == 0)
+        {
+            type = EaseType.INTERNAL_Zero;
+        }
         float v = Operate(type, t);
         return start + (from - start) * v;
     }
@@ -54,6 +58,8 @@ readonly struct Easing
     {
         return type switch
         {
+            EaseType.None => t,
+            
             EaseType.InQuad => Pow(t, 2),
             EaseType.InCubic => Pow(t, 3),
             EaseType.InQuart => Pow(t, 4),
@@ -123,6 +129,8 @@ readonly struct Easing
                 t < 0.5f
                     ? (1 - EaseOutBounce(1 - 2 * t)) / 2f
                     : (1 + EaseOutBounce(2 * t - 1)) / 2f,
+
+            EaseType.INTERNAL_Zero => 1f,
 
             _ => throw new ArgumentOutOfRangeException()
         };
@@ -206,4 +214,5 @@ public enum EaseType
     InBounce,
     OutBounce,
     InOutBounce,
+    INTERNAL_Zero,
 }

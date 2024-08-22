@@ -56,6 +56,11 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
+            if(time == 0)
+            {
+                action?.Invoke(time);
+                return;
+            }
             float baseTime = CurrentTime - Delta;
             float t = 0f;
             while(t < time)

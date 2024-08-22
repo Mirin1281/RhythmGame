@@ -61,7 +61,10 @@ namespace NoteGenerating
             for(int i = 0; i < noteDatas.Length; i++)
             {
                 var data = noteDatas[i];
-                SkyNote(data.Pos, z);
+                if(data.Disable == false)
+                {
+                    SkyNote(data.Pos, z);
+                }
                 z += GetDistanceInterval(data.Wait);
             }
 

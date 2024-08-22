@@ -153,7 +153,6 @@ public class ArcNote : NoteBase
             var knot = Spline[i];
             if(datas[i].IsJudgeDisable)
             {
-                i++;
                 continue;
             }
             else
@@ -183,7 +182,6 @@ public class ArcNote : NoteBase
             redSphere.transform.localPosition = endPos;
             redSphere.transform.localScale = 0.9f * Vector3.one;
             redSphere.SetColor(new Color(1, 0, 0, 0.5f));
-            i++;
         }
 
 #if UNITY_EDITOR

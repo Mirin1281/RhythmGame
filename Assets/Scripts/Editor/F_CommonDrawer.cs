@@ -92,7 +92,7 @@ namespace NoteGenerating.Editor
 
             if(noteDatasProp.isExpanded == false) return;
 
-            GUILayoutUtility.GetRect(0, 140 + noteDatasProp.arraySize * (EditorGUIUtility.singleLineHeight + 1));
+            GUILayoutUtility.GetRect(0, 140 + noteDatasProp.arraySize * (EditorGUIUtility.singleLineHeight + 2));
 
             var endProperty = noteDatasProp.GetEndProperty();
             noteDatasProp.NextVisible(true);

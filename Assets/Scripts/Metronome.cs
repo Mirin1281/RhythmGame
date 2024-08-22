@@ -48,16 +48,22 @@ public class Metronome : MonoBehaviour
             criAtomSource.cueSheet = musicData.CueName;
         }
 
+        int beatCount = 0;
         if(skipOnStart)
         {
             float skipTime = criAtomSource.GetLength() * timeRate;
             criAtomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
+            beatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - 10;
+            if(beatCount < 0)
+            {
+                beatCount = 0;
+            }
         }
         if(autoStart)
         {
             playback = criAtomSource.Play();
-            UpdateTimerAsync().Forget();
+            UpdateTimerAsync(beatCount).Forget();
         }
     }
 #if UNITY_EDITOR
@@ -67,12 +73,11 @@ public class Metronome : MonoBehaviour
     }
 #endif
 
-    async UniTask UpdateTimerAsync()
+    async UniTask UpdateTimerAsync(int beatCount = 0)
     {
         addTime = true;
-        int beatCount = 0;
         double baseTime = Time.timeAsDouble - currentTime;
-        double nextBeat = BeatInterval;
+        double nextBeat = BeatInterval * (beatCount + 1);
         while(true)
         {
             currentTime = Time.timeAsDouble - baseTime;
