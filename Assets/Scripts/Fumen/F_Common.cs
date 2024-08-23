@@ -88,12 +88,12 @@ namespace NoteGenerating
             return $"{s} : {summary}{GetInverseSummary()}";
         }
 
-        protected override void OnSelect()
+        public override void OnSelect()
         {
             Preview();
         }
 
-        protected override void Preview()
+        public override void Preview()
         {
             GameObject previewObj = MyUtility.GetPreviewObject();
             float y = 0f;
@@ -127,35 +127,29 @@ namespace NoteGenerating
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                if(lineY > y) break;
                 var line = Helper.LinePool.GetLine();
                 line.transform.localPosition = new Vector3(0, lineY);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewObj.transform;
                 lineY += GetTimeInterval(4) * Speed;
+                if(lineY > y) break;
             }
 
             void Note(float x, float y, NoteType type)
             {
-                NoteBase note = type switch
-                {
-                    NoteType.Normal => Helper.NormalNotePool.GetNote(),
-                    NoteType.Slide => Helper.SlideNotePool.GetNote(),
-                    NoteType.Flick => Helper.FlickNotePool.GetNote(),
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-                var startPos = new Vector3(GetInverse(x), y);
+                NoteBase note = Helper.GetNote(type);
+                var startPos = new Vector3(Inverse(x), y);
                 note.SetPos(startPos);
                 note.transform.parent = previewObj.transform;
             }
 
             void Hold(float x, float y, float length)
             {
-                var hold = Helper.HoldNotePool.GetNote();
+                var hold = Helper.GetHold();
                 var holdTime = GetTimeInterval(length);
                 hold.SetLength(holdTime * Speed);
-                hold.SetMaskLocalPos(new Vector2(GetInverse(x), From));
-                var startPos = new Vector3(GetInverse(x), y);
+                hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
+                var startPos = new Vector3(Inverse(x), y);
                 hold.SetPos(startPos);
                 hold.transform.parent = previewObj.transform;
             }

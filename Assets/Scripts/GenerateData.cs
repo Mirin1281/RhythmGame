@@ -1,8 +1,5 @@
 ﻿using System;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace NoteGenerating
 {
@@ -52,18 +49,6 @@ namespace NoteGenerating
         /// コマンド名を取得します
         /// </summary>
         public string GetName() => generatable?.GetName();
-
-        public void Preview()
-        {
-            if(EditorApplication.isPlaying == false)
-                generatable.Preview();
-        }
-
-        public void Select()
-        {
-            if(EditorApplication.isPlaying == false)
-                generatable?.Select();
-        }
 
         /// <summary>
         /// CSV用

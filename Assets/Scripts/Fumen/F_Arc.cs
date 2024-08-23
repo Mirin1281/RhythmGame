@@ -49,7 +49,7 @@ namespace NoteGenerating
             return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}";
         }
 
-        protected override async void Preview()
+        public override async void Preview()
         {
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
             if(arc == null)
@@ -65,12 +65,12 @@ namespace NoteGenerating
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                if(lineY > arc.LastZ) break;
                 var line = Helper.LinePool.GetLine();
                 line.transform.localPosition = new Vector3(0, 0, lineY);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewObj.transform;
                 lineY += GetDistanceInterval(4);
+                if(lineY > arc.LastZ) break;
             }
 
 

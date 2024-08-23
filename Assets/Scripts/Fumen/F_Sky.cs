@@ -53,7 +53,7 @@ namespace NoteGenerating
             return $"{s} : {summary}{GetInverseSummary()}";
         }
 
-        protected override void Preview()
+        public override void Preview()
         {
             GameObject previewObj = MyUtility.GetPreviewObject();
 
@@ -71,18 +71,18 @@ namespace NoteGenerating
             float lineZ = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                if(lineZ > z) break;
                 var line = Helper.LinePool.GetLine();
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewObj.transform;
                 lineZ += GetDistanceInterval(4);
+                if(lineZ > z) break;
             }
 
             void SkyNote(Vector2 pos, float z)
             {
                 SkyNote sky = Helper.SkyNotePool.GetNote();
-                var startPos = new Vector3(GetInverse(pos.x), pos.y, z);
+                var startPos = new Vector3(Inverse(pos.x), pos.y, z);
                 sky.SetPos(startPos);
                 sky.transform.parent = previewObj.transform;
             }

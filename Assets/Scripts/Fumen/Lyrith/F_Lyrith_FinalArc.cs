@@ -21,7 +21,7 @@ namespace NoteGenerating
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
-                new(new(-6, 0, 8), ArcVertexMode.Linear, false, 0, 8),
+                new(new(-6, 0, 4), ArcVertexMode.Linear, false, 0, 8),
                 new(new(-6, 0, 2), ArcVertexMode.Linear),
             },
             ArcColorType.Blue).Forget();
@@ -35,21 +35,22 @@ namespace NoteGenerating
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
-                new(new(-2, 0, 8), ArcVertexMode.Linear, false, 0, 8),
+                new(new(-2, 0, 4), ArcVertexMode.Linear, false, 0, 8),
                 new(new(-2, 0, 2), ArcVertexMode.Linear),
             },
             ArcColorType.Red).Forget();
 
-            await Wait(4, 6); ///////////////////////////////////////////////////
+            await Wait(4, 5); ///////////////////////////////////////////////////
+            await Wait(8, 1);
 
             int[] waits = new int[]
             {
-                8,12,8,12,16,8,16,16,8,12,16,16,12,16,24,16,24,16,16,24,
+                12,12,16,12,16,8,16,16,8,10,8,12,8,16,12,16,24,16,24,24,24,16,24,24
             };
 
             for(int i = 0; i < waits.Length; i++)
             {
-                var speed = Speed + i * 5f;
+                var speed = Speed + i * 7f;
                 if(i < waits.Length / 2)
                 {
                     MyArc2(new ArcCreateData[]
@@ -71,14 +72,14 @@ namespace NoteGenerating
                 {
                     MyArc2(new ArcCreateData[]
                     {
-                        new(new(4, 0, 0), ArcVertexMode.Linear, false, 0, 8),
+                        new(new(6, 0, 0), ArcVertexMode.Linear, false, 0, 8),
                         new(new(-6, 0, 8), ArcVertexMode.Linear),
                     },
                     ArcColorType.Red, speed);
                     await Wait(waits[i]);
                     MyArc2(new ArcCreateData[]
                     {
-                        new(new(4, 0, 0), ArcVertexMode.Linear, false, 0, 8),
+                        new(new(6, 0, 0), ArcVertexMode.Linear, false, 0, 8),
                         new(new(-6, 0, 8), ArcVertexMode.Linear),
                     },
                     ArcColorType.Blue, speed);

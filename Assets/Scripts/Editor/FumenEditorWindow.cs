@@ -336,7 +336,11 @@ namespace NoteGenerating.Editor
                 {
                     selectedCommandList.Add(commandList[i]);
                 }
-                lastSelectedCommand.Select();
+
+                if(EditorApplication.isPlaying == false)
+                {
+                    lastSelectedCommand.GetNoteGeneratorBase()?.OnSelect();
+                }
             }
 
             void OnReorder(ReorderableList list)

@@ -28,12 +28,7 @@ public class NoteInput : MonoBehaviour
     [SerializeField] Metronome metronome;
     [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
-    
-#if UNITY_EDITOR
     [SerializeField] bool isAuto;
-#else
-    bool isAuto = false;
-#endif
 
     readonly List<NoteExpect> allExpects = new(63);
     readonly List<HoldNote> holds = new(4);
@@ -50,6 +45,9 @@ public class NoteInput : MonoBehaviour
 
     void Start()
     {
+#if PLATFORM_ANDROID
+    bool isAuto = false;
+#endif
         judge.ResetCombo();
         if(isAuto) return;
         inputManager.OnInput += OnInput;
@@ -111,7 +109,7 @@ public class NoteInput : MonoBehaviour
         for(int i = 0; i < allExpects.Count; i++)
         {
             var expect = allExpects[i];
-            if(isAuto && metronome.CurrentTime > expect.Time - 0.02f)
+            /*if(isAuto && metronome.CurrentTime > expect.Time - 0.02f)
             {
                 // オート
                 if(expect.Note.Type == NoteType.Hold)
@@ -138,8 +136,8 @@ public class NoteInput : MonoBehaviour
                     RemoveExpect(expect);
                     judge.AddCombo();
                 }
-            }
-            /*if(isAuto && metronome.CurrentTime > expect.Time)
+            }*/
+            if(isAuto && metronome.CurrentTime > expect.Time)
             {
                 // オート
                 if(expect.Note.Type == NoteType.Hold)
@@ -157,7 +155,7 @@ public class NoteInput : MonoBehaviour
                     RemoveExpect(expect);
                     judge.AddCombo();
                 }
-            }*/
+            }
             else if(metronome.CurrentTime > expect.Time + 0.18f)
             {
                 // 遅れたらノーツを除去

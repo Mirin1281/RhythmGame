@@ -10,8 +10,6 @@ namespace NoteGenerating
         string GetName();
         string GetSummary();
         Color GetCommandColor();
-        void Preview();
-        void Select();
     }
 
     [Serializable]
@@ -49,8 +47,6 @@ namespace NoteGenerating
 
         string INoteGeneratable.GetSummary() => GetSummary();
         Color INoteGeneratable.GetCommandColor() => GetCommandColor();
-        void INoteGeneratable.Preview() => Preview();
-        void INoteGeneratable.Select() => OnSelect();
         string INoteGeneratable.GetName()
         {
             if(GetName() == null)
@@ -63,6 +59,8 @@ namespace NoteGenerating
                 return GetName();
             }
         }
+
+        /////////////////// 以下のメソッドは必要に応じてオーバーライドして使います//////////////////////
 
         /// <summary>
         /// 名前を変更します
@@ -79,11 +77,11 @@ namespace NoteGenerating
         /// </summary>
         protected virtual Color GetCommandColor() => new Color(0.9f, 0.9f, 0.9f, 1f);
 
-        protected virtual void Preview() {}
+        public virtual void Preview() {}
 
-        protected virtual void OnSelect() {}
+        public virtual void OnSelect() {}
 
-        public virtual string CSVContent1 { get; set; } = string.Empty;
-        public virtual string CSVContent2 { get; set; } = string.Empty;
+        public virtual string CSVContent1 { get; set; }
+        public virtual string CSVContent2 { get; set; }
     }
 }

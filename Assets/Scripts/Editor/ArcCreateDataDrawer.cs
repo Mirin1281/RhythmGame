@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.Reflection;
-using System;
-using Cysharp.Threading.Tasks;
 
 namespace NoteGenerating.Editor
 {

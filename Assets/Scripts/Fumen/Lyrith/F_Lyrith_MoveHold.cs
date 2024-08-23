@@ -51,14 +51,14 @@ namespace NoteGenerating
             var hold = Helper.HoldNotePool.GetNote();
             var holdTime = 240f / Helper.Metronome.Bpm / length;
             hold.SetLength(holdTime * Speed);
-            hold.SetMaskLocalPos(new Vector2(GetInverse(x), From));
-            var startPos = new Vector3(GetInverse(x), StartBase);
-            MoveAsync(hold, startPos, GetInverse(moveX)).Forget();
+            hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
+            var startPos = new Vector3(Inverse(x), StartBase);
+            MoveAsync(hold, startPos, Inverse(moveX)).Forget();
 
-            float distance = startPos.y - From - Speed * Delta;
+            float distance = startPos.y - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
             float holdEndTime = holdTime + expectTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * GetInverse(moveX), From), expectTime, holdEndTime);
+            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * Inverse(moveX), 0), expectTime, holdEndTime);
             Helper.NoteInput.AddExpect(expect);
         }
 
@@ -71,7 +71,7 @@ namespace NoteGenerating
             {
                 time = CurrentTime - baseTime;
                 hold.SetPos(startPos + time * vec);
-                hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, From));
+                hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, 0));
                 await UniTask.Yield(Helper.Token);
             }
         }

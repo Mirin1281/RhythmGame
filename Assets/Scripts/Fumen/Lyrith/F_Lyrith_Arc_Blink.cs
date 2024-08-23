@@ -106,11 +106,11 @@ namespace NoteGenerating
         async UniTask MySky(float x, float y = 4f, bool first = false)
         {
             var skyNote = Helper.SkyNotePool.GetNote();
-            var startPos = new Vector3(GetInverse(x), y, StartBase);
+            var startPos = new Vector3(Inverse(x), y, StartBase);
             DropAsync(skyNote, startPos).Forget();
             skys.Add(skyNote);
 
-            float distance = startPos.z - From - Speed * Delta;
+            float distance = startPos.z - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
             var expect = new NoteExpect(skyNote, skyNote.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);

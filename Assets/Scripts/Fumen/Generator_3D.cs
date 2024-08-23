@@ -13,7 +13,7 @@ namespace NoteGenerating
         /// <summary>
         /// 反転に対応した値にします
         /// </summary>
-        protected float GetInverse(float x) => x * (isInverse ? -1 : 1);
+        protected float Inverse(float x) => x * (isInverse ? -1 : 1);
 
         /// <summary>
         /// この値を大きくするとWaitの待機ループが
@@ -26,15 +26,8 @@ namespace NoteGenerating
         /// <summary>
         /// ノーツの初期生成地点
         /// </summary>
-        protected float StartBase => 2f * Speed + From + 0.2f;
-        protected float From => 0f;
+        protected float StartBase => 2f * Speed + 0 + 0.2f;
         protected float CurrentTime => Helper.Metronome.CurrentTime;         
-
-        protected float GetTimeInterval(float lpb, int num = 1)
-        {
-            if(lpb == 0) return 0;
-            return 240f / Helper.Metronome.Bpm / lpb * num;
-        }
 
         protected UniTask WaitSeconds(float time) => MyUtility.WaitSeconds(time, Helper.Token);
 
@@ -42,9 +35,13 @@ namespace NoteGenerating
         {
             if(lpb == 0 || num == 0) return Delta;
             float baseTime = CurrentTime;
-            float interval = GetTimeInterval(lpb, num);
-            await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);
-            Delta += CurrentTime - baseTime - interval;
+            float interval = Helper.GetTimeInterval(lpb, num);
+            if(Delta <= interval)
+            {
+                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);
+                Delta += CurrentTime - baseTime;
+            }
+            Delta -= interval;
             return Delta;
         }
 
@@ -58,18 +55,18 @@ namespace NoteGenerating
             }
             if(time == 0)
             {
-                action?.Invoke(time);
+                action.Invoke(time);
                 return;
             }
-            float baseTime = CurrentTime - Delta;
+            float baseTime = CurrentTime - delta;
             float t = 0f;
             while(t < time)
             {
                 t = CurrentTime - baseTime;
-                action?.Invoke(t);
+                action.Invoke(t);
                 await UniTask.Yield(Helper.Token);
             }
-            action?.Invoke(time);
+            action.Invoke(time);
         }
 
         protected async UniTask<float> SkyLoop(float lpb, params Vector2?[] nullablePoses)
@@ -91,7 +88,7 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            ArcNote arc = Helper.ArcNotePool.GetNote();
+            ArcNote arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
             var startPos = new Vector3(0, 0f, StartBase);
@@ -106,11 +103,11 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            SkyNote sky = Helper.SkyNotePool.GetNote();
-            var startPos = new Vector3(GetInverse(pos.x), pos.y, StartBase);
+            SkyNote sky = Helper.GetSky();
+            var startPos = new Vector3(Inverse(pos.x), pos.y, StartBase);
             DropAsync(sky, startPos, delta).Forget();
 
-            float distance = startPos.z - From - Speed * Delta;
+            float distance = startPos.z - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
             var expect = new NoteExpect(sky, sky.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);

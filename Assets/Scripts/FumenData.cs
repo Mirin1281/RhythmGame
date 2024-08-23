@@ -10,9 +10,6 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
-        #pragma warning disable 0414
-        [SerializeField, TextArea] string description;
-        #pragma warning restore 0414
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }

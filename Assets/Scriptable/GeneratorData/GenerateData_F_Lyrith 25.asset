@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: GenerateData_F_Lyrith 7
+  m_Name: GenerateData_F_Lyrith 25
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 165
+  beatTiming: 102
   generatable:
-    rid: 932862426347470849
+    rid: 932862479532556288
   references:
     version: 2
     RefIds:
-    - rid: 932862426347470849
-      type: {class: F_Dimension, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 932862479532556288
+      type: {class: F_NotesBlink, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        moveType: 1
-        time: 0.8
-        easeType: 6
-        delay: 0
-        isRotateClamp: 1
+        target: 15
+        delay: 0.1
+        blinkCount: 10
+        seed: 223
+        isDelayOneFrame: 1

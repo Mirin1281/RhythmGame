@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("Lyrith/ノーツ点滅しながら上昇"), System.Serializable]
-    public class F_Lyrith_BlinkNotes : Generator_Type1
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_BlinkNotes")]
+    [AddTypeMenu("Lyrith/【演出】ノーツ上昇"), System.Serializable]
+    public class F_Lyrith_NoteEffect2 : Generator_Type1
     {
         protected override async UniTask GenerateAsync()
         {
@@ -16,7 +17,6 @@ namespace NoteGenerating
                 float a = i - count / 2f + 0.5f;
                 slide.SetPos(new Vector2(a, a * 0.5f + 4f));
                 MoveAndRotateAsync(slide).Forget();
-                BlinkAsync(slide).Forget();
             }
         }
 
@@ -31,20 +31,6 @@ namespace NoteGenerating
                 note.SetRotate(90 + t * 100f);
             });
             note.SetActive(false);
-        }
-
-        async UniTask BlinkAsync(SlideNote slide)
-        {
-            var rand = new System.Random(222);
-            while(slide.IsActive)
-            {
-                int waitFrame = rand.Next(1, 5);
-                await UniTask.DelayFrame(waitFrame, cancellationToken: Helper.Token);
-                slide.SetRendererEnabled(false);
-                waitFrame = rand.Next(1, 3);
-                await UniTask.DelayFrame(waitFrame, cancellationToken: Helper.Token);
-                slide.SetRendererEnabled(true);
-            }
         }
     }
 }

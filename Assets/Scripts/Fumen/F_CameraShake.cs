@@ -4,7 +4,6 @@ using System;
 
 namespace NoteGenerating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_CameraShake")]
     [AddTypeMenu("◆カメラを揺らす"), System.Serializable]
     public class F_CameraShake : Generator_Type1
     {

@@ -16,6 +16,7 @@ namespace NoteGenerating
         [SerializeField] float time = 1f;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField, Min(0)] float delay = 0f;
+        [SerializeField] bool isRotateClamp = true;
 
         protected override async UniTask GenerateAsync()
         {
@@ -42,36 +43,83 @@ namespace NoteGenerating
         {
             var startPos = camera.transform.localPosition;
             var startRotate = camera.transform.localEulerAngles;
-            WhileYield(time, t => 
+            if(isRotateClamp)
             {
-                camera.transform.SetLocalPositionAndRotation(
-                    new Vector3(
-                        GetEaseValue(startPos.x, 0f, t),
-                        GetEaseValue(startPos.y, 7f, t),
-                        GetEaseValue(startPos.z, -6.5f, t)),
-                    Quaternion.Euler(
-                        GetEaseValue(startRotate.x, 25f, t),
-                        GetEaseValue(startRotate.y, 0f, t),
-                        GetEaseValue(startRotate.z, 0f, t)));
-            });
+                WhileYield(time, t => 
+                {
+                    camera.transform.SetLocalPositionAndRotation(
+                        new Vector3(
+                            GetEaseValue(startPos.x, 0f, t),
+                            GetEaseValue(startPos.y, 7f, t),
+                            GetEaseValue(startPos.z, -6.5f, t)),
+                        Quaternion.Euler(
+                            GetEaseValue(startRotate.x, GetNormalizedAngle(25f, startRotate.x - 180, startRotate.x + 180), t),
+                            GetEaseValue(startRotate.y, GetNormalizedAngle(0, startRotate.y - 180, startRotate.y + 180), t),
+                            GetEaseValue(startRotate.z, GetNormalizedAngle(0, startRotate.z - 180, startRotate.z + 180), t))
+                    );
+                });
+            }
+            else
+            {
+                WhileYield(time, t => 
+                {
+                    camera.transform.SetLocalPositionAndRotation(
+                        new Vector3(
+                            GetEaseValue(startPos.x, 0f, t),
+                            GetEaseValue(startPos.y, 7f, t),
+                            GetEaseValue(startPos.z, -6.5f, t)),
+                        Quaternion.Euler(
+                            GetEaseValue(startRotate.x, 25f, t),
+                            GetEaseValue(startRotate.y, 0, t),
+                            GetEaseValue(startRotate.z, 0, t))
+                    );
+                });
+            }
+            
         }
 
         void Move3DTo2D(Camera camera)
         {
             var startPos = camera.transform.localPosition;
             var startRotate = camera.transform.localEulerAngles;
-            WhileYield(time, t => 
+            if(isRotateClamp)
             {
-                camera.transform.SetLocalPositionAndRotation(
-                    new Vector3(
-                        GetEaseValue(startPos.x, 0f, t),
-                        GetEaseValue(startPos.y, 4f, t),
-                        GetEaseValue(startPos.z, -10f, t)),
-                    Quaternion.Euler(
-                        GetEaseValue(startRotate.x, 0f, t),
-                        GetEaseValue(startRotate.y, 0f, t),
-                        GetEaseValue(startRotate.z, 0f, t)));
-            });
+                WhileYield(time, t => 
+                {
+                    camera.transform.SetLocalPositionAndRotation(
+                        new Vector3(
+                            GetEaseValue(startPos.x, 0f, t),
+                            GetEaseValue(startPos.y, 4f, t),
+                            GetEaseValue(startPos.z, -10f, t)),
+                        Quaternion.Euler(
+                            GetEaseValue(startRotate.x, GetNormalizedAngle(0, startRotate.x - 180, startRotate.x + 180), t),
+                            GetEaseValue(startRotate.y, GetNormalizedAngle(0, startRotate.y - 180, startRotate.y + 180), t),
+                            GetEaseValue(startRotate.z, GetNormalizedAngle(0, startRotate.z - 180, startRotate.z + 180), t))
+                    );
+                });
+            }
+            else
+            {
+                WhileYield(time, t => 
+                {
+                    camera.transform.SetLocalPositionAndRotation(
+                        new Vector3(
+                            GetEaseValue(startPos.x, 0f, t),
+                            GetEaseValue(startPos.y, 4f, t),
+                            GetEaseValue(startPos.z, -10f, t)),
+                        Quaternion.Euler(
+                            GetEaseValue(startRotate.x, 0, t),
+                            GetEaseValue(startRotate.y, 0, t),
+                            GetEaseValue(startRotate.z, 0, t))
+                    );
+                });
+            }
+            
+        }
+
+        static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
+        {
+            return Mathf.Repeat(angle - min, max - min) + min;
         }
 
         float GetEaseValue(float start, float from, float t) => t.Ease(start, from, time, easeType);
@@ -97,7 +145,7 @@ namespace NoteGenerating
         {
             get
             {
-                return moveType + "|" + time + "|" + easeType + "|" + delay;
+                return moveType + "|" + time + "|" + easeType + "|" + delay + "|" + isRotateClamp;
             }
             set
             {
@@ -106,6 +154,7 @@ namespace NoteGenerating
                 time = float.Parse(texts[1]);
                 easeType = Enum.Parse<EaseType>(texts[2]);
                 delay = float.Parse(texts[3]);
+                isRotateClamp = bool.Parse(texts[4]);
             }
         }
     }

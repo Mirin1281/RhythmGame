@@ -19,12 +19,14 @@ namespace NoteGenerating
                     if (Event.current.keyCode == KeyCode.Period || Event.current.keyCode == KeyCode.Slash)
                     {
                         var window = EditorWindow.GetWindow<FumenEditorWindow>();
+                        if(window == null) return;
                         var command = window.LastSelectedCommand;
-                        if(command != null)
-                        {
-                            command.Preview();
-                            Undo.RecordObject(command, "NotePreview");
-                        }
+                        if(command == null) return;
+                        var generatorBase = command.GetNoteGeneratorBase();
+                        if(generatorBase == null) return;
+
+                        generatorBase.Preview();
+                        Undo.RecordObject(command, "NotePreview");
                     }
                 }
 

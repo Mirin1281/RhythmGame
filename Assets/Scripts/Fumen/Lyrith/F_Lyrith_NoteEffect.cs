@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("Lyrith/ノーツで演出"), System.Serializable]
+    [AddTypeMenu("Lyrith/【演出】花火みたいな"), System.Serializable]
     public class F_Lyrith_NoteEffect : Generator_Type1
     {
         [SerializeField] float speed = 3f;
@@ -16,14 +16,14 @@ namespace NoteGenerating
             var list = new List<NoteBase>(30);
             var camera = Camera.main;
 
-            await Wait(4, 6);
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             //CameraShake(camera, 10, 0.3f);
             CreateNotes(new Vector2(-3, 4), NoteType.Slide);
             await Wait(4);
-            //CameraShake(camera, -6, 0.3f);
+            CameraShake(camera, -6, 0.3f);
             CreateNotes(new Vector2(0, 4), NoteType.Flick, true);
             await Wait(4);
-            //CameraShake(camera, 10, 0.3f);
+            CameraShake(camera, 10, 0.3f);
             CreateNotes(new Vector2(3, 4), NoteType.Slide);
             await Wait(4);
 
