@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HoldNotePool : PoolBase<HoldNote>
@@ -9,5 +10,10 @@ public class HoldNotePool : PoolBase<HoldNote>
         holdNote.Grade = NoteGrade.None;
         holdNote.SetWidth(2.5f);
         return holdNote;
+    }
+
+    public List<HoldNote> GetAllNotes(int index = 0)
+    {
+        return PooledTable[index];
     }
 }

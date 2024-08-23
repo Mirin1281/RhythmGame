@@ -11,4 +11,9 @@ public class SlideNotePool : PoolBase<SlideNote>
         slideNote.SetWidth(3f);
         return slideNote;
     }
+
+    public List<SlideNote> GetAllNotes(int index = 0)
+    {
+        return PooledTable[index];
+    }
 }

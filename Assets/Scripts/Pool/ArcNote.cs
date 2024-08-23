@@ -239,7 +239,7 @@ public class ArcNote : NoteBase
         return judges[JudgeIndex];
     }
 
-    public async UniTask InvalidArcJudgeAsync(float time)
+    public async UniTask InvalidArcJudgeAsync(float time = 1f)
     {
         IsInvalid = true;
         var tmpColor = meshRenderer.sharedMaterial.color;
@@ -294,7 +294,7 @@ public class ArcNote : NoteBase
     /// <summary>
     /// 表示を切り替えます(判定等は変化しません)
     /// </summary>
-    public void SetRendererEnabled(bool enabled)
+    public override void SetRendererEnabled(bool enabled)
     {
         meshRenderer.enabled = enabled;
     }

@@ -41,8 +41,11 @@ Normal 0 4 2
 Normal 3 4 2
 Normal 5 4 2
 Normal 5 4 2",,
-F_CameraMove,True,14,,,
-F_CameraMove,True,14,,,
+F_NotesBlink,True,8,"Normal, Slide, Flick, Hold|0|2|220|True",,
+F_SetSpeed,True,15,0.9|0.2,,
+F_SetSpeed,True,19,0.8|0.2,,
+F_SetSpeed,True,23,0.6|0.2,,
+F_SetSpeed,True,32,1|0,,
 F_Lyrith2,True,32,,,
 F_Common,True,36,"False
 _None -3 4 2
@@ -63,6 +66,9 @@ Normal -5 16 2
 Normal -2 16 2
 Normal -3 16 2
 Normal 3 16 2",,
+F_CameraShake,True,44,"False
+True|0|5|0.4
+True|2|-5|0.4",,
 F_Common,True,44,"False
 Hold -4 0 3
 Normal 1 8 2
@@ -91,6 +97,9 @@ Normal 1 16 2
 _None 0 16 2
 Slide -3 16 2
 Slide 3 16 2",,
+F_CameraShake,True,52,"False
+True|1|-10|0.4
+True|3|10|0.4",,
 F_Common,True,52,"False
 Normal -4 0 0
 Normal 4 8 0
@@ -123,27 +132,25 @@ Normal 1 8 0
 Normal 2 16 0
 Normal 0 16 0
 Normal 4 8 0
-Normal -4 0 0
-Slide 4 8 0
+Normal -4 8 0
 Normal -1 0 0
 Flick 5 8 0
 Normal -3 16 0
 Normal 2 16 0
 Normal -5 8 0
-Slide -3 0 0
 Normal 4 8 0
-Flick 5 8 0
 Flick -5 8 0
+Flick 5 8 0
+Normal -4 0 0
+Normal 4 16 0
+Normal -3 0 0
+Normal 3 8 0
 Normal -3 0 0
 Normal 3 16 0
 Normal -2 0 0
 Normal 2 8 0
-Normal -2 0 0
-Normal 2 16 0
-Normal -1 0 0
-Normal 1 8 0
-Hold -3 0 3
-Hold 3 1 3",,
+Hold -1.5 0 3
+Hold 1.5 1 3",,
 F_Common,True,68,"False
 Slide 0 16 0
 Slide -3 16 0
@@ -159,6 +166,11 @@ _None 3 24 0
 Normal -1 6 0
 Normal 2 6 0
 Normal 5 6 0",,
+F_CameraMove,True,68,"True|(-0.50, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.2",,
+F_CameraMove,True,68,"True|(1.00, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.3",,
+F_CameraMove,True,68,"True|(0.30, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.5",,
+F_CameraMove,True,68,"True|(-1.00, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.6",,
+F_CameraMove,True,68,"True|(0.00, 4.00, -10.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Absolute|0.8",,
 F_Label,True,0,,,
 F_Common,True,72,"False
 _None 0 4 0
@@ -169,10 +181,10 @@ Hold -1 4 4
 _None -2 0 4
 Normal -5 8 4
 Normal -2 8 4
-Slide 5 8 4
-Slide 3 8 4
-Slide 4 8 4
-Slide 2 8 4
+Normal 5 8 4
+Slide 1 8 4
+Normal 4 8 4
+Slide 0 8 4
 Flick 3 8 4",,
 F_Common,True,79,"True
 Normal -1 8 4
@@ -186,11 +198,12 @@ Hold -1 4 4
 _None -2 0 4
 Normal -5 8 4
 Normal -2 8 4
-Slide 5 8 4
-Slide 2 8 4
-Slide 3 8 4
-Slide 0 8 4
+Normal 5 8 4
+Slide 1 8 4
+Normal 3 8 4
+Slide -1 8 4
 Flick 1 8 4",,
+F_NotesBlink,True,80,"Normal, Slide, Flick, Hold|0|20|222|True",,
 F_Common,True,87,"False
 Normal 2 32 0
 Slide 3 32 0
@@ -260,11 +273,15 @@ Flick -3 0 8
 Flick 3 16 8
 Slide -5 0 8
 Slide 5 16 8",,
-F_CameraShake,True,102,,,
+F_CameraShake,True,96,"False
+True|0|-10|0.4
+True|2|10|0.4
+True|4|-6|0.4
+True|5|8|0.4
+True|6|-10|0.4",,
+F_Dimension,True,102,Move2DTo3D|0.5|OutQuad|0,,
 F_Label,True,0,,,
-F_Dimension,True,108,,,
 F_Lyrith_BlinkNotes,True,108,,,
-F_Lyrith_Arc,True,104,,,
 F_Sky,True,108,"False
 (4.00, 4.00)|8|False
 (0.00, 0.00)|8|False
@@ -275,6 +292,7 @@ F_Sky,True,108,"False
 (-4.00, 4.00)|8|False
 (0.00, 4.00)|8|False
 (4.00, 4.00)|8|False",,
+F_Lyrith_Arc,True,104,,,
 F_Lyrith_Arc,True,112,,,
 F_Sky,True,116,"True
 (4.00, 4.00)|8|False
@@ -309,7 +327,7 @@ F_Sky,True,132,"True
 (0.00, 4.00)|8|False
 (4.00, 4.00)|8|False
 (4.00, 4.00)|8|False",,
-F_Arc,True,136,"False
+F_Arc,True,136,Red,"False
 (0.00, 4.00, 0.00)|Auto|False|0|8
 (1.40, 3.40, 16.00)|Auto|True|0|4
 (2.00, 2.00, 16.00)|Auto|False|0|8
@@ -326,7 +344,7 @@ F_Arc,True,136,"False
 (-1.40, 0.60, 16.00)|Auto|True|0|8
 (-2.00, 2.00, 16.00)|Auto|False|0|8
 (-1.40, 3.40, 16.00)|Auto|True|0|8
-(0.00, 4.00, 16.00)|Auto|True|0|8",,
+(0.00, 4.00, 16.00)|Auto|True|0|8",
 F_Sky,True,138,"False
 (0.00, 0.00)|0|False
 (0.00, 0.00)|8|True
@@ -341,10 +359,10 @@ F_Sky,True,138,"False
 (4.00, 0.00)|8|True
 (-4.00, 4.00)|8|False
 (0.00, 4.00)|8|False",,
-F_Arc,True,140,"False
+F_Arc,True,140,Blue,"False
 (-6.00, 0.00, 0.00)|Auto|False|0|6
-(-6.00, 0.00, 6.00)|Auto|True|0|0",,
-F_Arc,True,144,"True
+(-6.00, 0.00, 6.00)|Auto|True|0|0",
+F_Arc,True,144,Red,"True
 (0.00, 4.00, 0.00)|Auto|False|0|8
 (1.40, 3.40, 16.00)|Auto|True|0|4
 (2.00, 2.00, 16.00)|Auto|False|0|8
@@ -361,7 +379,7 @@ F_Arc,True,144,"True
 (-1.40, 0.60, 16.00)|Auto|True|0|8
 (-2.00, 2.00, 16.00)|Auto|False|0|8
 (-1.40, 3.40, 16.00)|Auto|True|0|8
-(0.00, 4.00, 16.00)|Auto|True|0|8",,
+(0.00, 4.00, 16.00)|Auto|True|0|8",
 F_Sky,True,146,"True
 (0.00, 0.00)|0|False
 (0.00, 0.00)|8|True
@@ -376,30 +394,33 @@ F_Sky,True,146,"True
 (4.00, 0.00)|8|True
 (-4.00, 4.00)|8|False
 (0.00, 4.00)|8|False",,
-F_Arc,True,148,"True
+F_Arc,True,148,Blue,"True
 (-6.00, 0.00, 0.00)|Auto|False|0|6
-(-6.00, 0.00, 6.00)|Auto|True|0|0",,
+(-6.00, 0.00, 6.00)|Auto|True|0|0",
 F_Lyrith_Arc_Blink,True,152,,,
-F_Arc,True,156,"False
+F_Arc,True,156,Blue,"False
 (-6.00, 0.00, 0.00)|Linear|False|0|8
-(2.00, 0.00, 8.00)|Linear|False|0|8
+(2.00, 0.00, 8.00)|Auto|False|0|8
 (-4.00, 0.00, 8.00)|Linear|False|0|8
-(4.00, 0.00, 8.00)|Linear|False|0|8
-(-2.00, 0.00, 8.00)|Auto|True|0|8",,
+(4.00, 0.00, 8.00)|Auto|False|0|8
+(-2.00, 0.00, 8.00)|Auto|True|0|8",
 F_Sky,True,156,"False
-(5.00, 0.00)|8|False
-(-3.00, 0.00)|8|False
+(4.00, 0.00)|8|False
+(-4.00, 0.00)|8|False
+(4.00, 4.00)|8|False
 (0.00, 4.00)|8|False
-(-3.00, 0.00)|8|False
 (6.00, 0.00)|8|False",,
 F_Lyrith_Reverse,True,162,,,
-F_Dimension,True,171,,,
+F_Dimension,True,165,Move3DTo2D|0.8|InOutCubic|0,,
 F_Label,True,0,,,
 F_Lyrith_MoveHold,True,168,,,
 F_Lyrith_MoveHold,True,175,,,
 F_Lyrith_MoveHold,True,182,,,
 F_Lyrith_MoveHold,True,189,,,
-F_CameraShake,True,209,,,
+F_CameraShake,True,203,"False
+True|0|-6|0.3
+True|7|6|0.3
+True|14|-6|0.3",,
 F_Common,True,196,"False
 Normal -4 0 0
 Normal 4 8 0
@@ -507,9 +528,9 @@ Normal 0.1 16 8
 Normal -0.1 16 8
 Flick 0 8 8
 Flick 0 8 8",,
-F_Label,True,0,,,
-F_SetSpeed,True,232,,,
-F_CameraMove,True,237,,,
+F_Label,True,0,ãxåe,,
+F_CameraMove,True,231,"True|(0.00, 7.00, -10.00)|True|(0.00, 0.00, 90.00)|True|1|OutBack|Absolute|0",,
+F_SetSpeed,True,232,0.5|0,,
 F_Common,True,232,"False
 _None 0 1 1
 Hold 4 2 2
@@ -525,9 +546,9 @@ Hold -3 2 2
 Normal 1 4 4
 Normal 2.5 4 4
 Hold 4.5 0.5 0.5",,
-F_SetSpeed,True,264,,,
-F_CameraMove,True,270,,,
-F_Label,True,0,,,
+F_SetSpeed,True,264,1|0,,
+F_CameraMove,True,264,"True|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|True|1|OutQuart|Absolute|0",,
+F_Label,True,0,ÉTÉr,,
 F_Common,True,264,"False
 Normal 0 0 0",,
 F_Lyrith_NoteEffect,True,265,,,
@@ -557,10 +578,10 @@ Normal -2 0 0
 Normal 2 8 0
 Normal 0 0 0
 Normal 4 8 0",,
-F_CameraMove,True,278,,,
-F_CameraMove,True,280,,,
-F_CameraMove,True,282,,,
-F_CameraMove,True,284,,,
+F_CameraMove,True,272,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -5.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,274,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -15.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,276,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -30.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,278,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|False|0.6|OutQuart|Absolute|0",,
 F_Common,True,280,"True
 Flick 0 8 0
 Normal 3 16 0
@@ -587,10 +608,10 @@ Normal -2 0 0
 Normal 2 8 0
 Normal 0 0 0
 Normal 4 8 0",,
-F_CameraMove,True,286,,,
-F_CameraMove,True,288,,,
-F_CameraMove,True,290,,,
-F_CameraMove,True,292,,,
+F_CameraMove,True,280,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 10.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,282,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 25.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,284,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 45.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,286,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 180.00)|True|0.3|OutBack|Absolute|0",,
 F_Common,True,288,"False
 Slide 0 8 0
 Normal 3 16 0
@@ -617,10 +638,10 @@ Normal 0 0 0
 Normal 4 8 0
 Slide 2 0 0
 Slide 6 16 0",,
-F_CameraMove,True,294,,,
-F_CameraMove,True,296,,,
-F_CameraMove,True,298,,,
-F_CameraMove,True,300,,,
+F_CameraMove,True,288,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 175.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,290,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 170.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,292,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 160.00)|True|0.3|OutBack|Absolute|0",,
+F_CameraMove,True,294,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|True|0.3|OutBack|Absolute|0",,
 F_Common,True,296,"False
 Flick -5 0 4
 Hold -5 8 4
@@ -644,78 +665,78 @@ _None 4 0 4
 Normal -5 8 4
 Flick -3 8 4",,
 F_Common,True,304,"False
-Normal -1 8 0
+Flick -1 8 0
 Normal 4 16 0
 Normal 1 16 0
-Flick -3 0 0
+Slide -3 0 0
 Normal 4 8 0
 _None 4 0 0
 Normal 5 16 0
-Slide 3 16 0
-Slide 5 0 0
-_None 5 0 0
-Normal -5 32 0
-Slide -3 32 0
-_None -3 16 0
+Slide -3 16 0
+Flick 5 0 0
+Normal -5 8 0
+_None -3 0 0
 Normal -5 16 0
-Normal 0 16 0
+Slide 0 16 0
 Normal -3 0 0
-Flick 4 8 0
+Normal 4 8 0
 _None 4 0 0
 Normal 0 16 0
 Normal 2 16 0
 Flick -4 4 0
-Normal 5 8 4
-Normal -5 8 4
+Normal 5 16 4
+Slide 3 16 4
+Normal -5 16 4
+Slide -3 16 4
 Hold -2 0 4
 Hold 2 0 4",,
 F_Common,True,312,"True
-Normal -1 8 0
+Flick -1 8 0
 Normal 4 16 0
 Normal 1 16 0
-Flick -3 0 0
+Slide -3 0 0
 Normal 4 8 0
 _None 4 0 0
 Normal 5 16 0
-Slide 3 16 0
-Slide 5 0 0
-_None 5 0 0
-Normal -5 32 0
-Slide -3 32 0
-_None -3 16 0
+Slide -2 16 0
+Flick 5 0 0
+Normal -5 8 0
+_None -3 0 0
 Normal -5 16 0
-Normal 0 16 0
+Slide 0 16 0
 Normal -3 0 0
-Flick 4 8 0
+Normal 4 8 0
 _None 4 0 0
 Normal 0 16 0
 Normal 2 16 0
 Flick -4 4 0
-Normal 5 8 4
-Normal -5 8 4
+Normal 5 16 4
+Slide 3 16 4
+Normal -5 16 4
+Slide -3 16 4
 Hold -2 0 4
 Hold 2 0 2",,
 F_Common,True,320,"False
 Normal 3 4 0
 _None 3 0 0
-Slide -3 16 0
+Normal -3 16 0
 Slide -1 16 0
 Slide 1 16 0
 Slide 3 16 0
 Slide 5 0 0
 _None 3 0 0
-Slide -4 16 0
+Normal -4 16 0
 Slide -1.333 16 0
 Slide 1.333 16 0
 Slide 4 16 0
 Slide 6.666 0 0
 _None 3 0 0
-Slide -5.5 16 0
+Normal -5.5 16 0
 Slide -1.833333 16 0
 Slide 1.833333 16 0
 Slide 5.5 16 0
 _None 3 0 0
-Slide -5.5 16 0
+Normal -5.5 16 0
 Slide -1.833333 16 0
 Slide 1.833333 16 0
 Slide 5.5 16 0
@@ -881,21 +902,19 @@ Normal 5 4 16
 Flick -3 0 16
 Normal 1 4 16
 Hold -5 0 0.6666667
-Hold 5 0.6666667 0.6666667
-Flick -5 0 0.6666667
-Flick 5 4 0.6666667",,
+Hold 5 0.6666667 0.6666667",,
 F_Label,True,0,,,
-F_Dimension,True,382,,,
-F_Arc,True,380,"False
+F_Dimension,True,376,Move2DTo3D|3|OutQuad|0,,
+F_Arc,True,380,Red,"False
 (-5.00, 0.00, 0.00)|Auto|False|0|8
 (-5.00, 0.00, 8.00)|Auto|False|0|8
 (-5.00, 0.00, 8.00)|Auto|False|0|8
-(-5.00, 0.00, 8.00)|Auto|False|0|8",,
-F_Arc,True,380,"True
+(-5.00, 0.00, 8.00)|Auto|False|0|8",
+F_Arc,True,380,Red,"True
 (-5.00, 0.00, 0.00)|Auto|False|0|8
 (-5.00, 0.00, 8.00)|Auto|False|0|8
 (-5.00, 0.00, 8.00)|Auto|False|0|8
-(-5.00, 0.00, 8.00)|Auto|False|0|8",,
+(-5.00, 0.00, 8.00)|Auto|False|0|8",
 F_Sky,True,382,"False
 (0.00, 0.00)|8|True
 (-4.00, 0.00)|8|False
@@ -918,26 +937,26 @@ F_Sky,True,382,"False
 (4.00, 4.00)|8|False
 (0.00, 0.00)|0|False
 (-4.00, 4.00)|4|False",,
-F_Arc,True,386,"False
+F_Arc,True,386,Blue,"False
 (0.00, 4.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 0.00, 16.00)|Linear|True|0|0
 (-4.00, 0.00, 16.00)|Linear|True|0|0
-(-4.00, 0.00, 16.00)|Linear|True|0|0",,
-F_Arc,True,388,"True
+(-4.00, 0.00, 16.00)|Linear|True|0|0",
+F_Arc,True,388,Blue,"True
 (0.00, 4.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 0.00, 16.00)|Linear|True|0|0
 (-4.00, 0.00, 16.00)|Linear|True|0|0
-(-4.00, 0.00, 16.00)|Linear|True|0|0",,
-F_Arc,True,390,"False
+(-4.00, 0.00, 16.00)|Linear|True|0|0",
+F_Arc,True,390,Blue,"False
 (0.00, 4.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 0.00, 16.00)|Linear|True|0|0
 (-4.00, 0.00, 16.00)|Linear|True|0|0
-(-4.00, 0.00, 16.00)|Linear|True|0|0",,
-F_Arc,True,390,"True
+(-4.00, 0.00, 16.00)|Linear|True|0|0",
+F_Arc,True,390,Blue,"True
 (0.00, 4.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 0.00, 16.00)|Linear|True|0|0
 (-4.00, 0.00, 16.00)|Linear|True|0|0
-(-4.00, 0.00, 16.00)|Linear|True|0|0",,
+(-4.00, 0.00, 16.00)|Linear|True|0|0",
 F_Sky,True,392,"False
 (0.00, 0.00)|0|False
 (-4.00, 4.00)|4|False
@@ -949,14 +968,14 @@ F_Sky,True,392,"False
 (0.00, 0.00)|0|True
 (-6.00, 0.00)|8|False
 (0.00, 0.00)|8|False
-(-4.00, 4.00)|0|False
+(-4.00, 4.00)|0|True
 (6.00, 0.00)|8|False
 (4.00, 4.00)|8|False
-(0.00, 0.00)|0|False
+(0.00, 0.00)|0|True
 (6.00, 0.00)|8|False
 (0.00, 4.00)|8|False
-(-4.00, 4.00)|4|False
-(0.00, 0.00)|4|False
+(-4.00, 4.00)|4|True
+(0.00, 0.00)|4|True
 (0.00, 0.00)|0|True
 (-4.00, 4.00)|4|False
 (-1.33, 4.00)|4|False
@@ -973,23 +992,23 @@ F_Sky,True,392,"False
 (2.00, 0.00)|8|False
 (-6.00, 0.00)|0|False
 (-2.00, 0.00)|8|False",,
-F_Arc,True,392,"False
+F_Arc,True,392,Red,"False
 (0.00, 0.00, 0.00)|Linear|False|0|4
 (4.00, 4.00, 16.00)|Linear|True|0|0
-(4.00, 4.00, 5.33)|Linear|True|0|0",,
-F_Arc,True,394,"False
+(4.00, 4.00, 5.33)|Linear|True|0|0",
+F_Arc,True,394,Red,"False
 (4.00, 4.00, 0.00)|Linear|False|0|4
 (0.00, 0.00, 16.00)|Linear|True|0|0
-(0.00, 0.00, 5.33)|Linear|True|0|0",,
-F_Arc,True,396,"False
+(0.00, 0.00, 5.33)|Linear|True|0|0",
+F_Arc,True,396,Blue,"False
 (-4.00, 4.00, 0.00)|Linear|False|0|5.333333
 (0.00, 0.00, 16.00)|Linear|True|0|0
-(0.00, 0.00, 8.00)|Linear|True|0|0",,
-F_Arc,True,397,"False
+(0.00, 0.00, 8.00)|Linear|True|0|0",
+F_Arc,True,397,Blue,"False
 (0.00, 0.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 4.00, 16.00)|Linear|True|0|0
-(-4.00, 4.00, 8.00)|Linear|True|0|0",,
-F_Arc,True,398,"False
+(-4.00, 4.00, 8.00)|Linear|True|0|0",
+F_Arc,True,398,Red,"False
 (4.00, 0.00, 0.00)|Auto|False|0|8
 (7.00, 0.00, 16.00)|Auto|True|0|16
 (8.00, 0.00, 16.00)|Auto|False|0|8
@@ -998,15 +1017,15 @@ F_Arc,True,398,"False
 (1.00, 0.00, 16.00)|Auto|True|0|0
 (0.00, 0.00, 16.00)|Auto|False|0|8
 (1.00, 0.00, 16.00)|Auto|True|0|0
-(4.00, 0.00, 16.00)|Auto|True|0|0",,
-F_Arc,True,398,"False
+(4.00, 0.00, 16.00)|Auto|True|0|0",
+F_Arc,True,398,Blue,"False
 (-4.00, 4.00, 0.00)|Linear|False|0|5.333333
 (0.00, 0.00, 16.00)|Linear|True|0|0
-(0.00, 0.00, 8.00)|Linear|True|0|0",,
-F_Arc,True,399,"False
+(0.00, 0.00, 8.00)|Linear|True|0|0",
+F_Arc,True,399,Blue,"False
 (0.00, 0.00, 0.00)|Linear|False|0|5.333333
 (-4.00, 4.00, 16.00)|Linear|True|0|0
-(-4.00, 4.00, 8.00)|Linear|True|0|0",,
+(-4.00, 4.00, 8.00)|Linear|True|0|0",
 F_Lyrith_FinalArc,True,406,,,
 F_Sky,True,423,"False
 (4.00, 4.00)|16|False

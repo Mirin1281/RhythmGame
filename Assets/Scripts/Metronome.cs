@@ -111,7 +111,6 @@ public class Metronome : MonoBehaviour
     {
         addTime = true;
         playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
-        UpdateTimerAsync().Forget();
     }
     
 #if UNITY_EDITOR

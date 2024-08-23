@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalNotePool : PoolBase<NormalNote> 
@@ -11,5 +12,10 @@ public class NormalNotePool : PoolBase<NormalNote>
             normalNote.SetWidth(3f);
         }
         return normalNote;
+    }
+
+    public List<NormalNote> GetAllNotes(int index = 0)
+    {
+        return PooledTable[index];
     }
 }

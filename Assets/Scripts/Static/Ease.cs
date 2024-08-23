@@ -32,7 +32,7 @@ readonly struct Easing
     {
         this.type = easeTime == 0 ? EaseType.INTERNAL_Zero : type;
         this.start = start;
-        this.inversedEaseTime = 1f / easeTime == 0 ? 0.001f : easeTime;
+        this.inversedEaseTime = 1f / (easeTime == 0 ? 0.001f : easeTime);
         this.delta = from - start;
     }
 

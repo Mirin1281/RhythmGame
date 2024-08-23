@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkyNotePool : PoolBase<SkyNote> 
@@ -10,5 +11,10 @@ public class SkyNotePool : PoolBase<SkyNote>
         skyNote.transform.parent = lane3D.transform;
         skyNote.SetWidth(3.5f);
         return skyNote;
+    }
+
+    public List<SkyNote> GetAllNotes(int index = 0)
+    {
+        return PooledTable[index];
     }
 }

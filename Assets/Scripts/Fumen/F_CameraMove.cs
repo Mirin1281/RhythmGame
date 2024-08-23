@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ namespace NoteGenerating
             {
                 await WaitSeconds(delay);
             }
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
             var camera = Camera.main;
             if(moveType == MoveType.Absolute)
@@ -172,6 +174,28 @@ namespace NoteGenerating
         protected override Color GetCommandColor()
         {
             return ConstContainer.UnNoteCommandColor;
+        }
+
+        public override string CSVContent1
+        {
+            get
+            {
+                return isPosMove + "|" + pos + "|" + isRotateMove + "|" + rotate + "|" +
+                    isRotateClamp + "|" + time + "|" + easeType + "|" + moveType + "|" + delay;
+            }
+            set
+            {
+                var texts = value.Split("|");
+                isPosMove = bool.Parse(texts[0]);
+                pos = texts[1].ToVector3();
+                isRotateMove = bool.Parse(texts[2]);
+                rotate = texts[3].ToVector3();
+                isRotateClamp = bool.Parse(texts[4]);
+                time = float.Parse(texts[5]);
+                easeType = Enum.Parse<EaseType>(texts[6]);
+                moveType = Enum.Parse<MoveType>(texts[7]);
+                delay = float.Parse(texts[8]);
+            }
         }
     }
 }

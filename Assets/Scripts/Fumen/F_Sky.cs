@@ -120,7 +120,7 @@ namespace NoteGenerating
                 {
                     var contents = dataTexts[i + 1].Split('|');
                     noteDatas[i] = new SkyNoteData(
-                        contents[0].ToVector3(),
+                        contents[0].ToVector2(),
                         float.Parse(contents[1]),
                         bool.Parse(contents[2]));
                 }

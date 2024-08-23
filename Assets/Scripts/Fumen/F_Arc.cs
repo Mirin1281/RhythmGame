@@ -83,6 +83,15 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
+            get => defaultColor.ToString();
+            set
+            {
+                defaultColor = Enum.Parse<ArcColorType>(value);
+            }
+        }
+
+        public override string CSVContent2
+        {
             get
             {
                 string text = string.Empty;
@@ -109,7 +118,7 @@ namespace NoteGenerating
                 {
                     var contents = dataTexts[i + 1].Split('|');
                     datas[i] = new ArcCreateData(
-                        contents[1].ToVector3(),
+                        contents[0].ToVector3(),
                         Enum.Parse<ArcCreateData.ArcVertexMode>(contents[1]),
                         bool.Parse(contents[2]),
                         float.Parse(contents[3]),

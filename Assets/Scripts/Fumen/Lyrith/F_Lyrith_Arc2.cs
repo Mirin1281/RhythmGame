@@ -40,7 +40,7 @@ namespace NoteGenerating
             {
                 new(new(-2, 4, 0), ArcVertexMode.Auto, false, 0, 4),
                 new(new(-1, 0, 12), ArcVertexMode.Auto),
-                new(new(-6, 0, 12), ArcVertexMode.Auto),
+                new(new(-3, 0, 12), ArcVertexMode.Auto),
                 new(new(-8, 0, 12), ArcVertexMode.Auto),
             }, ArcColorType.Blue);
         }

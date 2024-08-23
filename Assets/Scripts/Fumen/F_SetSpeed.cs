@@ -5,23 +5,37 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆速度変更"), System.Serializable]
-    public class F_SetSpeed : NoteGeneratorBase
+    public class F_SetSpeed : Generator_Type1
     {
-        [SerializeField] float speed;
-        [SerializeField, Min(0)] float delay = 0f;
+        [SerializeField] float speedRate = 1f;
+        [SerializeField, Min(0)] float delaySeconds;
 
         protected override async UniTask GenerateAsync()
         {
-            if(delay > 0)
+            if(delaySeconds > 0)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: Helper.Token);
+                await WaitSeconds(delaySeconds + Delta);
             }
-            RhythmGameManager.Speed = speed;
+            RhythmGameManager.SetSpeed(speedRate);
         }
 
         protected override Color GetCommandColor()
         {
             return ConstContainer.UnNoteCommandColor;
+        }
+
+        public override string CSVContent1
+        {
+            get
+            {
+                return speedRate + "|" + delaySeconds;
+            }
+            set
+            {
+                var texts = value.Split("|");
+                speedRate = float.Parse(texts[0]);
+                delaySeconds = float.Parse(texts[1]);
+            }
         }
     }
 }

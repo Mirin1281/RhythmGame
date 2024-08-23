@@ -22,5 +22,9 @@ public static class MyUtility
         return previewObj;
     }
 
-    public static UniTask WaitSeconds(float time, CancellationToken token) => UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token);
+    public static UniTask WaitSeconds(float time, CancellationToken token)
+    {
+        if(time <= 0) return UniTask.CompletedTask;
+        return UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token);
+    }
 }

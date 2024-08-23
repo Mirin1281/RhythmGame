@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ namespace NoteGenerating
             {
                 await UniTask.Delay(System.TimeSpan.FromSeconds(delay), cancellationToken: Helper.Token);
             }
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             if(moveType == MoveType.Move2DTo3D)
             {
@@ -87,6 +90,22 @@ namespace NoteGenerating
             else
             {
                 return "2D";
+            }
+        }
+
+        public override string CSVContent1
+        {
+            get
+            {
+                return moveType + "|" + time + "|" + easeType + "|" + delay;
+            }
+            set
+            {
+                var texts = value.Split("|");
+                moveType = Enum.Parse<MoveType>(texts[0]);
+                time = float.Parse(texts[1]);
+                easeType = Enum.Parse<EaseType>(texts[2]);
+                delay = float.Parse(texts[3]);
             }
         }
     }

@@ -23,7 +23,7 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
     [SerializeField, Tooltip("–‘O‚É¶¬‚µ‚Ä‚¨‚¢‚½”‚ğ’´‰ß‚µ‚½ê‡‚ÉƒƒO‚ğo‚·")]
     bool showLog = true;
 
-    List<List<T>> PooledTable;
+    protected List<List<T>> PooledTable;
 
     protected T GetInstance(int index = 0)
     {

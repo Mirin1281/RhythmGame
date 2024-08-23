@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GenerateData_F_Lyrith 34
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 284
+  beatTiming: 278
   generatable:
     rid: 932862426347470855
   references:
@@ -23,11 +23,12 @@ MonoBehaviour:
       type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        posInvalid: 1
+        isPosMove: 0
         pos: {x: 0, y: 4, z: -10}
-        rotateInvalid: 0
+        isRotateMove: 1
         rotate: {x: 0, y: 0, z: 0}
         isRotateClamp: 0
         time: 0.6
         easeType: 8
+        moveType: 0
         delay: 0

@@ -15,7 +15,7 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, 6);
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
             var camera = Camera.main;

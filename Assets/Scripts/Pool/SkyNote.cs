@@ -10,7 +10,7 @@ public class SkyNote : NoteBase
         transform.localScale = new Vector3(width, scale.y, scale.z);
     }
 
-    public void SetRendererEnabled(bool enabled)
+    public override void SetRendererEnabled(bool enabled)
     {
         meshRenderer.enabled = enabled;
     }

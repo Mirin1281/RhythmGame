@@ -61,4 +61,9 @@ public class HoldNote : NoteBase
         spriteRenderer.transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
         spriteMask.transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
     }
+
+    public override void SetRendererEnabled(bool enabled)
+    {
+        spriteRenderer.enabled = enabled;
+    }
 }

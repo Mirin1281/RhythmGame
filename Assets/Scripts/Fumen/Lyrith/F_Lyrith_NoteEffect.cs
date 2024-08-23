@@ -8,8 +8,8 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/ノーツで演出"), System.Serializable]
     public class F_Lyrith_NoteEffect : Generator_Type1
     {
-        [SerializeField] float speed = 5f;
-        [SerializeField] float time = 1f;
+        [SerializeField] float speed = 3f;
+        [SerializeField] float time = 0.4f;
 
         protected override async UniTask GenerateAsync()
         {

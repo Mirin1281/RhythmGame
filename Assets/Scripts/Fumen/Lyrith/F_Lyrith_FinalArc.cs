@@ -7,7 +7,7 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/最後の低速アーク"), System.Serializable]
     public class F_Lyrith_FinalArc : Generator_3D
     {
-        [SerializeField] float decay = 5f;
+        [SerializeField] float decay = 15f;
         
         protected override async UniTask GenerateAsync()
         {
@@ -21,6 +21,7 @@ namespace NoteGenerating
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-6, 0, 2), ArcVertexMode.Linear, false, 0, 2),
+                new(new(-6, 0, 8), ArcVertexMode.Linear, false, 0, 8),
                 new(new(-6, 0, 2), ArcVertexMode.Linear),
             },
             ArcColorType.Blue).Forget();
@@ -34,6 +35,7 @@ namespace NoteGenerating
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
                 new(new(-2, 0, 2), ArcVertexMode.Linear, false, 0, 2),
+                new(new(-2, 0, 8), ArcVertexMode.Linear, false, 0, 8),
                 new(new(-2, 0, 2), ArcVertexMode.Linear),
             },
             ArcColorType.Red).Forget();

@@ -36,11 +36,11 @@ namespace NoteGenerating
         /// </summary>
         const float intervalRange = 0.008f;
 
-        protected UniTask WaitSeconds(float time) => UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: Helper.Token);
+        protected UniTask WaitSeconds(float time) => MyUtility.WaitSeconds(time, Helper.Token);
 
         protected async UniTask<float> Wait(float lpb, int num = 1)
         {
-            if(lpb == 0) return Delta;
+            if(lpb == 0 || num == 0) return Delta;
             float baseTime = CurrentTime;
             float interval = GetTimeInterval(lpb, num);
             await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);

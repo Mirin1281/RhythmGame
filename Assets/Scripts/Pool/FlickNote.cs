@@ -11,4 +11,9 @@ public class FlickNote : NoteBase
     {
         spriteRenderer.size = new Vector2(width, spriteRenderer.size.y);
     }
+
+    public override void SetRendererEnabled(bool enabled)
+    {
+        spriteRenderer.enabled = enabled;
+    }
 }

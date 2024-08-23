@@ -26,4 +26,6 @@ public abstract class NoteBase : PooledBase
     {
         transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
     }
+
+    public virtual void SetRendererEnabled(bool enabled) {}
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcPool : PoolBase<ArcNote>
+public class ArcNotePool : PoolBase<ArcNote>
 {
     [SerializeField] GameObject lane3D;
 
@@ -11,5 +11,10 @@ public class ArcPool : PoolBase<ArcNote>
         var arcNote = GetInstance();
         arcNote.transform.parent = lane3D.transform;
         return arcNote;
+    }
+
+    public List<ArcNote> GetAllNotes(int index = 0)
+    {
+        return PooledTable[index];
     }
 }

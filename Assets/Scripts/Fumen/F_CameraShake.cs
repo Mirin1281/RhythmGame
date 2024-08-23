@@ -9,12 +9,20 @@ namespace NoteGenerating
     public class F_CameraShake : Generator_Type1
     {
         [Serializable]
-        class CameraShakeStatus
+        struct CameraShakeStatus
         {
-            public bool enable = true;
+            public bool enable;
             public int beatTiming;
-            public float strength = 10f;
-            public float time = 0.4f;
+            public float strength;
+            public float time;
+
+            public CameraShakeStatus(bool enable = true, int beatTiming = 0, float strength = 10f, float time = 0.4f)
+            {
+                this.enable = enable;
+                this.beatTiming = beatTiming;
+                this.strength = strength;
+                this.time = time;
+            }
         }
 
         [Header("正の値は右側(時計回り)に回転します")]
@@ -23,6 +31,7 @@ namespace NoteGenerating
         protected override async UniTask GenerateAsync()
         {
             var camera = Camera.main;
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             int count = 0;
             int beatCount = 0;
             Beat(default, default);
@@ -66,6 +75,42 @@ namespace NoteGenerating
         protected override Color GetCommandColor()
         {
             return ConstContainer.UnNoteCommandColor;
+        }
+
+        public override string CSVContent1
+        {
+            get
+            {
+                string text = string.Empty;
+                text += IsInverse + "\n";
+                for(int i = 0; i < statuses.Length; i++)
+                {
+                    var data = statuses[i];
+                    text += data.enable + "|";
+                    text += data.beatTiming + "|";
+                    text += data.strength + "|";
+                    text += data.time;
+                    if(i == statuses.Length - 1) break;
+                    text += "\n";
+                }
+                return text;
+            }
+            set
+            {
+                var texts = value.Split("\n");
+                SetInverse(bool.Parse(texts[0]));
+                var statuses = new CameraShakeStatus[texts.Length - 1];
+                for(int i = 0; i < texts.Length - 1; i++)
+                {
+                    var contents = texts[i + 1].Split('|');
+                    statuses[i] = new CameraShakeStatus(
+                        bool.Parse(contents[0]),
+                        int.Parse(contents[1]),
+                        float.Parse(contents[2]),
+                        float.Parse(contents[3]));
+                }
+                this.statuses = statuses;
+            }
         }
     }
 }

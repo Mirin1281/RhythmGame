@@ -12,32 +12,40 @@ namespace NoteGenerating
             Arc(new ArcCreateData[]
             {
                 new(new(4, 4, 0), ArcVertexMode.Auto, false, 0, 4),
-                new(new(0, 2, 8), ArcVertexMode.Auto, true, 0, 8),
-                new(new(4, 0, 8), ArcVertexMode.Auto),
+                new(new(1, 3, 16), ArcVertexMode.Auto),
+                new(new(0, 2, 16), ArcVertexMode.Auto),
+                new(new(1, 1, 16), ArcVertexMode.Auto),
+                new(new(4, 0, 16), ArcVertexMode.Auto),
             }, ArcColorType.Red);
             await Wait(4);
 
             Arc(new ArcCreateData[]
             {
                 new(new(2, 4, 0), ArcVertexMode.Auto, false, 0, 8),
-                new(new(-2, 2, 8), ArcVertexMode.Auto, false, 0, 8),
-                new(new(2, 0, 8), ArcVertexMode.Auto),
+                new(new(-1, 3, 16), ArcVertexMode.Auto),
+                new(new(-2, 2, 16), ArcVertexMode.Auto, false, 0, 8),
+                new(new(-1, 1, 16), ArcVertexMode.Auto),
+                new(new(2, 0, 16), ArcVertexMode.Auto),
             }, ArcColorType.Blue);
             await Wait(4);
 
             Arc(new ArcCreateData[]
             {
                 new(new(0, 4, 0), ArcVertexMode.Auto, false, 0, 8),
-                new(new(-4, 2, 8), ArcVertexMode.Auto, false, 0, 8),
-                new(new(0, 0, 8), ArcVertexMode.Auto),
+                new(new(-3, 3, 16), ArcVertexMode.Auto),
+                new(new(-4, 2, 16), ArcVertexMode.Auto, false, 0, 8),
+                new(new(-3, 1, 16), ArcVertexMode.Auto),
+                new(new(0, 0, 16), ArcVertexMode.Auto),
             }, ArcColorType.Red);
             await Wait(4);
 
             Arc(new ArcCreateData[]
             {
                 new(new(-2, 4, 0), ArcVertexMode.Auto, false, 0, 8),
-                new(new(-6, 2, 8), ArcVertexMode.Auto, false, 0, 8),
-                new(new(-2, 0, 8), ArcVertexMode.Auto),
+                new(new(-5, 3, 16), ArcVertexMode.Auto),
+                new(new(-6, 2, 16), ArcVertexMode.Auto, false, 0, 8),
+                new(new(-5, 1, 16), ArcVertexMode.Auto),
+                new(new(-2, 0, 16), ArcVertexMode.Auto),
             }, ArcColorType.Blue);
         }
     }
