@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: GenerateData_F_Lyrith 72
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 19
+  beatTiming: 32
   generatable:
-    rid: 932862470883115008
+    rid: 932862497593491457
   references:
     version: 2
     RefIds:
-    - rid: 932862470883115008
-      type: {class: F_SetSpeed, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 932862497593491457
+      type: {class: F_Lyrith2, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        speedRate: 0.8
-        delaySeconds: 0.2
+        startY: 7
+        noteType: 4
+        moveTime: 1.37

@@ -9,7 +9,7 @@ namespace NoteGenerating
     {
         protected override async UniTask GenerateAsync()
         {
-            await UniTask.CompletedTask;
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             int count = 12;
             for(int i = 0; i < count; i++)
             {

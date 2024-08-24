@@ -87,6 +87,9 @@ namespace NoteGenerating.Editor
             EditorGUI.PropertyField(position, property.FindPropertyRelative("summary"));
 
             position.y += EditorGUIUtility.singleLineHeight;
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
+
+            position.y += EditorGUIUtility.singleLineHeight;
             var noteDatasProp = property.FindPropertyRelative("noteDatas");
             EditorGUI.PropertyField(position, noteDatasProp);
 

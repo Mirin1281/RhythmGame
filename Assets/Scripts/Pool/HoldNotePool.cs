@@ -8,7 +8,7 @@ public class HoldNotePool : PoolBase<HoldNote>
         var holdNote = GetInstance();
         holdNote.State =  HoldNote.InputState.Idle;
         holdNote.Grade = NoteGrade.None;
-        holdNote.SetWidth(2.5f);
+        holdNote.SetWidth(3f);
         return holdNote;
     }
 

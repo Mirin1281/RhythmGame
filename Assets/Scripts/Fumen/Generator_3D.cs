@@ -15,12 +15,6 @@ namespace NoteGenerating
         /// </summary>
         protected float Inverse(float x) => x * (isInverse ? -1 : 1);
 
-        /// <summary>
-        /// この値を大きくするとWaitの待機ループが
-        /// 生成速度に追いつかなくなる現象が改善されます
-        /// </summary>
-        const float intervalRange = 0.008f;
-
         protected virtual float Speed => RhythmGameManager.Speed3D;
 
         /// <summary>
@@ -38,7 +32,7 @@ namespace NoteGenerating
             float interval = Helper.GetTimeInterval(lpb, num);
             if(Delta <= interval)
             {
-                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);
+                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
                 Delta += CurrentTime - baseTime;
             }
             Delta -= interval;
@@ -89,7 +83,7 @@ namespace NoteGenerating
                 delta = Delta;
             }
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed, IsInverse).Forget();
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
             var startPos = new Vector3(0, 0f, StartBase);
             DropAsync(arc, startPos, delta).Forget();

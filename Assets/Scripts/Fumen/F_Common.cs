@@ -39,8 +39,11 @@ namespace NoteGenerating
         }
 
         [SerializeField] string summary;
+        [SerializeField] float speedRate = 1f;
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
-        
+
+        protected override float Speed => base.Speed * speedRate;
+
         protected override async UniTask GenerateAsync()
         {
             foreach(var data in noteDatas)
@@ -162,6 +165,15 @@ namespace NoteGenerating
         }
 
         public override string CSVContent1
+        {
+            get => speedRate.ToString();
+            set
+            {
+                speedRate = float.Parse(value);
+            }
+        }
+
+        public override string CSVContent2
         {
             get
             {

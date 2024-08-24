@@ -23,12 +23,6 @@ namespace NoteGenerating
         protected float StartBase => 2f * Speed + 0.2f;
         protected float CurrentTime => Helper.Metronome.CurrentTime;
 
-        /// <summary>
-        /// この値を大きくするとWaitの待機ループが
-        /// 生成速度に追いつかなくなる現象が改善されます
-        /// </summary>
-        const float intervalRange = 0.008f;
-
         protected UniTask WaitSeconds(float time) => MyUtility.WaitSeconds(time, Helper.Token);
 
         protected async UniTask<float> Wait(float lpb, int num = 1)
@@ -42,7 +36,7 @@ namespace NoteGenerating
             }
             else
             {
-                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval - intervalRange, cancellationToken: Helper.Token);
+                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
                 Delta += CurrentTime - baseTime - interval;
             }
             return Delta;

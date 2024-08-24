@@ -34,8 +34,8 @@ namespace NoteGenerating
             int count = 0;
             int beatCount = 0;
             Beat(default, default);
+            await UniTask.Yield(Helper.Token);
             Helper.Metronome.OnBeat += Beat;
-            await UniTask.CompletedTask;
 
 
             void Beat(int _, float __)

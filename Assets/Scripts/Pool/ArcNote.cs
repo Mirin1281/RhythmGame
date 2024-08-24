@@ -75,7 +75,7 @@ public class ArcNote : NoteBase
     /// <summary>
     /// アークを作成します
     /// </summary>
-    public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float bpm, float speed, bool isInverse = false)
+    public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, bool isInverse = false)
     {
         // 初期化
         Spline.Clear();
@@ -98,7 +98,7 @@ public class ArcNote : NoteBase
         for(int i = 0; i < datas.Length; i++)
         {
             var data = datas[i];
-            z += GetDistanceInterval(data.Pos.z, bpm, speed);
+            z += GetDistanceInterval(data.Pos.z);
             var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : z));
             TangentMode tangentMode = data.VertexMode switch
             {
@@ -127,21 +127,28 @@ public class ArcNote : NoteBase
             }
 
             float knotZ = knot.Position.z - GetPos().z;
-            float behindJudgePosZ = knotZ - GetDistanceInterval(datas[k].BehindJudgeRange, bpm, speed);
+            float behindJudgePosZ = knotZ - GetDistanceInterval(datas[k].BehindJudgeRange);
             var startPos = GetAnyPointOnZPlane(behindJudgePosZ);
             if(k == 0) startPos = Vector3.zero;
-            float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange, bpm, speed);
+            float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange);
             var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
         
             judges.Add(new ArcJudge(startPos, endPos));
             k++;
         }
+
+
+        float GetDistanceInterval(float lpb)
+        {
+            if(lpb == 0f) return 0f;
+            return wholeNoteInterval / lpb;
+        }
     }
 
-    public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float bpm, float speed, bool isInverse, DebugSphere debugSphere)
+    public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, bool isInverse, DebugSphere debugSphere)
     {
         meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
-        await CreateNewArcAsync(datas, bpm, speed, isInverse);
+        await CreateNewArcAsync(datas, wholeNoteInterval, isInverse);
         foreach(var child in transform.OfType<Transform>().ToArray())
         {
             DestroyImmediate(child.gameObject);
@@ -168,7 +175,7 @@ public class ArcNote : NoteBase
 
             if(i != 0)
             {
-                float behindDistance = knotZ - GetDistanceInterval(datas[i].BehindJudgeRange, bpm, speed);
+                float behindDistance = knotZ - GetDistanceInterval(datas[i].BehindJudgeRange);
                 var startPos = GetAnyPointOnZPlane(behindDistance);
                 var blueSphere = Instantiate(debugSphere, transform);
                 blueSphere.transform.localPosition = startPos;
@@ -176,7 +183,7 @@ public class ArcNote : NoteBase
                 blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
             }
 
-            float aheadDistance = knotZ + GetDistanceInterval(datas[i].AheadJudgeRange, bpm, speed);
+            float aheadDistance = knotZ + GetDistanceInterval(datas[i].AheadJudgeRange);
             var endPos = GetAnyPointOnZPlane(aheadDistance);
             var redSphere = Instantiate(debugSphere, transform);
             redSphere.transform.localPosition = endPos;
@@ -194,12 +201,12 @@ public class ArcNote : NoteBase
             }
         }
 #endif
-    }
 
-    static float GetDistanceInterval(float lpb, float bpm, float speed)
-    {
-        if(lpb == 0f) return 0f;
-        return 240f / bpm * speed / lpb;
+        float GetDistanceInterval(float lpb)
+        {
+            if(lpb == 0f) return 0f;
+            return wholeNoteInterval / lpb;
+        }
     }
 
     /// <summary>

@@ -59,7 +59,7 @@ namespace NoteGenerating
             }
             arc.SetActive(true);
             arc.SetColor(defaultColor, IsInverse);
-            await arc.DebugCreateNewArcAsync(datas, RhythmGameManager.DebugBpm, Speed, IsInverse, debugSpherePrefab);
+            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse, debugSpherePrefab);
 
             GameObject previewObj = MyUtility.GetPreviewObject();
             float lineY = 0f;

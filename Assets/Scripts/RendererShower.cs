@@ -25,7 +25,7 @@ public class RendererShower : MonoBehaviour
         {
             SetAlpha(easing.Ease(t), spriteRenderers, meshRenderers);
             t += Time.deltaTime;
-            await UniTask.Yield();
+            await UniTask.Yield(destroyCancellationToken);
         }
         SetAlpha(from, spriteRenderers, meshRenderers);
     }

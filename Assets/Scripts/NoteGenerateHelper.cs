@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Threading;
 using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class NoteGenerateHelper : MonoBehaviour
 {
@@ -35,6 +38,12 @@ public class NoteGenerateHelper : MonoBehaviour
     public float GetTimeInterval(float lpb, int num = 1)
     {
         if(lpb == 0) return 0;
+#if UNITY_EDITOR
+        if(EditorApplication.isPlaying == false)
+        {
+            return 240f / 200 / lpb * num;
+        }
+#endif
         return 240f / Metronome.Bpm / lpb * num;
     }
 }

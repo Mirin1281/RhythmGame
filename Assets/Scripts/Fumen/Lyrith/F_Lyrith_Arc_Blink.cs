@@ -60,7 +60,7 @@ namespace NoteGenerating
         async UniTask MyArc(ArcCreateData[] datas, ArcColorType colorType, bool first = false)
         {
             var arc = Helper.ArcNotePool.GetNote();
-            arc.CreateNewArcAsync(datas, Helper.Metronome.Bpm, Speed / decay, IsInverse).Forget();
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed / decay, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
 
             var startPos = new Vector3(0, 0f, StartBase);

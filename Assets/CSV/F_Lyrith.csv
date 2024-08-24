@@ -1,6 +1,6 @@
 Name,F_Lyrith,
 
-F_Common,True,0,"False
+F_Common,True,0,1,"False
 _None 0 4 0
 Normal -4 4 0
 Normal -1 4 0
@@ -16,8 +16,9 @@ Normal -2 4 2
 Hold 2 4 4
 _None 0 8 2
 Normal -3 8 2
-Hold -3 2 2
-_None -3 0 2
+Hold -3 2 2",
+F_NotesBlink,True,8,"Normal, Slide, Flick, Hold|0|2|220|True",,
+F_Common,True,16,0.9,"False
 Slide -3 8 2
 Slide -1 8 2
 Slide 1 8 2
@@ -25,7 +26,8 @@ Slide 3 8 2
 Slide -4.5 8 2
 Slide -1.5 8 2
 Slide 1.5 8 2
-Slide 4.5 8 2
+Slide 4.5 8 2",
+F_Common,True,20,0.8,"False
 Slide -4.5 8 2
 Slide 1.5 8 2
 Slide -1.5 8 2
@@ -33,21 +35,16 @@ Slide 4.5 8 2
 Slide -3 8 2
 Slide 1 8 2
 Slide -1 8 2
-Slide 3 8 2
-_None 5 0 2
+Slide 3 8 2",
+F_Common,True,24,0.6,"False
 Normal -4 2 2
 Normal -2 2 2
 Normal 0 4 2
 Normal 3 4 2
 Normal 5 4 2
-Normal 5 4 2",,
-F_NotesBlink,True,8,"Normal, Slide, Flick, Hold|0|2|220|True",,
-F_SetSpeed,True,15,0.9|0.2,,
-F_SetSpeed,True,19,0.8|0.2,,
-F_SetSpeed,True,23,0.6|0.2,,
-F_SetSpeed,True,32,1|0,,
+Normal 5 4 2",
 F_Lyrith2,True,32,,,
-F_Common,True,36,"False
+F_Common,True,36,1,"False
 _None -3 4 2
 Hold -3 8 8
 Hold 4 8 8
@@ -65,11 +62,8 @@ Normal 5 16 2
 Normal -5 16 2
 Normal -2 16 2
 Normal -3 16 2
-Normal 3 16 2",,
-F_CameraShake,True,44,"False
-True|0|5|0.4
-True|2|-5|0.4",,
-F_Common,True,44,"False
+Normal 3 16 2",
+F_Common,True,44,1,"False
 Hold -4 0 3
 Normal 1 8 2
 Normal 3 8 2
@@ -96,11 +90,11 @@ Normal -5 16 2
 Normal 1 16 2
 _None 0 16 2
 Slide -3 16 2
-Slide 3 16 2",,
-F_CameraShake,True,52,"False
-True|1|-10|0.4
-True|3|10|0.4",,
-F_Common,True,52,"False
+Slide 3 16 2",
+F_CameraShake,True,44,"False
+True|0|5|0.4
+True|2|-5|0.4",,
+F_Common,True,52,1,"False
 Normal -4 0 0
 Normal 4 8 0
 Normal -2 8 0
@@ -125,8 +119,11 @@ Hold -4 16 16
 Hold 2 16 16
 Hold -2 16 16
 Hold 2 8 5
-Slide -3 0 16",,
-F_Common,True,60,"False
+Slide -3 0 16",
+F_CameraShake,True,52,"False
+True|1|-10|0.4
+True|3|10|0.4",,
+F_Common,True,60,1,"False
 Flick -4 0 0
 Normal 1 8 0
 Normal 2 16 0
@@ -150,8 +147,8 @@ Normal 3 16 0
 Normal -2 0 0
 Normal 2 8 0
 Hold -1.5 0 3
-Hold 1.5 1 3",,
-F_Common,True,68,"False
+Hold 1.5 1 3",
+F_Common,True,68,1,"False
 Slide 0 16 0
 Slide -3 16 0
 Slide 2 16 0
@@ -165,14 +162,16 @@ Slide 3 16 0
 _None 3 24 0
 Normal -1 6 0
 Normal 2 6 0
-Normal 5 6 0",,
+Normal 5 6 0",
+F_CameraMove,True,68,"True|(1.00, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0",,
+F_CameraMove,True,68,"True|(-0.50, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.1",,
 F_CameraMove,True,68,"True|(-0.50, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.2",,
 F_CameraMove,True,68,"True|(1.00, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.3",,
 F_CameraMove,True,68,"True|(0.30, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.5",,
 F_CameraMove,True,68,"True|(-1.00, 0.00, 0.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Relative|0.6",,
 F_CameraMove,True,68,"True|(0.00, 4.00, -10.00)|False|(0.00, 0.00, 0.00)|True|0|OutQuad|Absolute|0.8",,
 F_Label,True,0,,,
-F_Common,True,72,"False
+F_Common,True,72,1,"False
 _None 0 4 0
 Normal 4 8 0
 Normal 2 8 0
@@ -185,8 +184,8 @@ Normal 5 8 4
 Slide 1 8 4
 Normal 4 8 4
 Slide 0 8 4
-Flick 3 8 4",,
-F_Common,True,79,"True
+Flick 3 8 4",
+F_Common,True,79,1,"True
 Normal -1 8 4
 Normal -4 8 4
 Slide 3 0 4
@@ -202,9 +201,9 @@ Normal 5 8 4
 Slide 1 8 4
 Normal 3 8 4
 Slide -1 8 4
-Flick 1 8 4",,
+Flick 1 8 4",
 F_NotesBlink,True,80,"Normal, Slide, Flick, Hold|0|20|222|True",,
-F_Common,True,87,"False
+F_Common,True,87,1,"False
 Normal 2 32 0
 Slide 3 32 0
 Slide 4 32 0
@@ -216,8 +215,8 @@ Slide -4 32 0
 Normal 3 32 0
 Slide 2 32 0
 Slide 1 32 0
-Slide 0 32 0",,
-F_Common,True,89,"True
+Slide 0 32 0",
+F_Common,True,89,1,"True
 Normal 2 32 0
 Slide 3 32 0
 Slide 4 32 0
@@ -229,8 +228,8 @@ Slide -4 32 0
 Normal 3 32 0
 Slide 2 32 0
 Slide 1 32 0
-Slide 0 32 0",,
-F_Common,True,91,"False
+Slide 0 32 0",
+F_Common,True,91,1,"False
 Normal -5 32 0
 Slide -4 32 0
 Slide -3 32 0
@@ -246,8 +245,8 @@ Flick 3 0 0
 Normal -1 8 0
 Normal -1 8 0
 Normal -5 0 0
-Normal 5 1 0",,
-F_Common,True,95,"False
+Normal 5 1 0",
+F_Common,True,95,1,"False
 Normal 5 8 0
 Hold -5 8 4
 Flick -1 16 0
@@ -272,16 +271,18 @@ _None 3 8 8
 Flick -3 0 8
 Flick 3 16 8
 Slide -5 0 8
-Slide 5 16 8",,
+Slide 5 16 8",
 F_CameraShake,True,96,"False
 True|0|-10|0.4
 True|2|10|0.4
 True|4|-6|0.4
 True|5|8|0.4
 True|6|-10|0.4",,
-F_Dimension,True,102,Move2DTo3D|0.5|OutQuad|0,,
+F_NotesBlink,True,102,"Normal, Slide, Flick, Hold|0.1|10|223|True",,
+F_Lyrith_NoteEffect2,True,102,,,
+F_Dimension,True,102,Move2DTo3D|0.5|OutQuad|0|False,,
 F_Label,True,0,,,
-F_Lyrith_BlinkNotes,True,108,,,
+F_Lyrith_Arc,True,104,,,
 F_Sky,True,108,"False
 (4.00, 4.00)|8|False
 (0.00, 0.00)|8|False
@@ -292,7 +293,6 @@ F_Sky,True,108,"False
 (-4.00, 4.00)|8|False
 (0.00, 4.00)|8|False
 (4.00, 4.00)|8|False",,
-F_Lyrith_Arc,True,104,,,
 F_Lyrith_Arc,True,112,,,
 F_Sky,True,116,"True
 (4.00, 4.00)|8|False
@@ -398,20 +398,20 @@ F_Arc,True,148,Blue,"True
 (-6.00, 0.00, 0.00)|Auto|False|0|6
 (-6.00, 0.00, 6.00)|Auto|True|0|0",
 F_Lyrith_Arc_Blink,True,152,,,
-F_Arc,True,156,Blue,"False
-(-6.00, 0.00, 0.00)|Linear|False|0|8
-(2.00, 0.00, 8.00)|Auto|False|0|8
-(-4.00, 0.00, 8.00)|Linear|False|0|8
-(4.00, 0.00, 8.00)|Auto|False|0|8
-(-2.00, 0.00, 8.00)|Auto|True|0|8",
 F_Sky,True,156,"False
 (4.00, 0.00)|8|False
 (-4.00, 0.00)|8|False
 (4.00, 4.00)|8|False
 (0.00, 4.00)|8|False
 (6.00, 0.00)|8|False",,
-F_Lyrith_Reverse,True,162,,,
-F_Dimension,True,165,Move3DTo2D|0.8|InOutCubic|0,,
+F_Arc,True,156,Blue,"False
+(-6.00, 0.00, 0.00)|Linear|False|0|8
+(2.00, 0.00, 8.00)|Auto|False|0|8
+(-4.00, 0.00, 8.00)|Linear|False|0|8
+(4.00, 0.00, 8.00)|Auto|False|0|8
+(-2.00, 0.00, 8.00)|Auto|True|0|8",
+F_Lyrith_Reverse,True,160,,,
+F_Dimension,True,165,Move3DTo2D|0.8|InOutCubic|0|True,,
 F_Label,True,0,,,
 F_Lyrith_MoveHold,True,168,,,
 F_Lyrith_MoveHold,True,175,,,
@@ -421,7 +421,7 @@ F_CameraShake,True,203,"False
 True|0|-6|0.3
 True|7|6|0.3
 True|14|-6|0.3",,
-F_Common,True,196,"False
+F_Common,True,196,1,"False
 Normal -4 0 0
 Normal 4 8 0
 Normal 0 8 0
@@ -467,8 +467,8 @@ Normal 1 8 8
 Normal -1 16 8
 Normal 2 16 8
 Flick 5 8 8
-Normal -4 8 8",,
-F_Common,True,211,"True
+Normal -4 8 8",
+F_Common,True,211,1,"True
 Normal -4 0 0
 Normal 4 8 0
 Normal 0 8 0
@@ -508,8 +508,8 @@ Slide -5 0 8
 Normal 1 8 8
 Normal -1 8 8
 Normal 2 16 8
-Normal 5 8 8",,
-F_Common,True,224,"False
+Normal 5 8 8",
+F_Common,True,224,1,"False
 Hold 5.5 8 8
 Hold -5.5 8 8
 Hold 4.5 8 8
@@ -527,32 +527,31 @@ Normal -0.25 16 8
 Normal 0.1 16 8
 Normal -0.1 16 8
 Flick 0 8 8
-Flick 0 8 8",,
+Flick 0 8 8",
 F_Label,True,0,ãxåe,,
 F_CameraMove,True,231,"True|(0.00, 7.00, -10.00)|True|(0.00, 0.00, 90.00)|True|1|OutBack|Absolute|0",,
-F_SetSpeed,True,232,0.5|0,,
-F_Common,True,232,"False
+F_Common,True,232,0.5,"False
 _None 0 1 1
 Hold 4 2 2
 Hold -4 2 2
 Hold 0 1 1
-Hold 2 4 4
+Hold 4 4 4
 _None 2 4 4
 Hold -1 4 4
-Hold -4 4 4
+Hold -4.5 4 4
 Hold 3 1.333 1.333
-Slide 0 4 4
+Slide -1 4 4
 Hold -3 2 2
 Normal 1 4 4
 Normal 2.5 4 4
-Hold 4.5 0.5 0.5",,
-F_SetSpeed,True,264,1|0,,
+Hold 4.5 1.33333 0.5
+Slide -2 4 0.5
+Slide -2 4 0.5",
+F_NotesBlink,True,256,"Normal, Slide, Flick, Hold|0|18|224|True",,
 F_CameraMove,True,264,"True|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|True|1|OutQuart|Absolute|0",,
 F_Label,True,0,ÉTÉr,,
-F_Common,True,264,"False
-Normal 0 0 0",,
 F_Lyrith_NoteEffect,True,265,,,
-F_Common,True,272,"False
+F_Common,True,272,1,"False
 Flick 0 8 0
 Normal 3 16 0
 Normal 0 16 0
@@ -577,17 +576,17 @@ Normal 0 8 0
 Normal -2 0 0
 Normal 2 8 0
 Normal 0 0 0
-Normal 4 8 0",,
+Normal 4 8 0",
 F_CameraMove,True,272,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -5.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,274,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -15.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,276,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, -30.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,278,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|False|0.6|OutQuart|Absolute|0",,
-F_Common,True,280,"True
+F_Common,True,280,1,"True
 Flick 0 8 0
 Normal 3 16 0
 Normal 0 16 0
 Normal 3 0 0
-Normal -3 8 0
+_None -3 8 0
 _None -3 0 0
 Normal -5 16 0
 Normal 2 16 0
@@ -607,12 +606,12 @@ Normal 0 8 0
 Normal -2 0 0
 Normal 2 8 0
 Normal 0 0 0
-Normal 4 8 0",,
+Normal 4 8 0",
 F_CameraMove,True,280,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 10.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,282,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 25.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,284,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 45.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,286,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 180.00)|True|0.3|OutBack|Absolute|0",,
-F_Common,True,288,"False
+F_Common,True,288,1,"False
 Slide 0 8 0
 Normal 3 16 0
 Normal 0 16 0
@@ -627,22 +626,22 @@ Normal 3 16 0
 Normal -1 8 0
 _None -1 0 0
 Normal 4 16 0
-Normal -5 16 0
+Slide -4 16 0
 Normal 3 8 0
 _None 3 0 0
-Normal -4 0 0
-Normal 0 8 0
 Normal -2 0 0
 Normal 2 8 0
 Normal 0 0 0
 Normal 4 8 0
-Slide 2 0 0
-Slide 6 16 0",,
+Normal 2 0 0
+Normal 6 8 0
+Slide 0 0 0
+Slide 4 16 0",
 F_CameraMove,True,288,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 175.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,290,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 170.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,292,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 160.00)|True|0.3|OutBack|Absolute|0",,
 F_CameraMove,True,294,"False|(0.00, 4.00, -10.00)|True|(0.00, 0.00, 0.00)|True|0.3|OutBack|Absolute|0",,
-F_Common,True,296,"False
+F_Common,True,296,1,"False
 Flick -5 0 4
 Hold -5 8 4
 Normal 3 8 4
@@ -663,8 +662,15 @@ Normal 2 16 4
 Normal 4 8 4
 _None 4 0 4
 Normal -5 8 4
-Flick -3 8 4",,
-F_Common,True,304,"False
+Flick -3 4 4
+Slide -6 64 4
+Slide -4 64 4
+Slide -2 64 4
+Slide 0 64 4
+Slide 2 64 4
+Slide 4 64 4
+Slide 6 64 4",
+F_Common,True,304,1,"False
 Flick -1 8 0
 Normal 4 16 0
 Normal 1 16 0
@@ -688,9 +694,16 @@ Normal 5 16 4
 Slide 3 16 4
 Normal -5 16 4
 Slide -3 16 4
-Hold -2 0 4
-Hold 2 0 4",,
-F_Common,True,312,"True
+_None -2 0 4
+_None 2 4 4
+Slide -2 0 4
+Slide 2 64 4
+Slide -4 0 4
+Slide 4 64 4
+Slide -6 0 4
+Slide 6 64 4",
+F_Lyrith_RotateHold,True,310,,,
+F_Common,True,312,1,"True
 Flick -1 8 0
 Normal 4 16 0
 Normal 1 16 0
@@ -715,8 +728,11 @@ Slide 3 16 4
 Normal -5 16 4
 Slide -3 16 4
 Hold -2 0 4
-Hold 2 0 2",,
-F_Common,True,320,"False
+Hold 2 8 2
+Slide -3 8 2
+Slide -1 8 2
+Slide -2 8 2",
+F_Common,True,320,1,"False
 Normal 3 4 0
 _None 3 0 0
 Normal -3 16 0
@@ -752,8 +768,8 @@ Slide 5.5 16 0
 Slide 5.5 16 0
 Slide 5.5 16 0
 Slide 5.5 16 0
-Slide 5.5 16 0",,
-F_Common,True,326,"False
+Slide 5.5 16 0",
+F_Common,True,326,1,"False
 Normal 0 16 0
 Slide -1.375 16 0
 Slide -2.75 16 0
@@ -762,8 +778,8 @@ Slide -5.5 16 0
 Slide -5.5 16 0
 Slide -5.5 16 0
 Slide -5.5 16 0
-Slide -5.5 16 0",,
-F_Common,True,328,"False
+Slide -5.5 16 0",
+F_Common,True,328,1,"False
 Normal 2 8 0
 Normal -2 8 0
 _None 0 0 0
@@ -788,8 +804,16 @@ Normal 0 16 0
 Normal 0 16 0
 _None 0 16 0
 Normal -4 8 0
-Normal 4 16 0",,
-F_Common,True,336,"False
+Normal 4 16 0
+_None 4 0 0
+Slide 3 16 0
+Slide 0.5 16 0
+Slide -2.5 16 0
+Slide -5.5 16 0
+Slide -3 16 0
+Slide -1 16 0
+Slide 0 16 0",
+F_Common,True,336,1,"False
 Normal -5 0 2
 Hold 0 4 0.666
 Normal -5 8 2
@@ -857,10 +881,10 @@ Normal 0 16 16
 Normal -3 16 16
 Normal 5 16 16
 Normal -1 16 16
-Normal 4 16 16
+Normal 6 16 16
 Normal 0 16 16
 Normal 3 16 16
-Normal -4 16 16
+Normal -6 16 16
 Normal 0 16 16
 Normal 1 16 16
 Normal -3 16 16
@@ -871,13 +895,13 @@ Normal -1 16 16
 Normal 1 16 16
 Normal 5 16 16
 _None 1 0 16
-Normal -5 32 16
+Normal -6 32 16
 Normal 1 32 16
 Normal -3 16 16
 Normal 3 16 16
 Normal 0 16 16
 Normal 5 16 16
-Normal 1 16 16
+Normal 0 16 16
 Normal -2 16 16
 Normal 4 16 16
 Normal 0 16 16
@@ -902,9 +926,36 @@ Normal 5 4 16
 Flick -3 0 16
 Normal 1 4 16
 Hold -5 0 0.6666667
-Hold 5 0.6666667 0.6666667",,
+Hold 5 1 0.6666667",
+F_CameraShake,True,368,"False
+True|0|-5|0.3
+True|2|5|0.3
+True|4|-8|0.3
+True|5|8|0.3
+True|6|-10|0.3
+True|7|10|0.2",,
+F_Dimension,True,376,Move2DTo3D|3|OutQuad|0|True,,
+F_Common,True,380,1,"False
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 5 16 0",
+F_Common,True,380,1,"True
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 4 16 0
+Slide 6 16 0
+Slide 5 16 0",
 F_Label,True,0,,,
-F_Dimension,True,376,Move2DTo3D|3|OutQuad|0,,
 F_Arc,True,380,Red,"False
 (-5.00, 0.00, 0.00)|Auto|False|0|8
 (-5.00, 0.00, 8.00)|Auto|False|0|8
