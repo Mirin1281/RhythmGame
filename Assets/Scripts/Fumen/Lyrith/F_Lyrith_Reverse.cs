@@ -49,7 +49,7 @@ namespace NoteGenerating
 
         void MySky(Vector3 pos)
         {
-            var skyNote = Helper.SkyNotePool.GetNote();
+            var skyNote = Helper.GetSky();
             float timeInterval = pos.z;
             var startPos = new Vector3(Inverse(pos.x), pos.y, timeInterval * Speed * 1.1f);
             float moveTime = Helper.GetTimeInterval(2);

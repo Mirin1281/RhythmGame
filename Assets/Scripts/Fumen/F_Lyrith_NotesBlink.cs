@@ -38,27 +38,27 @@ namespace NoteGenerating
             List<NoteBase> notes = new(100);
             if(target.HasFlag(BlinkTargets.Normal))
             {
-                notes.AddRange(Helper.NormalNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.NormalPool.GetAllNotes(0));
             }
             if(target.HasFlag(BlinkTargets.Slide))
             {
-                notes.AddRange(Helper.SlideNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.SlidePool.GetAllNotes(0));
             }
             if(target.HasFlag(BlinkTargets.Flick))
             {
-                notes.AddRange(Helper.FlickNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.FlickPool.GetAllNotes(0));
             }
             if(target.HasFlag(BlinkTargets.Hold))
             {
-                notes.AddRange(Helper.HoldNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.HoldPool.GetAllNotes(0));
             }
             if(target.HasFlag(BlinkTargets.Sky))
             {
-                notes.AddRange(Helper.SkyNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.SkyPool.GetAllNotes(0));
             }
             if(target.HasFlag(BlinkTargets.Arc))
             {
-                notes.AddRange(Helper.ArcNotePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.ArcPool.GetAllNotes(0));
             }
 
             if(isDelayOneFrame)

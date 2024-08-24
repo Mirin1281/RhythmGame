@@ -85,7 +85,7 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            NoteBase note = Helper.GetNote(type);
+            NoteBase note = Helper.PoolManager.GetNote(type);
             Vector3 startPos = new Vector3(Inverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 
@@ -93,6 +93,7 @@ namespace NoteGenerating
             float expectTime = CurrentTime + distance / Speed;
             NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
             Helper.NoteInput.AddExpect(expect);
+            
             return note;
         }
         protected HoldNote Hold(float x, float length, float delta = -1)

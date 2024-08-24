@@ -48,7 +48,7 @@ namespace NoteGenerating
 
         void MoveHold(float x, float length, float moveX)
         {
-            var hold = Helper.HoldNotePool.GetNote();
+            var hold = Helper.GetHold();
             var holdTime = Helper.GetTimeInterval(length);
             hold.SetLength(holdTime * Speed);
             hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));

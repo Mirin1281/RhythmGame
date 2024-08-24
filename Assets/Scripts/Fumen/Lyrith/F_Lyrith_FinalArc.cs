@@ -90,7 +90,7 @@ namespace NoteGenerating
 
         async UniTask MyArc(ArcCreateData[] datas, ArcColorType colorType)
         {
-            var arc = Helper.ArcNotePool.GetNote();
+            var arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed / decay, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
             var startPos = new Vector3(0, 0f, StartBase);
@@ -126,7 +126,7 @@ namespace NoteGenerating
 
         void MyArc2(ArcCreateData[] datas, ArcColorType colorType, float speed)
         {
-            var arc = Helper.ArcNotePool.GetNote();
+            var arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
             var startPos = new Vector3(0, 0f, StartBase);

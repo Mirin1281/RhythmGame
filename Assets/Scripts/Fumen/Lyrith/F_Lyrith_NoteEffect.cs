@@ -38,13 +38,7 @@ namespace NoteGenerating
                 int count = 10;
                 for(int i = 0; i < count; i++)
                 {
-                    NoteBase note = type switch
-                    {
-                        NoteType.Normal => Helper.NormalNotePool.GetNote(),
-                        NoteType.Slide => Helper.SlideNotePool.GetNote(),
-                        NoteType.Flick => Helper.FlickNotePool.GetNote(),
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
+                    NoteBase note = Helper.PoolManager.GetNote(type);
                     list.Add(note);
                     var dir = i * 360f / count;
                     Move(note, pos, dir, flg);

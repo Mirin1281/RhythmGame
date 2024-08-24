@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using UnityEditor;
 
 namespace NoteGenerating
 {
@@ -25,13 +26,7 @@ namespace NoteGenerating
 
         void Create(Vector2 startPos, float rotationSpeed)
         {
-            NoteBase note = noteType switch
-            {
-                NoteType.Normal => Helper.NormalNotePool.GetNote(),
-                NoteType.Slide => Helper.SlideNotePool.GetNote(),
-                NoteType.Flick => Helper.FlickNotePool.GetNote(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            NoteBase note = Helper.PoolManager.GetNote(noteType);
             WhileYield(moveTime, t => 
             {
                 note.SetRotate(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));

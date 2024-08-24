@@ -59,7 +59,7 @@ namespace NoteGenerating
 
         async UniTask MyArc(ArcCreateData[] datas, ArcColorType colorType, bool first = false)
         {
-            var arc = Helper.ArcNotePool.GetNote();
+            var arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed / decay, IsInverse).Forget();
             arc.SetColor(colorType, IsInverse);
 
@@ -105,7 +105,7 @@ namespace NoteGenerating
 
         async UniTask MySky(float x, float y = 4f, bool first = false)
         {
-            var skyNote = Helper.SkyNotePool.GetNote();
+            var skyNote = Helper.GetSky();
             var startPos = new Vector3(Inverse(x), y, StartBase);
             DropAsync(skyNote, startPos).Forget();
             skys.Add(skyNote);

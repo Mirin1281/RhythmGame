@@ -140,7 +140,7 @@ namespace NoteGenerating
 
             void Note(float x, float y, NoteType type)
             {
-                NoteBase note = Helper.GetNote(type);
+                NoteBase note = Helper.PoolManager.GetNote(type);
                 var startPos = new Vector3(Inverse(x), y);
                 note.SetPos(startPos);
                 note.transform.parent = previewObj.transform;

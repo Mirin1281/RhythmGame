@@ -28,6 +28,7 @@ public class NoteInput : MonoBehaviour
     [SerializeField] Metronome metronome;
     [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
+    [SerializeField] NotePoolManager notePoolManager;
     [SerializeField] bool isAuto;
 
     readonly List<NoteExpect> allExpects = new(63);
@@ -76,6 +77,25 @@ public class NoteInput : MonoBehaviour
 
     public void AddExpect(NoteExpect expect)
     {
+        // 同時刻に着地するノーツがあった場合は同時押しの見た目を適用する
+        foreach(var e in allExpects)
+        {
+            if(Mathf.Approximately(expect.Time, e.Time) == false) continue;
+            var e1Note = expect.Note;
+            var e2Note = e.Note;
+            if(e1Note.Type is NoteType.Normal or NoteType.Slide or NoteType.Flick
+            || e2Note.Type is NoteType.Normal or NoteType.Slide or NoteType.Flick)
+            {
+                notePoolManager.SetSimultaneousSprite(e1Note, e1Note.Type);
+                notePoolManager.SetSimultaneousSprite(e2Note, e2Note.Type);
+            }
+            else if(e1Note.Type is NoteType.Floor && e2Note.Type is NoteType.Sky
+                 && e1Note.Type is NoteType.Sky && e2Note.Type is NoteType.Floor)
+            {
+                // 線を結ぶ
+            }
+        }
+
         allExpects.Add(expect);
     }
     void RemoveExpect(NoteExpect expect, bool isInactive = true)
@@ -176,7 +196,8 @@ public class NoteInput : MonoBehaviour
 
     void OnInput(Vector2 pos)
     {
-        (NoteExpect expect, float delta) = FetchNearestNote(pos, metronome.CurrentTime, defaultRange, NoteType.Normal, NoteType.Hold);
+        (NoteExpect expect, float delta) = FetchNearestNote(
+            pos, metronome.CurrentTime, defaultRange, NoteType.Normal, NoteType.Hold, NoteType.Sky);
         if(expect == null) return;
 
         NoteGrade grade = judge.GetGradeAndSetText(delta);

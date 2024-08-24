@@ -15,4 +15,9 @@ public class SlideNote : NoteBase
     {
         spriteRenderer.enabled = enabled;
     }
+
+    public void SetSprite(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+    }
 }

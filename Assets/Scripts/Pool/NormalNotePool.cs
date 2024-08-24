@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class NormalNotePool : PoolBase<NormalNote> 
 {
-    public NormalNote GetNote(int index = 0)
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] Sprite simultaneousSprite;
+
+    public NormalNote GetNote(int index = 0, bool isSimultaneous = false)
     {
         var normalNote = GetInstance(index);
         normalNote.SetRotate(0);
+        normalNote.SetSprite(defaultSprite);
         if(index != 1)
         {
-            normalNote.SetWidth(3f);
+            //normalNote.SetWidth(3f);
         }
         return normalNote;
     }
@@ -18,4 +22,6 @@ public class NormalNotePool : PoolBase<NormalNote>
     {
         return PooledTable[index];
     }
+
+    public Sprite GetSimultaneousSprite() => simultaneousSprite;
 }

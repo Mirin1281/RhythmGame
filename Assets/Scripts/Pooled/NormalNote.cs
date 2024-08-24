@@ -13,4 +13,9 @@ public class NormalNote : NoteBase
     {
         spriteRenderer.enabled = enabled;
     }
+
+    public void SetSprite(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+    }
 }

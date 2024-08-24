@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class SlideNotePool : PoolBase<SlideNote>
 {
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] Sprite simultaneousSprite;
+
     public SlideNote GetNote()
     {
         var slideNote = GetInstance();
         slideNote.SetRotate(0);
-        slideNote.SetWidth(3f);
+        slideNote.SetSprite(defaultSprite);
+        //slideNote.SetWidth(3f);
         return slideNote;
     }
 
@@ -16,4 +20,6 @@ public class SlideNotePool : PoolBase<SlideNote>
     {
         return PooledTable[index];
     }
+
+    public Sprite GetSimultaneousSprite() => simultaneousSprite;
 }
