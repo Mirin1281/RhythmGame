@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆3D 2D変更"), System.Serializable]
-    public class F_Dimension : Generator_Type1
+    public class F_Dimension : Generator_2D
     {
         enum MoveType
         {

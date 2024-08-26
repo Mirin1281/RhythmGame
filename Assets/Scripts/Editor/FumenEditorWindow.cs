@@ -365,7 +365,7 @@ namespace NoteGenerating.Editor
                 {
                     cmdName = "Null";
                 }
-                else if(cmdName.StartsWith("F_"))
+                else if(cmdName.StartsWith("F_", StringComparison.Ordinal))
                 {
                     cmdName = cmdName[2..];
                 }

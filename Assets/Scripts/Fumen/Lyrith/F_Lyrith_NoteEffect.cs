@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/【演出】花火みたいな"), System.Serializable]
-    public class F_Lyrith_NoteEffect : Generator_Type1
+    public class F_Lyrith_NoteEffect : Generator_2D
     {
         [SerializeField] float speed = 3f;
         [SerializeField] float time = 0.4f;
@@ -38,7 +38,7 @@ namespace NoteGenerating
                 int count = 10;
                 for(int i = 0; i < count; i++)
                 {
-                    NoteBase note = Helper.PoolManager.GetNote(type);
+                    NoteBase note = Helper.PoolManager.GetNote2D(type);
                     list.Add(note);
                     var dir = i * 360f / count;
                     Move(note, pos, dir, flg);

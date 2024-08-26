@@ -4,7 +4,7 @@ using System;
 
 namespace NoteGenerating
 {
-    public abstract class Generator_Type1 : NoteGeneratorBase
+    public abstract class Generator_2D : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
         protected bool IsInverse => isInverse;
@@ -79,13 +79,13 @@ namespace NoteGenerating
             return Delta;
         }
 
-        protected NoteBase Note(float x, NoteType type, float delta = -1)
+        protected NoteBase_2D Note(float x, NoteType type, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
-            NoteBase note = Helper.PoolManager.GetNote(type);
+            NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
             Vector3 startPos = new Vector3(Inverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 
@@ -117,7 +117,7 @@ namespace NoteGenerating
             return hold;
         }
 
-        async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
+        protected async UniTask DropAsync(NoteBase_2D note, Vector3 startPos, float delta = -1)
         {
             if(delta == -1)
             {

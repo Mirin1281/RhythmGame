@@ -8,9 +8,9 @@ namespace NoteGenerating
     {
         [SerializeField] string summary;
 
-        protected override async UniTask GenerateAsync()
+        protected override UniTask GenerateAsync()
         {
-            await UniTask.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         protected override Color GetCommandColor()

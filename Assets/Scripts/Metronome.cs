@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using TMPro;
 using CriWare;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,6 +11,7 @@ public class Metronome : MonoBehaviour
 {
     [SerializeField] CriAtomSource criAtomSource;
     [SerializeField] MusicData musicData;
+    [SerializeField] TMP_Text beatText;
     [SerializeField] bool autoStart;
     [Space(10)]
     [SerializeField] bool skipOnStart;
@@ -88,6 +90,7 @@ public class Metronome : MonoBehaviour
                     bpm = musicData.GetChangeBPM(bpmChangeCount);
                     bpmChangeCount++;
                 }
+                beatText.SetText((beatCount - musicData.StartBeatOffset - RhythmGameManager.DefaultWaitOnAction).ToString());
                 OnBeat?.Invoke(beatCount - musicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
                 
                 beatCount++;

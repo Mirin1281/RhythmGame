@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
-    public class F_Lyrith_MoveHold : Generator_Type1
+    public class F_Lyrith_MoveHold : Generator_2D
     {
         float MoveX => 0.15f;
 

@@ -65,7 +65,7 @@ namespace NoteGenerating
                 {
                     SkyNote(data.Pos, z);
                 }
-                z += GetDistanceInterval(data.Wait);
+                z += Helper.GetTimeInterval(data.Wait) * Speed;
             }
 
             float lineZ = 0f;
@@ -75,7 +75,7 @@ namespace NoteGenerating
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewObj.transform;
-                lineZ += GetDistanceInterval(4);
+                lineZ += Helper.GetTimeInterval(4) * Speed;
                 if(lineZ > z) break;
             }
 
@@ -85,12 +85,6 @@ namespace NoteGenerating
                 var startPos = new Vector3(Inverse(pos.x), pos.y, z);
                 sky.SetPos(startPos);
                 sky.transform.parent = previewObj.transform;
-            }
-
-            float GetDistanceInterval(float lpb)
-            {
-                if(lpb == 0) return 0;
-                return 240f / RhythmGameManager.DebugBpm / lpb * Speed;
             }
         }
 

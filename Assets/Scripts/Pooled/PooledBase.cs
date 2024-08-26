@@ -1,6 +1,9 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// プール時に使用するアクティブの情報をもつ
+/// </summary>
 public abstract class PooledBase : MonoBehaviour
 {
     bool isActiveForPool;

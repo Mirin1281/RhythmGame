@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     }
     readonly List<FlickParameter> flickParameters = new(4);
 
+    // 構造体にしたすぎる
     public class InputStatus
     {
         public readonly int FingerIndex;
@@ -55,6 +56,10 @@ public class InputManager : MonoBehaviour
     }
     void OnDestroy()
     {
+        OnInput = null;
+        OnHold = null;
+        OnFlick = null;
+        OnUp = null;
         Touch.onFingerDown -= OnFingerDown;
         Touch.onFingerMove -= OnFingerMove;
         Touch.onFingerUp -= OnFingerUp;
@@ -116,24 +121,54 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    readonly List<Input> inputs = new(10);
+    public IReadOnlyList<Input> Inputs => inputs;
+    public readonly struct Input
+    {
+        public readonly int index;
+        public readonly Vector2 pos;
+        public Input(int index, Vector2 pos)
+        {
+            this.index = index;
+            this.pos = pos;
+        }
+    }
+
     void Update()
     {
-        var touches = Touch.activeTouches;
-        for(int i = 0; i < inputStatuses.Count; i++)
         {
-            for(int k = 0; k < touches.Count; k++)
+            var touches = Touch.activeTouches;
+            for(int i = 0; i < inputStatuses.Count; i++)
             {
-                if(touches[k].finger.index == inputStatuses[i].FingerIndex)
+                for(int k = 0; k < touches.Count; k++)
                 {
-                    inputStatuses[i].SetPosition(GetWorldPosition(touches[k].screenPosition));
-                    break;
+                    if(touches[k].finger.index == inputStatuses[i].FingerIndex)
+                    {
+                        inputStatuses[i].SetPosition(GetWorldPosition(touches[k].screenPosition));
+                        break;
+                    }
                 }
             }
+            /*foreach(var touch in touches)
+            {
+                Debug.Log(touch.finger.index);
+            }*/
+            //if(inputStatuses.Count != 0)
+            //{
+                OnHold?.Invoke(inputStatuses);
+            //}
         }
-        //if(inputStatuses.Count != 0)
-        //{
-            OnHold?.Invoke(inputStatuses);
-        //}
+
+        {
+            
+            inputs.Clear();
+            var touches = Touch.activeTouches;
+            foreach(var touch in touches)
+            {
+                var input = new Input(touch.finger.index, GetWorldPosition(touch.screenPosition));
+                inputs.Add(input);
+            }
+        }
     }
 
     List<InputStatus> FetchInputStatuses()

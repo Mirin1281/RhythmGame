@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆ノーツ点滅"), System.Serializable]
-    public class F_NotesBlink : Generator_Type1
+    public class F_NotesBlink : Generator_2D
     {
         [Flags]
         enum BlinkTargets

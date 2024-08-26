@@ -8,7 +8,7 @@ namespace NoteGenerating
     // 生成 → 移動
     // AddExpectを動的に設定できたら面白そう
     [AddTypeMenu("Lyrith/2 回転して着地"), System.Serializable]
-    public class F_Lyrith2 : Generator_Type1
+    public class F_Lyrith2 : Generator_2D
     {
         [SerializeField] float startY = 7f;
         [SerializeField] NoteType noteType = NoteType.Flick;
@@ -26,7 +26,8 @@ namespace NoteGenerating
 
         void Create(Vector2 startPos, float rotationSpeed)
         {
-            NoteBase note = Helper.PoolManager.GetNote(noteType);
+            NoteBase_2D note = Helper.PoolManager.GetNote2D(noteType);
+            Helper.PoolManager.SetSimultaneousSprite(note);
             WhileYield(moveTime, t => 
             {
                 note.SetRotate(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));

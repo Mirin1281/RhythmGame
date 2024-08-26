@@ -43,11 +43,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     void OnApplicationQuit()
     {
-        Speed = 16f;
-        Speed3D = 80f;
+        Speed = DefaultSpeed;
+        Speed3D = DefaultSpeed3D;
     }
 
-    public static void SetSpeed(float rate = -1)
+    /*public static void SetSpeed(float rate = -1)
     {
         if(rate == -1)
         {
@@ -59,5 +59,5 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             Speed = DefaultSpeed * rate;
             Speed3D = DefaultSpeed3D * rate;
         }
-    }
+    }*/
 }

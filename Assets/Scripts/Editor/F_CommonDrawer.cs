@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace NoteGenerating.Editor
 {
-    [CustomPropertyDrawer(typeof(F_Common.NoteData))]
+    [CustomPropertyDrawer(typeof(F_Generic2D.NoteData))]
     public class F_CommonNoteDataDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -13,9 +13,9 @@ namespace NoteGenerating.Editor
             position.width = width * 0.25f;
             var typeProp = property.FindPropertyRelative("type");
             EditorGUI.PropertyField(position, typeProp, GUIContent.none);
-            var type = (F_Common.CreateNoteType)typeProp.enumValueIndex;
+            var type = (F_Generic2D.CreateNoteType)typeProp.enumValueIndex;
 
-            if(type == F_Common.CreateNoteType._None)
+            if(type == F_Generic2D.CreateNoteType._None)
             {
                 DrawBoxLayout(new Rect(19, position.y - 2, width + 40, EditorGUIUtility.singleLineHeight + 4), Color.cyan);
                 position.x += width * 0.525f;
@@ -47,7 +47,7 @@ namespace NoteGenerating.Editor
                 DrawBoxLayout(new Rect(19, position.y -2, width + 40, 2 * (EditorGUIUtility.singleLineHeight + 4)), Color.yellow);
             }
 
-            if(type == F_Common.CreateNoteType.Hold)
+            if(type == F_Generic2D.CreateNoteType.Hold)
             {
                 position.x += width * 0.17f;
                 EditorGUI.LabelField(position, "長さ:");
@@ -76,7 +76,7 @@ namespace NoteGenerating.Editor
         }
     }
 
-    [CustomPropertyDrawer(typeof(F_Common))]
+    [CustomPropertyDrawer(typeof(F_Generic2D))]
     public class F_CommonDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

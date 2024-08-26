@@ -69,15 +69,8 @@ namespace NoteGenerating
                 line.transform.localPosition = new Vector3(0, 0, lineY);
                 line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
                 line.transform.parent = previewObj.transform;
-                lineY += GetDistanceInterval(4);
+                lineY += Helper.GetTimeInterval(4) * Speed;
                 if(lineY > arc.LastZ) break;
-            }
-
-
-            float GetDistanceInterval(float lpb)
-            {
-                if(lpb == 0) return 0;
-                return 240f / RhythmGameManager.DebugBpm / lpb * Speed;
             }
         }
 

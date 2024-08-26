@@ -30,4 +30,6 @@ public abstract class NoteBase : PooledBase
     }
 
     public virtual void SetRendererEnabled(bool enabled) {}
+
+    public virtual void SetSimultaneous() {}
 }

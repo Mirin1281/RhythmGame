@@ -5,7 +5,7 @@ namespace NoteGenerating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_BlinkNotes")]
     [AddTypeMenu("Lyrith/【演出】ノーツ上昇"), System.Serializable]
-    public class F_Lyrith_NoteEffect2 : Generator_Type1
+    public class F_Lyrith_NoteEffect2 : Generator_2D
     {
         protected override async UniTask GenerateAsync()
         {
@@ -13,7 +13,7 @@ namespace NoteGenerating
             int count = 12;
             for(int i = 0; i < count; i++)
             {
-                var slide = Helper.PoolManager.GetNote(NoteType.Slide);
+                var slide = Helper.PoolManager.GetNote2D(NoteType.Slide);
                 float a = i - count / 2f + 0.5f;
                 slide.SetPos(new Vector2(a, a * 0.5f + 4f));
                 MoveAndRotateAsync(slide).Forget();

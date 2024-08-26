@@ -11,36 +11,31 @@ public class NotePoolManager : MonoBehaviour
     [field: SerializeField] public SkyNotePool SkyPool { get; private set; }
     [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
 
-    public NoteBase GetNote(NoteType type, int index = 0) => type switch
+    public NoteBase_2D GetNote2D(NoteType type, int index = 0) => type switch
     {
         NoteType.Normal => NormalPool.GetNote(index),
         NoteType.Slide => SlidePool.GetNote(),
         NoteType.Flick => FlickPool.GetNote(),
+        _ => throw new System.Exception()
+    };
+
+    public NoteBase GetNote(NoteType type, int index = 0) => type switch
+    {
+        /*NoteType.Normal => NormalPool.GetNote(index),
+        NoteType.Slide => SlidePool.GetNote(),
+        NoteType.Flick => FlickPool.GetNote(),*/
         NoteType.Hold => HoldPool.GetNote(),
         NoteType.Sky => SkyPool.GetNote(),
         NoteType.Arc => ArcPool.GetNote(),
         _ => throw new System.Exception()
     };
 
-    public void SetSimultaneousSprite(NoteBase note, NoteType type)
+    public void SetSimultaneousSprite(NoteBase_2D note)
     {
-        if((type is NoteType.Normal or NoteType.Slide or NoteType.Flick) == false) return;
-        var sprite = GetSimultaneousSprite(type);
-        if(type == NoteType.Normal)
-        {
-            var normal = note as NormalNote;
-            normal.SetSprite(sprite);
-        }
-        else if(type == NoteType.Slide)
-        {
-            var slide = note as SlideNote;
-            slide.SetSprite(sprite);
-        }
-        else if(type == NoteType.Flick)
-        {
-            var flick = note as FlickNote;
-            flick.SetSprite(sprite);
-        }
+        if(note == null) return;
+        var sprite = GetSimultaneousSprite(note.Type);
+        if(sprite == null) return;
+        note.SetSprite(sprite);
 
 
         Sprite GetSimultaneousSprite(NoteType type) => type switch
@@ -48,6 +43,7 @@ public class NotePoolManager : MonoBehaviour
             NoteType.Normal => NormalPool.GetSimultaneousSprite(),
             NoteType.Slide => SlidePool.GetSimultaneousSprite(),
             NoteType.Flick => FlickPool.GetSimultaneousSprite(),
+            NoteType.Hold => null,
             /*NoteType.Hold => holdNotePool,
             NoteType.Sky => skyNotePool,
             NoteType.Arc => arcNotePool,*/

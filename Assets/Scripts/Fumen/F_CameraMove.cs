@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆カメラ制御"), System.Serializable]
-    public class F_CameraMove : Generator_Type1
+    public class F_CameraMove : Generator_2D
     {
         enum MoveType
         {
@@ -86,7 +86,6 @@ namespace NoteGenerating
                             t.Ease(startRotate.z, rotate.z, time, easeType));
                     });
                 }
-                
             }
             else
             {

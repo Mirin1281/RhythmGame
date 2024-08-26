@@ -25,6 +25,7 @@ public class MusicData : ScriptableObject
     public float Bpm => bpm;
     public float Offset => offset;
     public int StartBeatOffset => startBeatOffset;
+    public BPMChangePoint[] BpmChangePoints => bpmChangePoints;
 
     public bool TryGetBPMChangeBeatCount(int index, out int beatCount)
     {
