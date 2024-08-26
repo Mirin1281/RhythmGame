@@ -56,11 +56,11 @@ public class Judgement : MonoBehaviour
 
     public static NoteGrade GetGrade(float delta)
     {
-        if(Mathf.Abs(delta) < 0.03f)
+        if(Mathf.Abs(delta) < 0.05f)
         {
             return NoteGrade.Perfect;
         }
-        else if(Mathf.Abs(delta) < 0.06f)
+        else if(Mathf.Abs(delta) < 0.08f)
         {
             if(delta > 0)
             {

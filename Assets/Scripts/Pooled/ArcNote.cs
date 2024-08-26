@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -55,15 +56,22 @@ public class ArcNote : NoteBase
     /// </summary>
     public static readonly float Height = 0.3f;
 
-    /// <summary>
-    /// アークの色
-    /// </summary>
-    public ArcColorType ColorType { get; set; }
+    ArcColorType colorType;
+
+    CancellationTokenSource cts;
+
+    static Color missColor = new Color(0.9f, 0f, 0f, 0.9f);
 
     void Awake()
     {
         meshRenderer.material = new Material(meshRenderer.material);
         meshFilter.mesh = meshFilter.mesh.Duplicate();
+    }
+    void OnDestroy()
+    {
+        cts?.Cancel();
+        cts = null;
+        cts?.Dispose();
     }
 
     void Update()
@@ -248,12 +256,15 @@ public class ArcNote : NoteBase
 
     public async UniTask InvalidArcJudgeAsync(float time = 1f)
     {
+        cts?.Cancel();
+        cts ??= new();
+        var token = cts.Token;
+
         IsInvalid = true;
-        var tmpColor = meshRenderer.sharedMaterial.color;
-        SetColor(new Color(0.9f, 0f, 0f, 1f));
-        await MyUtility.WaitSeconds(time, destroyCancellationToken);
+        await MyUtility.WaitSeconds(time, token);
         IsInvalid = false;
-        SetColor(tmpColor);
+
+        cts = null;
         FingerIndex = -1;
     }
 
@@ -261,8 +272,14 @@ public class ArcNote : NoteBase
     {
         if(enabled)
         {
+            if(IsInvalid)
+            {
+                SetColor(missColor);
+                return;
+            }
             noInputTime = 0f;
         }
+        SetColor(colorType);
         var c = meshRenderer.material.color;
         meshRenderer.material.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
     }
@@ -285,8 +302,8 @@ public class ArcNote : NoteBase
         {
             type = colorType;
         }
-        ColorType = type;
-        SetColor(ColorType switch
+        this.colorType = type;
+        SetColor(this.colorType switch
         {
             ArcColorType.Red => new Color32(233, 124, 187, 200),
             ArcColorType.Blue => new Color32(91, 179, 255, 200),

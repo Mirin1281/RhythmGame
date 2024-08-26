@@ -1,48 +1,48 @@
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using Cysharp.Threading.Tasks;
 
 public class InputManager : MonoBehaviour
 {
     Camera mainCamera;
     
-    class FlickParameter
+    public readonly struct Input : IEquatable<Input>
     {
-        public int index;
-        public Vector2 startPos;
-        public Vector2 currentPos;
-        public bool isPrepared;
-    }
-    readonly List<FlickParameter> flickParameters = new(4);
-
-    // 構造体にしたすぎる
-    public class InputStatus
-    {
-        public readonly int FingerIndex;
-        public Vector2 Position { get; private set; }
-        public ArcColorType ArcColorType { get; private set; }
-
-        public InputStatus(int index, Vector2 pos)
+        public readonly int index;
+        public readonly Vector2 pos;
+        public Input(int index, Vector2 pos)
         {
-            FingerIndex = index;
-            Position = pos;
-            ArcColorType = ArcColorType.None;
+            this.index = index;
+            this.pos = pos;
         }
 
-        public void SetPosition(Vector2 position) => Position = position;
-        public void SetArcColorType(ArcColorType type) => ArcColorType = type;
+        public bool Equals(Input input) => (index, pos) == (input.index, input.pos);
+        public override int GetHashCode() => (index, pos).GetHashCode();
     }
-    List<InputStatus> inputStatuses = new(8);
-    public List<InputStatus> InputStatuses => inputStatuses;
-    
+    readonly List<Input> inputs = new(10);
+
+    // 座標はスクリーン座標であることに注意
+    readonly struct FlickInput : IEquatable<FlickInput>
+    {
+        public readonly int index;
+        public readonly Vector2 startPos;
+        public FlickInput(Finger finger)
+        {
+            index = finger.index;
+            startPos = finger.screenPosition;
+        }
+
+        public bool Equals(FlickInput f) => (index, startPos) == (f.index, f.startPos);
+        public override int GetHashCode() => (index, startPos).GetHashCode();
+    }
+    readonly List<FlickInput> flickInputs = new(4);
+
     const float posDiff = 30f; // フリックの感度
 
     public event Action<Vector2> OnInput;
-    public event Action<List<InputStatus>> OnHold;
+    public event Action<List<Input>> OnHold;
     public event Action<Vector2> OnFlick;
     public event Action<int> OnUp;
 
@@ -68,29 +68,30 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        inputStatuses = FetchInputStatuses();
-        inputStatuses.ForEach(status => OnInput?.Invoke(status.Position));
-
-        var flickParam = new FlickParameter()
-        {
-            index = finger.index,
-            startPos = finger.screenPosition,
-            isPrepared = true,
-        };
-        flickParameters.Add(flickParam);
+        var pos = GetWorldPosition(finger.screenPosition);
+        OnInput?.Invoke(pos);
+        var flickInput = new FlickInput(finger);
+        flickInputs.Add(flickInput);
     }
     void OnFingerMove(Finger finger)
     {
-        for(int i = 0; i < flickParameters.Count; i++)
+        /*var f = flickInputs.Where(f => f.index == finger.index).FirstOrDefault();
+        if(f.Equals(default)) return;
+        if (Mathf.Abs(finger.screenPosition.y - f.startPos.y) >= posDiff
+         || Mathf.Abs(finger.screenPosition.x - f.startPos.x) >= posDiff)
         {
-            var p = flickParameters[i];
-            if(p.index != finger.index) continue;
-            p.currentPos = finger.screenPosition;
-            if (p.isPrepared && 
-               (Mathf.Abs(p.currentPos.y - p.startPos.y) >= posDiff || Mathf.Abs(p.currentPos.x - p.startPos.x) >= posDiff))
+            OnFlick?.Invoke(GetWorldPosition(f.startPos));
+            flickInputs.Remove(f);
+        }*/
+        for(int i = 0; i < flickInputs.Count; i++)
+        {
+            var input = flickInputs[i];
+            if(input.index != finger.index) continue;
+            if (Mathf.Abs(finger.screenPosition.y - input.startPos.y) >= posDiff
+             || Mathf.Abs(finger.screenPosition.x - input.startPos.x) >= posDiff)
             {
-                OnFlick?.Invoke(GetWorldPosition(p.startPos));
-                p.isPrepared = false;
+                OnFlick?.Invoke(GetWorldPosition(input.startPos));
+                flickInputs.RemoveAt(i);
             }
         }
 
@@ -105,76 +106,26 @@ public class InputManager : MonoBehaviour
     void OnFingerUp(Finger finger)
     {
         OnUp?.Invoke(finger.index);
-        for(int i = 0; i < flickParameters.Count; i++)
-        {
-            if(finger.index == flickParameters[i].index)
-            {
-                flickParameters.RemoveAt(i);
-            }
-        }
-        for(int i = 0; i < inputStatuses.Count; i++)
-        {
-            if(finger.index == inputStatuses[i].FingerIndex)
-            {
-                inputStatuses.RemoveAt(i);
-            }
-        }
-    }
 
-    readonly List<Input> inputs = new(10);
-    public IReadOnlyList<Input> Inputs => inputs;
-    public readonly struct Input
-    {
-        public readonly int index;
-        public readonly Vector2 pos;
-        public Input(int index, Vector2 pos)
+        for(int i = 0; i < flickInputs.Count; i++)
         {
-            this.index = index;
-            this.pos = pos;
+            if(finger.index == flickInputs[i].index)
+            {
+                flickInputs.RemoveAt(i);
+            }
         }
     }
 
     void Update()
     {
+        inputs.Clear();
+        foreach(var touch in Touch.activeTouches)
         {
-            var touches = Touch.activeTouches;
-            for(int i = 0; i < inputStatuses.Count; i++)
-            {
-                for(int k = 0; k < touches.Count; k++)
-                {
-                    if(touches[k].finger.index == inputStatuses[i].FingerIndex)
-                    {
-                        inputStatuses[i].SetPosition(GetWorldPosition(touches[k].screenPosition));
-                        break;
-                    }
-                }
-            }
-            /*foreach(var touch in touches)
-            {
-                Debug.Log(touch.finger.index);
-            }*/
-            //if(inputStatuses.Count != 0)
-            //{
-                OnHold?.Invoke(inputStatuses);
-            //}
+            var input = new Input(touch.finger.index, GetWorldPosition(touch.screenPosition));
+            inputs.Add(input);
         }
-
-        {
-            
-            inputs.Clear();
-            var touches = Touch.activeTouches;
-            foreach(var touch in touches)
-            {
-                var input = new Input(touch.finger.index, GetWorldPosition(touch.screenPosition));
-                inputs.Add(input);
-            }
-        }
+        OnHold?.Invoke(inputs);
     }
-
-    List<InputStatus> FetchInputStatuses()
-        => Touch.activeTouches
-        .Select(touch => new InputStatus(touch.finger.index, GetWorldPosition(touch.screenPosition)))
-        .ToList();
 
     Vector2 GetWorldPosition(Vector2 screenPos)
     {
