@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using System;
 using TMPro;
 using CriWare;
+using NoteGenerating;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -10,7 +12,7 @@ using UnityEditor;
 public class Metronome : MonoBehaviour
 {
     [SerializeField] CriAtomSource criAtomSource;
-    [SerializeField] MusicData musicData;
+    [SerializeField] MusicMasterData masterData;
     [SerializeField] TMP_Text beatText;
     [SerializeField] bool autoStart;
     [Space(10)]
@@ -24,30 +26,37 @@ public class Metronome : MonoBehaviour
     CriAtomExPlayback playback;
     int bpmChangeCount;
     double BeatInterval => 60d / bpm;
+    MusicData MusicData => masterData.MusicData;
+    public Fumen Fumen => masterData.FumenData.Fumen;
 
     /// <summary>
     /// (ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
-    public float CurrentTime => (float)currentTime + musicData.Offset + RhythmGameManager.Offset;
+    public float CurrentTime => (float)currentTime + MusicData.Offset + RhythmGameManager.Offset;
     public float Bpm => bpm;
 
-    void Start()
+    void Awake()
     {
 #if UNITY_EDITOR
         EditorApplication.pauseStateChanged += SwitchMusic;
 #else
         skipOnStart = false;
+        masterData = RhythmGameManager.Instance.MusicMasterData;
 #endif
-        bpm = musicData.Bpm;
+    }
 
-        if(string.IsNullOrEmpty(musicData.SheetName))
+    void Start()
+    {
+        bpm = MusicData.Bpm;
+
+        if(string.IsNullOrEmpty(MusicData.SheetName))
         {
-            criAtomSource.cueSheet = musicData.SheetName;
+            criAtomSource.cueSheet = MusicData.SheetName;
         }
-        if(string.IsNullOrEmpty(musicData.CueName))
+        if(string.IsNullOrEmpty(MusicData.CueName))
         {
-            criAtomSource.cueSheet = musicData.CueName;
+            criAtomSource.cueSheet = MusicData.CueName;
         }
 
         int beatCount = 0;
@@ -85,13 +94,13 @@ public class Metronome : MonoBehaviour
             currentTime = Time.timeAsDouble - baseTime;
             if(CurrentTime > nextBeat && addTime)
             {
-                if(musicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
+                if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
                 {
-                    bpm = musicData.GetChangeBPM(bpmChangeCount);
+                    bpm = MusicData.GetChangeBPM(bpmChangeCount);
                     bpmChangeCount++;
                 }
-                beatText.SetText((beatCount - musicData.StartBeatOffset - RhythmGameManager.DefaultWaitOnAction).ToString());
-                OnBeat?.Invoke(beatCount - musicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
+                beatText.SetText((beatCount - MusicData.StartBeatOffset - RhythmGameManager.DefaultWaitOnAction).ToString());
+                OnBeat?.Invoke(beatCount - MusicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
                 
                 beatCount++;
                 nextBeat += BeatInterval;

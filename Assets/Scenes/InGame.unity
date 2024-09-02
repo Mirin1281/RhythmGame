@@ -498,7 +498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1909321d6fa9c4c8f7decbebf86e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fumenData: {fileID: 11400000, guid: 94726f465b1acd04689ca4db525fe527, type: 2}
   metronome: {fileID: 1748492940}
   noteGenerateHelper: {fileID: 111858075}
 --- !u!4 &111858077
@@ -5932,51 +5931,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 620527998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1195611052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1195611054}
-  - component: {fileID: 1195611053}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1195611053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195611052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c825bbdb55de949b19be56f3a0b2c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeOnAwake: 0
---- !u!4 &1195611054
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195611052}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322463375
 GameObject:
   m_ObjectHideFlags: 0
@@ -9139,7 +9093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   criAtomSource: {fileID: 1748492942}
-  musicData: {fileID: 11400000, guid: b3a92a8ab0faa7742a0a6f1ecd1a64d5, type: 2}
+  masterData: {fileID: 11400000, guid: aa02614a47c19f448b0c4a70839b1fd9, type: 2}
   beatText: {fileID: 1509384678}
   autoStart: 1
   skipOnStart: 1
@@ -11551,7 +11505,6 @@ SceneRoots:
   - {fileID: 1601997349}
   - {fileID: 230457994}
   - {fileID: 712175382}
-  - {fileID: 1195611054}
   - {fileID: 1748492941}
   - {fileID: 1813629402}
   - {fileID: 111858077}

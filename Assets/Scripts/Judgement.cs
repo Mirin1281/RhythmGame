@@ -27,8 +27,8 @@ public class Judgement : MonoBehaviour
     const float Range = 2.4f;
     public bool IsNearPosition(Vector2 pos1, Vector2 pos2, float rangeW = Range)
     {
-        var sqrDistance = Vector2.SqrMagnitude(pos1 - pos2);
-        return sqrDistance < rangeW * rangeW;
+        var distance = Vector2.Distance(pos1, pos2);
+        return distance < rangeW;
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)

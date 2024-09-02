@@ -14,6 +14,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static float Speed3D { get; private set; }  = 80f;
     static readonly float DefaultSpeed = 16f;
     static readonly float DefaultSpeed3D = 80f;
+
+    public MusicMasterData MusicMasterData { get; set; }
     
     public static float Offset;
 

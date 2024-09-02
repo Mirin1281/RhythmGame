@@ -2,11 +2,18 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(
-    fileName = "MusicData",
-    menuName = "ScriptableObject/MusicData")
+    fileName = "Music",
+    menuName = "ScriptableObject/Music",
+    order = 0)
 ]
 public class MusicData : ScriptableObject
 {
+    [SerializeField] string musicName;
+
+    [SerializeField] string internalMusicName;
+
+    [SerializeField] string composerName;
+
     [SerializeField] string sheetName;
     
     [SerializeField] string cueName;
@@ -20,6 +27,9 @@ public class MusicData : ScriptableObject
 
     [SerializeField] BPMChangePoint[] bpmChangePoints;
     
+    public string MusicName => musicName;
+    public string InternalMusicName => internalMusicName ?? musicName;
+    public string ComposerName => composerName;
     public string SheetName => sheetName;
     public string CueName => cueName;
     public float Bpm => bpm;

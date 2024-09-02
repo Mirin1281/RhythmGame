@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
     readonly List<Input> inputs = new(10);
 
     // 座標はスクリーン座標であることに注意
-    readonly struct FlickInput : IEquatable<FlickInput>
+    readonly struct FlickInput
     {
         public readonly int index;
         public readonly Vector2 startPos;
@@ -33,9 +33,6 @@ public class InputManager : MonoBehaviour
             index = finger.index;
             startPos = finger.screenPosition;
         }
-
-        public bool Equals(FlickInput f) => (index, startPos) == (f.index, f.startPos);
-        public override int GetHashCode() => (index, startPos).GetHashCode();
     }
     readonly List<FlickInput> flickInputs = new(4);
 

@@ -6,13 +6,19 @@ namespace NoteGenerating
     [CreateAssetMenu(
         fileName = "F_",
         menuName = "ScriptableObject/Fumen",
-        order = 0)
+        order = 1)
     ]
     public class FumenData : ScriptableObject
     {
+        [SerializeField] Difficulty difficulty = Difficulty.Easy;
+        [SerializeField] int level = 1;
+        public Difficulty Difficulty => difficulty;
+        public int Level => level;
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }
+
+    public enum Difficulty { None, Easy, Normal, Hard }
 
     [System.Serializable]
     public class Fumen

@@ -5,7 +5,6 @@ namespace NoteGenerating
 {
     public class NoteGenerator : MonoBehaviour
     {
-        [SerializeField] FumenData fumenData;
         [SerializeField] Metronome metronome;
         [SerializeField] NoteGenerateHelper noteGenerateHelper;
 
@@ -20,7 +19,7 @@ namespace NoteGenerating
 
         void GenerateProcessAsync(int beatCount, float delta)
         {
-            foreach(var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
+            foreach(var generateData in metronome.Fumen.GetReadOnlyGenerateDataList())
             {
                 if(beatCount == generateData.BeatTiming)
                 {

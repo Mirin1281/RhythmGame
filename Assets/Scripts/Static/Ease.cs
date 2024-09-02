@@ -21,12 +21,13 @@ static class ValueEaseExtension
     }
 }
 
-readonly struct Easing
+public readonly struct Easing
 {
     readonly float start;
     readonly float inversedEaseTime;
     readonly float delta;
     readonly EaseType type;
+    public EaseType EaseType => type;
 
     public Easing(float start, float from, float easeTime, EaseType type)
     {
@@ -58,7 +59,7 @@ readonly struct Easing
     {
         return type switch
         {
-            EaseType.None => t,
+            EaseType.Linear => t,
             
             EaseType.InQuad => Pow(t, 2),
             EaseType.InCubic => Pow(t, 3),
@@ -182,6 +183,8 @@ readonly struct Easing
 public enum EaseType
 {
     None,
+    Linear,
+
     InQuad,
     OutQuad,
     InOutQuad,
@@ -214,5 +217,6 @@ public enum EaseType
     InBounce,
     OutBounce,
     InOutBounce,
+    
     INTERNAL_Zero,
 }
