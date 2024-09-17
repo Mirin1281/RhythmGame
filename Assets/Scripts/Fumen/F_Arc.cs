@@ -9,39 +9,17 @@ namespace NoteGenerating
     public class F_Arc : Generator_3D
     {
         [SerializeField] DebugSphere debugSpherePrefab;
-        [SerializeField] ArcColorType defaultColor = ArcColorType.Red;
         [SerializeField] ArcCreateData[] datas;
 
         protected override async UniTask GenerateAsync()
         {
-            Arc(datas, defaultColor);
+            Arc(datas);
             await UniTask.CompletedTask;
         }
 
         protected override Color GetCommandColor()
         {
-            ArcColorType type = ArcColorType.None;
-            if(IsInverse)
-            {
-                if(defaultColor == ArcColorType.Red)
-                {
-                    type = ArcColorType.Blue;
-                }
-                else if(defaultColor == ArcColorType.Blue)
-                {
-                    type = ArcColorType.Red;
-                }
-            }
-            else
-            {
-                type = defaultColor;
-            }
-            return type switch
-            {
-                ArcColorType.Red => new Color32(240, 180, 200, 255),
-                ArcColorType.Blue => new Color32(160, 200, 255, 255),
-                _ => base.GetCommandColor()
-            };
+            return new Color32(240, 180, 200, 255);
         }
 
         protected override string GetSummary()
@@ -58,7 +36,6 @@ namespace NoteGenerating
                 return;
             }
             arc.SetActive(true);
-            arc.SetColor(defaultColor, IsInverse);
             await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse, debugSpherePrefab);
 
             GameObject previewObj = MyUtility.GetPreviewObject();
@@ -74,15 +51,6 @@ namespace NoteGenerating
             }
         }
 
-        public override string CSVContent1
-        {
-            get => defaultColor.ToString();
-            set
-            {
-                defaultColor = Enum.Parse<ArcColorType>(value);
-            }
-        }
-
         public override string CSVContent2
         {
             get
@@ -95,6 +63,7 @@ namespace NoteGenerating
                     text += d.Pos + "|";
                     text += d.VertexMode + "|";
                     text += d.IsJudgeDisable + "|";
+                    text += d.IsDuplicated + "|";
                     text += d.BehindJudgeRange + "|";
                     text += d.AheadJudgeRange;
                     if(i == datas.Length - 1) break;
@@ -114,8 +83,9 @@ namespace NoteGenerating
                         contents[0].ToVector3(),
                         Enum.Parse<ArcCreateData.ArcVertexMode>(contents[1]),
                         bool.Parse(contents[2]),
-                        float.Parse(contents[3]),
-                        float.Parse(contents[4]));
+                        bool.Parse(contents[3]),
+                        float.Parse(contents[4]),
+                        float.Parse(contents[5]));
                 }
                 this.datas = datas;
             }

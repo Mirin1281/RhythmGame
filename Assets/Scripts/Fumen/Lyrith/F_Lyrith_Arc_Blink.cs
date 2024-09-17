@@ -18,14 +18,14 @@ namespace NoteGenerating
 
             MyArc(new ArcCreateData[]
             {
-                new(new(6, 0, 0), ArcVertexMode.Linear, false, 0, 3),
-                new(new(0, 0, 3), ArcVertexMode.Linear),
-            }, ArcColorType.Red, true).Forget();
+                new(new(6, 0, 0), ArcVertexMode.Linear, false, false, 0, 3),
+                new(new(0, 0, 3), ArcVertexMode.Linear, true),
+            }, true).Forget();
             MyArc(new ArcCreateData[]
             {
-                new(new(-6, 0, 0), ArcVertexMode.Linear, false, 0, 3),
-                new(new(0, 0, 3), ArcVertexMode.Linear),
-            }, ArcColorType.Blue).Forget();
+                new(new(-6, 0, 0), ArcVertexMode.Linear, false, false, 0, 3),
+                new(new(0, 0, 3), ArcVertexMode.Linear, true),
+            }).Forget();
 
             await Wait(2);
 
@@ -57,11 +57,10 @@ namespace NoteGenerating
             }
         }
 
-        async UniTask MyArc(ArcCreateData[] datas, ArcColorType colorType, bool first = false)
+        async UniTask MyArc(ArcCreateData[] datas, bool first = false)
         {
             var arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed / decay, IsInverse).Forget();
-            arc.SetColor(colorType, IsInverse);
 
             var startPos = new Vector3(0, 0f, StartBase);
             bool isRanged = false;

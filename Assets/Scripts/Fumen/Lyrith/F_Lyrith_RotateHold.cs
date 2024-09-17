@@ -27,7 +27,7 @@ namespace NoteGenerating
             float distance = startPos.y - Speed * Delta;
             float expectTime = CurrentTime + distance / Speed;
             float holdEndTime = expectTime + holdTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime);
+            var expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
             Helper.NoteInput.AddExpect(expect);
 
             MoveRotateAsync(hold, startPos, toPos, expectTime, holdTime, left).Forget();

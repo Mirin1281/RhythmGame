@@ -58,7 +58,7 @@ namespace NoteGenerating
             float distance = startPos.y - Speed * Delta;
             float expectTime = distance / Speed + CurrentTime;
             float holdEndTime = holdTime + expectTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * Inverse(moveX), 0), expectTime, holdEndTime);
+            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * Inverse(moveX), 0), expectTime, holdEndTime: holdEndTime);
             Helper.NoteInput.AddExpect(expect);
         }
 

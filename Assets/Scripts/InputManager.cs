@@ -3,6 +3,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using System;
 using System.Collections.Generic;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Cysharp.Threading.Tasks;
 
 public class InputManager : MonoBehaviour
 {
@@ -24,24 +25,23 @@ public class InputManager : MonoBehaviour
     readonly List<Input> inputs = new(10);
 
     // 座標はスクリーン座標であることに注意
-    readonly struct FlickInput
+    class FlickInput
     {
         public readonly int index;
-        public readonly Vector2 startPos;
+        public Vector2 currentPos;
+        public const float PosDiff = 40f; // フリックの感度
         public FlickInput(Finger finger)
         {
             index = finger.index;
-            startPos = finger.screenPosition;
+            currentPos = finger.screenPosition;
         }
     }
     readonly List<FlickInput> flickInputs = new(4);
 
-    const float posDiff = 30f; // フリックの感度
-
-    public event Action<Vector2> OnInput;
+    public event Action<Input> OnDown;
     public event Action<List<Input>> OnHold;
-    public event Action<Vector2> OnFlick;
-    public event Action<int> OnUp;
+    public event Action<Input> OnUp;
+    public event Action<Input> OnFlick;
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class InputManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        OnInput = null;
+        OnDown = null;
         OnHold = null;
         OnFlick = null;
         OnUp = null;
@@ -65,10 +65,9 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        var pos = GetWorldPosition(finger.screenPosition);
-        OnInput?.Invoke(pos);
-        var flickInput = new FlickInput(finger);
-        flickInputs.Add(flickInput);
+        Input input = GetInput(finger);
+        OnDown?.Invoke(input);
+        flickInputs.Add(new FlickInput(finger));
     }
     void OnFingerMove(Finger finger)
     {
@@ -82,27 +81,27 @@ public class InputManager : MonoBehaviour
         }*/
         for(int i = 0; i < flickInputs.Count; i++)
         {
-            var input = flickInputs[i];
-            if(input.index != finger.index) continue;
-            if (Mathf.Abs(finger.screenPosition.y - input.startPos.y) >= posDiff
-             || Mathf.Abs(finger.screenPosition.x - input.startPos.x) >= posDiff)
+            var flickInput = flickInputs[i];
+            if(flickInput.index != finger.index) continue;
+            if (Vector2.Distance(finger.screenPosition, flickInput.currentPos) > FlickInput.PosDiff)
             {
-                OnFlick?.Invoke(GetWorldPosition(input.startPos));
-                flickInputs.RemoveAt(i);
+                //PulseFlash().Forget();
+                OnFlick?.Invoke(GetInput(flickInput));
             }
+            flickInput.currentPos = finger.screenPosition;
         }
 
 
         /*async UniTask PulseFlash()
         {
             mainCamera.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
-            await UniTask.Delay(100);
-            mainCamera.backgroundColor = Color.black;
+            await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
+            mainCamera.backgroundColor = Color.white;
         }*/
     }
     void OnFingerUp(Finger finger)
     {
-        OnUp?.Invoke(finger.index);
+        OnUp?.Invoke(GetInput(finger));
 
         for(int i = 0; i < flickInputs.Count; i++)
         {
@@ -118,11 +117,14 @@ public class InputManager : MonoBehaviour
         inputs.Clear();
         foreach(var touch in Touch.activeTouches)
         {
-            var input = new Input(touch.finger.index, GetWorldPosition(touch.screenPosition));
+            var input = GetInput(touch.finger);
             inputs.Add(input);
         }
         OnHold?.Invoke(inputs);
     }
+
+    Input GetInput(Finger finger) => new Input(finger.index, GetWorldPosition(finger.screenPosition));
+    Input GetInput(FlickInput flickInput) => new Input(flickInput.index, GetWorldPosition(flickInput.currentPos));
 
     Vector2 GetWorldPosition(Vector2 screenPos)
     {

@@ -76,7 +76,7 @@ namespace NoteGenerating
             return Delta;
         }
 
-        protected ArcNote Arc(ArcCreateData[] datas, ArcColorType colorType, float delta = -1)
+        protected ArcNote Arc(ArcCreateData[] datas, float delta = -1)
         {
             if(delta == -1)
             {
@@ -84,7 +84,6 @@ namespace NoteGenerating
             }
             ArcNote arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
-            arc.SetColor(colorType, IsInverse);
             var startPos = new Vector3(0, 0f, StartBase);
             DropAsync(arc, startPos, delta).Forget();
             Helper.NoteInput.AddArc(arc);

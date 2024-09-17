@@ -56,11 +56,7 @@ public class ArcNote : NoteBase
     /// </summary>
     public static readonly float Height = 0.3f;
 
-    ArcColorType colorType;
-
     CancellationTokenSource cts;
-
-    static Color missColor = new Color(0.9f, 0f, 0f, 0.9f);
 
     void Awake()
     {
@@ -141,7 +137,7 @@ public class ArcNote : NoteBase
             float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange);
             var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
         
-            judges.Add(new ArcJudge(startPos, endPos));
+            judges.Add(new ArcJudge(startPos, endPos, datas[k].IsDuplicated));
             k++;
         }
 
@@ -219,6 +215,7 @@ public class ArcNote : NoteBase
 
     /// <summary>
     /// あるZ平面上におけるアークの座標を返します
+    /// TODO: 仕組みが不完全なので要改善
     /// </summary>
     public Vector3 GetAnyPointOnZPlane(float targetZ)
     {
@@ -274,42 +271,15 @@ public class ArcNote : NoteBase
         {
             if(IsInvalid)
             {
-                SetColor(missColor);
+                SetColor(new Color(0.9f, 0f, 0f, 0.9f));
                 return;
             }
             noInputTime = 0f;
         }
-        SetColor(colorType);
         var c = meshRenderer.material.color;
         meshRenderer.material.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
     }
 
-    public void SetColor(ArcColorType colorType, bool isInverse = false)
-    {
-        ArcColorType type = ArcColorType.None;
-        if(isInverse)
-        {
-            if(colorType == ArcColorType.Red)
-            {
-                type = ArcColorType.Blue;
-            }
-            else if(colorType == ArcColorType.Blue)
-            {
-                type = ArcColorType.Red;
-            }
-        }
-        else
-        {
-            type = colorType;
-        }
-        this.colorType = type;
-        SetColor(this.colorType switch
-        {
-            ArcColorType.Red => new Color32(233, 124, 187, 200),
-            ArcColorType.Blue => new Color32(91, 179, 255, 200),
-            _ => throw new Exception()
-        });
-    }
     void SetColor(Color color)
     {
         meshRenderer.sharedMaterial.color = color;
@@ -342,23 +312,18 @@ public class ArcJudge
         Got,
         Miss,
     }
-    public Vector3 StartPos;
-    public Vector3 EndPos;
+    public readonly Vector3 StartPos;
+    public readonly Vector3 EndPos;
+    public readonly bool IsDuplicated;
     public InputState State;
 
-    public ArcJudge(Vector3 start, Vector3 end)
+    public ArcJudge(Vector3 start, Vector3 end, bool isDuplicated)
     {
         StartPos = start;
         EndPos = end;
+        IsDuplicated = isDuplicated;
         State = InputState.Idle;
     }
-}
-
-public enum ArcColorType
-{
-    None,
-    Red,
-    Blue,
 }
 
 // 設置範囲
@@ -377,20 +342,23 @@ public struct ArcCreateData
     [SerializeField] Vector3 pos;
     [SerializeField] ArcVertexMode vertexMode;
     [SerializeField] bool isJudgeDisable;
+    [SerializeField] bool isDuplicated;
     [SerializeField] float behindJudgeRange;
     [SerializeField] float aheadJudgeRange;
     
     public readonly Vector3 Pos => pos;
     public readonly ArcVertexMode VertexMode => vertexMode;
     public readonly bool IsJudgeDisable => isJudgeDisable;
+    public readonly bool IsDuplicated => isDuplicated;
     public readonly float BehindJudgeRange => behindJudgeRange;
     public readonly float AheadJudgeRange => aheadJudgeRange;
 
-    public ArcCreateData(Vector3 pos, ArcVertexMode vertexMode, bool isJudgeDisable = true, float behindJudgeRange = 0, float aheadJudgeRange = 8)
+    public ArcCreateData(Vector3 pos, ArcVertexMode vertexMode, bool isJudgeDisable, bool isDuplicated = false, float behindJudgeRange = 0, float aheadJudgeRange = 8)
     {
         this.pos = pos;
         this.vertexMode = vertexMode;
         this.isJudgeDisable = isJudgeDisable;
+        this.isDuplicated = isDuplicated;
         this.behindJudgeRange = behindJudgeRange;
         this.aheadJudgeRange = aheadJudgeRange;
     }

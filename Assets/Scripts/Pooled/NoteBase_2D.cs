@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class NoteBase_2D : NoteBase
+public abstract class NoteBase_2D : NoteBase
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     protected SpriteRenderer SpriteRenderer => spriteRenderer;
@@ -9,6 +9,12 @@ public class NoteBase_2D : NoteBase
     public override void SetRendererEnabled(bool enabled)
     {
         spriteRenderer.enabled = enabled;
+    }
+
+    public virtual void SetWidth(float width)
+    {
+        var scale = transform.localScale;
+        transform.localScale = new Vector3(width, scale.y, scale.z);
     }
 
     public void SetAlpha(float alpha)

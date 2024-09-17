@@ -89,6 +89,12 @@ public class MySplineExtrude : MonoBehaviour
         }
     }
 
+    [ContextMenu("Rebuild")]
+    void Rebuild()
+    {
+        RebuildAsync().Forget();
+    }
+
     Mesh CreateMeshAsset()
     {
 #if UNITY_EDITOR

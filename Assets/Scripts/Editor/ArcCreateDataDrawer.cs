@@ -8,42 +8,45 @@ namespace NoteGenerating.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var x = position.x;
-            var width = position.width;
-            position.height = EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("pos"), GUIContent.none);
-            position.y += EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("vertexMode"));
+            var hel = new PropertyDrawerHelper(position, property, EditorGUIUtility.singleLineHeight);
+            var width = hel.StartWidth;
 
-            position.y += EditorGUIUtility.singleLineHeight;
-            var disableProp = property.FindPropertyRelative("isJudgeDisable");
-            EditorGUI.PropertyField(position, disableProp);
+            hel.PropertyField("pos", false);
+
+            hel.SetY();
+            hel.PropertyField("vertexMode");
+
+            hel.SetY();
+            hel.SetWidth(width / 2f);
+            var disableProp = hel.PropertyField("isJudgeDisable");
+
+            hel.SetX(width / 2f);
+            hel.PropertyField("isDuplicated");
 
             using (new EditorGUI.DisabledGroupScope(disableProp.boolValue))
             {
-                position.y += EditorGUIUtility.singleLineHeight;
+                hel.SetY();
+                var w = width / 4f;
+                hel.SetWidth(w);
 
-                position.width = position.width / 4f;
-                EditorGUI.LabelField(position, "手前");
-                var tmpX = position.x;
-                position.x += position.width - 30;
-                var tmpWidth = position.width;
-                position.width += 30;
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("behindJudgeRange"), GUIContent.none);
+                hel.SetX(0);
+                hel.LabelField("手前");
 
-                position.width = tmpWidth;
-                position.x = tmpX + position.width * 2f + 30;
-                EditorGUI.LabelField(position, "奥");
-                position.x += position.width - 60;
-                position.width += 30;
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("aheadJudgeRange"), GUIContent.none);
+                hel.SetX(w - 30);
+                hel.PropertyField("behindJudgeRange", false);
+
+                hel.SetX(w * 2f);
+                hel.LabelField("奥");
+
+                hel.SetX(w * 3f - 30);
+                hel.PropertyField("aheadJudgeRange", false);
             }
 
-            position.x = x - 10;
-            position.y += EditorGUIUtility.singleLineHeight + 5;
+            position.x = hel.SetX(-10);
+            position.y = hel.SetY(5);
             position.width = width + 15;
             position.height = 1;
-            EditorGUI.DrawRect(position, Color.white);
+            EditorGUI.DrawRect(position, new Color(0.7f, 0.7f, 0.7f));
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

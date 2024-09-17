@@ -24,11 +24,26 @@ public class Judgement : MonoBehaviour
 
     int combo;
 
-    const float Range = 2.4f;
-    public bool IsNearPosition(Vector2 pos1, Vector2 pos2, float rangeW = Range)
+    const float Range = 4.6f;
+    public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2, float rangeW = Range)
     {
         var distance = Vector2.Distance(pos1, pos2);
-        return distance < rangeW;
+        return distance < rangeW / 2f;
+    }
+    public bool IsNearPositionHold(HoldNote hold, Vector2 inputPos)
+    {
+        return MyUtility.IsPointInsideRectangle(
+            new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, Range)),
+            inputPos,
+            hold.transform.localEulerAngles.z * Mathf.Deg2Rad);
+    }
+    public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
+    {
+        return MyUtility.IsPointInsideRectangle(
+            new Rect(expect.Pos, new Vector2(expect.Note.transform.localScale.x * Range, Range)),
+            inputPos,
+            expect.Note.transform.localEulerAngles.z * Mathf.Deg2Rad);
+        //return MyUtility.IsPointInsideRectangle(new Rect(expect.Pos, new Vector2(expect.Width * Range, Range)), inputPos, expect.Dir);
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
