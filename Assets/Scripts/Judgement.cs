@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
-using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public enum NoteGrade
 {
@@ -18,8 +19,12 @@ public class Judgement : MonoBehaviour
 {
     [SerializeField] TMP_Text comboText;
     [SerializeField] TMP_Text deltaText;
+    [SerializeField] TMP_Text judgeText;
     [SerializeField] ParticleManager particleManager;
+    [SerializeField] bool showDebugRange;
+    [SerializeField] GameObject debugNoteRangePrefab;
     [SerializeField] LightParticle[] lights;
+    
     readonly Dictionary<ArcNote, LightParticle> lightDic = new(4);
 
     int combo;
@@ -40,7 +45,7 @@ public class Judgement : MonoBehaviour
     public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
     {
         return MyUtility.IsPointInsideRectangle(
-            new Rect(expect.Pos, new Vector2(expect.Note.transform.localScale.x * Range, Range)),
+            new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
             inputPos,
             expect.Note.transform.localEulerAngles.z * Mathf.Deg2Rad);
         //return MyUtility.IsPointInsideRectangle(new Rect(expect.Pos, new Vector2(expect.Width * Range, Range)), inputPos, expect.Dir);
@@ -49,6 +54,17 @@ public class Judgement : MonoBehaviour
     public void PlayParticle(NoteGrade grade, Vector2 pos)
     {
         particleManager.PlayParticle(grade, pos);
+    }
+
+    public async UniTask DebugShowRange(NoteExpect expect)
+    {
+        if(showDebugRange == false) return;
+        var obj = Instantiate(debugNoteRangePrefab, transform);
+        obj.transform.localPosition = expect.Pos;
+        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.localEulerAngles.z * Mathf.Rad2Deg, Vector3.forward);
+        obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
+        await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
+        Destroy(obj);
     }
 
     public void AddCombo()
@@ -62,11 +78,26 @@ public class Judgement : MonoBehaviour
         comboText.SetText(combo.ToString());
     }
 
+    CancellationTokenSource cts = new();
     public NoteGrade GetGradeAndSetText(float delta)
     {
         var grade = GetGrade(delta);
         deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
+        if(grade != NoteGrade.Perfect)
+            SetJudgeText(grade).Forget();
         return grade;
+
+
+        async UniTask SetJudgeText(NoteGrade grade)
+        {
+            cts.Cancel();
+            cts = new();
+            CancellationToken token = cts.Token;
+
+            judgeText.SetText(grade.ToString());
+            await MyUtility.WaitSeconds(1f, token);
+            judgeText.SetText(string.Empty);
+        }
     }
 
     public static NoteGrade GetGrade(float delta)

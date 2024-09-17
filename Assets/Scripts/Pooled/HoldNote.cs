@@ -13,12 +13,13 @@ public class HoldNote : NoteBase_2D
 
     [SerializeField] SpriteMask spriteMask;
     public InputState State { get; set; }
-    public NoteGrade Grade { get; set; }
     public float EndTime { get; set; }
-    public float Width => SpriteRenderer.size.x;
+    static readonly float BaseScaleX = 3f;
 
     public override void SetWidth(float width)
     {
+        Width = width;
+        width *= BaseScaleX;
         SpriteRenderer.size = new Vector2(width, SpriteRenderer.size.y);
         spriteMask.transform.localScale = new Vector3(spriteMask.transform.localScale.x, SpriteRenderer.size.y);
     }

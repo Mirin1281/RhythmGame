@@ -13,6 +13,7 @@ public abstract class NoteBase_2D : NoteBase
 
     public virtual void SetWidth(float width)
     {
+        Width = width;
         var scale = transform.localScale;
         transform.localScale = new Vector3(width, scale.y, scale.z);
     }

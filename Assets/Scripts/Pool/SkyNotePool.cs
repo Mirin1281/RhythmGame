@@ -9,7 +9,7 @@ public class SkyNotePool : PoolBase<SkyNote>
     {
         var skyNote = GetInstance(index);
         skyNote.transform.parent = lane3D.transform;
-        //skyNote.SetWidth(3.5f);
+        skyNote.SetWidth(1f);
         return skyNote;
     }
 

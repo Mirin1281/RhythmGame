@@ -3,17 +3,26 @@ using Cysharp.Threading.Tasks;
 
 public class RendererShower : MonoBehaviour
 {
+    [SerializeField] GameObject[] gameObjects;
     [SerializeField] SpriteRenderer[] spriteRenderers;
     [SerializeField] MeshRenderer[] meshRenderers;
 
     public async UniTask ShowLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
     {
         gameObject.SetActive(true);
+        foreach(var obj in gameObjects)
+        {
+            obj.SetActive(true);
+        }
         await FadeLaneAsync(0, 1, time, easeType);
     }
     public async UniTask HideLaneAsync(float time, EaseType easeType = EaseType.OutQuad)
     {
         await FadeLaneAsync(1, 0, time, easeType);
+        foreach(var obj in gameObjects)
+        {
+            obj.SetActive(false);
+        }
         gameObject.SetActive(false);
     }
 

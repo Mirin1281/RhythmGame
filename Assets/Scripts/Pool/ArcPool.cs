@@ -10,6 +10,7 @@ public class ArcNotePool : PoolBase<ArcNote>
     {
         var arcNote = GetInstance();
         arcNote.transform.parent = lane3D.transform;
+        arcNote.transform.localRotation = default;
         return arcNote;
     }
 

@@ -6,54 +6,54 @@ namespace NoteGenerating.Editor
     [CustomPropertyDrawer(typeof(F_Generic2D.NoteData))]
     public class F_CommonNoteDataDrawer : PropertyDrawer
     {
+        static readonly float Height = 18;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var width = position.width;
+            var hel = new PropertyDrawerHelper(position, property, Height + 2);
+            var width = hel.StartWidth;
+            hel.SetWidth(width * 0.18f);
 
-            position.width = width * 0.25f;
-            var typeProp = property.FindPropertyRelative("type");
-            EditorGUI.PropertyField(position, typeProp, GUIContent.none);
+            var typeProp = hel.PropertyField("type", false);
             var type = (F_Generic2D.CreateNoteType)typeProp.enumValueIndex;
+            hel.SetWidth(width * 0.12f);
 
             if(type == F_Generic2D.CreateNoteType._None)
             {
-                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, EditorGUIUtility.singleLineHeight + 4), Color.cyan);
-                position.x += width * 0.525f;
-                EditorGUI.LabelField(position, "待ち:");
-                position.x += width * 0.08f;
-                position.width = width * 0.13f;
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("wait"), GUIContent.none);
-                position.width = width * 0.25f;
+                float x = hel.SetX(width / 5f * 2f);
+                hel.LabelField("待:");
+                hel.SetX(x - 30f);
+                hel.PropertyField("wait", false);
+
+                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, Height + 4), Color.cyan);
                 return;
             }
 
-            position.x += width * 0.275f;
-            EditorGUI.LabelField(position, "位置:");
-            position.x += width * 0.08f;
-            position.width = width * 0.13f;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("x"), GUIContent.none);
-            position.width = width * 0.25f;
+            float x1 = hel.SetX(width / 5f);
+            hel.LabelField("X:");
+            hel.SetX(x1 - 30f);
+            hel.PropertyField("x", false);
             
-            position.x += width * 0.17f;
-            EditorGUI.LabelField(position, "待ち:");
-            position.x += width * 0.08f;
-            position.width = width * 0.13f;
-            var waitProp = property.FindPropertyRelative("wait");
-            EditorGUI.PropertyField(position, waitProp, GUIContent.none);
-            position.width = width * 0.25f;
+            float x2 = hel.SetX(width / 5f * 2f);
+            hel.LabelField("待:");
+            hel.SetX(x2 - 30f);
+            var waitProp = hel.PropertyField("wait", false);
 
-            if(waitProp.floatValue == 0f)
-            {
-                DrawBoxLayout(new Rect(19, position.y -2, width + 40, 2 * (EditorGUIUtility.singleLineHeight + 4)), Color.yellow);
-            }
+            float x3 = hel.SetX(width / 5f * 3f);
+            hel.LabelField("幅:");
+            hel.SetX(x3 - 30f);
+            hel.PropertyField("width", false);
 
             if(type == F_Generic2D.CreateNoteType.Hold)
             {
-                position.x += width * 0.17f;
-                EditorGUI.LabelField(position, "長さ:");
-                position.x += width * 0.08f;
-                position.width = width * 0.13f;
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("length"), GUIContent.none);
+                float x4 = hel.SetX(width / 5f * 4f);
+                hel.LabelField("長:");
+                hel.SetX(x4 - 30f);
+                hel.PropertyField("length", false);
+            }
+
+            if(waitProp.floatValue == 0f)
+            {
+                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, 2f * (Height + 4)), Color.yellow);
             }
         }
 
@@ -62,7 +62,7 @@ namespace NoteGenerating.Editor
             var originalColor = GUI.color;
 
             // Alpha値を小さくしないと文字が見えないので下げる
-            GUI.color = new Color(color.r, color.g, color.b, 0.1f);
+            GUI.color = new Color(color.r, color.g, color.b, 0.08f);
             var style = new GUIStyle
             {
                 normal =
@@ -74,6 +74,9 @@ namespace NoteGenerating.Editor
 
             GUI.color = originalColor;
         }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+            => Height;
     }
 
     [CustomPropertyDrawer(typeof(F_Generic2D))]
@@ -95,7 +98,7 @@ namespace NoteGenerating.Editor
 
             if(noteDatasProp.isExpanded == false) return;
 
-            GUILayoutUtility.GetRect(0, 140 + noteDatasProp.arraySize * (EditorGUIUtility.singleLineHeight + 2));
+            GUILayoutUtility.GetRect(0, 140 + noteDatasProp.arraySize * (18 + 2));
 
             var endProperty = noteDatasProp.GetEndProperty();
             noteDatasProp.NextVisible(true);

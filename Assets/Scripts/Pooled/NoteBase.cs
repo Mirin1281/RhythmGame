@@ -17,6 +17,7 @@ public abstract class NoteBase : PooledBase
 {
     [SerializeField] NoteType type;
     public NoteType Type => type;
+    public float Width = 1f;
 
     public virtual Vector3 GetPos() => transform.localPosition;
     public virtual void SetPos(Vector3 pos)

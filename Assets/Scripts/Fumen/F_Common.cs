@@ -24,17 +24,20 @@ namespace NoteGenerating
             [SerializeField] CreateNoteType type;
             [SerializeField] float x;
             [SerializeField, Min(0)] float wait;
+            [SerializeField, Min(0)] float width;
             [SerializeField, Min(0)] float length;
             public readonly CreateNoteType Type => type;
             public readonly float X => x;
             public readonly float Wait => wait;
+            public readonly float Width => width;
             public readonly float Length => length;
 
-            public NoteData(CreateNoteType type, float x, float wait, float length)
+            public NoteData(CreateNoteType type, float x, float wait, float width, float length)
             {
                 this.type = type;
                 this.x = x;
                 this.wait = wait;
+                this.width = width;
                 this.length = length;
             }
         }
@@ -57,15 +60,15 @@ namespace NoteGenerating
                 var type = data.Type;
                 if(type == CreateNoteType.Normal)
                 {
-                    MyNote(data.X, NoteType.Normal);
+                    MyNote(data.X, NoteType.Normal, data.Width);
                 }
                 else if(type == CreateNoteType.Slide)
                 {
-                    MyNote(data.X, NoteType.Slide);
+                    MyNote(data.X, NoteType.Slide, data.Width);
                 }
                 else if(type == CreateNoteType.Flick)
                 {
-                    MyNote(data.X, NoteType.Flick);
+                    MyNote(data.X, NoteType.Flick, data.Width);
                 }
                 else if(type == CreateNoteType.Hold)
                 {
@@ -74,19 +77,24 @@ namespace NoteGenerating
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
                     }
-                    MyHold(data.X, data.Length);
+                    MyHold(data.X, data.Length, data.Width);
                 }
                 await Wait(data.Wait);
             }
 
 
-            NoteBase_2D MyNote(float x, NoteType type, float delta = -1)
+            NoteBase_2D MyNote(float x, NoteType type, float width, float delta = -1)
             {
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
                 NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                if((width is 0 or 1) == false)
+                {
+                    note.SetWidth(width);
+                }
+                
                 Vector3 startPos = new Vector3(Inverse(x), StartBase);
                 DropAsync(note, startPos, delta).Forget();
 
@@ -114,13 +122,18 @@ namespace NoteGenerating
                 return note;
             }
 
-            HoldNote MyHold(float x, float length, float delta = -1)
+            HoldNote MyHold(float x, float length, float width, float delta = -1)
             {
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
                 HoldNote hold = Helper.GetHold();
+                if((width is 0 or 1) == false)
+                {
+                    hold.SetWidth(width);
+                }
+                
                 float holdTime = Helper.GetTimeInterval(length);
                 hold.SetLength(holdTime * Speed);
                 Vector3 startPos = new Vector3(Inverse(x), StartBase);
@@ -314,7 +327,8 @@ namespace NoteGenerating
                         Enum.Parse<CreateNoteType>(contents[0]),
                         float.Parse(contents[1]),
                         float.Parse(contents[2]),
-                        float.Parse(contents[3]));
+                        float.Parse(contents[3]),
+                        float.Parse(contents[4]));
                 }
                 this.noteDatas = noteDatas;
             }

@@ -56,18 +56,10 @@ public class ArcNote : NoteBase
     /// </summary>
     public static readonly float Height = 0.3f;
 
-    CancellationTokenSource cts;
-
     void Awake()
     {
         meshRenderer.material = new Material(meshRenderer.material);
         meshFilter.mesh = meshFilter.mesh.Duplicate();
-    }
-    void OnDestroy()
-    {
-        cts?.Cancel();
-        cts = null;
-        cts?.Dispose();
     }
 
     void Update()
@@ -251,10 +243,11 @@ public class ArcNote : NoteBase
         return judges[JudgeIndex];
     }
 
+    CancellationTokenSource cts = new();
     public async UniTask InvalidArcJudgeAsync(float time = 1f)
     {
-        cts?.Cancel();
-        cts ??= new();
+        cts.Cancel();
+        cts = new();
         var token = cts.Token;
 
         IsInvalid = true;
