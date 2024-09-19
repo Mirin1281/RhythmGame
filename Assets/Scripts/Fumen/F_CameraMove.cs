@@ -7,25 +7,58 @@ namespace NoteGenerating
     [AddTypeMenu("◆カメラ制御"), System.Serializable]
     public class F_CameraMove : Generator_2D
     {
-        enum MoveType
+        public enum MoveType
         {
             Absolute,
             Relative
         }
 
-        [SerializeField] bool isPosMove = false;
-        [SerializeField] Vector3 pos;
-        [SerializeField] bool isRotateMove = true;
-        [SerializeField] Vector3 rotate;
-        [SerializeField] bool isRotateClamp = true;
-        [SerializeField] float time = 1f;
-        [SerializeField] EaseType easeType = EaseType.OutQuad;
-        [SerializeField] MoveType moveType = MoveType.Absolute;
+        [Serializable]
+        public class CameraMoveSetting : IBeatTimingContainable
+        {
+            [SerializeField] int beatTiming;
+            [SerializeField] bool isPosMove = false;
+            [SerializeField] Vector3 pos;
+            [SerializeField] bool isRotateMove = true;
+            [SerializeField] Vector3 rotate;
+            [SerializeField, Tooltip("現在の回転から目標の回転までの差が\nより近いような回り方を選んで回転します")]
+            bool isRotateClamp = true;
+            [SerializeField] float time = 1f;
+            [SerializeField] EaseType easeType = EaseType.OutQuad;
+            [SerializeField] MoveType moveType = MoveType.Absolute;
+
+            public int BeatTiming => beatTiming;
+            public bool IsPosMove => isPosMove;
+            public Vector3 Pos => pos;
+            public bool IsRotateMove => isRotateMove;
+            public Vector3 Rotate => rotate;
+            public bool IsRotateClamp => isRotateClamp;
+            public float Time => time;
+            public EaseType EaseType => easeType;
+            public MoveType MoveType => moveType;
+
+            public CameraMoveSetting(int beatTiming, bool isPosMove, Vector3 pos, bool isRotateMove, Vector3 rotate,
+                bool isRotateClamp, float time, EaseType easeType, MoveType moveType)
+            {
+                this.beatTiming = beatTiming;
+                this.isPosMove = isPosMove;
+                this.pos = pos;
+                this.isRotateMove = isRotateMove;
+                this.rotate = rotate;
+                this.isRotateClamp = isRotateClamp;
+                this.time = time;
+                this.easeType = easeType;
+                this.moveType = moveType;
+            }
+
+            public CameraMoveSetting() {} // デフォルトコンストラクタ
+        }
+
         [SerializeField, Min(0)] float delay = 0f;
+        [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
         protected override async UniTask GenerateAsync()
         {
-            if(isPosMove == false && isRotateMove == false) return;
             if(delay > 0)
             {
                 await WaitSeconds(delay);
@@ -33,14 +66,18 @@ namespace NoteGenerating
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
             var camera = Camera.main;
-            if(moveType == MoveType.Absolute)
+            BeatCaller<CameraMoveSetting>.SetOnBeat(settings, Helper, s => 
             {
-                MoveAbsolute(camera, time);
-            }
-            else if(moveType == MoveType.Relative)
-            {
-                MoveRelative(camera, time);
-            }
+                if(s.IsPosMove == false && s.IsRotateMove == false) return;
+                if(s.MoveType == MoveType.Absolute)
+                {
+                    MoveAbsolute(camera, s);
+                }
+                else if(s.MoveType == MoveType.Relative)
+                {
+                    MoveRelative(camera, s);
+                }
+            });
         }
 
         static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
@@ -48,123 +85,123 @@ namespace NoteGenerating
             return Mathf.Repeat(angle - min, max - min) + min;
         }
 
-        void MoveAbsolute(Camera camera, float time)
+        void MoveAbsolute(Camera camera, CameraMoveSetting setting)
         {
             var startPos = camera.transform.position;
             var startRotate = camera.transform.eulerAngles;
 
-            if(isPosMove && isRotateMove == false)
+            if(setting.IsPosMove && setting.IsRotateMove == false)
             {
-                WhileYield(time, t => 
+                WhileYield(setting.Time, t => 
                 {
                     camera.transform.position = new Vector3(
-                        t.Ease(startPos.x, pos.x, time, easeType),
-                        t.Ease(startPos.y, pos.y, time, easeType),
-                        t.Ease(startPos.z, pos.z, time, easeType)
+                        t.Ease(startPos.x, setting.Pos.x, setting.Time, setting.EaseType),
+                        t.Ease(startPos.y, setting.Pos.y, setting.Time, setting.EaseType),
+                        t.Ease(startPos.z, setting.Pos.z, setting.Time, setting.EaseType)
                     );
                 });
             }
-            else if(isPosMove == false && isRotateMove)
+            else if(setting.IsPosMove == false && setting.IsRotateMove)
             {
-                if(isRotateClamp)
+                if(setting.IsRotateClamp)
                 {
-                    WhileYield(time, t => 
+                    WhileYield(setting.Time, t => 
                     {
                         camera.transform.localRotation = Quaternion.Euler(
-                            t.Ease(startRotate.x, GetNormalizedAngle(rotate.x, startRotate.x - 180, startRotate.x + 180), time, easeType),
-                            t.Ease(startRotate.y, GetNormalizedAngle(rotate.y, startRotate.y - 180, startRotate.y + 180), time, easeType),
-                            t.Ease(startRotate.z, GetNormalizedAngle(rotate.z, startRotate.z - 180, startRotate.z + 180), time, easeType));
+                            t.Ease(startRotate.x, GetNormalizedAngle(setting.Rotate.x, startRotate.x - 180, startRotate.x + 180), setting.Time, setting.EaseType),
+                            t.Ease(startRotate.y, GetNormalizedAngle(setting.Rotate.y, startRotate.y - 180, startRotate.y + 180), setting.Time, setting.EaseType),
+                            t.Ease(startRotate.z, GetNormalizedAngle(setting.Rotate.z, startRotate.z - 180, startRotate.z + 180), setting.Time, setting.EaseType));
                     });
                 }
                 else
                 {
-                    WhileYield(time, t => 
+                    WhileYield(setting.Time, t => 
                     {
                         camera.transform.localRotation = Quaternion.Euler(
-                            t.Ease(startRotate.x, rotate.x, time, easeType),
-                            t.Ease(startRotate.y, rotate.y, time, easeType),
-                            t.Ease(startRotate.z, rotate.z, time, easeType));
+                            t.Ease(startRotate.x, setting.Rotate.x, setting.Time, setting.EaseType),
+                            t.Ease(startRotate.y, setting.Rotate.y, setting.Time, setting.EaseType),
+                            t.Ease(startRotate.z, setting.Rotate.z, setting.Time, setting.EaseType));
                     });
                 }
             }
             else
             {
-                if(isRotateClamp)
+                if(setting.IsRotateClamp)
                 {
-                    WhileYield(time, t => 
+                    WhileYield(setting.Time, t => 
                     {
                         camera.transform.SetLocalPositionAndRotation(
                             new Vector3(
-                                t.Ease(startPos.x, pos.x, time, easeType),
-                                t.Ease(startPos.y, pos.y, time, easeType),
-                                t.Ease(startPos.z, pos.z, time, easeType)
+                                t.Ease(startPos.x, setting.Pos.x, setting.Time, setting.EaseType),
+                                t.Ease(startPos.y, setting.Pos.y, setting.Time, setting.EaseType),
+                                t.Ease(startPos.z, setting.Pos.z, setting.Time, setting.EaseType)
                             ),
                             Quaternion.Euler(
-                                t.Ease(startRotate.x, GetNormalizedAngle(rotate.x, startRotate.x - 180, startRotate.x + 180), time, easeType),
-                                t.Ease(startRotate.y, GetNormalizedAngle(rotate.y, startRotate.y - 180, startRotate.y + 180), time, easeType),
-                                t.Ease(startRotate.z, GetNormalizedAngle(rotate.z, startRotate.z - 180, startRotate.z + 180), time, easeType))
+                                t.Ease(startRotate.x, GetNormalizedAngle(setting.Rotate.x, startRotate.x - 180, startRotate.x + 180), setting.Time, setting.EaseType),
+                                t.Ease(startRotate.y, GetNormalizedAngle(setting.Rotate.y, startRotate.y - 180, startRotate.y + 180), setting.Time, setting.EaseType),
+                                t.Ease(startRotate.z, GetNormalizedAngle(setting.Rotate.z, startRotate.z - 180, startRotate.z + 180), setting.Time, setting.EaseType))
                         );
                     });
                 }
                 else
                 {
-                    WhileYield(time, t => 
+                    WhileYield(setting.Time, t => 
                     {
                         camera.transform.SetLocalPositionAndRotation(
                             new Vector3(
-                                t.Ease(startPos.x, pos.x, time, easeType),
-                                t.Ease(startPos.y, pos.y, time, easeType),
-                                t.Ease(startPos.z, pos.z, time, easeType)
+                                t.Ease(startPos.x, setting.Pos.x, setting.Time, setting.EaseType),
+                                t.Ease(startPos.y, setting.Pos.y, setting.Time, setting.EaseType),
+                                t.Ease(startPos.z, setting.Pos.z, setting.Time, setting.EaseType)
                             ),
                             Quaternion.Euler(
-                                t.Ease(startRotate.x, rotate.x, time, easeType),
-                                t.Ease(startRotate.y, rotate.y, time, easeType),
-                                t.Ease(startRotate.z, rotate.z, time, easeType))
+                                t.Ease(startRotate.x, setting.Rotate.x, setting.Time, setting.EaseType),
+                                t.Ease(startRotate.y, setting.Rotate.y, setting.Time, setting.EaseType),
+                                t.Ease(startRotate.z, setting.Rotate.z, setting.Time, setting.EaseType))
                         );
                     });
                 }
             }
         }
 
-        void MoveRelative(Camera camera, float time)
+        void MoveRelative(Camera camera, CameraMoveSetting setting)
         {
             camera.transform.GetLocalPositionAndRotation(out var startPos, out var startRotate);
 
-            if(isPosMove && isRotateMove == false)
+            if(setting.IsPosMove && setting.IsRotateMove == false)
             {
-                WhileYield(time, t => 
+                WhileYield(setting.Time, t => 
                 {
                     camera.transform.position = new Vector3(
-                        t.Ease(startPos.x, pos.x + startPos.x, time, easeType),
-                        t.Ease(startPos.y, pos.y + startPos.y, time, easeType),
-                        t.Ease(startPos.z, pos.z + startPos.z, time, easeType)
+                        t.Ease(startPos.x, setting.Pos.x + startPos.x, setting.Time, setting.EaseType),
+                        t.Ease(startPos.y, setting.Pos.y + startPos.y, setting.Time, setting.EaseType),
+                        t.Ease(startPos.z, setting.Pos.z + startPos.z, setting.Time, setting.EaseType)
                     );
                 });
             }
-            else if(isPosMove == false && isRotateMove)
+            else if(setting.IsPosMove == false && setting.IsRotateMove)
             {
-                WhileYield(time, t => 
+                WhileYield(setting.Time, t => 
                 {
                     camera.transform.localRotation = startRotate * Quaternion.Euler(
-                        t.Ease(0, rotate.x, time, easeType),
-                        t.Ease(0, rotate.y, time, easeType),
-                        t.Ease(0, rotate.z, time, easeType));
+                        t.Ease(0, setting.Rotate.x, setting.Time, setting.EaseType),
+                        t.Ease(0, setting.Rotate.y, setting.Time, setting.EaseType),
+                        t.Ease(0, setting.Rotate.z, setting.Time, setting.EaseType));
                 });
             }
             else
             {
-                WhileYield(time, t => 
+                WhileYield(setting.Time, t => 
                 {
                     camera.transform.SetLocalPositionAndRotation(
                         new Vector3(
-                            t.Ease(startPos.x, pos.x + startPos.x, time, easeType),
-                            t.Ease(startPos.y, pos.y + startPos.y, time, easeType),
-                            t.Ease(startPos.z, pos.z + startPos.z, time, easeType)
+                            t.Ease(startPos.x, setting.Pos.x + startPos.x, setting.Time, setting.EaseType),
+                            t.Ease(startPos.y, setting.Pos.y + startPos.y, setting.Time, setting.EaseType),
+                            t.Ease(startPos.z, setting.Pos.z + startPos.z, setting.Time, setting.EaseType)
                         ),
                         startRotate * Quaternion.Euler(
-                            t.Ease(0, rotate.x, time, easeType),
-                            t.Ease(0, rotate.y, time, easeType),
-                            t.Ease(0, rotate.z, time, easeType))
+                            t.Ease(0, setting.Rotate.x, setting.Time, setting.EaseType),
+                            t.Ease(0, setting.Rotate.y, setting.Time, setting.EaseType),
+                            t.Ease(0, setting.Rotate.z, setting.Time, setting.EaseType))
                     );
                 });
             }
@@ -177,23 +214,59 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get
-            {
-                return isPosMove + "|" + pos + "|" + isRotateMove + "|" + rotate + "|" +
-                    isRotateClamp + "|" + time + "|" + easeType + "|" + moveType + "|" + delay;
-            }
+            get => IsInverse + "|" + delay;
             set
             {
                 var texts = value.Split("|");
-                isPosMove = bool.Parse(texts[0]);
-                pos = texts[1].ToVector3();
-                isRotateMove = bool.Parse(texts[2]);
-                rotate = texts[3].ToVector3();
-                isRotateClamp = bool.Parse(texts[4]);
-                time = float.Parse(texts[5]);
-                easeType = Enum.Parse<EaseType>(texts[6]);
-                moveType = Enum.Parse<MoveType>(texts[7]);
-                delay = float.Parse(texts[8]);
+                SetInverse(bool.Parse(texts[0]));
+                delay = float.Parse(texts[1]);
+            }
+        }
+
+        public override string CSVContent2
+        {
+            get
+            {
+                string text = string.Empty;
+                for(int i = 0; i < settings.Length; i++)
+                {
+                    var data = settings[i];
+                    if(data == null) continue;
+                    text += data.BeatTiming + "|";
+                    text += data.IsPosMove + "|";
+                    text += data.Pos + "|";
+                    text += data.IsRotateMove + "|";
+                    text += data.Rotate + "|";
+                    text += data.IsRotateClamp + "|";
+                    text += data.Time + "|";
+                    text += data.EaseType + "|";
+                    text += data.MoveType;
+                    if(i == settings.Length - 1) break;
+                    text += "\n";
+                }
+                return text;
+            }
+            set
+            {
+                var texts = value.Split("\n");
+                if(texts.Length == 1 && string.IsNullOrEmpty(texts[0])) return;
+                var settings = new CameraMoveSetting[texts.Length];
+                for(int i = 0; i < texts.Length; i++)
+                {
+                    var contents = texts[i].Split('|');
+                    settings[i] = new CameraMoveSetting(
+                        int.Parse(contents[0]),
+                        bool.Parse(contents[1]),
+                        contents[2].ToVector3(),
+                        bool.Parse(contents[3]),
+                        contents[4].ToVector3(),
+                        bool.Parse(contents[5]),
+                        float.Parse(contents[6]),
+                        EaseType.Parse<EaseType>(contents[7]),
+                        MoveType.Parse<MoveType>(contents[8])
+                    );
+                }
+                this.settings = settings;
             }
         }
     }

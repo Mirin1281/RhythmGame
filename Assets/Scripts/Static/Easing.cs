@@ -218,5 +218,5 @@ public enum EaseType
     OutBounce,
     InOutBounce,
     
-    INTERNAL_Zero,
+    [InspectorName("")] INTERNAL_Zero,
 }

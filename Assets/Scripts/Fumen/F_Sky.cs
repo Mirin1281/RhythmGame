@@ -90,10 +90,15 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
+            get => IsInverse.ToString();
+            set { SetInverse(bool.Parse(value)); }
+        }
+
+        public override string CSVContent2
+        {
             get
             {
                 string text = string.Empty;
-                text += IsInverse + "\n";
                 for(int i = 0; i < noteDatas.Length; i++)
                 {
                     var data = noteDatas[i];
@@ -108,11 +113,10 @@ namespace NoteGenerating
             set
             {
                 var dataTexts = value.Split("\n");
-                SetInverse(bool.Parse(dataTexts[0]));
-                var noteDatas = new SkyNoteData[dataTexts.Length - 1];
-                for(int i = 0; i < dataTexts.Length - 1; i++)
+                var noteDatas = new SkyNoteData[dataTexts.Length];
+                for(int i = 0; i < dataTexts.Length; i++)
                 {
-                    var contents = dataTexts[i + 1].Split('|');
+                    var contents = dataTexts[i].Split('|');
                     noteDatas[i] = new SkyNoteData(
                         contents[0].ToVector2(),
                         float.Parse(contents[1]),

@@ -23,24 +23,20 @@ MonoBehaviour:
       type: {class: F_CameraShake, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        statuses:
-        - enable: 0
+        settings:
+        - disabled: 0
           beatTiming: 0
-          strength: 0
-          time: 0
-        - enable: 0
-          beatTiming: 0
-          strength: 0
-          time: 0
-        - enable: 0
-          beatTiming: 0
-          strength: 0
-          time: 0
-        - enable: 0
-          beatTiming: 0
-          strength: 0
-          time: 0
-        - enable: 0
-          beatTiming: 0
-          strength: 0
-          time: 0
+          strength: 10
+          time: 0.2
+        - disabled: 0
+          beatTiming: 2
+          strength: -10
+          time: 0.2
+        - disabled: 0
+          beatTiming: 4
+          strength: 10
+          time: 0.3
+        - disabled: 0
+          beatTiming: 5
+          strength: -12
+          time: 0.3

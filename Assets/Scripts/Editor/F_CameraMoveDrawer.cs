@@ -3,16 +3,48 @@ using UnityEditor;
 
 namespace NoteGenerating.Editor
 {
-    [CustomPropertyDrawer(typeof(F_CameraMove))]
+    [CustomPropertyDrawer(typeof(F_CameraMove.CameraMoveSetting))]
     public class F_CameraMoveDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var x = position.x;
-            var w = position.width;
-            position.y += GetHeight();
+            var helper = new PropertyDrawerHelper(position, property);
+            var w = helper.StartWidth;
 
-            EditorGUI.LabelField(position, "Pos");
+            helper.PropertyField("beatTiming");
+
+            helper.SetY();
+            helper.LabelField("Pos");
+            helper.SetX(60);
+            var isPosMove_p = helper.PropertyField("isPosMove", false);
+            helper.SetX(120);
+            helper.SetWidth(w - 120);
+            using (new EditorGUI.DisabledGroupScope(isPosMove_p.boolValue == false))
+            {
+                helper.PropertyField("pos", false);
+            }
+
+            helper.SetY();
+            helper.LabelField("Rotate");
+            helper.SetX(60);
+            var isRotateMove_p = helper.PropertyField("isRotateMove", false);
+            helper.SetX(120);
+            helper.SetWidth(w - 120);
+            using (new EditorGUI.DisabledGroupScope(isRotateMove_p.boolValue == false))
+            {
+                helper.PropertyField("rotate", false);
+                helper.SetY();
+                helper.PropertyField("isRotateClamp");
+            }
+
+            helper.SetY();
+            helper.PropertyField("time");
+            helper.SetY();
+            helper.PropertyField("easeType");
+            helper.SetY();
+            helper.PropertyField("moveType");
+
+            /*EditorGUI.LabelField(position, "Pos");
             position.x = x + 60;
             position.width = w - 60;
             var isPosMove_p = property.FindPropertyRelative("isPosMove");
@@ -56,9 +88,12 @@ namespace NoteGenerating.Editor
             position.y += GetHeight();
             EditorGUI.PropertyField(position, property.FindPropertyRelative("moveType"));
             position.y += GetHeight();
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("delay"));
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("delay"));*/
         }
 
-        float GetHeight() => 24f;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return 20 * 7;
+        }
     }
 }

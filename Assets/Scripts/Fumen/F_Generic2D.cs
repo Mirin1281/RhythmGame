@@ -288,10 +288,10 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => speedRate + " " + isCheckSimultaneous;
+            get => speedRate + "|" + isCheckSimultaneous;
             set
             {
-                var texts = value.Split(' ');
+                var texts = value.Split('|');
                 speedRate = float.Parse(texts[0]);
                 isCheckSimultaneous = bool.Parse(texts[1]);
             }
@@ -306,9 +306,10 @@ namespace NoteGenerating
                 for(int i = 0; i < noteDatas.Length; i++)
                 {
                     var data = noteDatas[i];
-                    text += data.Type + " ";
-                    text += data.X + " ";
-                    text += data.Wait + " ";
+                    text += data.Type + "|";
+                    text += data.X + "|";
+                    text += data.Wait + "|";
+                    text += data.Width + "|";
                     text += data.Length;
                     if(i == noteDatas.Length - 1) break;
                     text += "\n";
@@ -322,7 +323,7 @@ namespace NoteGenerating
                 var noteDatas = new NoteData[texts.Length - 1];
                 for(int i = 0; i < texts.Length - 1; i++)
                 {
-                    var contents = texts[i + 1].Split(' ');
+                    var contents = texts[i + 1].Split('|');
                     noteDatas[i] = new NoteData(
                         Enum.Parse<CreateNoteType>(contents[0]),
                         float.Parse(contents[1]),

@@ -8,16 +8,21 @@ namespace NoteGenerating
     public class F_CameraShake : Generator_2D
     {
         [Serializable]
-        struct CameraShakeStatus
+        struct CameraShakeSetting : IBeatTimingContainable
         {
-            public bool enable;
-            public int beatTiming;
-            public float strength;
-            public float time;
+            [SerializeField] bool disabled;
+            [SerializeField] int beatTiming;
+            [SerializeField] float strength;
+            [SerializeField] float time;
 
-            public CameraShakeStatus(bool enable = true, int beatTiming = 0, float strength = 10f, float time = 0.4f)
+            public readonly bool Disabled => disabled;
+            public readonly int BeatTiming => beatTiming;
+            public readonly float Strength => strength;
+            public readonly float Time => time;
+
+            public CameraShakeSetting(bool disabled = false, int beatTiming = 0, float strength = 10f, float time = 0.4f)
             {
-                this.enable = enable;
+                this.disabled = disabled;
                 this.beatTiming = beatTiming;
                 this.strength = strength;
                 this.time = time;
@@ -25,50 +30,35 @@ namespace NoteGenerating
         }
 
         [Header("正の値は右側(時計回り)に回転します")]
-        [SerializeField] CameraShakeStatus[] statuses = new CameraShakeStatus[1];
+        [SerializeField] CameraShakeSetting[] settings;
 
         protected override async UniTask GenerateAsync()
         {
-            var camera = Camera.main;
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
-            int count = 0;
-            int beatCount = 0;
-            Beat(default, default);
-            await UniTask.Yield(Helper.Token);
-            Helper.Metronome.OnBeat += Beat;
 
-
-            void Beat(int _, float __)
+            var camera = Camera.main;
+            BeatCaller<CameraShakeSetting>.SetOnBeat(settings, Helper, s => 
             {
-                var status = statuses[count];
-                if(beatCount == status.beatTiming)
+                if(s.Disabled == false)
                 {
-                    if(status.enable)
-                    {
-                        CameraShake(camera, status.strength, status.time);
-                    }
-                    count++;
-                    if(count == statuses.Length)
-                    {
-                        Helper.Metronome.OnBeat -= Beat;
-                    }
+                    CameraShake(camera, s.Strength, s.Time);
                 }
-                beatCount++;
-            }
-        }
-
-        void CameraShake(Camera camera, float strength, float time)
-        {
-            camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
-            WhileYield(time, t => 
-            {
-                camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
             });
+
+
+            void CameraShake(Camera camera, float strength, float time)
+            {
+                camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
+                WhileYield(time, t => 
+                {
+                    camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
+                });
+            }
         }
 
         protected override string GetSummary()
         {
-            return statuses.Length.ToString();
+            return settings?.Length.ToString();
         }
 
         protected override Color GetCommandColor()
@@ -78,18 +68,23 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
+            get => IsInverse.ToString();
+            set { SetInverse(bool.Parse(value)); }
+        }
+
+        public override string CSVContent2
+        {
             get
             {
                 string text = string.Empty;
-                text += IsInverse + "\n";
-                for(int i = 0; i < statuses.Length; i++)
+                for(int i = 0; i < settings.Length; i++)
                 {
-                    var data = statuses[i];
-                    text += data.enable + "|";
-                    text += data.beatTiming + "|";
-                    text += data.strength + "|";
-                    text += data.time;
-                    if(i == statuses.Length - 1) break;
+                    var data = settings[i];
+                    text += data.Disabled + "|";
+                    text += data.BeatTiming + "|";
+                    text += data.Strength + "|";
+                    text += data.Time;
+                    if(i == settings.Length - 1) break;
                     text += "\n";
                 }
                 return text;
@@ -97,18 +92,19 @@ namespace NoteGenerating
             set
             {
                 var texts = value.Split("\n");
-                SetInverse(bool.Parse(texts[0]));
-                var statuses = new CameraShakeStatus[texts.Length - 1];
-                for(int i = 0; i < texts.Length - 1; i++)
+                if(texts.Length == 1 && string.IsNullOrEmpty(texts[0])) return;
+                var settings = new CameraShakeSetting[texts.Length];
+                for(int i = 0; i < texts.Length; i++)
                 {
-                    var contents = texts[i + 1].Split('|');
-                    statuses[i] = new CameraShakeStatus(
+                    var contents = texts[i].Split('|');
+                    settings[i] = new CameraShakeSetting(
                         bool.Parse(contents[0]),
                         int.Parse(contents[1]),
                         float.Parse(contents[2]),
-                        float.Parse(contents[3]));
+                        float.Parse(contents[3])
+                    );
                 }
-                this.statuses = statuses;
+                this.settings = settings;
             }
         }
     }
