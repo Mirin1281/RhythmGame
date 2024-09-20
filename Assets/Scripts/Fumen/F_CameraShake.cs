@@ -4,26 +4,27 @@ using System;
 
 namespace NoteGenerating
 {
+    // TODO: Inverseに未対応
     [AddTypeMenu("◆カメラを揺らす"), System.Serializable]
     public class F_CameraShake : Generator_2D
     {
         [Serializable]
-        struct CameraShakeSetting : IBeatTimingContainable
+        struct CameraShakeSetting
         {
+            [SerializeField] int wait;
             [SerializeField] bool disabled;
-            [SerializeField] int beatTiming;
             [SerializeField] float strength;
             [SerializeField] float time;
 
+            public readonly int Wait => wait;
             public readonly bool Disabled => disabled;
-            public readonly int BeatTiming => beatTiming;
             public readonly float Strength => strength;
             public readonly float Time => time;
 
             public CameraShakeSetting(bool disabled = false, int beatTiming = 0, float strength = 10f, float time = 0.4f)
             {
                 this.disabled = disabled;
-                this.beatTiming = beatTiming;
+                this.wait = beatTiming;
                 this.strength = strength;
                 this.time = time;
             }
@@ -37,13 +38,15 @@ namespace NoteGenerating
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
             var camera = Camera.main;
-            BeatCaller<CameraShakeSetting>.SetOnBeat(settings, Helper, s => 
+            for(int i = 0; i < settings.Length; i++)
             {
+                var s = settings[i];
                 if(s.Disabled == false)
                 {
                     CameraShake(camera, s.Strength, s.Time);
                 }
-            });
+                await Wait(s.Wait);
+            }
 
 
             void CameraShake(Camera camera, float strength, float time)
@@ -81,7 +84,7 @@ namespace NoteGenerating
                 {
                     var data = settings[i];
                     text += data.Disabled + "|";
-                    text += data.BeatTiming + "|";
+                    text += data.Wait + "|";
                     text += data.Strength + "|";
                     text += data.Time;
                     if(i == settings.Length - 1) break;

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆ノーツ点滅"), System.Serializable]
-    public class F_NotesBlink : Generator_2D
+    public class F_NotesBlink : NoteGeneratorBase
     {
         [Flags]
         enum BlinkTargets
@@ -31,7 +31,7 @@ namespace NoteGenerating
             if(target == 0) return;
             if(delay > 0)
             {
-                await WaitSeconds(delay + Delta);
+                await Helper.WaitSeconds(delay + Delta);
             }
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 

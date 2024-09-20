@@ -48,7 +48,7 @@ namespace NoteGenerating
         /// <summary>
         /// コマンド名を取得します
         /// </summary>
-        public string GetName() => generatable?.GetName();
+        public string GetName(bool rawName = false) => generatable?.GetName(rawName);
 
         /// <summary>
         /// CSV用

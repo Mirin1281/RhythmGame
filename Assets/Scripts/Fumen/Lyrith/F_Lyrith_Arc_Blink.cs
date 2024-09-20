@@ -67,7 +67,7 @@ namespace NoteGenerating
             DropAsync(arc, startPos).Forget();
             Helper.NoteInput.AddArc(arc);
 
-            await UniTask.Delay(System.TimeSpan.FromSeconds((StartBase + Speed * Delta) / Speed), cancellationToken: Helper.Token);
+            await Helper.WaitSeconds((StartBase + Speed * Delta) / Speed);
             if(first)
             {
                 BlinkLoop().Forget();
@@ -85,7 +85,7 @@ namespace NoteGenerating
                 {
                     float time = CurrentTime - baseTime;
                     arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
 
                 baseTime = CurrentTime;
@@ -95,7 +95,7 @@ namespace NoteGenerating
                 {
                     float time = CurrentTime - baseTime;
                     arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
                 arcs.Remove(arc);
                 arc.SetRendererEnabled(true);
@@ -114,7 +114,7 @@ namespace NoteGenerating
             var expect = new NoteExpect(skyNote, skyNote.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);
 
-            await UniTask.Delay(System.TimeSpan.FromSeconds(distance / Speed), cancellationToken: Helper.Token);
+            await Helper.WaitSeconds(distance / Speed);
             if(first)
             {
                 skys.ForEach(sky => sky.SetRendererEnabled(true));

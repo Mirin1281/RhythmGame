@@ -74,7 +74,7 @@ namespace NoteGenerating
                 var t = time.Ease(0, 10f + rand / 50f, 1.5f, EaseType.InCubic);
                 note.SetPos(startPos + t * vec);
                 note.SetRotate(startRotateZ + t * rand);
-                await UniTask.Yield(Helper.Token);
+                await Helper.Yield();
             }
             note.SetActive(false);
         }

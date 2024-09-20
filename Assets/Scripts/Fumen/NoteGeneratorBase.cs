@@ -7,7 +7,7 @@ namespace NoteGenerating
     public interface INoteGeneratable
     {
         void Generate(NoteGenerateHelper helper, float delta);
-        string GetName();
+        string GetName(bool rawName = false);
         string GetSummary();
         Color GetCommandColor();
     }
@@ -37,6 +37,49 @@ namespace NoteGenerating
         /// </summary>
         protected float Delta { get; set; }
 
+        protected float CurrentTime => Helper.Metronome.CurrentTime;
+
+        protected async UniTask<float> Wait(float lpb, int num = 1)
+        {
+            if(lpb == 0 || num == 0) return Delta;
+            float baseTime = CurrentTime;
+            float interval = Helper.GetTimeInterval(lpb, num);
+            if(Delta > interval)
+            {
+                Delta -= interval;
+            }
+            else
+            {
+                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
+                Delta += CurrentTime - baseTime - interval;
+            }
+            return Delta;
+        }
+
+        protected void WhileYield(float time, Action<float> action, float delta = -1)
+            => WhileYieldAsync(time, action, delta).Forget();
+        protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)
+        {
+            if(delta == -1)
+            {
+                delta = Delta;
+            }
+            if(time == 0)
+            {
+                action.Invoke(time);
+                return;
+            }
+            float baseTime = CurrentTime - delta;
+            float t = 0f;
+            while(t < time)
+            {
+                t = CurrentTime - baseTime;
+                action.Invoke(t);
+                await Helper.Yield();
+            }
+            action.Invoke(time);
+        }
+
         protected abstract UniTask GenerateAsync();
         void INoteGeneratable.Generate(NoteGenerateHelper helper, float delta)
         {
@@ -47,9 +90,9 @@ namespace NoteGenerating
 
         string INoteGeneratable.GetSummary() => GetSummary();
         Color INoteGeneratable.GetCommandColor() => GetCommandColor();
-        string INoteGeneratable.GetName()
+        string INoteGeneratable.GetName(bool rawName)
         {
-            if(GetName() == null)
+            if(GetName() == null || rawName)
             {
                 var tmpArray = this.ToString().Split('.');
                 return tmpArray[^1];

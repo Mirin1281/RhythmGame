@@ -69,7 +69,7 @@ namespace NoteGenerating
                 {
                     time = CurrentTime - baseTime;
                     note.SetPos(startPos - time.Ease(0f, 0.3f, moveTime / 2, EaseType.OutQuad) * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
 
                 baseTime = CurrentTime;
@@ -79,7 +79,7 @@ namespace NoteGenerating
                 {
                     time = CurrentTime - baseTime;
                     note.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
             }
         }

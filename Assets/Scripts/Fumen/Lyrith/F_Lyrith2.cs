@@ -20,7 +20,7 @@ namespace NoteGenerating
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
             var camera = Camera.main;
-            await WaitSeconds(moveTime);
+            await Helper.WaitSeconds(moveTime);
             CameraShake(camera, 10, 0.4f);
         }
 

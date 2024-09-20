@@ -94,7 +94,7 @@ namespace NoteGenerating
             bool isRanged = false;
             DropAsync(arc, startPos).Forget();
             Helper.NoteInput.AddArc(arc);
-            await WaitSeconds((StartBase + Speed * Delta) / Speed);
+            await Helper.WaitSeconds((StartBase + Speed * Delta) / Speed);
             isRanged = true;            
 
 
@@ -106,7 +106,7 @@ namespace NoteGenerating
                 {
                     float time = CurrentTime - baseTime;
                     arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
 
                 baseTime = CurrentTime;
@@ -116,7 +116,7 @@ namespace NoteGenerating
                 {
                     float time = CurrentTime - baseTime;
                     arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace NoteGenerating
                 {
                     float time = CurrentTime - baseTime;
                     arc.SetPos(startPos + time * vec);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
             }
         }

@@ -23,4 +23,12 @@ MonoBehaviour:
       type: {class: F_CameraShake, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        settings: []
+        settings:
+        - wait: 2
+          disabled: 0
+          strength: 10
+          time: 0.3
+        - wait: 2
+          disabled: 0
+          strength: -10
+          time: 0.3

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆スカイノーツ"), System.Serializable]
+    [AddTypeMenu("◆スカイ"), System.Serializable]
     public class F_Sky : Generator_3D
     {
         [Serializable]
@@ -14,6 +14,7 @@ namespace NoteGenerating
             [SerializeField] Vector2 pos;
             [SerializeField, Min(0)] float wait;
             [SerializeField] bool disable;
+            
             public readonly Vector2 Pos => pos;
             public readonly float Wait => wait;
             public readonly bool Disable => disable;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆3D 2D変更"), System.Serializable]
-    public class F_Dimension : Generator_2D
+    public class F_Dimension : NoteGeneratorBase
     {
         enum MoveType
         {
@@ -22,7 +22,7 @@ namespace NoteGenerating
         {
             if(delay > 0)
             {
-                await UniTask.Delay(System.TimeSpan.FromSeconds(delay), cancellationToken: Helper.Token);
+                await Helper.WaitSeconds(delay);
             }
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             

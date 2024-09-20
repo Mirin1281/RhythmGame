@@ -19,16 +19,16 @@ public class NotePoolManager : MonoBehaviour
         _ => throw new System.Exception()
     };
 
-    public NoteBase GetNote(NoteType type, int index = 0) => type switch
+    /*public NoteBase GetNote(NoteType type, int index = 0) => type switch
     {
-        /*NoteType.Normal => NormalPool.GetNote(index),
+        NoteType.Normal => NormalPool.GetNote(index),
         NoteType.Slide => SlidePool.GetNote(),
-        NoteType.Flick => FlickPool.GetNote(),*/
+        NoteType.Flick => FlickPool.GetNote(),
         NoteType.Hold => HoldPool.GetNote(),
         NoteType.Sky => SkyPool.GetNote(),
         NoteType.Arc => ArcPool.GetNote(),
         _ => throw new System.Exception()
-    };
+    };*/
 
     public void SetSimultaneousSprite(NoteBase_2D note)
     {

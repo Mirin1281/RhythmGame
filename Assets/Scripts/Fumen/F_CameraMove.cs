@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
+    // TODO: Inverseに未対応
     [AddTypeMenu("◆カメラ制御"), System.Serializable]
     public class F_CameraMove : Generator_2D
     {
@@ -14,9 +15,9 @@ namespace NoteGenerating
         }
 
         [Serializable]
-        public class CameraMoveSetting : IBeatTimingContainable
+        public class CameraMoveSetting
         {
-            [SerializeField] int beatTiming;
+            [SerializeField] int wait;
             [SerializeField] bool isPosMove = false;
             [SerializeField] Vector3 pos;
             [SerializeField] bool isRotateMove = true;
@@ -27,7 +28,7 @@ namespace NoteGenerating
             [SerializeField] EaseType easeType = EaseType.OutQuad;
             [SerializeField] MoveType moveType = MoveType.Absolute;
 
-            public int BeatTiming => beatTiming;
+            public int Wait => wait;
             public bool IsPosMove => isPosMove;
             public Vector3 Pos => pos;
             public bool IsRotateMove => isRotateMove;
@@ -37,10 +38,10 @@ namespace NoteGenerating
             public EaseType EaseType => easeType;
             public MoveType MoveType => moveType;
 
-            public CameraMoveSetting(int beatTiming, bool isPosMove, Vector3 pos, bool isRotateMove, Vector3 rotate,
+            public CameraMoveSetting(int wait, bool isPosMove, Vector3 pos, bool isRotateMove, Vector3 rotate,
                 bool isRotateClamp, float time, EaseType easeType, MoveType moveType)
             {
-                this.beatTiming = beatTiming;
+                this.wait = wait;
                 this.isPosMove = isPosMove;
                 this.pos = pos;
                 this.isRotateMove = isRotateMove;
@@ -61,13 +62,14 @@ namespace NoteGenerating
         {
             if(delay > 0)
             {
-                await WaitSeconds(delay);
+                await Helper.WaitSeconds(delay);
             }
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
             var camera = Camera.main;
-            BeatCaller<CameraMoveSetting>.SetOnBeat(settings, Helper, s => 
+            for(int i = 0; i < settings.Length; i++)
             {
+                var s = settings[i];
                 if(s.IsPosMove == false && s.IsRotateMove == false) return;
                 if(s.MoveType == MoveType.Absolute)
                 {
@@ -77,7 +79,8 @@ namespace NoteGenerating
                 {
                     MoveRelative(camera, s);
                 }
-            });
+                await Wait(s.Wait);
+            }
         }
 
         static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
@@ -232,7 +235,7 @@ namespace NoteGenerating
                 {
                     var data = settings[i];
                     if(data == null) continue;
-                    text += data.BeatTiming + "|";
+                    text += data.Wait + "|";
                     text += data.IsPosMove + "|";
                     text += data.Pos + "|";
                     text += data.IsRotateMove + "|";

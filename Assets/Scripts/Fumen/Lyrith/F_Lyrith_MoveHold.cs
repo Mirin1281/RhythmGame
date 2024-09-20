@@ -72,7 +72,7 @@ namespace NoteGenerating
                 time = CurrentTime - baseTime;
                 hold.SetPos(startPos + time * vec);
                 hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, 0));
-                await UniTask.Yield(Helper.Token);
+                await Helper.Yield();
             }
         }
     }

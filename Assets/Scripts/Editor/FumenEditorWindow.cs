@@ -157,7 +157,7 @@ namespace NoteGenerating.Editor
                         {
                             menu.AddItem(new GUIContent("Edit Script"), false, () =>
                             {
-                                var commandName = lastSelectedCommand.GetName();
+                                var commandName = lastSelectedCommand.GetName(true);
                                 var scriptPath = GetScriptPath(commandName);
                                 Object scriptAsset = AssetDatabase.LoadAssetAtPath<Object>(scriptPath);
                                 AssetDatabase.OpenAsset(scriptAsset, 7);

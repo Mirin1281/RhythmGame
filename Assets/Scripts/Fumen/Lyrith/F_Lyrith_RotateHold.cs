@@ -43,7 +43,7 @@ namespace NoteGenerating
                     time = CurrentTime - baseTime;
                     hold.SetPos(startPos + time * vec);
                     hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, 0));
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
 
                 // ここから着地後
@@ -56,7 +56,7 @@ namespace NoteGenerating
                     vec = Speed * new Vector2(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Cos(deg * Mathf.Deg2Rad));
                     hold.SetPos(toPos + time * vec);
                     hold.SetRotate(deg);
-                    await UniTask.Yield(Helper.Token);
+                    await Helper.Yield();
                 }
             }
         }

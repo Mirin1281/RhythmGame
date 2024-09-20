@@ -21,47 +21,6 @@ namespace NoteGenerating
         /// ノーツの初期生成地点
         /// </summary>
         protected float StartBase => 2f * Speed + 0 + 0.2f;
-        protected float CurrentTime => Helper.Metronome.CurrentTime;         
-
-        protected UniTask WaitSeconds(float time) => MyUtility.WaitSeconds(time, Helper.Token);
-
-        protected async UniTask<float> Wait(float lpb, int num = 1)
-        {
-            if(lpb == 0 || num == 0) return Delta;
-            float baseTime = CurrentTime;
-            float interval = Helper.GetTimeInterval(lpb, num);
-            if(Delta <= interval)
-            {
-                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
-                Delta += CurrentTime - baseTime;
-            }
-            Delta -= interval;
-            return Delta;
-        }
-
-        protected void WhileYield(float time, Action<float> action, float delta = -1)
-            => WhileYieldAsync(time, action, delta).Forget();
-        protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            if(time == 0)
-            {
-                action.Invoke(time);
-                return;
-            }
-            float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while(t < time)
-            {
-                t = CurrentTime - baseTime;
-                action.Invoke(t);
-                await UniTask.Yield(Helper.Token);
-            }
-            action.Invoke(time);
-        }
 
         protected async UniTask<float> SkyLoop(float lpb, params Vector2?[] nullablePoses)
         {
@@ -120,7 +79,7 @@ namespace NoteGenerating
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
-                await UniTask.Yield(Helper.Token);
+                await Helper.Yield();
             }
         }
 

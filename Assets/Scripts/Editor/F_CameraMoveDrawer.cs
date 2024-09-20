@@ -11,7 +11,7 @@ namespace NoteGenerating.Editor
             var helper = new PropertyDrawerHelper(position, property);
             var w = helper.StartWidth;
 
-            helper.PropertyField("beatTiming");
+            helper.PropertyField("wait");
 
             helper.SetY();
             helper.LabelField("Pos");

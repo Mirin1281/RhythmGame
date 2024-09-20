@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace NoteGenerating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Common")]
     [AddTypeMenu("◆汎用ジェネレータ2D"), System.Serializable]
     public class F_Generic2D : Generator_2D
     {
@@ -26,6 +24,7 @@ namespace NoteGenerating
             [SerializeField, Min(0)] float wait;
             [SerializeField, Min(0)] float width;
             [SerializeField, Min(0)] float length;
+
             public readonly CreateNoteType Type => type;
             public readonly float X => x;
             public readonly float Wait => wait;
@@ -46,7 +45,6 @@ namespace NoteGenerating
         [SerializeField] float speedRate = 1f;
         [SerializeField] bool isCheckSimultaneous = false;
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
-
         protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTask GenerateAsync()
@@ -83,13 +81,13 @@ namespace NoteGenerating
             }
 
 
-            NoteBase_2D MyNote(float x, NoteType type, float width, float delta = -1)
+            void MyNote(float x, NoteType type, float width, float delta = -1)
             {
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
-                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                NoteBase_2D note = Helper.GetNote2D(type);
                 if((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
@@ -103,26 +101,10 @@ namespace NoteGenerating
                 NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
                 Helper.NoteInput.AddExpect(expect, isCheckSimultaneous);
 
-                if(beforeTime == expectTime)
-                {
-                    if(simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(note);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeTime = expectTime;
-                beforeNote = note;
-                
-                return note;
+                SetSimultaneous(note, expectTime);
             }
 
-            HoldNote MyHold(float x, float length, float width, float delta = -1)
+            void MyHold(float x, float length, float width, float delta = -1)
             {
                 if(delta == -1)
                 {
@@ -146,13 +128,18 @@ namespace NoteGenerating
                 NoteExpect expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
                 Helper.NoteInput.AddExpect(expect, isCheckSimultaneous);
 
+                SetSimultaneous(hold, expectTime);
+            }
+
+            void SetSimultaneous(NoteBase_2D note, float expectTime)
+            {
                 if(beforeTime == expectTime)
                 {
                     if(simultaneousCount == 1)
                     {
                         Helper.PoolManager.SetSimultaneousSprite(beforeNote);
                     }
-                    Helper.PoolManager.SetSimultaneousSprite(hold);
+                    Helper.PoolManager.SetSimultaneousSprite(note);
                     simultaneousCount++;
                 }
                 else
@@ -160,9 +147,7 @@ namespace NoteGenerating
                     simultaneousCount = 1;
                 }
                 beforeTime = expectTime;
-                beforeNote = hold;
-
-                return hold;
+                beforeNote = note;
             }
         }
 
@@ -194,6 +179,7 @@ namespace NoteGenerating
             int simultaneousCount = 0;
             float beforeY = -1;
             NoteBase_2D beforeNote = null;
+
             float y = 0f;
             foreach(var data in noteDatas)
             {
@@ -233,9 +219,10 @@ namespace NoteGenerating
                 if(lineY > y) break;
             }
 
+
             void DebugNote(float x, float y, NoteType type)
             {
-                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                NoteBase_2D note = Helper.GetNote2D(type);
                 var startPos = new Vector3(Inverse(x), y);
                 note.SetPos(startPos);
                 note.transform.parent = previewObj.transform;
@@ -283,17 +270,17 @@ namespace NoteGenerating
                 beforeY = y;
                 beforeNote = hold;
             }
-
         }
 
         public override string CSVContent1
         {
-            get => speedRate + "|" + isCheckSimultaneous;
+            get => IsInverse + "|" + speedRate + "|" + isCheckSimultaneous;
             set
             {
                 var texts = value.Split('|');
-                speedRate = float.Parse(texts[0]);
-                isCheckSimultaneous = bool.Parse(texts[1]);
+                SetInverse(bool.Parse(texts[0]));
+                speedRate = float.Parse(texts[1]);
+                isCheckSimultaneous = bool.Parse(texts[2]);
             }
         }
 
@@ -302,7 +289,6 @@ namespace NoteGenerating
             get
             {
                 string text = string.Empty;
-                text += IsInverse + "\n";
                 for(int i = 0; i < noteDatas.Length; i++)
                 {
                     var data = noteDatas[i];
@@ -319,11 +305,10 @@ namespace NoteGenerating
             set
             {
                 var texts = value.Split("\n");
-                SetInverse(bool.Parse(texts[0]));
-                var noteDatas = new NoteData[texts.Length - 1];
-                for(int i = 0; i < texts.Length - 1; i++)
+                var noteDatas = new NoteData[texts.Length];
+                for(int i = 0; i < texts.Length; i++)
                 {
-                    var contents = texts[i + 1].Split('|');
+                    var contents = texts[i].Split('|');
                     noteDatas[i] = new NoteData(
                         Enum.Parse<CreateNoteType>(contents[0]),
                         float.Parse(contents[1]),
