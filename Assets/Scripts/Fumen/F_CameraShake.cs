@@ -21,10 +21,10 @@ namespace NoteGenerating
             public readonly float Strength => strength;
             public readonly float Time => time;
 
-            public CameraShakeSetting(bool disabled = false, int beatTiming = 0, float strength = 10f, float time = 0.4f)
+            public CameraShakeSetting(int beatTiming = 0, bool disabled = false, float strength = 10f, float time = 0.4f)
             {
-                this.disabled = disabled;
                 this.wait = beatTiming;
+                this.disabled = disabled;
                 this.strength = strength;
                 this.time = time;
             }
@@ -83,8 +83,8 @@ namespace NoteGenerating
                 for(int i = 0; i < settings.Length; i++)
                 {
                     var data = settings[i];
-                    text += data.Disabled + "|";
                     text += data.Wait + "|";
+                    text += data.Disabled + "|";
                     text += data.Strength + "|";
                     text += data.Time;
                     if(i == settings.Length - 1) break;
@@ -101,8 +101,8 @@ namespace NoteGenerating
                 {
                     var contents = texts[i].Split('|');
                     settings[i] = new CameraShakeSetting(
-                        bool.Parse(contents[0]),
-                        int.Parse(contents[1]),
+                        int.Parse(contents[0]),
+                        bool.Parse(contents[1]),
                         float.Parse(contents[2]),
                         float.Parse(contents[3])
                     );

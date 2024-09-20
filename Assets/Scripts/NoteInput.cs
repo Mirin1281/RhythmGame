@@ -135,6 +135,7 @@ public class NoteInput : MonoBehaviour
                 }
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 judge.AddCombo();
+                judge.GetGradeAndSetText(0);
                 judge.DebugShowRange(expect).Forget();
             }
             else if(metronome.CurrentTime > expect.Time + 0.18f)
@@ -309,6 +310,7 @@ public class NoteInput : MonoBehaviour
                     {
                         hold.State = HoldState.Got;
                         judge.AddCombo();
+                        judge.GetGradeAndSetText(0);
                     }
                 }
                 else
@@ -434,6 +436,7 @@ public class NoteInput : MonoBehaviour
                 judge.PlayParticle(NoteGrade.Perfect, worldPos);
                 arc.JudgeIndex++;
                 judge.AddCombo();
+                judge.GetGradeAndSetText(0);
             }
         }
     }

@@ -11,9 +11,13 @@ namespace NoteGenerating
     public class FumenData : ScriptableObject
     {
         [SerializeField] Difficulty difficulty = Difficulty.Easy;
-        [SerializeField] int level = 1;
+        [SerializeField, Min(0)] int level = 1;
+        [SerializeField, Min(1)] int noteCount = 1;
+
         public Difficulty Difficulty => difficulty;
         public int Level => level;
+        public int NoteCount => noteCount;
+
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }

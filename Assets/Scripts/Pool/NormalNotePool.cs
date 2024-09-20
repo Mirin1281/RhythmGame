@@ -11,6 +11,7 @@ public class NormalNotePool : PoolBase<NormalNote>
         var normalNote = GetInstance(index);
         normalNote.SetRotate(0);
         normalNote.SetSprite(defaultSprite);
+        normalNote.SetWidth(1f);
         if(index != 1)
         {
             //normalNote.SetWidth(3f);

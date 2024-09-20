@@ -36,7 +36,6 @@ namespace NoteGenerating
             MySky(new Vector3(-2, 4, interval));
             MySky(new Vector3(2, 4, interval));
             interval += Helper.GetTimeInterval(8);
-            interval += Helper.GetTimeInterval(16);
             MySky(new Vector3(6, 0, interval));
             interval += Helper.GetTimeInterval(16);
             MySky(new Vector3(-6, 0, interval));

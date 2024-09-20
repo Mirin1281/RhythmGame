@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using System;
 using TMPro;
 using CriWare;
-using NoteGenerating;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,8 +10,8 @@ using UnityEditor;
 
 public class Metronome : MonoBehaviour
 {
+    [SerializeField] InGameManager inGameManager;
     [SerializeField] CriAtomSource criAtomSource;
-    [SerializeField] MusicMasterData masterData;
     [SerializeField] TMP_Text beatText;
     [SerializeField] bool autoStart;
     [Space(10)]
@@ -26,8 +25,7 @@ public class Metronome : MonoBehaviour
     CriAtomExPlayback playback;
     int bpmChangeCount;
     double BeatInterval => 60d / bpm;
-    MusicData MusicData => masterData.MusicData;
-    public Fumen Fumen => masterData.FumenData.Fumen;
+    MusicData MusicData => inGameManager.MusicData;
 
     /// <summary>
     /// (ビートの回数, 誤差)
@@ -42,7 +40,6 @@ public class Metronome : MonoBehaviour
         EditorApplication.pauseStateChanged += SwitchMusic;
 #else
         skipOnStart = false;
-        masterData = RhythmGameManager.Instance.MusicMasterData;
 #endif
     }
 
@@ -77,12 +74,14 @@ public class Metronome : MonoBehaviour
             UpdateTimerAsync(beatCount).Forget();
         }
     }
-#if UNITY_EDITOR
+
     void OnDestroy()
     {
+        OnBeat = null;
+#if UNITY_EDITOR
         EditorApplication.pauseStateChanged -= SwitchMusic;
-    }
 #endif
+    }
 
     async UniTask UpdateTimerAsync(int beatCount = 0)
     {

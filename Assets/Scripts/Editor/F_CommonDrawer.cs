@@ -4,7 +4,7 @@ using UnityEditor;
 namespace NoteGenerating.Editor
 {
     [CustomPropertyDrawer(typeof(F_Generic2D.NoteData))]
-    public class F_CommonNoteDataDrawer : PropertyDrawer
+    public class F_Generic2D_NoteDataDrawer : PropertyDrawer
     {
         static readonly float Height = 18;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -80,7 +80,7 @@ namespace NoteGenerating.Editor
     }
 
     [CustomPropertyDrawer(typeof(F_Generic2D))]
-    public class F_CommonDrawer : PropertyDrawer
+    public class F_Generic2DDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -91,6 +91,9 @@ namespace NoteGenerating.Editor
 
             position.y += EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
+
+            position.y += EditorGUIUtility.singleLineHeight;
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("isCheckSimultaneous"));
 
             position.y += EditorGUIUtility.singleLineHeight;
             var noteDatasProp = property.FindPropertyRelative("noteDatas");

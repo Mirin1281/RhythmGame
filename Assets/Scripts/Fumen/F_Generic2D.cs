@@ -186,15 +186,15 @@ namespace NoteGenerating
                 var type = data.Type;
                 if(type == CreateNoteType.Normal)
                 {
-                    DebugNote(data.X, y, NoteType.Normal);
+                    DebugNote(data.X, y, NoteType.Normal, data.Width);
                 }
                 else if(type == CreateNoteType.Slide)
                 {
-                    DebugNote(data.X, y, NoteType.Slide);
+                    DebugNote(data.X, y, NoteType.Slide, data.Width);
                 }
                 else if(type == CreateNoteType.Flick)
                 {
-                    DebugNote(data.X, y, NoteType.Flick);
+                    DebugNote(data.X, y, NoteType.Flick, data.Width);
                 }
                 else if(type == CreateNoteType.Hold)
                 {
@@ -203,7 +203,7 @@ namespace NoteGenerating
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
                     }
-                    DebugHold(data.X, y, data.Length);
+                    DebugHold(data.X, y, data.Length, data.Width);
                 }
                 y += Helper.GetTimeInterval(data.Wait) * Speed;
             }
@@ -220,9 +220,13 @@ namespace NoteGenerating
             }
 
 
-            void DebugNote(float x, float y, NoteType type)
+            void DebugNote(float x, float y, NoteType type, float width)
             {
                 NoteBase_2D note = Helper.GetNote2D(type);
+                if((width is 0 or 1) == false)
+                {
+                    note.SetWidth(width);
+                }
                 var startPos = new Vector3(Inverse(x), y);
                 note.SetPos(startPos);
                 note.transform.parent = previewObj.transform;
@@ -244,9 +248,13 @@ namespace NoteGenerating
                 beforeNote = note;
             }
 
-            void DebugHold(float x, float y, float length)
+            void DebugHold(float x, float y, float length, float width)
             {
                 var hold = Helper.GetHold();
+                if((width is 0 or 1) == false)
+                {
+                    hold.SetWidth(width);
+                }
                 var holdTime = Helper.GetTimeInterval(length);
                 hold.SetLength(holdTime * Speed);
                 hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
