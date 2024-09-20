@@ -357,14 +357,14 @@ public class NoteInput : MonoBehaviour
             }
 
             // 距離の近いアークを調べる
-            var tmpJudge = arc.GetCurrentJudge();
-            if (tmpJudge == null)
+            var arcJ = arc.GetCurrentJudge();
+            if (arcJ == null)
             {
                 arc.IsPosDuplicated = false;
             }
             else
             {
-                arc.IsPosDuplicated = tmpJudge.IsDuplicated;
+                arc.IsPosDuplicated = arcJ.IsDuplicated;
             }
             var worldPos = arc.GetAnyPointOnZPlane(0);
             foreach(var otherArc in arcs)
@@ -415,7 +415,6 @@ public class NoteInput : MonoBehaviour
             }
             arc.SetInput(isHold);
 
-            var arcJ = arc.GetCurrentJudge();
             if (arcJ == null) continue; // 最後の判定を終えた
             if (arcJ.EndPos.z < arcPos.z)
             {

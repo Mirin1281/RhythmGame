@@ -6,20 +6,27 @@ public class SelectMusicButton : MonoBehaviour
 {
     [SerializeField] TMP_Text levelTmpro;
     [SerializeField] TMP_Text nameTmpro;
-    [SerializeField] Image image;
-    MusicMasterData data;
+    [SerializeField] Image plateImage;
+    [SerializeField] Image illustImage;
+    int index;
 
-    public void SetData(MusicMasterData data)
+    public void SetData(MusicMasterData data, int index)
     {
-        this.data = data;
+        this.index = index;
         levelTmpro.SetText(data.FumenData.Level.ToString());
         nameTmpro.SetText(data.MusicData.MusicName.ToString());
-        image.sprite = data.Illust;
+        illustImage.sprite = data.Illust;
     }
 
-    public void StartGame()
+    public void OnSelect()
     {
-        RhythmGameManager.Instance.MusicMasterData = data;
-        FadeLoadSceneManager.Instance.LoadScene(1f, "InGame");
+        var creator = transform.parent.GetComponent<MusicMasterCreator>();
+        creator.Select(index);
+        plateImage.color = Color.cyan;
+    }
+
+    public void Deselect()
+    {
+        plateImage.color = Color.white;
     }
 }

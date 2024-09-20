@@ -1,7 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
-using TMPro;
 using CriWare;
 
 #if UNITY_EDITOR
@@ -11,15 +10,13 @@ using UnityEditor;
 public class Metronome : MonoBehaviour
 {
     [SerializeField] InGameManager inGameManager;
-    [SerializeField] CriAtomSource criAtomSource;
-    [SerializeField] TMP_Text beatText;
-    [SerializeField] bool autoStart;
+    [SerializeField] CriAtomSource atomSource;
     [Space(10)]
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
 
     float bpm;
-    bool addTime;
+    bool isLooping;
     double currentTime;
     
     CriAtomExPlayback playback;
@@ -41,26 +38,36 @@ public class Metronome : MonoBehaviour
 #else
         skipOnStart = false;
 #endif
+
+        bpm = MusicData.Bpm;
+        atomSource.cueSheet = MusicData.SheetName;
+        atomSource.cueName = MusicData.CueName;
     }
 
-    void Start()
+    public void Play()
     {
-        bpm = MusicData.Bpm;
+        /*bpm = MusicData.Bpm;
 
-        if(string.IsNullOrEmpty(MusicData.SheetName))
-        {
-            criAtomSource.cueSheet = MusicData.SheetName;
-        }
-        if(string.IsNullOrEmpty(MusicData.CueName))
-        {
-            criAtomSource.cueSheet = MusicData.CueName;
-        }
+        atomSource.cueSheet = MusicData.SheetName;
+        atomSource.cueName = MusicData.CueName;
 
         int beatCount = 0;
         if(skipOnStart)
         {
-            float skipTime = criAtomSource.GetLength() * timeRate;
-            criAtomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
+            float skipTime = atomSource.GetLength() * timeRate;
+            atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
+            currentTime = skipTime;
+            beatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - 10;
+            if(beatCount < 0)
+            {
+                beatCount = 0;
+            }
+        }*/
+        int beatCount = 0;
+        if(skipOnStart)
+        {
+            float skipTime = atomSource.GetLength() * timeRate;
+            atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
             beatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - 10;
             if(beatCount < 0)
@@ -68,11 +75,9 @@ public class Metronome : MonoBehaviour
                 beatCount = 0;
             }
         }
-        if(autoStart)
-        {
-            playback = criAtomSource.Play();
-            UpdateTimerAsync(beatCount).Forget();
-        }
+
+        playback = atomSource.Play();
+        UpdateTimerAsync(beatCount).Forget();
     }
 
     void OnDestroy()
@@ -85,24 +90,26 @@ public class Metronome : MonoBehaviour
 
     async UniTask UpdateTimerAsync(int beatCount = 0)
     {
-        addTime = true;
+        isLooping = true;
         double baseTime = Time.timeAsDouble - currentTime;
         double nextBeat = BeatInterval * (beatCount + 1);
         while(true)
         {
-            currentTime = Time.timeAsDouble - baseTime;
-            if(CurrentTime > nextBeat && addTime)
+            if(isLooping)
             {
-                if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
+                currentTime = Time.timeAsDouble - baseTime;
+                if(CurrentTime > nextBeat)
                 {
-                    bpm = MusicData.GetChangeBPM(bpmChangeCount);
-                    bpmChangeCount++;
+                    if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
+                    {
+                        bpm = MusicData.GetChangeBPM(bpmChangeCount);
+                        bpmChangeCount++;
+                    }
+                    OnBeat?.Invoke(beatCount - MusicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
+                    
+                    beatCount++;
+                    nextBeat += BeatInterval;
                 }
-                beatText.SetText((beatCount - MusicData.StartBeatOffset - RhythmGameManager.DefaultWaitOnAction).ToString());
-                OnBeat?.Invoke(beatCount - MusicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
-                
-                beatCount++;
-                nextBeat += BeatInterval;
             }
             await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, destroyCancellationToken);
         }
@@ -110,17 +117,17 @@ public class Metronome : MonoBehaviour
 
     public void Stop()
     {
-        addTime = false;
+        isLooping = false;
         playback.Stop();
     }
     public void Pause()
     {
-        addTime = false;
+        isLooping = false;
         playback.Pause();
     }
     public void Resume()
     {
-        addTime = true;
+        isLooping = true;
         playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
     }
     

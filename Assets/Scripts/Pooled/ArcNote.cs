@@ -246,7 +246,7 @@ public class ArcNote : NoteBase
     CancellationTokenSource cts = new();
     public async UniTask InvalidArcJudgeAsync(float time = 1f)
     {
-        cts.Cancel();
+        cts?.Cancel();
         cts = new();
         var token = cts.Token;
 

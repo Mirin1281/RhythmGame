@@ -17,6 +17,8 @@ public class MusicData : ScriptableObject
     [SerializeField] string sheetName;
     
     [SerializeField] string cueName;
+    [SerializeField] float previewStart;
+    [SerializeField] float previewEnd = 1000;
 
     [SerializeField] float bpm;
 
@@ -32,6 +34,8 @@ public class MusicData : ScriptableObject
     public string ComposerName => composerName;
     public string SheetName => sheetName;
     public string CueName => cueName;
+    public float PreviewStart => previewStart;
+    public float PreviewEnd => previewEnd;
     public float Bpm => bpm;
     public float Offset => offset;
     public int StartBeatOffset => startBeatOffset;

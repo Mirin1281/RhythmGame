@@ -56,7 +56,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
         {
             fadeImage.color = Color.Lerp(clearColor, color, time / interval);
             time += Time.deltaTime;
-            await UniTask.Yield();
+            await UniTask.Yield(destroyCancellationToken);
         }
         fadeImage.color = color;
     }
@@ -71,7 +71,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
         {
             fadeImage.color = Color.Lerp(color, clearColor, time / interval);
             time += Time.deltaTime;
-            await UniTask.Yield();
+            await UniTask.Yield(destroyCancellationToken);
         }
         fadeImage.color = color;
         fadeImage.gameObject.SetActive(false);
