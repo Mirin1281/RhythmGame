@@ -18,4 +18,11 @@ public class SettingCanvas : MonoBehaviour
         gameObject.SetActive(false);
         canvas.enabled = false;
     }
+
+    public void Toggle()
+    {
+        bool isActive = gameObject.activeSelf;
+        gameObject.SetActive(!isActive);
+        canvas.enabled = !isActive;
+    }
 }

@@ -6,7 +6,8 @@ public class InGameManager : MonoBehaviour
 {
     [SerializeField] MusicMasterData masterData;
     [SerializeField] Metronome metronome;
-    public FumenData FumenData => masterData.FumenData;
+    public MusicMasterData MasterData => masterData;
+    public FumenData FumenData => masterData.GetFumenData();
     public MusicData MusicData => masterData.MusicData;
 
     async UniTask Awake()

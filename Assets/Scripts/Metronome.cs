@@ -46,23 +46,6 @@ public class Metronome : MonoBehaviour
 
     public void Play()
     {
-        /*bpm = MusicData.Bpm;
-
-        atomSource.cueSheet = MusicData.SheetName;
-        atomSource.cueName = MusicData.CueName;
-
-        int beatCount = 0;
-        if(skipOnStart)
-        {
-            float skipTime = atomSource.GetLength() * timeRate;
-            atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
-            currentTime = skipTime;
-            beatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - 10;
-            if(beatCount < 0)
-            {
-                beatCount = 0;
-            }
-        }*/
         int beatCount = 0;
         if(skipOnStart)
         {

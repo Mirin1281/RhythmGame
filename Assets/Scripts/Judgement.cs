@@ -15,6 +15,82 @@ public enum NoteGrade
     Miss,
 }
 
+public class Result
+{
+    int perfect;
+    int fastGreat;
+    int lateGreat;
+    int fastFar;
+    int lateFar;
+    int miss;
+
+    int combo;
+    int maxCombo;
+    double score;
+    readonly MusicMasterData masterData;
+    
+    static readonly int MaxScore = 10000000;
+
+    public int Perfect => perfect;
+    public int FastGreat => fastGreat;
+    public int LateGreat => lateGreat;
+    public int FastFar => fastFar;
+    public int LateFar => lateFar;
+    public int Miss => miss;
+
+    public int Combo => combo;
+    public int MaxCombo => maxCombo;
+    public int Score => Mathf.RoundToInt((float)score);
+    public MusicMasterData MasterData => masterData;
+
+    public Result(MusicMasterData masterData)
+    {
+        this.masterData = masterData;
+    }
+
+    public void SetCombo(NoteGrade grade)
+    {
+        if(grade == NoteGrade.Miss)
+        {
+            combo = 0;
+            miss++;
+            return;
+        }
+
+        combo++;
+        if(combo > maxCombo)
+        {
+            maxCombo = combo;
+        }
+        
+        if(grade == NoteGrade.Perfect) {
+            perfect++;
+        } else if(grade == NoteGrade.FastGreat) {
+            fastGreat++;
+        } else if(grade == NoteGrade.LateGreat) {
+            lateGreat++;
+        } else if(grade == NoteGrade.FastFar) {
+            fastFar++;
+        } else if(grade == NoteGrade.LateFar) {
+            lateFar++;
+        } else {
+            throw new System.Exception();
+        }
+
+        double rate = grade switch
+        {
+            NoteGrade.Perfect => 1d,
+            NoteGrade.FastGreat or NoteGrade.LateGreat => 0.5d,
+            NoteGrade.FastFar or NoteGrade.LateFar => 0.3d,
+            NoteGrade.Miss => 0,
+            _ => throw new System.Exception()
+        };
+        double baseScore = (double)MaxScore / masterData.GetFumenData().NoteCount;
+        score += baseScore * rate;
+    }
+}
+
+
 public class Judgement : MonoBehaviour
 {
     [SerializeField] InGameManager inGameManager;
@@ -28,9 +104,14 @@ public class Judgement : MonoBehaviour
     [SerializeField] LightParticle[] lights;
     
     readonly Dictionary<ArcNote, LightParticle> lightDic = new(4);
+    Result result;
+    public Result Result => result;
 
-    int combo;
-    double score;
+    void Awake()
+    {
+        comboText.SetText("0");
+        result = new Result(inGameManager.MasterData);
+    }
 
     const float Range = 4.6f;
     public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2, float rangeW = Range)
@@ -69,26 +150,20 @@ public class Judgement : MonoBehaviour
         Destroy(obj);
     }
 
-    public void AddCombo()
+    public void SetCombo(NoteGrade grade)
     {
-        combo++;
-        comboText.SetText(combo.ToString());
-    }
-    public void ResetCombo()
-    {
-        combo = 0;
-        comboText.SetText(combo.ToString());
+        result.SetCombo(grade);
+        comboText.SetText(result.Combo.ToString());
+        scoreText.SetText(result.Score.ToString("00000000"));
     }
 
     CancellationTokenSource cts = new();
     public NoteGrade GetGradeAndSetText(float delta)
     {
         var grade = GetGrade(delta);
-        deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
         if(grade != NoteGrade.Perfect)
             SetJudgeText(grade).Forget();
-        SetScore(grade);
-        scoreText.SetText(Mathf.RoundToInt((float)score).ToString("00000000"));
+        deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
         return grade;
 
 
@@ -101,19 +176,6 @@ public class Judgement : MonoBehaviour
             judgeText.SetText(grade.ToString());
             await MyUtility.WaitSeconds(1f, token);
             judgeText.SetText(string.Empty);
-        }
-
-        void SetScore(NoteGrade grade)
-        {
-            double baseScore = 10000000d / inGameManager.FumenData.NoteCount;
-            double rate = grade switch
-            {
-                NoteGrade.Perfect => 1d,
-                NoteGrade.FastGreat or NoteGrade.LateGreat => 0.5d,
-                NoteGrade.FastFar or NoteGrade.LateFar => 0.3d,
-                _ => throw new System.Exception()
-            };
-            score += baseScore * rate;
         }
     }
 

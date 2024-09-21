@@ -47,7 +47,6 @@ public class NoteInput : MonoBehaviour
 #else
         isAuto = false;
 #endif
-        judge.ResetCombo();
         if(isAuto) return;
         inputManager.OnDown += OnDown;
         inputManager.OnHold += OnHold;
@@ -134,8 +133,7 @@ public class NoteInput : MonoBehaviour
                     RemoveExpect(expect);
                 }
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                judge.AddCombo();
-                judge.GetGradeAndSetText(0);
+                judge.SetCombo(NoteGrade.Perfect);
                 judge.DebugShowRange(expect).Forget();
             }
             else if(metronome.CurrentTime > expect.Time + 0.18f)
@@ -150,7 +148,7 @@ public class NoteInput : MonoBehaviour
                 {
                     RemoveExpect(expect);
                 }
-                judge.ResetCombo();
+                judge.SetCombo(NoteGrade.Miss);
             }
         }
     }
@@ -162,14 +160,13 @@ public class NoteInput : MonoBehaviour
         if(expect == null) return;
 
         NoteGrade grade = judge.GetGradeAndSetText(delta);
+        judge.SetCombo(grade);
         if(grade == NoteGrade.Miss)
         {
-            judge.ResetCombo();
             RemoveExpect(expect);
             return;
         }
 
-        judge.AddCombo();
         judge.PlayParticle(grade, expect.Pos);
 
         if(expect.Note.Type == NoteType.Hold)
@@ -209,7 +206,7 @@ public class NoteInput : MonoBehaviour
                     
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                     expect.Note.SetActive(false);
-                    judge.AddCombo();
+                    judge.SetCombo(NoteGrade.Perfect);
                 });
             }
         }
@@ -233,7 +230,7 @@ public class NoteInput : MonoBehaviour
                 
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 expect.Note.SetActive(false);
-                judge.AddCombo();
+                judge.SetCombo(NoteGrade.Perfect);
             });
         }
     }
@@ -309,15 +306,14 @@ public class NoteInput : MonoBehaviour
                     if(metronome.CurrentTime > hold.EndTime - 0.2f)
                     {
                         hold.State = HoldState.Got;
-                        judge.AddCombo();
-                        judge.GetGradeAndSetText(0);
+                        judge.SetCombo(NoteGrade.Perfect);
                     }
                 }
                 else
                 {
                     hold.State = HoldState.Missed;
                     hold.SetAlpha(0.4f);
-                    judge.ResetCombo();
+                    judge.SetCombo(NoteGrade.Miss);
                 }
             }
             else if(hold.State is HoldState.Missed)
@@ -420,7 +416,7 @@ public class NoteInput : MonoBehaviour
             {
                 arcJ.State = ArcJudgeState.Miss;
                 arc.JudgeIndex++;
-                judge.ResetCombo();
+                judge.SetCombo(NoteGrade.Miss);
             }
 
             if ((arcJ.StartPos.z < arcPos.z && arcPos.z < arcJ.EndPos.z) == false) continue; // 判定の範囲外
@@ -433,9 +429,8 @@ public class NoteInput : MonoBehaviour
             {
                 arcJ.State = ArcJudgeState.Got;
                 judge.PlayParticle(NoteGrade.Perfect, worldPos);
+                judge.SetCombo(NoteGrade.Perfect);
                 arc.JudgeIndex++;
-                judge.AddCombo();
-                judge.GetGradeAndSetText(0);
             }
         }
     }

@@ -14,9 +14,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         //await MyUtility.WaitSeconds(1f, destroyCancellationToken);
         await UniTask.WaitUntil(() => _onSceneTransition, cancellationToken: destroyCancellationToken);
-        Debug.Log(0);
         if(FadeLoadSceneManager.IsSceneChanging) return;
-        Debug.Log(1);
         FadeLoadSceneManager.Instance.LoadScene(0.3f, _sceneName);
     }
 }

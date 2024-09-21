@@ -1,21 +1,25 @@
+using NoteGenerating;
 using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
     // 通常は60～180程度を想定
     static int SpeedBase = 160;
-    public static float Speed => SpeedBase / 10f;
     static readonly int DefaultSpeedBase = 160;
-    
+    public static float Speed => SpeedBase / 10f;
     public static float Speed3D => SpeedBase / 2f;
 
     static int OffsetBase;
     public static float Offset => OffsetBase / 100f;
 
-    public MusicMasterData MusicMasterData { get; set; }
-    
-
     public static readonly float DebugBpm = 200;
+
+    public MusicMasterData MusicMasterData { get; set; }
+    public Result Result { get; set; }
+    public static Difficulty Difficulty { get; set; }
+
+    public static int SelectedIndex { get; set; }
+    
 
     /// <summary>
     /// カメラ制御の際など、ノーツの生成と異なり即座に影響を与えるコマンドは待機させた方が
@@ -30,6 +34,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         OffsetBase = 0;
         Application.targetFrameRate = 60;
         SpeedBase = DefaultSpeedBase;
+        Difficulty = Difficulty.Hard;
+        SelectedIndex = -1;
     }
     void OnApplicationQuit()
     {

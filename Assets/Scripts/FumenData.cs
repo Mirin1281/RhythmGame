@@ -10,7 +10,7 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
-        [SerializeField] Difficulty difficulty = Difficulty.Easy;
+        [SerializeField] Difficulty difficulty = Difficulty.Normal;
         [SerializeField, Min(0)] int level = 1;
         [SerializeField, Min(1)] int noteCount = 1;
 
@@ -22,7 +22,7 @@ namespace NoteGenerating
         public Fumen Fumen => fumen;
     }
 
-    public enum Difficulty { None, Easy, Normal, Hard }
+    public enum Difficulty { None, Normal, Hard, Extra }
 
     [System.Serializable]
     public class Fumen
