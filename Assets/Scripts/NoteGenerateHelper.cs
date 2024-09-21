@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Threading;
-using System;
 using Cysharp.Threading.Tasks;
 
 #if UNITY_EDITOR
@@ -31,13 +30,19 @@ public class NoteGenerateHelper : MonoBehaviour
         }
         return UniTask.Yield(token);
     }
-    public UniTask WaitSeconds(float wait, CancellationToken token = default)
+    public async UniTask WaitSeconds(float wait, CancellationToken token = default)
     {
         if(token == default)
         {
-            return MyUtility.WaitSeconds(wait, Token);
+            token = Token;
         }
-        return MyUtility.WaitSeconds(wait, token);
+        float baseTime = Metronome.CurrentTime;
+        float time = 0f;
+        while(time < wait)
+        {
+            time = Metronome.CurrentTime - baseTime;
+            await UniTask.Yield(token);
+        }
     }
 
     public float GetTimeInterval(float lpb, int num = 1)

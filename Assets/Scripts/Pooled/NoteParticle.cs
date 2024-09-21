@@ -8,7 +8,7 @@ public class NoteParticle : PooledBase
     public async UniTask PlayAsync()
     {
         particle.Play();
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f), cancellationToken: destroyCancellationToken);
+        await MyUtility.WaitSeconds(0.4f, destroyCancellationToken);
         if(this == null) return;
         gameObject.SetActive(false);
     }

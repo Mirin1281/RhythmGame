@@ -24,6 +24,8 @@ namespace NoteGenerating
         [SerializeField, Min(0)] float delay;
         [SerializeField] int blinkCount = 20;
         [SerializeField] int seed = 222;
+        [SerializeField] Vector2Int hideWaitRange = new Vector2Int(1, 5);
+        [SerializeField] Vector2Int showWaitRange = new Vector2Int(1, 3);
         [SerializeField] bool isDelayOneFrame = true;
 
         protected override async UniTask GenerateAsync()
@@ -68,13 +70,12 @@ namespace NoteGenerating
 
             var actionNotes = notes.Where(n => n.IsActive).ToArray();
             var rand = new System.Random(seed);
+            float interval = 1 / 120f;
             for(int i = 0; i < blinkCount; i++)
             {
-                int waitFrame = rand.Next(1, 5);
-                await UniTask.DelayFrame(waitFrame, cancellationToken: Helper.Token);
+                await Helper.WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
                 SetRendererEnableds(actionNotes, false);
-                waitFrame = rand.Next(1, 3);
-                await UniTask.DelayFrame(waitFrame, cancellationToken: Helper.Token);
+                await Helper.WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
                 SetRendererEnableds(actionNotes, true);
             }
         }

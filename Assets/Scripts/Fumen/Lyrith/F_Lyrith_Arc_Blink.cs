@@ -11,6 +11,7 @@ namespace NoteGenerating
         [SerializeField] float decay = 3f;
         List<ArcNote> arcs;
         List<SkyNote> skys;
+        
         protected override async UniTask GenerateAsync()
         {
             arcs = new(2);
@@ -43,14 +44,15 @@ namespace NoteGenerating
             var rand = new System.Random(223);
             float baseTime = CurrentTime;
             float time = 0f;
+            float interval = 1 / 120f;
             while(time < 1f)
             {
                 time = CurrentTime - baseTime;
-                await UniTask.DelayFrame(rand.Next(1, 5), cancellationToken: Helper.Token);
+                await Helper.WaitSeconds(interval * rand.Next(1, 5));
 
                 arcs.ForEach(arc => arc.SetRendererEnabled(false));
                 skys.ForEach(sky => sky.SetRendererEnabled(false));
-                await UniTask.DelayFrame(rand.Next(1, 5), cancellationToken: Helper.Token);
+                await Helper.WaitSeconds(interval * rand.Next(1, 5));
 
                 arcs.ForEach(arc => arc.SetRendererEnabled(true));
                 skys.ForEach(sky => sky.SetRendererEnabled(true));

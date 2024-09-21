@@ -18,6 +18,7 @@ public class Metronome : MonoBehaviour
     float bpm;
     bool isLooping;
     double currentTime;
+    int beatCount;
     
     CriAtomExPlayback playback;
     int bpmChangeCount;
@@ -46,7 +47,6 @@ public class Metronome : MonoBehaviour
 
     public void Play()
     {
-        int beatCount = 0;
         if(skipOnStart)
         {
             float skipTime = atomSource.GetLength() * timeRate;
@@ -71,15 +71,16 @@ public class Metronome : MonoBehaviour
 #endif
     }
 
-    async UniTask UpdateTimerAsync(int beatCount = 0)
+    async UniTask UpdateTimerAsync(int startBeatCount = 0)
     {
+        beatCount = startBeatCount;
         isLooping = true;
         double baseTime = Time.timeAsDouble - currentTime;
         double nextBeat = BeatInterval * (beatCount + 1);
-        while(true)
+        while(isLooping)
         {
-            if(isLooping)
-            {
+            //if(isLooping)
+            //{
                 currentTime = Time.timeAsDouble - baseTime;
                 if(CurrentTime > nextBeat)
                 {
@@ -93,7 +94,7 @@ public class Metronome : MonoBehaviour
                     beatCount++;
                     nextBeat += BeatInterval;
                 }
-            }
+            //}
             await UniTask.Yield(PlayerLoopTiming.EarlyUpdate, destroyCancellationToken);
         }
     }
@@ -112,6 +113,8 @@ public class Metronome : MonoBehaviour
     {
         isLooping = true;
         playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
+        currentTime += 0.01f;
+        UpdateTimerAsync(beatCount).Forget();
     }
     
 #if UNITY_EDITOR
