@@ -1,3 +1,4 @@
+using CriWare;
 using NoteGenerating;
 using UnityEngine;
 
@@ -29,13 +30,33 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static readonly int DefaultWaitOnAction = 6;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void Init()
+    static void InitBeforeSceneLoad()
     {
         OffsetBase = 0;
         Application.targetFrameRate = 60;
         SpeedBase = DefaultSpeedBase;
         Difficulty = Difficulty.Hard;
         SelectedIndex = -1;
+    }
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static void InitAfterSceneLoad()
+    {
+        // キューデータをスクリプトから流す
+        (string sheet, string name)[] cueSheetAndNames = new (string, string)[]
+        {
+            ("my1", "my1"),
+            ("my2", "my2"),
+        };
+
+        for(int i = 0; i < cueSheetAndNames.Length; i++)
+        {
+            var c = cueSheetAndNames[i];
+            var sheet = CriAtom.GetCueSheet(c.sheet);
+            if(sheet == null)
+            {
+                CriAtom.AddCueSheet(c.sheet, c.name + ".acb", "");
+            }
+        }
     }
     void OnApplicationQuit()
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using CriWare;
 using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using UnityEngine;
@@ -58,5 +59,20 @@ public static class MyUtility
             // 四角形の範囲内かどうかを確認（長辺はw、短辺はhの中心対称）
             return Mathf.Abs(rotatedX) <= rect.width / 2 && Mathf.Abs(rotatedY) <= rect.height / 2;
         }
+    }
+
+    public static Vector2 GetRotatedPos(Vector2 pos, float deg, Vector2 centerPos = default)
+    {
+        var cos = Mathf.Cos(deg * Mathf.Deg2Rad);
+        var sin = Mathf.Sin(deg * Mathf.Deg2Rad);
+        return new Vector2(
+            centerPos.x + (pos.x - centerPos.x) * cos - (pos.y - centerPos.y) * sin,
+            centerPos.y + (pos.x - centerPos.x) * sin + (pos.y - centerPos.y) * cos);
+    }
+
+    public static UniTask LoadCueSheetAsync(string cueSheetName, string acbName = null)
+    {
+        CriAtom.AddCueSheetAsync(cueSheetName, (acbName ?? cueSheetName) + ".acb", "");
+        return UniTask.WaitWhile(() => CriAtom.CueSheetsAreLoading);
     }
 }

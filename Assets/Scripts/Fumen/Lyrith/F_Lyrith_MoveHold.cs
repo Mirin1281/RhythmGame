@@ -6,32 +6,32 @@ namespace NoteGenerating
     [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
     public class F_Lyrith_MoveHold : Generator_2D
     {
-        float MoveX => 0.15f;
-
         protected override async UniTask GenerateAsync()
         {
-            MoveHold(-9, 4, MoveX);
+            float moveX = 2.4f / Speed;
+
+            MoveHold(-9, 4, moveX);
             await Loop(8, NoteType.Normal,
                 3,
                 5,
                 3
             );
 
-            MoveHold(9, 4, -MoveX);
+            MoveHold(9, 4, -moveX);
             await Loop(8, NoteType.Normal,
                 -3,
                 -5,
                 -3
             );
 
-            MoveHold(-11, 4, MoveX);
+            MoveHold(-11, 4, moveX);
             await Loop(8, NoteType.Normal,
                 1,
                 3,
                 5
             );
 
-            MoveHold(11, 4, -MoveX);
+            MoveHold(11, 4, -moveX);
             await Loop(8, NoteType.Normal,
                 -1,
                 -3,

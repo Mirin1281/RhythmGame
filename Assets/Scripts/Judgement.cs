@@ -85,7 +85,7 @@ public class Result
             NoteGrade.Miss => 0,
             _ => throw new System.Exception()
         };
-        double baseScore = (double)MaxScore / masterData.GetFumenData().NoteCount;
+        double baseScore = (double)MaxScore / masterData.GetFumenData(RhythmGameManager.Difficulty).NoteCount;
         score += baseScore * rate;
     }
 }
@@ -124,14 +124,14 @@ public class Judgement : MonoBehaviour
         return MyUtility.IsPointInsideRectangle(
             new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, Range)),
             inputPos,
-            hold.transform.localEulerAngles.z * Mathf.Deg2Rad);
+            hold.transform.localEulerAngles.z);
     }
     public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
     {
         return MyUtility.IsPointInsideRectangle(
             new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
             inputPos,
-            expect.Note.transform.localEulerAngles.z * Mathf.Deg2Rad);
+            expect.Note.transform.localEulerAngles.z);
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
@@ -144,7 +144,7 @@ public class Judgement : MonoBehaviour
         if(showDebugRange == false) return;
         var obj = Instantiate(debugNoteRangePrefab, transform);
         obj.transform.localPosition = expect.Pos;
-        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.localEulerAngles.z * Mathf.Rad2Deg, Vector3.forward);
+        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.localEulerAngles.z, Vector3.forward);
         obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
         await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
         Destroy(obj);

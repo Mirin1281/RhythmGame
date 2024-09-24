@@ -14,6 +14,7 @@ public class HoldNote : NoteBase_2D
     [SerializeField] SpriteMask spriteMask;
     public InputState State { get; set; }
     public float EndTime { get; set; }
+    public float NoInputTime { get; set; }
     static readonly float BaseScaleX = 3f;
 
     public override void SetWidth(float width)

@@ -302,6 +302,7 @@ public class NoteInput : MonoBehaviour
                      || isAuto;
                 if(isInput)
                 {
+                    hold.NoInputTime = 0f;
                     // ギリギリまで取らなくても判定されるように
                     if(metronome.CurrentTime > hold.EndTime - 0.2f)
                     {
@@ -311,9 +312,13 @@ public class NoteInput : MonoBehaviour
                 }
                 else
                 {
-                    hold.State = HoldState.Missed;
-                    hold.SetAlpha(0.4f);
-                    judge.SetCombo(NoteGrade.Miss);
+                    hold.NoInputTime += Time.deltaTime;
+                    if(hold.NoInputTime > 0.1f) // 一瞬離しても許容
+                    {
+                        hold.State = HoldState.Missed;
+                        hold.SetAlpha(0.4f);
+                        judge.SetCombo(NoteGrade.Miss);
+                    }
                 }
             }
             else if(hold.State is HoldState.Missed)

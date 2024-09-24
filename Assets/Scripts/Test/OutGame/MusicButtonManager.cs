@@ -7,6 +7,7 @@ using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using NoteGenerating;
+using CriWare;
 
 public class MusicButtonManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class MusicButtonManager : MonoBehaviour
     [SerializeField] Image illustImage;
     [SerializeField] TMP_Text titleTmpro;
     [SerializeField] TMP_Text composerTmpro;
+    [SerializeField] TMP_Text illustratorTmpro;
     [SerializeField] List<MusicMasterData> datas;
     List<MusicMasterData> sortedDatas;
     readonly List<SelectMusicButton> buttons = new();
@@ -104,12 +106,15 @@ public class MusicButtonManager : MonoBehaviour
             if(selectedIndex != -1)
             {
                 previewer.Stop(0f);
+                CriAtom.RemoveCueSheet(sortedDatas[selectedIndex].MusicData.SheetName);
                 buttons[selectedIndex].Deselect();
             }
             previewer.MusicPreview(data.MusicData).Forget();
+            SEManager.Instance.PlaySE(SEType.my1);
             illustImage.sprite = data.Illust;
             titleTmpro.SetText(data.MusicData.MusicName);
             composerTmpro.SetText(data.MusicData.ComposerName);
+            illustratorTmpro.SetText(data.IllustratorName);
 
             OnOtherSelect?.Invoke(data);
 

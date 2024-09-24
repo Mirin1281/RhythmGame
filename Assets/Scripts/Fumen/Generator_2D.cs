@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using System;
 
 namespace NoteGenerating
 {
@@ -9,7 +8,7 @@ namespace NoteGenerating
         [SerializeField] bool isInverse;
         protected bool IsInverse => isInverse;
         protected void SetInverse(bool inverse) => isInverse = inverse;
-
+        
         /// <summary>
         /// 反転に対応した値にします
         /// </summary>
@@ -49,7 +48,6 @@ namespace NoteGenerating
             float expectTime = CurrentTime + distance / Speed;
             NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
             Helper.NoteInput.AddExpect(expect);
-            
             return note;
         }
         protected HoldNote Hold(float x, float length, float delta = -1)

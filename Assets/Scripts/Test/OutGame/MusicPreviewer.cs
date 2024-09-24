@@ -19,9 +19,11 @@ public class MusicPreviewer : MonoBehaviour
         source.cueSheet = musicData.SheetName;
         source.cueName = musicData.CueName;
         source.startTime = Mathf.RoundToInt(musicData.PreviewStart * 1000f);
+        await MyUtility.LoadCueSheetAsync(musicData.SheetName);
 
         float time = musicData.PreviewStart;
         FadeInAsync(0.5f, token).Forget();
+        
         while(token.IsCancellationRequested == false)
         {
             if(time > musicData.PreviewEnd)

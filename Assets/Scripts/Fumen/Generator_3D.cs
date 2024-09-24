@@ -20,7 +20,7 @@ namespace NoteGenerating
         /// <summary>
         /// ノーツの初期生成地点
         /// </summary>
-        protected float StartBase => 2f * Speed + 0 + 0.2f;
+        protected float StartBase => 2f * Speed + 0.2f;
 
         protected async UniTask<float> SkyLoop(float lpb, params Vector2?[] nullablePoses)
         {
@@ -33,20 +33,6 @@ namespace NoteGenerating
                 await Wait(lpb);
             }
             return Delta;
-        }
-
-        protected ArcNote Arc(ArcCreateData[] datas, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
-            var startPos = new Vector3(0, 0f, StartBase);
-            DropAsync(arc, startPos, delta).Forget();
-            Helper.NoteInput.AddArc(arc);
-            return arc;
         }
 
         protected SkyNote Sky(Vector2 pos, float delta = -1)
@@ -64,6 +50,20 @@ namespace NoteGenerating
             var expect = new NoteExpect(sky, sky.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);
             return sky;
+        }
+
+        protected ArcNote Arc(ArcCreateData[] datas, float delta = -1)
+        {
+            if(delta == -1)
+            {
+                delta = Delta;
+            }
+            ArcNote arc = Helper.GetArc();
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
+            var startPos = new Vector3(0, 0f, StartBase);
+            DropAsync(arc, startPos, delta).Forget();
+            Helper.NoteInput.AddArc(arc);
+            return arc;
         }
 
         protected async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
