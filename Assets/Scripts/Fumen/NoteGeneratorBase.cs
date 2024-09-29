@@ -33,27 +33,46 @@ namespace NoteGenerating
         }
 
         /// <summary>
-        /// 発火された時間と理想の発火時間との誤差(通常は負の値を取る)
+        /// 発火された時間と理想の発火時間との誤差(通常は正の値を取る)
         /// </summary>
         protected float Delta { get; set; }
 
         protected float CurrentTime => Helper.Metronome.CurrentTime;
 
-        protected async UniTask<float> Wait(float lpb, int num = 1)
+        protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {
-            if(lpb == 0 || num == 0) return Delta;
-            float baseTime = CurrentTime;
-            float interval = Helper.GetTimeInterval(lpb, num);
-            if(Delta > interval)
+            if(delta == -1)
             {
-                Delta -= interval;
+                if(lpb == 0 || num == 0) return Delta;
+                float baseTime = CurrentTime;
+                float interval = Helper.GetTimeInterval(lpb, num);
+                if(Delta > interval)
+                {
+                    Delta -= interval;
+                }
+                else
+                {
+                    await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
+                    Delta += CurrentTime - baseTime - interval;
+                }
+                return Delta;
             }
             else
             {
-                await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
-                Delta += CurrentTime - baseTime - interval;
+                if(lpb == 0 || num == 0) return delta;
+                float baseTime = CurrentTime;
+                float interval = Helper.GetTimeInterval(lpb, num);
+                if(delta > interval)
+                {
+                    delta -= interval;
+                }
+                else
+                {
+                    await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
+                    delta += CurrentTime - baseTime - interval;
+                }
+                return delta;
             }
-            return Delta;
         }
 
         protected void WhileYield(float time, Action<float> action, float delta = -1)

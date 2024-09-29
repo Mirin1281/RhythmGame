@@ -14,6 +14,7 @@ public class Metronome : MonoBehaviour
     [Space(10)]
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
+    readonly int tolerance = 10;
 
     float bpm;
     bool isLooping;
@@ -49,10 +50,15 @@ public class Metronome : MonoBehaviour
             float skipTime = atomSource.GetLength() * timeRate;
             atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
-            beatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - 10;
-            if(beatCount < 0)
+            int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
+            beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
+            
+            foreach(var generateData in inGameManager.FumenData.Fumen.GetReadOnlyGenerateDataList())
             {
-                beatCount = 0;
+                if(b >= generateData.BeatTiming + tolerance && generateData.GetNoteGeneratorBase() is IZoneCommand zone)
+                {
+                    zone.CallZone(skipTime - (generateData.BeatTiming + tolerance) * (float)BeatInterval);
+                }
             }
         }
 
@@ -94,7 +100,7 @@ public class Metronome : MonoBehaviour
         }
     }
 
-    public void Stop()
+    void Stop()
     {
         isLooping = false;
         playback.Stop();
@@ -116,11 +122,11 @@ public class Metronome : MonoBehaviour
     {
         if(state == PauseState.Paused)
         {
-            Pause();
+            playback.Pause();
         }
         else
         {
-            Resume();
+            playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
         }
     }
 #endif

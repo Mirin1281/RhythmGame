@@ -12,6 +12,8 @@ public class NormalNotePool : PoolBase<NormalNote>
         normalNote.SetRotate(0);
         normalNote.SetSprite(defaultSprite);
         normalNote.SetWidth(1f);
+        normalNote.SetRendererEnabled(true);
+        normalNote.transform.SetParent(this.transform);
         if(index != 1)
         {
             //normalNote.SetWidth(3f);

@@ -40,7 +40,7 @@ public class MusicButtonManager : MonoBehaviour
 
         UniTask.Void(async () => 
         {
-            await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
+            await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
             if(RhythmGameManager.SelectedIndex >= 0)
             {
                 buttons[RhythmGameManager.SelectedIndex].OnSelect();

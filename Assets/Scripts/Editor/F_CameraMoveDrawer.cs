@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace NoteGenerating.Editor
 {
-    [CustomPropertyDrawer(typeof(F_CameraMove.CameraMoveSetting))]
+    [CustomPropertyDrawer(typeof(CameraMoveSetting))]
     public class F_CameraMoveDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

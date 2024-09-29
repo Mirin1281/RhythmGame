@@ -38,9 +38,10 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         Difficulty = Difficulty.Hard;
         SelectedIndex = -1;
     }
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    static void InitAfterSceneLoad()
+
+    void Start()
     {
+        //base.Awake();
         // キューデータをスクリプトから流す
         (string sheet, string name)[] cueSheetAndNames = new (string, string)[]
         {

@@ -46,7 +46,7 @@ public class ArcNote : NoteBase
     {
         get
         {
-            if(Spline == null) return 0;
+            if(Spline == null || Spline.Knots.Count() == 0) return 0;
             return Spline.Knots.Last().Position.z;
         }
     }

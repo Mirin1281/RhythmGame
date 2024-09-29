@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆3D 2D変更"), System.Serializable]
-    public class F_Dimension : NoteGeneratorBase
+    public class F_Dimension : NoteGeneratorBase, IZoneCommand
     {
         enum MoveType
         {
@@ -16,113 +16,47 @@ namespace NoteGenerating
         [SerializeField] float time = 1f;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField, Min(0)] float delay = 0f;
-        [SerializeField] bool isRotateClamp = true;
 
         protected override async UniTask GenerateAsync()
         {
-            if(delay > 0)
-            {
-                await Helper.WaitSeconds(delay);
-            }
+            await Helper.WaitSeconds(delay);
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
-            
+            Process(time);
+        }
+
+        void IZoneCommand.CallZone(float delta)
+        {
+            UniTask.Void(async () => 
+            {
+                Delta = delta;
+                await Helper.WaitSeconds(delay - delta);
+                await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+                Process(Mathf.Clamp(time - delta, 0, Mathf.Infinity));
+            });
+        }
+
+        void Process(float time)
+        {
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             if(moveType == MoveType.Move2DTo3D)
             {
                 rendererShower.ShowLaneAsync(time).Forget();
-                Move2DTo3D(Camera.main);
+                Helper.CameraMover.Move(new Vector3(0f, 7f, -6.5f), new Vector3(25f, 0f, 0f),
+                    CameraMoveType.Absolute,
+                    time,
+                    easeType
+                );
             }
             else if(moveType == MoveType.Move3DTo2D)
             {
                 rendererShower.HideLaneAsync(time).Forget();
-                Move3DTo2D(Camera.main);
+                Helper.CameraMover.Move(new Vector3(0f, 4f, -10f), Vector3.zero,
+                    CameraMoveType.Absolute,
+                    time,
+                    easeType
+                );
             }
         }
-
-        void Move2DTo3D(Camera camera)
-        {
-            var startPos = camera.transform.localPosition;
-            var startRotate = camera.transform.localEulerAngles;
-            if(isRotateClamp)
-            {
-                WhileYield(time, t => 
-                {
-                    camera.transform.SetLocalPositionAndRotation(
-                        new Vector3(
-                            GetEaseValue(startPos.x, 0f, t),
-                            GetEaseValue(startPos.y, 7f, t),
-                            GetEaseValue(startPos.z, -6.5f, t)),
-                        Quaternion.Euler(
-                            GetEaseValue(startRotate.x, GetNormalizedAngle(25f, startRotate.x - 180, startRotate.x + 180), t),
-                            GetEaseValue(startRotate.y, GetNormalizedAngle(0, startRotate.y - 180, startRotate.y + 180), t),
-                            GetEaseValue(startRotate.z, GetNormalizedAngle(0, startRotate.z - 180, startRotate.z + 180), t))
-                    );
-                });
-            }
-            else
-            {
-                WhileYield(time, t => 
-                {
-                    camera.transform.SetLocalPositionAndRotation(
-                        new Vector3(
-                            GetEaseValue(startPos.x, 0f, t),
-                            GetEaseValue(startPos.y, 7f, t),
-                            GetEaseValue(startPos.z, -6.5f, t)),
-                        Quaternion.Euler(
-                            GetEaseValue(startRotate.x, 25f, t),
-                            GetEaseValue(startRotate.y, 0, t),
-                            GetEaseValue(startRotate.z, 0, t))
-                    );
-                });
-            }
-            
-        }
-
-        void Move3DTo2D(Camera camera)
-        {
-            var startPos = camera.transform.localPosition;
-            var startRotate = camera.transform.localEulerAngles;
-            if(isRotateClamp)
-            {
-                WhileYield(time, t => 
-                {
-                    camera.transform.SetLocalPositionAndRotation(
-                        new Vector3(
-                            GetEaseValue(startPos.x, 0f, t),
-                            GetEaseValue(startPos.y, 4f, t),
-                            GetEaseValue(startPos.z, -10f, t)),
-                        Quaternion.Euler(
-                            GetEaseValue(startRotate.x, GetNormalizedAngle(0, startRotate.x - 180, startRotate.x + 180), t),
-                            GetEaseValue(startRotate.y, GetNormalizedAngle(0, startRotate.y - 180, startRotate.y + 180), t),
-                            GetEaseValue(startRotate.z, GetNormalizedAngle(0, startRotate.z - 180, startRotate.z + 180), t))
-                    );
-                });
-            }
-            else
-            {
-                WhileYield(time, t => 
-                {
-                    camera.transform.SetLocalPositionAndRotation(
-                        new Vector3(
-                            GetEaseValue(startPos.x, 0f, t),
-                            GetEaseValue(startPos.y, 4f, t),
-                            GetEaseValue(startPos.z, -10f, t)),
-                        Quaternion.Euler(
-                            GetEaseValue(startRotate.x, 0, t),
-                            GetEaseValue(startRotate.y, 0, t),
-                            GetEaseValue(startRotate.z, 0, t))
-                    );
-                });
-            }
-            
-        }
-
-        static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
-        {
-            return Mathf.Repeat(angle - min, max - min) + min;
-        }
-
-        float GetEaseValue(float start, float from, float t) => t.Ease(start, from, time, easeType);
 
         protected override Color GetCommandColor()
         {
@@ -145,7 +79,7 @@ namespace NoteGenerating
         {
             get
             {
-                return moveType + "|" + time + "|" + easeType + "|" + delay + "|" + isRotateClamp;
+                return moveType + "|" + time + "|" + easeType + "|" + delay;
             }
             set
             {
@@ -154,7 +88,6 @@ namespace NoteGenerating
                 time = float.Parse(texts[1]);
                 easeType = Enum.Parse<EaseType>(texts[2]);
                 delay = float.Parse(texts[3]);
-                isRotateClamp = bool.Parse(texts[4]);
             }
         }
     }

@@ -13,6 +13,7 @@ public class NoteGenerateHelper : MonoBehaviour
     
     [field: SerializeField] public NoteInput NoteInput { get; private set; }
     [field: SerializeField] public Metronome Metronome { get; private set; }
+    [field: SerializeField] public CameraMover CameraMover { get; private set; }
 
     public CancellationToken Token => destroyCancellationToken;
 

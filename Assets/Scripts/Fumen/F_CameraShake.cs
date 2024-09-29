@@ -4,7 +4,6 @@ using System;
 
 namespace NoteGenerating
 {
-    // TODO: Inverseに未対応
     [AddTypeMenu("◆カメラを揺らす"), System.Serializable]
     public class F_CameraShake : Generator_2D
     {
@@ -21,9 +20,9 @@ namespace NoteGenerating
             public readonly float Strength => strength;
             public readonly float Time => time;
 
-            public CameraShakeSetting(int beatTiming = 0, bool disabled = false, float strength = 10f, float time = 0.4f)
+            public CameraShakeSetting(int wait = 0, bool disabled = false, float strength = 10f, float time = 0.4f)
             {
-                this.wait = beatTiming;
+                this.wait = wait;
                 this.disabled = disabled;
                 this.strength = strength;
                 this.time = time;
@@ -37,25 +36,14 @@ namespace NoteGenerating
         {
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
-            var camera = Camera.main;
             for(int i = 0; i < settings.Length; i++)
             {
                 var s = settings[i];
                 if(s.Disabled == false)
                 {
-                    CameraShake(camera, s.Strength, s.Time);
+                    Helper.CameraMover.Shake(s.Strength, s.Time, isInverse: IsInverse);
                 }
                 await Wait(s.Wait);
-            }
-
-
-            void CameraShake(Camera camera, float strength, float time)
-            {
-                camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
-                WhileYield(time, t => 
-                {
-                    camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
-                });
             }
         }
 

@@ -8,16 +8,15 @@ namespace NoteGenerating
         [SerializeField] InGameManager inGameManager;
         [SerializeField] Metronome metronome;
         [SerializeField] NoteGenerateHelper noteGenerateHelper;
-        Fumen Fumen => inGameManager.FumenData.Fumen;
 
-        void Start()
+        void Awake()
         {
             metronome.OnBeat += GenerateProcessAsync;
         }
 
         void GenerateProcessAsync(int beatCount, float delta)
         {
-            foreach(var generateData in Fumen.GetReadOnlyGenerateDataList())
+            foreach(var generateData in inGameManager.FumenData.Fumen.GetReadOnlyGenerateDataList())
             {
                 if(beatCount == generateData.BeatTiming)
                 {

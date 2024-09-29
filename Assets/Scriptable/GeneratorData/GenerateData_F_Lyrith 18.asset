@@ -15,13 +15,22 @@ MonoBehaviour:
   enable: 1
   beatTiming: 231
   generatable:
-    rid: 932862426347470855
+    rid: 8711923869748822016
   references:
     version: 2
     RefIds:
-    - rid: 932862426347470855
+    - rid: 8711923869748822016
       type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
         delay: 0
-        settings: []
+        settings:
+        - wait: 0
+          isPosMove: 1
+          pos: {x: 0, y: 3, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 90}
+          isRotateClamp: 1
+          time: 0.7
+          easeType: 24
+          moveType: 1
