@@ -8,11 +8,26 @@ namespace NoteGenerating
     {
         protected override async UniTask GenerateAsync()
         {
+            // 円ノーツのテスト //
+            /*await Wait(1);
+            await Wait(4);
+            await LoopCreateCircle(4,
+                (3, 5),
+                (3, 1),
+                (-3, 1),
+                (-3, 5),
+                null,
+                (0, 3),
+                null
+            );
+
+            return;*/
+
             // グループ化のテスト //
             UniTask.Void(async () => 
             {
                 var parent = Helper.GetNote2D(NoteType.Normal);
-                parent.SetRendererEnabled(false);
+                parent.SetSprite(null);
                 RightMoveAsync(parent, 1f, Vector3.zero).Forget();
 
                 float baseTime = CurrentTime - Delta;
@@ -31,7 +46,7 @@ namespace NoteGenerating
             float delta2 = await Wait(1);
 
             var parent2 = Helper.GetNote2D(NoteType.Normal);
-            parent2.SetRendererEnabled(false);
+            parent2.SetSprite(null);
             RightMoveAsync(parent2, -1f, Vector3.zero).Forget();
 
             float baseTime2 = CurrentTime - Delta;
@@ -140,6 +155,40 @@ namespace NoteGenerating
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
                 await Helper.Yield();
+            }
+        }
+
+
+        void Circle(Vector2 pos)
+        {
+            var note = Helper.PoolManager.NormalPool.GetNote(1);
+            MoveAsync(note, pos).Forget();
+            Helper.NoteInput.AddExpect(new NoteExpect(note, pos, CurrentTime + 120f / Helper.Metronome.Bpm));
+
+
+            async UniTask MoveAsync(NormalNote note, Vector3 startPos)
+            {
+                note.SetPos(startPos);
+                float baseTime = CurrentTime - Delta;
+                float t = 0f;
+                while (note.IsActive && t < 3f)
+                {
+                    t = CurrentTime - baseTime;
+                    note.transform.localScale = Vector3.one * t.Ease(1.5f, 0f, 120f / Helper.Metronome.Bpm, EaseType.InQuad);
+                    await Helper.Yield();
+                }
+            }
+        }
+
+        async UniTask LoopCreateCircle(int lpb, params (int x, int y)?[] poses)
+        {
+            for(int i = 0; i < poses.Length; i++)
+            {
+                if(poses[i] is (int, int) pos)
+                {
+                    Circle(new Vector2(pos.x, pos.y));
+                }
+                await Wait(lpb);
             }
         }
     }

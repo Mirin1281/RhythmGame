@@ -34,6 +34,7 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
+            if(settings == null) return;
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
 
             for(int i = 0; i < settings.Length; i++)

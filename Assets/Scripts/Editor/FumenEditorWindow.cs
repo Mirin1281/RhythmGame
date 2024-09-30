@@ -31,6 +31,8 @@ namespace NoteGenerating.Editor
 
         void OnEnable()
         {
+            Undo.undoRedoPerformed -= OnSelectionChange;
+            Undo.undoRedoPerformed += OnSelectionChange;
             reorderableList = CreateReorderableList();
             selectedCommandList = new();
             copiedCommandList = new();
@@ -435,7 +437,14 @@ namespace NoteGenerating.Editor
                 int removeIndex = commandList.IndexOf(command);
                 bool isLastElementRemoved = removeIndex == commandList.Count - 1;
                 commandList.Remove(command);
-                FumenEditorUtility.DestroyScritableObject(command);
+                if(command == null)
+                {
+                    OnSelectionChange();
+                }
+                else
+                {
+                    Undo.DestroyObjectImmediate(command);
+                }
 
                 if (i != selectedCommandList.Count - 1) continue;
                 selectedCommandList.Clear();

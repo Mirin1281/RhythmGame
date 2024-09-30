@@ -11,7 +11,7 @@ public static class MyUtility
     public static GameObject GetPreviewObject()
     {
         GameObject previewObj = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-            .Where(obj => obj.name == ConstContainer.DebugPreviewObjName)
+            .Where(obj => obj.name == "Preview2D")
             .FirstOrDefault();
         previewObj.SetActive(true);
         foreach(var child in previewObj.transform.OfType<Transform>().ToArray())

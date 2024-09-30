@@ -19,9 +19,8 @@ namespace NoteGenerating
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
-            var camera = Camera.main;
             await Helper.WaitSeconds(moveTime);
-            CameraShake(camera, 10, 0.4f);
+            Helper.CameraMover.Shake(10, 0.4f);
         }
 
         void Create(Vector2 startPos, float rotationSpeed)
@@ -35,15 +34,6 @@ namespace NoteGenerating
             });
             float expectTime = CurrentTime + moveTime;
             Helper.NoteInput.AddExpect(new NoteExpect(note, new Vector2(startPos.x, 0), expectTime));
-        }
-
-        void CameraShake(Camera camera, float strength, float time)
-        {
-            camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
-            WhileYield(time, t => 
-            {
-                camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
-            });
         }
     }
 }

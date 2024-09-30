@@ -175,7 +175,7 @@ public class ArcNote : NoteBase
                 var startPos = GetAnyPointOnZPlane(behindDistance);
                 var blueSphere = Instantiate(debugSphere, transform);
                 blueSphere.transform.localPosition = startPos;
-                blueSphere.transform.localScale = 0.9f * Vector3.one;
+                blueSphere.transform.localScale = 1.4f * Vector3.one;
                 blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
             }
 
@@ -183,7 +183,7 @@ public class ArcNote : NoteBase
             var endPos = GetAnyPointOnZPlane(aheadDistance);
             var redSphere = Instantiate(debugSphere, transform);
             redSphere.transform.localPosition = endPos;
-            redSphere.transform.localScale = 0.9f * Vector3.one;
+            redSphere.transform.localScale = 1.4f * Vector3.one;
             redSphere.SetColor(new Color(1, 0, 0, 0.5f));
         }
 

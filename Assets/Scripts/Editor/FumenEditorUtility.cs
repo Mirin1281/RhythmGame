@@ -70,16 +70,69 @@ namespace NoteGenerating.Editor
         /// <returns></returns>
         public static GenerateData CreateGenerateData(string baseName)
         {
-            string path =ConstContainer.DATA_PATH;
+            string path = ConstContainer.DATA_PATH;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
             var name = GetFileName(path, baseName, "asset");
-            var cmdData = ScriptableObject.CreateInstance<GenerateData>();
-            AssetDatabase.CreateAsset(cmdData, Path.Combine(path, name));
+            var data = ScriptableObject.CreateInstance<GenerateData>();
+            AssetDatabase.CreateAsset(data, Path.Combine(path, name));
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
-            return cmdData;
+            return data;
+        }
+
+        /// <summary>
+        /// 不要なGenerateDataを削除します
+        /// </summary>
+        public static void RemoveUnusedGenerateData(string folderPath = null)
+        {
+            // Undo等で破損状態のファイルを削除 //
+            var guids = AssetDatabase.FindAssets(null, new string[] { folderPath ??= ConstContainer.DATA_PATH });
+            int removeCount = 0;
+            for(int i = 0; i < guids.Length; i++)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                var obj = AssetDatabase.LoadAllAssetsAtPath(path);
+                if(obj.Length == 0) // アセットがない > 破損している 
+                {
+                    File.Delete(path);
+                    File.Delete($"{path}.meta");
+                    removeCount++;
+                }
+            }
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+
+            // どのフローチャートにも属していないCommandDataを削除 //
+            var datas = GetAllScriptableObjects<GenerateData>();
+            var fumenDatas = GetAllScriptableObjects<FumenData>();
+            foreach (var d in datas)
+            {
+                if (IsUsed(d, fumenDatas) == false)
+                {
+                    removeCount++;
+                    DestroyScritableObject(d);
+                }
+            }
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+            if(removeCount > 0)
+            {
+                Debug.Log($"不要なデータが{removeCount}個削除されました\nFolder: {folderPath}");
+            }
+            else
+            {
+                Debug.Log($"不要なデータの検索が完了しました。削除されたデータはありません\nFolder: {folderPath}");
+            }
+            
+
+            static bool IsUsed(GenerateData targetData, FumenData[] fumenDatas)
+            {
+                foreach (var flowchartData in fumenDatas)
+                {
+                    if (flowchartData.Fumen.IsUsed(targetData)) return true;
+                }
+                return false;
+            }
         }
     }
 }

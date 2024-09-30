@@ -64,17 +64,7 @@ namespace NoteGenerating.Editor
 
                 if (GUILayout.Button("ñ¢égópÇÃNoteGeneratorDataÇçÌèúÇ∑ÇÈ"))
                 {
-                    var cmdDatas = FumenEditorUtility.GetAllScriptableObjects<GenerateData>();
-                    var FumenDatas = FumenEditorUtility.GetAllScriptableObjects<FumenData>();
-
-                    foreach (var cmdData in cmdDatas)
-                    {
-                        if (IsUsed(cmdData, FumenDatas) == false)
-                        {
-                            FumenEditorUtility.DestroyScritableObject(cmdData);
-                        }
-                    }
-                    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                    FumenEditorUtility.RemoveUnusedGenerateData();
                 }
             }
 
