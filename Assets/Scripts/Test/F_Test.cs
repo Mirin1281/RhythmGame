@@ -1,13 +1,58 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using ArcVertexMode = ArcCreateData.ArcVertexMode;
 
 namespace NoteGenerating
 {
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_2D
     {
+        //protected override float Speed => base.Speed * 5f;
         protected override async UniTask GenerateAsync()
         {
+            await UniTask.CompletedTask;
+            ArcNote Arc(ArcCreateData[] datas, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                ArcNote arc = Helper.GetArc();
+                arc.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
+                var startPos = new Vector3(0, StartBase);
+                DropAsync(arc, startPos, delta).Forget();
+                Helper.NoteInput.AddArc(arc);
+                return arc;
+
+
+                async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
+                {
+                    if(delta == -1)
+                    {
+                        delta = Delta;
+                    }
+                    float baseTime = CurrentTime - delta;
+                    float time = 0f;
+                    var vec = new Vector3(0, -Speed);
+                    while (note.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        note.SetPos(startPos + time * vec);
+                        await Helper.Yield();
+                    }
+                }
+            }
+
+            Arc(new ArcCreateData[]
+            {
+                new(new(0, 0, 0), ArcVertexMode.Linear, false, false, 0, 4),
+                new(new(6, 0, 8), ArcVertexMode.Linear, true),
+                new(new(0, 0, 8), ArcVertexMode.Linear, true),
+                new(new(-6, 0, 8), ArcVertexMode.Linear, true),
+                new(new(0, 0, 8), ArcVertexMode.Linear, true),
+            });
+
             // 円ノーツのテスト //
             /*await Wait(1);
             await Wait(4);
@@ -24,7 +69,7 @@ namespace NoteGenerating
             return;*/
 
             // グループ化のテスト //
-            UniTask.Void(async () => 
+            /*UniTask.Void(async () => 
             {
                 var parent = Helper.GetNote2D(NoteType.Normal);
                 parent.SetSprite(null);
@@ -58,7 +103,7 @@ namespace NoteGenerating
             }
             
             await Wait(0.66f);
-            parent2.SetActive(false);
+            parent2.SetActive(false);*/
             
             
 
