@@ -8,76 +8,74 @@ namespace NoteGenerating
     {
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, 2);
+            var d = await Wait(4, 2);
 
             UniTask.Void(async () => 
             {
-                await Wait(8);
-                Sky(new Vector2(-4, 0));
-                await Wait(8);
-                Sky(new Vector2(0, 0));
-                await Wait(8);
-                Sky(new Vector2(4, 0));
-                await Wait(8);
+                var d1 = await Wait(8, delta: d);
+                Sky(new Vector2(-4, 0), d1);
+                d1 = await Wait(8, delta: d1);
+                Sky(new Vector2(0, 0), d1);
+                d1 = await Wait(8, delta: d1);
+                Sky(new Vector2(4, 0), d1);
+                d1 = await Wait(8, delta: d1);
 
-                Sky(new Vector2(0, 4));
-                Sky(new Vector2(0, 0));
-                await Wait(4);
-                Sky(new Vector2(-4, 2));
-                Sky(new Vector2(4, 2));
-                await Wait(4);
-                Sky(new Vector2(0, 4));
-                Sky(new Vector2(0, 0));
+                Sky(new Vector2(0, 4), d1);
+                Sky(new Vector2(0, 0), d1);
+                d1 = await Wait(4, delta: d1);
+                Sky(new Vector2(-4, 2), d1);
+                Sky(new Vector2(4, 2), d1);
+                d1 = await Wait(4, delta: d1);
+                Sky(new Vector2(0, 4), d1);
+                Sky(new Vector2(0, 0), d1);
             });
 
-            await Wait(4, 2);
+            d = await Wait(4, 2, d);
 
             float interval = 0;
-            MySky(new Vector3(-2, 4, interval));
-            MySky(new Vector3(2, 4, interval));
-            interval += Helper.GetTimeInterval(8);
-            MySky(new Vector3(6, 0, interval));
-            interval += Helper.GetTimeInterval(16);
-            MySky(new Vector3(-6, 0, interval));
-            interval += Helper.GetTimeInterval(8);
-            MySky(new Vector3(0, 0, interval));
-            interval += Helper.GetTimeInterval(8);
-            MySky(new Vector3(-4, 4, interval));
-            MySky(new Vector3(4, 4, interval));
+            MySky(new Vector3(-2, 4, interval), d);
+            MySky(new Vector3(2, 4, interval), d);
+
+            MySky(new Vector3(6, 0, interval + Helper.GetTimeInterval(16, 3)), d);
+
+            MySky(new Vector3(-6, 0, interval + Helper.GetTimeInterval(4)), d);
+
+            MySky(new Vector3(0, 0, interval + Helper.GetTimeInterval(8, 3)), d);
+
+            MySky(new Vector3(-4, 4, interval + Helper.GetTimeInterval(2)), d);
+            MySky(new Vector3(4, 4, interval + Helper.GetTimeInterval(2)), d);
         }
 
-        void MySky(Vector3 pos)
+        void MySky(Vector3 pos, float delta)
         {
             var skyNote = Helper.GetSky();
-            float timeInterval = pos.z;
-            var startPos = new Vector3(Inverse(pos.x), pos.y, timeInterval * Speed * 1.1f);
             float moveTime = Helper.GetTimeInterval(2);
+            var startPos = new Vector3(Inverse(pos.x), pos.y, StartBase + (pos.z - Helper.GetTimeInterval(2, 3)) * Speed);
             Drop3DAsync(skyNote, startPos, moveTime).Forget();
 
-            float expectTime = CurrentTime + moveTime + timeInterval;
+            float expectTime = CurrentTime - delta + pos.z + moveTime;
             var expect = new NoteExpect(skyNote, startPos, expectTime);
             Helper.NoteInput.AddExpect(expect);
 
 
             async UniTask Drop3DAsync(NoteBase note, Vector3 startPos, float moveTime)
             {
-                float baseTime = CurrentTime - Delta;
-                float time = 0f;
-                var vec = Speed * Vector3.back;
-                while (note.IsActive && time < moveTime / 2f + 0.2f)
+                float baseTime = CurrentTime - delta;
+                float t = 0f;
+                while (note.IsActive && t < moveTime)
                 {
-                    time = CurrentTime - baseTime;
-                    note.SetPos(startPos - time.Ease(0f, 0.3f, moveTime / 2, EaseType.OutQuad) * vec);
+                    t = CurrentTime - baseTime;
+                    var vec = t.Ease(0, -Speed, moveTime / 1.95f, EaseType.OutQuad) * Vector3.back;
+                    note.SetPos(startPos + t * vec);
                     await Helper.Yield();
                 }
 
                 baseTime = CurrentTime;
-                vec = Speed * 1.1f * Vector3.back;
-                startPos = note.GetPos();
+                var vec2 = Speed * Vector3.back;
                 while (note.IsActive)
                 {
-                    time = CurrentTime - baseTime;
-                    note.SetPos(startPos + time * vec);
+                    t = CurrentTime - baseTime;
+                    note.SetPos(startPos + t * vec2);
                     await Helper.Yield();
                 }
             }

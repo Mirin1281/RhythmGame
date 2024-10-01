@@ -45,7 +45,7 @@ namespace NoteGenerating
             var startPos = new Vector3(Inverse(pos.x), pos.y, StartBase);
             DropAsync(sky, startPos, delta).Forget();
 
-            float distance = startPos.z - Speed * Delta;
+            float distance = startPos.z - Speed * delta;
             float expectTime = distance / Speed + CurrentTime;
             var expect = new NoteExpect(sky, sky.transform.position, expectTime);
             Helper.NoteInput.AddExpect(expect);

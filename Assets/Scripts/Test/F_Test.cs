@@ -11,13 +11,14 @@ namespace NoteGenerating
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
-            ArcNote Arc(ArcCreateData[] datas, float delta = -1)
+            ArcNote Arc2D(ArcCreateData[] datas, float delta = -1)
             {
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
                 ArcNote arc = Helper.GetArc();
+                arc.Is2D = true;
                 arc.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
                 arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
                 var startPos = new Vector3(0, StartBase);
@@ -44,13 +45,13 @@ namespace NoteGenerating
                 }
             }
 
-            Arc(new ArcCreateData[]
+            Arc2D(new ArcCreateData[]
             {
                 new(new(0, 0, 0), ArcVertexMode.Linear, false, false, 0, 4),
-                new(new(6, 0, 8), ArcVertexMode.Linear, true),
-                new(new(0, 0, 8), ArcVertexMode.Linear, true),
-                new(new(-6, 0, 8), ArcVertexMode.Linear, true),
-                new(new(0, 0, 8), ArcVertexMode.Linear, true),
+                new(new(6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
+                new(new(0, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
+                new(new(-6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
+                new(new(0, 0, 4), ArcVertexMode.Linear, true, false, 0, 4),
             });
 
             // 円ノーツのテスト //

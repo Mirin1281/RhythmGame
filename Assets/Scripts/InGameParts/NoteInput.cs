@@ -135,6 +135,7 @@ public class NoteInput : MonoBehaviour
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 judge.SetCombo(NoteGrade.Perfect);
                 judge.DebugShowRange(expect).Forget();
+                SEManager.Instance.PlaySE(SEType.my2);
             }
             else if(metronome.CurrentTime > expect.Time + 0.18f)
             {
@@ -168,6 +169,7 @@ public class NoteInput : MonoBehaviour
         }
 
         judge.PlayParticle(grade, expect.Pos);
+        SEManager.Instance.PlaySE(SEType.my2);
 
         if(expect.Note.Type == NoteType.Hold)
         {
@@ -205,6 +207,7 @@ public class NoteInput : MonoBehaviour
                     }
                     
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                    SEManager.Instance.PlaySE(SEType.my2);
                     expect.Note.SetActive(false);
                     judge.SetCombo(NoteGrade.Perfect);
                 });
@@ -229,6 +232,7 @@ public class NoteInput : MonoBehaviour
                 }
                 
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+                SEManager.Instance.PlaySE(SEType.my2);
                 expect.Note.SetActive(false);
                 judge.SetCombo(NoteGrade.Perfect);
             });
@@ -348,8 +352,9 @@ public class NoteInput : MonoBehaviour
         {
             var arc = arcs[i];
             var arcPos = arc.GetPos();
-            if(arc.GetPos().z < 0) continue; // まだ到達していない
-            if(arcPos.z > arc.LastZ + 1) // アークが完全に通り過ぎた
+            var arcDownPos = arc.Is2D ? -arcPos.y : arcPos.z;
+            if(arcDownPos < 0) continue; // まだ到達していない
+            if(arcDownPos > arc.LastZ + 1) // アークが完全に通り過ぎた
             {
                 arcs.RemoveAt(i);
                 arc.SetActive(false);
@@ -407,16 +412,17 @@ public class NoteInput : MonoBehaviour
             
             judge.SetShowLight(arc, worldPos, isHold);
             arc.SetInput(isHold);
-
+            
             if (arcJ == null) continue; // 最後の判定を終えた
-            if (arcJ.EndPos.z < arcPos.z)
+
+            if (arcJ.EndPos.z < arcDownPos)
             {
                 arcJ.State = ArcJudgeState.Miss;
                 arc.JudgeIndex++;
                 judge.SetCombo(NoteGrade.Miss);
             }
 
-            if ((arcJ.StartPos.z < arcPos.z && arcPos.z < arcJ.EndPos.z) == false) continue; // 判定の範囲外
+            if ((arcJ.StartPos.z < arcDownPos && arcDownPos < arcJ.EndPos.z) == false) continue; // 判定の範囲外
 
             if(arcJ.State is ArcJudgeState.None)
             {
@@ -424,6 +430,8 @@ public class NoteInput : MonoBehaviour
             }
             else if(arcJ.State is ArcJudgeState.Idle && isHold && arc.IsInvalid == false)
             {
+                if(arc.JudgeIndex == 0)
+                    SEManager.Instance.PlaySE(SEType.my2);
                 arcJ.State = ArcJudgeState.Got;
                 judge.PlayParticle(NoteGrade.Perfect, worldPos);
                 judge.SetCombo(NoteGrade.Perfect);

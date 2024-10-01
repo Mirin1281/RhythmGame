@@ -39,6 +39,8 @@ public class ArcNote : NoteBase
     /// </summary>
     public int JudgeIndex { get; set; }
 
+    public bool Is2D { get; set; }
+
     /// <summary>
     /// 最後尾のz座標
     /// </summary>
@@ -65,7 +67,14 @@ public class ArcNote : NoteBase
     void Update()
     {
         noInputTime += Time.deltaTime;
-        meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
+        if(Is2D)
+        {
+            meshRenderer.material.SetFloat("_ZThreshold", -1);
+        }
+        else
+        {
+            meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
+        }
     }
 
     /// <summary>
@@ -122,13 +131,13 @@ public class ArcNote : NoteBase
                 continue;
             }
 
-            float knotZ = knot.Position.z - GetPos().z;
+            float knotZ = knot.Position.z - (Is2D ? -GetPos().y : GetPos().z);
             float behindJudgePosZ = knotZ - GetDistanceInterval(datas[k].BehindJudgeRange);
             var startPos = GetAnyPointOnZPlane(behindJudgePosZ);
             if(k == 0) startPos = Vector3.zero;
             float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange);
             var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
-        
+
             judges.Add(new ArcJudge(startPos, endPos, datas[k].IsDuplicated));
             k++;
         }
@@ -209,15 +218,16 @@ public class ArcNote : NoteBase
     /// あるZ平面上におけるアークの座標を返します
     /// TODO: 仕組みが不完全なので要改善
     /// </summary>
-    public Vector3 GetAnyPointOnZPlane(float targetZ)
+    public Vector3 GetAnyPointOnZPlane(float target)
     {
         BezierKnot behindKnot = Spline[0];
         BezierKnot aheadKnot = Spline[0];
-        var z = GetPos().z;
+        var downPos = Is2D ? -GetPos().y : GetPos().z;
         foreach(BezierKnot knot in Spline)
         {
-            if(knot.Position.z < targetZ + z)
+            if(knot.Position.z < target + downPos)
             {
+                
                 behindKnot = knot;
             }
             else
@@ -229,7 +239,7 @@ public class ArcNote : NoteBase
 
         float knotInterval = aheadKnot.Position.z - behindKnot.Position.z;
         if(knotInterval == 0f) return aheadKnot.Position;
-        float delta = targetZ + z - behindKnot.Position.z;
+        float delta = target + downPos - behindKnot.Position.z;
         float rate = delta / knotInterval;
         return rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
     }
