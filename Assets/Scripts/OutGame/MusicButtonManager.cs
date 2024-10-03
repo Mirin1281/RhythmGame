@@ -97,7 +97,7 @@ public class MusicButtonManager : MonoBehaviour
         {
             RhythmGameManager.Instance.MusicMasterData = data;
             previewer.Stop(0.5f);
-            FadeLoadSceneManager.Instance.LoadScene(1f, "InGame");
+            FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
             Debug.Log($"楽曲名: {data.MusicData.MusicName}\n" +
                 $"難易度: {RhythmGameManager.Difficulty} {data.GetFumenData(RhythmGameManager.Difficulty).Level}");
         }

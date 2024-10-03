@@ -89,16 +89,10 @@ public class NoteInput : MonoBehaviour
         allExpects.Add(expect);
     }
 
-    void RemoveExpect(NoteExpect expect, bool isInactive = true)
-    {
-        expect.Note.SetActive(!isInactive);
-        allExpects.Remove(expect);
-    }
-
-    HoldNote AddHold(NoteExpect expect)
+    HoldNote AddHold(NoteExpect expect, bool isMiss = false)
     {
         var hold = expect.Note as HoldNote;
-        hold.State = HoldState.Holding;
+        hold.State = isMiss ? HoldState.Missed : HoldState.Holding;
         hold.EndTime = expect.HoldEndTime;
         holds.Add(hold);
         return hold;
@@ -117,7 +111,7 @@ public class NoteInput : MonoBehaviour
             ProcessArc(null);
         }
 
-        for(int i = 0; i < allExpects.Count; i++)
+        for(int i = 0; i < allExpects.Count; )
         {
             var expect = allExpects[i];
             if(isAuto && metronome.CurrentTime > expect.Time)
@@ -126,30 +120,31 @@ public class NoteInput : MonoBehaviour
                 if(expect.Note.Type == NoteType.Hold)
                 {
                     AddHold(expect);
-                    RemoveExpect(expect, false);
                 }
                 else
                 {
-                    RemoveExpect(expect);
+                    expect.Note.SetActive(false);
                 }
+                allExpects.Remove(expect);
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 judge.SetCombo(NoteGrade.Perfect);
                 judge.DebugShowRange(expect).Forget();
                 SEManager.Instance.PlaySE(SEType.my2);
             }
-            else if(metronome.CurrentTime > expect.Time + 0.18f)
+            else if(metronome.CurrentTime > expect.Time + 0.12f)
             {
                 // 遅れたらノーツを除去
                 if(expect.Note.Type == NoteType.Hold)
                 {
-                    AddHold(expect);
-                    RemoveExpect(expect, false);
+                    AddHold(expect, true);
                 }
-                else
-                {
-                    RemoveExpect(expect);
-                }
+                allExpects.Remove(expect);
+                expect.Note.OnMiss();
                 judge.SetCombo(NoteGrade.Miss);
+            }
+            else
+            {
+                i++;
             }
         }
     }
@@ -162,23 +157,23 @@ public class NoteInput : MonoBehaviour
 
         NoteGrade grade = judge.GetGradeAndSetText(delta);
         judge.SetCombo(grade);
-        if(grade == NoteGrade.Miss)
+        if(grade == NoteGrade.Miss && expect.Note.Type != NoteType.Hold) // ホールドは判定が2つあるので除外
         {
-            RemoveExpect(expect);
+            allExpects.Remove(expect);
+            expect.Note.OnMiss();
             return;
         }
 
         judge.PlayParticle(grade, expect.Pos);
         SEManager.Instance.PlaySE(SEType.my2);
-
+        allExpects.Remove(expect);
         if(expect.Note.Type == NoteType.Hold)
         {
             AddHold(expect);
-            RemoveExpect(expect, false);
         }
         else
         {
-            RemoveExpect(expect);
+            expect.Note.SetActive(false);
         }
     }
 
@@ -198,7 +193,7 @@ public class NoteInput : MonoBehaviour
             foreach(var (expect, delta) in expects)
             {
                 if(expect.Note.Type != NoteType.Slide) continue;
-                RemoveExpect(expect, false);
+                allExpects.Remove(expect);
                 UniTask.Void(async () => 
                 {
                     if(delta < 0)
@@ -223,7 +218,7 @@ public class NoteInput : MonoBehaviour
         foreach(var (expect, delta) in expects)
         {
             if(expect.Note.Type != NoteType.Flick) continue;
-            RemoveExpect(expect, false);
+            allExpects.Remove(expect);
             UniTask.Void(async () => 
             {
                 if(delta < 0)
@@ -320,7 +315,7 @@ public class NoteInput : MonoBehaviour
                     if(hold.NoInputTime > 0.1f) // 一瞬離しても許容
                     {
                         hold.State = HoldState.Missed;
-                        hold.SetAlpha(0.4f);
+                        hold.OnMiss();
                         judge.SetCombo(NoteGrade.Miss);
                     }
                 }
@@ -329,7 +324,7 @@ public class NoteInput : MonoBehaviour
             {
                 if(metronome.CurrentTime > hold.EndTime)
                 {
-                    hold.gameObject.SetActive(false);
+                    hold.SetActive(false);
                     holds.RemoveAt(i);
                 }
             }
@@ -338,7 +333,7 @@ public class NoteInput : MonoBehaviour
                 // ちょっと早めに表示
                 if(metronome.CurrentTime > hold.EndTime - 0.02f)
                 {
-                    hold.gameObject.SetActive(false);
+                    hold.SetActive(false);
                     holds.RemoveAt(i);
                     judge.PlayParticle(NoteGrade.Perfect, hold.GetLandingPos());
                 }

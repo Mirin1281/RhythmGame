@@ -5,20 +5,20 @@ public class NormalNotePool : PoolBase<NormalNote>
 {
     [SerializeField] Sprite defaultSprite;
     [SerializeField] Sprite simultaneousSprite;
+    public bool isDarkMode;
 
     public NormalNote GetNote(int index = 0, bool isSimultaneous = false)
     {
-        var normalNote = GetInstance(index);
-        normalNote.SetRotate(0);
-        normalNote.SetSprite(defaultSprite);
-        normalNote.SetWidth(1f);
-        normalNote.SetRendererEnabled(true);
-        normalNote.transform.SetParent(this.transform);
-        if(index != 1)
-        {
-            //normalNote.SetWidth(3f);
-        }
-        return normalNote;
+        var n = GetInstance(index);
+        n.SetRotate(0);
+        n.SetWidth(1f);
+        n.transform.localScale = Vector3.one;
+        n.SetRendererEnabled(true);
+        n.SetSprite(defaultSprite);
+        n.SetAlpha(1f);
+        n.SetColor(isDarkMode ? Color.black : Color.white);
+        n.transform.SetParent(this.transform);
+        return n;
     }
 
     public List<NormalNote> GetAllNotes(int index = 0)

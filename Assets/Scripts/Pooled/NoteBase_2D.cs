@@ -18,6 +18,12 @@ public abstract class NoteBase_2D : NoteBase
         transform.localScale = new Vector3(width, scale.y, scale.z);
     }
 
+    public virtual void SetHeight(float height)
+    {
+        var scale = transform.localScale;
+        transform.localScale = new Vector3(scale.x, height, scale.z);
+    }
+
     public void SetAlpha(float alpha)
     {
         var c = spriteRenderer.color;
@@ -43,5 +49,19 @@ public abstract class NoteBase_2D : NoteBase
     public void SetSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
+    }
+
+    public void SetColor(Color color)
+    {
+        spriteRenderer.color = color;
+    }
+
+    public override void OnMiss()
+    {
+        UniTask.Void(async () => 
+        {
+            await FadeAlphaAsync(0f, 0.1f);
+            SetActive(false);
+        });
     }
 }

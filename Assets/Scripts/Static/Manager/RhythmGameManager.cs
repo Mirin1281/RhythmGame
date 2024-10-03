@@ -15,6 +15,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     public static readonly float DebugBpm = 200;
 
+    public float BGMVolume { get; set; } = 0.8f;
+    public float SEVolume { get; set; } = 0.8f;
     public MusicMasterData MusicMasterData { get; set; }
     public Result Result { get; set; }
     public static Difficulty Difficulty { get; set; }

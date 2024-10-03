@@ -6,6 +6,7 @@ public class Preview2D : MonoBehaviour
 {
     void Awake()
     {
-        gameObject.SetActive(false);
+        Destroy(this.gameObject);
+        //gameObject.SetActive(false);
     }
 }

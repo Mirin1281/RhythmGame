@@ -10,6 +10,7 @@ public class NotePoolManager : MonoBehaviour
     [field: SerializeField] public HoldNotePool HoldPool { get; private set; }
     [field: SerializeField] public SkyNotePool SkyPool { get; private set; }
     [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
+    [field: SerializeField] public LinePool LinePool { get; private set; }
 
     public NoteBase_2D GetNote2D(NoteType type, int index = 0) => type switch
     {

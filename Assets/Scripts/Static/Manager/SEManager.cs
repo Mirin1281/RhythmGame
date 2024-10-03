@@ -7,7 +7,6 @@ public class SEManager : SingletonMonoBehaviour<SEManager>
 
     public void PlaySE(SEType type)
     {
-        // ?????????1????????
         source.cueSheet = type.ToString();
         source.Play(type.ToString());
     }

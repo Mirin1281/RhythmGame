@@ -8,11 +8,15 @@ public class FlickNotePool : PoolBase<FlickNote>
 
     public FlickNote GetNote()
     {
-        var flickNote = GetInstance();
-        flickNote.SetRotate(0);
-        flickNote.SetSprite(defaultSprite);
-        //flickNote.SetWidth(3f);
-        return flickNote;
+        var n = GetInstance();
+        n.SetRotate(0);
+        n.SetWidth(1f);
+        n.transform.localScale = Vector3.one;
+        n.SetRendererEnabled(true);
+        n.SetSprite(defaultSprite);
+        n.SetAlpha(1f);
+        n.transform.SetParent(this.transform);
+        return n;
     }
 
     public List<FlickNote> GetAllNotes(int index = 0)

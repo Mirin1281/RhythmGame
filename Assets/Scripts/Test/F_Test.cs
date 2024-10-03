@@ -7,11 +7,83 @@ namespace NoteGenerating
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_2D
     {
-        //protected override float Speed => base.Speed * 5f;
+        protected override float Speed => base.Speed * 5f;
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
-            ArcNote Arc2D(ArcCreateData[] datas, float delta = -1)
+
+            NoteBase_2D Note(float x, NoteType type, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                note.transform.localRotation = Quaternion.Euler(90, 0, 0); //
+                note.SetWidth(1.4f); //
+                note.SetHeight(5f); //
+                Vector3 startPos = new Vector3(Inverse(x), 0.04f, StartBase); //
+                DropAsync(note, startPos, delta).Forget();
+
+                float distance = startPos.z - Speed * delta;
+                float expectTime = CurrentTime + distance / Speed;
+                NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
+                Helper.NoteInput.AddExpect(expect);
+                return note;
+            }
+            HoldNote Hold(float x, float length, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                HoldNote hold = Helper.GetHold();
+                float holdTime = Helper.GetTimeInterval(length);
+                hold.transform.localRotation = Quaternion.Euler(90, 0, 0); //
+                hold.SetLength(holdTime * Speed);
+                hold.SetWidth(1.4f); //
+                Vector3 startPos = new Vector3(Inverse(x), StartBase, -0.04f);
+                hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+                base.DropAsync(hold, startPos, delta).Forget();
+
+                float distance = startPos.y - Speed * delta;
+                float expectTime = CurrentTime + distance / Speed;
+                float holdEndTime = expectTime + holdTime;
+                NoteExpect expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
+                Helper.NoteInput.AddExpect(expect);
+                return hold;
+            }
+
+            async UniTask DropAsync(NoteBase_2D note, Vector3 startPos, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                float baseTime = CurrentTime - delta;
+                float time = 0f;
+                var vec = new Vector3(0, 0, -Speed);
+                while (note.IsActive && time < 5f)
+                {
+                    time = CurrentTime - baseTime;
+                    note.SetPos(startPos + time * vec);
+                    await Helper.Yield();
+                }
+            }
+
+
+            await Wait(4);
+            Hold(2, 4);
+            await Wait(4);
+            Hold(0, 2);
+            await Wait(2);
+            Note(-2, NoteType.Normal);
+            await Wait(2);
+            Note(0, NoteType.Flick);
+
+
+            // 2Dアーク //
+            /*ArcNote Arc2D(ArcCreateData[] datas, float delta = -1)
             {
                 if(delta == -1)
                 {
@@ -52,7 +124,7 @@ namespace NoteGenerating
                 new(new(0, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(-6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(0, 0, 4), ArcVertexMode.Linear, true, false, 0, 4),
-            });
+            });*/
 
             // 円ノーツのテスト //
             /*await Wait(1);

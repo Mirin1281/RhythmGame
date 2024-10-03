@@ -59,27 +59,42 @@ public class CameraMoveSetting
 public class CameraMover : MonoBehaviour
 {
     [SerializeField] Metronome metronome;
-    Camera mainCamera;
     Vector3 deltaPos;
     Quaternion deltaRot;
     Vector3 basePos;
     Quaternion baseRot;
 
+    [ContextMenu("Switch")]
+    void SwitchDimension()
+    {
+        if(transform.localPosition.y == 4f)
+        {
+            transform.localPosition = new Vector3(0f, 7f, -6.5f);
+            transform.localRotation = Quaternion.Euler(25f, 0f, 0f);
+        }
+        else if(transform.localPosition.y == 7f)
+        {
+            transform.localPosition = new Vector3(0f, 4f, -10f);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+    }
+
     void Awake()
     {
-        mainCamera = Camera.main;
-        basePos = mainCamera.transform.localPosition;
-        baseRot = mainCamera.transform.localRotation;
+        basePos = transform.localPosition;
+        baseRot = transform.localRotation;
     }
 
     void Update()
     {
-        deltaPos = default;
+        deltaPos = Vector3.zero;
         deltaRot = Quaternion.identity;
     }
     void LateUpdate()
     {
-        mainCamera.transform.SetLocalPositionAndRotation(basePos + deltaPos, baseRot * deltaRot);
+        var toPos = basePos + deltaPos;
+        var toRot = baseRot * deltaRot;
+        transform.SetLocalPositionAndRotation(toPos, toRot);
     }
 
     public void SetPos(Vector3 pos)
@@ -156,8 +171,8 @@ public class CameraMover : MonoBehaviour
     {
         if(m.IsPosMove == false && m.IsRotateMove == false) return;
         int a = isInverse ? -1 : 1;
-        var startPos = mainCamera.transform.position;
-        var startRot = mainCamera.transform.eulerAngles;
+        var startPos = transform.position;
+        var startRot = transform.eulerAngles;
 
         if(m.IsPosMove)
         {

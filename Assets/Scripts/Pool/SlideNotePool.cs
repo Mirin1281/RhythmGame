@@ -9,11 +9,15 @@ public class SlideNotePool : PoolBase<SlideNote>
 
     public SlideNote GetNote()
     {
-        var slideNote = GetInstance();
-        slideNote.SetRotate(0);
-        slideNote.SetSprite(defaultSprite);
-        //slideNote.SetWidth(3f);
-        return slideNote;
+        var n = GetInstance();
+        n.SetRotate(0);
+        n.SetWidth(1f);
+        n.transform.localScale = Vector3.one;
+        n.SetRendererEnabled(true);
+        n.SetSprite(defaultSprite);
+        n.SetAlpha(0.5f);
+        n.transform.SetParent(this.transform);
+        return n;
     }
 
     public List<SlideNote> GetAllNotes(int index = 0)

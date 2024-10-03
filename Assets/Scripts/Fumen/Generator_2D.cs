@@ -41,7 +41,7 @@ namespace NoteGenerating
                 delta = Delta;
             }
             NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-            Vector3 startPos = new Vector3(Inverse(x), StartBase);
+            Vector3 startPos = new Vector3(Inverse(x), StartBase, -0.04f);
             DropAsync(note, startPos, delta).Forget();
 
             float distance = startPos.y - Speed * delta;
@@ -59,7 +59,7 @@ namespace NoteGenerating
             HoldNote hold = Helper.GetHold();
             float holdTime = Helper.GetTimeInterval(length);
             hold.SetLength(holdTime * Speed);
-            Vector3 startPos = new Vector3(Inverse(x), StartBase);
+            Vector3 startPos = new Vector3(Inverse(x), StartBase, -0.04f);
             hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
             DropAsync(hold, startPos, delta).Forget();
 

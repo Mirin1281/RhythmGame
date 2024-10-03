@@ -8,10 +8,11 @@ public class ArcNotePool : PoolBase<ArcNote>
 
     public ArcNote GetNote()
     {
-        var arcNote = GetInstance();
-        arcNote.transform.parent = lane3D.transform;
-        arcNote.transform.localRotation = default;
-        return arcNote;
+        var n = GetInstance();
+        n.transform.localRotation = default;
+        n.SetRendererEnabled(true);
+        n.transform.SetParent(lane3D.transform);
+        return n;
     }
 
     public List<ArcNote> GetAllNotes(int index = 0)

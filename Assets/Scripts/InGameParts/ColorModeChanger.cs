@@ -9,6 +9,7 @@ public interface IColorChangable
 
 public class ColorModeChanger : MonoBehaviour
 {
+    [SerializeField, Range(0f, 1f)] float value;
     [SerializeField] Camera mainCamera;
 
     [SerializeField] Image backImage;
@@ -20,9 +21,11 @@ public class ColorModeChanger : MonoBehaviour
 
     [SerializeField] SpriteRenderer judgeLine3D_Sky;
 
-    void Start()
+    [SerializeField] Image pauseImage;
+
+    void Awake()
     {
-        SetColor(1);
+        SetColor(value);
     }
 
     /// <summary>
@@ -39,6 +42,7 @@ public class ColorModeChanger : MonoBehaviour
         judgeLine3D.color = new Color(k, k, k);
         lane3D.sharedMaterial.color = new Color(v, v, v);
         judgeLine3D_Sky.color = new Color(k, k, k);
+        pauseImage.color = new Color(k, k, k);
     }
 
     // シーン内の全てのインターフェースを取得します
