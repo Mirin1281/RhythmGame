@@ -22,6 +22,7 @@ public class InGameManager : MonoBehaviour
         // 初期化 //
         notePoolManager.SetPoolCount(FumenData);
         await MyUtility.LoadCueSheetAsync(MusicData.SheetName);
+        await UniTask.DelayFrame(2);
 
         var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);
         var arc = arcPool.GetNote();
