@@ -60,7 +60,7 @@ public class ArcNote : NoteBase
 
     void Awake()
     {
-        meshRenderer.material = new Material(meshRenderer.material);
+        //meshRenderer.material = new Material(meshRenderer.material);
         meshFilter.mesh = meshFilter.mesh.Duplicate();
     }
 

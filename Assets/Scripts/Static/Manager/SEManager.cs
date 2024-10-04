@@ -5,6 +5,11 @@ public class SEManager : SingletonMonoBehaviour<SEManager>
 {
     [SerializeField] CriAtomSource source;
 
+    public void SetVolume(float value)
+    {
+        source.volume = value;
+    }
+
     public void PlaySE(SEType type)
     {
         source.cueSheet = type.ToString();

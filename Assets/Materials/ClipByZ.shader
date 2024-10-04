@@ -5,6 +5,7 @@ Shader "Custom/ClipByZ"
         _MainTex ("Texture", 2D) = "white" {}
         _Color("Color", Color) = (1, 1, 1, 1)
         _ZThreshold ("Z Threshold", Float) = 0.0
+        _InverseBlendRate ("BlendRate", Range(0.0, 1.0)) = 1
     }
 
     SubShader
@@ -38,6 +39,7 @@ Shader "Custom/ClipByZ"
             float4 _MainTex_ST;
             fixed4 _Color;
             float _ZThreshold;
+            fixed _InverseBlendRate;
 
             v2f vert (appdata v)
             {
@@ -57,10 +59,14 @@ Shader "Custom/ClipByZ"
                 }
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
                 col.a = _Color.a;
+                col.r = abs(col.r - _InverseBlendRate);
+                col.g = abs(col.g - _InverseBlendRate);
+                col.b = abs(col.b - _InverseBlendRate);
                 return col;
             }
             ENDCG
         }
+
 
         // 影のパスにも同じ処理を追加
         Pass
@@ -75,6 +81,7 @@ Shader "Custom/ClipByZ"
             #include "UnityCG.cginc"
 
             float _ZThreshold;
+            fixed4 _ShadowColor;
 
             struct v2f
             {

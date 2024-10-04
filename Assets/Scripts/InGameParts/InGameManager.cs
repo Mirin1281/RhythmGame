@@ -7,6 +7,7 @@ public class InGameManager : MonoBehaviour
 {
     [SerializeField] MusicMasterData masterData;
     [SerializeField] Metronome metronome;
+    [SerializeField] NotePoolManager notePoolManager;
     public MusicMasterData MasterData => masterData;
     public FumenData FumenData => masterData.GetFumenData();
     public MusicData MusicData => masterData.MusicData;
@@ -19,6 +20,7 @@ public class InGameManager : MonoBehaviour
         }
 
         // 初期化 //
+        notePoolManager.SetPoolCount(FumenData);
         await MyUtility.LoadCueSheetAsync(MusicData.SheetName);
 
         var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);

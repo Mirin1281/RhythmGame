@@ -12,7 +12,7 @@ public class SESlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.Instance.SEVolume;
+        var val = RhythmGameManager.Instance.RawSEVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
@@ -25,8 +25,9 @@ public class SESlider : MonoBehaviour
     public void OnValueChange()
     {
         var val = slider.value;
-        RhythmGameManager.Instance.SEVolume = val;
         SetText(val);
+        RhythmGameManager.Instance.SEVolume = val;
+        SEManager.Instance.SetVolume(RhythmGameManager.Instance.SEVolume);
 
         cts?.Cancel();
         cts = new();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NoteGenerating;
 using UnityEngine;
 
 public class NotePoolManager : MonoBehaviour
@@ -50,5 +51,17 @@ public class NotePoolManager : MonoBehaviour
             NoteType.Arc => arcNotePool,*/
             _ => throw new System.Exception()
         };
+    }
+
+    public void SetPoolCount(FumenData fumen)
+    {
+        NormalPool.SetPoolCount(fumen.NormalPoolCount);
+        NormalPool.SetPoolCount(fumen.CirclePoolCount, 1);
+        SlidePool.SetPoolCount(fumen.SlidePoolCount);
+        FlickPool.SetPoolCount(fumen.FlickPoolCount);
+        HoldPool.SetPoolCount(fumen.HoldPoolCount);
+        SkyPool.SetPoolCount(fumen.SkyPoolCount);
+        ArcPool.SetPoolCount(fumen.ArcPoolCount);
+        LinePool.SetPoolCount(fumen.LinePoolCount);
     }
 }

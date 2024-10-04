@@ -7,7 +7,7 @@ using CriWare;
 using UnityEditor;
 #endif
 
-public class Metronome : MonoBehaviour
+public class Metronome : MonoBehaviour, IVolumeChanable
 {
     [SerializeField] InGameManager inGameManager;
     [SerializeField] CriAtomSource atomSource;
@@ -115,6 +115,11 @@ public class Metronome : MonoBehaviour
         playback.Resume(CriAtomEx.ResumeMode.PausedPlayback);
         currentTime += 0.01f;
         UpdateTimerAsync(beatCount).Forget();
+    }
+
+    void IVolumeChanable.ChangeVolume(float value)
+    {
+        atomSource.volume = value;
     }
     
 #if UNITY_EDITOR

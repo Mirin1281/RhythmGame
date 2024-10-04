@@ -2,16 +2,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public interface IVolumeChanable
+{
+    void ChangeVolume(float value);
+}
+
 public class BGMSlider : MonoBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] TMP_Text tmpro;
+    [SerializeField] GameObject musicPlayable;
+    IVolumeChanable volumeChanable;
 
     void Awake()
     {
-        var val = RhythmGameManager.Instance.BGMVolume;
+        var val = RhythmGameManager.Instance.RawBGMVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
+        if(musicPlayable)
+        {
+            volumeChanable = musicPlayable.GetComponent<IVolumeChanable>();
+        }
     }
 
     void SetText(float val)
@@ -22,7 +33,9 @@ public class BGMSlider : MonoBehaviour
     public void OnValueChange()
     {
         var val = slider.value;
-        RhythmGameManager.Instance.BGMVolume = val;
         SetText(val);
+        RhythmGameManager.Instance.BGMVolume = val;
+        val = RhythmGameManager.Instance.BGMVolume;
+        volumeChanable.ChangeVolume(val);
     }
 }

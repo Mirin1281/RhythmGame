@@ -3,11 +3,15 @@ using CriWare;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class MusicPreviewer : MonoBehaviour
+public class MusicPreviewer : MonoBehaviour, IVolumeChanable
 {
     [SerializeField] CriAtomSource source;
     CancellationTokenSource cts = new();
-    readonly float previewVolume = 0.2f;
+
+    void IVolumeChanable.ChangeVolume(float value)
+    {
+        source.volume = value;
+    }
     
     public async UniTask MusicPreview(MusicData musicData)
     {
@@ -48,25 +52,26 @@ public class MusicPreviewer : MonoBehaviour
     {
         source.Play();
         source.volume = 0;
-        var outQuad = new Easing(0, previewVolume, time, EaseType.OutQuad);
+        float toVolume = RhythmGameManager.Instance.BGMVolume;
+        var outQuad = new Easing(0, toVolume, time, EaseType.OutQuad);
         var t = 0f;
         while (t < time)
         {
             source.volume = outQuad.Ease(t);
             t += Time.deltaTime;
-            await UniTask.Yield(token);
+            await UniTask.Yield(PlayerLoopTiming.LastUpdate, token);
         }
-        source.volume = previewVolume;
+        source.volume = toVolume;
     }
     async UniTask FadeOutAsync(float time, CancellationToken token)
     {
-        var outQuad = new Easing(source.volume, 0f, time, EaseType.OutQuad);
+        var outQuad = new Easing(source.volume, 0, time, EaseType.OutQuad);
         var t = 0f;
         while (t < time)
         {
             source.volume = outQuad.Ease(t);
             t += Time.deltaTime;
-            await UniTask.Yield(token);
+            await UniTask.Yield(PlayerLoopTiming.LastUpdate, token);
         }
         source.volume = 0f;
         source.Stop();

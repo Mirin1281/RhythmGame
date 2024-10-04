@@ -13,6 +13,15 @@ namespace NoteGenerating
         [SerializeField] Difficulty difficulty = Difficulty.Normal;
         [SerializeField, Min(0)] int level = 1;
         [SerializeField, Min(1)] int noteCount = 1;
+        [field: Space(20), Header("プール数の設定")]
+        [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
+        [field: SerializeField] public int CirclePoolCount { get; private set; } = -1;
+        [field: SerializeField] public int SlidePoolCount { get; private set; } = -1;
+        [field: SerializeField] public int FlickPoolCount { get; private set; } = -1;
+        [field: SerializeField] public int HoldPoolCount { get; private set; } = -1;
+        [field: SerializeField] public int SkyPoolCount { get; private set; } = -1;
+        [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
+        [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
 
         public Difficulty Difficulty => difficulty;
         public int Level => level;

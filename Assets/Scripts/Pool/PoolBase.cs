@@ -6,7 +6,6 @@ using UnityEditor;
 
 public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
 {
-
     [System.Serializable]
     class PrepareStatus
     {
@@ -16,6 +15,11 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         public int SearchIndex { get; set; }
         public T Prefab => prefab;
         public int Prepare => prepare;
+
+        public void SetPrepare(int count)
+        {
+            prepare = count;
+        }
     }
 
     [SerializeField] List<PrepareStatus> prepareStatuses;
@@ -64,7 +68,7 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         return NewInstantiate(status, true);
     }
 
-    void Awake()
+    void Start()
     {
         PooledTable = new List<List<T>>(prepareStatuses.Count);
         for(int i = 0; i < prepareStatuses.Count; i++)
@@ -95,5 +99,11 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         var list = PooledTable[prepareStatuses.IndexOf(status)];
         list.Add(t);
         return t;
+    }
+
+    public void SetPoolCount(int count, int index = 0)
+    {
+        if(count < 0) return;
+        prepareStatuses[index].SetPrepare(count);
     }
 }
