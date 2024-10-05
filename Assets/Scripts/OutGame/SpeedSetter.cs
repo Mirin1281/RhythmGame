@@ -19,5 +19,6 @@ public class SpeedSetter : MonoBehaviour
         || isAdd == false && RhythmGameManager.Speed <= 10f) return;
         RhythmGameManager.SetSpeed(isAdd);
         speedTmpro.SetText(RhythmGameManager.Speed.ToString("0.0"));
+        SEManager.Instance.PlaySE(SEType.ti);
     }
 }

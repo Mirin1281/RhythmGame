@@ -19,5 +19,6 @@ public class OffsetSetter : MonoBehaviour
         || isAdd == false && RhythmGameManager.Offset <= -1f) return;
         RhythmGameManager.SetOffset(isAdd);
         offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.00"));
+        SEManager.Instance.PlaySE(SEType.ti);
     }
 }

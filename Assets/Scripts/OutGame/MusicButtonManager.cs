@@ -17,7 +17,7 @@ public class MusicButtonManager : MonoBehaviour
     [SerializeField] TMP_Text titleTmpro;
     [SerializeField] TMP_Text composerTmpro;
     [SerializeField] TMP_Text illustratorTmpro;
-    [SerializeField] List<MusicMasterData> datas;
+    [SerializeField] MusicMasterManagerData managerData;
     List<MusicMasterData> sortedDatas;
     readonly List<SelectMusicButton> buttons = new();
     int selectedIndex = -1;
@@ -61,7 +61,7 @@ public class MusicButtonManager : MonoBehaviour
         // selectedIndexがソート後にどこにいくかを調べるため
         string beforeName = selectedIndex == -1 ? null : buttons[selectedIndex].MusicName;
         
-        sortedDatas = datas.Where(d => d.GetFumenData(diff) != null) // 難易度が存在するものを選定
+        sortedDatas = managerData.MasterDatas.Where(d => d.GetFumenData(diff) != null) // 難易度が存在するものを選定
             .OrderBy(d => d.GetFumenData(diff).Level) // レベルの数値で並べ替え
             .ThenBy(d => d.MusicData.InternalMusicName) // 楽曲名で並べ替え
             .ToList();

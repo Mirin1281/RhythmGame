@@ -5,10 +5,16 @@ using System.Collections.Generic;
 public class GameData
 {
     [JsonProperty("設定: BGM音量")]
-    public float BgmVolume { get; set; } = 0.3f;
+    public float BgmVolume { get; set; } = 0.8f;
 
     [JsonProperty("設定: SE音量")]
-    public float SeVolume { get; set; } = 0.3f;
+    public float SeVolume { get; set; } = 0.8f;
+
+    [JsonProperty("設定: スピード")]
+    public float Speed { get; set; } = 16f;
+
+    [JsonProperty("設定: オフセット")]
+    public float Offset { get; set; } = 0f;
 
     /*[JsonProperty("設定: ランダム選曲")]
     public bool IsRandomBGM { get; set; } = false;

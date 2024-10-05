@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using NoteGenerating;
+
+
 
 /// <summary>
 /// 譜面データをキーとしてスコアを保存する静的クラスです

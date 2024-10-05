@@ -21,5 +21,6 @@ public enum SEType
 {
     my1,
     my2,
-    start_freeze
+    start_freeze,
+    ti,
 }

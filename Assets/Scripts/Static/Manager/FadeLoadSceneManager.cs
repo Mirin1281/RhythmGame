@@ -66,7 +66,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
     {
         var color = fadeColor ?? Color.black;
         var clearColor = new Color(color.r, color.g, color.b, 0f);
-        var easing = new Easing(0f, 1f, interval, EaseType.OutCubic);
+        var easing = new Easing(0f, 1f, interval, EaseType.InCubic);
 
         var time = 0f;
         while (time <= interval)

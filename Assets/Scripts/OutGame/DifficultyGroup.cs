@@ -70,6 +70,7 @@ public class DifficultyGroup : MonoBehaviour
                 GetButton(selectedDiff).Deselect();
             }
             selectedDiff = difficulty;
+            SEManager.Instance.PlaySE(SEType.ti);
         }
     }
 }

@@ -36,7 +36,7 @@ public class SESlider : MonoBehaviour
         UniTask.Void(async () => 
         {
             await MyUtility.WaitSeconds(0.3f, token);
-            SEManager.Instance.PlaySE(SEType.my1);
+            SEManager.Instance.PlaySE(SEType.start_freeze);
         });
     }
 }

@@ -19,7 +19,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     float bgmVolume = 0.8f;
     public float BGMVolume
     {
-        get => MasterVolume * bgmVolume;
+        get => 0.6f * MasterVolume * bgmVolume;
         set { bgmVolume = value; }
     }
     public float RawBGMVolume => bgmVolume;

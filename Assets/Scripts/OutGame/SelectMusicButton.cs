@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
+
 public class SelectMusicButton : MonoBehaviour
 {
     [SerializeField] TMP_Text levelTmpro;
@@ -30,12 +31,12 @@ public class SelectMusicButton : MonoBehaviour
     public void Pop()
     {
         plateImage.color = new Color32(0, 0, 0, 230);
-        transform.DOLocalMoveX(500f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOLocalMoveX(300f, 0.2f).SetEase(Ease.OutBack);
     }
 
     public void Deselect()
     {
         plateImage.color = new Color32(90, 90, 90, 150);
-        transform.DOLocalMoveX(626.5f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOLocalMoveX(451.5f, 0.2f).SetEase(Ease.OutBack);
     }
 }
