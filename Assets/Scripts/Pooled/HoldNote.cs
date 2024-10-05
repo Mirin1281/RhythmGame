@@ -31,12 +31,6 @@ public class HoldNote : NoteBase_2D
         spriteMask.transform.localScale = new Vector3(SpriteRenderer.size.x, spriteMask.transform.localScale.y);
     }
 
-    public void SetSortingOrder(int order)
-    {
-        SpriteRenderer.sortingOrder = order;
-        spriteMask.frontSortingOrder = order + 1;
-    }
-
     public override Vector3 GetPos() => SpriteRenderer.transform.localPosition;
 
     /// <summary>

@@ -40,7 +40,7 @@ public class ResultManager : MonoBehaviour
         detailGreatTmpro.SetText($"F:{result.FastGreat} L:{result.LateGreat}");
         detailFarTmpro.SetText($"F:{result.FastFar} L:{result.LateFar}");
 
-        illustratorTmpro.SetText($"Illust: {result.MasterData.IllustratorName}");
+        illustratorTmpro.SetText(result.MasterData.IllustratorName);
         illustImage.sprite = result.MasterData.Illust;
 
         RhythmGameManager.Instance.MusicMasterData = result.MasterData;

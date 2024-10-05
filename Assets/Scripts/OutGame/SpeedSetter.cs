@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class SpeedSetter : MonoBehaviour
 {
-    [SerializeField] SettingButton button;
+    [SerializeField] HoldableButton button;
     [SerializeField] TMP_Text speedTmpro;
+    [SerializeField] bool isAdd;
 
     void Start()
     {
@@ -12,9 +13,11 @@ public class SpeedSetter : MonoBehaviour
         speedTmpro.SetText(RhythmGameManager.Speed.ToString("0.0"));
     }
 
-    void SetSpeed(bool isUp)
+    void SetSpeed()
     {
-        RhythmGameManager.SetSpeed(isUp);
+        if(isAdd && RhythmGameManager.Speed >= 18f
+        || isAdd == false && RhythmGameManager.Speed <= 10f) return;
+        RhythmGameManager.SetSpeed(isAdd);
         speedTmpro.SetText(RhythmGameManager.Speed.ToString("0.0"));
     }
 }

@@ -15,6 +15,7 @@ public class TitleSceneManager : MonoBehaviour
         //await MyUtility.WaitSeconds(1f, destroyCancellationToken);
         await UniTask.WaitUntil(() => _onSceneTransition, cancellationToken: destroyCancellationToken);
         if(FadeLoadSceneManager.IsSceneChanging) return;
+        SEManager.Instance.PlaySE(SEType.start_freeze);
         FadeLoadSceneManager.Instance.LoadScene(0.5f, _sceneName, 0.5f, Color.white);
     }
 }

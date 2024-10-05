@@ -57,7 +57,7 @@ public class DifficultyGroup : MonoBehaviour
         {
             RhythmGameManager.Instance.MusicMasterData = masterData;
             previewer.Stop(0.5f);
-            FadeLoadSceneManager.Instance.LoadScene(1f, "InGame");
+            FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
             Debug.Log($"楽曲名: {masterData.MusicData.MusicName}\n" +
                 $"難易度: {difficulty} {masterData.GetFumenData(difficulty).Level}");
         }

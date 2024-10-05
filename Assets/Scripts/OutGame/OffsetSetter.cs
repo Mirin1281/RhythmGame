@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class OffsetSetter : MonoBehaviour
 {
-    [SerializeField] SettingButton button;
+    [SerializeField] HoldableButton button;
     [SerializeField] TMP_Text offsetTmpro;
+    [SerializeField] bool isAdd;
 
     void Start()
     {
@@ -12,9 +13,11 @@ public class OffsetSetter : MonoBehaviour
         offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.00"));
     }
 
-    void SetOffset(bool isUp)
+    void SetOffset()
     {
-        RhythmGameManager.SetOffset(isUp);
+        if(isAdd && RhythmGameManager.Offset >= 1f
+        || isAdd == false && RhythmGameManager.Offset <= -1f) return;
+        RhythmGameManager.SetOffset(isAdd);
         offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.00"));
     }
 }

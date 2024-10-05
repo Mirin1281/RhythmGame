@@ -79,9 +79,9 @@ SpriteMask:
   m_BackSortingLayerID: 0
   m_FrontSortingLayer: 0
   m_BackSortingLayer: 0
-  m_FrontSortingOrder: 2
-  m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 1
+  m_FrontSortingOrder: 3
+  m_BackSortingOrder: 1
+  m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 1
 --- !u!1 &8254644677493775442
 GameObject:
@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2144076757511859025}
   - component: {fileID: 2851350411573429629}
+  - component: {fileID: 1767494175358410735}
   m_Layer: 0
   m_Name: HoldNote
   m_TagString: Untagged
@@ -132,6 +133,18 @@ MonoBehaviour:
   type: 3
   spriteRenderer: {fileID: 483549448770595083}
   spriteMask: {fileID: 2071491265126081354}
+--- !u!210 &1767494175358410735
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254644677493775442}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &9203490350654945631
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +217,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2fda4c24018f00740a9be22380ba412c, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
