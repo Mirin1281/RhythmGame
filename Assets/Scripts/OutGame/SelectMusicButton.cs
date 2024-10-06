@@ -25,7 +25,7 @@ public class SelectMusicButton : MonoBehaviour
     public void OnSelect()
     {
         var creator = transform.parent.GetComponent<MusicButtonManager>();
-        creator.NotifyByChild(index);
+        creator.NotifyInput(index);
         Pop();
     }
     public void Pop()

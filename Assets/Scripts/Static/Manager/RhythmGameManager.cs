@@ -1,4 +1,5 @@
 using CriWare;
+using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using UnityEngine;
 
@@ -13,17 +14,20 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     static int OffsetBase;
     public static float Offset => OffsetBase / 100f;
 
+    /// <summary>
+    /// エディタ上での仮のBPM
+    /// </summary>
     public static readonly float DebugBpm = 200;
 
     static readonly float MasterVolume = 0.6f;
-    float bgmVolume = 0.8f;
+    static float bgmVolume = 0.8f;
     public float BGMVolume
     {
         get => 0.6f * MasterVolume * bgmVolume;
         set { bgmVolume = value; }
     }
     public float RawBGMVolume => bgmVolume;
-    float seVolume = 0.8f;
+    static float seVolume = 0.8f;
     public float SEVolume
     {
         get => MasterVolume * seVolume;
@@ -36,6 +40,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static Difficulty Difficulty { get; set; }
 
     public static int SelectedIndex { get; set; }
+
+    /// <summary>
+    /// Falseにするとデフォルトの設定が使用されます
+    /// </summary>
+    static readonly bool useJsonData = false;
     
 
     /// <summary>
@@ -48,21 +57,40 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitBeforeSceneLoad()
     {
-        OffsetBase = 0;
         Application.targetFrameRate = 60;
-        SpeedBase = DefaultSpeedBase;
-        Difficulty = Difficulty.Hard;
-        SelectedIndex = -1;
+        
+        if(useJsonData)
+        {
+            var gameData = SaveLoadUtility.GetDataImmediately<GameData>(ConstContainer.GameDataName);
+            gameData ??= new GameData();
+            bgmVolume = gameData.BgmVolume;
+            seVolume = gameData.SeVolume;
+            SpeedBase = Mathf.RoundToInt(gameData.Speed * 10f);
+            OffsetBase = Mathf.RoundToInt(gameData.Offset * 100f);
+            Difficulty = gameData.Difficulty;
+            SelectedIndex = gameData.SelectedIndex;
+        }
+        else
+        {
+            bgmVolume = 0.8f;
+            seVolume = 0.8f;
+            SpeedBase = DefaultSpeedBase;
+            OffsetBase = 0;
+            Difficulty = Difficulty.Hard;
+            SelectedIndex = -1;
+        }
     }
 
+    // AwakeだとCriWare側でエラーを吐く
     void Start()
     {
-        //base.Awake();
         // キューデータをスクリプトから流す
         (string sheet, string name)[] cueSheetAndNames = new (string, string)[]
         {
             ("my1", "my1"),
             ("my2", "my2"),
+            ("start_freeze", "start_freeze"),
+            ("ti", "ti"),
         };
 
         for(int i = 0; i < cueSheetAndNames.Length; i++)
@@ -75,14 +103,31 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             }
         }
     }
+
     void OnApplicationQuit()
     {
-        SpeedBase = DefaultSpeedBase;
+        if(useJsonData)
+        {
+            var gameData = new GameData
+            {
+                BgmVolume = bgmVolume,
+                SeVolume = seVolume,
+                Speed = Speed,
+                Offset = Offset,
+                Difficulty = Difficulty,
+                SelectedIndex = SelectedIndex,
+            };
+            SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
+        }
+        else
+        {
+            SpeedBase = DefaultSpeedBase;
+        }
     }
 
-    public static void SetSpeed(bool isUp)
+    public static void SetSpeed(bool isAdd)
     {
-        if(isUp)
+        if(isAdd)
         {
             SpeedBase++;
         }
@@ -90,10 +135,6 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             SpeedBase--;
         }
-    }
-    public static void SetSpeed(int speedBase)
-    {
-        SpeedBase = speedBase;
     }
 
     public static void SetOffset(bool isUp)
@@ -106,9 +147,5 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             OffsetBase--;
         }
-    }
-    public static void SetOffset(int offsetBase)
-    {
-        OffsetBase = offsetBase;
     }
 }

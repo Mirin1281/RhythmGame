@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Generic;
 using NoteGenerating;
 using UnityEngine;
 
 public class DifficultyGroup : MonoBehaviour
 {
-    [SerializeField] MusicButtonManager creator;
-    [SerializeField] MusicPreviewer previewer;
     [SerializeField] DifficultyButton buttonPrefab;
-    readonly List<DifficultyButton> buttons = new();
+    [SerializeField] MusicButtonManager buttonManager;
+    [SerializeField] MusicPreviewer previewer;
+    List<DifficultyButton> buttons;
     Difficulty selectedDiff = Difficulty.None;
     MusicMasterData masterData;
+
+    public event Action<Difficulty> OnChangeDifficulty;
 
     void Awake()
     {
@@ -18,8 +21,9 @@ public class DifficultyGroup : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
 
-        creator.OnOtherSelect += UpdateButton;
+        buttonManager.OnOtherSelect += UpdateButton;
 
+        buttons = new(3);
         for(int i = 0; i < 3; i++)
         {
             var b = Instantiate(buttonPrefab, this.transform);
@@ -28,6 +32,10 @@ public class DifficultyGroup : MonoBehaviour
             buttons.Add(b);
         }
         GetButton(RhythmGameManager.Difficulty).OnSelect();
+    }
+    void OnDestroy()
+    {
+        OnChangeDifficulty = null;
     }
 
     DifficultyButton GetButton(Difficulty difficulty)
@@ -55,22 +63,30 @@ public class DifficultyGroup : MonoBehaviour
         RhythmGameManager.Difficulty = difficulty;
         if(selectedDiff == difficulty)
         {
-            RhythmGameManager.Instance.MusicMasterData = masterData;
-            previewer.Stop(0.5f);
-            FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
-            Debug.Log($"楽曲名: {masterData.MusicData.MusicName}\n" +
-                $"難易度: {difficulty} {masterData.GetFumenData(difficulty).Level}");
+            StartGame(masterData, difficulty);
         }
         else
         {
-            creator.Sort(difficulty);
-
             if(selectedDiff != Difficulty.None)
             {
                 GetButton(selectedDiff).Deselect();
             }
+            buttonManager.SortByDifficulty(difficulty);
+            OnChangeDifficulty?.Invoke(difficulty);
             selectedDiff = difficulty;
-            SEManager.Instance.PlaySE(SEType.ti);
         }
+    }
+
+    void StartGame(MusicMasterData data, Difficulty difficulty = Difficulty.None)
+    {
+        RhythmGameManager.Instance.MusicMasterData = data;
+        if(difficulty != Difficulty.None)
+        {
+            RhythmGameManager.Difficulty = difficulty;
+        }
+        previewer.Stop(0.5f);
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
+        Debug.Log($"楽曲名: {data.MusicData.MusicName}\n" +
+            $"難易度: {RhythmGameManager.Difficulty} {data.GetFumenData(RhythmGameManager.Difficulty).Level}");
     }
 }

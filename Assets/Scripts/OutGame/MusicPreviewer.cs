@@ -7,6 +7,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChanable
 {
     [SerializeField] CriAtomSource source;
     CancellationTokenSource cts = new();
+    string cueSheetName;
 
     void IVolumeChanable.ChangeVolume(float value)
     {
@@ -20,7 +21,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChanable
         cts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken, cts.Token);
         var token = cts.Token;
 
-        source.cueSheet = musicData.SheetName;
+        source.cueSheet = cueSheetName = musicData.SheetName;
         source.cueName = musicData.CueName;
         source.startTime = Mathf.RoundToInt(musicData.PreviewStart * 1000f);
         await MyUtility.LoadCueSheetAsync(musicData.SheetName);
@@ -46,6 +47,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChanable
         cts?.Cancel();
         await FadeOutAsync(fadeTime, destroyCancellationToken);
         source.Stop();
+        CriAtom.RemoveCueSheet(cueSheetName);
     }
 
     async UniTask FadeInAsync(float time, CancellationToken token)

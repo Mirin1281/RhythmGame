@@ -1,11 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    [SerializeField] MusicMasterManagerData masterManagerData;
+
     [SerializeField] TMP_Text musicTitleTmpro;
     [SerializeField] TMP_Text composerTmpro;
 
@@ -21,6 +24,12 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] TMP_Text illustratorTmpro;
     [SerializeField] Image illustImage;
+    
+#if UNITY_EDITOR
+    [SerializeField] bool isSavable;
+#else
+    bool isSavable = true;
+#endif
 
     void Awake()
     {
@@ -31,7 +40,13 @@ public class ResultManager : MonoBehaviour
         composerTmpro.SetText(result.MasterData.MusicData.ComposerName);
 
         scoreTmpro.SetText(result.Score.ToString());
-        //highScoreTmpro.SetText();
+
+        string fumenName = result.MasterData.GetFumenData(RhythmGameManager.Difficulty).name;
+        UniTask.Void(async () => 
+        {
+            int s = await GetHighScore(fumenName);
+            highScoreTmpro.SetText(s.ToString("00000000"));
+        });
 
         perfectTmpro.SetText(result.Perfect.ToString());
         greatTmpro.SetText((result.FastGreat + result.LateGreat).ToString());
@@ -44,5 +59,23 @@ public class ResultManager : MonoBehaviour
         illustImage.sprite = result.MasterData.Illust;
 
         RhythmGameManager.Instance.MusicMasterData = result.MasterData;
+
+        if(isSavable == false) return;
+        
+        var gameScore = new GameScore(
+            fumenName,
+            result.Score,
+            result.IsFullCombo);
+        masterManagerData.SetScoreJsonAsync(gameScore).Forget();
+    }
+
+    /// <summary>
+    /// ハイスコアを譜面データの名前から取得します
+    /// </summary>
+    async UniTask<int> GetHighScore(string fumenName)
+    {
+        var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);     
+        var score = list.FirstOrDefault(s => s.FumenName == fumenName);
+        return score.Score;
     }
 }

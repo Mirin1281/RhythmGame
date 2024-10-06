@@ -4,6 +4,8 @@ using NoteGenerating;
 using UnityEngine;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
+using System.Linq;
+using System.Threading;
 
 [CreateAssetMenu(
     fileName = "MasterManager",
@@ -13,7 +15,6 @@ using Cysharp.Threading.Tasks;
 public class MusicMasterManagerData : ScriptableObject
 {
     [SerializeField] MusicMasterData[] masterDatas;
-    static readonly string FileName = "ScoreData";
     public MusicMasterData[] MasterDatas => masterDatas;
 
     IReadOnlyList<FumenData> GetFumenDatas()
@@ -33,7 +34,7 @@ public class MusicMasterManagerData : ScriptableObject
     }
 
     [ContextMenu("ResetScoreData")]
-    void ResetScoreData()
+    ScoreData ResetScoreData()
     {
         var scoreData = new ScoreData();
         var fumenDatas = GetFumenDatas();
@@ -41,16 +42,46 @@ public class MusicMasterManagerData : ScriptableObject
         {
             scoreData.GameScores.Add(new GameScore(fumenDatas[i].name, 0, false));
         }
-        SaveLoadUtility.SetDataImmediately(scoreData, FileName);
+        SaveLoadUtility.SetDataImmediately(scoreData, ConstContainer.ScoreDataName);
         Debug.Log("データをリセットしました");
+        return scoreData;
     }
 
     /// <summary>
-    /// リザルト時に更新があったら呼び出されます
+    /// もしスコアに更新があればJsonに保存します
+    /// 返り値は元のスコアです
     /// </summary>
-    void SetDataToJson(GameScore gameScore)
+    public async UniTask<int> SetScoreJsonAsync(GameScore gameScore)
     {
+        var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName);
+        scoreData ??= ResetScoreData();
+        var s = scoreData.GameScores.FirstOrDefault(s => gameScore.FumenName == s.FumenName);
 
+        int beforeScore = s.Score;
+        int score = s.Score;
+        if(s.Score < gameScore.Score)
+        {
+            score = gameScore.Score;
+        }
+
+        bool isFullCombo = s.IsFullCombo;
+        if(isFullCombo == false && gameScore.IsFullCombo)
+        {
+            isFullCombo = gameScore.IsFullCombo;
+        }
+        s = new GameScore(s.FumenName, score, isFullCombo);
+        await SaveLoadUtility.SetData(scoreData, ConstContainer.ScoreDataName);
+        return beforeScore;
+    }
+
+    /// <summary>
+    /// Json内のスコアリストを取得します
+    /// </summary>
+    public async UniTask<List<GameScore>> GetScoreJsonAsync(CancellationToken token)
+    {
+        var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName, token);
+        scoreData ??= ResetScoreData();
+        return scoreData.GameScores;
     }
 }
 
@@ -58,15 +89,15 @@ public class MusicMasterManagerData : ScriptableObject
 /// 1譜面に1つのスコアを保持する
 /// </summary>
 [Serializable]
-public readonly struct GameScore
+public class GameScore
 {
     [SerializeField] readonly string fumenName;
     [SerializeField] readonly int score;
     [SerializeField] readonly bool isFullCombo;
 
-    public readonly string FumenName => fumenName;
-    public readonly int Score => score;
-    public readonly bool IsFullCombo => isFullCombo;
+    public string FumenName => fumenName;
+    public int Score => score;
+    public bool IsFullCombo => isFullCombo;
 
     public GameScore(string fumenName, int score, bool isFullCombo)
     {
@@ -74,11 +105,4 @@ public readonly struct GameScore
         this.score = score;
         this.isFullCombo = isFullCombo;
     }
-}
-
-[JsonObject]
-public class ScoreData
-{
-    [JsonProperty("譜面ごとのスコアリスト")]
-    public List<GameScore> GameScores { get; set; } = new();
 }

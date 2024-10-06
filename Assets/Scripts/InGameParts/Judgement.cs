@@ -42,6 +42,7 @@ public class Result
     public int MaxCombo => maxCombo;
     public int Score => Mathf.RoundToInt((float)score);
     public MusicMasterData MasterData => masterData;
+    public bool IsFullCombo => miss == 0;
 
     public Result(MusicMasterData masterData)
     {

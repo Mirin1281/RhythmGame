@@ -19,6 +19,7 @@ public class SEManager : SingletonMonoBehaviour<SEManager>
 
 public enum SEType
 {
+    None,
     my1,
     my2,
     start_freeze,
