@@ -7,12 +7,13 @@ namespace NoteGenerating
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_2D
     {
-        protected override float Speed => base.Speed * 5f;
+        //protected override float Speed => base.Speed * 5f;
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
 
-            NoteBase_2D Note(float x, NoteType type, float delta = -1)
+            // 3Dレーンに2Dノーツを流す //
+            /*NoteBase_2D Note(float x, NoteType type, float delta = -1)
             {
                 if(delta == -1)
                 {
@@ -80,6 +81,7 @@ namespace NoteGenerating
             Note(-2, NoteType.Normal);
             await Wait(2);
             Note(0, NoteType.Flick);
+            */
 
 
             // 2Dアーク //
@@ -142,36 +144,45 @@ namespace NoteGenerating
             return;*/
 
             // グループ化のテスト //
-            /*UniTask.Void(async () => 
+            UniTask.Void(async () => 
             {
-                var parent = Helper.GetNote2D(NoteType.Normal);
-                parent.SetSprite(null);
-                RightMoveAsync(parent, 1f, Vector3.zero).Forget();
+                var parent = new GameObject(); // 親を作る
+                ParentMoveAsync(parent).Forget();
 
-                float baseTime = CurrentTime - Delta;
                 float delta = Delta;
                 for(int i = 0; i < 24; i++)
                 {
-                    float time = CurrentTime - baseTime;
-                    var note = GroupNote(parent.transform, 1f, time, -4f, NoteType.Normal, delta);
+                    var note = GroupNote(parent.transform, -4f, NoteType.Normal, delta);
                     delta = await Wait(8, delta: delta);
                 }
-
-                await Wait(0.66f);
-                parent.SetActive(false);
+               
+                await Wait(0.66f); // 子を流し終わったら
+                parent.transform.MoveChildren(); // 避難させて
+                GameObject.Destroy(parent); // 削除
             });
 
             float delta2 = await Wait(1);
 
-            var parent2 = Helper.GetNote2D(NoteType.Normal);
-            parent2.SetSprite(null);
-            RightMoveAsync(parent2, -1f, Vector3.zero).Forget();
+            var parent2 = new GameObject();
+            ParentMoveAsync(parent2).Forget();
 
-            float baseTime2 = CurrentTime - Delta;
             for(int i = 0; i < 24; i++)
             {
-                float time = CurrentTime - baseTime2;
-                var note2 = GroupNote(parent2.transform, -1f, time, 4f, NoteType.Normal, delta2);
+                var note2 = GroupNote(parent2.transform, 4f, NoteType.Normal, delta2);
+                delta2 = await Wait(8, delta: delta2);
+            }
+            
+            await Wait(0.66f);
+            parent2.transform.MoveChildren();
+            GameObject.Destroy(parent2);
+
+           /* var parent2 = Helper.GetNote2D(NoteType.Normal);
+            parent2.SetSprite(null);
+            ParentMoveAsync(parent2).Forget();
+
+            for(int i = 0; i < 24; i++)
+            {
+                var note2 = GroupNote(parent2.transform, 4f, NoteType.Normal, delta2);
                 delta2 = await Wait(8, delta: delta2);
             }
             
@@ -241,7 +252,7 @@ namespace NoteGenerating
             }
         }
 
-        NoteBase_2D GroupNote(Transform parent, float parentSpeed, float time, float x, NoteType type, float delta = -1)
+        NoteBase_2D GroupNote(Transform parent, float x, NoteType type, float delta = -1)
         {
             if(delta == -1)
             {
@@ -255,27 +266,40 @@ namespace NoteGenerating
             float distance = startPos.y - Speed * delta;
             float expectTime = CurrentTime + distance / Speed;
             NoteExpect expect = new NoteExpect(note, 
-                new Vector3(startPos.x + (time + distance / Speed) * parentSpeed, 0), expectTime);
+                new Vector3(default, 0), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
             Helper.NoteInput.AddExpect(expect);
             return note;
         }
-        async UniTask RightMoveAsync(NoteBase_2D note, float speed, Vector3 startPos, float delta = -1)
+        async UniTask ParentMoveAsync(NoteBase_2D note, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            float time = 0f;
-            var vec = new Vector3(speed, 0, 0);
-            while (note.IsActive && time < 10f)
+            float t = 0f;
+            while (note.IsActive && t < 10f)
             {
-                time = CurrentTime - baseTime;
-                note.SetPos(startPos + time * vec);
+                t = CurrentTime - baseTime;
+                note.SetPos(new Vector3(2f * Mathf.Sin(t * 2f), 0));
                 await Helper.Yield();
             }
         }
-
+        async UniTask ParentMoveAsync(GameObject obj, float delta = -1)
+        {
+            if(delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = CurrentTime - delta;
+            float t = 0f;
+            while (obj && t < 10f)
+            {
+                t = CurrentTime - baseTime;
+                obj.transform.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
+                await Helper.Yield();
+            }
+        }
 
         void Circle(Vector2 pos)
         {

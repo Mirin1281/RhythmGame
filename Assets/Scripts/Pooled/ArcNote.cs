@@ -299,9 +299,9 @@ public class ArcNote : NoteBase
     /// <summary>
     /// 利便性のため、Z座標に-1をかけています
     /// </summary>
-    public override Vector3 GetPos()
+    public override Vector3 GetPos(bool isWorld = false)
     {
-        var pos = base.GetPos();
+        var pos = base.GetPos(isWorld);
         return new Vector3(pos.x, pos.y, -pos.z);
     }
 }

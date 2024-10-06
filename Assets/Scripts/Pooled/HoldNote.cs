@@ -31,7 +31,17 @@ public class HoldNote : NoteBase_2D
         spriteMask.transform.localScale = new Vector3(SpriteRenderer.size.x, spriteMask.transform.localScale.y);
     }
 
-    public override Vector3 GetPos() => SpriteRenderer.transform.localPosition;
+    public override Vector3 GetPos(bool isWorld = false)
+    {
+        if(isWorld)
+        {
+            return SpriteRenderer.transform.position;
+        }
+        else
+        {
+            return SpriteRenderer.transform.localPosition;
+        }
+    }
 
     /// <summary>
     /// ホールドの着地地点の座標

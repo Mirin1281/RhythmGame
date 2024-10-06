@@ -100,7 +100,11 @@ public class Judgement : MonoBehaviour
     [SerializeField] TMP_Text judgeText;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] ParticleManager particleManager;
+#if UNITY_EDITOR
     [SerializeField] bool showDebugRange;
+#else
+    bool showDebugRange = false;
+#endif
     [SerializeField] GameObject debugNoteRangePrefab;
     [SerializeField] LightParticle[] lights;
     

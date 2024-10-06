@@ -6,23 +6,7 @@ public class SettingCanvas : MonoBehaviour
 {
     [SerializeField] Canvas canvas;
     [SerializeField] CanvasGroup canvasGroup;
-
-    public void Open()
-    {
-        gameObject.SetActive(true);
-        canvas.enabled = true;
-        FadeAlphaAsync(1, 0.3f, EaseType.OutCubic).Forget();
-    }
-
-    public void Close()
-    {
-        UniTask.Void(async () => 
-        {
-            await FadeAlphaAsync(0, 0.3f, EaseType.OutCubic);
-            gameObject.SetActive(false);
-            canvas.enabled = false;
-        });
-    }
+    [SerializeField] bool isFading;
 
     public void Toggle()
     {
@@ -36,8 +20,28 @@ public class SettingCanvas : MonoBehaviour
         }
     }
 
+    public void Open()
+    {
+        if(isFading) return;
+        gameObject.SetActive(true);
+        canvas.enabled = true;
+        FadeAlphaAsync(1, 0.3f, EaseType.OutCubic).Forget();
+    }
+
+    public void Close()
+    {
+        if(isFading) return;
+        UniTask.Void(async () => 
+        {
+            await FadeAlphaAsync(0, 0.3f, EaseType.OutCubic);
+            gameObject.SetActive(false);
+            canvas.enabled = false;
+        });
+    }
+
     async UniTask FadeAlphaAsync(float toAlpha, float time, EaseType easeType)
     {
+        isFading = true;
         var outQuad = new Easing(canvasGroup.alpha, toAlpha, time, easeType);
         var t = 0f;
         while (t < time)
@@ -47,5 +51,6 @@ public class SettingCanvas : MonoBehaviour
             await UniTask.Yield(destroyCancellationToken);
         }
         canvasGroup.alpha = toAlpha;
+        isFading = false;
     }
 }

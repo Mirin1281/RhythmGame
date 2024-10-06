@@ -19,7 +19,7 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return new Color32(240, 180, 200, 255);
+            return new Color32(160, 190, 240, 255);
         }
 
         protected override string GetSummary()

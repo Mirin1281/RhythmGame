@@ -55,7 +55,17 @@ public class MusicMasterManagerData : ScriptableObject
     {
         var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName);
         scoreData ??= ResetScoreData();
-        var s = scoreData.GameScores.FirstOrDefault(s => gameScore.FumenName == s.FumenName);
+
+        int index = -1;
+        GameScore s = null;
+        for(int i = 0; i < scoreData.GameScores.Count; i++)
+        {
+            if(scoreData.GameScores[i].FumenName == gameScore.FumenName)
+            {
+                s = scoreData.GameScores[i];
+                index = i;
+            }
+        }
 
         int beforeScore = s.Score;
         int score = s.Score;
@@ -69,7 +79,8 @@ public class MusicMasterManagerData : ScriptableObject
         {
             isFullCombo = gameScore.IsFullCombo;
         }
-        s = new GameScore(s.FumenName, score, isFullCombo);
+
+        scoreData.GameScores[index] = new GameScore(s.FumenName, score, isFullCombo);
         await SaveLoadUtility.SetData(scoreData, ConstContainer.ScoreDataName);
         return beforeScore;
     }

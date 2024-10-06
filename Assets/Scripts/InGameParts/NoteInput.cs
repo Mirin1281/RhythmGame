@@ -9,17 +9,32 @@ using System.Linq;
 
 public class NoteExpect
 {
+    public enum ExpectMode
+    {
+        Static,
+        Y_Static,
+        Dynamic,
+    }
     public readonly NoteBase Note;
-    public readonly Vector2 Pos;
+    Vector2 pos;
+    public Vector2 Pos => Mode switch
+    {
+        ExpectMode.Static => pos,
+        ExpectMode.Y_Static => new Vector2(Note.GetPos(true).x, pos.y),
+        ExpectMode.Dynamic => Note.GetPos(true),
+        _ => throw new Exception()
+    };
     public readonly float Time;
     public readonly float HoldEndTime;
+    public readonly ExpectMode Mode;
 
-    public NoteExpect(NoteBase note, Vector2 pos, float time, float holdEndTime = 0)
+    public NoteExpect(NoteBase note, Vector2 pos, float time, float holdEndTime = 0, ExpectMode mode = ExpectMode.Static)
     {
         Note = note;
-        Pos = pos;
+        this.pos = pos;
         Time = time;
         HoldEndTime = holdEndTime;
+        Mode = mode;
     }
 }
 
@@ -277,8 +292,22 @@ public class NoteInput : MonoBehaviour
             float delta = inputTime - expect.Time;
             if(Mathf.Abs(delta) > tolerance) continue;
 
+            
             // 入力座標から遠かったらスルー
             if(judge.IsNearPosition(expect, inputPos) == false) continue;
+            
+            /*if(expect.Mode == NoteExpect.ExpectMode.Static)
+            {
+                if(judge.IsNearPosition(expect, inputPos) == false) continue;
+            }
+            else if(expect.Mode == NoteExpect.ExpectMode.Y_Static)
+            {
+                if(judge.IsNearPosition(expect.Note, new Vector2(expect.Note.GetPos().x, expect.Pos.y), inputPos) == false) continue;
+            }
+            else if(expect.Mode == NoteExpect.ExpectMode.Dynamic)
+            {
+                if(judge.IsNearPosition(expect.Note, expect.Note.GetPos(), inputPos) == false) continue;
+            }*/
             fetchedExpects.Add((expect, delta));
         }
         fetchedExpects.Sort((a, b) => a.Item1.Time.CompareTo(b.Item1.Time));

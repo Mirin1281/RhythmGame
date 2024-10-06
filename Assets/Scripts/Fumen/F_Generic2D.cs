@@ -158,7 +158,7 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.VersatileCommandColor;
+            return new Color32(255, (byte)Mathf.Clamp(246 - noteDatas.Length, 96, 246), (byte)Mathf.Clamp(230 - noteDatas.Length, 130, 230), 255);
         }
 
         protected override string GetSummary()

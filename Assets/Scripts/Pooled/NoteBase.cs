@@ -19,7 +19,17 @@ public abstract class NoteBase : PooledBase
     public NoteType Type => type;
     public float Width { get; set; } = 1f;
 
-    public virtual Vector3 GetPos() => transform.localPosition;
+    public virtual Vector3 GetPos(bool isWorld = false)
+    {
+        if(isWorld)
+        {
+            return transform.position;
+        }
+        else
+        {
+            return transform.localPosition;
+        }
+    }
     public virtual void SetPos(Vector3 pos)
     {
         transform.localPosition = pos;
