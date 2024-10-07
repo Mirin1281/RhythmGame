@@ -16,8 +16,10 @@ namespace NoteGenerating
 
         void GenerateProcessAsync(int beatCount, float delta)
         {
-            foreach(var generateData in inGameManager.FumenData.Fumen.GetReadOnlyGenerateDataList())
+            var dataList = inGameManager.FumenData.Fumen.GetReadOnlyGenerateDataList();
+            for(int i = 0; i < dataList.Count; i++)
             {
+                var generateData = dataList[i];
                 if(beatCount == generateData.BeatTiming)
                 {
                     generateData.Generate(noteGenerateHelper, delta);

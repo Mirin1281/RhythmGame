@@ -54,7 +54,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChanable
     {
         source.Play();
         source.volume = 0;
-        float toVolume = RhythmGameManager.Instance.BGMVolume;
+        float toVolume = RhythmGameManager.GetBGMVolume();
         var outQuad = new Easing(0, toVolume, time, EaseType.OutQuad);
         var t = 0f;
         while (t < time)

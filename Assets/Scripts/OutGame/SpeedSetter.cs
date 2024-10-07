@@ -3,22 +3,34 @@ using UnityEngine;
 
 public class SpeedSetter : MonoBehaviour
 {
-    [SerializeField] HoldableButton button;
     [SerializeField] TMP_Text speedTmpro;
     [SerializeField] bool isAdd;
 
     void Start()
     {
-        button.OnInput += SetSpeed;
-        speedTmpro.SetText(RhythmGameManager.Speed.ToString("0.0"));
+        var holdableButton = GetComponent<HoldableButton>();
+        holdableButton.OnInput += SetSpeed;
+        SetText();
     }
 
     void SetSpeed()
     {
-        if(isAdd && RhythmGameManager.Speed >= 18f
-        || isAdd == false && RhythmGameManager.Speed <= 10f) return;
-        RhythmGameManager.SetSpeed(isAdd);
-        speedTmpro.SetText(RhythmGameManager.Speed.ToString("0.0"));
+        if(isAdd && RhythmGameManager.SettingSpeed >= 100f
+        || isAdd == false && RhythmGameManager.SettingSpeed <= 50f) return;
+        if(isAdd)
+        {
+            RhythmGameManager.SettingSpeed++;
+        }
+        else
+        {
+            RhythmGameManager.SettingSpeed--;
+        }
+        SetText();
         SEManager.Instance.PlaySE(SEType.ti);
+    }
+
+    void SetText()
+    {
+        speedTmpro.SetText("{0:0.0}", RhythmGameManager.SettingSpeed / 10f);
     }
 }

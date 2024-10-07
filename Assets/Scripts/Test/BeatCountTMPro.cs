@@ -13,6 +13,6 @@ public class BeatCountTMPro : MonoBehaviour
 
     void SetText(int beatCount, float _)
     {
-        tmpro.SetText((beatCount - RhythmGameManager.DefaultWaitOnAction).ToString());
+        tmpro.SetText("{0}", beatCount - RhythmGameManager.DefaultWaitOnAction);
     }
 }

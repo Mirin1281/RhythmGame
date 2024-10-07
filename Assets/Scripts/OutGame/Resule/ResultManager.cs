@@ -33,39 +33,39 @@ public class ResultManager : MonoBehaviour
 
     void Awake()
     {
-        var result = RhythmGameManager.Instance.Result;
-        if(result == null) return;
+        var r = RhythmGameManager.Instance.Result;
+        if(r == null) return;
 
-        musicTitleTmpro.SetText(result.MasterData.MusicData.MusicName);
-        composerTmpro.SetText(result.MasterData.MusicData.ComposerName);
+        var master = r.MasterData;
+        musicTitleTmpro.SetText(master.MusicData.MusicName);
+        composerTmpro.SetText(master.MusicData.ComposerName);
 
-        scoreTmpro.SetText(result.Score.ToString());
+        scoreTmpro.SetText(r.Score.ToString());
 
-        string fumenName = result.MasterData.GetFumenData(RhythmGameManager.Difficulty).name;
+        string fumenName = r.FumenData.name;
         UniTask.Void(async () => 
         {
             int s = await GetHighScore(fumenName);
             highScoreTmpro.SetText(s.ToString("00000000"));
         });
 
-        perfectTmpro.SetText(result.Perfect.ToString());
-        greatTmpro.SetText((result.FastGreat + result.LateGreat).ToString());
-        farTmpro.SetText((result.FastFar + result.LateFar).ToString());
-        missTmpro.SetText(result.Miss.ToString());
-        detailGreatTmpro.SetText($"F:{result.FastGreat} L:{result.LateGreat}");
-        detailFarTmpro.SetText($"F:{result.FastFar} L:{result.LateFar}");
+        perfectTmpro.SetText(r.Perfect.ToString());
+        greatTmpro.SetText((r.FastGreat + r.LateGreat).ToString());
+        farTmpro.SetText((r.FastFar + r.LateFar).ToString());
+        missTmpro.SetText(r.Miss.ToString());
+        detailGreatTmpro.SetText($"F:{r.FastGreat} L:{r.LateGreat}");
+        detailFarTmpro.SetText($"F:{r.FastFar} L:{r.LateFar}");
 
-        illustratorTmpro.SetText(result.MasterData.IllustratorName);
-        illustImage.sprite = result.MasterData.Illust;
+        illustratorTmpro.SetText(master.IllustratorName);
+        illustImage.sprite = master.Illust;
 
-        RhythmGameManager.Instance.MusicMasterData = result.MasterData;
+        RhythmGameManager.Instance.MusicMasterData = r.MasterData;
 
         if(isSavable == false) return;
-        
         var gameScore = new GameScore(
             fumenName,
-            result.Score,
-            result.IsFullCombo);
+            r.Score,
+            r.IsFullCombo);
         masterManagerData.SetScoreJsonAsync(gameScore).Forget();
     }
 

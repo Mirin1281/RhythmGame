@@ -5,9 +5,12 @@ public class SEManager : SingletonMonoBehaviour<SEManager>
 {
     [SerializeField] CriAtomSource source;
 
-    public void SetVolume(float value)
+    /// <summary>
+    /// カテゴリに属するSEの音量を調整します。カテゴリ名はAtomCraftで設定しています
+    /// </summary>
+    public void SetCategoryVolume(string categoryName, float value)
     {
-        source.volume = value;
+        CriAtom.SetCategoryVolume(categoryName, value);
     }
 
     public void PlaySE(SEType type)

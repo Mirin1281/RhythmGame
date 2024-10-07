@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using NoteGenerating;
 
 public class SESlider : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class SESlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.Instance.RawSEVolume;
+        var val = RhythmGameManager.SettingSEVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
@@ -26,8 +27,8 @@ public class SESlider : MonoBehaviour
     {
         var val = slider.value;
         SetText(val);
-        RhythmGameManager.Instance.SEVolume = val;
-        SEManager.Instance.SetVolume(RhythmGameManager.Instance.SEVolume);
+        RhythmGameManager.SettingSEVolume = val;
+        SEManager.Instance.SetCategoryVolume(ConstContainer.SECategory, RhythmGameManager.GetSEVolume());
 
         cts?.Cancel();
         cts = new();

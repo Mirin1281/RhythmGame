@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using NoteGenerating;
 
 public enum NoteGrade
 {
@@ -28,6 +29,7 @@ public class Result
     int maxCombo;
     double score;
     readonly MusicMasterData masterData;
+    readonly FumenData fumenData;
     
     static readonly int MaxScore = 10000000;
 
@@ -42,11 +44,13 @@ public class Result
     public int MaxCombo => maxCombo;
     public int Score => Mathf.RoundToInt((float)score);
     public MusicMasterData MasterData => masterData;
+    public FumenData FumenData => fumenData;
     public bool IsFullCombo => miss == 0;
 
     public Result(MusicMasterData masterData)
     {
         this.masterData = masterData;
+        this.fumenData = masterData.GetFumenData(RhythmGameManager.Difficulty);
     }
 
     public void SetCombo(NoteGrade grade)
@@ -86,7 +90,7 @@ public class Result
             NoteGrade.Miss => 0,
             _ => throw new System.Exception()
         };
-        double baseScore = (double)MaxScore / masterData.GetFumenData(RhythmGameManager.Difficulty).NoteCount;
+        double baseScore = (double)MaxScore / fumenData.NoteCount;
         score += baseScore * rate;
     }
 }
@@ -158,8 +162,8 @@ public class Judgement : MonoBehaviour
     public void SetCombo(NoteGrade grade)
     {
         result.SetCombo(grade);
-        comboText.SetText(result.Combo.ToString());
-        scoreText.SetText(result.Score.ToString("00000000"));
+        comboText.SetText("{0}", result.Combo);
+        scoreText.SetText("{0:00000000}", result.Score);
     }
 
     CancellationTokenSource cts = new();

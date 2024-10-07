@@ -1,6 +1,5 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using NoteGenerating;
 
 public class LineGenerator : MonoBehaviour
 {
@@ -12,10 +11,6 @@ public class LineGenerator : MonoBehaviour
     void Start()
     {
         metronome.OnBeat += GenerateProcessAsync;
-    }
-    void OnDestroy()
-    {
-        metronome.OnBeat -= GenerateProcessAsync;
     }
 
     void GenerateProcessAsync(int beatCount, float delta)
@@ -31,47 +26,36 @@ public class LineGenerator : MonoBehaviour
     }
 
     float GetStartBase(float speed) => 2f * speed + 0.2f;
+
     async UniTask CreateLine(float delta)
     {
         Line line = linePool.GetLine();
-        var speed = RhythmGameManager.Speed;
-        await LinearMoveAsync(line, new Vector3(0f, GetStartBase(speed)), speed, 3f);
-        line.gameObject.SetActive(false);
-
-
-        async UniTask LinearMoveAsync(Line line, Vector3 startPos, float speed, float moveTime)
+        float baseTime = metronome.CurrentTime - delta;
+        float time = 0;
+        var vec = RhythmGameManager.Speed * Vector3.down;
+        var startPos = new Vector3(0f, GetStartBase(RhythmGameManager.Speed));
+        while (line.IsActive && time < 3f)
         {
-            float baseTime = metronome.CurrentTime - delta;
-            float time = 0;
-            var vec = speed * Vector3.down;
-            while (line.IsActive && time < moveTime)
-            {
-                time = metronome.CurrentTime - baseTime;
-                line.transform.localPosition = startPos + time * vec;
-                await UniTask.Yield(destroyCancellationToken);
-            }
+            time = metronome.CurrentTime - baseTime;
+            line.transform.localPosition = startPos + time * vec;
+            await UniTask.Yield(destroyCancellationToken);
         }
+        line.gameObject.SetActive(false);
     }
 
     async UniTask Create3DLine(float delta)
     {
         Line line = linePool.GetLine(1);
-        var speed = RhythmGameManager.Speed3D;
-        await LinearMoveAsync(line, new Vector3(0f, 0.01f, GetStartBase(speed)), speed, 3f);
-        line.gameObject.SetActive(false);
-
-
-        async UniTask LinearMoveAsync(Line line, Vector3 startPos, float speed, float moveTime)
+        float baseTime = metronome.CurrentTime - delta;
+        float time = 0;
+        var vec = RhythmGameManager.Speed3D * Vector3.back;
+        var startPos = new Vector3(0f, 0.01f, GetStartBase(RhythmGameManager.Speed3D));
+        while (line.IsActive && time < 3f)
         {
-            float baseTime = metronome.CurrentTime - delta;
-            float time = 0;
-            var vec = speed * Vector3.back;
-            while (line.IsActive && time < moveTime)
-            {
-                time = metronome.CurrentTime - baseTime;
-                line.transform.localPosition = startPos + time * vec;
-                await UniTask.Yield(destroyCancellationToken);
-            }
+            time = metronome.CurrentTime - baseTime;
+            line.transform.localPosition = startPos + time * vec;
+            await UniTask.Yield(destroyCancellationToken);
         }
+        line.gameObject.SetActive(false);
     }
 }

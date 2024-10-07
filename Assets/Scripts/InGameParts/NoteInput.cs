@@ -118,6 +118,13 @@ public class NoteInput : MonoBehaviour
         arcs.Add(arcNote);
     }
 
+    void PlayNoteSE(NoteType noteType)
+    {
+        var volume = RhythmGameManager.GetNoteVolume();
+        if(volume == 0f) return;
+        SEManager.Instance.PlaySE(SEType.my2);
+    }
+
     void Update()
     {
         if(isAuto)
@@ -144,7 +151,7 @@ public class NoteInput : MonoBehaviour
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 judge.SetCombo(NoteGrade.Perfect);
                 judge.DebugShowRange(expect).Forget();
-                SEManager.Instance.PlaySE(SEType.my2);
+                PlayNoteSE(expect.Note.Type);
             }
             else if(metronome.CurrentTime > expect.Time + 0.12f)
             {
@@ -180,7 +187,7 @@ public class NoteInput : MonoBehaviour
         }
 
         judge.PlayParticle(grade, expect.Pos);
-        SEManager.Instance.PlaySE(SEType.my2);
+        PlayNoteSE(expect.Note.Type);
         allExpects.Remove(expect);
         if(expect.Note.Type == NoteType.Hold)
         {
@@ -217,7 +224,7 @@ public class NoteInput : MonoBehaviour
                     }
                     
                     judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                    SEManager.Instance.PlaySE(SEType.my2);
+                    PlayNoteSE(expect.Note.Type);
                     expect.Note.SetActive(false);
                     judge.SetCombo(NoteGrade.Perfect);
                 });
@@ -242,7 +249,7 @@ public class NoteInput : MonoBehaviour
                 }
                 
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                SEManager.Instance.PlaySE(SEType.my2);
+                PlayNoteSE(expect.Note.Type);
                 expect.Note.SetActive(false);
                 judge.SetCombo(NoteGrade.Perfect);
             });
@@ -455,7 +462,7 @@ public class NoteInput : MonoBehaviour
             else if(arcJ.State is ArcJudgeState.Idle && isHold && arc.IsInvalid == false)
             {
                 if(arc.JudgeIndex == 0)
-                    SEManager.Instance.PlaySE(SEType.my2);
+                    PlayNoteSE(NoteType.Arc);
                 arcJ.State = ArcJudgeState.Got;
                 judge.PlayParticle(NoteGrade.Perfect, worldPos);
                 judge.SetCombo(NoteGrade.Perfect);

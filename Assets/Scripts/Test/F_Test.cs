@@ -144,52 +144,51 @@ namespace NoteGenerating
             return;*/
 
             // グループ化のテスト //
-            UniTask.Void(async () => 
+            // 複数のノーツをいい感じに動かしたり、n軸で制御できる
+            var parentTs = new GameObject().transform;
+            ParentMoveAsync(parentTs).Forget();
+
+            float beforeDelta = Delta;
+            float delta = Delta;
+            for(int i = 0; i < 24; i++)
             {
-                var parent = new GameObject(); // 親を作る
-                ParentMoveAsync(parent).Forget();
+                var note = Note_YStatic(-4f, NoteType.Normal, delta - beforeDelta);
+                note.transform.SetParent(parentTs);
+                delta = await Wait(8, delta);
+            }
+            
+            parentTs.AutoDispose(Helper.Token);
+
+            
+            /*UniTask.Void(async () => 
+            {
+                var parentTs = new GameObject().transform;
+                ParentMoveAsync(parentTs).Forget();
 
                 float delta = Delta;
                 for(int i = 0; i < 24; i++)
                 {
-                    var note = GroupNote(parent.transform, -4f, NoteType.Normal, delta);
+                    var note = Note_YStatic(-4f, NoteType.Normal, delta); // 動的予測でノーツ生成
+                    note.transform.SetParent(parentTs); // 子の親をセット
                     delta = await Wait(8, delta: delta);
                 }
                
-                await Wait(0.66f); // 子を流し終わったら
-                parent.transform.MoveChildren(); // 避難させて
-                GameObject.Destroy(parent); // 削除
+                parentTs.AutoDispose(Helper.Token); // 使用後は破棄する
             });
 
             float delta2 = await Wait(1);
 
-            var parent2 = new GameObject();
-            ParentMoveAsync(parent2).Forget();
+            var parentTs2 = new GameObject().transform;
+            ParentMoveAsync(parentTs2).Forget();
 
             for(int i = 0; i < 24; i++)
             {
-                var note2 = GroupNote(parent2.transform, 4f, NoteType.Normal, delta2);
+                var note2 = Note_YStatic(4f, NoteType.Normal, delta2);
+                note2.transform.SetParent(parentTs2);
                 delta2 = await Wait(8, delta: delta2);
             }
             
-            await Wait(0.66f);
-            parent2.transform.MoveChildren();
-            GameObject.Destroy(parent2);
-
-           /* var parent2 = Helper.GetNote2D(NoteType.Normal);
-            parent2.SetSprite(null);
-            ParentMoveAsync(parent2).Forget();
-
-            for(int i = 0; i < 24; i++)
-            {
-                var note2 = GroupNote(parent2.transform, 4f, NoteType.Normal, delta2);
-                delta2 = await Wait(8, delta: delta2);
-            }
-            
-            await Wait(0.66f);
-            parent2.SetActive(false);*/
-            
-            
+            parentTs2.AutoDispose(Helper.Token);*/
 
 
             // カメラ制御
@@ -252,25 +251,28 @@ namespace NoteGenerating
             }
         }
 
-        NoteBase_2D GroupNote(Transform parent, float x, NoteType type, float delta = -1)
+        // グループ化　パターン1 （親のみを動かす代わりに制御が面倒）
+        /*NoteBase_2D Note_YStatic(Transform parentTs, int i, float x, NoteType type, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-            note.transform.SetParent(parent);
-            Vector3 startPos = new Vector3(Inverse(x), StartBase);
-            DropAsync(note, startPos, delta).Forget();
+            note.transform.SetParent(parentTs);
+            Vector3 startPos = new Vector3(Inverse(x), StartBase + i * Helper.GetTimeInterval(8) * Speed);
+            note.SetPos(startPos);
+            
+            //DropAsync(note, startPos, delta).Forget();
 
-            float distance = startPos.y - Speed * delta;
+            float distance = StartBase - delta * Speed;
             float expectTime = CurrentTime + distance / Speed;
             NoteExpect expect = new NoteExpect(note, 
                 new Vector3(default, 0), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
             Helper.NoteInput.AddExpect(expect);
             return note;
         }
-        async UniTask ParentMoveAsync(NoteBase_2D note, float delta = -1)
+        async UniTask ParentMoveAsync(Transform parentTs, float delta = -1)
         {
             if(delta == -1)
             {
@@ -278,14 +280,34 @@ namespace NoteGenerating
             }
             float baseTime = CurrentTime - delta;
             float t = 0f;
-            while (note.IsActive && t < 10f)
+            var vec = new Vector3(0, -Speed, 0);
+            //var vec = Vector3.zero;
+            while (parentTs && t < 10f)
             {
                 t = CurrentTime - baseTime;
-                note.SetPos(new Vector3(2f * Mathf.Sin(t * 2f), 0));
+                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0) + vec * t;
                 await Helper.Yield();
             }
+        }*/
+
+        NoteBase_2D Note_YStatic(float x, NoteType type, float delta = -1)
+        {
+            if(delta == -1)
+            {
+                delta = Delta;
+            }
+            NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+            Vector3 startPos = new Vector3(Inverse(x), StartBase);
+            DropAsync(note, startPos, delta).Forget();
+
+            float distance = StartBase - delta * Speed;
+            float expectTime = CurrentTime + distance / Speed;
+            NoteExpect expect = new NoteExpect(note, 
+                new Vector3(default, 0), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+            Helper.NoteInput.AddExpect(expect);
+            return note;
         }
-        async UniTask ParentMoveAsync(GameObject obj, float delta = -1)
+        async UniTask ParentMoveAsync(Transform parentTs, float delta = -1)
         {
             if(delta == -1)
             {
@@ -293,10 +315,10 @@ namespace NoteGenerating
             }
             float baseTime = CurrentTime - delta;
             float t = 0f;
-            while (obj && t < 10f)
+            while (parentTs && t < 10f)
             {
                 t = CurrentTime - baseTime;
-                obj.transform.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
+                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
                 await Helper.Yield();
             }
         }

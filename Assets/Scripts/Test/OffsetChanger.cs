@@ -13,12 +13,12 @@ public class OffsetChanger : MonoBehaviour
     
     public void AddOffset()
     {
-        RhythmGameManager.SetOffset(true);
+        RhythmGameManager.SettingOffset += 10;
         text.SetText(RhythmGameManager.Offset.ToString());
     }
     public void SubtractOffset()
     {
-        RhythmGameManager.SetOffset(false);
+        RhythmGameManager.SettingOffset -= 10;
         text.SetText(RhythmGameManager.Offset.ToString());
     }
 }

@@ -74,6 +74,41 @@ namespace NoteGenerating
                 return delta;
             }
         }
+        protected async UniTask<float> Wait(float lpb, float delta)
+        {
+            if(delta == -1)
+            {
+                if(lpb == 0) return Delta;
+                float baseTime = CurrentTime;
+                float interval = Helper.GetTimeInterval(lpb, 1);
+                if(Delta > interval)
+                {
+                    Delta -= interval;
+                }
+                else
+                {
+                    await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
+                    Delta += CurrentTime - baseTime - interval;
+                }
+                return Delta;
+            }
+            else
+            {
+                if(lpb == 0) return delta;
+                float baseTime = CurrentTime;
+                float interval = Helper.GetTimeInterval(lpb, 1);
+                if(delta > interval)
+                {
+                    delta -= interval;
+                }
+                else
+                {
+                    await UniTask.WaitUntil(() => CurrentTime - baseTime >= interval, cancellationToken: Helper.Token);
+                    delta += CurrentTime - baseTime - interval;
+                }
+                return delta;
+            }
+        }
 
         protected void WhileYield(float time, Action<float> action, float delta = -1)
             => WhileYieldAsync(time, action, delta).Forget();

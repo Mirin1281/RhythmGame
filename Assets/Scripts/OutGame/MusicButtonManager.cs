@@ -24,7 +24,7 @@ public class MusicButtonManager : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
 
-        for(int i = 0; i < sortedDatas.Count; i++)
+        for(int i = 0; i < managerData.MasterDatas.Length; i++)
         {
             var selectButton = Instantiate(selectButtonPrefab, this.transform);
             buttons.Add(selectButton);

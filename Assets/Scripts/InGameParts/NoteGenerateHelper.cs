@@ -8,6 +8,8 @@ using UnityEditor;
 
 public class NoteGenerateHelper : MonoBehaviour
 {
+    static readonly float DebugBPM = 200;
+
     [field: SerializeField] public NotePoolManager PoolManager { get; private set; }
     [field: SerializeField] public LinePool LinePool { get; private set; }
     
@@ -52,7 +54,7 @@ public class NoteGenerateHelper : MonoBehaviour
 #if UNITY_EDITOR
         if(EditorApplication.isPlaying == false)
         {
-            return 240f / 200 / lpb * num;
+            return 240f / DebugBPM / lpb * num;
         }
 #endif
         return 240f / Metronome.Bpm / lpb * num;

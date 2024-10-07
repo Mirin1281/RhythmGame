@@ -3,22 +3,34 @@ using UnityEngine;
 
 public class OffsetSetter : MonoBehaviour
 {
-    [SerializeField] HoldableButton button;
     [SerializeField] TMP_Text offsetTmpro;
     [SerializeField] bool isAdd;
 
     void Start()
     {
-        button.OnInput += SetOffset;
-        offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.00"));
+        var holdableButton = GetComponent<HoldableButton>();
+        holdableButton.OnInput += SetOffset;
+        SetText();
     }
 
     void SetOffset()
     {
         if(isAdd && RhythmGameManager.Offset >= 1f
         || isAdd == false && RhythmGameManager.Offset <= -1f) return;
-        RhythmGameManager.SetOffset(isAdd);
-        offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.00"));
+        if(isAdd)
+        {
+            RhythmGameManager.SettingOffset++;
+        }
+        else
+        {
+            RhythmGameManager.SettingOffset--;
+        }
+        SetText();
         SEManager.Instance.PlaySE(SEType.ti);
+    }
+
+    void SetText()
+    {
+        offsetTmpro.SetText(RhythmGameManager.Offset.ToString("0.000"));
     }
 }

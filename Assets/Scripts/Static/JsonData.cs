@@ -17,16 +17,23 @@ public class ScoreData : JsonObject
 public class GameData : JsonObject
 {
     [JsonProperty("設定: BGM音量")]
-    public float BgmVolume { get; set; } = 0.8f;
+    public float BGMVolume { get; set; } = 0.8f;
 
     [JsonProperty("設定: SE音量")]
-    public float SeVolume { get; set; } = 0.8f;
+    public float SEVolume { get; set; } = 0.8f;
+
+    [JsonProperty("設定: ノーツ音量")]
+    public float NoteVolume { get; set; } = 0.8f;
 
     [JsonProperty("設定: スピード")]
-    public float Speed { get; set; } = 14f;
+    public int Speed { get; set; } = 70;
+
+    [JsonProperty("設定: スピード3D")]
+    public int Speed3D { get; set; } = 70;
 
     [JsonProperty("設定: オフセット")]
-    public float Offset { get; set; } = 0f;
+    public int Offset { get; set; } = 0;
+    
 
     [JsonProperty("難易度")]
     public Difficulty Difficulty { get; set; } = Difficulty.Normal;
