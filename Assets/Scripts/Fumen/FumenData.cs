@@ -13,6 +13,8 @@ namespace NoteGenerating
         [SerializeField] Difficulty difficulty = Difficulty.Normal;
         [SerializeField, Min(0)] int level = 1;
         [SerializeField, Min(1)] int noteCount = 1;
+        [SerializeField] bool start3D = false;
+
         [field: Space(20), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
         [field: SerializeField] public int CirclePoolCount { get; private set; } = -1;
@@ -26,6 +28,7 @@ namespace NoteGenerating
         public Difficulty Difficulty => difficulty;
         public int Level => level;
         public int NoteCount => noteCount;
+        public bool Start3D => start3D;
 
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;

@@ -8,6 +8,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] MusicMasterData masterData;
     [SerializeField] Metronome metronome;
     [SerializeField] NotePoolManager notePoolManager;
+    [SerializeField] 
     public MusicMasterData MasterData => masterData;
     public FumenData FumenData => masterData.GetFumenData();
     public MusicData MusicData => masterData.MusicData;
@@ -17,6 +18,17 @@ public class InGameManager : MonoBehaviour
         if(RhythmGameManager.Instance != null && RhythmGameManager.Instance.MusicMasterData != null)
         {
             masterData = RhythmGameManager.Instance.MusicMasterData;
+        }
+        if(masterData.GetFumenData(RhythmGameManager.Difficulty).Start3D)
+        {
+            var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
+            var CameraMover = GameObject.FindAnyObjectByType<CameraMover>(FindObjectsInactive.Include);
+            rendererShower.ShowLaneAsync(0).Forget();
+            CameraMover.Move(new Vector3(0f, 7f, -6.5f), new Vector3(25f, 0f, 0f),
+                CameraMoveType.Absolute,
+                0,
+                EaseType.None
+            );
         }
 
         // 初期化 //
