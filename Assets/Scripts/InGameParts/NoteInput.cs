@@ -103,6 +103,27 @@ public class NoteInput : MonoBehaviour
        
         allExpects.Add(expect);
     }
+    /// <summary>
+    /// 注意点: hold時間とExpectModeがNoteExpectの引数とは異なります。
+    /// </summary>
+    public void AddExpect(NoteBase note, float x, float time, float holdingTime = 0,
+        NoteExpect.ExpectMode mode = NoteExpect.ExpectMode.Y_Static, bool isCheckSimultaneous = true)
+    {
+        if(isCheckSimultaneous)
+        {
+            // 同時刻に着地するノーツがあった場合は同時押しの見た目を適用する
+            foreach(var e in allExpects)
+            {
+                if(Mathf.Approximately(time, e.Time))
+                {
+                    notePoolManager.SetSimultaneousSprite(note as NoteBase_2D);
+                    notePoolManager.SetSimultaneousSprite(e.Note as NoteBase_2D);
+                }
+            }
+        }
+       
+        allExpects.Add(new NoteExpect(note, new Vector2(0, x), time, time + holdingTime, mode));
+    }
 
     HoldNote AddHold(NoteExpect expect, bool isMiss = false)
     {

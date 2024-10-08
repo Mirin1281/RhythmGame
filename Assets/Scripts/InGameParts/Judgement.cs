@@ -112,13 +112,14 @@ public class Judgement : MonoBehaviour
     [SerializeField] GameObject debugNoteRangePrefab;
     [SerializeField] LightParticle[] lights;
     
-    readonly Dictionary<ArcNote, LightParticle> lightDic = new(4);
+    Dictionary<ArcNote, LightParticle> lightDic = new(4);
     Result result;
     public Result Result => result;
 
     void Awake()
     {
         comboText.SetText("0");
+        lightDic = new(4);
         result = new Result(inGameManager.MasterData);
     }
 
@@ -133,14 +134,14 @@ public class Judgement : MonoBehaviour
         return MyUtility.IsPointInsideRectangle(
             new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, Range)),
             inputPos,
-            hold.transform.localEulerAngles.z);
+            hold.transform.eulerAngles.z);
     }
     public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
     {
         return MyUtility.IsPointInsideRectangle(
             new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
             inputPos,
-            expect.Note.transform.localEulerAngles.z);
+            expect.Note.transform.eulerAngles.z);
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
@@ -153,7 +154,7 @@ public class Judgement : MonoBehaviour
         if(showDebugRange == false) return;
         var obj = Instantiate(debugNoteRangePrefab, transform);
         obj.transform.localPosition = expect.Pos;
-        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.localEulerAngles.z, Vector3.forward);
+        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.eulerAngles.z, Vector3.forward);
         obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
         await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
         Destroy(obj);
@@ -172,7 +173,7 @@ public class Judgement : MonoBehaviour
         var grade = GetGrade(delta);
         if(grade != NoteGrade.Perfect)
             SetJudgeText(grade).Forget();
-        deltaText.SetText(Mathf.RoundToInt(delta * 1000f).ToString());
+        deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
         return grade;
 
 

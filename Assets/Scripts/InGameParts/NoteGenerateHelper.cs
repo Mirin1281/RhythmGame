@@ -21,6 +21,12 @@ public class NoteGenerateHelper : MonoBehaviour
 
     public NoteBase_2D GetNote2D(NoteType type) => PoolManager.GetNote2D(type);
     public HoldNote GetHold() => PoolManager.HoldPool.GetNote();
+    public HoldNote GetHold(float length)
+    {
+        var hold = PoolManager.HoldPool.GetNote();
+        hold.SetLength(length);
+        return hold;
+    }
     public SkyNote GetSky() => PoolManager.SkyPool.GetNote();
     public ArcNote GetArc() => PoolManager.ArcPool.GetNote();
 

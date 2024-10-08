@@ -148,12 +148,17 @@ namespace NoteGenerating
             var parentTs = new GameObject().transform;
             ParentMoveAsync(parentTs).Forget();
 
+            var line = Helper.PoolManager.LinePool.GetLine();
+            line.transform.SetParent(parentTs);
+            line.Set2DJudge();
+            line.SetPos(default);
+            line.SetRotate(default);
+
             float beforeDelta = Delta;
             float delta = Delta;
             for(int i = 0; i < 24; i++)
             {
-                var note = Note_YStatic(-4f, NoteType.Normal, delta - beforeDelta);
-                note.transform.SetParent(parentTs);
+                var note = GroupNote(parentTs, -5f + i * 0f, NoteType.Normal, delta - beforeDelta);
                 delta = await Wait(8, delta);
             }
             
@@ -290,20 +295,25 @@ namespace NoteGenerating
             }
         }*/
 
-        NoteBase_2D Note_YStatic(float x, NoteType type, float delta = -1)
+        NoteBase_2D GroupNote(Transform parentTs, float x, NoteType type, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+            note.transform.SetParent(parentTs);
+            note.SetRotate(0);
             Vector3 startPos = new Vector3(Inverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 
             float distance = StartBase - delta * Speed;
             float expectTime = CurrentTime + distance / Speed;
+
+            float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+            Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
             NoteExpect expect = new NoteExpect(note, 
-                new Vector3(default, 0), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+                new Vector3(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
             Helper.NoteInput.AddExpect(expect);
             return note;
         }
@@ -318,9 +328,23 @@ namespace NoteGenerating
             while (parentTs && t < 10f)
             {
                 t = CurrentTime - baseTime;
-                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
+                parentTs.localRotation = Quaternion.Euler(0, 0, 4f * Mathf.Sin(t * 2f));
                 await Helper.Yield();
             }
+            //parentTs.localRotation = Quaternion.Euler(0, 0, 30);
+
+            /*if(delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = CurrentTime - delta;
+            float t = 0f;
+            while (parentTs && t < 10f)
+            {
+                t = CurrentTime - baseTime;
+                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
+                await Helper.Yield();
+            }*/
         }
 
         void Circle(Vector2 pos)

@@ -48,18 +48,13 @@ namespace NoteGenerating
 
         void MoveHold(float x, float length, float moveX)
         {
-            var hold = Helper.GetHold();
-            var holdTime = Helper.GetTimeInterval(length);
-            hold.SetLength(holdTime * Speed);
-            hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
-            var startPos = new Vector3(Inverse(x), StartBase);
+            float holdTime = Helper.GetTimeInterval(length);
+            HoldNote hold = Helper.GetHold(holdTime * Speed);
+            Vector3 startPos = new (Inverse(x), StartBase);
             MoveAsync(hold, startPos, Inverse(moveX)).Forget();
 
-            float distance = startPos.y - Speed * Delta;
-            float expectTime = distance / Speed + CurrentTime;
-            float holdEndTime = holdTime + expectTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x + distance * Inverse(moveX), 0), expectTime, holdEndTime: holdEndTime);
-            Helper.NoteInput.AddExpect(expect);
+            float expectTime = CurrentTime + startPos.y / Speed - Delta;
+            Helper.NoteInput.AddExpect(hold, 0, expectTime, holdTime);
         }
 
         async UniTask MoveAsync(HoldNote hold, Vector3 startPos, float moveX)
@@ -70,8 +65,9 @@ namespace NoteGenerating
             while (hold.IsActive && time < 5f)
             {
                 time = CurrentTime - baseTime;
-                hold.SetPos(startPos + time * vec);
-                hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, 0));
+                var pos = startPos + time * vec;
+                hold.SetPos(pos);
+                hold.SetMaskLocalPos(new Vector2(pos.x, 0));
                 await Helper.Yield();
             }
         }
