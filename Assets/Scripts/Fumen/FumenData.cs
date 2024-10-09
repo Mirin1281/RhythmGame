@@ -30,6 +30,14 @@ namespace NoteGenerating
         public int NoteCount => noteCount;
         public bool Start3D => start3D;
 
+        public void SetData(Difficulty difficulty, int level, int noteCount, bool start3D)
+        {
+            this.difficulty = difficulty;
+            this.level = level;
+            this.noteCount = noteCount;
+            this.start3D = start3D;
+        }
+
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }

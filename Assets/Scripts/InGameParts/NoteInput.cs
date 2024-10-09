@@ -122,7 +122,7 @@ public class NoteInput : MonoBehaviour
             }
         }
        
-        allExpects.Add(new NoteExpect(note, new Vector2(0, x), time, time + holdingTime, mode));
+        allExpects.Add(new NoteExpect(note, new Vector2(x, 0), time, time + holdingTime, mode));
     }
 
     HoldNote AddHold(NoteExpect expect, bool isMiss = false)

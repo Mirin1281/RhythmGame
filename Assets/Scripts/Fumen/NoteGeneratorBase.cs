@@ -180,5 +180,7 @@ namespace NoteGenerating
 
         public virtual string CSVContent1 { get; set; }
         public virtual string CSVContent2 { get; set; }
+        public virtual string CSVContent3 { get; set; }
+        public virtual string CSVContent4 { get; set; }
     }
 }

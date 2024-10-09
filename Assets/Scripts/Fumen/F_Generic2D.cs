@@ -1,6 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Reflection;
+using System.Text;
 
 namespace NoteGenerating
 {
@@ -41,10 +43,11 @@ namespace NoteGenerating
             }
         }
 
-        [SerializeField] string summary;
         [SerializeField] float speedRate = 1f;
-        [SerializeField] bool isCheckSimultaneous = false;
+        [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
+        bool isCheckSimultaneous = false;
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
+
         protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTask GenerateAsync()
@@ -81,58 +84,49 @@ namespace NoteGenerating
             }
 
 
-            void MyNote(float x, NoteType type, float width, float delta = -1)
+            void MyNote(float x, NoteType type, float width)
             {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
                 NoteBase_2D note = Helper.GetNote2D(type);
                 if((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
-                
-                Vector3 startPos = new Vector3(Inverse(x), StartBase);
-                DropAsync(note, startPos, delta).Forget();
+                Vector3 startPos = new (Inverse(x), StartBase);
+                DropAsync(note, startPos).Forget();
 
-                float distance = startPos.y - Speed * delta;
+                float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
-                Helper.NoteInput.AddExpect(expect, isCheckSimultaneous);
+                Helper.NoteInput.AddExpect(note, startPos.x, expectTime, isCheckSimultaneous: isCheckSimultaneous);
 
                 SetSimultaneous(note, expectTime);
             }
 
-            void MyHold(float x, float length, float width, float delta = -1)
+            void MyHold(float x, float length, float width)
             {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                HoldNote hold = Helper.GetHold();
+                float holdTime = Helper.GetTimeInterval(length);
+                HoldNote hold = Helper.GetHold(holdTime * Speed);
                 if((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
-                
-                float holdTime = Helper.GetTimeInterval(length);
-                hold.SetLength(holdTime * Speed);
-                Vector3 startPos = new Vector3(Inverse(x), StartBase);
+                Vector3 startPos = new (Inverse(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                DropAsync(hold, startPos, delta).Forget();
+                DropAsync(hold, startPos).Forget();
 
-                float distance = startPos.y - Speed * delta;
+                float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                float holdEndTime = expectTime + holdTime;
-                NoteExpect expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
-                Helper.NoteInput.AddExpect(expect, isCheckSimultaneous);
+                Helper.NoteInput.AddExpect(hold, startPos.x, expectTime, holdTime, isCheckSimultaneous: isCheckSimultaneous);
 
                 SetSimultaneous(hold, expectTime);
             }
 
+            // 同時押しをこのコマンド内でのみチェックします。
+            // NoteInput内でするよりも軽量なのでデフォルトではこちらを使用します
             void SetSimultaneous(NoteBase_2D note, float expectTime)
             {
+                // NoteInput内で行う場合は不要
+                if(isCheckSimultaneous) return;
+
                 if(beforeTime == expectTime)
                 {
                     if(simultaneousCount == 1)
@@ -158,14 +152,16 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return new Color32(255, (byte)Mathf.Clamp(246 - noteDatas.Length, 96, 246), (byte)Mathf.Clamp(230 - noteDatas.Length, 130, 230), 255);
+            return new Color32(
+                255,
+                (byte)Mathf.Clamp(246 - noteDatas.Length, 96, 246),
+                (byte)Mathf.Clamp(230 - noteDatas.Length, 130, 230),
+                255);
         }
 
         protected override string GetSummary()
         {
-            string s = noteDatas.Length.ToString();
-            if(string.IsNullOrEmpty(summary)) return s + GetInverseSummary();
-            return $"{s} : {summary}{GetInverseSummary()}";
+            return $"{noteDatas.Length}  {GetInverseSummary()}";
         }
 
         public override void OnSelect()
@@ -212,9 +208,9 @@ namespace NoteGenerating
             for(int i = 0; i < 10000; i++)
             {
                 var line = Helper.LinePool.GetLine();
-                line.transform.localPosition = new Vector3(0, lineY);
-                line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
-                line.transform.parent = previewObj.transform;
+                line.SetPos(new Vector3(0, lineY));
+                line.SetHeight(0.06f);
+                line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * Speed;
                 if(lineY > y) break;
             }
@@ -229,8 +225,29 @@ namespace NoteGenerating
                 }
                 var startPos = new Vector3(Inverse(x), y);
                 note.SetPos(startPos);
-                note.transform.parent = previewObj.transform;
+                note.transform.SetParent(previewObj.transform);
 
+                SetSimultaneous(note, y);
+            }
+
+            void DebugHold(float x, float y, float length, float width)
+            {
+                var holdTime = Helper.GetTimeInterval(length);
+                var hold = Helper.GetHold(holdTime * Speed);
+                if((width is 0 or 1) == false)
+                {
+                    hold.SetWidth(width);
+                }
+                hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
+                var startPos = new Vector3(Inverse(x), y);
+                hold.SetPos(startPos);
+                hold.transform.SetParent(previewObj.transform);
+
+                SetSimultaneous(hold, y);
+            }
+
+            void SetSimultaneous(NoteBase_2D note, float y)
+            {
                 if(beforeY == y)
                 {
                     if(simultaneousCount == 1)
@@ -247,37 +264,6 @@ namespace NoteGenerating
                 beforeY = y;
                 beforeNote = note;
             }
-
-            void DebugHold(float x, float y, float length, float width)
-            {
-                var hold = Helper.GetHold();
-                if((width is 0 or 1) == false)
-                {
-                    hold.SetWidth(width);
-                }
-                var holdTime = Helper.GetTimeInterval(length);
-                hold.SetLength(holdTime * Speed);
-                hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
-                var startPos = new Vector3(Inverse(x), y);
-                hold.SetPos(startPos);
-                hold.transform.parent = previewObj.transform;
-
-                if(beforeY == y)
-                {
-                    if(simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(hold);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeY = y;
-                beforeNote = hold;
-            }
         }
 
         public override string CSVContent1
@@ -286,7 +272,7 @@ namespace NoteGenerating
             set
             {
                 var texts = value.Split('|');
-                SetInverse(bool.Parse(texts[0]));
+                IsInverse = bool.Parse(texts[0]);
                 speedRate = float.Parse(texts[1]);
                 isCheckSimultaneous = bool.Parse(texts[2]);
             }
@@ -294,38 +280,8 @@ namespace NoteGenerating
 
         public override string CSVContent2
         {
-            get
-            {
-                string text = string.Empty;
-                for(int i = 0; i < noteDatas.Length; i++)
-                {
-                    var data = noteDatas[i];
-                    text += data.Type + "|";
-                    text += data.X + "|";
-                    text += data.Wait + "|";
-                    text += data.Width + "|";
-                    text += data.Length;
-                    if(i == noteDatas.Length - 1) break;
-                    text += "\n";
-                }
-                return text;
-            }
-            set
-            {
-                var texts = value.Split("\n");
-                var noteDatas = new NoteData[texts.Length];
-                for(int i = 0; i < texts.Length; i++)
-                {
-                    var contents = texts[i].Split('|');
-                    noteDatas[i] = new NoteData(
-                        Enum.Parse<CreateNoteType>(contents[0]),
-                        float.Parse(contents[1]),
-                        float.Parse(contents[2]),
-                        float.Parse(contents[3]),
-                        float.Parse(contents[4]));
-                }
-                this.noteDatas = noteDatas;
-            }
+            get => MyUtility.GetArrayContent(noteDatas);
+            set => noteDatas = MyUtility.GetArrayFromContent<NoteData>(value);
         }
     }
 }

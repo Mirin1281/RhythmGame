@@ -61,7 +61,7 @@ namespace NoteGenerating
         public override string CSVContent1
         {
             get => IsInverse.ToString();
-            set { SetInverse(bool.Parse(value)); }
+            set { IsInverse = bool.Parse(value); }
         }
 
         public override string CSVContent2

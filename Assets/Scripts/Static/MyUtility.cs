@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
@@ -76,5 +78,80 @@ public static class MyUtility
             GameObject.DestroyImmediate(child.gameObject);
         }
         return previewObj;
+    }
+
+    /// <summary>
+    /// 配列内の値をフォーマットに従って出力します
+    /// </summary>
+    public static string GetArrayContent<T>(T[] array)
+    {
+        StringBuilder sb = new ();
+        for(int i = 0; i < array.Length; i++)
+        {
+            sb.Append(GetFieldContent(array[i]));
+            if(i == array.Length - 1) break;
+            sb.Append("\n");
+        }
+        return sb.ToString();
+
+
+        static StringBuilder GetFieldContent(T t)
+        {
+            StringBuilder sb = new ();
+            Type type = typeof(T);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                object v = fields[i].GetValue(t);
+                sb.Append(v);
+                if(i == fields.Length - 1) break;
+                sb.Append("|");
+            }
+            return sb;
+        }
+    }
+
+    /// <summary>
+    /// 配列を入力されたフォーマットに従って生成します
+    /// </summary>
+    public static T[] GetArrayFromContent<T>(string content)
+    {
+        var txts = content.Split("\n");
+        var array = new T[txts.Length];
+        for(int i = 0; i < array.Length; i++)
+        {
+            array[i] = GetInstanceFromContent(txts[i]);
+        }
+        return array;
+
+
+        static T GetInstanceFromContent(string content)
+        {
+            var fTxts = content.Split('|');
+            Type type = typeof(T);
+            object instance = Activator.CreateInstance(type);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            for(int i = 0; i < fields.Length; i++)
+            {
+                FieldInfo f = fields[i];
+                Type fieldType = f.FieldType;
+                f.SetValue(instance, Convert(fieldType, fTxts[i]));
+            }
+            return (T)instance;
+        }
+
+        static object Convert(Type type, string stringValue)
+        {
+            if (type == typeof(Vector2))
+            {
+                return stringValue.ToVector2();
+            }
+            else if (type == typeof(Vector3))
+            {
+                return stringValue.ToVector3();
+            }
+            var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
+            return converter.ConvertFrom(stringValue);
+        }
     }
 }

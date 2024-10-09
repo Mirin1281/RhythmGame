@@ -6,13 +6,12 @@ namespace NoteGenerating
     public abstract class Generator_2D : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse => isInverse;
-        protected void SetInverse(bool inverse) => isInverse = inverse;
+        protected bool IsInverse { get => isInverse; set => isInverse = value; }
         
         /// <summary>
         /// 反転に対応した値にします
         /// </summary>
-        protected float Inverse(float x) => x * (isInverse ? -1 : 1);
+        protected float Inverse(float x) => x * (IsInverse ? -1 : 1);
 
         protected virtual float Speed => RhythmGameManager.Speed;
 
@@ -90,7 +89,7 @@ namespace NoteGenerating
 
         protected string GetInverseSummary()
         {
-            if(isInverse)
+            if(IsInverse)
             {
                 return " <color=#0000ff><b>(inv)</b></color>";
             }

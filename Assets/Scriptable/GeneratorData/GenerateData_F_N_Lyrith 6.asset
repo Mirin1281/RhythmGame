@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: GenerateData_F_N_Lyrith 6
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  generatable:
+    rid: 9146111769743982598
+  references:
+    version: 2
+    RefIds:
+    - rid: 9146111769743982598
+      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
+      data:
+        isInverse: 0
+        delay: 0
+        settings:
+        - wait: 1
+          isPosMove: 1
+          pos: {x: 2, y: 3, z: 4}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          time: 1
+          easeType: 1
+          moveType: 1
+        - wait: 3
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 3, y: 3, z: 4}
+          isRotateClamp: 0
+          time: 7
+          easeType: 3
+          moveType: 0

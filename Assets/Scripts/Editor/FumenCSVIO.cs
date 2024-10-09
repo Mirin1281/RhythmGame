@@ -20,59 +20,65 @@ namespace NoteGenerating.Editor
 
 			var exportName = fumenData.name;
 			var sheetName = FumenEditorUtility.GetFileName(path, exportName, "csv");
-			StreamWriter sw = new StreamWriter($"{path}/{sheetName}", false, Encoding.GetEncoding("shift_jis"));
+            using StreamWriter sw = new ($"{path}/{sheetName}", false, Encoding.GetEncoding("shift_jis"));
 
-			try
+            // 1行目は名前
+            sw.Write("Name,");
+            sw.Write($"{exportName},");
+            sw.WriteLine();
+
+            // 2行目はデータの情報
+            sw.Write($"{fumenData.Difficulty},");
+            sw.Write($"{fumenData.Level},");
+            sw.Write($"{fumenData.NoteCount},");
+            sw.Write($"{fumenData.Start3D},");
+            sw.WriteLine();
+
+            // 3行目は空白
+            sw.WriteLine();
+
+            // 4行目以降はコマンドデータ
+            var sb = new StringBuilder();
+            var list = fumenData.Fumen.GetReadOnlyGenerateDataList();
+            for (int i = 0; i < list.Count; i++)
             {
-				// 1行目は名前
-				sw.Write("Name,");
-				sw.WriteLine($"{exportName},");
+                var generateData = list[i];
+                var cmdBase = generateData.GetNoteGeneratorBase();
 
-				// 2行目は空白
-				sw.WriteLine();
+                // 1列目 コマンド名
+                sb.AddCell(GetCommandName(cmdBase));
+                // 2列目 有効か
+                sb.AddCell(generateData.Enable.ToString());
+                // 3列目 発火タイミング
+                sb.AddCell(generateData.BeatTiming.ToString());
+                // 4列目 コンテント1
+                var content1 = cmdBase?.CSVContent1;
+                sb.AddCell(content1);
+                // 5列目 コンテント2
+                var content2 = cmdBase?.CSVContent2;
+                sb.AddCell(content2);
+                // 5列目 コンテント3
+                var content3 = cmdBase?.CSVContent3;
+                sb.AddCell(content3);
+                // 6列目 コンテント4
+                var content4 = cmdBase?.CSVContent4;
+                sb.AddCell(content4);
 
-                // 3行目以降はコマンドデータ
-                var sb = new StringBuilder();
-                var list = fumenData.Fumen.GetReadOnlyGenerateDataList();
-                int maxFlowchartsCmdIndex = list.Count;
-				for (int i = 0; i < maxFlowchartsCmdIndex; i++)
-				{
-                    var generateData = list[i];
-                    var cmdBase = generateData.GetNoteGeneratorBase();
+                sw.WriteLine(sb.ToString());
+                sb.Clear();
+            }
 
-                    // 1列目 コマンド名
-                    sb.AddCell(GetCommandName(cmdBase));
-                    // 2列目 有効か
-                    sb.AddCell(generateData.Enable.ToString());
-                    // 3列目 発火タイミング
-                    sb.AddCell(generateData.BeatTiming.ToString());
-                    // 4列目 コンテント1
-                    var content1 = cmdBase?.CSVContent1;
-                    sb.AddCell(content1);
-                    // 5列目 コンテント2
-                    var content2 = cmdBase?.CSVContent2;
-                    sb.AddCell(content2);
-
-					sw.WriteLine(sb.ToString());
-					sb.Clear();
-				}
-
-				AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-				var p = FumenEditorUtility.AbsoluteToAssetsPath(path);
-				var csv = AssetDatabase.LoadAssetAtPath<TextAsset>($"{p}/{sheetName}");
-				EditorGUIUtility.PingObject(csv);
-				Debug.Log("<color=lightblue>CSVを書き出しました！</color>");
-			}
-			finally
-            {
-				sw.Flush();
-				sw.Close();
-			}
-		}
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+            var p = FumenEditorUtility.AbsoluteToAssetsPath(path);
+            var csv = AssetDatabase.LoadAssetAtPath<TextAsset>($"{p}/{sheetName}");
+            EditorGUIUtility.PingObject(csv);
+            Debug.Log("<color=lightblue>CSVを書き出しました！</color>");
+        }
 
 	    public static async UniTask ImportFumenDataAsync(FumenData fumenData)
 		{
 			await UniTask.Yield();
+
 			var dataList = LoadCSV();
 			if (dataList == null) return;
 
@@ -81,12 +87,19 @@ namespace NoteGenerating.Editor
 			var csvName = dataList[0][1];
 			if (importName != csvName)
 			{
-				Debug.LogError("名前が一致しません！");
-				Debug.LogError($"現在の名前: {importName}, CSVの名前: {csvName}");
+				Debug.LogError($"名前が一致しません！\n現在の名前: {importName}, CSVの名前: {csvName}");
 				return;
 			}
 			dataList.RemoveAt(0); // もういらないのでこの行は削除する
-			dataList.RemoveAt(0); // もういらないので次の行も削除する
+
+            fumenData.SetData(
+                Difficulty.Parse<Difficulty>(dataList[0][0]),
+                int.Parse(dataList[0][1]),
+                int.Parse(dataList[0][2]),
+                bool.Parse(dataList[0][3])
+            );
+            dataList.RemoveAt(0);
+			dataList.RemoveAt(0);
 
             Import(fumenData, dataList);
 
@@ -103,13 +116,13 @@ namespace NoteGenerating.Editor
 			// フォルダメニューを開き、CSVファイルを読み込みます
 			List<string[]> LoadCSV()
             {
-				var absolutePath = EditorUtility.OpenFilePanel("Open csv", path, "csv");
+				string absolutePath = EditorUtility.OpenFilePanel("Open CSV", path, "csv");
 				if (string.IsNullOrEmpty(absolutePath)) return null;
 				var relativePath = FumenEditorUtility.AbsoluteToAssetsPath(absolutePath);
 
-				var fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				using var fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 				var encoding = Encoding.GetEncoding("shift_jis");
-				var reader = new StreamReader(fs, encoding);
+				using StreamReader reader = new (fs, encoding);
 				var dataList = CSV2StringTable(reader);
 				reader.Close();
 				return dataList;
@@ -166,16 +179,6 @@ namespace NoteGenerating.Editor
 						result.Add(line.ToArray());
 					}
 
-					/*// デバッグ用
-					for(int i = 0; i < result.Count; i++)
-                    {
-						for(int k = 0; k < result[i].Length; k++)
-                        {
-							if (string.IsNullOrEmpty(result[i][k])) continue;
-							Debug.Log(result[i][k]);
-                        }
-                    }*/
-
 				    return result;
 					
 
@@ -194,12 +197,10 @@ namespace NoteGenerating.Editor
 			void Import(FumenData fumenData, List<string[]> csvList)
 			{
 				// 行(横)をスライド
-                var columnCount = csvList.Count;
-				for (int i = 0; i < columnCount; i++)
+				for (int i = 0; i < csvList.Count; i++)
 				{
-                    GenerateData data = null;
-					NoteGeneratorBase colomn_base = null;
-					var colomn_array = csvList[i];
+                    NoteGeneratorBase colomn_base = null;
+                    var colomn_array = csvList[i];
 
                     string cellName = colomn_array[0];
                     bool notExistCell = string.IsNullOrEmpty(cellName);
@@ -207,6 +208,7 @@ namespace NoteGenerating.Editor
                     var list = fumenData.Fumen.GetGenerateDataList();
                     list ??= new();
 
+                    GenerateData data;
                     // CSVにコマンドがあるのにフローチャートにはない場合、名前から新しくつくる
                     if (i >= list.Count)
                     {
@@ -224,7 +226,7 @@ namespace NoteGenerating.Editor
                     else // コマンドがある場合、名前が一致してるか調べる
                     {
                         data = list[i];
-                        if(data == null)
+                        if (data == null)
                         {
                             data = FumenEditorUtility.CreateGenerateData($"GenerateData_{fumenData.name}");
                         }
@@ -271,6 +273,14 @@ namespace NoteGenerating.Editor
                     {
                         colomn_base.CSVContent2 = colomn_array[4];
                     }
+                    if (colomn_base != null && colomn_array.Length > 5)
+                    {
+                        colomn_base.CSVContent3 = colomn_array[5];
+                    }
+                    if (colomn_base != null && colomn_array.Length > 6)
+                    {
+                        colomn_base.CSVContent4 = colomn_array[6];
+                    }
 				}
 			}
 		}
@@ -278,8 +288,7 @@ namespace NoteGenerating.Editor
 		static string GetCommandName(NoteGeneratorBase generatorBase)
 		{
 			if (generatorBase == null) return "Null";
-			return generatorBase.ToString()
-				.Replace($"{nameof(NoteGenerating)}.", string.Empty);
+			return generatorBase.ToString().Replace($"{nameof(NoteGenerating)}.", string.Empty);
 		}
 
 		static Type GetTypeByClassName(string className)
@@ -289,14 +298,14 @@ namespace NoteGenerating.Editor
 				foreach (Type type in assembly.GetTypes())
 				{
 					if (type.Name == className && 
-						type.Namespace == "NoteGenerating")
+						type.Namespace == nameof(NoteGenerating))
 					{
 						return type;
 					}
 				}
 			}
 			Debug.LogWarning($"{className}クラスが見つかりませんでした！\n" +
-				$"タイポもしくは{className}クラスが名前空間\"NoteGenerating\"内に存在しない可能性があります");
+				$"タイポもしくは{className}クラスが名前空間{nameof(NoteGenerating)}内に存在しない可能性があります");
 			return null;
 		}
     }
