@@ -3,13 +3,13 @@ using CriWare;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class MusicPreviewer : MonoBehaviour, IVolumeChanable
+public class MusicPreviewer : MonoBehaviour, IVolumeChangable
 {
     [SerializeField] CriAtomSource source;
     CancellationTokenSource cts = new();
     string cueSheetName;
 
-    void IVolumeChanable.ChangeVolume(float value)
+    void IVolumeChangable.ChangeVolume(float value)
     {
         source.volume = value;
     }

@@ -17,16 +17,18 @@ public class MusicData : ScriptableObject
     [SerializeField] string sheetName;
     
     [SerializeField] string cueName;
-    [SerializeField] float previewStart;
-    [SerializeField] float previewEnd = 1000;
-
-    [SerializeField] float bpm;
 
     [Header("値を大きくするとノーツがより早く落ちます(よりLateになる)")]
     [SerializeField] float offset = 0;
 
     [SerializeField] int startBeatOffset = 3;
 
+    [SerializeField] float bpm;
+    [Space(20)]
+    [SerializeField] float previewStart;
+
+    [SerializeField] float previewEnd = 1000;
+    [Space(10)]
     [SerializeField] BPMChangePoint[] bpmChangePoints;
     
     public string MusicName => musicName;
@@ -39,14 +41,16 @@ public class MusicData : ScriptableObject
     public float Bpm => bpm;
     public float Offset => offset;
     public int StartBeatOffset => startBeatOffset;
-    public BPMChangePoint[] BpmChangePoints => bpmChangePoints;
 
+    /// <summary>
+    /// BPMの変化点のカウントを取得します
+    /// </summary>
     public bool TryGetBPMChangeBeatCount(int index, out int beatCount)
     {
         beatCount = 0;
         if(bpmChangePoints.Length > index)
         {
-            beatCount = bpmChangePoints[index].BeatCount + startBeatOffset;
+            beatCount = bpmChangePoints[index].BeatCount;
             return true;
         }
         return false;
@@ -56,11 +60,10 @@ public class MusicData : ScriptableObject
 }
 
 [Serializable]
-public class BPMChangePoint
+public struct BPMChangePoint
 {
     [SerializeField, Min(0)] float bpm;
     [SerializeField, Min(0)] int beatCount;
-
-    public float Bpm => bpm;
-    public int BeatCount => beatCount;
+    public readonly float Bpm => bpm;
+    public readonly int BeatCount => beatCount;
 }

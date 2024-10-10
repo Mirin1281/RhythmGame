@@ -25,6 +25,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static int SettingOffset { get; set; }
     public static float Offset => SettingOffset / 1000f;
 
+    public static bool SettingIsMirror { get; set; }
+
     public MusicMasterData MusicMasterData { get; set; }
     public Result Result { get; set; }
     public static Difficulty Difficulty { get; set; } = Difficulty.Normal;
@@ -59,6 +61,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             SettingSpeed3D = gameData.Speed3D;
             SettingOffset = gameData.Offset;
 
+            SettingIsMirror = gameData.IsMirror;
+
             Difficulty = gameData.Difficulty;
             SelectedIndex = gameData.SelectedIndex;
         }
@@ -71,6 +75,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             SettingSpeed = 70;
             SettingSpeed3D = 70;
             SettingOffset = 0;
+
+            SettingIsMirror = false;
 
             Difficulty = Difficulty.Normal;
             SelectedIndex = -1;
@@ -112,6 +118,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
                 Speed = SettingSpeed,
                 Speed3D = SettingSpeed3D,
                 Offset = SettingOffset,
+                IsMirror = SettingIsMirror,
                 Difficulty = Difficulty == Difficulty.None ? Difficulty.Normal : Difficulty,
                 SelectedIndex = SelectedIndex,
             };

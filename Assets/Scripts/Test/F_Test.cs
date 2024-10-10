@@ -7,6 +7,9 @@ namespace NoteGenerating
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_2D
     {
+        [SerializeField, SerializeReference, SubclassSelector]
+        IParentGeneratable parentGeneratable;
+
         //protected override float Speed => base.Speed * 5f;
         protected override async UniTask GenerateAsync()
         {
@@ -145,26 +148,21 @@ namespace NoteGenerating
 
             // グループ化のテスト //
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
-            var parentTs = new GameObject().transform;
-            ParentMoveAsync(parentTs).Forget();
+            var parentTs = parentGeneratable.GenerateParent(Delta, Helper);
 
-            var line = Helper.PoolManager.LinePool.GetLine();
+            /*var line = Helper.PoolManager.LinePool.GetLine();
             line.transform.SetParent(parentTs);
             line.SetWidth(30f);
             line.SetHeight(0.1f);
             line.SetAlpha(1f);
             line.SetPos(default);
-            line.SetRotate(default);
+            line.SetRotate(default);*/
 
-            float beforeDelta = Delta;
-            float delta = Delta;
             for(int i = 0; i < 24; i++)
             {
-                var note = GroupNote(parentTs, -5f + i * 0f, NoteType.Normal, delta - beforeDelta);
-                delta = await Wait(8, delta);
+                GroupNote(parentTs, -5f + i * 0f, NoteType.Slide);
+                await Wait(8);
             }
-            
-            parentTs.AutoDispose(Helper.Token);
 
             
             /*UniTask.Void(async () => 

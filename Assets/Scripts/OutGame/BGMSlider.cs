@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public interface IVolumeChanable
+public interface IVolumeChangable
 {
     void ChangeVolume(float value);
 }
@@ -12,7 +12,7 @@ public class BGMSlider : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] TMP_Text tmpro;
     [SerializeField] GameObject musicPlayable;
-    IVolumeChanable volumeChanable;
+    IVolumeChangable volumeChanable;
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class BGMSlider : MonoBehaviour
         SetText(val);
         if(musicPlayable)
         {
-            volumeChanable = musicPlayable.GetComponent<IVolumeChanable>();
+            volumeChanable = musicPlayable.GetComponent<IVolumeChangable>();
         }
     }
 

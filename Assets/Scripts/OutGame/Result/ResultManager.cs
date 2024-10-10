@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -8,6 +7,7 @@ using UnityEngine.UI;
 public class ResultManager : MonoBehaviour
 {
     [SerializeField] MusicMasterManagerData masterManagerData;
+    [SerializeField] UIMover uiMover;
 
     [SerializeField] TMP_Text musicTitleTmpro;
     [SerializeField] TMP_Text composerTmpro;
@@ -22,8 +22,8 @@ public class ResultManager : MonoBehaviour
     [SerializeField] TMP_Text detailFarTmpro;
     [SerializeField] TMP_Text missTmpro;
 
-    [SerializeField] TMP_Text illustratorTmpro;
     [SerializeField] Image illustImage;
+    [SerializeField] TMP_Text illustratorTmpro;
     
 #if UNITY_EDITOR
     [SerializeField] bool isSavable;
@@ -33,9 +33,24 @@ public class ResultManager : MonoBehaviour
 
     void Awake()
     {
-        var r = RhythmGameManager.Instance.Result;
-        if(r == null) return;
+        uiMover.MoveUI().Forget();
 
+        var result = RhythmGameManager.Instance.Result;
+        if(result == null) return;
+
+        SetUI(result);
+        RhythmGameManager.Instance.MusicMasterData = result.MasterData;
+        if(isSavable == false) return;
+
+        var gameScore = new GameScore(
+            result.FumenData.name,
+            result.Score,
+            result.IsFullCombo);
+        masterManagerData.SetScoreJsonAsync(gameScore).Forget();
+    }
+
+    void SetUI(Result r)
+    {
         var master = r.MasterData;
         musicTitleTmpro.SetText(master.MusicData.MusicName);
         composerTmpro.SetText(master.MusicData.ComposerName);
@@ -59,23 +74,13 @@ public class ResultManager : MonoBehaviour
         illustratorTmpro.SetText(master.IllustratorName);
         illustImage.sprite = master.Illust;
 
-        RhythmGameManager.Instance.MusicMasterData = r.MasterData;
 
-        if(isSavable == false) return;
-        var gameScore = new GameScore(
-            fumenName,
-            r.Score,
-            r.IsFullCombo);
-        masterManagerData.SetScoreJsonAsync(gameScore).Forget();
-    }
-
-    /// <summary>
-    /// ハイスコアを譜面データの名前から取得します
-    /// </summary>
-    async UniTask<int> GetHighScore(string fumenName)
-    {
-        var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);     
-        var score = list.FirstOrDefault(s => s.FumenName == fumenName);
-        return score.Score;
+        // ハイスコアを譜面データの名前から取得します
+        async UniTask<int> GetHighScore(string fumenName)
+        {
+            var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);     
+            var score = list.FirstOrDefault(s => s.FumenName == fumenName);
+            return score.Score;
+        }
     }
 }

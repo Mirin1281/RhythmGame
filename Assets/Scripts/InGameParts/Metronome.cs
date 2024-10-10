@@ -7,7 +7,7 @@ using CriWare;
 using UnityEditor;
 #endif
 
-public class Metronome : MonoBehaviour, IVolumeChanable
+public class Metronome : MonoBehaviour, IVolumeChangable
 {
     [SerializeField] InGameManager inGameManager;
     [SerializeField] CriAtomSource atomSource;
@@ -20,7 +20,6 @@ public class Metronome : MonoBehaviour, IVolumeChanable
     bool isLooping;
     double currentTime;
     int beatCount;
-    
     CriAtomExPlayback playback;
     int bpmChangeCount;
     double BeatInterval => 60d / bpm;
@@ -48,8 +47,8 @@ public class Metronome : MonoBehaviour, IVolumeChanable
         if(skipOnStart)
         {
             float skipTime = atomSource.GetLength() * timeRate;
-            atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             currentTime = skipTime;
+            atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
             beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
             
@@ -86,13 +85,19 @@ public class Metronome : MonoBehaviour, IVolumeChanable
             currentTime = Time.timeAsDouble - baseTime;
             if(CurrentTime > nextBeat)
             {
-                if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount) && beatCount == changeBeatCount)
+                int offsetedBeatCount = beatCount - MusicData.StartBeatOffset;
+
+                // BPMの変化がある場合 //
+                if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount))
                 {
-                    bpm = MusicData.GetChangeBPM(bpmChangeCount);
-                    bpmChangeCount++;
+                    if(offsetedBeatCount == changeBeatCount)
+                    {
+                        bpm = MusicData.GetChangeBPM(bpmChangeCount);
+                        bpmChangeCount++;
+                    }
                 }
-                OnBeat?.Invoke(beatCount - MusicData.StartBeatOffset, (float)(CurrentTime - nextBeat));
-                
+
+                OnBeat?.Invoke(offsetedBeatCount, (float)(CurrentTime - nextBeat));
                 beatCount++;
                 nextBeat += BeatInterval;
             }
@@ -117,7 +122,7 @@ public class Metronome : MonoBehaviour, IVolumeChanable
         UpdateTimerAsync(beatCount).Forget();
     }
 
-    void IVolumeChanable.ChangeVolume(float value)
+    void IVolumeChangable.ChangeVolume(float value)
     {
         atomSource.volume = value;
     }

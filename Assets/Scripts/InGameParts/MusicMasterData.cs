@@ -9,9 +9,11 @@ using NoteGenerating;
 public class MusicMasterData : ScriptableObject
 {
     [SerializeField] MusicData musicData;
+    [Space(20)]
     [SerializeField] FumenData normalFumenData;
     [SerializeField] FumenData hardFumenData;
     [SerializeField] FumenData extraFumenData;
+    [Space(20)]
     [SerializeField] Sprite illust;
     [SerializeField] string illustratorName;
 

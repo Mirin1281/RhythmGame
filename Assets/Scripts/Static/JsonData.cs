@@ -33,6 +33,9 @@ public class GameData : JsonObject
 
     [JsonProperty("設定: オフセット")]
     public int Offset { get; set; } = 0;
+
+    [JsonProperty("設定: ミラー譜面")]
+    public bool IsMirror { get; set; }
     
 
     [JsonProperty("難易度")]
