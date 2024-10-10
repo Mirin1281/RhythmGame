@@ -19,10 +19,5 @@ public class FlickNotePool : PoolBase<FlickNote>
         return n;
     }
 
-    public List<FlickNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
-
     public Sprite GetSimultaneousSprite() => simultaneousSprite;
 }

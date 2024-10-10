@@ -86,28 +86,10 @@ public class NoteInput : MonoBehaviour
         }
     }
 
-    public void AddExpect(NoteExpect expect, bool isCheckSimultaneous = true)
-    {
-        if(isCheckSimultaneous)
-        {
-            // 同時刻に着地するノーツがあった場合は同時押しの見た目を適用する
-            foreach(var e in allExpects)
-            {
-                if(Mathf.Approximately(expect.Time, e.Time))
-                {
-                    notePoolManager.SetSimultaneousSprite(expect.Note as NoteBase_2D);
-                    notePoolManager.SetSimultaneousSprite(e.Note as NoteBase_2D);
-                }
-            }
-        }
-       
-        allExpects.Add(expect);
-    }
     /// <summary>
-    /// 注意点: hold時間とExpectModeがNoteExpectの引数とは異なります。
+    /// ノーツの打点情報を伝えます
     /// </summary>
-    public void AddExpect(NoteBase note, float x, float time, float holdingTime = 0,
-        NoteExpect.ExpectMode mode = NoteExpect.ExpectMode.Y_Static, bool isCheckSimultaneous = true)
+    public void AddExpect(NoteBase note, float time, float holdingTime = 0, bool isCheckSimultaneous = true)
     {
         if(isCheckSimultaneous)
         {
@@ -122,7 +104,24 @@ public class NoteInput : MonoBehaviour
             }
         }
        
-        allExpects.Add(new NoteExpect(note, new Vector2(x, 0), time, time + holdingTime, mode));
+        allExpects.Add(new NoteExpect(note, new Vector2(default, 0), time, time + holdingTime, NoteExpect.ExpectMode.Y_Static));
+    }
+    public void AddExpect(NoteBase note, Vector2 pos, float time, float holdingTime = 0,
+        bool isCheckSimultaneous = true, NoteExpect.ExpectMode mode = NoteExpect.ExpectMode.Static)
+    {
+        if(isCheckSimultaneous)
+        {
+            foreach(var e in allExpects)
+            {
+                if(Mathf.Approximately(time, e.Time))
+                {
+                    notePoolManager.SetSimultaneousSprite(note as NoteBase_2D);
+                    notePoolManager.SetSimultaneousSprite(e.Note as NoteBase_2D);
+                }
+            }
+        }
+       
+        allExpects.Add(new NoteExpect(note, pos, time, time + holdingTime, mode));
     }
 
     HoldNote AddHold(NoteExpect expect, bool isMiss = false)

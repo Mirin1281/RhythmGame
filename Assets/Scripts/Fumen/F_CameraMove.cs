@@ -29,7 +29,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => IsInverse + "|" + delay;
+            get => MyUtility.GetContentFrom(IsInverse, delay);
             set
             {
                 var texts = value.Split("|");
@@ -40,8 +40,8 @@ namespace NoteGenerating
         
         public override string CSVContent2
         {
-            get => MyUtility.GetArrayContent(settings);
-            set => settings = MyUtility.GetArrayFromContent<CameraMoveSetting>(value);
+            get => MyUtility.GetContentFrom(settings);
+            set => settings = MyUtility.GetArrayFrom<CameraMoveSetting>(value);
         }
     }
 }

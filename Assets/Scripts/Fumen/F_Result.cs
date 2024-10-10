@@ -11,7 +11,7 @@ namespace NoteGenerating
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);
             RhythmGameManager.Instance.Result = judge.Result;
-            FadeLoadSceneManager.Instance.LoadScene(1, "Result");
+            FadeLoadSceneManager.Instance.LoadScene(1, "Result", 1, Color.white);
         }
 
         protected override Color GetCommandColor()

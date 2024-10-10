@@ -21,10 +21,5 @@ public class NormalNotePool : PoolBase<NormalNote>
         return n;
     }
 
-    public List<NormalNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
-
     public Sprite GetSimultaneousSprite() => simultaneousSprite;
 }

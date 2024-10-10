@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -99,6 +101,19 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         var list = PooledTable[prepareStatuses.IndexOf(status)];
         list.Add(t);
         return t;
+    }
+
+    public IEnumerable<T> GetInstances(int index = 0, bool isExtractInactive = true)
+    {
+        var list = PooledTable[index];
+        if(isExtractInactive)
+        {
+            return list.Where(t => t.IsActive);
+        }
+        else
+        {
+            return list;
+        }
     }
 
     public void SetPoolCount(int count, int index = 0)

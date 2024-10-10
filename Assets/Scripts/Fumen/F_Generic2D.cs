@@ -32,15 +32,6 @@ namespace NoteGenerating
             public readonly float Wait => wait;
             public readonly float Width => width;
             public readonly float Length => length;
-
-            public NoteData(CreateNoteType type, float x, float wait, float width, float length)
-            {
-                this.type = type;
-                this.x = x;
-                this.wait = wait;
-                this.width = width;
-                this.length = length;
-            }
         }
 
         [SerializeField] float speedRate = 1f;
@@ -91,12 +82,12 @@ namespace NoteGenerating
                 {
                     note.SetWidth(width);
                 }
-                Vector3 startPos = new (Inverse(x), StartBase);
+                Vector3 startPos = new (ConvertIfInverse(x), StartBase);
                 DropAsync(note, startPos).Forget();
 
                 float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                Helper.NoteInput.AddExpect(note, startPos.x, expectTime, isCheckSimultaneous: isCheckSimultaneous);
+                Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
 
                 SetSimultaneous(note, expectTime);
             }
@@ -109,13 +100,13 @@ namespace NoteGenerating
                 {
                     hold.SetWidth(width);
                 }
-                Vector3 startPos = new (Inverse(x), StartBase);
+                Vector3 startPos = new (ConvertIfInverse(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
                 DropAsync(hold, startPos).Forget();
 
                 float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                Helper.NoteInput.AddExpect(hold, startPos.x, expectTime, holdTime, isCheckSimultaneous: isCheckSimultaneous);
+                Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
 
                 SetSimultaneous(hold, expectTime);
             }
@@ -154,21 +145,21 @@ namespace NoteGenerating
         {
             return new Color32(
                 255,
-                (byte)Mathf.Clamp(246 - noteDatas.Length, 96, 246),
-                (byte)Mathf.Clamp(230 - noteDatas.Length, 130, 230),
+                (byte)Mathf.Clamp(246 - noteDatas.Length * 2, 96, 246),
+                (byte)Mathf.Clamp(230 - noteDatas.Length * 2, 130, 230),
                 255);
         }
 
         protected override string GetSummary()
         {
-            return $"{noteDatas.Length}  {GetInverseSummary()}";
+            string invText = IsInverse ? "<color=#0000ff><b>(inv)</b></color>" : string.Empty;
+            return $"{noteDatas.Length}  {invText}";
         }
 
         public override void OnSelect()
         {
             Preview();
         }
-
         public override void Preview()
         {
             GameObject previewObj = MyUtility.GetPreviewObject();
@@ -209,7 +200,6 @@ namespace NoteGenerating
             {
                 var line = Helper.LinePool.GetLine();
                 line.SetPos(new Vector3(0, lineY));
-                line.SetHeight(0.06f);
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * Speed;
                 if(lineY > y) break;
@@ -223,7 +213,7 @@ namespace NoteGenerating
                 {
                     note.SetWidth(width);
                 }
-                var startPos = new Vector3(Inverse(x), y);
+                var startPos = new Vector3(ConvertIfInverse(x), y);
                 note.SetPos(startPos);
                 note.transform.SetParent(previewObj.transform);
 
@@ -238,8 +228,8 @@ namespace NoteGenerating
                 {
                     hold.SetWidth(width);
                 }
-                hold.SetMaskLocalPos(new Vector2(Inverse(x), 0));
-                var startPos = new Vector3(Inverse(x), y);
+                hold.SetMaskLocalPos(new Vector2(ConvertIfInverse(x), 0));
+                var startPos = new Vector3(ConvertIfInverse(x), y);
                 hold.SetPos(startPos);
                 hold.transform.SetParent(previewObj.transform);
 
@@ -268,10 +258,11 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => IsInverse + "|" + speedRate + "|" + isCheckSimultaneous;
+            get => MyUtility.GetContentFrom(IsInverse, speedRate, isCheckSimultaneous);
             set
             {
                 var texts = value.Split('|');
+
                 IsInverse = bool.Parse(texts[0]);
                 speedRate = float.Parse(texts[1]);
                 isCheckSimultaneous = bool.Parse(texts[2]);
@@ -280,8 +271,8 @@ namespace NoteGenerating
 
         public override string CSVContent2
         {
-            get => MyUtility.GetArrayContent(noteDatas);
-            set => noteDatas = MyUtility.GetArrayFromContent<NoteData>(value);
+            get => MyUtility.GetContentFrom(noteDatas);
+            set => noteDatas = MyUtility.GetArrayFrom<NoteData>(value);
         }
     }
 }

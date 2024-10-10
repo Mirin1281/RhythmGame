@@ -15,9 +15,4 @@ public class SkyNotePool : PoolBase<SkyNote>
         n.transform.SetParent(lane3D.transform);
         return n;
     }
-
-    public List<SkyNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
 }

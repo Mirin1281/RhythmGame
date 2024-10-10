@@ -81,9 +81,9 @@ public static class MyUtility
     }
 
     /// <summary>
-    /// 配列内の値をフォーマットに従って出力します
+    /// 入力された配列内の値をフォーマットに従って文字列に変換します
     /// </summary>
-    public static string GetArrayContent<T>(T[] array)
+    public static string GetContentFrom<T>(T[] array)
     {
         StringBuilder sb = new ();
         for(int i = 0; i < array.Length; i++)
@@ -112,10 +112,26 @@ public static class MyUtility
     }
 
     /// <summary>
+    /// 入力された値をフォーマットに従って文字列に変換します
+    /// </summary>
+    public static string GetContentFrom(params object[] objects)
+    {
+        string text = null;
+        for(int i = 0; i < objects.Length; i++)
+        {
+            text += objects[i];
+            if(i == objects.Length - 1) break;
+            text += "|";
+        }
+        return text;
+    }
+
+    /// <summary>
     /// 配列を入力されたフォーマットに従って生成します
     /// </summary>
-    public static T[] GetArrayFromContent<T>(string content)
+    public static T[] GetArrayFrom<T>(string content)
     {
+        if(string.IsNullOrWhiteSpace(content)) return null;
         var txts = content.Split("\n");
         var array = new T[txts.Length];
         for(int i = 0; i < array.Length; i++)

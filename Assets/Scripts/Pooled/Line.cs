@@ -28,14 +28,6 @@ public class Line : PooledBase
         transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
     }
 
-    public Line Set2DJudge(float alpha = 1f)
-    {
-        SetWidth(30f);
-        SetHeight(0.1f);
-        SetAlpha(alpha);
-        return this;
-    }
-
     public void SetWidth(float width)
     {
         transform.localScale = new Vector3(width, transform.localScale.y);
@@ -43,6 +35,11 @@ public class Line : PooledBase
     public void SetHeight(float height)
     {
         transform.localScale = new Vector3(transform.localScale.x, height);
+    }
+
+    public void SetRendererEnabled(bool enabled)
+    {
+        spriteRenderer.enabled = enabled;
     }
 
     public void SetAlpha(float alpha)

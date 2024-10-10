@@ -150,7 +150,9 @@ namespace NoteGenerating
 
             var line = Helper.PoolManager.LinePool.GetLine();
             line.transform.SetParent(parentTs);
-            line.Set2DJudge();
+            line.SetWidth(30f);
+            line.SetHeight(0.1f);
+            line.SetAlpha(1f);
             line.SetPos(default);
             line.SetRotate(default);
 
@@ -233,13 +235,12 @@ namespace NoteGenerating
             NoteBase_2D note = Helper.GetNote2D(type);
             note.SetRotate(deg);
             note.SetWidth(2);
-            Vector2 startPos = MyUtility.GetRotatedPos(new Vector2(Inverse(pos.x), StartBase + pos.y), deg, pos);
+            Vector2 startPos = MyUtility.GetRotatedPos(new Vector2(ConvertIfInverse(pos.x), StartBase + pos.y), deg, pos);
             RotateDropAsync(note, startPos, deg).Forget();
 
             float distance = StartBase - Speed * Delta;
             float expectTime = CurrentTime + distance / Speed;
-            NoteExpect expect = new NoteExpect(note, new Vector2(Inverse(pos.x), 0), expectTime);
-            Helper.NoteInput.AddExpect(expect);
+            Helper.NoteInput.AddExpect(note, expectTime);
 
 
             async UniTask RotateDropAsync(NoteBase_2D note, Vector2 startPos, float deg)
@@ -304,7 +305,7 @@ namespace NoteGenerating
             NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
             note.transform.SetParent(parentTs);
             note.SetRotate(0);
-            Vector3 startPos = new Vector3(Inverse(x), StartBase);
+            Vector3 startPos = new Vector3(ConvertIfInverse(x), StartBase);
             DropAsync(note, startPos, delta).Forget();
 
             float distance = StartBase - delta * Speed;
@@ -312,9 +313,7 @@ namespace NoteGenerating
 
             float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
             Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-            NoteExpect expect = new NoteExpect(note, 
-                new Vector3(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
-            Helper.NoteInput.AddExpect(expect);
+            Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
             return note;
         }
         async UniTask ParentMoveAsync(Transform parentTs, float delta = -1)
@@ -351,7 +350,7 @@ namespace NoteGenerating
         {
             var note = Helper.PoolManager.NormalPool.GetNote(1);
             MoveAsync(note, pos).Forget();
-            Helper.NoteInput.AddExpect(new NoteExpect(note, pos, CurrentTime + 120f / Helper.Metronome.Bpm));
+            Helper.NoteInput.AddExpect(note, pos, CurrentTime + 120f / Helper.Metronome.Bpm);
 
 
             async UniTask MoveAsync(NormalNote note, Vector3 startPos)

@@ -15,9 +15,4 @@ public class HoldNotePool : PoolBase<HoldNote>
         n.transform.SetParent(this.transform);
         return n;
     }
-
-    public List<HoldNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
 }

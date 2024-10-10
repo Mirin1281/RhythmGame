@@ -4,16 +4,20 @@ using System;
 
 namespace NoteGenerating
 {
-    public abstract class Generator_3D : NoteGeneratorBase
+    public abstract class Generator_3D : NoteGeneratorBase, IInversable
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse => isInverse;
-        protected void SetInverse(bool inverse) => isInverse = inverse;
-
+        protected bool IsInverse { get => isInverse; set => isInverse = value; }
+        
         /// <summary>
-        /// 反転に対応した値にします
+        /// IsInverseがtrueの時、-1倍して返します
         /// </summary>
-        protected float Inverse(float x) => x * (isInverse ? -1 : 1);
+        protected float ConvertIfInverse(float x) => x * (isInverse ? -1 : 1);
+
+        void IInversable.SetToggleInverse()
+        {
+            isInverse = !isInverse;
+        }
 
         protected virtual float Speed => RhythmGameManager.Speed3D;
 
@@ -22,7 +26,7 @@ namespace NoteGenerating
         /// </summary>
         protected float StartBase => 2f * Speed + 0.2f;
 
-        protected async UniTask<float> SkyLoop(float lpb, params Vector2?[] nullablePoses)
+        /*protected async UniTask<float> SkyLoop(float lpb, params Vector2?[] nullablePoses)
         {
             foreach(var nullablePos in nullablePoses)
             {
@@ -33,7 +37,7 @@ namespace NoteGenerating
                 await Wait(lpb);
             }
             return Delta;
-        }
+        }*/
 
         protected SkyNote Sky(Vector2 pos, float delta = -1)
         {
@@ -42,13 +46,12 @@ namespace NoteGenerating
                 delta = Delta;
             }
             SkyNote sky = Helper.GetSky();
-            var startPos = new Vector3(Inverse(pos.x), pos.y, StartBase);
+            var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase);
             DropAsync(sky, startPos, delta).Forget();
 
             float distance = startPos.z - Speed * delta;
             float expectTime = distance / Speed + CurrentTime;
-            var expect = new NoteExpect(sky, sky.transform.position, expectTime);
-            Helper.NoteInput.AddExpect(expect);
+            Helper.NoteInput.AddExpect(sky, startPos, expectTime);
             return sky;
         }
 
@@ -74,24 +77,12 @@ namespace NoteGenerating
             }
             float baseTime = CurrentTime - delta;
             float time = 0f;
-            var vec = new Vector3(0, 0, -Speed);
+            var vec = Speed * Vector3.back;
             while (note.IsActive && time < 5f)
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
                 await Helper.Yield();
-            }
-        }
-
-        protected string GetInverseSummary()
-        {
-            if(isInverse)
-            {
-                return " <color=#0000ff><b>(inv)</b></color>";
-            }
-            else
-            {
-                return string.Empty;
             }
         }
     }

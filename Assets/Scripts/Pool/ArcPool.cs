@@ -14,9 +14,4 @@ public class ArcNotePool : PoolBase<ArcNote>
         n.transform.SetParent(lane3D.transform);
         return n;
     }
-
-    public List<ArcNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
 }

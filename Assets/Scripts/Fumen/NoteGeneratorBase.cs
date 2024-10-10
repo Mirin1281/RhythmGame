@@ -134,6 +134,9 @@ namespace NoteGenerating
             action.Invoke(time);
         }
 
+        /// <summary>
+        /// コマンドの中身を発火します
+        /// </summary>
         protected abstract UniTask GenerateAsync();
         void INoteGeneratable.Generate(NoteGenerateHelper helper, float delta)
         {
@@ -174,8 +177,15 @@ namespace NoteGenerating
         /// </summary>
         protected virtual Color GetCommandColor() => new Color(0.9f, 0.9f, 0.9f, 1f);
 
+        /// <summary>
+        /// ピリオドキーが押された際に呼ばれます
+        /// エディタ上でノーツのプレビューをします
+        /// </summary>
         public virtual void Preview() {}
 
+        /// <summary>
+        /// コマンドが選択された際に呼ばれます
+        /// </summary>
         public virtual void OnSelect() {}
 
         public virtual string CSVContent1 { get; set; }

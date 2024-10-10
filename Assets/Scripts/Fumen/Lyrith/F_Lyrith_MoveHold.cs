@@ -11,34 +11,34 @@ namespace NoteGenerating
             float moveX = 2.4f / Speed;
 
             MoveHold(-9, 4, moveX);
-            await Loop(8, NoteType.Normal,
+            await LoopNote(8, NoteType.Normal,
                 3,
                 5,
                 3
             );
 
             MoveHold(9, 4, -moveX);
-            await Loop(8, NoteType.Normal,
+            await LoopNote(8, NoteType.Normal,
                 -3,
                 -5,
                 -3
             );
 
             MoveHold(-11, 4, moveX);
-            await Loop(8, NoteType.Normal,
+            await LoopNote(8, NoteType.Normal,
                 1,
                 3,
                 5
             );
 
             MoveHold(11, 4, -moveX);
-            await Loop(8, NoteType.Normal,
+            await LoopNote(8, NoteType.Normal,
                 -1,
                 -3,
                 -5
             );
 
-            await Loop(16, NoteType.Normal,
+            await LoopNote(16, NoteType.Normal,
                 0.5f,
                 -0.5f,
                 0.5f,
@@ -50,11 +50,11 @@ namespace NoteGenerating
         {
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = new (Inverse(x), StartBase);
-            MoveAsync(hold, startPos, Inverse(moveX)).Forget();
+            Vector3 startPos = new (ConvertIfInverse(x), StartBase);
+            MoveAsync(hold, startPos, ConvertIfInverse(moveX)).Forget();
 
             float expectTime = CurrentTime + startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(hold, 0, expectTime, holdTime);
+            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
         }
 
         async UniTask MoveAsync(HoldNote hold, Vector3 startPos, float moveX)

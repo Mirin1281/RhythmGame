@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -18,16 +17,8 @@ namespace NoteGenerating
             public readonly Vector2 Pos => pos;
             public readonly float Wait => wait;
             public readonly bool Disable => disable;
-
-            public SkyNoteData(Vector2 pos, float wait, bool disable)
-            {
-                this.pos = pos;
-                this.wait = wait;
-                this.disable = disable;
-            }
         }
 
-        [SerializeField] string summary;
         [SerializeField] SkyNoteData[] noteDatas = new SkyNoteData[1];
 
         protected override async UniTask GenerateAsync()
@@ -50,8 +41,8 @@ namespace NoteGenerating
         protected override string GetSummary()
         {
             string s = noteDatas.Length.ToString();
-            if(string.IsNullOrEmpty(summary)) return s + GetInverseSummary();
-            return $"{s} : {summary}{GetInverseSummary()}";
+            string invText = IsInverse ? " : <color=#0000ff><b>(inv)</b></color>" : string.Empty;
+            return s + invText;
         }
 
         public override void Preview()
@@ -72,10 +63,9 @@ namespace NoteGenerating
             float lineZ = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                var line = Helper.LinePool.GetLine();
+                var line = Helper.LinePool.GetLine(1);
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
-                line.transform.localScale = new Vector3(line.transform.localScale.x, 0.06f, line.transform.localScale.z);
-                line.transform.parent = previewObj.transform;
+                line.transform.SetParent(previewObj.transform);
                 lineZ += Helper.GetTimeInterval(4) * Speed;
                 if(lineZ > z) break;
             }
@@ -83,48 +73,22 @@ namespace NoteGenerating
             void SkyNote(Vector2 pos, float z)
             {
                 SkyNote sky = Helper.GetSky();
-                var startPos = new Vector3(Inverse(pos.x), pos.y, z);
+                var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, z);
                 sky.SetPos(startPos);
-                sky.transform.parent = previewObj.transform;
+                sky.transform.SetParent(previewObj.transform);
             }
         }
 
         public override string CSVContent1
         {
-            get => IsInverse.ToString();
-            set { SetInverse(bool.Parse(value)); }
+            get => MyUtility.GetContentFrom(IsInverse);
+            set { IsInverse = bool.Parse(value); }
         }
 
         public override string CSVContent2
         {
-            get
-            {
-                string text = string.Empty;
-                for(int i = 0; i < noteDatas.Length; i++)
-                {
-                    var data = noteDatas[i];
-                    text += data.Pos + "|";
-                    text += data.Wait + "|";
-                    text += data.Disable;
-                    if(i == noteDatas.Length - 1) break;
-                    text += "\n";
-                }
-                return text;
-            }
-            set
-            {
-                var dataTexts = value.Split("\n");
-                var noteDatas = new SkyNoteData[dataTexts.Length];
-                for(int i = 0; i < dataTexts.Length; i++)
-                {
-                    var contents = dataTexts[i].Split('|');
-                    noteDatas[i] = new SkyNoteData(
-                        contents[0].ToVector2(),
-                        float.Parse(contents[1]),
-                        bool.Parse(contents[2]));
-                }
-                this.noteDatas = noteDatas;
-            }
+            get => MyUtility.GetContentFrom(noteDatas);
+            set => noteDatas = MyUtility.GetArrayFrom<SkyNoteData>(value);
         }
     }
 }

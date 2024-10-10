@@ -15,20 +15,16 @@ namespace NoteGenerating
 
         void MoveHold(float x, float length, bool left)
         {
-            var hold = Helper.GetHold();
-            var startPos = new Vector2(Inverse(x), StartBase);
-            var toPos = new Vector2(Inverse(x), 0);
             var holdTime = Helper.GetTimeInterval(length);
-            hold.SetLength(holdTime * Speed);
+            var hold = Helper.GetHold(holdTime * Speed);
+            var startPos = new Vector2(ConvertIfInverse(x), StartBase);
+            var toPos = new Vector2(ConvertIfInverse(x), 0);
             hold.SetMaskLocalPos(toPos);
             hold.SetMaskLength(10);
             
-
             float distance = startPos.y - Speed * Delta;
             float expectTime = CurrentTime + distance / Speed;
-            float holdEndTime = expectTime + holdTime;
-            var expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
-            Helper.NoteInput.AddExpect(expect);
+            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
 
             MoveRotateAsync(hold, startPos, toPos, expectTime, holdTime, left).Forget();
 

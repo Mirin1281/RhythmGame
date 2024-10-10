@@ -19,8 +19,8 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            await Helper.WaitSeconds(delay);
             await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await Helper.WaitSeconds(delay);
             Process(time);
         }
 
@@ -79,7 +79,7 @@ namespace NoteGenerating
         {
             get
             {
-                return moveType + "|" + time + "|" + easeType + "|" + delay;
+                return MyUtility.GetContentFrom(moveType, time, easeType, delay);
             }
             set
             {

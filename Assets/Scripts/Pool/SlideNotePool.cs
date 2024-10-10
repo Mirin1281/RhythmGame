@@ -20,10 +20,5 @@ public class SlideNotePool : PoolBase<SlideNote>
         return n;
     }
 
-    public List<SlideNote> GetAllNotes(int index = 0)
-    {
-        return PooledTable[index];
-    }
-
     public Sprite GetSimultaneousSprite() => simultaneousSprite;
 }

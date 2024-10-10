@@ -18,6 +18,7 @@ namespace NoteGenerating
             Hold = 1 << 3,
             Sky = 1 << 4,
             Arc = 1 << 5,
+            Line = 1 << 6,
         }
 
         [SerializeField] BlinkTargets target = BlinkTargets.Normal | BlinkTargets.Slide | BlinkTargets.Flick | BlinkTargets.Hold;
@@ -40,27 +41,33 @@ namespace NoteGenerating
             List<NoteBase> notes = new(100);
             if(target.HasFlag(BlinkTargets.Normal))
             {
-                notes.AddRange(Helper.PoolManager.NormalPool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.NormalPool.GetInstances(0));
             }
             if(target.HasFlag(BlinkTargets.Slide))
             {
-                notes.AddRange(Helper.PoolManager.SlidePool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.SlidePool.GetInstances(0));
             }
             if(target.HasFlag(BlinkTargets.Flick))
             {
-                notes.AddRange(Helper.PoolManager.FlickPool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.FlickPool.GetInstances(0));
             }
             if(target.HasFlag(BlinkTargets.Hold))
             {
-                notes.AddRange(Helper.PoolManager.HoldPool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.HoldPool.GetInstances(0));
             }
             if(target.HasFlag(BlinkTargets.Sky))
             {
-                notes.AddRange(Helper.PoolManager.SkyPool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.SkyPool.GetInstances(0));
             }
             if(target.HasFlag(BlinkTargets.Arc))
             {
-                notes.AddRange(Helper.PoolManager.ArcPool.GetAllNotes(0));
+                notes.AddRange(Helper.PoolManager.ArcPool.GetInstances(0));
+            }
+
+            IEnumerable<Line> lines = null;
+            if(target.HasFlag(BlinkTargets.Line))
+            {
+                lines = Helper.PoolManager.LinePool.GetInstances(0);
             }
 
             if(isDelayOneFrame)
@@ -68,23 +75,27 @@ namespace NoteGenerating
                 await UniTask.DelayFrame(1, cancellationToken: Helper.Token);
             }
 
-            var actionNotes = notes.Where(n => n.IsActive).ToArray();
             var rand = new System.Random(seed);
             float interval = 1 / 120f;
             for(int i = 0; i < blinkCount; i++)
             {
                 await Helper.WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
-                SetRendererEnableds(actionNotes, false);
+                SetRendererEnableds(notes, lines, false);
                 await Helper.WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
-                SetRendererEnableds(actionNotes, true);
+                SetRendererEnableds(notes, lines, true);
             }
         }
 
-        void SetRendererEnableds(IEnumerable<NoteBase> notes, bool enabled)
+        void SetRendererEnableds(IEnumerable<NoteBase> notes, IEnumerable<Line> lines, bool enabled)
         {
             foreach(var note in notes)
             {
                 note.SetRendererEnabled(enabled);
+            }
+            if(lines == null) return;
+            foreach(var line in lines)
+            {
+                line.SetRendererEnabled(enabled);
             }
         }
 
@@ -95,13 +106,11 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get
-            {
-                return target + "|" + delay + "|" + blinkCount + "|" + seed + "|" + isDelayOneFrame;
-            }
+            get => MyUtility.GetContentFrom(target, delay, blinkCount, seed, isDelayOneFrame);
             set
             {
                 var texts = value.Split("|");
+
                 target = Enum.Parse<BlinkTargets>(texts[0]);
                 delay = float.Parse(texts[1]);
                 blinkCount = int.Parse(texts[2]);
