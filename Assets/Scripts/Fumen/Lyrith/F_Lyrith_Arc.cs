@@ -5,7 +5,7 @@ using ArcVertexMode = ArcCreateData.ArcVertexMode;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/アーク1"), System.Serializable]
-    public class F_Lyrith_Arc : Generator_3D
+    public class F_Lyrith_Arc : Generator_Common
     {
         protected override async UniTask GenerateAsync()
         {

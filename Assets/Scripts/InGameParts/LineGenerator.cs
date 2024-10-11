@@ -32,12 +32,11 @@ public class LineGenerator : MonoBehaviour
         Line line = linePool.GetLine();
         float baseTime = metronome.CurrentTime - delta;
         float time = 0;
-        var vec = RhythmGameManager.Speed * Vector3.down;
-        var startPos = new Vector3(0f, GetStartBase(RhythmGameManager.Speed));
         while (line.IsActive && time < 3f)
         {
             time = metronome.CurrentTime - baseTime;
-            line.transform.localPosition = startPos + time * vec;
+            var vec = RhythmGameManager.Speed * Vector3.down;
+            line.transform.localPosition = new Vector3(0f, GetStartBase(RhythmGameManager.Speed)) + time * vec;
             await UniTask.Yield(destroyCancellationToken);
         }
         line.gameObject.SetActive(false);
@@ -48,12 +47,11 @@ public class LineGenerator : MonoBehaviour
         Line line = linePool.GetLine(1);
         float baseTime = metronome.CurrentTime - delta;
         float time = 0;
-        var vec = RhythmGameManager.Speed3D * Vector3.back;
-        var startPos = new Vector3(0f, 0.01f, GetStartBase(RhythmGameManager.Speed3D));
         while (line.IsActive && time < 3f)
         {
             time = metronome.CurrentTime - baseTime;
-            line.transform.localPosition = startPos + time * vec;
+            var vec = RhythmGameManager.Speed3D * Vector3.back;
+            line.transform.localPosition = new Vector3(0f, 0.01f, GetStartBase(RhythmGameManager.Speed3D)) + time * vec;
             await UniTask.Yield(destroyCancellationToken);
         }
         line.gameObject.SetActive(false);

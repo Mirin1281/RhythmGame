@@ -47,6 +47,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitBeforeSceneLoad()
     {
+        SpeedBase = 1f;
         Application.targetFrameRate = 60;
         
         if(useJsonData)

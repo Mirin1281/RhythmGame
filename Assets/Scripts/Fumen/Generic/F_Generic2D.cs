@@ -7,7 +7,7 @@ using System.Text;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆汎用ジェネレータ2D"), System.Serializable]
-    public class F_Generic2D : Generator_2D
+    public class F_Generic2D : Generator_Common
     {
         public enum CreateNoteType
         {

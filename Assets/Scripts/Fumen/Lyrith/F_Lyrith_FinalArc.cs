@@ -5,7 +5,7 @@ using ArcVertexMode = ArcCreateData.ArcVertexMode;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/最後の低速アーク"), System.Serializable]
-    public class F_Lyrith_FinalArc : Generator_3D
+    public class F_Lyrith_FinalArc : Generator_Common
     {
         [SerializeField] float decay = 15f;
         
@@ -48,7 +48,7 @@ namespace NoteGenerating
 
             for(int i = 0; i < waits.Length; i++)
             {
-                var speed = Speed + i * 7f;
+                var speed = Speed3D + i * 7f;
                 if(i < waits.Length / 2)
                 {
                     MyArc2(new ArcCreateData[]
@@ -89,19 +89,19 @@ namespace NoteGenerating
         async UniTask MyArc(ArcCreateData[] datas)
         {
             var arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed / decay, IsInverse).Forget();
-            var startPos = new Vector3(0, 0f, StartBase);
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed3D / decay, IsInverse).Forget();
+            var startPos = new Vector3(0, 0f, StartBase3D);
             bool isRanged = false;
             DropAsync(arc, startPos).Forget();
             Helper.NoteInput.AddArc(arc);
-            await Helper.WaitSeconds((StartBase + Speed * Delta) / Speed);
+            await Helper.WaitSeconds((StartBase3D + Speed3D * Delta) / Speed3D);
             isRanged = true;            
 
 
             async UniTask DropAsync(ArcNote arc, Vector3 startPos)
             {
                 float baseTime = CurrentTime - Delta;
-                var vec = Speed * Vector3.back;
+                var vec = Speed3D * Vector3.back;
                 while (arc.IsActive && isRanged == false)
                 {
                     float time = CurrentTime - baseTime;
@@ -110,7 +110,7 @@ namespace NoteGenerating
                 }
 
                 baseTime = CurrentTime;
-                vec = Speed / decay * Vector3.back;
+                vec = Speed3D / decay * Vector3.back;
                 startPos = arc.transform.localPosition;
                 while (arc.IsActive)
                 {
@@ -125,7 +125,7 @@ namespace NoteGenerating
         {
             var arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse).Forget();
-            var startPos = new Vector3(0, 0f, StartBase);
+            var startPos = new Vector3(0, 0f, StartBase3D);
             bool isRanged = false;
             DropAsync(arc, startPos).Forget();
             Helper.NoteInput.AddArc(arc);           

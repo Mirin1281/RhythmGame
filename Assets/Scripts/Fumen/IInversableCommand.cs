@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInversable
+public interface IInversableCommand
 {
     /// <summary>
     /// 反転をトグル式に変化させます

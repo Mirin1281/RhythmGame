@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆カメラ制御"), System.Serializable]
-    public class F_CameraMove : Generator_2D
+    public class F_CameraMove : Generator_Common
     {
         [SerializeField, Min(0)] float delay = 0f;
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];

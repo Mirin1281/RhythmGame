@@ -30,6 +30,14 @@ public class NoteGenerateHelper : MonoBehaviour
     }
     public SkyNote GetSky() => PoolManager.SkyPool.GetNote();
     public ArcNote GetArc() => PoolManager.ArcPool.GetNote();
+    public Line GetLine()
+    {
+        var line = PoolManager.LinePool.GetLine();
+        line.SetWidth(30f);
+        line.SetHeight(0.1f);
+        line.SetAlpha(1);
+        return line;
+    }
 
 
     public UniTask Yield(CancellationToken token = default)

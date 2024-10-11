@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/逆走"), System.Serializable]
-    public class F_Lyrith_Reverse : Generator_3D
+    public class F_Lyrith_Reverse : Generator_Common
     {
         protected override async UniTask GenerateAsync()
         {
@@ -50,7 +50,7 @@ namespace NoteGenerating
         {
             var skyNote = Helper.GetSky();
             float moveTime = Helper.GetTimeInterval(2);
-            var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase + (pos.z - Helper.GetTimeInterval(2, 3)) * Speed);
+            var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase3D + (pos.z - Helper.GetTimeInterval(2, 3)) * Speed3D);
             Drop3DAsync(skyNote, startPos, moveTime).Forget();
 
             float expectTime = CurrentTime - delta + pos.z + moveTime;
@@ -64,13 +64,13 @@ namespace NoteGenerating
                 while (note.IsActive && t < moveTime)
                 {
                     t = CurrentTime - baseTime;
-                    var vec = t.Ease(0, -Speed, moveTime / 1.95f, EaseType.OutQuad) * Vector3.back;
+                    var vec = t.Ease(0, -Speed3D, moveTime / 1.95f, EaseType.OutQuad) * Vector3.back;
                     note.SetPos(startPos + t * vec);
                     await Helper.Yield();
                 }
 
                 baseTime = CurrentTime;
-                var vec2 = Speed * Vector3.back;
+                var vec2 = Speed3D * Vector3.back;
                 while (note.IsActive)
                 {
                     t = CurrentTime - baseTime;

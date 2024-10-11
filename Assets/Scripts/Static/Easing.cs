@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 // UnityではないC#の場合はMathf.Pow()をMath.Pow()などに置き換えてください
@@ -53,6 +55,20 @@ public readonly struct Easing
         float t = time * inversedEaseTime;
         float v = Operate(type, t);
         return start + delta * v;
+    }
+
+    public async UniTask EaseAsync(CancellationToken token, Action<float> action)
+    {
+        float time = 0f;
+        while(time < 1f / inversedEaseTime)
+        {
+            float t = time * inversedEaseTime;
+            float v = Operate(type, t);
+            action.Invoke(start + delta * v);
+            time += Time.deltaTime;
+            await UniTask.Yield(token);
+        }
+        action.Invoke(start + delta * Operate(type, 1));
     }
 
     static float Operate(EaseType type, float t)

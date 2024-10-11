@@ -13,7 +13,7 @@ public enum NoteType
     Arc,
 }
 
-public abstract class NoteBase : PooledBase
+public abstract class NoteBase : PooledBase, ITransformable
 {
     [SerializeField] NoteType type;
     public NoteType Type => type;

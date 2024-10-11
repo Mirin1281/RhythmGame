@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆スカイ"), System.Serializable]
-    public class F_Sky : Generator_3D
+    public class F_Sky : Generator_Common
     {
         [Serializable]
         public struct SkyNoteData
@@ -57,7 +57,7 @@ namespace NoteGenerating
                 {
                     SkyNote(data.Pos, z);
                 }
-                z += Helper.GetTimeInterval(data.Wait) * Speed;
+                z += Helper.GetTimeInterval(data.Wait) * Speed3D;
             }
 
             float lineZ = 0f;
@@ -66,7 +66,7 @@ namespace NoteGenerating
                 var line = Helper.LinePool.GetLine(1);
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
                 line.transform.SetParent(previewObj.transform);
-                lineZ += Helper.GetTimeInterval(4) * Speed;
+                lineZ += Helper.GetTimeInterval(4) * Speed3D;
                 if(lineZ > z) break;
             }
 

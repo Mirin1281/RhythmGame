@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 namespace NoteGenerating
 {
     [AddTypeMenu("Lyrith/2_1 回転ホールド"), System.Serializable]
-    public class F_Lyrith_RotateHold : Generator_2D
+    public class F_Lyrith_RotateHold : Generator_Common
     {
         protected override async UniTask GenerateAsync()
         {

@@ -8,7 +8,7 @@ namespace NoteGenerating
     // 生成 → 移動
     // AddExpectを動的に設定できたら面白そう
     [AddTypeMenu("Lyrith/2 回転して着地"), System.Serializable]
-    public class F_Lyrith2 : Generator_2D
+    public class F_Lyrith2 : Generator_Common
     {
         [SerializeField] float startY = 7f;
         [SerializeField] NoteType noteType = NoteType.Flick;

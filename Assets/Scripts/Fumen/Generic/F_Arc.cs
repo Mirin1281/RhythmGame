@@ -6,7 +6,7 @@ using System;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆アーク"), System.Serializable]
-    public class F_Arc : Generator_3D
+    public class F_Arc : Generator_Common
     {
         [SerializeField] ArcCreateData[] datas;
 
@@ -35,7 +35,7 @@ namespace NoteGenerating
                 return;
             }
             arc.SetActive(true);
-            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse, Helper.DebugSpherePrefab);
+            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed3D, IsInverse, Helper.DebugSpherePrefab);
 
             GameObject previewObj = MyUtility.GetPreviewObject();
             float lineY = 0f;
@@ -44,7 +44,7 @@ namespace NoteGenerating
                 var line = Helper.LinePool.GetLine(1);
                 line.SetPos(new Vector3(0, 0, lineY));
                 line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * Speed;
+                lineY += Helper.GetTimeInterval(4) * Speed3D;
                 if(lineY > arc.LastZ) break;
             }
         }

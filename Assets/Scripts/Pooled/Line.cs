@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class Line : PooledBase
+public class Line : PooledBase, ITransformable
 {
     [SerializeField] SpriteRenderer spriteRenderer;
 
@@ -62,5 +62,51 @@ public class Line : PooledBase
             await UniTask.Yield(destroyCancellationToken);
         }
         SetAlpha(toAlpha);
+    }
+
+    public void FadeIn(float time, float toAlpha = 1f, Easing easing = default)
+    {
+        SetAlpha(0);
+        FadeAlphaAsync(toAlpha, time, easing).Forget();
+    }
+
+    public void FadeOut(float time, float waitSeconds = 0f, bool isDisable = true, Easing easing = default)
+    {
+        UniTask.Void(async () => 
+        {
+            await MyUtility.WaitSeconds(waitSeconds, destroyCancellationToken);
+            await FadeAlphaAsync(0, time, easing);
+            if(isDisable)
+            {
+                SetActive(false);
+            }
+        });
+    }
+
+    public async UniTask MoveAsync(Vector3 toPos, float time, float delta = 0)
+    {
+        var xEasing = new Easing(GetPos().x, toPos.x, time, EaseType.OutQuad);
+        var yEasing = new Easing(GetPos().y, toPos.y, time, EaseType.OutQuad);
+        var zEasing = new Easing(GetPos().z, toPos.z, time, EaseType.OutQuad);
+
+        float t = delta;
+        while(t < time)
+        {
+            t += Time.deltaTime;
+            SetPos(new Vector3(xEasing.Ease(t), yEasing.Ease(t), zEasing.Ease(t)));
+            await UniTask.Yield(destroyCancellationToken);
+        }
+    }
+    public async UniTask RotateAsync(float toRot, float time, float delta = 0)
+    {
+        var easing = new Easing(transform.eulerAngles.z, toRot, time, EaseType.OutQuad);
+
+        float t = delta;
+        while(t < time)
+        {
+            t += Time.deltaTime;
+            SetRotate(easing.Ease(t));
+            await UniTask.Yield(destroyCancellationToken);
+        }
     }
 }

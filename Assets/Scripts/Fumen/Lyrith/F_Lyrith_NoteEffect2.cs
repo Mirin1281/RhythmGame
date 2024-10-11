@@ -5,7 +5,7 @@ namespace NoteGenerating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_BlinkNotes")]
     [AddTypeMenu("Lyrith/【演出】ノーツ上昇"), System.Serializable]
-    public class F_Lyrith_NoteEffect2 : Generator_2D
+    public class F_Lyrith_NoteEffect2 : Generator_Common
     {
         protected override async UniTask GenerateAsync()
         {

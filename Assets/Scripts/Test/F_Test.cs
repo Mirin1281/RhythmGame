@@ -5,7 +5,7 @@ using ArcVertexMode = ArcCreateData.ArcVertexMode;
 namespace NoteGenerating
 {
     [AddTypeMenu("テスト用"), System.Serializable]
-    public class F_Test : Generator_2D
+    public class F_Test : Generator_Common
     {
         [SerializeField, SerializeReference, SubclassSelector]
         IParentGeneratable parentGeneratable;
@@ -150,52 +150,40 @@ namespace NoteGenerating
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
             var parentTs = parentGeneratable.GenerateParent(Delta, Helper);
 
-            /*var line = Helper.PoolManager.LinePool.GetLine();
+            var line = Helper.GetLine();
             line.transform.SetParent(parentTs);
-            line.SetWidth(30f);
-            line.SetHeight(0.1f);
-            line.SetAlpha(1f);
-            line.SetPos(default);
-            line.SetRotate(default);*/
+            line.FadeIn(1);
+            line.SetPos(new Vector3(10, 5));
+            line.SetRotate(default);
+            line.MoveAsync(Vector3.zero, 1.5f, Delta).Forget();
+            line.RotateAsync(720f, 1.5f, Delta).Forget();
+            UniTask.Void(async () => 
+            {
+                await Wait(4, RhythmGameManager.DefaultWaitOnAction, delta: 0);
+                await Wait(1, 3, delta: 0);
+                line.FadeOut(0.5f);
+            });
+
+            // スピードの設定 //
+            // RhythmGameManager.SpeedBaseでダイナミックな速度変更
+            UniTask.Void(async () => 
+            {
+                await Wait(2, 3, 0);
+
+                var easing = new Easing(RhythmGameManager.SpeedBase, 0.3f, 1f, EaseType.OutQuad);
+                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
+                easing = new Easing(RhythmGameManager.SpeedBase, 1f, 1f, EaseType.OutQuad);
+                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
+            });
 
             for(int i = 0; i < 24; i++)
             {
-                GroupNote(parentTs, -5f + i * 0f, NoteType.Slide);
+                var note = Note(-5f + i * 0.5f, NoteType.Slide, isSpeedChangable: true, parentTs: parentTs);
+                if(i % 2 == 0) Hold(i % 4 == 0 ? 5 : 0, 4, isSpeedChangable: true, parentTs: parentTs);
                 await Wait(8);
             }
 
             
-            /*UniTask.Void(async () => 
-            {
-                var parentTs = new GameObject().transform;
-                ParentMoveAsync(parentTs).Forget();
-
-                float delta = Delta;
-                for(int i = 0; i < 24; i++)
-                {
-                    var note = Note_YStatic(-4f, NoteType.Normal, delta); // 動的予測でノーツ生成
-                    note.transform.SetParent(parentTs); // 子の親をセット
-                    delta = await Wait(8, delta: delta);
-                }
-               
-                parentTs.AutoDispose(Helper.Token); // 使用後は破棄する
-            });
-
-            float delta2 = await Wait(1);
-
-            var parentTs2 = new GameObject().transform;
-            ParentMoveAsync(parentTs2).Forget();
-
-            for(int i = 0; i < 24; i++)
-            {
-                var note2 = Note_YStatic(4f, NoteType.Normal, delta2);
-                note2.transform.SetParent(parentTs2);
-                delta2 = await Wait(8, delta: delta2);
-            }
-            
-            parentTs2.AutoDispose(Helper.Token);*/
-
-
             // カメラ制御
             /*Helper.CameraMover.Move(new Vector3(3f, 5f, -10f), null,
                 CameraMoveType.Absolute,
@@ -255,94 +243,6 @@ namespace NoteGenerating
             }
         }
 
-        // グループ化　パターン1 （親のみを動かす代わりに制御が面倒）
-        /*NoteBase_2D Note_YStatic(Transform parentTs, int i, float x, NoteType type, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-            note.transform.SetParent(parentTs);
-            Vector3 startPos = new Vector3(Inverse(x), StartBase + i * Helper.GetTimeInterval(8) * Speed);
-            note.SetPos(startPos);
-            
-            //DropAsync(note, startPos, delta).Forget();
-
-            float distance = StartBase - delta * Speed;
-            float expectTime = CurrentTime + distance / Speed;
-            NoteExpect expect = new NoteExpect(note, 
-                new Vector3(default, 0), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
-            Helper.NoteInput.AddExpect(expect);
-            return note;
-        }
-        async UniTask ParentMoveAsync(Transform parentTs, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            float baseTime = CurrentTime - delta;
-            float t = 0f;
-            var vec = new Vector3(0, -Speed, 0);
-            //var vec = Vector3.zero;
-            while (parentTs && t < 10f)
-            {
-                t = CurrentTime - baseTime;
-                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0) + vec * t;
-                await Helper.Yield();
-            }
-        }*/
-
-        NoteBase_2D GroupNote(Transform parentTs, float x, NoteType type, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-            note.transform.SetParent(parentTs);
-            note.SetRotate(0);
-            Vector3 startPos = new Vector3(ConvertIfInverse(x), StartBase);
-            DropAsync(note, startPos, delta).Forget();
-
-            float distance = StartBase - delta * Speed;
-            float expectTime = CurrentTime + distance / Speed;
-
-            float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
-            Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-            Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
-            return note;
-        }
-        async UniTask ParentMoveAsync(Transform parentTs, float delta = -1)
-        {
-            if(delta == -1)
-            {
-                delta = Delta;
-            }
-            float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while (parentTs && t < 10f)
-            {
-                t = CurrentTime - baseTime;
-                parentTs.localRotation = Quaternion.Euler(0, 0, 4f * Mathf.Sin(t * 2f));
-                await Helper.Yield();
-            }
-            //parentTs.localRotation = Quaternion.Euler(0, 0, 30);
-
-            /*if(delta == -1)
-            {
-                delta = Delta;
-            }
-            float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while (parentTs && t < 10f)
-            {
-                t = CurrentTime - baseTime;
-                parentTs.localPosition = new Vector3(2f * Mathf.Sin(t * 2f), 0);
-                await Helper.Yield();
-            }*/
-        }
 
         void Circle(Vector2 pos)
         {
