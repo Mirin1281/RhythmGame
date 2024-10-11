@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using NoteGenerating;
 using UnityEngine;
-using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
-using System.Linq;
 using System.Threading;
 
 [CreateAssetMenu(

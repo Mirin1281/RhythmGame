@@ -148,7 +148,7 @@ namespace NoteGenerating
 
             // グループ化のテスト //
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
-            var parentTs = parentGeneratable.GenerateParent(Delta, Helper);
+            var parentTs = parentGeneratable.GenerateParent(Delta, Helper, IsInverse);
 
             var line = Helper.GetLine();
             line.transform.SetParent(parentTs);
@@ -176,9 +176,19 @@ namespace NoteGenerating
                 await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
             });
 
+            UniTask.Void(async () => 
+            {
+                await Wait(1, 6, 0);
+
+                var easing = new Easing(RhythmGameManager.SpeedBase, 0.3f, 1f, EaseType.OutQuad);
+                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
+                easing = new Easing(RhythmGameManager.SpeedBase, 1f, 1f, EaseType.OutQuad);
+                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
+            });
+
             for(int i = 0; i < 24; i++)
             {
-                var note = Note(-5f + i * 0.5f, NoteType.Slide, isSpeedChangable: true, parentTs: parentTs);
+                var note = Note2D(-5f + i * 0.5f, NoteType.Slide, isSpeedChangable: true, parentTs: parentTs);
                 if(i % 2 == 0) Hold(i % 4 == 0 ? 5 : 0, 4, isSpeedChangable: true, parentTs: parentTs);
                 await Wait(8);
             }

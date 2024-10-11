@@ -9,7 +9,8 @@ public class SaveLoadUtility
 #if UNITY_EDITOR
     readonly static int encryptKey = 0;
 #else
-    readonly static int encryptKey = 90;
+    readonly static int encryptKey = 0;
+    //readonly static int encryptKey = 90;
 #endif
 
     static string GetFilePath(string fileName)

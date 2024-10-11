@@ -10,27 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: GenerateData_F_H_Lyrith 4
+  m_Name: GenerateData_F_H_Lyrith 5
   m_EditorClassIdentifier: 
   enable: 0
-  beatTiming: 1
+  beatTiming: 0
   generatable:
-    rid: 8711923641520488453
+    rid: 9146111811889659905
   references:
     version: 2
     RefIds:
-    - rid: 8711923641520488453
-      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 9146111811889659905
+      type: {class: F_Line, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
-        isInverse: 0
-        delay: 0
-        settings:
+        isInverse: 1
+        datas:
         - wait: 0
-          isPosMove: 0
-          pos: {x: 0, y: 0, z: 0}
-          isRotateMove: 1
-          rotate: {x: 0, y: 0, z: 90}
-          isRotateClamp: 0
-          time: 0
-          easeType: 0
-          moveType: 0
+          pos: {x: 0, y: 0}
+          deg: 30
+          lpbTime: {x: 8, y: 1, z: 8}
+          alpha: 1

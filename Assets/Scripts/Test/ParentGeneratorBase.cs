@@ -7,23 +7,25 @@ namespace NoteGenerating
 {
     public interface IParentGeneratable
     {
-        Transform GenerateParent(float delta, NoteGenerateHelper helper);
+        Transform GenerateParent(float delta, NoteGenerateHelper helper, bool isInverse);
     }
 
     public abstract class ParentGeneratorBase : IParentGeneratable
     {
-        Transform IParentGeneratable.GenerateParent(float delta, NoteGenerateHelper helper)
+        Transform IParentGeneratable.GenerateParent(float delta, NoteGenerateHelper helper, bool isInverse)
         {
             Delta = delta;
             Helper = helper;
+            this.isInverse = isInverse;
 
             var note = Helper.GetNote2D(NoteType.Normal);
             note.SetSprite(null);
             note.SetPos(Vector3.zero);
+            note.transform.SetParent(null);
             var parentTs = note.transform;
             MoveParentAsync(note).Forget();
 
-            AutoDispose(note, helper.Token);
+            AutoDispose(parentTs, helper.Token);
             return parentTs;
         }
 
@@ -52,6 +54,14 @@ namespace NoteGenerating
         protected float Delta { get; set; }
 
         protected float CurrentTime => Helper.Metronome.CurrentTime;
+
+        bool isInverse;
+        protected bool IsInverse { get => isInverse; set => isInverse = value; }
+        
+        /// <summary>
+        /// IsInverseがtrueの時、-1倍して返します
+        /// </summary>
+        protected float ConvertIfInverse(float x) => x * (isInverse ? -1 : 1);
 
         protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {
@@ -151,26 +161,26 @@ namespace NoteGenerating
         /// <summary>
         /// 自動で親を破棄します
         /// </summary>
-        static void AutoDispose(PooledBase parent, CancellationToken token)
+        static void AutoDispose(Transform ts, CancellationToken token)
         {
             UniTask.Void(async () => 
             {
                 await UniTask.DelayFrame(2, cancellationToken: token);
-                await UniTask.WaitUntil(() => !IsAnyChildrenActive(parent), cancellationToken: token);
-                int childCount = parent.transform.childCount;
+                await UniTask.WaitUntil(() => !IsAnyChildrenActive(ts) && ts.childCount != 0, cancellationToken: token);
+                int childCount = ts.childCount;
                 for(int i = 0; i < childCount; i++)
                 {
-                    parent.transform.GetChild(0).SetParent(null);
+                    ts.GetChild(0).SetParent(null);
                 }
-                parent.SetActive(false);
+                ts.gameObject.SetActive(false);
             });
 
 
-            static bool IsAnyChildrenActive(PooledBase parent)
+            static bool IsAnyChildrenActive(Transform ts)
             {
-                for(int i = 0; i < parent.transform.childCount; i++)
+                for(int i = 0; i < ts.childCount; i++)
                 {
-                    if(parent.transform.GetChild(i).gameObject.activeSelf)
+                    if(ts.GetChild(i).gameObject.activeSelf)
                     {
                         return true;
                     }

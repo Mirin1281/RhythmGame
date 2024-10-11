@@ -10,9 +10,7 @@ public class NoteGenerateHelper : MonoBehaviour
 {
     static readonly float DebugBPM = 200;
 
-    [field: SerializeField] public NotePoolManager PoolManager { get; private set; }
-    [field: SerializeField] public LinePool LinePool { get; private set; }
-    
+    [field: SerializeField] public NotePoolManager PoolManager { get; private set; }    
     [field: SerializeField] public NoteInput NoteInput { get; private set; }
     [field: SerializeField] public Metronome Metronome { get; private set; }
     [field: SerializeField] public CameraMover CameraMover { get; private set; }
@@ -21,7 +19,6 @@ public class NoteGenerateHelper : MonoBehaviour
     public CancellationToken Token => destroyCancellationToken;
 
     public NoteBase_2D GetNote2D(NoteType type) => PoolManager.GetNote2D(type);
-    public HoldNote GetHold() => PoolManager.HoldPool.GetNote();
     public HoldNote GetHold(float length)
     {
         var hold = PoolManager.HoldPool.GetNote();

@@ -88,7 +88,7 @@ public class Common
 	{
 		get {
 			if (Application.platform == RuntimePlatform.Android) {
-				return Application.dataPath + "/StreamingAssets/ADX2Files";
+				return "ADX2Files";
 			}
 			else {
 				return Application.streamingAssetsPath + "/ADX2Files";

@@ -41,7 +41,7 @@ namespace NoteGenerating
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                var line = Helper.LinePool.GetLine(1);
+                var line = Helper.PoolManager.LinePool.GetLine(1);
                 line.SetPos(new Vector3(0, 0, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * Speed3D;

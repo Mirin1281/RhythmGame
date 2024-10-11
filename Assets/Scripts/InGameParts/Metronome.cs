@@ -43,7 +43,8 @@ public class Metronome : MonoBehaviour, IVolumeChangable
         bpm = MusicData.Bpm;
         atomSource.cueSheet = MusicData.SheetName;
         atomSource.cueName = MusicData.CueName;
-        
+
+#if UNITY_EDITOR
         if(skipOnStart)
         {
             float skipTime = atomSource.GetLength() * timeRate;
@@ -60,6 +61,7 @@ public class Metronome : MonoBehaviour, IVolumeChangable
                 }
             }
         }
+#endif
 
         playback = atomSource.Play();
         UpdateTimerAsync(beatCount).Forget();

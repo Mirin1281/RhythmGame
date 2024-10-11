@@ -3,11 +3,10 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using System;
 using System.Collections.Generic;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using Cysharp.Threading.Tasks;
 
 public class InputManager : MonoBehaviour
 {
-    Camera mainCamera;
+    [SerializeField] Camera mainCamera;
     
     public readonly struct Input : IEquatable<Input>
     {
@@ -43,9 +42,8 @@ public class InputManager : MonoBehaviour
     public event Action<Input> OnUp;
     public event Action<Input> OnFlick;
 
-    void Start()
+    void Awake()
     {
-        mainCamera = Camera.main;
         EnhancedTouchSupport.Enable();
         Touch.onFingerDown += OnFingerDown;
         Touch.onFingerMove += OnFingerMove;
@@ -65,12 +63,14 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
+        if(finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
         Input input = GetInput(finger);
         OnDown?.Invoke(input);
         flickInputs.Add(new FlickInput(finger));
     }
     void OnFingerMove(Finger finger)
     {
+        if(finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
         /*var f = flickInputs.Where(f => f.index == finger.index).FirstOrDefault();
         if(f.Equals(default)) return;
         if (Mathf.Abs(finger.screenPosition.y - f.startPos.y) >= posDiff
@@ -101,6 +101,7 @@ public class InputManager : MonoBehaviour
     }
     void OnFingerUp(Finger finger)
     {
+        if(finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
         OnUp?.Invoke(GetInput(finger));
 
         for(int i = 0; i < flickInputs.Count; i++)
@@ -117,6 +118,7 @@ public class InputManager : MonoBehaviour
         inputs.Clear();
         foreach(var touch in Touch.activeTouches)
         {
+            if(touch.screenPosition.x > 10000 || touch.screenPosition.x < -10000) continue;
             var input = GetInput(touch.finger);
             inputs.Add(input);
         }

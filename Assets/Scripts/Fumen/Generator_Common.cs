@@ -25,13 +25,9 @@ namespace NoteGenerating
         /// ノーツの初期生成地点
         /// </summary>
         protected float StartBase => 2f * Speed + 0.2f;
-
-        /// <summary>
-        /// ノーツの初期生成地点
-        /// </summary>
         protected float StartBase3D => 2f * Speed3D + 0.2f;
 
-        protected NoteBase_2D Note(float x, NoteType type, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
+        protected NoteBase_2D Note2D(float x, NoteType type, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
         {
             if(delta == -1)
             {
@@ -179,7 +175,7 @@ namespace NoteGenerating
             {
                 if(nullableX is float x)
                 {
-                    Note(x, type, Delta);
+                    Note2D(x, type, Delta);
                 }
                 await Wait(lpb);
             }

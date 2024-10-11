@@ -1,8 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using System.Reflection;
-using System.Text;
 
 namespace NoteGenerating
 {
@@ -35,8 +33,15 @@ namespace NoteGenerating
         }
 
         [SerializeField] float speedRate = 1f;
+
+        [SerializeField] bool isSpeedChangable;
+
+        [SerializeField, SerializeReference, SubclassSelector]
+        IParentGeneratable parentGeneratable;
+
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = false;
+        
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
         protected override float Speed => base.Speed * speedRate;
@@ -47,20 +52,22 @@ namespace NoteGenerating
             float beforeTime = -1;
             NoteBase_2D beforeNote = null;
 
+            var parentTs = parentGeneratable?.GenerateParent(Delta, Helper, IsInverse);
+
             foreach(var data in noteDatas)
             {
                 var type = data.Type;
                 if(type == CreateNoteType.Normal)
                 {
-                    MyNote(data.X, NoteType.Normal, data.Width);
+                    MyNote(data.X, NoteType.Normal, data.Width, parentTs);
                 }
                 else if(type == CreateNoteType.Slide)
                 {
-                    MyNote(data.X, NoteType.Slide, data.Width);
+                    MyNote(data.X, NoteType.Slide, data.Width, parentTs);
                 }
                 else if(type == CreateNoteType.Flick)
                 {
-                    MyNote(data.X, NoteType.Flick, data.Width);
+                    MyNote(data.X, NoteType.Flick, data.Width, parentTs);
                 }
                 else if(type == CreateNoteType.Hold)
                 {
@@ -69,46 +76,117 @@ namespace NoteGenerating
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
                     }
-                    MyHold(data.X, data.Length, data.Width);
+                    MyHold(data.X, data.Length, data.Width, parentTs);
                 }
                 await Wait(data.Wait);
             }
 
 
-            void MyNote(float x, NoteType type, float width)
+            void MyNote(float x, NoteType type, float width, Transform parentTs)
             {
                 NoteBase_2D note = Helper.GetNote2D(type);
+                if(parentTs != null)
+                {
+                    note.transform.SetParent(parentTs);
+                    note.transform.localRotation = default;
+                }
                 if((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
                 Vector3 startPos = new (ConvertIfInverse(x), StartBase);
-                DropAsync(note, startPos).Forget();
+                if(isSpeedChangable)
+                {
+                    DropAsync_SpeedChangable(note).Forget();
+                }
+                else
+                {
+                    DropAsync(note, startPos).Forget();
+                }
 
                 float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
-
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime,
+                        isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
+                }
                 SetSimultaneous(note, expectTime);
+
+
+                async UniTask DropAsync_SpeedChangable(NoteBase_2D note)
+                {
+                    float baseTime = CurrentTime - Delta;
+                    float time = 0f;
+                    while (note.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        var vec = Speed * Vector3.down;
+                        note.SetPos(new Vector3(ConvertIfInverse(x), StartBase) + time * vec);
+                        await Helper.Yield();
+                    }
+                }
             }
 
-            void MyHold(float x, float length, float width)
+            void MyHold(float x, float length, float width, Transform parentTs)
             {
                 float holdTime = Helper.GetTimeInterval(length);
                 HoldNote hold = Helper.GetHold(holdTime * Speed);
+                if(parentTs != null)
+                {
+                    hold.transform.SetParent(parentTs);
+                    hold.transform.localRotation = default;
+                }
                 if((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
                 Vector3 startPos = new (ConvertIfInverse(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                DropAsync(hold, startPos).Forget();
+                if(isSpeedChangable)
+                {
+                    DropAsync_SpeedChangable(hold).Forget();
+                }
+                else
+                {
+                    DropAsync(hold, startPos).Forget();
+                }
 
                 float distance = startPos.y - Speed * Delta;
                 float expectTime = CurrentTime + distance / Speed;
-                Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
-
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime,
+                        holdTime, isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
+                }
                 SetSimultaneous(hold, expectTime);
+
+
+                async UniTask DropAsync_SpeedChangable(HoldNote hold)
+                {
+                    float baseTime = CurrentTime - Delta;
+                    float time = 0f;
+                    while (hold.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        var vec = Speed * Vector3.down;
+                        hold.SetLength(holdTime * Speed);
+                        hold.SetPos(new Vector3(ConvertIfInverse(x), StartBase, -0.04f) + time * vec);
+                        await Helper.Yield();
+                    }
+                }
             }
 
             // 同時押しをこのコマンド内でのみチェックします。
@@ -198,7 +276,7 @@ namespace NoteGenerating
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                var line = Helper.LinePool.GetLine();
+                var line = Helper.PoolManager.LinePool.GetLine();
                 line.SetPos(new Vector3(0, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * Speed;

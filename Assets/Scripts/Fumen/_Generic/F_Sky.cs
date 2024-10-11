@@ -63,7 +63,7 @@ namespace NoteGenerating
             float lineZ = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                var line = Helper.LinePool.GetLine(1);
+                var line = Helper.PoolManager.LinePool.GetLine(1);
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
                 line.transform.SetParent(previewObj.transform);
                 lineZ += Helper.GetTimeInterval(4) * Speed3D;

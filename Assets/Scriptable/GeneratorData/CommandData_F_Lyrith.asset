@@ -12,18 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: CommandData_F_Lyrith
   m_EditorClassIdentifier: 
-  enable: 0
+  enable: 1
   beatTiming: 0
   generatable:
     rid: 932862425523290114
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 932862425523290114
       type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
-        isInverse: 0
+        isInverse: 1
         speedRate: 1
+        isSpeedChangable: 0
+        parentGeneratable:
+          rid: -2
         isCheckSimultaneous: 0
         noteDatas:
         - type: 0

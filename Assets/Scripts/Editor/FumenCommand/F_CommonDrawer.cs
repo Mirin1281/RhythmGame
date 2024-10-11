@@ -90,6 +90,14 @@ namespace NoteGenerating.Editor
             EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
 
             position.y += EditorGUIUtility.singleLineHeight;
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("isSpeedChangable"));
+
+            position.y += EditorGUIUtility.singleLineHeight;
+            var parentProp = property.FindPropertyRelative("parentGeneratable");
+            EditorGUI.PropertyField(new Rect(position.x - 15, position.y, position.width + 15, position.height), parentProp);
+
+
+            position.y += EditorGUI.GetPropertyHeight(parentProp);
             EditorGUI.PropertyField(position, property.FindPropertyRelative("isCheckSimultaneous"));
 
             position.y += EditorGUIUtility.singleLineHeight;

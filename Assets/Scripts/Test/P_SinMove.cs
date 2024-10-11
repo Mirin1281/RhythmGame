@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("親テスト用"), System.Serializable]
+    [AddTypeMenu("親テスト用(なにもしない)"), System.Serializable]
     public class P_SinMove : ParentGeneratorBase
     {
         [SerializeField] float moveTime = 10f;
@@ -11,7 +11,7 @@ namespace NoteGenerating
         protected override async UniTask MoveParentAsync(NoteBase parent)
         {
             await UniTask.CompletedTask;
-            VibrationMove(parent).Forget();
+            //VibrationMove(parent).Forget();
             //parent.SetRotate(30);
         }
 

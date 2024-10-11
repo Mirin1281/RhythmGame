@@ -19,11 +19,16 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 932862425523290114
       type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
         speedRate: 0.9
+        isSpeedChangable: 0
+        parentGeneratable:
+          rid: -2
         isCheckSimultaneous: 0
         noteDatas:
         - type: 2

@@ -159,6 +159,14 @@ public class Judgement : MonoBehaviour
         await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
         Destroy(obj);
     }
+    public async UniTask DebugShowRange(Vector2 pos)
+    {
+        var obj = Instantiate(debugNoteRangePrefab, transform);
+        obj.transform.localPosition = pos;
+        obj.transform.localScale = new Vector3(2f, 2f);
+        await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
+        Destroy(obj);
+    }
 
     public void SetCombo(NoteGrade grade)
     {

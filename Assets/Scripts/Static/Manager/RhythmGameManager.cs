@@ -32,10 +32,14 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static Difficulty Difficulty { get; set; } = Difficulty.Normal;
     public static int SelectedIndex { get; set; } = -1;
 
+#if UNITY_EDITOR
     /// <summary>
     /// falseにするとデフォルトの設定が使用されます
     /// </summary>
     static readonly bool useJsonData = false;
+#else
+    static readonly bool useJsonData = true;
+#endif
 
     /// <summary>
     /// カメラ制御の際など、ノーツの生成と異なり即座に影響を与えるコマンドは待機させた方が
@@ -104,6 +108,15 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             {
                 CriAtom.AddCueSheet(c.sheet, c.name + ".acb", "");
             }
+        }
+    }
+
+    // OnApplicationQuitはタスクキルすると呼ばれないっぽい
+    void OnApplicationPause(bool goBack)
+    {
+        if (goBack)
+        {
+            OnApplicationQuit();
         }
     }
 

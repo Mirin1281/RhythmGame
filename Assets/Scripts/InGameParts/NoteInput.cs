@@ -193,6 +193,7 @@ public class NoteInput : MonoBehaviour
 
     void OnDown(Input input)
     {
+        judge.DebugShowRange(input.pos).Forget();
         (NoteExpect expect, float delta) = FetchNearestNote(
             input.pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold, NoteType.Sky);
         if(expect == null) return;

@@ -23,8 +23,6 @@ namespace NoteGenerating
             generatable.Generate(helper, delta);
         }
 
-#if UNITY_EDITOR
-
         /// <summary>
         /// NoteGeneratorBaseをキャストして返します
         /// </summary>
@@ -32,6 +30,8 @@ namespace NoteGenerating
         {
             return generatable as NoteGeneratorBase;
         }
+
+#if UNITY_EDITOR
 
         static readonly Color NullColor = new Color(0.8f, 0.8f, 0.8f, 1f);
 
