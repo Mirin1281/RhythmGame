@@ -15,15 +15,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 0
   generatable:
-    rid: 9146111788307972096
+    rid: 9146111827465732102
   references:
     version: 2
     RefIds:
-    - rid: 9146111788307972096
+    - rid: 9146111827465732102
       type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
         speedRate: 1
+        isSpeedChangable: 0
+        parentGeneratable:
+          rid: 9146111827465732105
         isCheckSimultaneous: 0
         noteDatas:
         - type: 0
@@ -91,3 +94,7 @@ MonoBehaviour:
           wait: 4
           width: 0
           length: 2
+    - rid: 9146111827465732105
+      type: {class: P_Direction, ns: NoteGenerating, asm: Assembly-CSharp}
+      data:
+        deg: 0

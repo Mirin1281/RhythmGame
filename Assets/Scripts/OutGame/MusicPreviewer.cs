@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
@@ -7,7 +8,16 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
 {
     [SerializeField] CriAtomSource source;
     CancellationTokenSource cts = new();
-    string cueSheetName;
+    List<string> loadedCueSheetNames;
+
+    // RemoveCueSheet()は重いので、ロードした曲を覚えてシーン移動時にまとめて削除
+    void OnDestroy()
+    {
+        foreach(var n in loadedCueSheetNames)
+        {
+            CriAtom.RemoveCueSheet(n);
+        }
+    }
 
     void IVolumeChangable.ChangeVolume(float value)
     {
@@ -16,15 +26,21 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
     
     public async UniTask MusicPreview(MusicData musicData)
     {
+        loadedCueSheetNames ??= new();
         cts?.Cancel();
         cts = new();
         cts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken, cts.Token);
         var token = cts.Token;
 
-        source.cueSheet = cueSheetName = musicData.SheetName;
+        string sheet = musicData.SheetName;
+        source.cueSheet = sheet;
         source.cueName = musicData.CueName;
         source.startTime = Mathf.RoundToInt(musicData.PreviewStart * 1000f);
-        await MyUtility.LoadCueSheetAsync(musicData.SheetName);
+        if(loadedCueSheetNames.Contains(sheet) == false)
+        {
+            await MyUtility.LoadCueSheetAsync(sheet);
+            loadedCueSheetNames.Add(sheet);
+        }
 
         float time = musicData.PreviewStart;
         FadeInAsync(0.5f, token).Forget();
@@ -42,12 +58,11 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
         }
     }
 
-    public async void Stop(float fadeTime = 0f)
+    public async UniTask Stop(float fadeTime = 0f)
     {
         cts?.Cancel();
         await FadeOutAsync(fadeTime, destroyCancellationToken);
         source.Stop();
-        CriAtom.RemoveCueSheet(cueSheetName);
     }
 
     async UniTask FadeInAsync(float time, CancellationToken token)

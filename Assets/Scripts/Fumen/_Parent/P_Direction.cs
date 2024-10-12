@@ -13,5 +13,11 @@ namespace NoteGenerating
             parent.SetRotate(ConvertIfInverse(deg));
             await UniTask.CompletedTask;
         }
+
+        public override string CSVContent1
+        {
+            get => deg.ToString();
+            set => deg = float.Parse(value);
+        }
     }
 }

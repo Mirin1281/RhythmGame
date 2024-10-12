@@ -24,6 +24,8 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] Image illustImage;
     [SerializeField] TMP_Text illustratorTmpro;
+
+    [SerializeField] TMP_Text debugTmpro;
     
 #if UNITY_EDITOR
     [SerializeField] bool isSavable;

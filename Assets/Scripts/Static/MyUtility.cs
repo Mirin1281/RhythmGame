@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
+using NoteGenerating;
 using UnityEngine;
 
 public static class MyUtility
@@ -83,7 +84,7 @@ public static class MyUtility
     /// <summary>
     /// 入力された配列内の値をフォーマットに従って文字列に変換します
     /// </summary>
-    public static string GetContentFrom<T>(T[] array)
+    public static string GetContentFrom<T>(T[] array, string separator = "|")
     {
         StringBuilder sb = new ();
         for(int i = 0; i < array.Length; i++)
@@ -95,7 +96,7 @@ public static class MyUtility
         return sb.ToString();
 
 
-        static StringBuilder GetFieldContent(T t)
+        StringBuilder GetFieldContent(T t)
         {
             StringBuilder sb = new ();
             Type type = typeof(T);
@@ -105,7 +106,7 @@ public static class MyUtility
                 object v = fields[i].GetValue(t);
                 sb.Append(v);
                 if(i == fields.Length - 1) break;
-                sb.Append("|");
+                sb.Append(separator);
             }
             return sb;
         }
@@ -114,6 +115,17 @@ public static class MyUtility
     /// <summary>
     /// 入力された値をフォーマットに従って文字列に変換します
     /// </summary>
+    public static string GetContentFrom(string separator = "|", params object[] objects)
+    {
+        string text = null;
+        for(int i = 0; i < objects.Length; i++)
+        {
+            text += objects[i];
+            if(i == objects.Length - 1) break;
+            text += separator;
+        }
+        return text;
+    }
     public static string GetContentFrom(params object[] objects)
     {
         string text = null;
@@ -129,7 +141,7 @@ public static class MyUtility
     /// <summary>
     /// 配列を入力されたフォーマットに従って生成します
     /// </summary>
-    public static T[] GetArrayFrom<T>(string content)
+    public static T[] GetArrayFrom<T>(string content, string separator = "|")
     {
         if(string.IsNullOrWhiteSpace(content)) return null;
         var txts = content.Split("\n");
@@ -141,9 +153,9 @@ public static class MyUtility
         return array;
 
 
-        static T GetInstanceFromContent(string content)
+        T GetInstanceFromContent(string content)
         {
-            var fTxts = content.Split('|');
+            var fTxts = content.Split(separator);
             Type type = typeof(T);
             object instance = Activator.CreateInstance(type);
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -168,6 +180,38 @@ public static class MyUtility
             }
             var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
             return converter.ConvertFrom(stringValue);
+        }
+    }
+
+    /// <summary>
+    /// クラスを型名から生成します
+    /// </summary>
+    public static T CreateInstance<T>(string className, string namespaceName = nameof(NoteGenerating)) where T : class
+    {
+        Type t = GetTypeByClassName(className, namespaceName);
+        if (t == null)
+        {
+            return null;
+        }
+        return Activator.CreateInstance(t) as T;
+
+
+        static Type GetTypeByClassName(string className, string namespaceName)
+        {
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (type.Name == className && 
+                        type.Namespace == namespaceName)
+                    {
+                        return type;
+                    }
+                }
+            }
+            Debug.LogWarning($"{className}クラスが見つかりませんでした！\n" +
+                $"タイポもしくは{className}クラスが名前空間{namespaceName}内に存在しない可能性があります");
+            return null;
         }
     }
 }

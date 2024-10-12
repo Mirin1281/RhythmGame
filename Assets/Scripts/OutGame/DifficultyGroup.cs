@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using UnityEngine;
 
@@ -84,7 +85,7 @@ public class DifficultyGroup : MonoBehaviour
         {
             RhythmGameManager.Difficulty = difficulty;
         }
-        previewer.Stop(0.5f);
+        previewer.Stop(0.5f).Forget();
         FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
         Debug.Log($"楽曲名: {data.MusicData.MusicName}\n" +
             $"難易度: {RhythmGameManager.Difficulty} {data.GetFumenData(RhythmGameManager.Difficulty).Level}");

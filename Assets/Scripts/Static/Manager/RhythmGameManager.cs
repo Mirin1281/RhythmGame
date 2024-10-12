@@ -83,7 +83,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
             SettingIsMirror = false;
 
-            Difficulty = Difficulty.Normal;
+            Difficulty = Difficulty.Hard;
             SelectedIndex = -1;
         }
     }

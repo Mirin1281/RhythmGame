@@ -206,13 +206,21 @@ namespace NoteGenerating
             }
             float baseTime = CurrentTime - delta;
             float time = 0f;
-            var vec = RhythmGameManager.Speed3D * Vector3.back;
+            var vec = Speed3D * Vector3.back;
             while (note.IsActive && time < 5f)
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
                 await Helper.Yield();
             }
+        }
+
+        /// <summary>
+        /// Parentを生成します
+        /// </summary>
+        protected Transform CreateParent(IParentGeneratable parentGeneratable)
+        {
+            return parentGeneratable?.GenerateParent(Delta, Helper, IsInverse);
         }
     }
 }

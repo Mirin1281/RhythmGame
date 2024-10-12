@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -52,7 +53,7 @@ namespace NoteGenerating
             float beforeTime = -1;
             NoteBase_2D beforeNote = null;
 
-            var parentTs = parentGeneratable?.GenerateParent(Delta, Helper, IsInverse);
+            var parentTs = CreateParent(parentGeneratable);
 
             foreach(var data in noteDatas)
             {
@@ -336,14 +337,15 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(IsInverse, speedRate, isCheckSimultaneous);
+            get => MyUtility.GetContentFrom(IsInverse, speedRate, isSpeedChangable, isCheckSimultaneous);
             set
             {
                 var texts = value.Split('|');
 
                 IsInverse = bool.Parse(texts[0]);
                 speedRate = float.Parse(texts[1]);
-                isCheckSimultaneous = bool.Parse(texts[2]);
+                isSpeedChangable = bool.Parse(texts[2]);
+                isCheckSimultaneous = bool.Parse(texts[3]);
             }
         }
 
@@ -351,6 +353,12 @@ namespace NoteGenerating
         {
             get => MyUtility.GetContentFrom(noteDatas);
             set => noteDatas = MyUtility.GetArrayFrom<NoteData>(value);
+        }
+
+        public override string CSVContent3
+        {
+            get => parentGeneratable?.GetContent();
+            set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
         }
     }
 }

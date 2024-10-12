@@ -33,7 +33,7 @@ public class UpdatorOnChange : MonoBehaviour
     // 曲が変更された際に呼ばれる
     void UpdateUIAndMusic(MusicMasterData data)
     {
-        previewer.Stop(0f);
+        previewer.Stop(0f).Forget();
         previewer.MusicPreview(data.MusicData).Forget();
         titleTmpro.SetText(data.MusicData.MusicName);
         composerTmpro.SetText(data.MusicData.ComposerName);

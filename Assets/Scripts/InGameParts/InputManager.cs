@@ -3,6 +3,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using System;
 using System.Collections.Generic;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Cysharp.Threading.Tasks;
 
 public class InputManager : MonoBehaviour
 {
@@ -28,7 +29,8 @@ public class InputManager : MonoBehaviour
     {
         public readonly int index;
         public Vector2 currentPos;
-        public const float PosDiff = 40f; // フリックの感度
+        public bool enabled;
+        public const float PosDiff = 300f; // フリックの感度
         public FlickInput(Finger finger)
         {
             index = finger.index;
@@ -83,21 +85,39 @@ public class InputManager : MonoBehaviour
         {
             var flickInput = flickInputs[i];
             if(flickInput.index != finger.index) continue;
-            if (Vector2.Distance(finger.screenPosition, flickInput.currentPos) > FlickInput.PosDiff)
+
+            var vec = (finger.screenPosition - flickInput.currentPos) / Time.deltaTime / 100;
+            if (vec.sqrMagnitude > FlickInput.PosDiff)
             {
-                //PulseFlash().Forget();
-                OnFlick?.Invoke(GetInput(flickInput));
+                if(flickInput.enabled == false)
+                {
+                    PulseFlash().Forget();
+                    OnFlick?.Invoke(GetInput(flickInput));
+                    flickInput.enabled = true;
+                }
             }
+            else
+            {
+                flickInput.enabled = false;
+            }
+            /*if (Vector2.Distance(finger.screenPosition, flickInput.currentPos) > FlickInput.PosDiff)
+            {
+                var vec = finger.screenPosition - flickInput.currentPos;
+                flickInput.dir = Mathf.Atan2(vec.y, vec.x);
+                //Debug.Log(flickInput.dir * Mathf.Rad2Deg);
+                PulseFlash().Forget();
+                OnFlick?.Invoke(GetInput(flickInput));
+            }*/
             flickInput.currentPos = finger.screenPosition;
         }
 
 
-        /*async UniTask PulseFlash()
+        async UniTask PulseFlash()
         {
             mainCamera.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
             await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
             mainCamera.backgroundColor = Color.white;
-        }*/
+        }
     }
     void OnFingerUp(Finger finger)
     {

@@ -8,6 +8,8 @@ namespace NoteGenerating
     public interface IParentGeneratable
     {
         Transform GenerateParent(float delta, NoteGenerateHelper helper, bool isInverse);
+        string GetContent();
+        string CSVContent1 { get; set; }
     }
 
     public abstract class ParentGeneratorBase : IParentGeneratable
@@ -34,18 +36,8 @@ namespace NoteGenerating
         NoteGenerateHelper helper;
         protected NoteGenerateHelper Helper
         {
-            get
-            {
-                if(helper == null)
-                {
-                    helper = GameObject.FindAnyObjectByType<NoteGenerateHelper>();
-                }
-                return helper;
-            }
-            private set
-            {
-                helper = value;
-            }
+            get => helper;
+            private set => helper = value;
         }
 
         /// <summary>
@@ -188,5 +180,38 @@ namespace NoteGenerating
                 return false;
             }
         }
+
+        public static ParentGeneratorBase CreateFrom(string content)
+        {
+            var className = content.Split(Separator)[0];
+            var instance = MyUtility.CreateInstance<ParentGeneratorBase>(className);
+            int index = content.IndexOf(Separator);
+            if(index == -1)
+            {
+                return instance;
+            }
+            var other = content.Remove(0, index + 1);
+            instance.CSVContent1 = other;
+            return instance;
+        }
+
+        protected const string Separator = "!";
+        
+        string IParentGeneratable.GetContent()
+        {
+            var tmpArray = this.ToString().Split('.');
+            var className = tmpArray[^1];
+            var addStatus = CSVContent1;
+            if(addStatus == null)
+            {
+                return className;
+            }
+            else
+            {
+                return className + Separator + addStatus;
+            }
+        }
+
+        public virtual string CSVContent1 { get; set; }
     }
 }

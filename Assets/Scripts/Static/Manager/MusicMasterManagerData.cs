@@ -80,6 +80,7 @@ public class MusicMasterManagerData : ScriptableObject
 
         scoreData.GameScores[index] = new GameScore(s.FumenName, score, isFullCombo);
         await SaveLoadUtility.SetData(scoreData, ConstContainer.ScoreDataName);
+        Debug.Log("データが保存されました");
         return beforeScore;
     }
 

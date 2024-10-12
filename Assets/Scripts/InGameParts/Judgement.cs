@@ -119,6 +119,7 @@ public class Judgement : MonoBehaviour
     void Awake()
     {
         comboText.SetText("0");
+        judgeText.SetText("");
         lightDic = new(4);
         result = new Result(inGameManager.MasterData);
     }
