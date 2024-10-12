@@ -5,7 +5,7 @@ using System;
 namespace NoteGenerating
 {
     [AddTypeMenu("◆判定線"), System.Serializable]
-    public class F_Line : Generator_Common, IInversableCommand
+    public class F_Line : Generator_Common
     {
         [Serializable]
         struct LineData

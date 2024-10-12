@@ -193,8 +193,8 @@ public class CameraMover : MonoBehaviour
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), m.Time, m.EaseType),
-                        a * t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType),
-                        a * t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType));
+                        t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType),
+                        t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType));
                 });
             }
             else
@@ -203,8 +203,8 @@ public class CameraMover : MonoBehaviour
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, m.Rotate.x, m.Time, m.EaseType),
-                        a * t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType),
-                        a * t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType));
+                        t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType),
+                        t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType));
                 });
             }
         }

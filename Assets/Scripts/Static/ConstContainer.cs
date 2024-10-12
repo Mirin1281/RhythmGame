@@ -5,6 +5,9 @@ public static class ConstContainer
 {
     public static readonly string DATA_PATH = "Assets/Scriptable/GeneratorData";
 
+    public static readonly string InGameSceneName = "InGame";
+    public static readonly string TestSceneName = "FumenTest";
+
     public static readonly string ScoreDataName = "ScoreData";
     public static readonly string GameDataName = "GameData";
 

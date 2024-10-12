@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
@@ -341,6 +342,8 @@ namespace NoteGenerating.Editor
 
                 if(EditorApplication.isPlaying == false)
                 {
+                    if (SceneManager.GetActiveScene().name != ConstContainer.InGameSceneName
+                     && SceneManager.GetActiveScene().name != ConstContainer.TestSceneName) return;
                     lastSelectedCommand.GetNoteGeneratorBase()?.OnSelect();
                 }
             }

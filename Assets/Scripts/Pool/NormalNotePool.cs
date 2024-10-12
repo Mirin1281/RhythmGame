@@ -14,7 +14,7 @@ public class NormalNotePool : PoolBase<NormalNote>
         n.SetWidth(1f);
         n.transform.localScale = Vector3.one;
         n.SetRendererEnabled(true);
-        //n.SetSprite(defaultSprite);
+        n.SetSprite(defaultSprite);
         n.SetAlpha(1f);
         //n.SetColor(isDarkMode ? Color.white : Color.black);
         n.transform.SetParent(this.transform);

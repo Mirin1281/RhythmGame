@@ -3,20 +3,15 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    public abstract class Generator_Common : NoteGeneratorBase, IInversableCommand
+    public abstract class Generator_Common : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse { get => isInverse; set => isInverse = value; }
+        protected bool IsInverse { get => isInverse ^ RhythmGameManager.SettingIsMirror; set => isInverse = value; }
         
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
         /// </summary>
-        protected float ConvertIfInverse(float x) => x * (isInverse ? -1 : 1);
-
-        void IInversableCommand.SetToggleInverse()
-        {
-            isInverse = !isInverse;
-        }
+        protected float ConvertIfInverse(float x) => x * (IsInverse ? -1 : 1);
 
         protected virtual float Speed => RhythmGameManager.Speed;
         protected virtual float Speed3D => RhythmGameManager.Speed3D;

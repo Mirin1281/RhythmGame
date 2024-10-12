@@ -14,9 +14,10 @@ namespace NoteGenerating
         {
             await UniTask.CompletedTask;
 
+
             // これから来る譜面がカットインするやつ
 
-            // 星型にノーツやレーンを
+            // 星型にノーツやレーンを //
             /*for(int i = 0; i < 5; i++)
             {
                 var note = Helper.GetNote2D(NoteType.Slide);
