@@ -108,7 +108,7 @@ namespace NoteGenerating
         {
             var skyNote = Helper.GetSky();
             var startPos = new Vector3(ConvertIfInverse(x), y, StartBase3D);
-            DropAsync_3D(skyNote, startPos).Forget();
+            DropAsync3D(skyNote, startPos).Forget();
             skys.Add(skyNote);
 
             float distance = startPos.z - Speed3D * Delta;

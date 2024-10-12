@@ -274,7 +274,7 @@ public class ArcNote : NoteBase
         {
             if(IsInvalid)
             {
-                SetColor(new Color(0.9f, 0f, 0f, 0.9f));
+                meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
                 return;
             }
             noInputTime = 0f;
@@ -283,9 +283,9 @@ public class ArcNote : NoteBase
         meshRenderer.material.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
     }
 
-    void SetColor(Color color)
+    public void SetRadius(float radius)
     {
-        meshRenderer.sharedMaterial.color = color;
+        splineExtrude.Radius = radius;
     }
 
     /// <summary>

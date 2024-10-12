@@ -12,6 +12,7 @@ public class ArcNotePool : PoolBase<ArcNote>
         n.transform.localRotation = default;
         n.SetRendererEnabled(true);
         n.transform.SetParent(lane3D.transform);
+        n.SetRadius(0.5f);
         return n;
     }
 }

@@ -33,7 +33,7 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+            NoteBase_2D note = Helper.GetNote2D(type);
             if(parentTs != null)
             {
                 note.transform.SetParent(parentTs);
@@ -147,7 +147,7 @@ namespace NoteGenerating
             }
             SkyNote sky = Helper.GetSky();
             var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase3D);
-            DropAsync_3D(sky, startPos, delta).Forget();
+            DropAsync3D(sky, startPos, delta).Forget();
 
             float distance = startPos.z - Speed3D * delta;
             float expectTime = distance / Speed3D + CurrentTime;
@@ -155,16 +155,32 @@ namespace NoteGenerating
             return sky;
         }
 
-        protected ArcNote Arc(ArcCreateData[] datas, float delta = -1)
+        protected ArcNote Arc(ArcCreateData[] datas, bool is2D = false, float delta = -1)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed3D, IsInverse).Forget();
-            var startPos = new Vector3(0, 0f, StartBase3D);
-            DropAsync_3D(arc, startPos, delta).Forget();
+            if(is2D)
+            {
+                arc.SetRadius(0.4f);
+                arc.Is2D = true;
+                arc.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+            }
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * (is2D ? Speed : Speed3D), IsInverse).Forget();
+
+            Vector3 startPos;
+            if(is2D)
+            {
+                startPos = new Vector3(0, StartBase);
+                DropAsync(arc, startPos, delta).Forget();
+            }
+            else
+            {
+                startPos = new Vector3(0, 0f, StartBase3D);
+                DropAsync3D(arc, startPos, delta).Forget();
+            }
             Helper.NoteInput.AddArc(arc);
             return arc;
         }
@@ -182,7 +198,7 @@ namespace NoteGenerating
             return Delta;
         }
 
-        protected async UniTask DropAsync(NoteBase_2D note, Vector3 startPos, float delta = -1)
+        protected async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
         {
             if(delta == -1)
             {
@@ -198,7 +214,7 @@ namespace NoteGenerating
                 await Helper.Yield();
             }
         }
-        protected async UniTask DropAsync_3D(NoteBase note, Vector3 startPos, float delta = -1)
+        protected async UniTask DropAsync3D(NoteBase note, Vector3 startPos, float delta = -1)
         {
             if(delta == -1)
             {

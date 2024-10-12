@@ -405,7 +405,7 @@ public class NoteInput : MonoBehaviour
             var arcPos = arc.GetPos();
             var arcDownPos = arc.Is2D ? -arcPos.y : arcPos.z;
             if(arcDownPos < 0) continue; // まだ到達していない
-            if(arcDownPos > arc.LastZ + 1) // アークが完全に通り過ぎた
+            if(arcDownPos > arc.LastZ + 3) // アークが完全に通り過ぎた
             {
                 arcs.RemoveAt(i);
                 arc.SetActive(false);

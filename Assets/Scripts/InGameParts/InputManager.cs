@@ -91,7 +91,7 @@ public class InputManager : MonoBehaviour
             {
                 if(flickInput.enabled == false)
                 {
-                    PulseFlash().Forget();
+                    //PulseFlash().Forget();
                     OnFlick?.Invoke(GetInput(flickInput));
                     flickInput.enabled = true;
                 }
@@ -112,12 +112,12 @@ public class InputManager : MonoBehaviour
         }
 
 
-        async UniTask PulseFlash()
+        /*async UniTask PulseFlash()
         {
             mainCamera.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
             await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
             mainCamera.backgroundColor = Color.white;
-        }
+        }*/
     }
     void OnFingerUp(Finger finger)
     {

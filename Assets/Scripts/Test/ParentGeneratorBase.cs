@@ -21,7 +21,7 @@ namespace NoteGenerating
             this.isInverse = isInverse;
 
             var note = Helper.GetNote2D(NoteType.Normal);
-            note.SetSprite(null);
+            note.SetAlpha(0);
             note.SetPos(Vector3.zero);
             note.transform.SetParent(null);
             var parentTs = note.transform;

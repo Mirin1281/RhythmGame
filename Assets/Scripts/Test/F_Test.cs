@@ -10,98 +10,62 @@ namespace NoteGenerating
         [SerializeField, SerializeReference, SubclassSelector]
         IParentGeneratable parentGeneratable;
 
-        //protected override float Speed => base.Speed * 5f;
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
 
-            // 3Dレーンに2Dノーツを流す //
-            /*NoteBase_2D Note(float x, NoteType type, float delta = -1)
+            // これから来る譜面がカットインするやつ
+
+            // 星型にノーツやレーンを
+            /*for(int i = 0; i < 5; i++)
+            {
+                var note = Helper.GetNote2D(NoteType.Slide);
+                var dir = i * 360 / 5f;
+                note.SetRotate(dir);
+                note.SetWidth(2);
+                note.SetPos(new Vector3(0, 4) + new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad)));
+            }*/
+
+            // オバラピみたいにレーンによって傾きの異なる
+            /*NoteBase_2D Note2D_Lane(int x, NoteType type, float delta = -1, Transform parentTs = null)
             {
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
-                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-                note.transform.localRotation = Quaternion.Euler(90, 0, 0); //
-                note.SetWidth(1.4f); //
-                note.SetHeight(5f); //
-                Vector3 startPos = new Vector3(Inverse(x), 0.04f, StartBase); //
+                NoteBase_2D note = Helper.GetNote2D(type);
+                if(parentTs != null)
+                {
+                    note.transform.SetParent(parentTs);
+                    note.transform.localRotation = default;
+                }
+                int dir = 10 * x;
+                note.SetRotate(dir);
+                Vector3 toPos = x switch
+                {
+                    -2 => new Vector3(-8, 1.5f),
+                    -1 => new Vector3(-4, 0.5f),
+                    0 => new Vector3(0, 0f),
+                    1 => new Vector3(4, 0.5f),
+                    2 => new Vector3(8, 1.5f),
+                    _ => throw new System.Exception()
+                };
+                Vector3 startPos = toPos + StartBase * new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad));
                 DropAsync(note, startPos, delta).Forget();
 
-                float distance = startPos.z - Speed * delta;
+                float distance = StartBase - Speed * delta;
                 float expectTime = CurrentTime + distance / Speed;
-                NoteExpect expect = new NoteExpect(note, new Vector2(startPos.x, 0), expectTime);
-                Helper.NoteInput.AddExpect(expect);
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(note, toPos, expectTime, mode: NoteExpect.ExpectMode.Static);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(note, toPos + pos, expectTime, mode: NoteExpect.ExpectMode.Static);
+                }
                 return note;
-            }
-            HoldNote Hold(float x, float length, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                HoldNote hold = Helper.GetHold();
-                float holdTime = Helper.GetTimeInterval(length);
-                hold.transform.localRotation = Quaternion.Euler(90, 0, 0); //
-                hold.SetLength(holdTime * Speed);
-                hold.SetWidth(1.4f); //
-                Vector3 startPos = new Vector3(Inverse(x), StartBase, -0.04f);
-                hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                base.DropAsync(hold, startPos, delta).Forget();
-
-                float distance = startPos.y - Speed * delta;
-                float expectTime = CurrentTime + distance / Speed;
-                float holdEndTime = expectTime + holdTime;
-                NoteExpect expect = new NoteExpect(hold, new Vector2(startPos.x, 0), expectTime, holdEndTime: holdEndTime);
-                Helper.NoteInput.AddExpect(expect);
-                return hold;
-            }
-
-            async UniTask DropAsync(NoteBase_2D note, Vector3 startPos, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                float baseTime = CurrentTime - delta;
-                float time = 0f;
-                var vec = new Vector3(0, 0, -Speed);
-                while (note.IsActive && time < 5f)
-                {
-                    time = CurrentTime - baseTime;
-                    note.SetPos(startPos + time * vec);
-                    await Helper.Yield();
-                }
-            }
-
-
-            await Wait(4);
-            Hold(2, 4);
-            await Wait(4);
-            Hold(0, 2);
-            await Wait(2);
-            Note(-2, NoteType.Normal);
-            await Wait(2);
-            Note(0, NoteType.Flick);
-            */
-
-
-            // 2Dアーク //
-            /*ArcNote Arc2D(ArcCreateData[] datas, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                ArcNote arc = Helper.GetArc();
-                arc.Is2D = true;
-                arc.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, IsInverse).Forget();
-                var startPos = new Vector3(0, StartBase);
-                DropAsync(arc, startPos, delta).Forget();
-                Helper.NoteInput.AddArc(arc);
-                return arc;
 
 
                 async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
@@ -112,7 +76,7 @@ namespace NoteGenerating
                     }
                     float baseTime = CurrentTime - delta;
                     float time = 0f;
-                    var vec = new Vector3(0, -Speed);
+                    var vec = Speed * new Vector3(Mathf.Cos((dir + 270) * Mathf.Deg2Rad), Mathf.Sin((dir + 270) * Mathf.Deg2Rad));
                     while (note.IsActive && time < 5f)
                     {
                         time = CurrentTime - baseTime;
@@ -121,18 +85,566 @@ namespace NoteGenerating
                     }
                 }
             }
+            void Line(float dir, Vector3 pos)
+            {
+                var line = Helper.GetLine();
+                line.SetRotate(dir);
+                line.SetPos(pos);
+            }
 
-            Arc2D(new ArcCreateData[]
+            Line(-20, new Vector3(-8, 1.5f));
+            Line(-10, new Vector3(-4, 0.5f));
+            Line(0, new Vector3(0, 0));
+            Line(10, new Vector3(4, 0.5f));
+            Line(20, new Vector3(8, 1.5f));
+
+            await Wait(4);
+            Note2D_Lane(-2, NoteType.Normal);
+            await Wait(4);
+            Note2D_Lane(-1, NoteType.Normal);
+            await Wait(4);
+            Note2D_Lane(0, NoteType.Normal);
+            await Wait(4);
+            Note2D_Lane(1, NoteType.Normal);
+            await Wait(2);
+            Note2D_Lane(2, NoteType.Normal);*/
+
+
+
+            // ラインリズムに合わせて点滅 //
+            /*await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+
+            Line[] lines = new Line[4];
+            for(int i = 0; i < lines.Length; i++)
+            {
+                var line = Helper.GetLine();
+                line.FadeIn(0.3f, 0.3f);
+                var d = i * 360f / lines.Length;
+                line.SetPos(new Vector3(0, 4) + 5f * new Vector3(Mathf.Cos(d * Mathf.Deg2Rad), Mathf.Sin(d * Mathf.Deg2Rad)));
+                line.SetRotate(d + 45);
+                lines[i] = line;
+            }
+
+            await Wait(4);
+
+            void Blink(int i)
+            {
+                lines[i].SetAlpha(1);
+                lines[i].FadeAlphaAsync(0.3f, 0.2f).Forget();
+            }
+
+            Blink(0);
+            await Wait(4);
+            Blink(1);
+            await Wait(4);
+            Blink(2);
+            await Wait(4);
+            Blink(3);
+            await Wait(2);
+            Blink(0);
+            await Wait(2);*/
+            
+
+
+            
+
+            // ノーツ場所移動 //
+            /*int flg = 0;
+
+            NoteBase_2D Note2D_Unmove(float x, NoteType type, float delta = -1, Transform parentTs = null)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                if(parentTs != null)
+                {
+                    note.transform.SetParent(parentTs);
+                    note.transform.localRotation = default;
+                }
+                Vector3 startPos = new (ConvertIfInverse(x), StartBase, -0.04f);
+
+                float distance = startPos.y - Speed * delta;
+                float expectTime = CurrentTime + distance / Speed;
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(note, expectTime);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+                }
+                return note;
+            }
+            async UniTask DummyDropAsync(NoteBase note, Vector3 startPos, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                float baseTime = CurrentTime - delta;
+                float time = 0f;
+                var vec = Speed * Vector3.down;
+                while (note.IsActive && time < 5f)
+                {
+                    time = CurrentTime - baseTime;
+                    if(flg == 2)
+                    {
+                        note.SetPos(startPos + time * vec);
+                    }
+                    else if(flg == 1)
+                    {
+                        note.SetPos(startPos + new Vector3(0.5f, 0) + time * vec);
+                    }
+                    else
+                    {
+                        note.SetPos(new Vector3(-4, StartBase) + time * vec);
+                    }
+                    await Helper.Yield();
+                }
+            }
+
+            UniTask.Void(async () => 
+            {
+                await Wait(4, RhythmGameManager.DefaultWaitOnAction, delta: 0);
+                flg = 1;
+                await Helper.Yield();
+                flg = 2;
+            });
+
+            Note2D(4, NoteType.Normal);
+            await Wait(4);
+
+            DummyDropAsync(Note2D_Unmove(-4, NoteType.Normal), new Vector3(-4, StartBase)).Forget();
+            await Wait(16);
+            DummyDropAsync(Note2D_Unmove(-1.5f, NoteType.Slide), new Vector3(-1.5f, StartBase)).Forget();
+            await Wait(16);
+            DummyDropAsync(Note2D_Unmove(0, NoteType.Slide), new Vector3(0, StartBase)).Forget();
+            await Wait(16);
+            DummyDropAsync(Note2D_Unmove(-1.5f, NoteType.Slide), new Vector3(-1.5f, StartBase)).Forget();
+            await Wait(16);
+            DummyDropAsync(Note2D_Unmove(-4, NoteType.Slide), new Vector3(-4, StartBase)).Forget();*/
+
+            
+            
+
+
+            // カメラ移動して下からノーツ生成
+            /*UniTask.Void(async () => 
+            {
+                await Wait(4, RhythmGameManager.DefaultWaitOnAction, delta: 0);
+                Helper.CameraMover.Move(new Vector3(0, -4, -10), null,
+                    CameraMoveType.Absolute, 3f, EaseType.OutBack);
+            });
+
+            await Wait(4);
+            RotateNote2(-2, NoteType.Normal);
+            await Wait(4);
+            RotateNote2(0, NoteType.Normal);
+            await Wait(4);
+            RotateNote2(2, NoteType.Normal, 180);
+            await Wait(4);
+            RotateNote2(4, NoteType.Normal, 180);
+            await Wait(2);
+            RotateNote2(-4, NoteType.Normal, 180);*/
+            
+
+            // 円のようにノーツ生成 (正解)
+            /*NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                if(parentTs != null)
+                {
+                    note.transform.SetParent(parentTs);
+                    note.transform.localRotation = default;
+                }
+                float distance = StartBase - Speed * delta;
+                float moveTime = StartBase / Speed;
+                float expectTime = CurrentTime + distance / Speed;
+                CurveAsync(note, moveTime, delta).Forget();
+
+                
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(note, expectTime);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+                }
+                return note;
+
+
+                async UniTask CurveAsync(NoteBase note, float moveTime, float delta = -1)
+                {
+                    if(delta == -1)
+                    {
+                        delta = Delta;
+                    }
+                    float baseTime = CurrentTime - delta;
+                    float time = 0f;
+                    while (note.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        float dir = (moveTime - time) * Speed / radius;
+                        if(inverse)
+                        {
+                            note.SetPos(new Vector3(x + radius, 0) + radius * new Vector3(Mathf.Cos(Mathf.PI + dir), Mathf.Sin(dir)));
+                            note.SetRotate(-dir * Mathf.Rad2Deg);
+                        }
+                        else
+                        {
+                            note.SetPos(new Vector3(x - radius, 0) + radius * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir)));
+                            note.SetRotate(dir * Mathf.Rad2Deg);
+                        }
+                        await Helper.Yield();
+                    }
+                }
+            }
+
+            await Wait(4);
+            Note2D(-2, NoteType.Normal);
+            NoteCircle(0, NoteType.Normal);
+            await Wait(4);
+            NoteCircle(0, NoteType.Normal, true);
+            await Wait(4);
+            NoteCircle(-2, NoteType.Normal);
+            await Wait(4);*/
+
+
+            // 円のようにノーツ生成 (失敗したけどこれもアリ)
+            // Speedを倍にするといい感じ
+            /*NoteBase_2D Note2D_Curve(float x, NoteType type, bool inverse = false, float radius = 10f, float delta = -1, Transform parentTs = null)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
+                if(parentTs != null)
+                {
+                    note.transform.SetParent(parentTs);
+                    note.transform.localRotation = default;
+                }
+                float distance = StartBase - Speed * delta;
+                float expectTime = CurrentTime + distance / Speed;
+                CurveAsync(note, StartBase / Speed, delta).Forget();
+                
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(note, expectTime);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+                }
+                return note;
+
+
+                async UniTask CurveAsync(NoteBase note, float moveTime, float delta = -1)
+                {
+                    if(delta == -1)
+                    {
+                        delta = Delta;
+                    }
+                    float baseTime = CurrentTime - delta;
+                    float time = 0f;
+                    while (note.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        float dir = (moveTime - time) * Speed / radius;
+                        if(inverse)
+                        {
+                            note.SetPos(new Vector3(2 * x - x * Mathf.Cos(dir), radius * Mathf.Sin(dir)));
+                        }
+                        else
+                        {
+                            note.SetPos(new Vector3(x * Mathf.Cos(dir), radius * Mathf.Sin(dir)));
+                        }
+                        
+                        await Helper.Yield();
+                    }
+                }
+            }
+
+            await Wait(4);
+            Note2D_Curve(0, NoteType.Normal);
+            await Wait(4);
+            Note2D_Curve(0, NoteType.Normal, true);
+            await Wait(4);
+            Note2D_Curve(0, NoteType.Normal);
+            await Wait(4);
+            Note2D_Curve(3, NoteType.Normal, true);
+            await Wait(2);
+            Note2D_Curve(3, NoteType.Normal);
+            await Wait(2);
+            Note2D_Curve(3, NoteType.Normal, true);
+            await Wait(4);
+            Note2D_Curve(3, NoteType.Normal);
+            await Wait(4);
+            Note2D_Curve(3, NoteType.Normal, true);
+            await Wait(4);
+            Note2D_Curve(3, NoteType.Normal);
+            await Wait(4);
+            Note2D_Curve(3, NoteType.Normal, true);*/
+
+
+
+            // ライン斜めにして下から上へ飛ばす(ループコマンドとか欲しい) //
+            /*float time = 2f;
+            for(int i = 0; i < 8; i++)
+            {
+                var line = Helper.GetLine();
+                line.SetAlpha(0.3f);
+                int a = i % 2 == 0 ? 1 : -1;
+                WhileYield(time, t => 
+                {
+                    line.SetPos(new Vector3(0, t.Ease(-3, 20, time, EaseType.InQuad)));
+                    line.SetRotate(t.Ease(0, a * 20, time, EaseType.OutBack));
+                });
+                await Wait(2);
+            }*/
+
+
+
+            // ロングを押して無からノーツエフェクト生成 //
+            // Distorted Fateの最後のやつ
+            /*NoteBase_2D EffectNote(Vector2 inputPos, Vector2 pos, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.PoolManager.GetNote2D(NoteType.Slide);
+                note.SetWidth(10);
+                note.SetRotate(Mathf.Atan2(inputPos.y - pos.y, inputPos.x - pos.x) * Mathf.Rad2Deg);
+                note.SetRendererEnabled(false);
+                Vector3 startPos = new (ConvertIfInverse(pos.x), pos.y);
+
+                Helper.NoteInput.AddExpect(note, startPos, CurrentTime - delta, mode: NoteExpect.ExpectMode.Static);
+                return note;
+            }
+
+            Hold(0, 1);
+            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await Wait(4);
+            for(int i = 0; i < 10; i++)
+            {
+                EffectNote(Vector2.zero, new Vector2(-4 + i, 4));
+                await Wait(4);
+            }*/
+
+
+            // ロング分割 (2 => 16, 8, 16, 4に分割) //
+            /*float baseLength = 2;
+            HoldNote baseHold = Helper.GetHold(Helper.GetTimeInterval(baseLength) * Speed);
+            var easing = new Easing(StartBase, 1, 1, EaseType.OutQuad);
+            await WhileYieldAsync(1, t => 
+            {
+                baseHold.SetPos(new Vector3(0, easing.Ease(t)));
+            });
+            baseHold.SetActive(false);
+
+            int[] lengthes = new int[4] { 16, 8, 16, 4 };
+            Vector3 pos = Vector3.zero;
+            for(int i = 0; i < lengthes.Length; i++)
+            {
+                float len = Helper.GetTimeInterval(lengthes[i]) * Speed;
+                pos += i == 0 ? 
+                    baseHold.GetPos() :
+                    new Vector3(0, Helper.GetTimeInterval(lengthes[i - 1]) * Speed);
+                HoldNote hold = Helper.GetHold(len);
+                hold.SetPos(pos);
+
+                
+                UniTask.Void(async () => 
+                {
+                    float time = 1 + i * 0.3f;
+                    int a = i % 2 == 0 ? 1 : -1;
+                    var p = pos;
+                    await WhileYieldAsync(time, t => 
+                    {
+                        hold.SetPos(new Vector3(
+                            t.Ease(p.x, a * (pos.x + 2), time, EaseType.Linear),
+                            t.Ease(p.y, p.y - 20, time, EaseType.InCubic)
+                        ));
+                        hold.SetRotate(t.Ease(a * -10, a * -30, time, EaseType.OutQuad));
+                        hold.SetMaskLocalPos(new Vector2(100, 100));
+                    });
+                    hold.SetActive(false);
+                });
+            }*/
+
+
+            // タップ判定のロング //
+            // holdTimeを0にするだけ
+            /*HoldNote Hold(float x, float length, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                float holdTime = Helper.GetTimeInterval(length);
+                HoldNote hold = Helper.GetHold(holdTime * Speed);
+                if(parentTs != null)
+                {
+                    hold.transform.SetParent(parentTs);
+                    hold.transform.localRotation = default;
+                }
+                Vector3 startPos = new (ConvertIfInverse(x), StartBase, -0.04f);
+                hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+                if(isSpeedChangable)
+                {
+                    DropAsync_SpeedChangable(hold, delta).Forget();
+                }
+                else
+                {
+                    DropAsync(hold, startPos, delta).Forget();
+                }
+
+                float distance = startPos.y - Speed * delta;
+                float expectTime = CurrentTime + distance / Speed;
+                if(parentTs == null)
+                {
+                    Helper.NoteInput.AddExpect(hold, expectTime, 0);
+                }
+                else
+                {
+                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
+                    Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime, 0, mode: NoteExpect.ExpectMode.Y_Static);
+                }
+                return hold;
+
+
+                async UniTask DropAsync_SpeedChangable(HoldNote hold, float delta = -1)
+                {
+                    if(delta == -1)
+                    {
+                        delta = Delta;
+                    }
+                    float baseTime = CurrentTime - delta;
+                    float time = 0f;
+                    while (hold.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        var vec = Speed * Vector3.down;
+                        hold.SetLength(holdTime * Speed);
+                        hold.SetPos(new Vector3(ConvertIfInverse(x), StartBase, -0.04f) + time * vec);
+                        await Helper.Yield();
+                    }
+                }
+            }
+            Hold(0, 1);*/
+
+
+#region Test1
+
+            // 3Dレーンに2Dノーツを流す //
+            /*NoteBase_2D Note3D(float x, NoteType type, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                NoteBase_2D note = Helper.GetNote2D(type);
+                note.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                note.SetWidth(1.4f);
+                note.SetHeight(5f);
+                Vector3 startPos = new Vector3(ConvertIfInverse(x), 0.04f, StartBase3D);
+                DropAsync3D(note, startPos, delta).Forget();
+
+                float distance = startPos.z - Speed3D * delta;
+                float expectTime = CurrentTime + distance / Speed3D;
+                Helper.NoteInput.AddExpect(note, expectTime);
+                return note;
+            }
+            HoldNote Hold(float x, float length, float delta = -1)
+            {
+                if(delta == -1)
+                {
+                    delta = Delta;
+                }
+                float holdTime = Helper.GetTimeInterval(length);
+                HoldNote hold = Helper.GetHold(holdTime * Speed3D);
+                hold.SetRotate(new Vector3(90, 0, 0));
+                hold.SetWidth(1.4f);
+                Vector3 startPos = new Vector3(ConvertIfInverse(x), 0.04f, StartBase3D);
+                hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+                DropAsync3D(hold, startPos, delta).Forget();
+
+                float distance = startPos.z - Speed3D * delta;
+                float expectTime = CurrentTime + distance / Speed3D;
+                Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+                return hold;
+            }
+
+            await Wait(4);
+            Hold(2, 4);
+            await Wait(4);
+            Hold(0, 2);
+            await Wait(2);
+            Note3D(-2, NoteType.Normal);
+            await Wait(2);
+            Note3D(0, NoteType.Flick);*/
+            
+    
+            // 2Dアーク //
+            /*Arc(new ArcCreateData[]
             {
                 new(new(0, 0, 0), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(0, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(-6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
                 new(new(0, 0, 4), ArcVertexMode.Linear, true, false, 0, 4),
-            });*/
+            }, is2D: true);*/
+
 
             // 円ノーツのテスト //
-            /*await Wait(1);
+            /*void Circle(Vector2 pos)
+            {
+                var note = Helper.PoolManager.NormalPool.GetNote(1);
+                MoveAsync(note, pos).Forget();
+                Helper.NoteInput.AddExpect(note, pos, CurrentTime + 120f / Helper.Metronome.Bpm);
+
+
+                async UniTask MoveAsync(NormalNote note, Vector3 startPos)
+                {
+                    note.SetPos(startPos);
+                    float baseTime = CurrentTime - Delta;
+                    float t = 0f;
+                    while (note.IsActive && t < 3f)
+                    {
+                        t = CurrentTime - baseTime;
+                        note.transform.localScale = Vector3.one * t.Ease(1.5f, 0f, 120f / Helper.Metronome.Bpm, EaseType.InQuad);
+                        await Helper.Yield();
+                    }
+                }
+            }
+            async UniTask LoopCreateCircle(int lpb, params (int x, int y)?[] poses)
+            {
+                for(int i = 0; i < poses.Length; i++)
+                {
+                    if(poses[i] is (int, int) pos)
+                    {
+                        Circle(new Vector2(pos.x, pos.y));
+                    }
+                    await Wait(lpb);
+                }
+            }
+
+            await Wait(1);
             await Wait(4);
             await LoopCreateCircle(4,
                 (3, 5),
@@ -142,13 +654,11 @@ namespace NoteGenerating
                 null,
                 (0, 3),
                 null
-            );
-
-            return;*/
+            );*/
 
             // グループ化のテスト //
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
-            var parentTs = parentGeneratable.GenerateParent(Delta, Helper, IsInverse);
+            /*var parentTs = parentGeneratable.GenerateParent(Delta, Helper, IsInverse);
 
             var line = Helper.GetLine();
             line.transform.SetParent(parentTs);
@@ -191,7 +701,7 @@ namespace NoteGenerating
                 var note = Note2D(-5f + i * 0.5f, NoteType.Slide, isSpeedChangable: true, parentTs: parentTs);
                 if(i % 2 == 0) Hold(i % 4 == 0 ? 5 : 0, 4, isSpeedChangable: true, parentTs: parentTs);
                 await Wait(8);
-            }
+            }*/
 
             
             // カメラ制御
@@ -209,6 +719,39 @@ namespace NoteGenerating
             );*/
 
             // 斜め飛ばし
+            
+            void RotateNote(Vector2 pos, NoteType type, float deg)
+            {
+                NoteBase_2D note = Helper.GetNote2D(type);
+                note.SetRotate(deg);
+                Vector2 startPos = MyUtility.GetRotatedPos(new Vector2(ConvertIfInverse(pos.x), StartBase + pos.y), deg, pos);
+                RotateDropAsync(note, startPos, deg).Forget();
+
+                float distance = StartBase - Speed * Delta;
+                float expectTime = CurrentTime + distance / Speed;
+                Helper.NoteInput.AddExpect(note, expectTime);
+
+
+                async UniTask RotateDropAsync(NoteBase_2D note, Vector2 startPos, float deg)
+                {
+                    float baseTime = CurrentTime - Delta;
+                    float time = 0f;
+                    var vec = new Vector3(0, -Speed, 0);
+                    while (note.IsActive && time < 5f)
+                    {
+                        time = CurrentTime - baseTime;
+                        note.SetPos(startPos + MyUtility.GetRotatedPos(time * vec, deg));
+                        await Helper.Yield();
+                    }
+                }
+            }
+#pragma warning disable CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
+            void RotateNote2(float x, NoteType type, float deg = 0)
+            {
+                RotateNote(new Vector2(x, 0), type, deg);
+            }
+#pragma warning restore CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
+
             /*for(int i = 0; i < 18; i++)
             {
                 NoteBase_2D n = Helper.GetNote2D(NoteType.Normal);
@@ -224,67 +767,8 @@ namespace NoteGenerating
             await Wait(4);
             RotateNote(new Vector2(-3, 0), NoteType.Normal, 180f);
             await Wait(4);*/
-        }
 
-        void RotateNote(Vector2 pos, NoteType type, float deg)
-        {
-            NoteBase_2D note = Helper.GetNote2D(type);
-            note.SetRotate(deg);
-            note.SetWidth(2);
-            Vector2 startPos = MyUtility.GetRotatedPos(new Vector2(ConvertIfInverse(pos.x), StartBase + pos.y), deg, pos);
-            RotateDropAsync(note, startPos, deg).Forget();
-
-            float distance = StartBase - Speed * Delta;
-            float expectTime = CurrentTime + distance / Speed;
-            Helper.NoteInput.AddExpect(note, expectTime);
-
-
-            async UniTask RotateDropAsync(NoteBase_2D note, Vector2 startPos, float deg)
-            {
-                float baseTime = CurrentTime - Delta;
-                float time = 0f;
-                var vec = new Vector3(0, -Speed, 0);
-                while (note.IsActive && time < 5f)
-                {
-                    time = CurrentTime - baseTime;
-                    note.SetPos(startPos + MyUtility.GetRotatedPos(time * vec, deg));
-                    await Helper.Yield();
-                }
-            }
-        }
-
-
-        void Circle(Vector2 pos)
-        {
-            var note = Helper.PoolManager.NormalPool.GetNote(1);
-            MoveAsync(note, pos).Forget();
-            Helper.NoteInput.AddExpect(note, pos, CurrentTime + 120f / Helper.Metronome.Bpm);
-
-
-            async UniTask MoveAsync(NormalNote note, Vector3 startPos)
-            {
-                note.SetPos(startPos);
-                float baseTime = CurrentTime - Delta;
-                float t = 0f;
-                while (note.IsActive && t < 3f)
-                {
-                    t = CurrentTime - baseTime;
-                    note.transform.localScale = Vector3.one * t.Ease(1.5f, 0f, 120f / Helper.Metronome.Bpm, EaseType.InQuad);
-                    await Helper.Yield();
-                }
-            }
-        }
-
-        async UniTask LoopCreateCircle(int lpb, params (int x, int y)?[] poses)
-        {
-            for(int i = 0; i < poses.Length; i++)
-            {
-                if(poses[i] is (int, int) pos)
-                {
-                    Circle(new Vector2(pos.x, pos.y));
-                }
-                await Wait(lpb);
-            }
+            #endregion
         }
     }
 }

@@ -7,7 +7,7 @@ public class HoldNotePool : PoolBase<HoldNote>
     {
         var n = GetInstance();
         n.State =  HoldNote.InputState.Idle;
-        n.transform.localRotation = default;
+        n.SetRotate(Vector3.zero);
         n.SetRotate(0);
         n.SetWidth(1f);
         n.transform.localScale = Vector3.one;

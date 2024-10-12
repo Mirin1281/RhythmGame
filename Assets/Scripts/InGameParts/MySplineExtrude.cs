@@ -18,6 +18,11 @@ public class MySplineExtrude : MonoBehaviour
     [SerializeField] bool m_Capped = true;
 
     [SerializeField] float m_Radius = 0.25f;
+    public float Radius
+    {
+        get => m_Radius;
+        set => m_Radius = value;
+    }
 
     [SerializeField] Vector2 m_Range = new Vector2(0f, 1f);
 
