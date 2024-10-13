@@ -6,12 +6,16 @@ namespace NoteGenerating
     public abstract class Generator_Common : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse { get => isInverse ^ RhythmGameManager.SettingIsMirror; set => isInverse = value; }
+        protected bool IsInverse
+        {
+            get => isInverse ^ RhythmGameManager.SettingIsMirror;
+            set => isInverse = value;
+        }
         
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
         /// </summary>
-        protected float ConvertIfInverse(float x) => x * (IsInverse ? -1 : 1);
+        protected float Inv(float x) => x * (IsInverse ? -1 : 1);
 
         protected virtual float Speed => RhythmGameManager.Speed;
         protected virtual float Speed3D => RhythmGameManager.Speed3D;
@@ -22,30 +26,35 @@ namespace NoteGenerating
         protected float StartBase => 2f * Speed + 0.2f;
         protected float StartBase3D => 2f * Speed3D + 0.2f;
 
-        protected NoteBase_2D Note2D(float x, NoteType type, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
+
+        #region Notes
+
+        /// <summary>
+        /// Normal, Slide, Flickノーツを生成します
+        /// </summary>
+        /// <param name="x">着弾地点のX座標</param>
+        /// <param name="type">Normal, Slide, Flickのどれかを指定</param>
+        /// <param name="delta">生成時間の誤差情報(通常は無視してOK)</param>
+        /// <param name="parentTs">高度な移動をする際の親オブジェクト</param>
+        protected NoteBase_2D Note2D(float x, NoteType type, float delta = -1, bool isMove = true, Transform parentTs = null)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
-            NoteBase_2D note = Helper.GetNote2D(type);
-            if(parentTs != null)
-            {
-                note.transform.SetParent(parentTs);
-                note.transform.localRotation = default;
-            }
-            Vector3 startPos = new (ConvertIfInverse(x), StartBase, -0.04f);
-            if(isSpeedChangable)
-            {
-                DropAsync_SpeedChangable(note, delta).Forget();
-            }
-            else
+            NoteBase_2D note = Helper.GetNote2D(type, parentTs);
+            Vector3 startPos = new (Inv(x), StartBase, -0.04f);
+            if(isMove)
             {
                 DropAsync(note, startPos, delta).Forget();
             }
+            else
+            {
+                note.SetPos(startPos);
+            }
 
-            float distance = startPos.y - Speed * delta;
-            float expectTime = CurrentTime + distance / Speed;
+            // 現在の時間から何秒後に着弾するか
+            float expectTime = startPos.y/Speed - delta;
             if(parentTs == null)
             {
                 Helper.NoteInput.AddExpect(note, expectTime);
@@ -57,51 +66,27 @@ namespace NoteGenerating
                 Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
             }
             return note;
-
-
-            async UniTask DropAsync_SpeedChangable(NoteBase_2D note, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                float baseTime = CurrentTime - delta;
-                float time = 0f;
-                while (note.IsActive && time < 5f)
-                {
-                    time = CurrentTime - baseTime;
-                    var vec = Speed * Vector3.down;
-                    note.SetPos(new Vector3(ConvertIfInverse(x), StartBase, -0.04f) + time * vec);
-                    await Helper.Yield();
-                }
-            }
         }
-        protected HoldNote Hold(float x, float length, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
+        protected HoldNote Hold(float x, float length, float delta = -1, bool isMove = true, Transform parentTs = null)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             float holdTime = Helper.GetTimeInterval(length);
-            HoldNote hold = Helper.GetHold(holdTime * Speed);
-            if(parentTs != null)
-            {
-                hold.transform.SetParent(parentTs);
-                hold.transform.localRotation = default;
-            }
-            Vector3 startPos = new (ConvertIfInverse(x), StartBase, -0.04f);
+            HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
+            Vector3 startPos = new (Inv(x), StartBase, -0.04f);
             hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-            if(isSpeedChangable)
-            {
-                DropAsync_SpeedChangable(hold, delta).Forget();
-            }
-            else
+            if(isMove)
             {
                 DropAsync(hold, startPos, delta).Forget();
             }
+            else
+            {
+                hold.SetPos(startPos);
+            }
 
-            float distance = startPos.y - Speed * delta;
-            float expectTime = CurrentTime + distance / Speed;
+            float expectTime = startPos.y/Speed - delta;
             if(parentTs == null)
             {
                 Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
@@ -113,39 +98,26 @@ namespace NoteGenerating
                 Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime, holdTime, mode: NoteExpect.ExpectMode.Y_Static);
             }
             return hold;
-
-
-            async UniTask DropAsync_SpeedChangable(HoldNote hold, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                float baseTime = CurrentTime - delta;
-                float time = 0f;
-                while (hold.IsActive && time < 5f)
-                {
-                    time = CurrentTime - baseTime;
-                    var vec = Speed * Vector3.down;
-                    hold.SetLength(holdTime * Speed);
-                    hold.SetPos(new Vector3(ConvertIfInverse(x), StartBase, -0.04f) + time * vec);
-                    await Helper.Yield();
-                }
-            }
         }
 
-        protected SkyNote Sky(Vector2 pos, float delta = -1)
+        protected SkyNote Sky(Vector2 pos, float delta = -1, bool isMove = true)
         {
             if(delta == -1)
             {
                 delta = Delta;
             }
             SkyNote sky = Helper.GetSky();
-            var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase3D);
-            DropAsync3D(sky, startPos, delta).Forget();
+            var startPos = new Vector3(Inv(pos.x), pos.y, StartBase3D);
+            if(isMove)
+            {
+                DropAsync3D(sky, startPos, delta).Forget();
+            }
+            else
+            {
+                sky.SetPos(startPos);
+            }
 
-            float distance = startPos.z - Speed3D * delta;
-            float expectTime = distance / Speed3D + CurrentTime;
+            float expectTime = startPos.z/Speed3D - delta;
             Helper.NoteInput.AddExpect(sky, startPos, expectTime);
             return sky;
         }
@@ -192,6 +164,8 @@ namespace NoteGenerating
             }
             return Delta;
         }
+
+        #endregion
 
         protected async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
         {

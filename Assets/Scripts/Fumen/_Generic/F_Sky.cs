@@ -73,7 +73,7 @@ namespace NoteGenerating
             void SkyNote(Vector2 pos, float z)
             {
                 SkyNote sky = Helper.GetSky();
-                var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, z);
+                var startPos = new Vector3(Inv(pos.x), pos.y, z);
                 sky.SetPos(startPos);
                 sky.transform.SetParent(previewObj.transform);
             }

@@ -107,15 +107,14 @@ namespace NoteGenerating
         async UniTask MySky(float x, float y = 4f, bool first = false)
         {
             var skyNote = Helper.GetSky();
-            var startPos = new Vector3(ConvertIfInverse(x), y, StartBase3D);
+            var startPos = new Vector3(Inv(x), y, StartBase3D);
             DropAsync3D(skyNote, startPos).Forget();
             skys.Add(skyNote);
 
-            float distance = startPos.z - Speed3D * Delta;
-            float expectTime = distance / Speed3D + CurrentTime;
+            float expectTime = startPos.z/Speed3D - Delta;
             Helper.NoteInput.AddExpect(skyNote, startPos, expectTime);
 
-            await Helper.WaitSeconds(distance / Speed3D);
+            await Helper.WaitSeconds(expectTime);
             if(first)
             {
                 skys.ForEach(sky => sky.SetRendererEnabled(true));

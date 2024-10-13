@@ -13,7 +13,7 @@ namespace NoteGenerating
             int count = 12;
             for(int i = 0; i < count; i++)
             {
-                var slide = Helper.PoolManager.GetNote2D(NoteType.Slide);
+                var slide = Helper.GetNote2D(NoteType.Slide);
                 float a = i - count / 2f + 0.5f;
                 slide.SetPos(new Vector2(a, a * 0.5f + 4f));
                 MoveAndRotateAsync(slide).Forget();

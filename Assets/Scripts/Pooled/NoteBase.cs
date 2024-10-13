@@ -39,6 +39,10 @@ public abstract class NoteBase : PooledBase, ITransformable
     {
         transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
     }
+    public virtual void SetRotate(Vector3 rot)
+    {
+        transform.localRotation = Quaternion.Euler(rot.x, rot.y, rot.z);
+    }
 
     public virtual void SetRendererEnabled(bool enabled) {}
 

@@ -50,10 +50,10 @@ namespace NoteGenerating
         {
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = new (ConvertIfInverse(x), StartBase);
-            MoveAsync(hold, startPos, ConvertIfInverse(moveX)).Forget();
+            Vector3 startPos = new (Inv(x), StartBase);
+            MoveAsync(hold, startPos, Inv(moveX)).Forget();
 
-            float expectTime = CurrentTime + startPos.y / Speed - Delta;
+            float expectTime = startPos.y/Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
         }
 

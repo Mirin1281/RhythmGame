@@ -35,7 +35,7 @@ namespace NoteGenerating
 
         [SerializeField] float speedRate = 1f;
 
-        [SerializeField] bool isSpeedChangable;
+        [SerializeField] bool isSpeedChangable; // 非推奨: F_SpeedChangeを使用してください
 
         [SerializeField, SerializeReference, SubclassSelector]
         IParentGeneratable parentGeneratable;
@@ -85,17 +85,12 @@ namespace NoteGenerating
 
             void MyNote(float x, NoteType type, float width, Transform parentTs)
             {
-                NoteBase_2D note = Helper.GetNote2D(type);
-                if(parentTs != null)
-                {
-                    note.transform.SetParent(parentTs);
-                    note.transform.localRotation = default;
-                }
+                NoteBase_2D note = Helper.GetNote2D(type, parentTs);
                 if((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
-                Vector3 startPos = new (ConvertIfInverse(x), StartBase);
+                Vector3 startPos = new(Inv(x), StartBase);
                 if(isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(note).Forget();
@@ -105,8 +100,7 @@ namespace NoteGenerating
                     DropAsync(note, startPos).Forget();
                 }
 
-                float distance = startPos.y - Speed * Delta;
-                float expectTime = CurrentTime + distance / Speed;
+                float expectTime = startPos.y/Speed - Delta;
                 if(parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
@@ -129,7 +123,7 @@ namespace NoteGenerating
                     {
                         time = CurrentTime - baseTime;
                         var vec = Speed * Vector3.down;
-                        note.SetPos(new Vector3(ConvertIfInverse(x), StartBase) + time * vec);
+                        note.SetPos(new Vector3(Inv(x), StartBase) + time * vec);
                         await Helper.Yield();
                     }
                 }
@@ -138,17 +132,12 @@ namespace NoteGenerating
             void MyHold(float x, float length, float width, Transform parentTs)
             {
                 float holdTime = Helper.GetTimeInterval(length);
-                HoldNote hold = Helper.GetHold(holdTime * Speed);
-                if(parentTs != null)
-                {
-                    hold.transform.SetParent(parentTs);
-                    hold.transform.localRotation = default;
-                }
+                HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
                 if((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
-                Vector3 startPos = new (ConvertIfInverse(x), StartBase);
+                Vector3 startPos = new (Inv(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
                 if(isSpeedChangable)
                 {
@@ -159,8 +148,7 @@ namespace NoteGenerating
                     DropAsync(hold, startPos).Forget();
                 }
 
-                float distance = startPos.y - Speed * Delta;
-                float expectTime = CurrentTime + distance / Speed;
+                float expectTime = startPos.y/Speed - Delta;
                 if(parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
@@ -184,7 +172,7 @@ namespace NoteGenerating
                         time = CurrentTime - baseTime;
                         var vec = Speed * Vector3.down;
                         hold.SetLength(holdTime * Speed);
-                        hold.SetPos(new Vector3(ConvertIfInverse(x), StartBase, -0.04f) + time * vec);
+                        hold.SetPos(new Vector3(Inv(x), StartBase, -0.04f) + time * vec);
                         await Helper.Yield();
                     }
                 }
@@ -292,7 +280,7 @@ namespace NoteGenerating
                 {
                     note.SetWidth(width);
                 }
-                var startPos = new Vector3(ConvertIfInverse(x), y);
+                var startPos = new Vector3(Inv(x), y);
                 note.SetPos(startPos);
                 note.transform.SetParent(previewObj.transform);
 
@@ -307,8 +295,8 @@ namespace NoteGenerating
                 {
                     hold.SetWidth(width);
                 }
-                hold.SetMaskLocalPos(new Vector2(ConvertIfInverse(x), 0));
-                var startPos = new Vector3(ConvertIfInverse(x), y);
+                hold.SetMaskLocalPos(new Vector2(Inv(x), 0));
+                var startPos = new Vector3(Inv(x), y);
                 hold.SetPos(startPos);
                 hold.transform.SetParent(previewObj.transform);
 

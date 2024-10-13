@@ -87,7 +87,7 @@ namespace NoteGenerating.Editor
             EditorGUI.PropertyField(position, property.FindPropertyRelative("isInverse"));
 
             position.y += EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
+            //EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
 
             position.y += EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(position, property.FindPropertyRelative("isSpeedChangable"));

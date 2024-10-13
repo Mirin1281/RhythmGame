@@ -18,11 +18,25 @@ public class NoteGenerateHelper : MonoBehaviour
 
     public CancellationToken Token => destroyCancellationToken;
 
-    public NoteBase_2D GetNote2D(NoteType type) => PoolManager.GetNote2D(type);
-    public HoldNote GetHold(float length)
+    public NoteBase_2D GetNote2D(NoteType type, Transform parentTs = null)
+    {
+        var note = PoolManager.GetNote2D(type);
+        if(parentTs != null)
+        {
+            note.transform.SetParent(parentTs);
+            note.transform.localRotation = default;
+        }
+        return note;
+    }
+    public HoldNote GetHold(float length, Transform parentTs = null)
     {
         var hold = PoolManager.HoldPool.GetNote();
         hold.SetLength(length);
+        if(parentTs != null)
+        {
+            hold.transform.SetParent(parentTs);
+            hold.transform.localRotation = default;
+        }
         return hold;
     }
     public SkyNote GetSky() => PoolManager.SkyPool.GetNote();

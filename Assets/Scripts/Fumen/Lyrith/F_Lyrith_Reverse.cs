@@ -50,10 +50,10 @@ namespace NoteGenerating
         {
             var skyNote = Helper.GetSky();
             float moveTime = Helper.GetTimeInterval(2);
-            var startPos = new Vector3(ConvertIfInverse(pos.x), pos.y, StartBase3D + (pos.z - Helper.GetTimeInterval(2, 3)) * Speed3D);
+            var startPos = new Vector3(Inv(pos.x), pos.y, StartBase3D + (pos.z - Helper.GetTimeInterval(2, 3)) * Speed3D);
             Drop3DAsync(skyNote, startPos, moveTime).Forget();
 
-            float expectTime = CurrentTime - delta + pos.z + moveTime;
+            float expectTime = pos.z + moveTime - delta;
             Helper.NoteInput.AddExpect(skyNote, startPos, expectTime);
 
 

@@ -17,13 +17,12 @@ namespace NoteGenerating
         {
             var holdTime = Helper.GetTimeInterval(length);
             var hold = Helper.GetHold(holdTime * Speed);
-            var startPos = new Vector2(ConvertIfInverse(x), StartBase);
-            var toPos = new Vector2(ConvertIfInverse(x), 0);
+            var startPos = new Vector2(Inv(x), StartBase);
+            var toPos = new Vector2(Inv(x), 0);
             hold.SetMaskLocalPos(toPos);
             hold.SetMaskLength(10);
             
-            float distance = startPos.y - Speed * Delta;
-            float expectTime = CurrentTime + distance / Speed;
+            float expectTime = startPos.y / Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
 
             MoveRotateAsync(hold, startPos, toPos, expectTime, holdTime, left).Forget();
@@ -33,8 +32,8 @@ namespace NoteGenerating
             {
                 float baseTime = CurrentTime - Delta;
                 var vec = Speed * Vector2.down;
-                float time;
-                while (hold.IsActive && CurrentTime < expectTime)
+                float time = 0;
+                while (hold.IsActive && time < expectTime)
                 {
                     time = CurrentTime - baseTime;
                     hold.SetPos(startPos + time * vec);
@@ -43,11 +42,11 @@ namespace NoteGenerating
                 }
 
                 // ここから着地後
-                baseTime = expectTime;
+                baseTime = CurrentTime + expectTime;
                 time = 0f;
                 while (hold.IsActive && time < 3f)
                 {
-                    time = CurrentTime - baseTime;
+                    time = CurrentTime + expectTime - baseTime;
                     float deg = time.Ease(0, 360f, holdingTime, EaseType.OutQuad) * (left ? 1 : -1);
                     vec = Speed * new Vector2(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Cos(deg * Mathf.Deg2Rad));
                     hold.SetPos(toPos + time * vec);

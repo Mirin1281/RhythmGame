@@ -22,7 +22,7 @@ namespace NoteGenerating
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for(int i = 0; i < count; i++)
             {
-                Note2D(ConvertIfInverse(easing.Ease(i)), noteType);
+                Note2D(Inv(easing.Ease(i)), noteType);
                 await Wait(wait);
             }
         }
@@ -50,24 +50,25 @@ namespace NoteGenerating
             {
                 var note = Helper.GetNote2D(noteType);
                 note.transform.SetParent(previewObj.transform);
-                note.SetPos(new Vector3(ConvertIfInverse(easing.Ease(i)), y));
+                note.SetPos(new Vector3(Inv(easing.Ease(i)), y));
                 y += Helper.GetTimeInterval(wait) * Speed;
             };
         }
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(count, noteType, wait, easeX, easeTime, easeType);
+            get => MyUtility.GetContentFrom(IsInverse, count, noteType, wait, easeX, easeTime, easeType);
             set
             {
                 var texts = value.Split('|');
 
-                count = int.Parse(texts[0]);
-                noteType = Enum.Parse<NoteType>(texts[1]);
-                wait = float.Parse(texts[2]);
-                easeX = texts[3].ToVector2();
-                easeTime = float.Parse(texts[4]);
-                easeType = Enum.Parse<EaseType>(texts[5]);
+                IsInverse = bool.Parse(texts[0]);
+                count = int.Parse(texts[1]);
+                noteType = Enum.Parse<NoteType>(texts[2]);
+                wait = float.Parse(texts[3]);
+                easeX = texts[4].ToVector2();
+                easeTime = float.Parse(texts[5]);
+                easeType = Enum.Parse<EaseType>(texts[6]);
             }
         }
     }

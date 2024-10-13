@@ -32,6 +32,18 @@ public class LineGenerator : MonoBehaviour
         Line line = linePool.GetLine();
         float baseTime = metronome.CurrentTime - delta;
         float time = 0;
+        Vector3 startPos = new Vector3(0f, GetStartBase(RhythmGameManager.Speed));
+        var vec = RhythmGameManager.Speed * Vector3.down;
+        while (line.IsActive && time < 3f)
+        {
+            time = metronome.CurrentTime - baseTime;
+            line.SetPos(startPos + time * vec);
+            await UniTask.Yield(destroyCancellationToken);
+        }
+        line.SetActive(false);
+        /*Line line = linePool.GetLine();
+        float baseTime = metronome.CurrentTime - delta;
+        float time = 0;
         while (line.IsActive && time < 3f)
         {
             time = metronome.CurrentTime - baseTime;
@@ -39,12 +51,12 @@ public class LineGenerator : MonoBehaviour
             line.transform.localPosition = new Vector3(0f, GetStartBase(RhythmGameManager.Speed)) + time * vec;
             await UniTask.Yield(destroyCancellationToken);
         }
-        line.gameObject.SetActive(false);
+        line.SetActive(false);*/
     }
 
     async UniTask Create3DLine(float delta)
     {
-        Line line = linePool.GetLine(1);
+        /*Line line = linePool.GetLine(1);
         float baseTime = metronome.CurrentTime - delta;
         float time = 0;
         while (line.IsActive && time < 3f)
@@ -52,6 +64,19 @@ public class LineGenerator : MonoBehaviour
             time = metronome.CurrentTime - baseTime;
             var vec = RhythmGameManager.Speed3D * Vector3.back;
             line.transform.localPosition = new Vector3(0f, 0.01f, GetStartBase(RhythmGameManager.Speed3D)) + time * vec;
+            await UniTask.Yield(destroyCancellationToken);
+        }
+        line.gameObject.SetActive(false);*/
+        Line line = linePool.GetLine(1);
+        float baseTime = metronome.CurrentTime - delta;
+        float time = 0;
+        Vector3 startPos = new Vector3(0f, 0.01f, GetStartBase(RhythmGameManager.Speed3D));
+        var vec = RhythmGameManager.Speed3D * Vector3.back;
+        while (line.IsActive && time < 3f)
+        {
+            time = metronome.CurrentTime - baseTime;
+            
+            line.SetPos(startPos + time * vec);
             await UniTask.Yield(destroyCancellationToken);
         }
         line.gameObject.SetActive(false);

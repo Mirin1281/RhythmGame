@@ -25,14 +25,13 @@ namespace NoteGenerating
 
         void Create(Vector2 startPos, float rotationSpeed)
         {
-            NoteBase_2D note = Helper.PoolManager.GetNote2D(noteType);
+            NoteBase_2D note = Helper.GetNote2D(noteType);
             WhileYield(moveTime, t => 
             {
                 note.SetRotate(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));
                 note.SetPos(startPos - new Vector2(0, t.Ease(0f, startPos.y, moveTime, EaseType.InQuint)));
             });
-            float expectTime = CurrentTime + moveTime;
-            Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: true);
+            Helper.NoteInput.AddExpect(note, moveTime, isCheckSimultaneous: true);
         }
     }
 }

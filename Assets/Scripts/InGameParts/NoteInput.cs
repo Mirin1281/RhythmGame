@@ -91,29 +91,17 @@ public class NoteInput : MonoBehaviour
     /// </summary>
     public void AddExpect(NoteBase note, float time, float holdingTime = 0, bool isCheckSimultaneous = true)
     {
-        if(isCheckSimultaneous)
-        {
-            // 同時刻に着地するノーツがあった場合は同時押しの見た目を適用する
-            foreach(var e in allExpects)
-            {
-                if(Mathf.Approximately(time, e.Time))
-                {
-                    notePoolManager.SetSimultaneousSprite(note as NoteBase_2D);
-                    notePoolManager.SetSimultaneousSprite(e.Note as NoteBase_2D);
-                }
-            }
-        }
-       
-        allExpects.Add(new NoteExpect(note, new Vector2(default, 0), time, time + holdingTime, NoteExpect.ExpectMode.Y_Static));
+        AddExpect(note, new Vector2(default, 0), time, holdingTime, isCheckSimultaneous, NoteExpect.ExpectMode.Y_Static);
     }
     public void AddExpect(NoteBase note, Vector2 pos, float time, float holdingTime = 0,
         bool isCheckSimultaneous = true, NoteExpect.ExpectMode mode = NoteExpect.ExpectMode.Static)
     {
+        float absoluteTime = metronome.CurrentTime + time;
         if(isCheckSimultaneous)
         {
             foreach(var e in allExpects)
             {
-                if(Mathf.Approximately(time, e.Time))
+                if(Mathf.Approximately(absoluteTime, e.Time))
                 {
                     notePoolManager.SetSimultaneousSprite(note as NoteBase_2D);
                     notePoolManager.SetSimultaneousSprite(e.Note as NoteBase_2D);
@@ -121,7 +109,7 @@ public class NoteInput : MonoBehaviour
             }
         }
        
-        allExpects.Add(new NoteExpect(note, pos, time, time + holdingTime, mode));
+        allExpects.Add(new NoteExpect(note, pos, absoluteTime, absoluteTime + holdingTime, mode));
     }
 
     HoldNote AddHold(NoteExpect expect, bool isMiss = false)

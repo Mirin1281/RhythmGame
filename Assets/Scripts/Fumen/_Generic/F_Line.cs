@@ -35,8 +35,8 @@ namespace NoteGenerating
                 var d = datas[i];
                 var line = Helper.GetLine();
                 line.FadeIn(Helper.GetTimeInterval(d.LpbTime.x));
-                line.SetPos(new Vector3(ConvertIfInverse(d.Pos.x), d.Pos.y));
-                line.SetRotate(ConvertIfInverse(d.Deg));
+                line.SetPos(new Vector3(Inv(d.Pos.x), d.Pos.y));
+                line.SetRotate(Inv(d.Deg));
                 UniTask.Void(async () => 
                 {
                     await Wait(d.LpbTime.y);
@@ -49,15 +49,24 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.UnNoteCommandColor;
+            return ConstContainer.LineCommandColor;
         }
 
         protected override string GetSummary()
         {
-            return datas.Length.ToString();
+            return datas?.Length.ToString();
         }
 
         public override string CSVContent1
+        {
+            get => MyUtility.GetContentFrom(IsInverse);
+            set
+            {
+                IsInverse = bool.Parse(value);
+            }
+        }
+
+        public override string CSVContent2
         {
             get => MyUtility.GetContentFrom(datas);
             set => datas = MyUtility.GetArrayFrom<LineData>(value);
