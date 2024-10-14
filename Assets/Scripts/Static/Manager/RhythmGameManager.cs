@@ -1,6 +1,4 @@
 using CriWare;
-using Cysharp.Threading.Tasks;
-using NoteGenerating;
 using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
@@ -13,6 +11,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static float GetSEVolume() => MasterVolume * SettingSEVolume;
     public static float GetNoteVolume() => MasterVolume * SettingNoteVolume;
 
+    // スクリプト上で変更可能な値
     public static float SpeedBase = 1f;
 
     // 50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
@@ -27,7 +26,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     public static bool SettingIsMirror { get; set; }
 
-    public MusicMasterData MusicMasterData { get; set; }
+    public static string FumenName { get; set; }
     public Result Result { get; set; }
     public static Difficulty Difficulty { get; set; } = Difficulty.Normal;
     public static int SelectedIndex { get; set; } = -1;
@@ -68,6 +67,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
             SettingIsMirror = gameData.IsMirror;
 
+            FumenName = null;
             Difficulty = gameData.Difficulty;
             SelectedIndex = gameData.SelectedIndex;
         }
@@ -83,6 +83,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
             SettingIsMirror = false;
 
+            FumenName = null;
             Difficulty = Difficulty.Hard;
             SelectedIndex = -1;
         }

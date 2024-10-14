@@ -1,25 +1,37 @@
 using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using ArcVertexMode = ArcCreateData.ArcVertexMode;
 
 public class InGameManager : MonoBehaviour
 {
-    [SerializeField] MusicMasterData masterData;
+    [SerializeField] FumenData editorFumenData;
     [SerializeField] Metronome metronome;
     [SerializeField] NotePoolManager notePoolManager;
-    [SerializeField] 
-    public MusicMasterData MasterData => masterData;
-    public FumenData FumenData => masterData.GetFumenData();
-    public MusicData MusicData => masterData.MusicData;
+    FumenData fumenData;
+    bool isLoaded;
 
-    async UniTask Awake()
+    public FumenData FumenData => fumenData;
+    public bool IsLoaded => isLoaded;
+
+    void Awake()
     {
-        if(RhythmGameManager.Instance != null && RhythmGameManager.Instance.MusicMasterData != null)
+        Init().Forget();
+    }
+    async UniTask Init()
+    {
+        isLoaded = false;
+        if(RhythmGameManager.Instance != null && string.IsNullOrEmpty(RhythmGameManager.FumenName) == false)
         {
-            masterData = RhythmGameManager.Instance.MusicMasterData;
+            fumenData = await Addressables.LoadAssetAsync<FumenData>(RhythmGameManager.FumenName);
         }
-        if(masterData.GetFumenData(RhythmGameManager.Difficulty).Start3D)
+        else
+        {
+            fumenData = editorFumenData;
+        }
+        
+        if(fumenData.Start3D)
         {
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             var CameraMover = GameObject.FindAnyObjectByType<CameraMover>(FindObjectsInactive.Include);
@@ -32,10 +44,16 @@ public class InGameManager : MonoBehaviour
         }
 
         // 初期化 //
+
+        // プール数の設定
         notePoolManager.SetPoolCount(FumenData);
-        await MyUtility.LoadCueSheetAsync(MusicData.SheetName);
+
+        // 音楽データをロード
+        await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);
+
         await UniTask.DelayFrame(2);
 
+        // アークは最初が高負荷なので予め生成しておく
         var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);
         var arc = arcPool.GetNote();
         arc.SetPos(new Vector3(1000, 1000));
@@ -49,6 +67,7 @@ public class InGameManager : MonoBehaviour
             }, 2);
         arc.SetActive(false);
         
+        isLoaded = true;
         await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
         metronome.Play();
     }

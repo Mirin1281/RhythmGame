@@ -28,8 +28,6 @@ namespace NoteGenerating.Editor
             sw.WriteLine();
 
             // 2行目はデータの情報
-            sw.Write($"{fumenData.Difficulty},");
-            sw.Write($"{fumenData.Level},");
             sw.Write($"{fumenData.NoteCount},");
             sw.Write($"{fumenData.Start3D},");
             sw.WriteLine();
@@ -93,10 +91,8 @@ namespace NoteGenerating.Editor
 			dataList.RemoveAt(0); // もういらないのでこの行は削除する
 
             fumenData.SetData(
-                Difficulty.Parse<Difficulty>(dataList[0][0]),
-                int.Parse(dataList[0][1]),
-                int.Parse(dataList[0][2]),
-                bool.Parse(dataList[0][3])
+                int.Parse(dataList[0][0]),
+                bool.Parse(dataList[0][1])
             );
             dataList.RemoveAt(0);
 			dataList.RemoveAt(0);

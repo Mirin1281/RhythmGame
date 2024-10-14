@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-
 public class SelectMusicButton : MonoBehaviour
 {
     [SerializeField] TMP_Text levelTmpro;
@@ -11,15 +10,17 @@ public class SelectMusicButton : MonoBehaviour
     [SerializeField] Image plateImage;
     [SerializeField] Image illustImage;
     int index;
-    public string MusicName;
+    string musicName;
 
-    public void SetData(MusicMasterData data, int index)
+    public string MusicName => musicName;
+
+    public void SetData(MusicSelectData data, int index)
     {
         this.index = index;
-        levelTmpro.SetText(data.GetFumenData(RhythmGameManager.Difficulty).Level.ToString());
-        nameTmpro.SetText(data.MusicData.MusicName.ToString());
+        levelTmpro.SetText(data.GetFumenLevel(RhythmGameManager.Difficulty).ToString());
+        nameTmpro.SetText(data.MusicName.ToString());
         illustImage.sprite = data.Illust;
-        MusicName = data.MusicData.MusicName;
+        musicName = data.MusicName;
     }
 
     public void OnSelect()

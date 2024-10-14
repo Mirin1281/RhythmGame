@@ -20,7 +20,7 @@ public class UpdatorOnChange : MonoBehaviour
     [SerializeField] TMP_Text illustratorTmpro;
     [SerializeField] TMP_Text highScoreTmpro;
     List<GameScore> scores;
-    MusicMasterData selectedMasterData;
+    MusicSelectData pickedData;
     string selectedFumenName;
 
     void Awake()
@@ -31,16 +31,16 @@ public class UpdatorOnChange : MonoBehaviour
     }
 
     // 曲が変更された際に呼ばれる
-    void UpdateUIAndMusic(MusicMasterData data)
+    void UpdateUIAndMusic(MusicSelectData data)
     {
         previewer.Stop(0f).Forget();
-        previewer.MusicPreview(data.MusicData).Forget();
-        titleTmpro.SetText(data.MusicData.MusicName);
-        composerTmpro.SetText(data.MusicData.ComposerName);
+        previewer.MusicPreview(data).Forget();
+        titleTmpro.SetText(data.MusicName);
+        composerTmpro.SetText(data.ComposerName);
         illustImage.sprite = data.Illust;
         illustratorTmpro.SetText(data.IllustratorName);
-        selectedMasterData = data;
-        selectedFumenName = data.GetFumenData(RhythmGameManager.Difficulty).name;
+        pickedData = data;
+        selectedFumenName = data.GetFumenAddress(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.my1);
         SetHighScoreText(selectedFumenName).Forget();
     }
@@ -48,14 +48,15 @@ public class UpdatorOnChange : MonoBehaviour
     // 難易度が変更された際に呼ばれる
     void UpdateHighScore(Difficulty difficulty)
     {
-        selectedFumenName = selectedMasterData.GetFumenData(RhythmGameManager.Difficulty).name;
+        selectedFumenName = pickedData.GetFumenAddress(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.ti);
         SetHighScoreText(selectedFumenName).Forget();
     }
 
     async UniTask SetHighScoreText(string fumenName)
     {
-        var list = await GetGameScoresAsync();        
+        if(string.IsNullOrEmpty(fumenName)) return;
+        var list = await GetGameScoresAsync();  
         var gameScore = list.FirstOrDefault(s => s.FumenName == fumenName);
         (int highScore, bool isFullCombo) = (gameScore.Score, gameScore.IsFullCombo);
         string fullComboText = isFullCombo ? "[F]" : string.Empty;

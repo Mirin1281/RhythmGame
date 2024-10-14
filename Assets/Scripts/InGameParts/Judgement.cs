@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using NoteGenerating;
 
 public enum NoteGrade
 {
@@ -15,86 +14,6 @@ public enum NoteGrade
     LateFar,
     Miss,
 }
-
-public class Result
-{
-    int perfect;
-    int fastGreat;
-    int lateGreat;
-    int fastFar;
-    int lateFar;
-    int miss;
-
-    int combo;
-    int maxCombo;
-    double score;
-    readonly MusicMasterData masterData;
-    readonly FumenData fumenData;
-    
-    static readonly int MaxScore = 10000000;
-
-    public int Perfect => perfect;
-    public int FastGreat => fastGreat;
-    public int LateGreat => lateGreat;
-    public int FastFar => fastFar;
-    public int LateFar => lateFar;
-    public int Miss => miss;
-
-    public int Combo => combo;
-    public int MaxCombo => maxCombo;
-    public int Score => Mathf.RoundToInt((float)score);
-    public MusicMasterData MasterData => masterData;
-    public FumenData FumenData => fumenData;
-    public bool IsFullCombo => miss == 0;
-
-    public Result(MusicMasterData masterData)
-    {
-        this.masterData = masterData;
-        this.fumenData = masterData.GetFumenData(RhythmGameManager.Difficulty);
-    }
-
-    public void SetCombo(NoteGrade grade)
-    {
-        if(grade == NoteGrade.Miss)
-        {
-            combo = 0;
-            miss++;
-            return;
-        }
-
-        combo++;
-        if(combo > maxCombo)
-        {
-            maxCombo = combo;
-        }
-        
-        if(grade == NoteGrade.Perfect) {
-            perfect++;
-        } else if(grade == NoteGrade.FastGreat) {
-            fastGreat++;
-        } else if(grade == NoteGrade.LateGreat) {
-            lateGreat++;
-        } else if(grade == NoteGrade.FastFar) {
-            fastFar++;
-        } else if(grade == NoteGrade.LateFar) {
-            lateFar++;
-        } else {
-            throw new System.Exception();
-        }
-
-        double rate = grade switch
-        {
-            NoteGrade.Perfect => 1d,
-            NoteGrade.FastGreat or NoteGrade.LateGreat => 0.5d,
-            NoteGrade.FastFar or NoteGrade.LateFar => 0.3d,
-            NoteGrade.Miss => 0,
-            _ => throw new System.Exception()
-        };
-        double baseScore = (double)MaxScore / fumenData.NoteCount;
-        score += baseScore * rate;
-    }
-}
-
 
 public class Judgement : MonoBehaviour
 {
@@ -121,7 +40,11 @@ public class Judgement : MonoBehaviour
         comboText.SetText("0");
         judgeText.SetText("");
         lightDic = new(4);
-        result = new Result(inGameManager.MasterData);
+        UniTask.Void(async () => 
+        {
+            await UniTask.WaitUntil(() => inGameManager.IsLoaded, cancellationToken: destroyCancellationToken);
+            result = new Result(inGameManager.FumenData);
+        });
     }
 
     const float Range = 4.6f;

@@ -24,7 +24,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
         source.volume = value;
     }
     
-    public async UniTask MusicPreview(MusicData musicData)
+    public async UniTask MusicPreview(MusicSelectData musicData)
     {
         loadedCueSheetNames ??= new();
         cts?.Cancel();
@@ -33,24 +33,23 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
         var token = cts.Token;
 
         string sheet = musicData.SheetName;
-        source.cueSheet = sheet;
-        source.cueName = musicData.CueName;
-        source.startTime = Mathf.RoundToInt(musicData.PreviewStart * 1000f);
+        source.cueSheet = source.cueName = sheet;
+        source.startTime = Mathf.RoundToInt(musicData.PreviewStartTime * 1000f);
         if(loadedCueSheetNames.Contains(sheet) == false)
         {
             await MyUtility.LoadCueSheetAsync(sheet);
             loadedCueSheetNames.Add(sheet);
         }
 
-        float time = musicData.PreviewStart;
+        float time = musicData.PreviewStartTime;
         FadeInAsync(0.5f, token).Forget();
         
         while(token.IsCancellationRequested == false)
         {
-            if(time > musicData.PreviewEnd)
+            if(time > musicData.PreviewEndTime)
             {
                 await FadeOutAsync(0.5f, token);
-                time = musicData.PreviewStart;
+                time = musicData.PreviewStartTime;
                 FadeInAsync(0.5f, token).Forget();
             }
             time += Time.deltaTime;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NoteGenerating;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
@@ -12,33 +11,28 @@ using System.Threading;
 ]
 public class MusicMasterManagerData : ScriptableObject
 {
-    [SerializeField] MusicMasterData[] masterDatas;
-    public MusicMasterData[] MasterDatas => masterDatas;
-
-    IReadOnlyList<FumenData> GetFumenDatas()
-    {
-        List<FumenData> fumenDatas = new(Mathf.RoundToInt(masterDatas.Length * 2.5f));
-        foreach(var data in masterDatas)
-        {
-            fumenDatas.Add(data.GetFumenData(Difficulty.Normal));
-            fumenDatas.Add(data.GetFumenData(Difficulty.Hard));
-            var extraFumenData = data.GetFumenData(Difficulty.Extra);
-            if(extraFumenData != null)
-            {
-                fumenDatas.Add(extraFumenData);
-            }
-        }
-        return fumenDatas;
-    }
+    [SerializeField] MusicSelectData[] selectDatas;
+    public MusicSelectData[] SelectDatas => selectDatas;
 
     [ContextMenu("ResetScoreData")]
     ScoreData ResetScoreData()
     {
         var scoreData = new ScoreData();
-        var fumenDatas = GetFumenDatas();
-        for(int i = 0; i < fumenDatas.Count; i++)
+        for(int i = 0; i < selectDatas.Length; i++)
         {
-            scoreData.GameScores.Add(new GameScore(fumenDatas[i].name, 0, false));
+            var d = selectDatas[i];
+            if(!string.IsNullOrEmpty(d.NormalFumenAddress))
+            {
+                scoreData.GameScores.Add(new GameScore(d.NormalFumenAddress, 0, false));
+            }
+            if(!string.IsNullOrEmpty(d.HardFumenAddress))
+            {
+                scoreData.GameScores.Add(new GameScore(d.HardFumenAddress, 0, false));
+            }
+            if(!string.IsNullOrEmpty(d.ExtraFumenAddress))
+            {
+                scoreData.GameScores.Add(new GameScore(d.ExtraFumenAddress, 0, false));
+            }
         }
         SaveLoadUtility.SetDataImmediately(scoreData, ConstContainer.ScoreDataName);
         Debug.Log("データをリセットしました");

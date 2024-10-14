@@ -10,8 +10,9 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
-        [SerializeField] Difficulty difficulty = Difficulty.Normal;
-        [SerializeField, Min(0)] int level = 1;
+        [SerializeField] MusicSelectData musicSelectData;
+        [SerializeField, Tooltip("参考用です。実際は" + nameof(MusicSelectData) + "の値が使用されます")]
+        int level;
         [SerializeField, Min(1)] int noteCount = 1;
         [SerializeField] bool start3D = false;
 
@@ -25,15 +26,13 @@ namespace NoteGenerating
         [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
         [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
 
-        public Difficulty Difficulty => difficulty;
+        public MusicSelectData MusicSelectData => musicSelectData;
         public int Level => level;
         public int NoteCount => noteCount;
         public bool Start3D => start3D;
 
-        public void SetData(Difficulty difficulty, int level, int noteCount, bool start3D)
+        public void SetData(int noteCount, bool start3D)
         {
-            this.difficulty = difficulty;
-            this.level = level;
             this.noteCount = noteCount;
             this.start3D = start3D;
         }
@@ -41,8 +40,6 @@ namespace NoteGenerating
         [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }
-
-    public enum Difficulty { None, Normal, Hard, Extra }
 
     [System.Serializable]
     public class Fumen

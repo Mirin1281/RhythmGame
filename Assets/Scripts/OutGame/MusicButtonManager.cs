@@ -11,20 +11,25 @@ public class MusicButtonManager : MonoBehaviour
     [SerializeField] SelectMusicButton selectButtonPrefab;
     [SerializeField] MusicMasterManagerData managerData;
     [SerializeField] MusicPreviewer previewer;
-    List<MusicMasterData> sortedDatas;
+    List<MusicSelectData> sortedDatas;
     readonly List<SelectMusicButton> buttons = new();
     int selectedIndex = -1;
 
-    public event Action<MusicMasterData> OnOtherSelect;
+    public event Action<MusicSelectData> OnOtherSelect;
 
-    async UniTask Awake()
+    void Awake()
+    {
+        Init().Forget();
+    }
+
+    async UniTask Init()
     {
         for(int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
         }
 
-        for(int i = 0; i < managerData.MasterDatas.Length; i++)
+        for(int i = 0; i < managerData.SelectDatas.Length; i++)
         {
             var selectButton = Instantiate(selectButtonPrefab, this.transform);
             buttons.Add(selectButton);
@@ -51,9 +56,9 @@ public class MusicButtonManager : MonoBehaviour
         // selectedIndexがソート後にどこにいくかを調べるため
         string beforeName = selectedIndex == -1 ? null : buttons[selectedIndex].MusicName;
         
-        sortedDatas = managerData.MasterDatas.Where(d => d.GetFumenData(diff) != null) // 難易度が存在するものを選定
-            .OrderBy(d => d.GetFumenData(diff).Level) // レベルの数値で並べ替え
-            .ThenBy(d => d.MusicData.InternalMusicName) // 楽曲名で並べ替え
+        sortedDatas = managerData.SelectDatas.Where(d => d.GetFumenAddress(diff) != null) // 難易度が存在するものを選定
+            .OrderBy(d => d.GetFumenLevel(diff)) // レベルの数値で並べ替え
+            .ThenBy(d => d.MusicName) // 楽曲名で並べ替え
             .ToList();
         for(int i = 0; i < buttons.Count; i++)
         {
@@ -82,10 +87,10 @@ public class MusicButtonManager : MonoBehaviour
 
     public void NotifyInput(int index)
     {
-        MusicMasterData data = sortedDatas[index];
+        MusicSelectData data = sortedDatas[index];
         if(selectedIndex == index)
         {
-            StartGame(data);
+            StartGame(data, RhythmGameManager.Difficulty);
         }
         else
         {
@@ -100,16 +105,16 @@ public class MusicButtonManager : MonoBehaviour
         }
     }
 
-    void StartGame(MusicMasterData data, Difficulty difficulty = Difficulty.None)
+    void StartGame(MusicSelectData selectData, Difficulty difficulty = Difficulty.None)
     {
-        RhythmGameManager.Instance.MusicMasterData = data;
+        RhythmGameManager.FumenName = selectData.GetFumenAddress(difficulty);
         if(difficulty != Difficulty.None)
         {
             RhythmGameManager.Difficulty = difficulty;
         }
         previewer.Stop(0.5f).Forget();
         FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
-        Debug.Log($"楽曲名: {data.MusicData.MusicName}\n" +
-            $"難易度: {RhythmGameManager.Difficulty} {data.GetFumenData(RhythmGameManager.Difficulty).Level}");
+        Debug.Log($"楽曲名: {selectData.MusicName}\n" +
+            $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
     }
 }

@@ -23,13 +23,13 @@ public class Metronome : MonoBehaviour, IVolumeChangable
     CriAtomExPlayback playback;
     int bpmChangeCount;
     double BeatInterval => 60d / bpm;
-    MusicData MusicData => inGameManager.MusicData;
+    MusicSelectData SelectData => inGameManager.FumenData.MusicSelectData;
 
     /// <summary>
     /// (ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
-    public float CurrentTime => (float)currentTime + MusicData.Offset + RhythmGameManager.Offset;
+    public float CurrentTime => (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
     public float Bpm => bpm;
 
     public void Play()
@@ -40,9 +40,8 @@ public class Metronome : MonoBehaviour, IVolumeChangable
         skipOnStart = false;
 #endif
 
-        bpm = MusicData.Bpm;
-        atomSource.cueSheet = MusicData.SheetName;
-        atomSource.cueName = MusicData.CueName;
+        bpm = SelectData.Bpm;
+        atomSource.cueSheet = atomSource.cueName = SelectData.SheetName;
 
 #if UNITY_EDITOR
         if(skipOnStart)
@@ -87,14 +86,14 @@ public class Metronome : MonoBehaviour, IVolumeChangable
             currentTime = Time.timeAsDouble - baseTime;
             if(CurrentTime > nextBeat)
             {
-                int offsetedBeatCount = beatCount - MusicData.StartBeatOffset;
+                int offsetedBeatCount = beatCount - SelectData.StartBeatOffset;
 
                 // BPMの変化がある場合 //
-                if(MusicData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount))
+                if(SelectData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount))
                 {
                     if(offsetedBeatCount == changeBeatCount)
                     {
-                        bpm = MusicData.GetChangeBPM(bpmChangeCount);
+                        bpm = SelectData.GetChangeBPM(bpmChangeCount);
                         bpmChangeCount++;
                     }
                 }

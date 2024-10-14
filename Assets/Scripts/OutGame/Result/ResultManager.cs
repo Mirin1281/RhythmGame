@@ -41,7 +41,6 @@ public class ResultManager : MonoBehaviour
         if(result == null) return;
 
         SetUI(result);
-        RhythmGameManager.Instance.MusicMasterData = result.MasterData;
         if(isSavable == false) return;
 
         var gameScore = new GameScore(
@@ -53,9 +52,9 @@ public class ResultManager : MonoBehaviour
 
     void SetUI(Result r)
     {
-        var master = r.MasterData;
-        musicTitleTmpro.SetText(master.MusicData.MusicName);
-        composerTmpro.SetText(master.MusicData.ComposerName);
+        var d = r.FumenData.MusicSelectData;
+        musicTitleTmpro.SetText(d.MusicName);
+        composerTmpro.SetText(d.ComposerName);
 
         scoreTmpro.SetText(r.Score.ToString());
 
@@ -73,8 +72,8 @@ public class ResultManager : MonoBehaviour
         detailGreatTmpro.SetText($"F:{r.FastGreat} L:{r.LateGreat}");
         detailFarTmpro.SetText($"F:{r.FastFar} L:{r.LateFar}");
 
-        illustratorTmpro.SetText(master.IllustratorName);
-        illustImage.sprite = master.Illust;
+        illustratorTmpro.SetText(d.IllustratorName);
+        illustImage.sprite = d.Illust;
 
 
         // ハイスコアを譜面データの名前から取得します

@@ -81,15 +81,6 @@ namespace NoteGenerating.Editor
                     FumenCSVIO.ImportFumenDataAsync(target as FumenData).Forget();
                 }
             }
-        }        
-
-        bool IsUsed(GenerateData targetData, FumenData[] FumenDatas)
-        {
-            foreach (var FumenData in FumenDatas)
-            {
-                if (FumenData.Fumen.IsUsed(targetData)) return true;
-            }
-            return false;
         }
     }
 }
