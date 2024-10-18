@@ -117,23 +117,22 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return count.ToString();
+            return count + GetInverseSummary();
         }
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(IsInverse, count, wait, isSpeedChangable, is3D, moveDirection, lineRotation);
+            get => MyUtility.GetContentFrom(count, wait, isSpeedChangable, is3D, moveDirection, lineRotation);
             set
             {
                 var texts = value.Split('|');
 
-                IsInverse = bool.Parse(texts[0]);
-                count = int.Parse(texts[1]);
-                wait = float.Parse(texts[2]);
-                isSpeedChangable = bool.Parse(texts[3]);
-                is3D = bool.Parse(texts[4]);
-                moveDirection = float.Parse(texts[5]);
-                lineRotation = float.Parse(texts[6]);
+                count = int.Parse(texts[0]);
+                wait = float.Parse(texts[1]);
+                isSpeedChangable = bool.Parse(texts[2]);
+                is3D = bool.Parse(texts[3]);
+                moveDirection = float.Parse(texts[4]);
+                lineRotation = float.Parse(texts[5]);
             }
         }
     }

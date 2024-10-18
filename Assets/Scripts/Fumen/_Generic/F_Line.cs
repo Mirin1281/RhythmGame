@@ -54,19 +54,10 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return datas?.Length.ToString();
+            return datas?.Length + GetInverseSummary();
         }
 
         public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(IsInverse);
-            set
-            {
-                IsInverse = bool.Parse(value);
-            }
-        }
-
-        public override string CSVContent2
         {
             get => MyUtility.GetContentFrom(datas);
             set => datas = MyUtility.GetArrayFrom<LineData>(value);

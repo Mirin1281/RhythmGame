@@ -40,9 +40,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            string s = noteDatas.Length.ToString();
-            string invText = IsInverse ? " : <color=#0000ff><b>(inv)</b></color>" : string.Empty;
-            return s + invText;
+            return noteDatas.Length + GetInverseSummary();
         }
 
         public override void Preview()
@@ -80,12 +78,6 @@ namespace NoteGenerating
         }
 
         public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(IsInverse);
-            set { IsInverse = bool.Parse(value); }
-        }
-
-        public override string CSVContent2
         {
             get => MyUtility.GetContentFrom(noteDatas);
             set => noteDatas = MyUtility.GetArrayFrom<SkyNoteData>(value);

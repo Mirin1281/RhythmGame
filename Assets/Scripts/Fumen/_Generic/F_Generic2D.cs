@@ -219,8 +219,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            string invText = IsInverse ? "<color=#0000ff><b>(inv)</b></color>" : string.Empty;
-            return $"{noteDatas.Length}  {invText}";
+            return noteDatas.Length + GetInverseSummary();
         }
 
         public override void OnSelect()
@@ -325,15 +324,14 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(IsInverse, speedRate, isSpeedChangable, isCheckSimultaneous);
+            get => MyUtility.GetContentFrom(speedRate, isSpeedChangable, isCheckSimultaneous);
             set
             {
                 var texts = value.Split('|');
 
-                IsInverse = bool.Parse(texts[0]);
-                speedRate = float.Parse(texts[1]);
-                isSpeedChangable = bool.Parse(texts[2]);
-                isCheckSimultaneous = bool.Parse(texts[3]);
+                speedRate = float.Parse(texts[0]);
+                isSpeedChangable = bool.Parse(texts[1]);
+                isCheckSimultaneous = bool.Parse(texts[2]);
             }
         }
 

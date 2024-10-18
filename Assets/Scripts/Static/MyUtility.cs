@@ -144,7 +144,7 @@ public static class MyUtility
     /// </summary>
     public static T[] GetArrayFrom<T>(string content, string separator = "|")
     {
-        if(string.IsNullOrWhiteSpace(content)) return null;
+        if(string.IsNullOrWhiteSpace(content)) return new T[0];
         var txts = content.Split("\n");
         var array = new T[txts.Length];
         for(int i = 0; i < array.Length; i++)

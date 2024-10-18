@@ -6,11 +6,7 @@ namespace NoteGenerating
     public abstract class Generator_Common : NoteGeneratorBase
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse
-        {
-            get => isInverse ^ RhythmGameManager.SettingIsMirror;
-            set => isInverse = value;
-        }
+        protected bool IsInverse => isInverse ^ RhythmGameManager.SettingIsMirror;
         
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
@@ -206,6 +202,28 @@ namespace NoteGenerating
         protected Transform CreateParent(IParentGeneratable parentGeneratable)
         {
             return parentGeneratable?.GenerateParent(Delta, Helper, IsInverse);
+        }
+
+        /// <summary>
+        /// 反転がtrueの際にテキストを追加します
+        /// </summary>
+        /// <returns></returns>
+        protected string GetInverseSummary()
+        {
+            if(isInverse)
+            {
+                return "  <color=#0000ff><b>(inv)</b></color>";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public override string CSVContent4
+        {
+            get => IsInverse.ToString();
+            set => isInverse = bool.Parse(value);
         }
     }
 }

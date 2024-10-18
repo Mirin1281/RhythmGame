@@ -35,6 +35,11 @@ public class ResultManager : MonoBehaviour
 
     void Awake()
     {
+        Show().Forget();
+    }
+
+    async UniTask Show()
+    {
         uiMover.MoveUI().Forget();
 
         var result = RhythmGameManager.Instance.Result;
@@ -48,6 +53,9 @@ public class ResultManager : MonoBehaviour
             result.Score,
             result.IsFullCombo);
         masterManagerData.SetScoreJsonAsync(gameScore).Forget();
+        
+        await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
+        RhythmGameManager.Instance.Result = null;
     }
 
     void SetUI(Result r)

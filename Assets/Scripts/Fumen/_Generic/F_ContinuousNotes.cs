@@ -57,18 +57,17 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(IsInverse, count, noteType, wait, easeX, easeTime, easeType);
+            get => MyUtility.GetContentFrom(count, noteType, wait, easeX, easeTime, easeType);
             set
             {
                 var texts = value.Split('|');
 
-                IsInverse = bool.Parse(texts[0]);
-                count = int.Parse(texts[1]);
-                noteType = Enum.Parse<NoteType>(texts[2]);
-                wait = float.Parse(texts[3]);
-                easeX = texts[4].ToVector2();
-                easeTime = float.Parse(texts[5]);
-                easeType = Enum.Parse<EaseType>(texts[6]);
+                count = int.Parse(texts[0]);
+                noteType = Enum.Parse<NoteType>(texts[1]);
+                wait = float.Parse(texts[2]);
+                easeX = texts[3].ToVector2();
+                easeTime = float.Parse(texts[4]);
+                easeType = Enum.Parse<EaseType>(texts[5]);
             }
         }
     }

@@ -29,12 +29,11 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(IsInverse, delay);
+            get => MyUtility.GetContentFrom(delay);
             set
             {
                 var texts = value.Split("|");
-                IsInverse = bool.Parse(texts[0]);
-                delay = float.Parse(texts[1]);
+                delay = float.Parse(texts[0]);
             }
         }
         

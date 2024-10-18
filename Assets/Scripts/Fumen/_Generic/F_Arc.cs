@@ -8,11 +8,12 @@ namespace NoteGenerating
     [AddTypeMenu("◆アーク"), System.Serializable]
     public class F_Arc : Generator_Common
     {
+        [SerializeField] bool is2D;
         [SerializeField] ArcCreateData[] datas;
 
         protected override async UniTask GenerateAsync()
         {
-            Arc(datas);
+            Arc(datas, is2D);
             await UniTask.CompletedTask;
         }
 
@@ -23,7 +24,19 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}";
+            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{GetInverseSummary()}";
+        }
+
+        protected override string GetName()
+        {
+            if(is2D)
+            {
+                return "2D Arc";
+            }
+            else
+            {
+                return base.GetName();
+            }
         }
 
         public override async void Preview()
@@ -35,7 +48,22 @@ namespace NoteGenerating
                 return;
             }
             arc.SetActive(true);
-            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed3D, IsInverse, Helper.DebugSpherePrefab);
+            if(is2D)
+            {
+                arc.SetRadius(0.4f);
+                arc.SetPos(new Vector3(0, 0, 0.5f));
+                arc.SetRotate(new Vector3(-90f, 0f, 0f));
+                arc.Is2D = true;
+            }
+            else
+            {
+                arc.SetRadius(0.5f);
+                arc.SetPos(Vector3.zero);
+                arc.SetRotate(Vector3.zero);
+                arc.Is2D = false;
+            }
+            float speed = is2D ? Speed : Speed3D;
+            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse, Helper.DebugSpherePrefab);
 
             GameObject previewObj = MyUtility.GetPreviewObject();
             float lineY = 0f;
@@ -44,18 +72,12 @@ namespace NoteGenerating
                 var line = Helper.PoolManager.LinePool.GetLine(1);
                 line.SetPos(new Vector3(0, 0, lineY));
                 line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * Speed3D;
+                lineY += Helper.GetTimeInterval(4) * speed;
                 if(lineY > arc.LastZ) break;
             }
         }
 
         public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(IsInverse);
-            set { IsInverse = bool.Parse(value); }
-        }
-
-        public override string CSVContent2
         {
             get => MyUtility.GetContentFrom(datas);
             set => datas = MyUtility.GetArrayFrom<ArcCreateData>(value);

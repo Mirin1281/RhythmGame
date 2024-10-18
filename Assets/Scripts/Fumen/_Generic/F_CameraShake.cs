@@ -42,7 +42,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return settings?.Length.ToString();
+            return settings?.Length + GetInverseSummary();
         }
 
         protected override Color GetCommandColor()
@@ -51,12 +51,6 @@ namespace NoteGenerating
         }
 
         public override string CSVContent1
-        {
-            get => IsInverse.ToString();
-            set { IsInverse = bool.Parse(value); }
-        }
-
-        public override string CSVContent2
         {
             get => MyUtility.GetContentFrom(settings);
             set => settings = MyUtility.GetArrayFrom<CameraShakeSetting>(value);
