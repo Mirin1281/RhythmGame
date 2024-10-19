@@ -4,7 +4,7 @@ using System;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆連続的なノーツ"), System.Serializable]
+    [AddTypeMenu("◆連続的なノーツ", -1), System.Serializable]
     public class F_ContinuousNotes : Generator_Common
     {
         [Space(20)]

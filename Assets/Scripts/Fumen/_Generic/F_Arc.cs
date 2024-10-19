@@ -5,7 +5,7 @@ using System;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆アーク"), System.Serializable]
+    [AddTypeMenu("◆アーク", -1), System.Serializable]
     public class F_Arc : Generator_Common
     {
         [SerializeField] bool is2D;
@@ -69,8 +69,8 @@ namespace NoteGenerating
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
-                var line = Helper.PoolManager.LinePool.GetLine(1);
-                line.SetPos(new Vector3(0, 0, lineY));
+                var line = Helper.PoolManager.LinePool.GetLine(is2D ? 0 : 1);
+                line.SetPos(is2D ? new Vector3(0, lineY) : new Vector3(0, 0.01f, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * speed;
                 if(lineY > arc.LastZ) break;

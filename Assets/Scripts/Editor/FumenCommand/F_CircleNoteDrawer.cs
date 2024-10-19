@@ -3,53 +3,38 @@ using UnityEditor;
 
 namespace NoteGenerating.Editor
 {
-    [CustomPropertyDrawer(typeof(NoteData))]
-    public class F_Generic2D_NoteDataDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(F_CircleNote.NoteData))]
+    public class F_CircleNoteDrawer : PropertyDrawer
     {
         static readonly float Height = 18;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var hel = new PropertyDrawerHelper(position, property, Height + 2);
-            var width = hel.StartWidth;
-            hel.SetWidth(width * 0.18f);
+            float width = hel.StartWidth;
+            float labelWidth = width * 0.2f;
+            float boxWidth = width * 0.12f;
 
-            var typeProp = hel.PropertyField("type", false);
-            var type = (CreateNoteType)typeProp.enumValueIndex;
-            hel.SetWidth(width * 0.12f);
+            hel.SetXAsWidth(0.8f);
+            var disabledProp = hel.PropertyField(boxWidth, "disabled", false);
 
-            if(type == CreateNoteType._None)
+            using(new EditorGUI.DisabledGroupScope(disabledProp.boolValue))
             {
-                float x = hel.SetX(width / 5f * 2f);
-                hel.LabelField("待:");
-                hel.SetX(x - 30f);
-                hel.PropertyField("wait", false);
+                hel.SetXAsWidth(0f);
+                hel.LabelField(labelWidth, "Pos");
 
-                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, Height + 4), Color.cyan);
-                return;
+                hel.SetXAsWidth(0.1f);
+                hel.PropertyField(boxWidth, "x", false);
+                hel.SetXAsWidth(0.25f);
+                hel.PropertyField(boxWidth, "y", false);
             }
 
-            float x1 = hel.SetX(width / 5f);
-            hel.LabelField("X:");
-            hel.SetX(x1 - 30f);
-            hel.PropertyField("x", false);
+            hel.SetXAsWidth(0.45f);
+            hel.LabelField(labelWidth, "Wait");
             
-            float x2 = hel.SetX(width / 5f * 2f);
-            hel.LabelField("待:");
-            hel.SetX(x2 - 30f);
-            var waitProp = hel.PropertyField("wait", false);
+            hel.SetXAsWidth(0.55f);
+            var waitProp = hel.PropertyField(boxWidth, "wait", false);
 
-            float x3 = hel.SetX(width / 5f * 3f);
-            hel.LabelField("幅:");
-            hel.SetX(x3 - 30f);
-            hel.PropertyField("width", false);
-
-            if(type == CreateNoteType.Hold)
-            {
-                float x4 = hel.SetX(width / 5f * 4f);
-                hel.LabelField("長:");
-                hel.SetX(x4 - 30f);
-                hel.PropertyField("length", false);
-            }
 
             if(waitProp.floatValue == 0f)
             {
@@ -75,11 +60,10 @@ namespace NoteGenerating.Editor
             GUI.color = originalColor;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-            => Height;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => Height;
     }
 
-    [CustomPropertyDrawer(typeof(F_Generic2D))]
+    /*[CustomPropertyDrawer(typeof(F_CircleNote))]
     public class F_Generic2DDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -121,5 +105,5 @@ namespace NoteGenerating.Editor
                  || i % 2 == 0) continue;
             }
         }
-    }
+    }*/
 }

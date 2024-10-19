@@ -11,6 +11,7 @@ public enum NoteType
     Floor,
     Sky,
     Arc,
+    Circle,
 }
 
 public abstract class NoteBase : PooledBase, ITransformable

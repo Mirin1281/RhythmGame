@@ -524,110 +524,6 @@ namespace NoteGenerating
 
 #region Test1
 
-            // 3Dレーンに2Dノーツを流す //
-            /*NoteBase_2D Note3D(float x, NoteType type, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                NoteBase_2D note = Helper.GetNote2D(type);
-                note.SetRotate(new Vector3(90, 0, 0));
-                note.SetWidth(1.4f);
-                note.SetHeight(5f);
-                Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
-                DropAsync3D(note, startPos, delta).Forget();
-
-                float expectTime = startPos.z / Speed3D - delta;
-                Helper.NoteInput.AddExpect(note, expectTime);
-                return note;
-            }
-            HoldNote Hold(float x, float length, float delta = -1)
-            {
-                if(delta == -1)
-                {
-                    delta = Delta;
-                }
-                float holdTime = Helper.GetTimeInterval(length);
-                HoldNote hold = Helper.GetHold(holdTime * Speed3D);
-                hold.SetRotate(new Vector3(90, 0, 0));
-                hold.SetWidth(1.4f);
-                Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
-                hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                DropAsync3D(hold, startPos, delta).Forget();
-
-                float expectTime = startPos.z / Speed3D - delta;
-                Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
-                return hold;
-            }
-
-            await Wait(4);
-            Hold(2, 4);
-            await Wait(4);
-            Hold(0, 2);
-            await Wait(2);
-            Note3D(-2, NoteType.Normal);
-            await Wait(2);
-            Note3D(0, NoteType.Flick);*/
-            
-    
-            // 2Dアーク //
-            /*Arc(new ArcCreateData[]
-            {
-                new(new(0, 0, 0), ArcVertexMode.Linear, false, false, 0, 4),
-                new(new(6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
-                new(new(0, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
-                new(new(-6, 0, 4), ArcVertexMode.Linear, false, false, 0, 4),
-                new(new(0, 0, 4), ArcVertexMode.Linear, true, false, 0, 4),
-            }, is2D: true);*/
-
-
-            // 円ノーツのテスト //
-            /*void Circle(Vector2 pos)
-            {
-                var note = Helper.PoolManager.NormalPool.GetNote(1);
-                MoveAsync(note, new Vector2(Inv(pos.x), pos.y)).Forget();
-                Helper.NoteInput.AddExpect(note, pos, 120f / Helper.Metronome.Bpm);
-
-
-                async UniTask MoveAsync(NormalNote note, Vector3 startPos)
-                {
-                    note.SetPos(startPos);
-                    float baseTime = CurrentTime - Delta;
-                    float t = 0f;
-                    while (note.IsActive && t < 3f)
-                    {
-                        t = CurrentTime - baseTime;
-                        note.transform.localScale = Vector3.one * t.Ease(1.5f, 0f, 120f / Helper.Metronome.Bpm, EaseType.InQuad);
-                        await Helper.Yield();
-                    }
-                }
-            }
-            async UniTask LoopCreateCircle(int lpb, params (int x, int y)?[] poses)
-            {
-                for(int i = 0; i < poses.Length; i++)
-                {
-                    if(poses[i] is (int, int) pos)
-                    {
-                        Circle(new Vector2(pos.x, pos.y));
-                    }
-                    await Wait(lpb);
-                }
-            }
-
-            await Wait(1);
-            await Wait(4);
-            await LoopCreateCircle(4,
-                (3, 5),
-                (3, 1),
-                (-3, 1),
-                (-3, 5),
-                null,
-                (0, 3),
-                null
-            );*/
-
-
             // グループ化のテスト //
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
             /*var parentTs = parentGeneratable.GenerateParent(Delta, Helper, IsInverse);
@@ -644,18 +540,6 @@ namespace NoteGenerating
                 await Wait(4, RhythmGameManager.DefaultWaitOnAction, delta: 0);
                 await Wait(1, 3, delta: 0);
                 line.FadeOut(0.5f);
-            });
-
-            // スピードの設定 //
-            // RhythmGameManager.SpeedBaseでダイナミックな速度変更
-            UniTask.Void(async () => 
-            {
-                await Wait(2, 3, 0);
-
-                var easing = new Easing(RhythmGameManager.SpeedBase, 0.3f, 1f, EaseType.OutQuad);
-                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
-                easing = new Easing(RhythmGameManager.SpeedBase, 1f, 1f, EaseType.OutQuad);
-                await easing.EaseAsync(Helper.Token, v => RhythmGameManager.SpeedBase = v);
             });
 
             UniTask.Void(async () => 
@@ -675,20 +559,6 @@ namespace NoteGenerating
                 await Wait(8);
             }*/
 
-            
-            // カメラ制御
-            /*Helper.CameraMover.Move(new Vector3(3f, 5f, -10f), null,
-                CameraMoveType.Absolute,
-                time: 2f,
-                EaseType.Linear,
-                isInverse: true
-            );
-            await Helper.WaitSeconds(1f);
-            Helper.CameraMover.Move(new Vector3(-2f, -2f, 0f), null,
-                CameraMoveType.Relative,
-                time: 2f,
-                EaseType.Linear
-            );*/
 
             // 斜め飛ばし
             

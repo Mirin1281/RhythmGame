@@ -13,7 +13,7 @@ namespace NoteGenerating.Editor
 {
     public class FumenEditorWindow : EditorWindow
     {
-        FumenData activeFumenData;
+        [SerializeField] FumenData activeFumenData;
         [SerializeField] Fumen activeFumen;
 
         [SerializeField] List<GenerateData> commandList = new();
@@ -30,7 +30,7 @@ namespace NoteGenerating.Editor
 
         static readonly float SplitMenuRatio = 0.4f;
 
-        void OnEnable()
+        void Init()
         {
             Undo.undoRedoPerformed -= OnSelectionChange;
             Undo.undoRedoPerformed += OnSelectionChange;
@@ -39,6 +39,11 @@ namespace NoteGenerating.Editor
             copiedCommandList = new();
             beforeSelectedIndices = new();
             OnSelectionChange();
+        }
+
+        void OnEnable()
+        {
+            Init();
         }
 
         void OnFocus()

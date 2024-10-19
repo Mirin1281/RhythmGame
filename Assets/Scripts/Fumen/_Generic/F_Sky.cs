@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆スカイ"), System.Serializable]
+    [AddTypeMenu("◆スカイ", -1), System.Serializable]
     public class F_Sky : Generator_Common
     {
         [Serializable]

@@ -22,7 +22,7 @@ public class Judgement : MonoBehaviour
     [SerializeField] TMP_Text deltaText;
     [SerializeField] TMP_Text judgeText;
     [SerializeField] TMP_Text scoreText;
-    [SerializeField] ParticleManager particleManager;
+    [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
     [SerializeField] bool showDebugRange;
 #else
@@ -70,7 +70,7 @@ public class Judgement : MonoBehaviour
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
     {
-        particleManager.PlayParticle(grade, pos);
+        particlePool.PlayParticle(pos, grade);
     }
 
     public async UniTask DebugShowRange(NoteExpect expect)

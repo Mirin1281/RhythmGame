@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆リザルト移行"), System.Serializable]
+    [AddTypeMenu("◇リザルト移行", 5), System.Serializable]
     public class F_Result : NoteGeneratorBase
     {
         protected override async UniTask GenerateAsync()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆3D 2D変更"), System.Serializable]
+    [AddTypeMenu("◇3D 2D変更"), System.Serializable]
     public class F_Dimension : NoteGeneratorBase, IZoneCommand
     {
         enum MoveType

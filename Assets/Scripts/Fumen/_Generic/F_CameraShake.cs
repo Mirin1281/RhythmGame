@@ -4,7 +4,7 @@ using System;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆カメラを揺らす"), System.Serializable]
+    [AddTypeMenu("◇カメラを揺らす"), System.Serializable]
     public class F_CameraShake : Generator_Common
     {
         [Serializable]

@@ -6,6 +6,7 @@ using UnityEngine;
 public class NotePoolManager : MonoBehaviour
 {
     [field: SerializeField] public NormalNotePool NormalPool { get; private set; }
+    [field: SerializeField] public CircleNotePool CirclePool { get; private set; }
     [field: SerializeField] public SlideNotePool SlidePool { get; private set; }
     [field: SerializeField] public FlickNotePool FlickPool { get; private set; }
     [field: SerializeField] public HoldNotePool HoldPool { get; private set; }
@@ -46,6 +47,7 @@ public class NotePoolManager : MonoBehaviour
             NoteType.Slide => SlidePool.GetSimultaneousSprite(),
             NoteType.Flick => FlickPool.GetSimultaneousSprite(),
             NoteType.Hold => null,
+            NoteType.Circle => null,
             /*NoteType.Hold => holdNotePool,
             NoteType.Sky => skyNotePool,
             NoteType.Arc => arcNotePool,*/
@@ -56,7 +58,7 @@ public class NotePoolManager : MonoBehaviour
     public void SetPoolCount(FumenData fumen)
     {
         NormalPool.SetPoolCount(fumen.NormalPoolCount);
-        NormalPool.SetPoolCount(fumen.CirclePoolCount, 1);
+        CirclePool.SetPoolCount(fumen.CirclePoolCount);
         SlidePool.SetPoolCount(fumen.SlidePoolCount);
         FlickPool.SetPoolCount(fumen.FlickPoolCount);
         HoldPool.SetPoolCount(fumen.HoldPoolCount);

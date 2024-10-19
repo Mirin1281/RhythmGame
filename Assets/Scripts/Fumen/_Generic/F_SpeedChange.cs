@@ -4,7 +4,7 @@ using System;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆速度変更"), System.Serializable]
+    [AddTypeMenu("◇速度変更"), System.Serializable]
     public class F_SpeedChange : NoteGeneratorBase
     {
         [Header("通常を1として、全体のノーツスピードを変更します")]

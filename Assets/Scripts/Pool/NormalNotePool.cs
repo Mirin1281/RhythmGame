@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class NormalNotePool : PoolBase<NormalNote> 
 {
+    [Space(20)]
     [SerializeField] Sprite defaultSprite;
     [SerializeField] Sprite simultaneousSprite;
-    public bool isDarkMode;
+    //public bool isDarkMode;
 
     public NormalNote GetNote(int index = 0, bool isSimultaneous = false)
     {

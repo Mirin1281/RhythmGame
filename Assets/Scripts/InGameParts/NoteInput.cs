@@ -182,7 +182,7 @@ public class NoteInput : MonoBehaviour
     void OnDown(Input input)
     {
         (NoteExpect expect, float delta) = FetchNearestNote(
-            input.pos, metronome.CurrentTime, NoteType.Normal, NoteType.Hold, NoteType.Sky);
+            input.pos, metronome.CurrentTime, NoteType.Normal, NoteType.Circle, NoteType.Hold, NoteType.Sky);
         if(expect == null) return;
 
         NoteGrade grade = judge.GetGradeAndSetText(delta);
@@ -307,22 +307,8 @@ public class NoteInput : MonoBehaviour
             float delta = inputTime - expect.Time;
             if(Mathf.Abs(delta) > tolerance) continue;
 
-            
             // 入力座標から遠かったらスルー
             if(judge.IsNearPosition(expect, inputPos) == false) continue;
-            
-            /*if(expect.Mode == NoteExpect.ExpectMode.Static)
-            {
-                if(judge.IsNearPosition(expect, inputPos) == false) continue;
-            }
-            else if(expect.Mode == NoteExpect.ExpectMode.Y_Static)
-            {
-                if(judge.IsNearPosition(expect.Note, new Vector2(expect.Note.GetPos().x, expect.Pos.y), inputPos) == false) continue;
-            }
-            else if(expect.Mode == NoteExpect.ExpectMode.Dynamic)
-            {
-                if(judge.IsNearPosition(expect.Note, expect.Note.GetPos(), inputPos) == false) continue;
-            }*/
             fetchedExpects.Add((expect, delta));
         }
         fetchedExpects.Sort((a, b) => a.Item1.Time.CompareTo(b.Item1.Time));

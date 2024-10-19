@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("◆ノーツ点滅"), System.Serializable]
+    [AddTypeMenu("◇ノーツ点滅"), System.Serializable]
     public class F_NotesBlink : NoteGeneratorBase
     {
         [Flags]

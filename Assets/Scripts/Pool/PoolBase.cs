@@ -14,6 +14,7 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         [SerializeField] T prefab;
         [SerializeField, Tooltip("Ž–‘O‚É¶¬‚µ‚Ä‚¨‚­”")]
         int prepare;
+
         public int SearchIndex { get; set; }
         public T Prefab => prefab;
         public int Prepare => prepare;

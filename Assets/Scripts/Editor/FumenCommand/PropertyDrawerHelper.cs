@@ -16,7 +16,15 @@ public class PropertyDrawerHelper
         this.position.height = contentHeight;
     }
 
+    /// <summary>
+    /// X座標を設定します。返り値を受けることもできます
+    /// </summary>
     public float SetX(float x) => position.x = startX + x;
+
+    /// <summary>
+    /// 全体幅の割合を指定してX座標を設定します。0だとデフォルト、0.8程度で右端に描画されます
+    /// </summary>
+    public float SetXAsWidth(float x) => position.x = startX + x * StartWidth;
 
     /// <summary>
     /// 次の行へ移ります。通常position.xとwidthはリセットされます
@@ -50,9 +58,35 @@ public class PropertyDrawerHelper
         }
         return prop;
     }
+    /// <summary>
+    /// フィールドを描画します。返り値としてSerializedPropertyを受け取れます
+    /// </summary>
+    public SerializedProperty PropertyField(float width, string fieldName, bool drawLabel = true)
+    {
+        float w = position.width;
+        SetWidth(width);
+        var prop = property.FindPropertyRelative(fieldName);
+        if(drawLabel)
+        {
+            EditorGUI.PropertyField(position, prop);
+        }
+        else
+        {
+            EditorGUI.PropertyField(position, prop, GUIContent.none);
+        }
+        SetWidth(w);
+        return prop;
+    }
 
     public void LabelField(string name)
     {
         EditorGUI.LabelField(position, name);
+    }
+    public void LabelField(float width, string name)
+    {
+        float w = position.width;
+        SetWidth(width);
+        EditorGUI.LabelField(position, name);
+        SetWidth(w);
     }
 }

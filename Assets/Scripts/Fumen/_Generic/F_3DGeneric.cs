@@ -1,36 +1,10 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace NoteGenerating
 {
-    public enum CreateNoteType
-    {
-        [InspectorName("なし")] _None,
-        [InspectorName("タップ")] Normal,
-        [InspectorName("スライド")] Slide,
-        [InspectorName("フリック")] Flick,
-        [InspectorName("ホールド")] Hold,
-    }
-
-    [Serializable]
-    public struct NoteData
-    {
-        [SerializeField] CreateNoteType type;
-        [SerializeField] float x;
-        [SerializeField, Min(0)] float wait;
-        [SerializeField, Min(0)] float width;
-        [SerializeField, Min(0)] float length;
-
-        public readonly CreateNoteType Type => type;
-        public readonly float X => x;
-        public readonly float Wait => wait;
-        public readonly float Width => width;
-        public readonly float Length => length;
-    }
-
-    [AddTypeMenu("◆汎用 ジェネレータ2D", -2), System.Serializable]
-    public class F_Generic2D : Generator_Common
+    [AddTypeMenu("◆汎用 3Dに2Dノーツを流す", -1), System.Serializable]
+    public class F_3DGeneric : Generator_Common
     {
         [SerializeField] float speedRate = 1f;
 
@@ -44,7 +18,7 @@ namespace NoteGenerating
         
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
-        protected override float Speed => base.Speed * speedRate;
+        protected override float Speed3D => base.Speed3D * speedRate;
 
         protected override async UniTask GenerateAsync()
         {
@@ -85,21 +59,27 @@ namespace NoteGenerating
             void MyNote(float x, NoteType type, float width, Transform parentTs)
             {
                 NoteBase_2D note = Helper.GetNote2D(type, parentTs);
+                note.SetRotate(new Vector3(90, 0, 0));
                 if((width is 0 or 1) == false)
                 {
-                    note.SetWidth(width);
+                    note.SetWidth(1.4f * width);
                 }
-                Vector3 startPos = new(Inv(x), StartBase);
+                else
+                {
+                    note.SetWidth(1.4f);
+                }
+                note.SetHeight(5f);
+                Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
                 if(isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(note).Forget();
                 }
                 else
                 {
-                    DropAsync(note, startPos).Forget();
+                    DropAsync3D(note, startPos).Forget();
                 }
 
-                float expectTime = startPos.y/Speed - Delta;
+                float expectTime = startPos.z/Speed3D - Delta;
                 if(parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
@@ -121,8 +101,8 @@ namespace NoteGenerating
                     while (note.IsActive && time < 5f)
                     {
                         time = CurrentTime - baseTime;
-                        var vec = Speed * Vector3.down;
-                        note.SetPos(new Vector3(Inv(x), StartBase) + time * vec);
+                        var vec = Speed3D * Vector3.back;
+                        note.SetPos(new Vector3(Inv(x), StartBase3D) + time * vec);
                         await Helper.Yield();
                     }
                 }
@@ -131,12 +111,17 @@ namespace NoteGenerating
             void MyHold(float x, float length, float width, Transform parentTs)
             {
                 float holdTime = Helper.GetTimeInterval(length);
-                HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
+                HoldNote hold = Helper.GetHold(holdTime * Speed3D, parentTs);
+                hold.SetRotate(new Vector3(90, 0, 0));
                 if((width is 0 or 1) == false)
                 {
-                    hold.SetWidth(width);
+                    hold.SetWidth(1.4f * width);
                 }
-                Vector3 startPos = new (Inv(x), StartBase);
+                else
+                {
+                    hold.SetWidth(1.4f);
+                }
+                Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
                 if(isSpeedChangable)
                 {
@@ -144,10 +129,10 @@ namespace NoteGenerating
                 }
                 else
                 {
-                    DropAsync(hold, startPos).Forget();
+                    DropAsync3D(hold, startPos).Forget();
                 }
 
-                float expectTime = startPos.y/Speed - Delta;
+                float expectTime = startPos.z/Speed3D - Delta;
                 if(parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
@@ -169,9 +154,9 @@ namespace NoteGenerating
                     while (hold.IsActive && time < 5f)
                     {
                         time = CurrentTime - baseTime;
-                        var vec = Speed * Vector3.down;
-                        hold.SetLength(holdTime * Speed);
-                        hold.SetPos(new Vector3(Inv(x), StartBase, -0.04f) + time * vec);
+                        var vec = Speed3D * Vector3.down;
+                        hold.SetLength(holdTime * Speed3D);
+                        hold.SetPos(new Vector3(Inv(x), StartBase3D, -0.04f) + time * vec);
                         await Helper.Yield();
                     }
                 }
@@ -204,7 +189,7 @@ namespace NoteGenerating
 
         protected override string GetName()
         {
-            return "汎用2D";
+            return "3Dレーン 2D";
         }
 
         protected override Color GetCommandColor()

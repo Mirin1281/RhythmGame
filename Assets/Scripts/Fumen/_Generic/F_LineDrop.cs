@@ -1,11 +1,10 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System;
 
 namespace NoteGenerating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_LineMove")]
-    [AddTypeMenu("◆ラインを降らせる"), System.Serializable]
+    [AddTypeMenu("◆判定線を降らせる"), System.Serializable]
     public class F_LineDrop : Generator_Common
     {
         [SerializeField] int count;
@@ -14,6 +13,14 @@ namespace NoteGenerating
         [SerializeField] bool is3D;
         [SerializeField] float moveDirection = 270;
         [SerializeField] float lineRotation;
+        [Space(20)]
+        [SerializeField] float speedRate = 1f;
+        [SerializeField] float lifeTime = 3f;
+        [SerializeField] Vector3 posOffset;
+        [SerializeField] bool useMoveEasing;
+        [SerializeField] EasingStatus moveEasing;
+        [SerializeField] bool useRotateEasing;
+        [SerializeField] EasingStatus rotateEasing;
 
         protected override async UniTask GenerateAsync()
         {
@@ -22,9 +29,23 @@ namespace NoteGenerating
                 CreateLineAsync().Forget();
                 await Wait(wait);
             }
+
+
+            async UniTaskVoid CreateLineAsync()
+            {
+                Line line = GetLine(is3D);
+
+                if(useRotateEasing)
+                {
+                    Rotate(line).Forget();
+                }
+
+                await MoveAsync(line);
+                line.SetActive(false);
+            }
         }
 
-        async UniTask CreateLineAsync()
+        Line GetLine(bool is3D)
         {
             Line line = Helper.GetLine();
             if(is3D)
@@ -36,67 +57,84 @@ namespace NoteGenerating
             }
             else
             {
-                line.SetWidth(20f);
+                line.SetWidth(26f);
                 line.SetHeight(0.06f);
                 line.SetRotate(Inv(lineRotation));
                 line.SetAlpha(0.25f);
             }
-            
+            return line;
+        }
 
+        async UniTaskVoid Rotate(Line line)
+        {
             float baseTime = CurrentTime - Delta;
             float time = 0;
-            if(isSpeedChangable)
+            var easing = new Easing(rotateEasing); 
+            while (line.IsActive && time < lifeTime)
             {
-                if(is3D)
+                time = CurrentTime - baseTime;
+                line.SetRotate(easing.Ease(time) * speedRate);
+                await Helper.Yield();
+            }
+        }
+
+        async UniTask MoveAsync(Line line)
+        {
+            float baseTime = CurrentTime - Delta;
+            float time = 0;
+            if(useMoveEasing)
+            {
+                var easing = new Easing(moveEasing); 
+                if(isSpeedChangable)
                 {
-                    while (line.IsActive && time < 3f)
+                    while (line.IsActive && time < lifeTime)
                     {
                         time = CurrentTime - baseTime;
-                        var vec = RhythmGameManager.Speed3D * GetVec();
-                        line.SetPos(-StartBase3D * GetVec() + time * vec);
+                        var vec = speedRate * GetVec();
+                        line.SetPos(-GetStartBase() * GetVec() + easing.Ease(time) * vec + posOffset);
                         await Helper.Yield();
                     }
                 }
                 else
                 {
-                    while (line.IsActive && time < 3f)
+                    Vector3 startPos = -GetStartBase() * GetVec();
+                    var vec = speedRate * GetVec();
+                    while (line.IsActive && time < lifeTime)
                     {
                         time = CurrentTime - baseTime;
-                        var vec = RhythmGameManager.Speed * GetVec();
-                        line.SetPos(-StartBase * GetVec() + time * vec);
+                        line.SetPos(startPos + easing.Ease(time) * vec + posOffset);
                         await Helper.Yield();
                     }
                 }
-                
             }
             else
             {
-                if(is3D)
+                if(isSpeedChangable)
                 {
-                    Vector3 startPos = -StartBase3D * GetVec();
-                    var vec = RhythmGameManager.Speed3D * GetVec();
-                    while (line.IsActive && time < 3f)
+                    while (line.IsActive && time < lifeTime)
                     {
                         time = CurrentTime - baseTime;
-                        line.SetPos(startPos + time * vec);
+                        var vec = GetSpeed() * GetVec();
+                        line.SetPos(-GetStartBase() * GetVec() + time * vec + posOffset);
                         await Helper.Yield();
                     }
                 }
                 else
                 {
-                    Vector3 startPos = -StartBase * GetVec();
-                    var vec = RhythmGameManager.Speed * GetVec();
-                    while (line.IsActive && time < 3f)
+                    Vector3 startPos = -GetStartBase() * GetVec();
+                    var vec = GetSpeed() * GetVec();
+                    while (line.IsActive && time < lifeTime)
                     {
                         time = CurrentTime - baseTime;
-                        line.SetPos(startPos + time * vec);
+                        line.SetPos(startPos + time * vec + posOffset);
                         await Helper.Yield();
                     }
                 }
-                
             }
-            line.SetActive(false);
         }
+
+        float GetStartBase() => is3D ? StartBase3D : StartBase;
+        float GetSpeed() => (is3D ? Speed3D : Speed) * speedRate;
 
         Vector3 GetVec()
         {
