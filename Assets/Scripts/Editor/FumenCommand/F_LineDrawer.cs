@@ -22,12 +22,12 @@ namespace NoteGenerating.Editor
             if(isPosEaseProp.boolValue)
             {
                 hel.LabelField("Start");
-                hel.SetX(EditorGUIUtility.labelWidth + 2);
+                hel.SetX(EditorGUIUtility.labelWidth);
                 hel.PropertyField(hel.Width / 1.8f, "startPos", false);
                 hel.SetY();
 
                 hel.LabelField("From");
-                hel.SetX(EditorGUIUtility.labelWidth + 2);
+                hel.SetX(EditorGUIUtility.labelWidth);
                 hel.PropertyField(hel.Width / 1.8f, "fromPos", false);
                 hel.SetY();
 
@@ -39,7 +39,7 @@ namespace NoteGenerating.Editor
             else
             {
                 hel.LabelField("Pos");
-                hel.SetX(EditorGUIUtility.labelWidth + 2);
+                hel.SetX(EditorGUIUtility.labelWidth);
                 hel.PropertyField(hel.Width / 1.8f, "startPos", false);
                 hel.SetY();
             }

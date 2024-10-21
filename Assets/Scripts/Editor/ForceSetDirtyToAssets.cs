@@ -34,7 +34,7 @@ public class ForceSetDirtyToAssets
         AssetDatabase.SaveAssets();
     }
 
-    private static void SetAssetDirtyByPath(string assetPath)
+    static void SetAssetDirtyByPath(string assetPath)
     {
         var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
         if (asset != null)
@@ -43,7 +43,7 @@ public class ForceSetDirtyToAssets
         }
     }
 
-    private static void SetAssetsInFoldersDirty(IEnumerable<string> folderPaths)
+    static void SetAssetsInFoldersDirty(IEnumerable<string> folderPaths)
     {
         var allAssetGUIDsInFolders = AssetDatabase.FindAssets("", folderPaths.ToArray());
         foreach (var guid in allAssetGUIDsInFolders)

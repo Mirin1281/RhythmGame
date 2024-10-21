@@ -8,41 +8,44 @@ namespace NoteGenerating.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var helper = new PropertyDrawerHelper(position, property);
-            var w = helper.StartWidth;
+            var hel = new PropertyDrawerHelper(position, property);
+            var w = hel.StartWidth;
 
-            helper.PropertyField("wait");
+            hel.PropertyField("wait");
 
-            helper.SetY();
-            helper.LabelField("Pos");
-            helper.SetX(60);
-            var isPosMove_p = helper.PropertyField("isPosMove", false);
-            helper.SetX(120);
-            helper.SetWidth(w - 120);
+            hel.SetY();
+            hel.LabelField("Pos");
+            hel.SetX(60);
+            var isPosMove_p = hel.PropertyField("isPosMove", false);
+            hel.SetX(EditorGUIUtility.labelWidth);
+            hel.SetWidth(w - EditorGUIUtility.labelWidth);
             using (new EditorGUI.DisabledGroupScope(isPosMove_p.boolValue == false))
             {
-                helper.PropertyField("pos", false);
+                hel.PropertyField("pos", false);
             }
 
-            helper.SetY();
-            helper.LabelField("Rotate");
-            helper.SetX(60);
-            var isRotateMove_p = helper.PropertyField("isRotateMove", false);
-            helper.SetX(120);
-            helper.SetWidth(w - 120);
+            hel.SetY();
+            hel.LabelField("Rotate");
+            hel.SetX(60);
+            var isRotateMove_p = hel.PropertyField("isRotateMove", false);
+            hel.SetX(EditorGUIUtility.labelWidth);
+            hel.SetWidth(w - EditorGUIUtility.labelWidth);
             using (new EditorGUI.DisabledGroupScope(isRotateMove_p.boolValue == false))
             {
-                helper.PropertyField("rotate", false);
-                helper.SetY();
-                helper.PropertyField("isRotateClamp");
+                hel.PropertyField("rotate", false);
+                hel.SetY();
+                hel.PropertyField("isRotateClamp");
             }
 
-            helper.SetY();
-            helper.PropertyField("time");
-            helper.SetY();
-            helper.PropertyField("easeType");
-            helper.SetY();
-            helper.PropertyField("moveType");
+            hel.SetY();
+            hel.PropertyField("time");
+            hel.SetY();
+            hel.PropertyField("easeType");
+            hel.SetY();
+            hel.PropertyField("moveType");
+            hel.SetY();
+            hel.SetY(-10);
+            hel.DrawLine();
 
             /*EditorGUI.LabelField(position, "Pos");
             position.x = x + 60;
@@ -93,7 +96,7 @@ namespace NoteGenerating.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 20 * 7;
+            return 20 * 8;
         }
     }
 }

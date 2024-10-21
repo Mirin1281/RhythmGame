@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using UnityEditor;
 
 namespace NoteGenerating
 {
@@ -212,6 +213,150 @@ namespace NoteGenerating
                 return summary + " : " + loopCount + GetInverseSummary();
             }
         }
+
+#if UNITY_EDITOR
+        public override async void Preview()
+        {
+            var previewObj = MyUtility.GetPreviewObject();
+            if(loopCount > 3)
+                loopCount = 3;
+            for(int i = 0; i < loopCount; i++)
+            {
+                for(int k = 0; k < datas.Length; k++)
+                {
+                    DebugCreateLine(datas[k]).Forget();
+                }
+                await MyUtility.WaitSeconds(Helper.GetTimeInterval(loopWaitLPB), default);
+            }
+
+
+            async UniTaskVoid DebugCreateLine(LineCreateData data)
+            {
+                await MyUtility.WaitSeconds(Helper.GetTimeInterval(data.DelayLPB), default);
+
+                var line = Helper.GetLine();
+                line.transform.SetParent(previewObj.transform);
+
+                if(data.IsPosEase)
+                {
+                    float posTime = data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime;
+                    var posEasing = new EasingVector2(
+                        data.StartPos,
+                        data.FromPos,
+                        posTime,
+                        data.OverridePosEaseType == EaseType.None ? easeType: data.OverridePosEaseType
+                    );            
+                    WhileYield(posTime, t =>
+                    {
+                        Vector2 p = basePos;
+                        if(data.IsRotateFromPos)
+                        {
+                            p += MyUtility.GetRotatedPos(posEasing.Ease(t), data.RotateFromPos, data.CenterPos);
+                        }
+                        else
+                        {
+                            p += posEasing.Ease(t);
+                        }
+                        line.SetPos(new Vector3(Inv(p.x), p.y));
+                    });
+                }
+                else
+                {
+                    Vector2 p = basePos;
+                    if(data.IsRotateFromPos)
+                    {
+                        p += MyUtility.GetRotatedPos(data.StartPos, data.RotateFromPos, data.CenterPos);
+                    }
+                    else
+                    {
+                        p += data.StartPos;
+                    }
+                    line.SetPos(new Vector3(Inv(p.x), p.y));
+                }
+                
+                if(data.IsRotateEase)
+                {
+                    float rotateTime = data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime;
+                    var rotateEasing = new Easing(
+                        data.StartRotate,
+                        data.FromRotate,
+                        rotateTime,
+                        data.OverrideRotateEaseType == EaseType.None ? easeType: data.OverrideRotateEaseType
+                    );
+                    WhileYield(rotateTime, t =>
+                    {
+                        Debug.Log(t);
+                        float r = default;
+                        if(data.IsRotateFromPos)
+                        {
+                            r = rotateEasing.Ease(t) + data.RotateFromPos;
+                        }
+                        else
+                        {
+                            r = rotateEasing.Ease(t);
+                        }
+                        line.SetRotate(Inv(r));
+                    });
+                }
+                else
+                {
+                    float r = default;
+                    if(data.IsRotateFromPos)
+                    {
+                        r = data.StartRotate + data.RotateFromPos;
+                    }
+                    else
+                    {
+                        r = data.StartRotate;
+                    }
+                    line.SetRotate(Inv(r));
+                }
+
+                if(data.IsAlphaEase)
+                {
+                    float alphaTime = data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime;
+                    var alphaEasing = new Easing(
+                        data.StartAlpha,
+                        data.FromAlpha,
+                        alphaTime,
+                        data.OverrideAlphaEaseType == EaseType.None ? easeType: data.OverrideAlphaEaseType
+                    );
+                    WhileYield(alphaTime, t =>
+                    {
+                        line.SetAlpha(alphaEasing.Ease(t));
+                    });
+                }
+                else
+                {
+                    line.SetAlpha(data.StartAlpha);
+                }
+
+                await MyUtility.WaitSeconds(time, default);
+                GameObject.DestroyImmediate(line.gameObject);
+            }
+
+            void WhileYield(float time, Action<float> action)
+            {
+                UniTask.Void(async () => 
+                {
+                    if(time == 0)
+                    {
+                        action.Invoke(time);
+                        return;
+                    }
+                    double baseTime = EditorApplication.timeSinceStartup;
+                    double t = 0f;
+                    while(t < time)
+                    {
+                        t = EditorApplication.timeSinceStartup - baseTime;
+                        action.Invoke((float)t);
+                        await UniTask.Yield();
+                    }
+                    action.Invoke(time);
+                });
+            }
+        }
+#endif
 
         public override string CSVContent1
         {
