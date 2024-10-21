@@ -23,9 +23,10 @@ MonoBehaviour:
       type: {class: F_LineDrop, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 1
-        count: 1
-        wait: 2
-        isSpeedChangable: 0
+        loopCount: 1
+        loopWaitLPB: 4
         is3D: 1
         moveDirection: 3
-        lineRotation: 4
+        isSpeedChangable: 0
+        speedRate: 1
+        lifeTime: 3

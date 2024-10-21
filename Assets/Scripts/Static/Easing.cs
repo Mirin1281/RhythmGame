@@ -253,6 +253,68 @@ public enum EaseType
     [InspectorName("")] INTERNAL_Zero,
 }
 
+public readonly struct EasingVector3
+{
+    readonly Easing easingX;
+    readonly Easing easingY;
+    readonly Easing easingZ;
+
+    public EasingVector3(Vector3 start, Vector3 from, float easeTime, EaseType type)
+    {
+        easingX = new Easing(start.x, from.x, easeTime, type);
+        easingY = new Easing(start.y, from.y, easeTime, type);
+        easingZ = new Easing(start.z, from.z, easeTime, type);
+    }
+    public EasingVector3(EasingStatusVector3 easingStatus)
+    {
+        easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
+        easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
+        easingZ = new Easing(easingStatus.Start.z, easingStatus.From.z, easingStatus.EaseTime, easingStatus.EaseType);
+    }
+
+    public static Vector3 Ease(Vector3 start, Vector3 from, float easeTime, EaseType type, float time)
+    {
+        return new Vector3(
+            Easing.Ease(start.x, from.x, easeTime, type, time),
+            Easing.Ease(start.y, from.y, easeTime, type, time),
+            Easing.Ease(start.z, from.z, easeTime, type, time));
+    }
+    
+    public Vector3 Ease(float time)
+    {
+        return new Vector3(easingX.Ease(time), easingY.Ease(time), easingZ.Ease(time));
+    }
+}
+
+public readonly struct EasingVector2
+{
+    readonly Easing easingX;
+    readonly Easing easingY;
+
+    public EasingVector2(Vector2 start, Vector2 from, float easeTime, EaseType type)
+    {
+        easingX = new Easing(start.x, from.x, easeTime, type);
+        easingY = new Easing(start.y, from.y, easeTime, type);
+    }
+    public EasingVector2(EasingStatusVector3 easingStatus)
+    {
+        easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
+        easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
+    }
+
+    public static Vector2 Ease(Vector2 start, Vector2 from, float easeTime, EaseType type, float time)
+    {
+        return new Vector2(
+            Easing.Ease(start.x, from.x, easeTime, type, time),
+            Easing.Ease(start.y, from.y, easeTime, type, time));
+    }
+    
+    public Vector2 Ease(float time)
+    {
+        return new Vector2(easingX.Ease(time), easingY.Ease(time));
+    }
+}
+
 [Serializable]
 public struct EasingStatus : IEquatable<EasingStatus>
 {
@@ -278,6 +340,74 @@ public struct EasingStatus : IEquatable<EasingStatus>
     {
         if (other is EasingStatus)
             return Equals((EasingStatus)other);
+        return false;
+    }
+
+    public override readonly int GetHashCode()
+    {
+        return HashCode.Combine(start, from, easeTime, easeType);
+    }
+}
+
+[Serializable]
+public struct EasingStatusVector3 : IEquatable<EasingStatusVector3>
+{
+    [SerializeField] Vector3 start;
+    [SerializeField] Vector3 from;
+    [SerializeField] float easeTime;
+    [SerializeField] EaseType easeType;
+
+    public readonly Vector3 Start => start;
+    public readonly Vector3 From => from;
+    public readonly float EaseTime => easeTime;
+    public readonly EaseType EaseType => easeType;
+
+    public readonly bool Equals(EasingStatusVector3 other)
+    {
+        return start == other.Start
+            && from == other.From
+            && easeTime == other.EaseTime
+            && easeType == other.EaseType;
+    }
+
+    public override readonly bool Equals(object other)
+    {
+        if (other is EasingStatusVector3)
+            return Equals((EasingStatusVector3)other);
+        return false;
+    }
+
+    public override readonly int GetHashCode()
+    {
+        return HashCode.Combine(start, from, easeTime, easeType);
+    }
+}
+
+[Serializable]
+public struct EasingStatusVector2 : IEquatable<EasingStatusVector2>
+{
+    [SerializeField] Vector2 start;
+    [SerializeField] Vector2 from;
+    [SerializeField] float easeTime;
+    [SerializeField] EaseType easeType;
+
+    public readonly Vector2 Start => start;
+    public readonly Vector2 From => from;
+    public readonly float EaseTime => easeTime;
+    public readonly EaseType EaseType => easeType;
+
+    public readonly bool Equals(EasingStatusVector2 other)
+    {
+        return start == other.Start
+            && from == other.From
+            && easeTime == other.EaseTime
+            && easeType == other.EaseType;
+    }
+
+    public override readonly bool Equals(object other)
+    {
+        if (other is EasingStatusVector2)
+            return Equals((EasingStatusVector2)other);
         return false;
     }
 
