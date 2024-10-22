@@ -18,14 +18,14 @@ namespace NoteGenerating.Editor
 
             using(new EditorGUI.DisabledGroupScope(disableeProp.boolValue))
             {
-                EditorGUI.LabelField(position, "位置:");
-                position.x += width * 0.08f;
+                //EditorGUI.LabelField(position, "位置:");
+                position.x += width * 0.04f;
                 position.width = width * 0.25f;
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("pos"), GUIContent.none);
                 position.width = width * 0.25f;
             }
                 
-            position.x += width * 0.3f;
+            position.x += width * 0.34f;
             EditorGUI.LabelField(position, "待ち:");
             position.x += width * 0.08f;
             position.width = width * 0.13f;

@@ -265,12 +265,12 @@ public readonly struct EasingVector3
         easingY = new Easing(start.y, from.y, easeTime, type);
         easingZ = new Easing(start.z, from.z, easeTime, type);
     }
-    public EasingVector3(EasingStatusVector3 easingStatus)
+    /*public EasingVector3(EasingStatusVector3 easingStatus)
     {
         easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
         easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
         easingZ = new Easing(easingStatus.Start.z, easingStatus.From.z, easingStatus.EaseTime, easingStatus.EaseType);
-    }
+    }*/
 
     public static Vector3 Ease(Vector3 start, Vector3 from, float easeTime, EaseType type, float time)
     {
@@ -296,11 +296,11 @@ public readonly struct EasingVector2
         easingX = new Easing(start.x, from.x, easeTime, type);
         easingY = new Easing(start.y, from.y, easeTime, type);
     }
-    public EasingVector2(EasingStatusVector3 easingStatus)
+    /*public EasingVector2(EasingStatusVector3 easingStatus)
     {
         easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
         easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
-    }
+    }*/
 
     public static Vector2 Ease(Vector2 start, Vector2 from, float easeTime, EaseType type, float time)
     {
@@ -349,7 +349,7 @@ public struct EasingStatus : IEquatable<EasingStatus>
     }
 }
 
-[Serializable]
+/*[Serializable]
 public struct EasingStatusVector3 : IEquatable<EasingStatusVector3>
 {
     [SerializeField] Vector3 start;
@@ -415,4 +415,4 @@ public struct EasingStatusVector2 : IEquatable<EasingStatusVector2>
     {
         return HashCode.Combine(start, from, easeTime, easeType);
     }
-}
+}*/

@@ -6,11 +6,11 @@ namespace NoteGenerating.Editor
     [CustomPropertyDrawer(typeof(F_CircleNote.NoteData))]
     public class F_CircleNoteDrawer : PropertyDrawer
     {
-        static readonly float Height = 18;
+        const float Height = 20;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var hel = new PropertyDrawerHelper(position, property, Height + 2);
+            var hel = new PropertyDrawerHelper(position, property, Height);
             float width = hel.StartWidth;
             float labelWidth = width * 0.2f;
             float boxWidth = width * 0.12f;
@@ -38,7 +38,7 @@ namespace NoteGenerating.Editor
 
             if(waitProp.floatValue == 0f)
             {
-                DrawBoxLayout(new Rect(19, position.y - 2, width + 40, 2f * (Height + 4)), Color.yellow);
+                DrawBoxLayout(new Rect(20, position.y, width + 40, 2f * (Height + 2)), Color.yellow);
             }
         }
 
@@ -62,48 +62,4 @@ namespace NoteGenerating.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => Height;
     }
-
-    /*[CustomPropertyDrawer(typeof(F_CircleNote))]
-    public class F_Generic2DDrawer : PropertyDrawer
-    {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("isInverse"));
-
-            position.y += EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("speedRate"));
-
-            position.y += EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("isSpeedChangable"));
-
-            position.y += EditorGUIUtility.singleLineHeight;
-            var parentProp = property.FindPropertyRelative("parentGeneratable");
-            EditorGUI.PropertyField(new Rect(position.x - 15, position.y, position.width + 15, position.height), parentProp);
-
-
-            position.y += EditorGUI.GetPropertyHeight(parentProp);
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("isCheckSimultaneous"));
-
-            position.y += EditorGUIUtility.singleLineHeight;
-            var noteDatasProp = property.FindPropertyRelative("noteDatas");
-            EditorGUI.PropertyField(position, noteDatasProp);
-
-            if(noteDatasProp.isExpanded == false) return;
-
-            GUILayoutUtility.GetRect(0, 140 + noteDatasProp.arraySize * (18 + 2));
-
-            var endProperty = noteDatasProp.GetEndProperty();
-            noteDatasProp.NextVisible(true);
-            position.y += 6;
-            int i = 0;
-            while (noteDatasProp.NextVisible(false))
-            {
-                position.y += 20;
-                i++;
-                if (SerializedProperty.EqualContents(noteDatasProp, endProperty)) break;
-                if (noteDatasProp.propertyType == SerializedPropertyType.ArraySize
-                 || i % 2 == 0) continue;
-            }
-        }
-    }*/
 }

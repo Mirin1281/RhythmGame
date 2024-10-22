@@ -60,6 +60,12 @@ namespace NoteGenerating
             public Vector2 CenterPos => centerPos;
         }
 
+        enum TimeMode
+        {
+            [InspectorName("秒単位")] Seconds,
+            [InspectorName("N分音符")] LPB,
+        }
+
         [SerializeField, Tooltip("このコマンドの説明(ビルドに含まれません)")]
         string summary;
 
@@ -70,6 +76,9 @@ namespace NoteGenerating
         [SerializeField, Tooltip("生成する間隔(n分音符)")]
         float loopWaitLPB = 4;
 
+        [SerializeField, Tooltip("生存時間の基準")]
+        TimeMode timeMode = TimeMode.Seconds;
+
         [SerializeField, Min(0), Tooltip("判定線の生存時間")]
         float time = 0.5f;
 
@@ -78,7 +87,9 @@ namespace NoteGenerating
 
         [SerializeField, Tooltip("基準の座標\n初期ではカメラの高さを設定しています")]
         Vector2 basePos = new Vector2(0, 4);
-        [SerializeField] LineCreateData[] datas = new LineCreateData[1];
+
+        [SerializeField]
+        LineCreateData[] datas = new LineCreateData[1];
 
         protected override async UniTask GenerateAsync()
         {
@@ -99,6 +110,8 @@ namespace NoteGenerating
             delta = await Wait(data.DelayLPB, delta: delta);
 
             var line = Helper.GetLine();
+
+            var time = timeMode == TimeMode.Seconds ? this.time : Helper.GetTimeInterval(this.time);
 
             if(data.IsPosEase)
             {
@@ -237,6 +250,8 @@ namespace NoteGenerating
                 var line = Helper.GetLine();
                 line.transform.SetParent(previewObj.transform);
 
+                var time = timeMode == TimeMode.Seconds ? this.time : Helper.GetTimeInterval(this.time);
+
                 if(data.IsPosEase)
                 {
                     float posTime = data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime;
@@ -331,7 +346,7 @@ namespace NoteGenerating
                     line.SetAlpha(data.StartAlpha);
                 }
 
-                await MyUtility.WaitSeconds(time, default);
+                await MyUtility.WaitSeconds(time + 0.1f, default);
                 GameObject.DestroyImmediate(line.gameObject);
             }
 
@@ -360,7 +375,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(summary, loopCount, loopWaitLPB, time, easeType, basePos);
+            get => MyUtility.GetContentFrom(summary, loopCount, loopWaitLPB, timeMode, time, easeType, basePos);
             set
             {
                 var texts = value.Split('|');
@@ -368,9 +383,10 @@ namespace NoteGenerating
                 summary = texts[0];
                 loopCount = int.Parse(texts[1]);
                 loopWaitLPB = float.Parse(texts[2]);
-                time = float.Parse(texts[3]);
-                easeType = Enum.Parse<EaseType>(texts[4]);
-                basePos = texts[5].ToVector2();
+                timeMode = Enum.Parse<TimeMode>(texts[3]);
+                time = float.Parse(texts[4]);
+                easeType = Enum.Parse<EaseType>(texts[5]);
+                basePos = texts[6].ToVector2();
             }
         }
 

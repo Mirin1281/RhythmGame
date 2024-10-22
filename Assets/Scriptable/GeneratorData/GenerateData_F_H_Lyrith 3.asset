@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: GenerateData_F_H_Lyrith 3
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 0
   generatable:
     rid: 9146112040901017607
@@ -24,28 +24,67 @@ MonoBehaviour:
       data:
         isInverse: 0
         summary: "\u30C6\u30B9\u30C8\u7528"
-        loopCount: 1
-        loopWaitLPB: 4
-        time: 2
-        easeType: 2
+        loopCount: 10
+        loopWaitLPB: 2
+        timeMode: 1
+        time: 4
+        easeType: 3
         basePos: {x: 0, y: 4}
         datas:
         - delayLPB: 0
           isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: 0}
+          startPos: {x: 15, y: 0}
+          fromPos: {x: 5, y: 0}
           overridePosEaseTime: -1
           overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 0
+          isRotateEase: 0
+          startRotate: 90
+          fromRotate: 1080
+          overrideRotateEaseTime: -1
+          overrideRotateEaseType: 0
+          isAlphaEase: 0
+          startAlpha: 0.5
+          fromAlpha: 1
+          overrideAlphaEaseTime: 1
+          overrideAlphaEaseType: 0
+          isRotateFromPos: 0
+          rotateFromPos: 0
+          centerPos: {x: 0, y: 0}
+        - delayLPB: 4
+          isPosEase: 1
+          startPos: {x: 5, y: 0}
+          fromPos: {x: 15, y: 0}
+          overridePosEaseTime: -1
+          overridePosEaseType: 2
+          isRotateEase: 0
+          startRotate: 90
           fromRotate: 1080
           overrideRotateEaseTime: -1
           overrideRotateEaseType: 0
           isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 1
-          overrideAlphaEaseTime: 1
-          overrideAlphaEaseType: 0
+          startAlpha: 0.3
+          fromAlpha: 0
+          overrideAlphaEaseTime: -1
+          overrideAlphaEaseType: 2
+          isRotateFromPos: 0
+          rotateFromPos: 0
+          centerPos: {x: 0, y: 0}
+        - delayLPB: 4
+          isPosEase: 1
+          startPos: {x: 5, y: 0}
+          fromPos: {x: -5, y: 0}
+          overridePosEaseTime: -1
+          overridePosEaseType: 2
+          isRotateEase: 0
+          startRotate: 90
+          fromRotate: 1080
+          overrideRotateEaseTime: -1
+          overrideRotateEaseType: 0
+          isAlphaEase: 1
+          startAlpha: 0.3
+          fromAlpha: 0
+          overrideAlphaEaseTime: -1
+          overrideAlphaEaseType: 2
           isRotateFromPos: 0
           rotateFromPos: 0
           centerPos: {x: 0, y: 0}
