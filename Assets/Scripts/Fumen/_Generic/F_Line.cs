@@ -111,11 +111,9 @@ namespace NoteGenerating
 
             var line = Helper.GetLine();
 
-            var time = timeMode == TimeMode.Seconds ? this.time : Helper.GetTimeInterval(this.time);
-
             if(data.IsPosEase)
             {
-                float posTime = data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime;
+                float posTime = ConvertTime(data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime);
                 var posEasing = new EasingVector2(
                     data.StartPos,
                     data.FromPos,
@@ -134,7 +132,7 @@ namespace NoteGenerating
                         p += posEasing.Ease(t);
                     }
                     line.SetPos(new Vector3(Inv(p.x), p.y));
-                });
+                }, delta);
             }
             else
             {
@@ -152,7 +150,7 @@ namespace NoteGenerating
             
             if(data.IsRotateEase)
             {
-                float rotateTime = data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime;
+                float rotateTime = ConvertTime(data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime);
                 var rotateEasing = new Easing(
                     data.StartRotate,
                     data.FromRotate,
@@ -171,7 +169,7 @@ namespace NoteGenerating
                         r = rotateEasing.Ease(t);
                     }
                     line.SetRotate(Inv(r));
-                });
+                }, delta);
             }
             else
             {
@@ -189,7 +187,7 @@ namespace NoteGenerating
 
             if(data.IsAlphaEase)
             {
-                float alphaTime = data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime;
+                float alphaTime = ConvertTime(data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime);
                 var alphaEasing = new Easing(
                     data.StartAlpha,
                     data.FromAlpha,
@@ -199,7 +197,7 @@ namespace NoteGenerating
                 WhileYield(alphaTime, t =>
                 {
                     line.SetAlpha(alphaEasing.Ease(t));
-                });
+                }, delta);
             }
             else
             {
@@ -208,6 +206,11 @@ namespace NoteGenerating
 
             await Helper.WaitSeconds(time - delta);
             line.SetActive(false);
+        }
+
+        float ConvertTime(float time)
+        {
+            return timeMode == TimeMode.Seconds ? time : Helper.GetTimeInterval(time);
         }
 
         protected override Color GetCommandColor()
@@ -250,11 +253,9 @@ namespace NoteGenerating
                 var line = Helper.GetLine();
                 line.transform.SetParent(previewObj.transform);
 
-                var time = timeMode == TimeMode.Seconds ? this.time : Helper.GetTimeInterval(this.time);
-
                 if(data.IsPosEase)
                 {
-                    float posTime = data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime;
+                    float posTime = ConvertTime(data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime);
                     var posEasing = new EasingVector2(
                         data.StartPos,
                         data.FromPos,
@@ -291,7 +292,7 @@ namespace NoteGenerating
                 
                 if(data.IsRotateEase)
                 {
-                    float rotateTime = data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime;
+                    float rotateTime = ConvertTime(data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime);
                     var rotateEasing = new Easing(
                         data.StartRotate,
                         data.FromRotate,
@@ -300,7 +301,6 @@ namespace NoteGenerating
                     );
                     WhileYield(rotateTime, t =>
                     {
-                        Debug.Log(t);
                         float r = default;
                         if(data.IsRotateFromPos)
                         {
@@ -329,7 +329,7 @@ namespace NoteGenerating
 
                 if(data.IsAlphaEase)
                 {
-                    float alphaTime = data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime;
+                    float alphaTime = ConvertTime(data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime);
                     var alphaEasing = new Easing(
                         data.StartAlpha,
                         data.FromAlpha,

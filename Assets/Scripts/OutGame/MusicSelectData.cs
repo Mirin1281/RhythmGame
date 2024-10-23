@@ -33,7 +33,7 @@ public class MusicSelectData : ScriptableObject
 
     [field: Space(10)]
     [field: SerializeField] public float Bpm { get; private set; }
-    [field: SerializeField] public float Offset { get; private set; }
+    [field: SerializeField, Tooltip("大きくするとLateになります")] public float Offset { get; private set; }
     [field: SerializeField] public int StartBeatOffset { get; private set; }
 
     [Space(10)]
