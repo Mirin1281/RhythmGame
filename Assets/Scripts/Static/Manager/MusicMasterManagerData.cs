@@ -58,6 +58,11 @@ public class MusicMasterManagerData : ScriptableObject
                 index = i;
             }
         }
+        if(s == null)
+        {
+            Debug.LogWarning($"{nameof(GameScore)}がnullでした\n{nameof(ScoreData)}を初期化していない可能性があります");
+            return -1;
+        }
 
         int beforeScore = s.Score;
         int score = s.Score;

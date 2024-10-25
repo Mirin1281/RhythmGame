@@ -7,24 +7,11 @@ namespace NoteGenerating
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_Common
     {
-        [SerializeField] int loopCount;
-        [SerializeField] int loopWait;
-        [SerializeField, SerializeReference, SubclassSelector]
-        INoteGeneratable noteGeneratable;
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;
 
         protected override async UniTask GenerateAsync()
         {
-            await UniTask.CompletedTask;
-
-            for(int i = 0; i < loopCount; i++)
-            {
-                noteGeneratable.Generate(Helper, Delta);
-                await Wait(loopWait);
-            }
-
-
             // これから来る譜面がカットインするやつ
 
             // 星型にノーツやレーンを //
@@ -237,24 +224,18 @@ namespace NoteGenerating
             
 
             // 円のようにノーツ生成 (正解)
-            /*NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
+            NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
             {
+                inverse = x > 0 ^ inverse;
                 if(delta == -1)
                 {
                     delta = Delta;
                 }
-                NoteBase_2D note = Helper.PoolManager.GetNote2D(type);
-                if(parentTs != null)
-                {
-                    note.transform.SetParent(parentTs);
-                    note.transform.localRotation = default;
-                }
-                float distance = StartBase - Speed * delta;
+                NoteBase_2D note = Helper.GetNote2D(type, parentTs);
                 float moveTime = StartBase / Speed;
-                float expectTime = CurrentTime + distance / Speed;
-                CurveAsync(note, moveTime, delta).Forget();
+                CurveAsync(note, moveTime).Forget();
 
-                
+                float expectTime = CurrentTime + StartBase / Speed - delta;
                 if(parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime);
@@ -268,28 +249,16 @@ namespace NoteGenerating
                 return note;
 
 
-                async UniTask CurveAsync(NoteBase note, float moveTime, float delta = -1)
+                async UniTask CurveAsync(NoteBase note, float moveTime)
                 {
-                    if(delta == -1)
-                    {
-                        delta = Delta;
-                    }
                     float baseTime = CurrentTime - delta;
                     float time = 0f;
                     while (note.IsActive && time < 5f)
                     {
                         time = CurrentTime - baseTime;
-                        float dir = (moveTime - time) * Speed / radius;
-                        if(inverse)
-                        {
-                            note.SetPos(new Vector3(x + radius, 0) + radius * new Vector3(Mathf.Cos(Mathf.PI + dir), Mathf.Sin(dir)));
-                            note.SetRotate(-dir * Mathf.Rad2Deg);
-                        }
-                        else
-                        {
-                            note.SetPos(new Vector3(x - radius, 0) + radius * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir)));
-                            note.SetRotate(dir * Mathf.Rad2Deg);
-                        }
+                        float dir = (moveTime - time) * Speed / radius * (inverse ? -1 : 1);
+                        note.SetPos(new Vector3(x - radius, 0) + radius * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir)));
+                        note.SetRotate(dir * Mathf.Rad2Deg);
                         await Helper.Yield();
                     }
                 }
@@ -302,7 +271,7 @@ namespace NoteGenerating
             NoteCircle(0, NoteType.Normal, true);
             await Wait(4);
             NoteCircle(-2, NoteType.Normal);
-            await Wait(4);*/
+            await Wait(4);
 
 
             // 円のようにノーツ生成 (失敗したけどこれもアリ)

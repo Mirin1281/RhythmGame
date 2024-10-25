@@ -155,7 +155,7 @@ public class CameraMover : MonoBehaviour
                     a * t.Ease(0, m.Rotate.z, m.Time, m.EaseType));
             }
         });
-        await UniTask.Yield(PlayerLoopTiming.LastEarlyUpdate, destroyCancellationToken);
+        await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         if(m.IsPosMove)
             basePos += new Vector3(a * m.Pos.x, m.Pos.y, m.Pos.z);
         if(m.IsRotateMove)

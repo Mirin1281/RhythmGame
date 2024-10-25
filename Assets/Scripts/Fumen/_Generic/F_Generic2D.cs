@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -13,8 +14,20 @@ namespace NoteGenerating
         [InspectorName("ホールド")] Hold,
     }
 
+    public interface INoteData
+    {
+        public CreateNoteType Type { get; }
+        public float X { get; }
+
+        public float Wait { get; }
+
+        public float Width { get; }
+
+        public float Length { get; }
+    }
+
     [Serializable]
-    public struct NoteData
+    public struct NoteData : INoteData
     {
         [SerializeField] CreateNoteType type;
         [SerializeField] float x;
@@ -227,98 +240,7 @@ namespace NoteGenerating
         }
         public override void Preview()
         {
-            GameObject previewObj = MyUtility.GetPreviewObject();
-            int simultaneousCount = 0;
-            float beforeY = -1;
-            NoteBase_2D beforeNote = null;
-
-            float y = 0f;
-            foreach(var data in noteDatas)
-            {
-                var type = data.Type;
-                if(type == CreateNoteType.Normal)
-                {
-                    DebugNote(data.X, y, NoteType.Normal, data.Width);
-                }
-                else if(type == CreateNoteType.Slide)
-                {
-                    DebugNote(data.X, y, NoteType.Slide, data.Width);
-                }
-                else if(type == CreateNoteType.Flick)
-                {
-                    DebugNote(data.X, y, NoteType.Flick, data.Width);
-                }
-                else if(type == CreateNoteType.Hold)
-                {
-                    if(data.Length == 0)
-                    {
-                        Debug.LogWarning("ホールドの長さが0です");
-                        continue;
-                    }
-                    DebugHold(data.X, y, data.Length, data.Width);
-                }
-                y += Helper.GetTimeInterval(data.Wait) * Speed;
-            }
-
-            float lineY = 0f;
-            for(int i = 0; i < 10000; i++)
-            {
-                var line = Helper.PoolManager.LinePool.GetLine();
-                line.SetPos(new Vector3(0, lineY));
-                line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * Speed;
-                if(lineY > y) break;
-            }
-
-
-            void DebugNote(float x, float y, NoteType type, float width)
-            {
-                NoteBase_2D note = Helper.GetNote2D(type);
-                if((width is 0 or 1) == false)
-                {
-                    note.SetWidth(width);
-                }
-                var startPos = new Vector3(Inv(x), y);
-                note.SetPos(startPos);
-                note.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(note, y);
-            }
-
-            void DebugHold(float x, float y, float length, float width)
-            {
-                var holdTime = Helper.GetTimeInterval(length);
-                var hold = Helper.GetHold(holdTime * Speed);
-                if((width is 0 or 1) == false)
-                {
-                    hold.SetWidth(width);
-                }
-                hold.SetMaskLocalPos(new Vector2(Inv(x), 0));
-                var startPos = new Vector3(Inv(x), y);
-                hold.SetPos(startPos);
-                hold.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(hold, y);
-            }
-
-            void SetSimultaneous(NoteBase_2D note, float y)
-            {
-                if(beforeY == y)
-                {
-                    if(simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(note);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeY = y;
-                beforeNote = note;
-            }
+            MyUtility.DebugPreview2DNotes(noteDatas.Select(d => (INoteData)d), Helper, IsInverse);
         }
 
         public override string CSVContent1

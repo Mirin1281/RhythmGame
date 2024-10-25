@@ -82,6 +82,9 @@ namespace NoteGenerating
         [SerializeField, Min(0), Tooltip("判定線の生存時間")]
         float time = 0.5f;
 
+        [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと基準の時間からの差で発火します")]
+        bool isChainWait = false;
+
         [SerializeField, Tooltip("デフォルトのイージング")]
         EaseType easeType = EaseType.InQuad;
 
@@ -97,17 +100,37 @@ namespace NoteGenerating
 
             for(int i = 0; i < loopCount; i++)
             {
-                for(int k = 0; k < datas.Length; k++)
+                if(isChainWait)
                 {
-                    CreateLine(datas[k], delta).Forget();
+                    LoopCreateLine(datas, delta).Forget();
                 }
+                else
+                {
+                    for(int k = 0; k < datas.Length; k++)
+                    {
+                        CreateLine(datas[k], delta).Forget();
+                    }
+                }
+                
                 delta = await Wait(loopWaitLPB, delta: delta);
             }
         }
 
-        async UniTaskVoid CreateLine(LineCreateData data, float delta)
+        async UniTaskVoid LoopCreateLine(LineCreateData[] datas, float delta)
         {
-            delta = await Wait(data.DelayLPB, delta: delta);
+            for(int i = 0; i < datas.Length; i++)
+            {
+                CreateLine(datas[i], delta, true).Forget();
+                delta = await Wait(datas[i].DelayLPB, delta: delta);
+            }
+        }
+
+        async UniTaskVoid CreateLine(LineCreateData data, float delta, bool isDisableWait = false)
+        {
+            if(!isDisableWait)
+            {
+                delta = await Wait(data.DelayLPB, delta: delta);
+            }
 
             var line = Helper.GetLine();
 
