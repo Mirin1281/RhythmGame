@@ -48,6 +48,7 @@ namespace NoteGenerating
 
         void MoveHold(float x, float length, float moveX)
         {
+            
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
             Vector3 startPos = new (Inv(x), StartBase);

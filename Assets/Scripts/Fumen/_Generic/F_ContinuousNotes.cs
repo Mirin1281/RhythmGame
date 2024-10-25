@@ -32,6 +32,11 @@ namespace NoteGenerating
             return ConstContainer.VersatileCommandColor;
         }
 
+        protected override string GetSummary()
+        {
+            return GetInverseSummary();
+        }
+
         protected override string GetName()
         {
             return "Continuous";

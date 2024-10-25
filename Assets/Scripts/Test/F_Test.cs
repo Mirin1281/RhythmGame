@@ -7,12 +7,22 @@ namespace NoteGenerating
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : Generator_Common
     {
+        [SerializeField] int loopCount;
+        [SerializeField] int loopWait;
         [SerializeField, SerializeReference, SubclassSelector]
-        IParentGeneratable parentGeneratable;
+        INoteGeneratable noteGeneratable;
+        //[SerializeField, SerializeReference, SubclassSelector]
+        //IParentGeneratable parentGeneratable;
 
         protected override async UniTask GenerateAsync()
         {
             await UniTask.CompletedTask;
+
+            for(int i = 0; i < loopCount; i++)
+            {
+                noteGeneratable.Generate(Helper, Delta);
+                await Wait(loopWait);
+            }
 
 
             // これから来る譜面がカットインするやつ

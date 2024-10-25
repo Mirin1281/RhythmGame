@@ -19,8 +19,8 @@ namespace NoteGenerating
         /// <summary>
         /// ノーツの初期生成地点
         /// </summary>
-        protected float StartBase => 2f * Speed + 0.2f;
-        protected float StartBase3D => 2f * Speed3D + 0.2f;
+        protected float StartBase => (2f * Speed + 0.2f) * 177f / Helper.Metronome.Bpm;
+        protected float StartBase3D => (2f * Speed3D + 0.2f) * 177f / Helper.Metronome.Bpm;
 
 
         #region Notes
@@ -172,7 +172,7 @@ namespace NoteGenerating
             float baseTime = CurrentTime - delta;
             float time = 0f;
             var vec = Speed * Vector3.down;
-            while (note.IsActive && time < 5f)
+            while (note.IsActive && time < 8f)
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);
@@ -188,7 +188,7 @@ namespace NoteGenerating
             float baseTime = CurrentTime - delta;
             float time = 0f;
             var vec = Speed3D * Vector3.back;
-            while (note.IsActive && time < 5f)
+            while (note.IsActive && time < 8f)
             {
                 time = CurrentTime - baseTime;
                 note.SetPos(startPos + time * vec);

@@ -18,7 +18,7 @@ public enum CameraMoveType
 [Serializable]
 public class CameraMoveSetting
 {
-    [SerializeField] int wait;
+    [SerializeField] float wait;
     [SerializeField] bool isPosMove = false;
     [SerializeField] Vector3 pos;
     [SerializeField] bool isRotateMove = true;
@@ -29,7 +29,7 @@ public class CameraMoveSetting
     [SerializeField] EaseType easeType = EaseType.OutQuad;
     [SerializeField] CameraMoveType moveType = CameraMoveType.Absolute;
 
-    public int Wait => wait;
+    public float Wait => wait;
     public bool IsPosMove => isPosMove;
     public Vector3 Pos => pos;
     public bool IsRotateMove => isRotateMove;

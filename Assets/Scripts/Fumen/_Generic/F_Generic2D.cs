@@ -40,7 +40,7 @@ namespace NoteGenerating
         IParentGeneratable parentGeneratable;
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
-        bool isCheckSimultaneous = false;
+        bool isCheckSimultaneous = true;
         
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
@@ -166,7 +166,7 @@ namespace NoteGenerating
                 {
                     float baseTime = CurrentTime - Delta;
                     float time = 0f;
-                    while (hold.IsActive && time < 5f)
+                    while (hold.IsActive && time < 8f)
                     {
                         time = CurrentTime - baseTime;
                         var vec = Speed * Vector3.down;

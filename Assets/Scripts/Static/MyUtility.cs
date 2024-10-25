@@ -116,17 +116,6 @@ public static class MyUtility
     /// <summary>
     /// 入力された値をフォーマットに従って文字列に変換します
     /// </summary>
-    public static string GetContentFrom(string separator = "|", params object[] objects)
-    {
-        string text = null;
-        for(int i = 0; i < objects.Length; i++)
-        {
-            text += objects[i];
-            if(i == objects.Length - 1) break;
-            text += separator;
-        }
-        return text;
-    }
     public static string GetContentFrom(params object[] objects)
     {
         string text = null;
