@@ -234,13 +234,19 @@ namespace NoteGenerating
             return noteDatas.Length + GetInverseSummary();
         }
 
-        public override void OnSelect()
+        public override void OnSelect(bool isFirst)
         {
-            Preview();
+            DebugPreview(isFirst);
         }
         public override void Preview()
         {
-            MyUtility.DebugPreview2DNotes(noteDatas.Select(d => (INoteData)d), Helper, IsInverse);
+            DebugPreview(false);
+        }
+
+        void DebugPreview(bool isClearPreview)
+        {
+            MyUtility.DebugPreview2DNotes(
+                noteDatas.Select(d => (INoteData)d), Helper, IsInverse, isClearPreview);
         }
 
         public override string CSVContent1

@@ -159,7 +159,7 @@ namespace NoteGenerating
         /// <summary>
         /// コマンドが選択された際に呼ばれます
         /// </summary>
-        public virtual void OnSelect() {}
+        public virtual void OnSelect(bool isFirst) {}
 
         public virtual string CSVContent1 { get; set; }
         public virtual string CSVContent2 { get; set; }

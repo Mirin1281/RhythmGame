@@ -27,6 +27,8 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
 
     [SerializeField] List<PrepareStatus> prepareStatuses;
 
+    [SerializeField] bool initOnStart;
+
     [SerializeField, Tooltip("–‘O‚É¶¬‚µ‚Ä‚¨‚¢‚½”‚ğ’´‰ß‚µ‚½ê‡‚ÉƒƒO‚ğo‚·")]
     bool showLog = true;
 
@@ -71,21 +73,28 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         return NewInstantiate(status, true);
     }
 
-    void Start()
+    public void Init(int poolCount = -1)
     {
+        int prepare = poolCount == -1 ? prepareStatuses[0].Prepare : poolCount;
         PooledTable = new List<List<T>>(prepareStatuses.Count);
         for(int i = 0; i < prepareStatuses.Count; i++)
         {
-            PooledTable.Add(new List<T>(prepareStatuses[i].Prepare));
+            PooledTable.Add(new List<T>(prepare));
         }
-        StartInstance();
+        StartInstance(prepare);
     }
 
-    void StartInstance()
+    void Start()
+    {
+        if(initOnStart)
+            Init();
+    }
+
+    void StartInstance(int prepareCount)
     {
         for (int i = 0; i < prepareStatuses.Count; i++)
         {
-            for (int j = 0; j < prepareStatuses[i].Prepare; j++)
+            for (int j = 0; j < prepareCount; j++)
             {
                 NewInstantiate(prepareStatuses[i], false);
             }
@@ -115,11 +124,5 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         {
             return list;
         }
-    }
-
-    public void SetPoolCount(int count, int index = 0)
-    {
-        if(count < 0) return;
-        prepareStatuses[index].SetPrepare(count);
     }
 }

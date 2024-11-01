@@ -13,6 +13,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
     // RemoveCueSheet()は重いので、ロードした曲を覚えてシーン移動時にまとめて削除
     void OnDestroy()
     {
+        if(loadedCueSheetNames == null) return;
         foreach(var n in loadedCueSheetNames)
         {
             CriAtom.RemoveCueSheet(n);

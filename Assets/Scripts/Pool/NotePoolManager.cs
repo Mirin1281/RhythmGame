@@ -55,7 +55,19 @@ public class NotePoolManager : MonoBehaviour
         };
     }
 
-    public void SetPoolCount(FumenData fumen)
+    public void InitPools(FumenData fumen)
+    {
+        NormalPool.Init(fumen.NormalPoolCount);
+        CirclePool.Init(fumen.CirclePoolCount);
+        SlidePool.Init(fumen.SlidePoolCount);
+        FlickPool.Init(fumen.FlickPoolCount);
+        HoldPool.Init(fumen.HoldPoolCount);
+        SkyPool.Init(fumen.SkyPoolCount);
+        ArcPool.Init(fumen.ArcPoolCount);
+        LinePool.Init(fumen.LinePoolCount);
+    }
+
+    /*public void SetPoolCount(FumenData fumen)
     {
         NormalPool.SetPoolCount(fumen.NormalPoolCount);
         CirclePool.SetPoolCount(fumen.CirclePoolCount);
@@ -65,5 +77,5 @@ public class NotePoolManager : MonoBehaviour
         SkyPool.SetPoolCount(fumen.SkyPoolCount);
         ArcPool.SetPoolCount(fumen.ArcPoolCount);
         LinePool.SetPoolCount(fumen.LinePoolCount);
-    }
+    }*/
 }

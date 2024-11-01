@@ -1,5 +1,5 @@
 Name,F_H_OsmanthusMarch,
-1,False,
+523,False,
 
 F_Line,True,0,"|1|4|Seconds|0.5|OutQuad|(0.00, 4.00)","0|False|(1.00, 0.00)|(0.00, 0.00)|-1|None|True|90|60|-1|None|True|1|0|0.25|OutQuad|False|0|(0.00, 0.00)
 8|False|(-3.00, 0.00)|(0.00, 0.00)|-1|None|True|90|120|-1|None|True|1|0|0.25|OutQuad|False|0|(0.00, 0.00)
@@ -12,9 +12,9 @@ F_Line,True,2,"左右|4|8|Seconds|0.5|OutQuad|(0.00, 4.00)","0|True|(13.00, 0.00)|
 0|True|(-13.00, 0.00)|(-7.00, 0.00)|-1|None|False|90|-90|0.2|OutQuad|True|0.6|0|-1|None|False|0|(0.00, 0.00)",,False,
 F_Line,True,2,"ベース|1|4|Seconds|100|OutQuad|(0.00, 0.00)","0|False|(0.00, 0.00)|(0.00, 0.00)|0|None|False|0|0|0|None|True|0|1|0.5|None|False|0|(0.00, 0.00)",,False,
 F_LineDrop,True,4,32|4|False|False|270,,,False,
-F_CameraMove,True,4,1|4|0,"0|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, 3.00)|True|0.4|OutQuad|Absolute",,False,
-F_CameraMove,True,6,7|1|0,"0|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, -6.00)|True|0.4|OutQuad|Relative
-2|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, 6.00)|True|0.4|OutQuad|Relative",,False,
+F_CameraMove,True,4,1|4|0,"0|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, 2.00)|True|0.4|OutQuad|Absolute",,False,
+F_CameraMove,True,6,7|1|0,"0|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, -4.00)|True|0.4|OutQuad|Relative
+2|False|(0.00, 0.00, 0.00)|True|(0.00, 0.00, 4.00)|True|0.4|OutQuad|Relative",,False,
 F_Generic2D,True,4,1|False|False,"Hold|4|8|0|2
 Normal|-4|8|0|0
 Normal|-2|8|0|0
@@ -24,19 +24,19 @@ Normal|4|8|0|2
 Normal|2|8|0|2
 Normal|5|8|0|2
 _None|5|0|0|2
-Normal|0|8|0|2
-_None|0|0|0|2
-Slide|0|16|0|2
-Slide|0|16|0|2
-_None|0|8|0|2
-Slide|0|16|0|2
-Slide|0|16|0|2
-_None|0|8|0|2
-Slide|0|16|0|2
-Slide|0|16|0|2
-Slide|0|8|0|2
-Slide|0|8|0|2
-Slide|0|16|0|2",,False,
+Normal|0|8|0|2",,False,
+F_2D_Curve,True,8,1|True|40,"_None|0|8|0|False|0
+Slide|0|16|0|True|0
+Slide|0|16|0|False|0
+_None|0|8|0|False|0
+Slide|0|16|0|True|0
+Slide|0|16|0|False|0
+_None|0|8|0|True|0
+Slide|0|16|0|False|0
+Slide|0|16|0|True|0
+Slide|0|8|0|False|0
+Slide|0|8|0|True|0
+Slide|0|8|0|False|0",,False,
 F_Generic2D,True,9,1|False|True,"Normal|-4|4|0|0
 Normal|-5|4|0|0
 Normal|-3|4|0|0
@@ -89,7 +89,7 @@ Normal|-4|4|1|16
 Normal|-2|4|0.9|16
 _None|-3|8|1|16
 Normal|-5|8|0.8|16
-Hold|-6|8|1|3",,False,
+Hold|-6|8|1|3",P_Sin,False,
 F_Generic2D,True,29,1|False|False,"Hold|3|4|1|16
 Hold|4|4|0.9|16
 Hold|5|4|0.8|16
@@ -102,6 +102,8 @@ F_Label,True,0,1番,,,,
 F_CameraMove,True,36,8|1|0,"0|True|(0.00, 0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0.4|OutQuad|Relative
 2|True|(0.00, -0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0.4|OutQuad|Relative",,False,
 F_Line,True,36,"|30|4|Seconds|2|InQuad|(0.00, 4.00)","0|True|(-15.00, 0.00)|(12.00, 0.00)|-1|InQuad|False|75|0|-1|None|False|0.1|0|-1|None|False|0|(0.00, 0.00)",,False,
+F_Line,True,36,"コード|8|1|Seconds|2|OutQuad|(0.00, 0.00)","0|False|(0.00, 0.00)|(12.00, 0.00)|-1|InQuad|True|0|5|-1|None|True|0.2|0|-1|None|False|0|(0.00, 0.00)
+0|False|(0.00, 0.00)|(12.00, 0.00)|-1|InQuad|True|0|10|-1|None|True|0.2|0|-1|None|False|0|(0.00, 0.00)",,False,
 F_LineDrop,True,36,32|4|False|False|270,,,False,
 F_Generic2D,True,36,1|False|False,"Normal|0|8|0|0
 Normal|2|8|0|0
@@ -162,8 +164,8 @@ F_Line,True,67,"|1|2|Seconds|1|OutQuad|(0.00, 4.00)","0|True|(5.00, 0.00)|(10.00
 F_Label,True,0,1番サビ,,,,
 F_CameraMove,True,68,32|4|0,"0|True|(0.00, 0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0|OutQuad|Relative
 2|True|(0.00, -0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0.2|OutQuad|Relative",,False,
-F_Line,True,68,"|15|2|Seconds|2|InQuad|(0.00, 4.00)","0|True|(0.00, -5.00)|(0.00, 15.00)|-1|InQuad|True|10|20|-1|None|True|0|0.4|-1|None|False|0|(0.00, 0.00)",,False,
-F_Line,True,69,"|15|2|Seconds|2|InQuad|(0.00, 4.00)","0|True|(0.00, -5.00)|(0.00, 15.00)|-1|InQuad|True|-10|-20|-1|None|True|0|0.4|-1|None|False|0|(0.00, 0.00)",,False,
+F_Line,True,68,"|15|2|Seconds|2|InQuad|(0.00, 4.00)","0|True|(0.00, -5.00)|(0.00, 15.00)|-1|InQuad|True|10|20|-1|None|True|0|0.4|-1|None|False|0|(0.00, 0.00)
+4|True|(0.00, -5.00)|(0.00, 15.00)|-1|InQuad|True|-10|-20|-1|None|True|0|0.4|-1|None|False|0|(0.00, 0.00)",,False,
 F_LineDrop,True,68,32|4|False|False|270,,,False,
 F_Generic2D,True,68,1|False|False,"Normal|0|8|0|0
 Normal|4|16|0|0
@@ -177,18 +179,7 @@ Normal|-3|8|0|0
 Normal|-2|8|0|0
 Normal|-1|0|0|0
 _None|-1|0|0|0
-Hold|5|8|0|1
-_None|0|0|0|1
-Slide|0|16|0|1
-Slide|-1|8|0|1
-_None|0|16|0|1
-Slide|0|16|0|1
-Slide|-1|8|0|1
-_None|0|16|0|1
-Slide|0|16|0|1
-Slide|-1|16|0|1
-Slide|0|8|0|1
-Slide|0|8|0|1
+Hold|5|1|0|1
 _None|0|0|0|1
 Hold|-5|8|0|4
 Normal|3|8|0|4
@@ -199,6 +190,17 @@ Normal|1|8|0|4
 Hold|2|8|0|4
 Normal|-2|8|0|4
 _None|-1|0|0|4",,False,
+F_2D_Curve,True,72,1|True|30,"_None|0|8|0|False|0
+Slide|0|16|0|True|0
+Slide|-1|16|0|False|0
+_None|0|8|0|False|0
+Slide|-1|16|0|True|0
+Slide|0|16|0|False|0
+_None|0|8|0|True|0
+Slide|-1|16|0|False|0
+Slide|0|16|0|True|0
+Slide|-1|8|0|False|0
+Slide|0|8|0|True|0",,False,
 F_Generic2D,True,80,1|False|False,"Normal|-6|8|0|0
 Normal|2|8|0|0
 Normal|4|0|0|0
@@ -245,13 +247,15 @@ Normal|6|0|0|0
 Normal|3|4|0|0
 Normal|0|4|0|0
 Normal|-6|0|0|0
-Normal|-3|8|0|0",,False,
+Normal|-3|8|0|0",P_Sin,False,
 F_ContinuousNotes,True,96,"17|Slide|16|(-5.00, 5.00)|8|OutQuad",,,False,
 F_ContinuousNotes,True,97,"6|Slide|8|(6.00, -5.00)|4|OutQuad",,,False,
 F_Label,True,0,2番,,,,
 F_CameraMove,True,100,8|1|0,"0|True|(0.00, 0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0.4|OutQuad|Relative
 2|True|(0.00, -0.20, 0.00)|False|(0.00, 0.00, 3.00)|True|0.4|OutQuad|Relative",,False,
 F_Line,True,100,"|29|4|Seconds|2.6|InQuad|(0.00, 4.00)","0|True|(15.00, 0.00)|(-12.00, 0.00)|-1|InQuad|False|75|0|-1|None|False|0.15|0|-1|None|False|0|(0.00, 0.00)",,False,
+F_Line,True,100,"コード|8|1|Seconds|2|OutQuad|(0.00, 0.00)","0|False|(0.00, 0.00)|(12.00, 0.00)|-1|InQuad|True|0|-5|-1|None|True|0.2|0|-1|None|False|0|(0.00, 0.00)
+0|False|(0.00, 0.00)|(12.00, 0.00)|-1|InQuad|True|0|-10|-1|None|True|0.2|0|-1|None|False|0|(0.00, 0.00)",,False,
 F_LineDrop,True,100,32|4|False|False|270,,,False,
 F_Generic2D,True,100,1|False|True,"Normal|3|8|0|0
 Normal|1|8|0|0
@@ -411,8 +415,8 @@ Slide|-6|16|0|0
 Slide|-6|16|0|0
 Slide|-6|16|0|0
 Slide|-6|16|0|0",,True,
-F_ContinuousNotes,True,160,"17|Slide|16|(-3.00, 6.00)|8|OutQuad",,,True,
-F_ContinuousNotes,True,161,"6|Slide|8|(-6.00, 5.00)|4|OutQuad",,,True,
+F_ContinuousNotes,True,160,"17|Slide|16|(-3.00, 6.00)|8|OutQuad",,,False,
+F_ContinuousNotes,True,161,"6|Slide|8|(-6.00, 5.00)|4|OutQuad",,,False,
 F_Label,True,0,アウトロ,,,,
 F_CameraMove,True,164,1|4|0,"0|False|(0.00, 0.20, 0.00)|True|(0.00, 0.00, -5.00)|True|1|OutQuad|Absolute",,False,
 F_Line,True,164,"|7|2|Seconds|2.6|InQuad|(0.00, 4.00)","0|True|(15.00, 0.00)|(-12.00, 0.00)|-1|InQuad|False|90|0|-1|None|False|0.15|0|-1|None|False|0|(0.00, 0.00)",,False,
@@ -474,20 +478,24 @@ Normal|4|4|0|0
 Normal|3|4|0|0
 Normal|-2|0|0|0
 Normal|2|4|0|0",,False,
+F_Line,True,200,"|1|4|Seconds|2|OutQuart|(0.00, 4.00)","0|True|(0.00, 5.00)|(0.00, 3.00)|-1|None|True|10|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
+0|True|(0.00, 6.00)|(0.00, 4.00)|-1|None|True|-20|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
+0|True|(4.00, 6.00)|(7.00, 4.00)|-1|None|True|-60|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
+0|True|(-5.00, 6.00)|(-9.00, 4.00)|-1|None|True|74|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)",,False,
 F_Line,True,204,"|1|4|Seconds|0.5|InQuad|(0.00, 4.00)","3.8|False|(-4.00, 0.00)|(0.00, 0.00)|-1|None|False|90|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
 3.1|False|(-3.00, 0.00)|(0.00, 0.00)|-1|None|False|90|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
 2.7|False|(-1.00, 0.00)|(0.00, 0.00)|-1|None|False|90|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
 1.9|False|(3.00, 0.00)|(0.00, 0.00)|-1|None|False|90|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
 0|False|(6.00, 0.00)|(0.00, 0.00)|-1|None|False|90|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)",,False,
-F_Generic2D,True,204,1|False|True,"Slide|-4|3.8|0|0
-Slide|-3|3.1|0|0
-Slide|-1|2.7|0|0
-Slide|3|1.9|0|0
-Slide|6|2|0|0",,False,
+F_NotesBlink,True,204,Slide|0.2|20|222|True,,,,
+F_2D_Curve,True,204,0.5|True|14,"Slide|-4|3.8|0|False|0
+Slide|-3|3.1|0|True|0
+Slide|-1|2.7|0|False|0
+Slide|3|1.9|0|False|0
+Slide|6|0|0|True|0",,False,
 F_Generic2D,True,214,1|False|True,Normal|0|1|0|0,,False,
-F_Line,True,214,"|1|4|Seconds|1.5|OutQuad|(0.00, 0.00)","0|True|(0.00, 0.00)|(0.00, 1.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
-0|True|(0.00, 0.00)|(0.00, 2.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
-0|True|(0.00, 0.00)|(0.00, 3.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
+F_Line,True,214,"|1|4|Seconds|1.5|OutQuad|(0.00, 0.00)","0|True|(0.00, 0.00)|(0.00, 2.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
 0|True|(0.00, 0.00)|(0.00, 4.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
-0|True|(0.00, 0.00)|(0.00, 5.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)",,False,
+0|True|(0.00, 0.00)|(0.00, 6.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)
+0|True|(0.00, 0.00)|(0.00, 8.00)|-1|None|False|0|0|-1|None|True|1|0|-1|None|False|0|(0.00, 0.00)",,False,
 F_Result,True,218,,,,,

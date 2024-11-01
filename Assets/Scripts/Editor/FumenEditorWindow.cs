@@ -342,14 +342,15 @@ namespace NoteGenerating.Editor
                 selectedCommandList.Clear();
                 foreach (var i in selects)
                 {
-                    selectedCommandList.Add(commandList[i]);
-                }
+                    var cmdData = commandList[i];
+                    selectedCommandList.Add(cmdData);
 
-                if(EditorApplication.isPlaying == false)
-                {
-                    if (SceneManager.GetActiveScene().name != ConstContainer.InGameSceneName
-                     && SceneManager.GetActiveScene().name != ConstContainer.TestSceneName) return;
-                    lastSelectedCommand.GetNoteGeneratorBase()?.OnSelect();
+                    if(EditorApplication.isPlaying == false)
+                    {
+                        if (SceneManager.GetActiveScene().name != ConstContainer.InGameSceneName
+                        && SceneManager.GetActiveScene().name != ConstContainer.TestSceneName) return;
+                        cmdData.GetNoteGeneratorBase()?.OnSelect(i == selects[0]);
+                    }
                 }
             }
 

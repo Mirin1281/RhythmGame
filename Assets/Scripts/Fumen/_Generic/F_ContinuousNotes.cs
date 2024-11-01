@@ -22,7 +22,7 @@ namespace NoteGenerating
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for(int i = 0; i < count; i++)
             {
-                Note2D(Inv(easing.Ease(i)), noteType);
+                Note2D(easing.Ease(i), noteType);
                 await Wait(wait);
             }
         }
@@ -42,14 +42,19 @@ namespace NoteGenerating
             return "Continuous";
         }
 
-        public override void OnSelect()
+        public override void OnSelect(bool isFirst)
         {
-            Preview();
+            DebugPreview(isFirst);
         }
         public override void Preview()
         {
+            DebugPreview(false);
+        }
+
+        void DebugPreview(bool isClearPreview)
+        {
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            var previewObj = MyUtility.GetPreviewObject();
+            var previewObj = MyUtility.GetPreviewObject(isClearPreview);
             float y = 0;
             for(int i = 0; i < count; i++)
             {

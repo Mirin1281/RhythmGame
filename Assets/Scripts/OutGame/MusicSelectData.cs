@@ -22,7 +22,8 @@ public class MusicSelectData : ScriptableObject
     [field: SerializeField] public string IllustratorName { get; private set; }
 
     [field: Space(10)]
-    //[field: SerializeField] public AssetReference NormalFumenReference { get; private set; }
+    // 問題点: AssetReferenceのアドレスを文字列にする簡単な方法がない
+    //[field: SerializeField] public AssetReference NormalFumenReference { get; private set; } 
     [field: SerializeField] public string NormalFumenAddress { get; private set; }
     [SerializeField] int level_normal = -1;
     public int Level_normal => level_normal;

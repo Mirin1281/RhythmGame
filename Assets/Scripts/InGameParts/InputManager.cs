@@ -46,7 +46,9 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
+#if UNITY_EDITOR
         EnhancedTouchSupport.Enable();
+#endif
         Touch.onFingerDown += OnFingerDown;
         Touch.onFingerMove += OnFingerMove;
         Touch.onFingerUp += OnFingerUp;
@@ -60,7 +62,9 @@ public class InputManager : MonoBehaviour
         Touch.onFingerDown -= OnFingerDown;
         Touch.onFingerMove -= OnFingerMove;
         Touch.onFingerUp -= OnFingerUp;
+#if UNITY_EDITOR
         EnhancedTouchSupport.Disable();
+#endif
     }
 
     void OnFingerDown(Finger finger)

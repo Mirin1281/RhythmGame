@@ -8,6 +8,7 @@ using CriWare;
 using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public static class MyUtility
 {
@@ -66,19 +67,32 @@ public static class MyUtility
         return UniTask.WaitWhile(() => CriAtom.CueSheetsAreLoading);
     }
 
+    public static string GetAddress(AssetReference assetReference)
+    {
+        var handle = Addressables.LoadResourceLocationsAsync(assetReference);
+        var result = handle.WaitForCompletion();
+        var location = result.FirstOrDefault();
+        var address = location?.PrimaryKey ?? string.Empty;
+        return address;
+    }
+
+
     /// <summary>
     /// (デバッグ用)ノーツのプレビューに使用するオブジェクトの用意をします
     /// </summary>
-    public static GameObject GetPreviewObject()
+    public static GameObject GetPreviewObject(bool isClear = true)
     {
         GameObject previewObj = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .Where(obj => obj.name == "Preview2D")
             .FirstOrDefault();
         if(previewObj == null) return null;
-        previewObj.SetActive(true);
-        foreach(var child in previewObj.transform.OfType<Transform>().ToArray())
+        if(isClear)
         {
-            GameObject.DestroyImmediate(child.gameObject);
+            previewObj.SetActive(true);
+            foreach(var child in previewObj.transform.OfType<Transform>().ToArray())
+            {
+                GameObject.DestroyImmediate(child.gameObject);
+            }
         }
         return previewObj;
     }
@@ -206,12 +220,12 @@ public static class MyUtility
         }
     }
 
-    public static void DebugPreview2DNotes(IEnumerable<INoteData> noteDatas, NoteGenerateHelper Helper, bool isInverse)
+    public static void DebugPreview2DNotes(IEnumerable<INoteData> noteDatas, NoteGenerateHelper Helper, bool isInverse, bool isClearPreview)
     {
         float Inv(float x) => x * (isInverse ? -1 : 1);
 
 
-        GameObject previewObj = GetPreviewObject();
+        GameObject previewObj = GetPreviewObject(isClearPreview);
         int simultaneousCount = 0;
         float beforeY = -1;
         NoteBase_2D beforeNote = null;
@@ -244,6 +258,7 @@ public static class MyUtility
             y += Helper.GetTimeInterval(data.Wait) * RhythmGameManager.Speed;
         }
 
+        if(isClearPreview == false) return;
         float lineY = 0f;
         for(int i = 0; i < 10000; i++)
         {

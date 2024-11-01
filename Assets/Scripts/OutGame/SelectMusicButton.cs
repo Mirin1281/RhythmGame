@@ -29,6 +29,7 @@ public class SelectMusicButton : MonoBehaviour
         creator.NotifyInput(index);
         Pop();
     }
+    
     public void Pop()
     {
         plateImage.color = new Color32(0, 0, 0, 230);
@@ -38,6 +39,6 @@ public class SelectMusicButton : MonoBehaviour
     public void Deselect()
     {
         plateImage.color = new Color32(90, 90, 90, 150);
-        transform.DOLocalMoveX(451.5f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOLocalMoveX(460f, 0.2f).SetEase(Ease.OutBack);
     }
 }

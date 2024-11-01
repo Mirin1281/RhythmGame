@@ -1,8 +1,8 @@
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using NoteGenerating;
 
 public enum NoteGrade
 {
@@ -25,29 +25,39 @@ public class Judgement : MonoBehaviour
     [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
     [SerializeField] bool showDebugRange;
+    [SerializeField] GameObject debugNoteRangePrefab;
 #else
     bool showDebugRange = false;
 #endif
-    [SerializeField] GameObject debugNoteRangePrefab;
-    [SerializeField] LightParticle[] lights;
     
-    Dictionary<ArcNote, LightParticle> lightDic = new(4);
     Result result;
+    float updateScore = -1;
+    CancellationTokenSource cts = new();
     public Result Result => result;
+    const float Range = 4.6f;
 
     void Awake()
     {
         comboText.SetText("0");
         judgeText.SetText("");
-        lightDic = new(4);
-        UniTask.Void(async () => 
-        {
-            await UniTask.WaitUntil(() => inGameManager.IsLoaded, cancellationToken: destroyCancellationToken);
-            result = new Result(inGameManager.FumenData);
-        });
     }
 
-    const float Range = 4.6f;
+    public void Init(FumenData fumenData)
+    {
+        result = new Result(fumenData);
+    }
+
+    void LateUpdate()
+    {
+        if(updateScore != -1)
+        {
+            var easing = new Easing(updateScore, result.Score, 0.3f, EaseType.OutQuad);
+            easing.EaseAsync(destroyCancellationToken, t => scoreText.SetText("{0:00000000}", t)).Forget();
+            updateScore = -1;
+        }
+    }
+
+    
     public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2, float rangeW = Range)
     {
         var distance = Vector2.Distance(pos1, pos2);
@@ -73,33 +83,16 @@ public class Judgement : MonoBehaviour
         particlePool.PlayParticle(pos, grade);
     }
 
-    public async UniTask DebugShowRange(NoteExpect expect)
-    {
-        if(showDebugRange == false) return;
-        var obj = Instantiate(debugNoteRangePrefab, transform);
-        obj.transform.localPosition = expect.Pos;
-        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.eulerAngles.z, Vector3.forward);
-        obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
-        await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
-        Destroy(obj);
-    }
-    public async UniTask DebugShowRange(Vector2 pos)
-    {
-        var obj = Instantiate(debugNoteRangePrefab, transform);
-        obj.transform.localPosition = pos;
-        obj.transform.localScale = new Vector3(2f, 2f);
-        await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
-        Destroy(obj);
-    }
-
     public void SetCombo(NoteGrade grade)
     {
+        if(updateScore == -1)
+        {
+            updateScore = result.Score;
+        }
         result.SetCombo(grade);
         comboText.SetText("{0}", result.Combo);
-        scoreText.SetText("{0:00000000}", result.Score);
     }
 
-    CancellationTokenSource cts = new();
     public NoteGrade GetGradeAndSetText(float delta)
     {
         var grade = GetGrade(delta);
@@ -155,39 +148,30 @@ public class Judgement : MonoBehaviour
         }
     }
 
-    LightParticle GetLight(ArcNote arcNote)
+#if UNITY_EDITOR
+    public void DebugShowRange(NoteExpect expect)
     {
-        if (lightDic.ContainsKey(arcNote))
+        if(showDebugRange == false) return;
+        var obj = Instantiate(debugNoteRangePrefab, transform);
+        obj.transform.localPosition = expect.Pos;
+        obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.eulerAngles.z, Vector3.forward);
+        obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
+        UniTask.Void(async () => 
         {
-            return lightDic[arcNote];
-        }
-        else
-        {
-            foreach(var p in lights)
-            {
-                if(lightDic.ContainsValue(p)) continue;
-                lightDic.Add(arcNote, p);
-                return p;
-            }
-        }
-        return null;
+            await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
+            Destroy(obj);
+        });
     }
-    public void SetShowLight(ArcNote arcNote, Vector2 pos, bool enabled)
+    public void DebugShowRange(Vector2 pos)
     {
-        LightParticle light = GetLight(arcNote);
-        if(light != null)
+        var obj = Instantiate(debugNoteRangePrefab, transform);
+        obj.transform.localPosition = pos;
+        obj.transform.localScale = new Vector3(2f, 2f);
+        UniTask.Void(async () => 
         {
-            light.IsActive = enabled;
-            if(enabled)
-            {
-                light.SetPos(pos);
-            }
-        }
+            await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
+            Destroy(obj);
+        });
     }
-    public void RemoveLink(ArcNote arcNote)
-    {
-        if(lightDic.ContainsKey(arcNote) == false) return;
-        lightDic[arcNote].IsActive = false;
-        lightDic.Remove(arcNote);
-    }
+#endif
 }

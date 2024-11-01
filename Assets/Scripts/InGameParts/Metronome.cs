@@ -2,6 +2,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 using CriWare;
+using NoteGenerating;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,12 +11,12 @@ using UnityEditor;
 
 public class Metronome : MonoBehaviour, IVolumeChangable
 {
-    [SerializeField] InGameManager inGameManager;
     [SerializeField] CriAtomSource atomSource;
     [Space(10)]
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
     readonly int tolerance = 10;
+    FumenData fumenData;
 
     float bpm;
     bool isLooping;
@@ -23,7 +25,7 @@ public class Metronome : MonoBehaviour, IVolumeChangable
     CriAtomExPlayback playback;
     int bpmChangeCount;
     double BeatInterval => 60d / bpm;
-    MusicSelectData SelectData => inGameManager.FumenData.MusicSelectData;
+    MusicSelectData SelectData => fumenData.MusicSelectData;
 
     /// <summary>
     /// (ビートの回数, 誤差)
@@ -32,18 +34,14 @@ public class Metronome : MonoBehaviour, IVolumeChangable
     public float CurrentTime => (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
     public float Bpm => bpm;
 
-    public void Play()
+    public void Play(FumenData fumenData)
     {
-#if UNITY_EDITOR
-        EditorApplication.pauseStateChanged += SwitchMusic;
-#else
-        skipOnStart = false;
-#endif
-
+        this.fumenData = fumenData;
         bpm = SelectData.Bpm;
         atomSource.cueSheet = atomSource.cueName = SelectData.SheetName;
 
 #if UNITY_EDITOR
+        EditorApplication.pauseStateChanged += SwitchMusic;
         if(skipOnStart)
         {
             float skipTime = atomSource.GetLength() * timeRate;
@@ -52,7 +50,7 @@ public class Metronome : MonoBehaviour, IVolumeChangable
             int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
             beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
             
-            foreach(var generateData in inGameManager.FumenData.Fumen.GetReadOnlyGenerateDataList())
+            foreach(var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
             {
                 if(b >= generateData.BeatTiming + tolerance && generateData.GetNoteGeneratorBase() is IZoneCommand zone)
                 {

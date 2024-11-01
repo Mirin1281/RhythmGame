@@ -56,8 +56,15 @@ public class MusicSelectDataEditor : Editor
                     serializedObject.ApplyModifiedProperties();
                 }
                 
-                string address = group.GetAssetEntry(guid).address;
-                self.SetFumenAddress(address, difficulty);
+                if(group.GetAssetEntry(guid) == null)
+                {
+                    Debug.LogError("アドレスを取得できませんでした");
+                }
+                else
+                {
+                    string address = group.GetAssetEntry(guid).address;
+                    self.SetFumenAddress(address, difficulty);
+                }
             }
         }        
     }

@@ -206,13 +206,18 @@ namespace NoteGenerating
             return noteDatas.Length + GetInverseSummary();
         }
 
-        public override void OnSelect()
+        public override void OnSelect(bool isFirst)
         {
-            Preview();
+            DebugPreview(isFirst);
         }
         public override void Preview()
         {
-            GameObject previewObj = MyUtility.GetPreviewObject();
+            DebugPreview(false);
+        }
+
+        void DebugPreview(bool isClearPreview)
+        {
+            GameObject previewObj = MyUtility.GetPreviewObject(isClearPreview);
             int simultaneousCount = 0;
             float beforeY = -1;
             NoteBase_2D beforeNote = null;

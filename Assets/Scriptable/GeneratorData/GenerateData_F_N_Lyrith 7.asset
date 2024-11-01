@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: GenerateData_F_N_Lyrith 9
+  m_Name: GenerateData_F_N_Lyrith 7
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 0
+  beatTiming: 22
   generatable:
-    rid: 9146111860500070408
+    rid: 9146112198813155330
   references:
     version: 2
     RefIds:
-    - rid: 9146111860500070408
-      type: {class: F_Line, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 9146112198813155330
+      type: {class: F_ContinuousNotes, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 1
-        summary: 
-        loopCount: 1
-        loopWaitLPB: 4
-        time: 0.5
-        easeType: 2
-        basePos: {x: 0, y: 4}
-        datas: []
+        count: 32
+        noteType: 2
+        wait: 64
+        easeX: {x: -6, y: 6}
+        easeTime: 32
+        easeType: 1

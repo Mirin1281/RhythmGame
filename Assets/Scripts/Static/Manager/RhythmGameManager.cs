@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    static readonly float MasterVolume = 0.6f;
+    static readonly float MasterVolume = 0.5f;
     public static float SettingBGMVolume { get; set; } = 0.8f;
     public static float SettingSEVolume { get; set; } = 0.8f;
     public static float SettingNoteVolume { get; set; } = 0.8f;
@@ -41,9 +41,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 #endif
 
     /// <summary>
-    /// カメラ制御の際など、ノーツの生成と異なり即座に影響を与えるコマンドは待機させた方が
-    /// 扱いが簡単になるため、LPB4でこの回数分待機してから処理を行う
-    /// (今後削除する可能性が高い)
+    /// カメラ制御の際など、ノーツの生成と異なり即座に影響を与えるコマンドは待機
+    /// させた方が扱いが簡単になるため、LPB=4でこの回数分待機してから処理を行う
     /// </summary>
     public static readonly int DefaultWaitOnAction = 6;
 
@@ -89,7 +88,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         }
     }
 
-    // AwakeだとCriWare側でエラーを吐く
+    // AwakeだとCriWare側でエラーを吐く 許さない
     void Start()
     {
         // キューデータをスクリプトから流す

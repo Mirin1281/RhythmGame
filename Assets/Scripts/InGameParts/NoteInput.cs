@@ -43,6 +43,7 @@ public class NoteInput : MonoBehaviour
     [SerializeField] Metronome metronome;
     [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
+    [SerializeField] ArcLightOperator arcLightOperator;
     [SerializeField] NotePoolManager notePoolManager;
     [SerializeField] bool isAuto;
 
@@ -158,7 +159,9 @@ public class NoteInput : MonoBehaviour
                 allExpects.Remove(expect);
                 judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
                 judge.SetCombo(NoteGrade.Perfect);
-                judge.DebugShowRange(expect).Forget();
+#if UNITY_EDITOR
+                judge.DebugShowRange(expect);
+#endif
                 PlayNoteSE(expect.Note.Type);
             }
             else if(metronome.CurrentTime > expect.Time + 0.12f)
@@ -383,7 +386,7 @@ public class NoteInput : MonoBehaviour
             {
                 arcs.RemoveAt(i);
                 arc.SetActive(false);
-                judge.RemoveLink(arc);
+                arcLightOperator.RemoveLink(arc);
                 continue;
             }
 
@@ -435,7 +438,7 @@ public class NoteInput : MonoBehaviour
                 }
             }
             
-            judge.SetShowLight(arc, worldPos, isHold);
+            arcLightOperator.SetShowLight(arc, worldPos, isHold);
             arc.SetInput(isHold);
             
             if (arcJ == null) continue; // 最後の判定を終えた
