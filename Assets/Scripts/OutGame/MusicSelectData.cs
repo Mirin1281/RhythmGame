@@ -15,7 +15,7 @@ public class MusicSelectData : ScriptableObject
     [field: Space(10)]
     [field: SerializeField] public string SheetName { get; private set; }
     [field: SerializeField] public float PreviewStartTime { get; private set; }
-    [field: SerializeField] public float PreviewEndTime { get; private set; }
+    [field: SerializeField] public float PreviewEndTime { get; private set; } = 10f;
 
     [field: Space(10)]
     [field: SerializeField] public Sprite Illust { get; private set; }

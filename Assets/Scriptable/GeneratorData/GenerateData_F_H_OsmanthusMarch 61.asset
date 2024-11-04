@@ -13,35 +13,29 @@ MonoBehaviour:
   m_Name: GenerateData_F_H_OsmanthusMarch 61
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 100
+  beatTiming: 164
   generatable:
-    rid: 9146112107677483009
+    rid: 176941210122846257
   references:
     version: 2
     RefIds:
-    - rid: 9146112107677483009
-      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 176941210122846257
+      type: {class: F_Osmanthus_MoveHold, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        loopCount: 8
-        loopWait: 1
-        delay: 0
-        settings:
-        - wait: 0
-          isPosMove: 1
-          pos: {x: 0, y: 0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0.4
-          easeType: 3
-          moveType: 1
-        - wait: 2
-          isPosMove: 1
-          pos: {x: 0, y: -0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0.4
-          easeType: 3
-          moveType: 1
+        datas:
+        - <Length>k__BackingField: 1.25
+          <FromX>k__BackingField: 5
+          <Wait>k__BackingField: 1
+        - <Length>k__BackingField: 1.25
+          <FromX>k__BackingField: 5
+          <Wait>k__BackingField: 1
+        - <Length>k__BackingField: 1.25
+          <FromX>k__BackingField: 5
+          <Wait>k__BackingField: 1
+        - <Length>k__BackingField: 2.5
+          <FromX>k__BackingField: 5
+          <Wait>k__BackingField: 2
+        - <Length>k__BackingField: 2.5
+          <FromX>k__BackingField: 5
+          <Wait>k__BackingField: 1

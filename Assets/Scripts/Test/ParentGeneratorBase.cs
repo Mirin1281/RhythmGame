@@ -183,6 +183,7 @@ namespace NoteGenerating
 
         public static ParentGeneratorBase CreateFrom(string content)
         {
+            if(string.IsNullOrEmpty(content)) return null;
             var className = content.Split(Separator)[0];
             var instance = MyUtility.CreateInstance<ParentGeneratorBase>(className);
             int index = content.IndexOf(Separator);

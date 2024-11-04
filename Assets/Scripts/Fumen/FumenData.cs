@@ -37,7 +37,7 @@ namespace NoteGenerating
             this.start3D = start3D;
         }
 
-        [SerializeField, HideInInspector] Fumen fumen;
+        [SerializeField] Fumen fumen;
         public Fumen Fumen => fumen;
     }
 

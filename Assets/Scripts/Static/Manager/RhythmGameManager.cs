@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    static readonly float MasterVolume = 0.5f;
+    static readonly float MasterVolume = 0.8f;
     public static float SettingBGMVolume { get; set; } = 0.8f;
     public static float SettingSEVolume { get; set; } = 0.8f;
     public static float SettingNoteVolume { get; set; } = 0.8f;

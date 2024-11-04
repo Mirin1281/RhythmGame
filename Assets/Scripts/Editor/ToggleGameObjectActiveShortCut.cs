@@ -1,40 +1,20 @@
 using UnityEngine;
 using UnityEditor;
-using System.Reflection;
+using UnityEditor.ShortcutManagement;
 
-// https://qiita.com/r-ngtm/items/ca5d4106e8c559275862
-[InitializeOnLoad]
-public class ToggleGameObjectActiveShortCut
+public static class ToggleGameObjectActiveShortCut
 {
-    static ToggleGameObjectActiveShortCut()
+    [Shortcut("Toggle Active", KeyCode.Comma, ShortcutModifiers.None)]
+    public static void ToggleActive()
     {
-        bool keyDown = false;
-        EditorApplication.CallbackFunction function = () =>
+        // "," が入力されたらHierarchyで選択しているオブジェクトのアクティブ状態を反転させる
+        if (Selection.activeGameObject != null)
         {
-            if (!keyDown && Event.current.type == EventType.KeyDown)
+            foreach (var g in Selection.gameObjects)
             {
-                keyDown = true;
-
-                // "," が入力されたらHierarchyで選択しているオブジェクトのアクティブ状態を反転させる
-                if (Event.current.keyCode == KeyCode.Comma && Selection.activeGameObject != null)
-                {
-                    foreach (var go in Selection.gameObjects)
-                    {
-                        Undo.RecordObject(go, go.name + ".activeSelf");
-                        go.SetActive(!go.activeSelf);
-                    }
-                }
+                Undo.RecordObject(g, g.name + ".activeSelf");
+                g.SetActive(!g.activeSelf);
             }
-
-            if (keyDown && Event.current.type == EventType.KeyUp)
-            {
-                keyDown = false;
-            }
-        };
-
-        FieldInfo info = typeof(EditorApplication).GetField("globalEventHandler", BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
-        EditorApplication.CallbackFunction functions = (EditorApplication.CallbackFunction)info.GetValue(null);
-        functions += function;
-        info.SetValue(null, functions);
+        }
     }
 }

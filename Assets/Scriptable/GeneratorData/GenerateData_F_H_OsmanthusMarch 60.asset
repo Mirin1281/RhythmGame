@@ -13,35 +13,20 @@ MonoBehaviour:
   m_Name: GenerateData_F_H_OsmanthusMarch 60
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 68
+  beatTiming: 164
   generatable:
-    rid: 9146112107677483009
+    rid: 176941210122846243
   references:
     version: 2
     RefIds:
-    - rid: 9146112107677483009
-      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 176941210122846243
+      type: {class: F_LineDrop, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        loopCount: 32
-        loopWait: 4
-        delay: 0
-        settings:
-        - wait: 0
-          isPosMove: 1
-          pos: {x: 0, y: 0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0
-          easeType: 3
-          moveType: 1
-        - wait: 2
-          isPosMove: 1
-          pos: {x: 0, y: -0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0.2
-          easeType: 3
-          moveType: 1
+        loopCount: 19
+        loopWaitLPB: 2
+        is3D: 0
+        moveDirection: 270
+        isSpeedChangable: 0
+        speedRate: 1
+        lifeTime: 3

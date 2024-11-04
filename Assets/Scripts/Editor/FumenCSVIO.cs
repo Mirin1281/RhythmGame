@@ -77,6 +77,8 @@ namespace NoteGenerating.Editor
 		{
 			await UniTask.Yield();
 
+            FumenEditorUtility.RemoveUnusedGenerateData();
+
 			var dataList = LoadCSV();
 			if (dataList == null) return;
 
@@ -103,6 +105,7 @@ namespace NoteGenerating.Editor
             EditorUtility.SetDirty(fumenData);
             foreach(var data in fumenData.Fumen.GetReadOnlyGenerateDataList())
             {
+                if(data == null) continue;
                 EditorUtility.SetDirty(data);
             }
             AssetDatabase.SaveAssets();

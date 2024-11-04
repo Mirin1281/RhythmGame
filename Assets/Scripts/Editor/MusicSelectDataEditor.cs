@@ -64,6 +64,8 @@ public class MusicSelectDataEditor : Editor
                 {
                     string address = group.GetAssetEntry(guid).address;
                     self.SetFumenAddress(address, difficulty);
+                    EditorUtility.SetDirty(target);
+                    AssetDatabase.SaveAssetIfDirty(target);
                 }
             }
         }        

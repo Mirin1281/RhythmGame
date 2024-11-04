@@ -13,35 +13,41 @@ MonoBehaviour:
   m_Name: GenerateData_F_H_OsmanthusMarch 59
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 36
+  beatTiming: 164
   generatable:
-    rid: 9146112107677483009
+    rid: 176941210122846229
   references:
     version: 2
     RefIds:
-    - rid: 9146112107677483009
-      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 176941210122846229
+      type: {class: F_Line, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        loopCount: 8
-        loopWait: 1
-        delay: 0
-        settings:
-        - wait: 0
-          isPosMove: 1
-          pos: {x: 0, y: 0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0.4
-          easeType: 3
-          moveType: 1
-        - wait: 2
-          isPosMove: 1
-          pos: {x: 0, y: -0.2, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 3}
-          isRotateClamp: 1
-          time: 0.4
-          easeType: 3
-          moveType: 1
+        summary: 
+        loopCount: 7
+        loopWaitLPB: 2
+        timeMode: 0
+        time: 2.6
+        isChainWait: 0
+        easeType: 2
+        basePos: {x: 0, y: 4}
+        datas:
+        - delayLPB: 0
+          isPosEase: 1
+          startPos: {x: 15, y: 0}
+          fromPos: {x: -12, y: 0}
+          overridePosEaseTime: -1
+          overridePosEaseType: 2
+          isRotateEase: 0
+          startRotate: 90
+          fromRotate: 0
+          overrideRotateEaseTime: -1
+          overrideRotateEaseType: 0
+          isAlphaEase: 0
+          startAlpha: 0.15
+          fromAlpha: 0
+          overrideAlphaEaseTime: -1
+          overrideAlphaEaseType: 0
+          isRotateFromPos: 0
+          rotateFromPos: 0
+          centerPos: {x: 0, y: 0}

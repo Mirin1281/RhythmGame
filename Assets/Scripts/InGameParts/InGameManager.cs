@@ -51,6 +51,8 @@ public class InGameManager : MonoBehaviour
 
         titleTmpro.SetText(fumenData.MusicSelectData.MusicName);
 
+        metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
+
 
         // 音楽データをロード
         await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);

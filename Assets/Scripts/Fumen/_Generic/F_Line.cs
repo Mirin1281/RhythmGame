@@ -398,7 +398,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(summary, loopCount, loopWaitLPB, timeMode, time, easeType, basePos);
+            get => MyUtility.GetContentFrom(summary, loopCount, loopWaitLPB, timeMode, time, isChainWait, easeType, basePos);
             set
             {
                 var texts = value.Split('|');
@@ -408,8 +408,9 @@ namespace NoteGenerating
                 loopWaitLPB = float.Parse(texts[2]);
                 timeMode = Enum.Parse<TimeMode>(texts[3]);
                 time = float.Parse(texts[4]);
-                easeType = Enum.Parse<EaseType>(texts[5]);
-                basePos = texts[6].ToVector2();
+                isChainWait = bool.Parse(texts[5]);
+                easeType = Enum.Parse<EaseType>(texts[6]);
+                basePos = texts[7].ToVector2();
             }
         }
 

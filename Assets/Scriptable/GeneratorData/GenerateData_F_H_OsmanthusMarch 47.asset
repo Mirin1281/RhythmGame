@@ -13,51 +13,35 @@ MonoBehaviour:
   m_Name: GenerateData_F_H_OsmanthusMarch 47
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 196
+  beatTiming: 132
   generatable:
-    rid: 9146112130001928193
+    rid: 176941210122846236
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 9146112130001928193
-      type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 176941210122846236
+      type: {class: F_CameraMove, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
-          rid: -2
-        isCheckSimultaneous: 1
-        noteDatas:
-        - type: 1
-          x: -4
-          wait: 4
-          width: 0
-          length: 0
-        - type: 1
-          x: -3
-          wait: 4
-          width: 0
-          length: 0
-        - type: 1
-          x: 4
-          wait: 4
-          width: 0
-          length: 0
-        - type: 1
-          x: 3
-          wait: 4
-          width: 0
-          length: 0
-        - type: 1
-          x: -2
-          wait: 0
-          width: 0
-          length: 0
-        - type: 1
-          x: 2
-          wait: 4
-          width: 0
-          length: 0
+        loopCount: 16
+        loopWait: 4
+        delay: 0
+        settings:
+        - wait: 0
+          isPosMove: 0
+          pos: {x: 0, y: 0.2, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: -2}
+          isRotateClamp: 1
+          time: 0
+          easeType: 3
+          moveType: 1
+        - wait: 0
+          isPosMove: 0
+          pos: {x: 0, y: -0.2, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 2}
+          isRotateClamp: 1
+          time: 0.2
+          easeType: 3
+          moveType: 1
