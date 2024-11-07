@@ -66,6 +66,7 @@ namespace NoteGenerating
                     hold.SetMaskLength(time * holdTime * Speed);
                     await Helper.Yield();
                 }
+                hold.SetActive(false);
             }
 
             async UniTaskVoid JudgeMoveAsync(HoldNote hold)
@@ -73,12 +74,13 @@ namespace NoteGenerating
                 float baseTime = CurrentTime - Delta;
                 float time = 0f;
                 var vec = Speed * Vector3.down;
-                while (hold.IsActive && time < 8f)
+                while (hold.IsActive && time < expectTime)
                 {
                     time = CurrentTime - baseTime;
                     hold.SetPos(new Vector3(0, StartBase - x) + time * vec);
                     await Helper.Yield();
                 }
+                hold.SetActive(false);
             }
         }
 

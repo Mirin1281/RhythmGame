@@ -48,6 +48,8 @@ namespace NoteGenerating.Editor
                         copiedCmdList.Add(copiedCmdData);
                     }
                     Fumen.SetGenerateDataList(copiedCmdList);
+                    EditorUtility.SetDirty(target);
+                    EditorUtility.SetDirty(copiedFumenData);
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
 

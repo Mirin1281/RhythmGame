@@ -49,7 +49,7 @@ public class InGameManager : MonoBehaviour
 
         judgement.Init(fumenData);
 
-        titleTmpro.SetText(fumenData.MusicSelectData.MusicName);
+        titleTmpro.SetText($"<size=30><b>♪</b></size>{fumenData.MusicSelectData.MusicName}");
 
         metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 

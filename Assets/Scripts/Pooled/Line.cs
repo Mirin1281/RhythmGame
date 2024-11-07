@@ -70,13 +70,13 @@ public class Line : PooledBase, ITransformable
         FadeAlphaAsync(toAlpha, time, easing).Forget();
     }
 
-    public void FadeOut(float time, float waitSeconds = 0f, bool isDisable = true, Easing easing = default)
+    public void FadeOut(float time, float delaySeconds = 0f, bool inActive = true, Easing easing = default)
     {
         UniTask.Void(async () => 
         {
-            await MyUtility.WaitSeconds(waitSeconds, destroyCancellationToken);
+            await MyUtility.WaitSeconds(delaySeconds, destroyCancellationToken);
             await FadeAlphaAsync(0, time, easing);
-            if(isDisable)
+            if(inActive)
             {
                 SetActive(false);
             }
