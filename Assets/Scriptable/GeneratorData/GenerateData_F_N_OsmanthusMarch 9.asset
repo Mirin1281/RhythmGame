@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: NoteGeneratorData_F_N_OsmanthusMarch 1 53
+  m_Name: GenerateData_F_N_OsmanthusMarch 9
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 160
+  beatTiming: 180
   generatable:
-    rid: 9146112123554758667
+    rid: 176941273224052739
   references:
     version: 2
     RefIds:
-    - rid: 9146112123554758667
-      type: {class: F_ContinuousNotes, ns: NoteGenerating, asm: Assembly-CSharp}
+    - rid: 176941273224052739
+      type: {class: F_Osmanthus_UpHold, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
-        count: 17
-        noteType: 2
-        wait: 16
-        easeX: {x: -5, y: 5}
-        easeTime: 8
-        easeType: 3
+        datas:
+        - <Length>k__BackingField: 4
+          <X>k__BackingField: -5
+          <Wait>k__BackingField: 2
+        - <Length>k__BackingField: 4
+          <X>k__BackingField: -2
+          <Wait>k__BackingField: 2

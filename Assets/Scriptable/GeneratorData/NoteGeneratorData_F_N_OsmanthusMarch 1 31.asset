@@ -19,6 +19,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 9146112123554758666
       type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
@@ -26,32 +28,27 @@ MonoBehaviour:
         speedRate: 1
         isSpeedChangable: 0
         parentGeneratable:
-          rid: 9146112130001928202
+          rid: -2
         isCheckSimultaneous: 0
         noteDatas:
-        - type: 1
-          x: 0
+        - type: 2
+          x: -4
           wait: 8
           width: 0
           length: 0
-        - type: 1
-          x: -3
+        - type: 2
+          x: 4
           wait: 8
           width: 0
           length: 0
-        - type: 1
-          x: -6
+        - type: 2
+          x: -4
           wait: 4
           width: 0
           length: 0
         - type: 1
-          x: 6
+          x: 5
           wait: 0
-          width: 0
-          length: 0
-        - type: 1
-          x: 3
-          wait: 4
           width: 0
           length: 0
         - type: 1
@@ -59,19 +56,18 @@ MonoBehaviour:
           wait: 4
           width: 0
           length: 0
+        - type: 2
+          x: 0
+          wait: 4
+          width: 0
+          length: 0
         - type: 1
-          x: -6
+          x: -5
           wait: 0
           width: 0
           length: 0
         - type: 1
-          x: -3
+          x: 0
           wait: 8
           width: 0
           length: 0
-    - rid: 9146112130001928202
-      type: {class: P_Sin, ns: NoteGenerating, asm: Assembly-CSharp}
-      data:
-        moveTime: 10
-        amplitude: 1
-        period: 2
