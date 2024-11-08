@@ -227,7 +227,7 @@ namespace NoteGenerating
                 line.SetAlpha(data.StartAlpha);
             }
 
-            await Helper.WaitSeconds(time - delta);
+            await Helper.WaitSeconds(ConvertTime(time) - delta);
             line.SetActive(false);
         }
 

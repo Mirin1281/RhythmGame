@@ -16,9 +16,11 @@ namespace NoteGenerating
         [SerializeField] Vector2 easeX;
         [SerializeField] float easeTime;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
+        [SerializeField] float delayLPB;
 
         protected override async UniTask GenerateAsync()
         {
+            await Wait(delayLPB);
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for(int i = 0; i < count; i++)
             {
@@ -67,7 +69,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(count, noteType, wait, easeX, easeTime, easeType);
+            get => MyUtility.GetContentFrom(count, noteType, wait, easeX, easeTime, easeType, delayLPB);
             set
             {
                 var texts = value.Split('|');
@@ -78,6 +80,7 @@ namespace NoteGenerating
                 easeX = texts[3].ToVector2();
                 easeTime = float.Parse(texts[4]);
                 easeType = Enum.Parse<EaseType>(texts[5]);
+                delayLPB = float.Parse(texts[6]);
             }
         }
     }

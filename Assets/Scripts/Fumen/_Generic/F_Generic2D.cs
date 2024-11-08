@@ -119,9 +119,9 @@ namespace NoteGenerating
                 }
                 else
                 {
-                    float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
+                    float parentDir = parentTs.eulerAngles.z * Mathf.Deg2Rad;
                     Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime,
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, parentTs.localPosition.y + pos.y), expectTime,
                         isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
                 }
                 SetSimultaneous(note, expectTime);

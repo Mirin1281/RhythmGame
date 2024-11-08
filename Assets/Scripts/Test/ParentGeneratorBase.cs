@@ -53,7 +53,7 @@ namespace NoteGenerating
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
         /// </summary>
-        protected float ConvertIfInverse(float x) => x * (isInverse ? -1 : 1);
+        protected float Inv(float x) => x * (isInverse ? -1 : 1);
 
         protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {
@@ -196,7 +196,7 @@ namespace NoteGenerating
             return instance;
         }
 
-        protected const string Separator = "!";
+        const string Separator = "!";
         
         string IParentGeneratable.GetContent()
         {

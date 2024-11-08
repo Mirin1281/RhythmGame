@@ -162,11 +162,6 @@ namespace NoteGenerating
             return "5Lane";
         }
 
-        protected override Color GetCommandColor()
-        {
-            return ConstContainer.UnNoteCommandColor;
-        }
-
         protected override string GetSummary()
         {
             return GetInverseSummary();

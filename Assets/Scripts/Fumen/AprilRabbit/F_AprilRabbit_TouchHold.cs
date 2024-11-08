@@ -8,11 +8,13 @@ namespace NoteGenerating
     [Serializable]
     public struct HoldData
     {
+        [SerializeField] bool isDiabled;
         [SerializeField] float x;
         [SerializeField, Min(0)] float wait;
         [SerializeField, Min(0)] float width;
         [SerializeField, Min(0)] float length;
 
+        public readonly bool IsDisabled => isDiabled;
         public readonly float X => x;
         public readonly float Wait => wait;
         public readonly float Width => width;
@@ -40,12 +42,15 @@ namespace NoteGenerating
         {
             foreach(var data in noteDatas)
             {
-                if(data.Length == 0)
+                if(data.IsDisabled == false)
                 {
-                    Debug.LogWarning("ホールドの長さが0です");
-                    continue;
+                    if(data.Length == 0)
+                    {
+                        Debug.LogWarning("ホールドの長さが0です");
+                        continue;
+                    }
+                    TouchHold(data.X, data.Length);
                 }
-                TouchHold(data.X, data.Length);
                 await Wait(data.Wait);
             }
         }

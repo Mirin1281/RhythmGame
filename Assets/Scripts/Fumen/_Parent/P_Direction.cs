@@ -10,7 +10,7 @@ namespace NoteGenerating
 
         protected override async UniTask MoveParentAsync(NoteBase parent)
         {
-            parent.SetRotate(ConvertIfInverse(deg));
+            parent.SetRotate(Inv(deg));
             await UniTask.CompletedTask;
         }
 
