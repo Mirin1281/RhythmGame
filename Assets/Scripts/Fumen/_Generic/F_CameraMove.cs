@@ -38,22 +38,9 @@ namespace NoteGenerating
             return ConstContainer.UnNoteCommandColor;
         }
 
-        public override string CSVContent1
+        protected override string GetSummary()
         {
-            get => MyUtility.GetContentFrom(loopCount, loopWait, delay);
-            set
-            {
-                var texts = value.Split("|");
-                loopCount = int.Parse(texts[0]);
-                loopWait = float.Parse(texts[1]);
-                delay = float.Parse(texts[2]);
-            }
-        }
-        
-        public override string CSVContent2
-        {
-            get => MyUtility.GetContent(settings);
-            set => settings = MyUtility.GetArrayFrom<CameraMoveSetting>(value);
+            return $"{loopCount} : {loopWait}  Length: {settings.Length}";
         }
     }
 }

@@ -37,31 +37,5 @@ namespace NoteGenerating
             var geratorBase = noteGeneratable as NoteGeneratorBase;
             geratorBase.Preview();
         }
-
-        public override string CSVContent1
-        {
-            get
-            {
-                string c = MyUtility.GetContentFrom(loopCount, loopWait);
-                var geratorBase = noteGeneratable as NoteGeneratorBase;
-                return c + "#" + geratorBase.CSVContent1;
-            }
-            set
-            {
-                var texts = value.Split("#");
-                var thisTexts = texts[0].Split("|");
-                loopCount = int.Parse(thisTexts[0]);
-                loopWait = float.Parse(thisTexts[1]);
-
-                var geratorBase = noteGeneratable as NoteGeneratorBase;
-                geratorBase.CSVContent1 = texts[1];
-            }
-        }
-
-        public override string CSVContent2
-        {
-            get => base.CSVContent1;
-            set => base.CSVContent1 = value;
-        }
     }
 }

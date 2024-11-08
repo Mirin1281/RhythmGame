@@ -41,18 +41,5 @@ namespace NoteGenerating
         {
             return "速度変更";
         }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(speed, easeTime, easeType);
-            set
-            {
-                var texts = value.Split('|');
-
-                speed = float.Parse(texts[0]);
-                easeTime = float.Parse(texts[1]);
-                easeType = Enum.Parse<EaseType>(texts[2]);
-            }
-        }
     }
 }

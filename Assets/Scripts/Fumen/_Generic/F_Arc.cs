@@ -65,7 +65,7 @@ namespace NoteGenerating
             float speed = is2D ? Speed : Speed3D;
             await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse, Helper.DebugSpherePrefab);
 
-            GameObject previewObj = MyUtility.GetPreviewObject();
+            GameObject previewObj = FumenDebugUtility.GetPreviewObject();
             float lineY = 0f;
             for(int i = 0; i < 10000; i++)
             {
@@ -75,12 +75,6 @@ namespace NoteGenerating
                 lineY += Helper.GetTimeInterval(4) * speed;
                 if(lineY > arc.LastZ) break;
             }
-        }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContent(datas);
-            set => datas = MyUtility.GetArrayFrom<ArcCreateData>(value);
         }
     }
 }

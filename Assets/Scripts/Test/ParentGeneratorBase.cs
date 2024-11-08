@@ -185,7 +185,7 @@ namespace NoteGenerating
         {
             if(string.IsNullOrEmpty(content)) return null;
             var className = content.Split(Separator)[0];
-            var instance = MyUtility.CreateInstance<ParentGeneratorBase>(className);
+            var instance = FumenDebugUtility.CreateInstance<ParentGeneratorBase>(className);
             int index = content.IndexOf(Separator);
             if(index == -1)
             {

@@ -35,7 +35,7 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.VersatileCommandColor;
+            return ConstContainer.NoteCommandColor;
         }
 
         protected override string GetSummary()
@@ -45,7 +45,7 @@ namespace NoteGenerating
 
         public override void Preview()
         {
-            GameObject previewObj = MyUtility.GetPreviewObject();
+            GameObject previewObj = FumenDebugUtility.GetPreviewObject();
 
             float z = 0f;
             for(int i = 0; i < noteDatas.Length; i++)
@@ -75,12 +75,6 @@ namespace NoteGenerating
                 sky.SetPos(startPos);
                 sky.transform.SetParent(previewObj.transform);
             }
-        }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContent(noteDatas);
-            set => noteDatas = MyUtility.GetArrayFrom<SkyNoteData>(value);
         }
     }
 }

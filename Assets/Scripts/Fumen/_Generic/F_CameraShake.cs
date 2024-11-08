@@ -49,11 +49,5 @@ namespace NoteGenerating
         {
             return ConstContainer.UnNoteCommandColor;
         }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContent(settings);
-            set => settings = MyUtility.GetArrayFrom<CameraShakeSetting>(value);
-        }
     }
 }

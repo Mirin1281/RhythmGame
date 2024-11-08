@@ -256,7 +256,7 @@ namespace NoteGenerating
 #if UNITY_EDITOR
         public override async void Preview()
         {
-            var previewObj = MyUtility.GetPreviewObject();
+            var previewObj = FumenDebugUtility.GetPreviewObject();
             if(loopCount > 3)
                 loopCount = 3;
             for(int i = 0; i < loopCount; i++)
@@ -395,29 +395,5 @@ namespace NoteGenerating
             }
         }
 #endif
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(summary, loopCount, loopWaitLPB, timeMode, time, isChainWait, easeType, basePos);
-            set
-            {
-                var texts = value.Split('|');
-
-                summary = texts[0];
-                loopCount = int.Parse(texts[1]);
-                loopWaitLPB = float.Parse(texts[2]);
-                timeMode = Enum.Parse<TimeMode>(texts[3]);
-                time = float.Parse(texts[4]);
-                isChainWait = bool.Parse(texts[5]);
-                easeType = Enum.Parse<EaseType>(texts[6]);
-                basePos = texts[7].ToVector2();
-            }
-        }
-
-        public override string CSVContent2
-        {
-            get => MyUtility.GetContent(datas);
-            set => datas = MyUtility.GetArrayFrom<LineCreateData>(value);
-        }
     }
 }

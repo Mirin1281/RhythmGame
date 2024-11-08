@@ -31,7 +31,7 @@ namespace NoteGenerating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.VersatileCommandColor;
+            return ConstContainer.NoteCommandColor;
         }
 
         protected override string GetSummary()
@@ -56,7 +56,7 @@ namespace NoteGenerating
         void DebugPreview(bool isClearPreview)
         {
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            var previewObj = MyUtility.GetPreviewObject(isClearPreview);
+            var previewObj = FumenDebugUtility.GetPreviewObject(isClearPreview);
             float y = 0;
             for(int i = 0; i < count; i++)
             {
@@ -65,23 +65,6 @@ namespace NoteGenerating
                 note.SetPos(new Vector3(Inv(easing.Ease(i)), y));
                 y += Helper.GetTimeInterval(wait) * Speed;
             };
-        }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(count, noteType, wait, easeX, easeTime, easeType, delayLPB);
-            set
-            {
-                var texts = value.Split('|');
-
-                count = int.Parse(texts[0]);
-                noteType = Enum.Parse<NoteType>(texts[1]);
-                wait = float.Parse(texts[2]);
-                easeX = texts[3].ToVector2();
-                easeTime = float.Parse(texts[4]);
-                easeType = Enum.Parse<EaseType>(texts[5]);
-                delayLPB = float.Parse(texts[6]);
-            }
         }
     }
 }

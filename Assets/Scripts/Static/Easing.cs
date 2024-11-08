@@ -253,7 +253,7 @@ public enum EaseType
     [InspectorName("")] INTERNAL_Zero,
 }
 
-public readonly struct EasingVector3
+/*public readonly struct EasingVector3
 {
     readonly Easing easingX;
     readonly Easing easingY;
@@ -265,12 +265,12 @@ public readonly struct EasingVector3
         easingY = new Easing(start.y, from.y, easeTime, type);
         easingZ = new Easing(start.z, from.z, easeTime, type);
     }
-    /*public EasingVector3(EasingStatusVector3 easingStatus)
+    public EasingVector3(EasingStatusVector3 easingStatus)
     {
         easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
         easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
         easingZ = new Easing(easingStatus.Start.z, easingStatus.From.z, easingStatus.EaseTime, easingStatus.EaseType);
-    }*/
+    }
 
     public static Vector3 Ease(Vector3 start, Vector3 from, float easeTime, EaseType type, float time)
     {
@@ -284,7 +284,7 @@ public readonly struct EasingVector3
     {
         return new Vector3(easingX.Ease(time), easingY.Ease(time), easingZ.Ease(time));
     }
-}
+}*/
 
 public readonly struct EasingVector2
 {

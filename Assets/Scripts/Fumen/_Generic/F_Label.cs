@@ -22,11 +22,5 @@ namespace NoteGenerating
         {
             return summary;
         }
-
-        public override string CSVContent1
-        {
-            get => summary;
-            set => summary = value;
-        }
     }
 }

@@ -50,17 +50,14 @@ namespace NoteGenerating.Editor
                 // 3列目 発火タイミング
                 sb.AddCell(generateData.BeatTiming.ToString());
                 // 4列目 コンテント1
-                var content1 = cmdBase?.CSVContent1;
+                var content1 = cmdBase?.CSVContent;
                 sb.AddCell(content1);
                 // 5列目 コンテント2
-                var content2 = cmdBase?.CSVContent2;
+                var content2 = cmdBase?.CSVContent1;
                 sb.AddCell(content2);
                 // 5列目 コンテント3
-                var content3 = cmdBase?.CSVContent3;
+                var content3 = cmdBase?.CSVContent2;
                 sb.AddCell(content3);
-                // 6列目 コンテント4
-                var content4 = cmdBase?.CSVContent4;
-                sb.AddCell(content4);
 
                 sw.WriteLine(sb.ToString());
                 sb.Clear();
@@ -266,19 +263,15 @@ namespace NoteGenerating.Editor
                     data.SetBeatTiming(int.Parse(colomn_array[2]));
                     if (colomn_base != null && colomn_array.Length > 3)
                     {
-                        colomn_base.CSVContent1 = colomn_array[3];
+                        colomn_base.CSVContent = colomn_array[3];
                     }
                     if (colomn_base != null && colomn_array.Length > 4)
                     {
-                        colomn_base.CSVContent2 = colomn_array[4];
+                        colomn_base.CSVContent1 = colomn_array[4];
                     }
                     if (colomn_base != null && colomn_array.Length > 5)
                     {
-                        colomn_base.CSVContent3 = colomn_array[5];
-                    }
-                    if (colomn_base != null && colomn_array.Length > 6)
-                    {
-                        colomn_base.CSVContent4 = colomn_array[6];
+                        colomn_base.CSVContent2 = colomn_array[5];
                     }
 				}
 			}

@@ -103,20 +103,5 @@ namespace NoteGenerating
         {
             return ConstContainer.UnNoteCommandColor;
         }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(target, delay, blinkCount, seed, isDelayOneFrame);
-            set
-            {
-                var texts = value.Split("|");
-
-                target = Enum.Parse<BlinkTargets>(texts[0]);
-                delay = float.Parse(texts[1]);
-                blinkCount = int.Parse(texts[2]);
-                seed = int.Parse(texts[3]);
-                isDelayOneFrame = bool.Parse(texts[4]);
-            }
-        }
     }
 }

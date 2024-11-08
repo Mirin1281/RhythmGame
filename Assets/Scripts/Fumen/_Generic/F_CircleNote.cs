@@ -123,26 +123,7 @@ namespace NoteGenerating
             return noteDatas.Length + GetInverseSummary();
         }
 
-        /*public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(speedRate, isSpeedChangable, isCheckSimultaneous);
-            set
-            {
-                var texts = value.Split('|');
-
-                speedRate = float.Parse(texts[0]);
-                isSpeedChangable = bool.Parse(texts[1]);
-                isCheckSimultaneous = bool.Parse(texts[2]);
-            }
-        }*/
-
-        public override string CSVContent2
-        {
-            get => MyUtility.GetContent(noteDatas);
-            set => noteDatas = MyUtility.GetArrayFrom<NoteData>(value);
-        }
-
-        public override string CSVContent3
+        public override string CSVContent1
         {
             get => parentGeneratable?.GetContent();
             set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);

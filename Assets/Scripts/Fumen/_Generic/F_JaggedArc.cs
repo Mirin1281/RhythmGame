@@ -93,7 +93,7 @@ namespace NoteGenerating
             }
             await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse, Helper.DebugSpherePrefab);
 
-            GameObject previewObj = MyUtility.GetPreviewObject();
+            GameObject previewObj = FumenDebugUtility.GetPreviewObject();
             float lineY = 0f;
             for(int i = 0; i < 1000; i++)
             {
@@ -103,35 +103,6 @@ namespace NoteGenerating
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * speed;
                 if(lineY > arc.LastZ) break;
-            }
-        }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(delayLPB, jagInterval, length, startWidth, fromWidth, easeType);
-            set
-            {
-                var texts = value.Split("|");
-
-                delayLPB = float.Parse(texts[0]);
-                jagInterval = float.Parse(texts[1]);
-                length = float.Parse(texts[2]);
-                startWidth = float.Parse(texts[3]);
-                fromWidth = float.Parse(texts[4]);
-                easeType = Enum.Parse<EaseType>(texts[5]);
-            }
-        }
-
-        public override string CSVContent2
-        {
-            get => MyUtility.GetContentFrom(posOffset, rotate, is2D);
-            set
-            {
-                var texts = value.Split("|");
-
-                posOffset = texts[0].ToVector2();
-                rotate = float.Parse(texts[1]);
-                is2D = bool.Parse(texts[2]);
             }
         }
     }

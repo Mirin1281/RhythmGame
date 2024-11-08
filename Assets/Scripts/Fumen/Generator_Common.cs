@@ -220,7 +220,7 @@ namespace NoteGenerating
             }
         }
 
-        public override string CSVContent4
+        public override string CSVContent2
         {
             get => IsInverse.ToString();
             set => isInverse = bool.Parse(value);

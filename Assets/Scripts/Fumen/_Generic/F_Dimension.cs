@@ -74,21 +74,5 @@ namespace NoteGenerating
                 return "2D";
             }
         }
-
-        public override string CSVContent1
-        {
-            get
-            {
-                return MyUtility.GetContentFrom(moveType, time, easeType, delay);
-            }
-            set
-            {
-                var texts = value.Split("|");
-                moveType = Enum.Parse<MoveType>(texts[0]);
-                time = float.Parse(texts[1]);
-                easeType = Enum.Parse<EaseType>(texts[2]);
-                delay = float.Parse(texts[3]);
-            }
-        }
     }
 }

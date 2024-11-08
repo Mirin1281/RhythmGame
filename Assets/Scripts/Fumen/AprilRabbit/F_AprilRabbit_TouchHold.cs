@@ -126,45 +126,5 @@ namespace NoteGenerating
         {
             return noteDatas.Length + GetInverseSummary();
         }
-
-        /*public override void OnSelect(bool isFirst)
-        {
-            DebugPreview(isFirst);
-        }
-        public override void Preview()
-        {
-            DebugPreview(false);
-        }
-
-        void DebugPreview(bool isClearPreview)
-        {
-            MyUtility.DebugPreview2DNotes(
-                noteDatas.Select(d => (INoteData)d), Helper, IsInverse, isClearPreview);
-        }
-
-        public override string CSVContent1
-        {
-            get => MyUtility.GetContentFrom(speedRate, isSpeedChangable, isCheckSimultaneous);
-            set
-            {
-                var texts = value.Split('|');
-
-                speedRate = float.Parse(texts[0]);
-                isSpeedChangable = bool.Parse(texts[1]);
-                isCheckSimultaneous = bool.Parse(texts[2]);
-            }
-        }
-
-        public override string CSVContent2
-        {
-            get => MyUtility.GetContentFrom(noteDatas);
-            set => noteDatas = MyUtility.GetArrayFrom<NoteData>(value);
-        }
-
-        public override string CSVContent3
-        {
-            get => parentGeneratable?.GetContent();
-            set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
-        }*/
     }
 }
