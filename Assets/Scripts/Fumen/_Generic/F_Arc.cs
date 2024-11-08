@@ -79,7 +79,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(datas);
+            get => MyUtility.GetContent(datas);
             set => datas = MyUtility.GetArrayFrom<ArcCreateData>(value);
         }
     }

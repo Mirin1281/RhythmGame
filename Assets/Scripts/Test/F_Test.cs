@@ -10,6 +10,16 @@ namespace NoteGenerating
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;
 
+        [SerializeField] string a = "bbb";
+        [SerializeField] NoteData[] noteDatas;
+        //[SerializeField] int[] ints;
+
+        public override string CSVContent1
+        {
+            get => MyUtility.GetContent(this);
+            set => MyUtility.GetNoteGenerator(this, value);
+        }
+
         protected override async UniTask GenerateAsync()
         {
             // これから来る譜面がカットインするやつ

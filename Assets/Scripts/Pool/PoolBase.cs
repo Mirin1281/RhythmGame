@@ -125,4 +125,18 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
             return list;
         }
     }
+
+#if UNITY_EDITOR
+    [SerializeField] int maxUseCount;
+
+    void Update()
+    {
+        var pooledList = PooledTable[0];
+        int count = pooledList.Count(t => t.IsActive);
+        if(maxUseCount < count)
+        {
+            maxUseCount = count;
+        }
+    }
+#endif
 }

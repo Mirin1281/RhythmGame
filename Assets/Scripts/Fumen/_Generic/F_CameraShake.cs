@@ -52,7 +52,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(settings);
+            get => MyUtility.GetContent(settings);
             set => settings = MyUtility.GetArrayFrom<CameraShakeSetting>(value);
         }
     }

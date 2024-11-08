@@ -264,7 +264,7 @@ namespace NoteGenerating
 
         public override string CSVContent2
         {
-            get => MyUtility.GetContentFrom(noteDatas);
+            get => MyUtility.GetContent(noteDatas);
             set => noteDatas = MyUtility.GetArrayFrom<NoteData>(value);
         }
 

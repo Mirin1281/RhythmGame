@@ -319,4 +319,226 @@ public static class MyUtility
             beforeNote = note;
         }
     }
+
+    public static string GetContent<T>(T t)
+    {
+        int separateLevel = 1;
+        StringBuilder sb = new ();
+        Type type = typeof(T);
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        for(int i = 0; i < fields.Length; i++)
+        {
+            var f = fields[i];
+            object v = f.GetValue(t);
+            if(f.FieldType.IsArray)
+            {
+                Array array = v as Array;
+                sb.Append(GetContentFromArray(array, separateLevel));
+            }
+            else
+            {
+                sb.Append(v);
+            }
+            
+            if(i == fields.Length - 1) break;
+            sb.Append(GetSeparator(separateLevel));
+        }
+        return sb.ToString();
+
+
+        static StringBuilder GetContentFromArray(Array array, int separateLevel)
+        {
+            StringBuilder sb = new ();
+            separateLevel++;
+            for(int i = 0; i < array.Length; i++)
+            {
+                var element = array.GetValue(i);
+                sb.Append(GetFieldContent(element, element.GetType(), separateLevel));
+                if(i == array.Length - 1) break;
+                sb.Append(GetSeparator(separateLevel));
+            }
+            return sb;
+
+
+            static StringBuilder GetFieldContent(object t, Type type, int separateLevel)
+            {
+                StringBuilder sb = new ();
+                separateLevel++;
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                for(int i = 0; i < fields.Length; i++)
+                {
+                    var f = fields[i];
+                    object v = f.GetValue(t);
+                    if(f.FieldType.IsArray)
+                    {
+                        Array array = v as Array;
+                        sb.Append(GetContentFromArray(array, separateLevel));
+                    }
+                    else
+                    {
+                        sb.Append(v);
+                    }
+
+                    if(i == fields.Length - 1) break;
+                    sb.Append(GetSeparator(separateLevel));
+                }
+                return sb;
+            }
+        }
+
+        static char GetSeparator(int level)
+        {
+            return level switch
+            {
+                1 => '|',
+                2 => '#',
+                3 => '%',
+                4 => '&',
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+    }
+
+    /*public static void GetNoteGenerator<T>(T generator, string content) where T : NoteGeneratorBase
+    {
+        if(string.IsNullOrWhiteSpace(content)) return;
+
+        var type = typeof(T);
+        var fieldStrings = content.Split("|");
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        for(int i = 0; i < fields.Length; i++)
+        {
+            FieldInfo f = fields[i];
+            if(f.FieldType.IsArray)
+            {
+                var array = f.GetValue(generator) as Array;
+                var arrayType = f.FieldType.GetElementType();
+                SetToArray(array, arrayType, fieldStrings[i]);
+            }
+            else
+            {
+                f.SetValue(generator, fieldStrings[i]);
+            }
+        }
+
+
+        static void SetToArray(Array array, Type type, string value)
+        {
+            var fieldStrings = value.Split("#");
+            //FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            for(int k = 0; k < array.Length; k++)
+            {
+                var element = array.GetValue(k);
+                SetToElement(element, element.GetType(), fieldStrings[k]);
+            }
+            
+
+
+            static void SetToElement(object element, Type elementType, string value)
+            {
+                var fieldStrings = value.Split("%");
+                FieldInfo[] fields = elementType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                for(int i = 0; i < fields.Length; i++)
+                {
+                    FieldInfo f = fields[i];
+                    if(f.FieldType.IsArray)
+                    {
+                        var array = f.GetValue(element) as Array;
+                        var arrayType = f.FieldType.GetElementType();
+                        SetToArray(array, arrayType, fieldStrings[i]);
+                    }
+                    else
+                    {
+                        f.SetValue(element, Convert(f.FieldType, fieldStrings[i]));
+                    }
+                    
+                }
+            }
+
+            static object Convert(Type type, string stringValue)
+            {
+                if (type == typeof(Vector2))
+                {
+                    return stringValue.ToVector2();
+                }
+                else if (type == typeof(Vector3))
+                {
+                    return stringValue.ToVector3();
+                }
+                var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
+                return converter.ConvertFrom(stringValue);
+            }
+        }*/
+
+    public static void GetNoteGenerator<T>(T generator, string content) where T : NoteGeneratorBase
+    {
+        if(string.IsNullOrWhiteSpace(content)) return;
+
+        var type = typeof(T);
+        var fieldStrings = content.Split("|");
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        for(int i = 0; i < fields.Length; i++)
+        {
+            FieldInfo f = fields[i];
+            if(f.FieldType.IsArray)
+            {
+                var arrayType = f.FieldType.GetElementType();
+                var createdArray = CreateArray(arrayType, fieldStrings[i]);
+                f.SetValue(generator, createdArray);
+            }
+            else
+            {
+                f.SetValue(generator, fieldStrings[i]);
+            }
+        }
+
+
+        static Array CreateArray(Type type, string value)
+        {
+            var elementStrings = value.Split("#");
+            var array = Array.CreateInstance(type, elementStrings.Length);
+            for(int i = 0; i < array.Length; i++)
+            {
+                array.SetValue(GetElement(type, elementStrings[i]), i);
+            }
+            return array;
+
+
+            static object GetElement(Type type, string value)
+            {
+                var elementStrings = value.Split("%");
+                object instance = Activator.CreateInstance(type);
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                for(int i = 0; i < fields.Length; i++)
+                {
+                    FieldInfo f = fields[i];
+                    if(f.FieldType.IsArray)
+                    {
+                        var arrayType = f.FieldType.GetElementType();
+                        var createdArray = CreateArray(arrayType, elementStrings[i]);
+                        f.SetValue(instance, createdArray);
+                    }
+                    else
+                    {
+                        f.SetValue(instance, Convert(f.FieldType, elementStrings[i]));
+                    }
+                }
+                return instance;
+            }
+
+            static object Convert(Type type, string stringValue)
+            {
+                if (type == typeof(Vector2))
+                {
+                    return stringValue.ToVector2();
+                }
+                else if (type == typeof(Vector3))
+                {
+                    return stringValue.ToVector3();
+                }
+                var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
+                return converter.ConvertFrom(stringValue);
+            }
+        }
+    }
 }

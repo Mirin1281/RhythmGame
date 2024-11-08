@@ -416,7 +416,7 @@ namespace NoteGenerating
 
         public override string CSVContent2
         {
-            get => MyUtility.GetContentFrom(datas);
+            get => MyUtility.GetContent(datas);
             set => datas = MyUtility.GetArrayFrom<LineCreateData>(value);
         }
     }

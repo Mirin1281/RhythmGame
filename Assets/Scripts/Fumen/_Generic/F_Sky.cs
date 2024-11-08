@@ -79,7 +79,7 @@ namespace NoteGenerating
 
         public override string CSVContent1
         {
-            get => MyUtility.GetContentFrom(noteDatas);
+            get => MyUtility.GetContent(noteDatas);
             set => noteDatas = MyUtility.GetArrayFrom<SkyNoteData>(value);
         }
     }
