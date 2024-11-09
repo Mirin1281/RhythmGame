@@ -9,7 +9,7 @@ public class InGameManager : MonoBehaviour
 {
     [SerializeField] FumenData editorFumenData;
     [SerializeField] Metronome metronome;
-    [SerializeField] NotePoolManager notePoolManager;
+    [SerializeField] PoolManager notePoolManager;
     [SerializeField] Judgement judgement;
     [SerializeField] TMP_Text titleTmpro;
     FumenData fumenData;

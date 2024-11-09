@@ -44,7 +44,7 @@ public class NoteInput : MonoBehaviour
     [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
     [SerializeField] ArcLightOperator arcLightOperator;
-    [SerializeField] NotePoolManager notePoolManager;
+    [SerializeField] PoolManager notePoolManager;
     [SerializeField] bool isAuto;
 
     readonly List<NoteExpect> allExpects = new(63);

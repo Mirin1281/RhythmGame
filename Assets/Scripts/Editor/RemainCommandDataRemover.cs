@@ -7,8 +7,8 @@ namespace NoteGenerating.Editor
     // GenerateDataは普通に削除しても空のassetファイルが残ります
     // これはUndo操作に対応するためですが、再起動などでも消えないため明示的に削除する必要があります
     //
-    // このクラスではエディタの終了時とビルドの直前に掃除をします
-    // またFumenDataの"未使用のGenerateDataを削除する"でも掃除ができます
+    // このクラスではエディタの終了時とビルドの直前にそれらのファイルの掃除をします
+    // またFumenDataの"未使用のGenerateDataを削除"でも掃除ができます
     public class RemainGenerateDataRemover : IPreprocessBuildWithReport
     {
         [InitializeOnLoadMethod]

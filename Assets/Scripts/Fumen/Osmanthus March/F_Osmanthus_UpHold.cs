@@ -10,9 +10,9 @@ namespace NoteGenerating
         [Serializable]
         struct MoveHoldData
         {
-            [field: SerializeField] public float Length { get; private set; }
-            [field: SerializeField] public float X { get; private set; }
             [field: SerializeField] public float Wait { get; private set; }
+            [field: SerializeField] public float X { get; private set; }
+            [field: SerializeField] public float Length { get; private set; }
         }
 
         [SerializeField] MoveHoldData[] datas = new MoveHoldData[1];
@@ -22,8 +22,8 @@ namespace NoteGenerating
             for(int i = 0; i < datas.Length; i++)
             {
                 var d = datas[i];
-                UpHold(d.Length, d.X);
                 await Wait(d.Wait);
+                UpHold(d.Length, d.X);
             }
 
             await UniTask.CompletedTask;

@@ -8,29 +8,47 @@ namespace NoteGenerating
     {
         [SerializeField, Min(0)] int loopCount = 1;
         [SerializeField, Min(0)] float loopWait = 4;
-        [SerializeField, Min(0)] float delay = 0f;
+        
+        [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと基準の時間からの差で発火します")]
+        bool isChainWait = true;
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
         protected override async UniTask GenerateAsync()
         {
-            await Helper.WaitSeconds(delay);
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
-
-            for(int k = 0; k < loopCount; k++)
+            float delta = await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            for(int i = 0; i < loopCount; i++)
             {
-                Create().Forget();
-                await Wait(loopWait);
+                if(isChainWait)
+                {
+                    LoopMove(settings, delta).Forget();
+                }
+                else
+                {
+                    for(int k = 0; k < settings.Length; k++)
+                    {
+                        Move(settings[k], delta).Forget();
+                    }
+                }
+                delta = await Wait(loopWait, delta);
             }
         }
 
-        async UniTaskVoid Create()
+        async UniTaskVoid LoopMove(CameraMoveSetting[] settings, float delta)
         {
             for(int i = 0; i < settings.Length; i++)
             {
-                var s = settings[i];
-                await Wait(s.Wait);
-                Helper.CameraMover.Move(s, IsInverse);
+                delta = await Wait(settings[i].Wait, delta);
+                Move(settings[i], delta, true).Forget();
             }
+        }
+
+        async UniTaskVoid Move(CameraMoveSetting s, float delta, bool isDisableWait = false)
+        {
+            if(!isDisableWait)
+            {
+                delta = await Wait(s.Wait, delta: delta);
+            }
+            Helper.CameraMover.Move(s, delta, IsInverse);
         }
 
         protected override Color GetCommandColor()
@@ -40,7 +58,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return $"{loopCount} : {loopWait}  Length: {settings.Length}";
+            return $"{loopCount} - {loopWait}  Length: {settings.Length}";
         }
     }
 }

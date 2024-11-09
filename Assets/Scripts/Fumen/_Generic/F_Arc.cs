@@ -29,14 +29,7 @@ namespace NoteGenerating
 
         protected override string GetName()
         {
-            if(is2D)
-            {
-                return "2D Arc";
-            }
-            else
-            {
-                return base.GetName();
-            }
+            return is2D ? "2DArc" : base.GetName();
         }
 
         public override async void Preview()

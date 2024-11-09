@@ -13,26 +13,28 @@ public class PropertyDrawerHelper
     {
         this.position = new Rect(position.x, position.y, position.width, contentHeight);
         this.property = property;
-        startX = position.x;
-        startWidth = position.width;
+        this.startX = position.x;
+        this.startWidth = position.width;
+    }
+
+    public float GetX() => position.x;
+    public void SetX(float x)
+    {
+        position.x = startX + x + IndentDepth * startWidth;
     }
 
     /// <summary>
-    /// X座標を設定します。返り値を受けることもできます
+    /// 幅の割合からX座標を設定します。0だと左端、0.8程度で右端に描画されます
     /// </summary>
-    public float SetX(float x)
-        => position.x = startX + IndentDepth * StartWidth + x;
+    public void SetXAsWidth(float x)
+    {
+        SetX(x * startWidth);
+    }
 
     /// <summary>
-    /// 全体幅の割合を指定してX座標を設定します。0だとデフォルト、0.8程度で右端に描画されます
+    /// 次の行へ移ります。通常、X座標と幅はリセットされます
     /// </summary>
-    public float SetXAsWidth(float x)
-        => SetX(x * Width);
-
-    /// <summary>
-    /// 次の行へ移ります。通常position.xとwidthはリセットされます
-    /// </summary>
-    public float SetY(float addHeight = 0, bool reset = true)
+    public void SetY(float addHeight = 0, bool reset = true)
     {
         if(reset)
         {
@@ -40,31 +42,20 @@ public class PropertyDrawerHelper
             SetWidth(startWidth * (1f - IndentDepth));
         }
         position.y += position.height + addHeight;
-        return position.y;
     }
 
-    public float SetWidth(float width) => position.width = width;
-
-    public int IndentLevel
-    {
-        get => indentLevel;
-        set
-        {
-            indentLevel = value;
-            SetX(0);
-            SetWidth(startWidth * (1f - IndentDepth));
-        }
-    }
-
-    public float StartWidth => startWidth;
-
-    public float Width => position.width;
+    public float GetWidth() => position.width;
+    public void SetWidth(float width) => position.width = width;
 
     float IndentDepth => 0.05f * indentLevel;
+    public void SetIndentLevel(bool increment)
+    {
+        indentLevel += increment ? 1 : -1;
+        SetX(0);
+        SetWidth(startWidth * (1f - IndentDepth));
+    }
 
-    /// <summary>
-    /// フィールドを描画します。返り値としてSerializedPropertyを受け取れます
-    /// </summary>
+
     public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
     {
         var prop = property.FindPropertyRelative(fieldName);
@@ -85,22 +76,11 @@ public class PropertyDrawerHelper
         }
         return prop;
     }
-    /// <summary>
-    /// フィールドを描画します。返り値としてSerializedPropertyを受け取れます
-    /// </summary>
-    public SerializedProperty PropertyField(float width, string fieldName, bool drawLabel = true)
+    public SerializedProperty PropertyField(float width, string fieldName, bool drawLabel = true, string overrideName = null)
     {
         float w = position.width;
         SetWidth(width);
-        var prop = property.FindPropertyRelative(fieldName);
-        if(drawLabel)
-        {
-            EditorGUI.PropertyField(position, prop);
-        }
-        else
-        {
-            EditorGUI.PropertyField(position, prop, GUIContent.none);
-        }
+        var prop = PropertyField(fieldName, drawLabel, overrideName);
         SetWidth(w);
         return prop;
     }
@@ -122,5 +102,23 @@ public class PropertyDrawerHelper
         EditorGUI.DrawRect(
             new Rect(position.x, position.y, position.width, 1),
             new Color(0.7f, 0.7f, 0.7f));
+    }
+
+    public void DrawBox(Rect position, Color color, float alpha = 0.1f)
+    {
+        var originalColor = GUI.color;
+
+        // Alpha値を小さくしないと文字が見えないので下げる
+        GUI.color = new Color(color.r, color.g, color.b, alpha);
+        var style = new GUIStyle
+        {
+            normal =
+            {
+                background = Texture2D.whiteTexture
+            }
+        };
+        GUI.Box(position, string.Empty, style);
+
+        GUI.color = originalColor;
     }
 }

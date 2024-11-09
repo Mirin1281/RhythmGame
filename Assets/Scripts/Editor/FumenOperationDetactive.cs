@@ -56,11 +56,16 @@ public class FumenOperationDetactive
     {
         if(operationType == OperationType.Copy)
         {
-            Debug.LogError("譜面データのコピーはバグに繋がるため、インスペクターの複製ボタンからコピーしてください");
+            Debug.LogError(
+                "◆この警告は譜面データを選択した状態でCキーを押下した際に表示されます◆\n" + 
+                "譜面データのコピーはバグに繋がるため、インスペクターの複製ボタンから複製、移動してください\n");
         }
         else if(operationType == OperationType.Duplicate)
         {
-            Debug.LogError("譜面データの複製はバグに繋がるため、インスペクターの複製ボタンから行ってください");
+            Debug.LogError(
+                "◆この警告は譜面データを選択した状態でDキーを押下した際に表示されます◆\n" + 
+                "譜面データの複製はバグに繋がるため、インスペクターの複製ボタンから行ってください\n" +
+                "複製してしまった場合はそのデータをDeleteキーで削除してください\n");
         }
     }
 }

@@ -36,7 +36,7 @@ public class MusicSelectDataEditor : Editor
                 };
                 if(difficulty == Difficulty.None)
                 {
-                    Debug.LogWarning("名前がフォーマットに合わなかったためスキップされました");
+                    Debug.LogWarning($"名前がフォーマットに合わなかったためキャンセルされました\n{d.name}");
                     continue;
                 }
 

@@ -8,95 +8,49 @@ namespace NoteGenerating.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var hel = new PropertyDrawerHelper(position, property);
-            var w = hel.StartWidth;
+            var h = new PropertyDrawerHelper(position, property);
+            var width = h.GetWidth();
 
-            hel.PropertyField("wait");
+            h.PropertyField("wait");
 
-            hel.SetY();
-            hel.LabelField("Pos");
-            hel.SetX(60);
-            var isPosMove_p = hel.PropertyField("isPosMove", false);
-            hel.SetX(EditorGUIUtility.labelWidth);
-            hel.SetWidth(w - EditorGUIUtility.labelWidth);
+            h.SetY(10);
+            h.LabelField("Pos");
+            h.SetX(60);
+            var isPosMove_p = h.PropertyField("isPosMove", false);
+            h.SetX(EditorGUIUtility.labelWidth);
+            h.SetWidth(width - EditorGUIUtility.labelWidth);
             using (new EditorGUI.DisabledGroupScope(isPosMove_p.boolValue == false))
             {
-                hel.PropertyField("pos", false);
+                h.PropertyField("pos", false);
             }
 
-            hel.SetY();
-            hel.LabelField("Rotate");
-            hel.SetX(60);
-            var isRotateMove_p = hel.PropertyField("isRotateMove", false);
-            hel.SetX(EditorGUIUtility.labelWidth);
-            hel.SetWidth(w - EditorGUIUtility.labelWidth);
+            h.SetY();
+            h.LabelField("Rotate");
+            h.SetX(60);
+            var isRotateMove_p = h.PropertyField("isRotateMove", false);
+            h.SetX(EditorGUIUtility.labelWidth);
+            h.SetWidth(width - EditorGUIUtility.labelWidth);
             using (new EditorGUI.DisabledGroupScope(isRotateMove_p.boolValue == false))
             {
-                hel.PropertyField("rotate", false);
-                hel.SetY();
-                hel.PropertyField("isRotateClamp");
+                h.PropertyField("rotate", false);
+                h.SetY();
+                h.PropertyField("isRotateClamp");
             }
 
-            hel.SetY();
-            hel.PropertyField("time");
-            hel.SetY();
-            hel.PropertyField("easeType");
-            hel.SetY();
-            hel.PropertyField("moveType");
-            hel.SetY();
-            hel.SetY(-10);
-            hel.DrawLine();
-
-            /*EditorGUI.LabelField(position, "Pos");
-            position.x = x + 60;
-            position.width = w - 60;
-            var isPosMove_p = property.FindPropertyRelative("isPosMove");
-            EditorGUI.PropertyField(position, isPosMove_p, GUIContent.none);
-            position.x = x + 120;
-            position.width = w - 120;
-            using (new EditorGUI.DisabledGroupScope(isPosMove_p.boolValue == false))
-            {
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("pos"), GUIContent.none);
-            }
-
-            position.y += GetHeight();
-            position.x = x;
-            position.width = w;
-
-            EditorGUI.LabelField(position, "Rotate");
-            position.x = x + 60;
-            position.width = w - 60;
-            var isRotateMove_p = property.FindPropertyRelative("isRotateMove");
-            EditorGUI.PropertyField(position, isRotateMove_p, GUIContent.none);
-            position.x = x + 120;
-            position.width = w - 120;
-            using (new EditorGUI.DisabledGroupScope(isRotateMove_p.boolValue == false))
-            {
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("rotate"), GUIContent.none);
-                position.y += GetHeight();
-                EditorGUI.LabelField(position, "isRotateClamp");
-                position.x = x + 220;
-                position.y -= 4;
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("isRotateClamp"), GUIContent.none);
-                position.y += 4;
-            }
-
-            position.x = x;
-            position.width = w;
-
-            position.y += GetHeight();
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("time"));
-            position.y += GetHeight();
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("easeType"));
-            position.y += GetHeight();
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("moveType"));
-            position.y += GetHeight();
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("delay"));*/
+            h.SetY();
+            h.PropertyField("time");
+            h.SetY();
+            h.PropertyField("easeType");
+            h.SetY();
+            h.PropertyField("moveType");
+            h.SetY();
+            h.SetY(-10);
+            h.DrawLine();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 20 * 8;
+            return 20 * 8.5f;
         }
     }
 }

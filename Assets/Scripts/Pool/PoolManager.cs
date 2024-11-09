@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using NoteGenerating;
 using UnityEngine;
 
-public class NotePoolManager : MonoBehaviour
+public class PoolManager : MonoBehaviour
 {
     [field: SerializeField] public NormalNotePool NormalPool { get; private set; }
     [field: SerializeField] public CircleNotePool CirclePool { get; private set; }
@@ -21,17 +19,6 @@ public class NotePoolManager : MonoBehaviour
         NoteType.Flick => FlickPool.GetNote(),
         _ => throw new System.Exception()
     };
-
-    /*public NoteBase GetNote(NoteType type, int index = 0) => type switch
-    {
-        NoteType.Normal => NormalPool.GetNote(index),
-        NoteType.Slide => SlidePool.GetNote(),
-        NoteType.Flick => FlickPool.GetNote(),
-        NoteType.Hold => HoldPool.GetNote(),
-        NoteType.Sky => SkyPool.GetNote(),
-        NoteType.Arc => ArcPool.GetNote(),
-        _ => throw new System.Exception()
-    };*/
 
     public void SetSimultaneousSprite(NoteBase_2D note)
     {
@@ -67,15 +54,23 @@ public class NotePoolManager : MonoBehaviour
         LinePool.Init(fumen.LinePoolCount);
     }
 
-    /*public void SetPoolCount(FumenData fumen)
+#if UNITY_EDITOR
+    [ContextMenu("Apply PoolCount")]
+    void ApplyPoolCount()
     {
-        NormalPool.SetPoolCount(fumen.NormalPoolCount);
-        CirclePool.SetPoolCount(fumen.CirclePoolCount);
-        SlidePool.SetPoolCount(fumen.SlidePoolCount);
-        FlickPool.SetPoolCount(fumen.FlickPoolCount);
-        HoldPool.SetPoolCount(fumen.HoldPoolCount);
-        SkyPool.SetPoolCount(fumen.SkyPoolCount);
-        ArcPool.SetPoolCount(fumen.ArcPoolCount);
-        LinePool.SetPoolCount(fumen.LinePoolCount);
-    }*/
+        var inGameManager = FindAnyObjectByType<InGameManager>();
+        var fumenData = inGameManager.FumenData;
+        fumenData.SetPoolCount(new int[8] {
+            NormalPool.MaxUseCount,
+            CirclePool.MaxUseCount,
+            SlidePool.MaxUseCount,
+            FlickPool.MaxUseCount,
+            HoldPool.MaxUseCount,
+            SkyPool.MaxUseCount,
+            ArcPool.MaxUseCount,
+            LinePool.MaxUseCount,
+        });
+        UnityEditor.EditorUtility.SetDirty(fumenData);
+    }
+#endif
 }

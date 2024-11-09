@@ -78,8 +78,12 @@ namespace NoteGenerating
                     sb.Append(v);
                 }
                 
-                if(i == fields.Length - 1) break;
                 sb.Append(GetSeparator(separateLevel));
+            }
+
+            if(t is IInversableCommand inversable)
+            {
+                sb.Append(inversable.IsInverse);
             }
             return sb.ToString();
 
@@ -145,14 +149,18 @@ namespace NoteGenerating
                     var createdArray = CreateArray(arrayType, fieldStrings[i], separateLevel);
                     f.SetValue(generator, createdArray);
                 }
-                else if(fType == typeof(NoteGenerateHelper))
-                {
-                    continue;
-                }
                 else
                 {
-                    f.SetValue(generator, Convert(fType, fieldStrings[i]));
+                    var v = Convert(fType, fieldStrings[i]);
+                    if(v != null)
+                    {
+                        f.SetValue(generator, v);
+                    }
                 }
+            }
+            if(generator is IInversableCommand inversable)
+            {
+                inversable.SetIsInverse(bool.Parse(fieldStrings[fields.Length]));
             }
 
 
@@ -185,7 +193,11 @@ namespace NoteGenerating
                         }
                         else
                         {
-                            f.SetValue(instance, Convert(f.FieldType, elementStrings[i]));
+                            var v = Convert(f.FieldType, elementStrings[i]);
+                            if(v != null)
+                            {
+                                f.SetValue(instance, v);
+                            }
                         }
                     }
                     return instance;
@@ -203,7 +215,16 @@ namespace NoteGenerating
                     return stringValue.ToVector3();
                 }
                 var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
-                return converter.ConvertFrom(stringValue);
+                object obj;
+                try
+                {
+                    obj = converter.ConvertFrom(stringValue);
+                }
+                catch
+                {
+                    return null;
+                }
+                return obj;
             }
         }
 
@@ -233,6 +254,8 @@ namespace NoteGenerating
             float y = 0f;
             foreach(var data in noteDatas)
             {
+                y += Helper.GetTimeInterval(data.Wait) * RhythmGameManager.Speed;
+
                 var type = data.Type;
                 if(type == CreateNoteType.Normal)
                 {
@@ -255,7 +278,6 @@ namespace NoteGenerating
                     }
                     DebugHold(data.X, y, data.Length, data.Width);
                 }
-                y += Helper.GetTimeInterval(data.Wait) * RhythmGameManager.Speed;
             }
 
             if(isClearPreview == false) return;

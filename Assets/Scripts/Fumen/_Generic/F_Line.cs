@@ -69,7 +69,7 @@ namespace NoteGenerating
         [SerializeField, Tooltip("このコマンドの説明(ビルドに含まれません)")]
         string summary;
 
-        [Space(20)]
+        [Space(10)]
         [SerializeField, Min(0), Tooltip("生成する回数")]
         int loopCount = 1;
 
@@ -91,6 +91,7 @@ namespace NoteGenerating
         [SerializeField, Tooltip("基準の座標\n初期ではカメラの高さを設定しています")]
         Vector2 basePos = new Vector2(0, 4);
 
+        [Space(10)]
         [SerializeField]
         LineCreateData[] datas = new LineCreateData[1];
 
@@ -120,8 +121,8 @@ namespace NoteGenerating
         {
             for(int i = 0; i < datas.Length; i++)
             {
-                CreateLine(datas[i], delta, true).Forget();
                 delta = await Wait(datas[i].DelayLPB, delta: delta);
+                CreateLine(datas[i], delta, true).Forget();
             }
         }
 

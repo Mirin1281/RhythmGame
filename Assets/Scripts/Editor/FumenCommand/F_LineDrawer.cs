@@ -10,105 +10,105 @@ namespace NoteGenerating.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var hel = new PropertyDrawerHelper(position, property, Height);
-            hel.SetY();
+            var h = new PropertyDrawerHelper(position, property, Height);
+            h.SetY();
 
-            hel.PropertyField("delayLPB");
-            hel.SetY(Height / 2f);
+            h.PropertyField("delayLPB");
+            h.SetY(Height / 2f);
 
-            var isPosEaseProp = hel.PropertyField("isPosEase");
-            hel.SetY();
-            hel.IndentLevel++;
+            var isPosEaseProp = h.PropertyField("isPosEase");
+            h.SetY();
+            h.SetIndentLevel(true);
             if(isPosEaseProp.boolValue)
             {
-                hel.LabelField("Start");
-                hel.SetX(EditorGUIUtility.labelWidth);
-                hel.PropertyField(hel.Width / 1.8f, "startPos", false);
-                hel.SetY();
+                h.LabelField("Start");
+                h.SetX(EditorGUIUtility.labelWidth);
+                h.PropertyField(h.GetWidth() / 1.8f, "startPos", false);
+                h.SetY();
 
-                hel.LabelField("From");
-                hel.SetX(EditorGUIUtility.labelWidth);
-                hel.PropertyField(hel.Width / 1.8f, "fromPos", false);
-                hel.SetY();
+                h.LabelField("From");
+                h.SetX(EditorGUIUtility.labelWidth);
+                h.PropertyField(h.GetWidth() / 1.8f, "fromPos", false);
+                h.SetY();
 
-                hel.PropertyField("overridePosEaseTime", overrideName: "OverrideTime");
-                hel.SetY();
-                hel.PropertyField("overridePosEaseType", overrideName: "OverrideType");
-                hel.SetY();
+                h.PropertyField("overridePosEaseTime", overrideName: "OverrideTime");
+                h.SetY();
+                h.PropertyField("overridePosEaseType", overrideName: "OverrideType");
+                h.SetY();
             }
             else
             {
-                hel.LabelField("Pos");
-                hel.SetX(EditorGUIUtility.labelWidth);
-                hel.PropertyField(hel.Width / 1.8f, "startPos", false);
-                hel.SetY();
+                h.LabelField("Pos");
+                h.SetX(EditorGUIUtility.labelWidth);
+                h.PropertyField(h.GetWidth() / 1.8f, "startPos", false);
+                h.SetY();
             }
-            hel.IndentLevel--;
+            h.SetIndentLevel(false);
 
 
-            var isRotateEaseProp = hel.PropertyField("isRotateEase");
-            hel.SetY();
-            hel.IndentLevel++;
+            var isRotateEaseProp = h.PropertyField("isRotateEase");
+            h.SetY();
+            h.SetIndentLevel(true);
             if(isRotateEaseProp.boolValue)
             {
-                hel.PropertyField("startRotate", overrideName: "Start");
-                hel.SetY();
+                h.PropertyField("startRotate", overrideName: "Start");
+                h.SetY();
 
-                hel.PropertyField("fromRotate", overrideName: "From");
-                hel.SetY();
+                h.PropertyField("fromRotate", overrideName: "From");
+                h.SetY();
 
-                hel.PropertyField("overrideRotateEaseTime", overrideName: "OverrideTime");
-                hel.SetY();
-                hel.PropertyField("overrideRotateEaseType", overrideName: "OverrideType");
-                hel.SetY();
+                h.PropertyField("overrideRotateEaseTime", overrideName: "OverrideTime");
+                h.SetY();
+                h.PropertyField("overrideRotateEaseType", overrideName: "OverrideType");
+                h.SetY();
             }
             else
             {
-                hel.PropertyField("startRotate", overrideName: "Rotate");
-                hel.SetY();
+                h.PropertyField("startRotate", overrideName: "Rotate");
+                h.SetY();
             }
-            hel.IndentLevel--;
+            h.SetIndentLevel(false);
 
 
-            var isAlphaEaseProp = hel.PropertyField("isAlphaEase");
-            hel.SetY();
-            hel.IndentLevel++;
+            var isAlphaEaseProp = h.PropertyField("isAlphaEase");
+            h.SetY();
+            h.SetIndentLevel(true);
             if(isAlphaEaseProp.boolValue)
             {
-                hel.PropertyField("startAlpha", overrideName: "Start");
-                hel.SetY();
+                h.PropertyField("startAlpha", overrideName: "Start");
+                h.SetY();
 
-                hel.PropertyField("fromAlpha", overrideName: "From");
-                hel.SetY();
+                h.PropertyField("fromAlpha", overrideName: "From");
+                h.SetY();
 
-                hel.PropertyField("overrideAlphaEaseTime", overrideName: "OverrideTime");
-                hel.SetY();
-                hel.PropertyField("overrideAlphaEaseType", overrideName: "OverrideType");
-                hel.SetY();
+                h.PropertyField("overrideAlphaEaseTime", overrideName: "OverrideTime");
+                h.SetY();
+                h.PropertyField("overrideAlphaEaseType", overrideName: "OverrideType");
+                h.SetY();
             }
             else
             {
-                hel.PropertyField("startAlpha", overrideName: "Alpha");
-                hel.SetY();
+                h.PropertyField("startAlpha", overrideName: "Alpha");
+                h.SetY();
             }
-            hel.IndentLevel--;
+            h.SetIndentLevel(false);
 
 
-            var isRotateFromPosProp = hel.PropertyField("isRotateFromPos");
-            hel.SetY();
+            var isRotateFromPosProp = h.PropertyField("isRotateFromPos");
+            h.SetY();
             if(isRotateFromPosProp.boolValue)
             {
-                hel.IndentLevel++;
-                hel.PropertyField("rotateFromPos");
-                hel.SetY();
-                hel.PropertyField("centerPos");
-                hel.SetY();
-                hel.SetY();
-                hel.IndentLevel--;
+                h.SetIndentLevel(true);
+                h.PropertyField("rotateFromPos");
+                h.SetY();
+                h.PropertyField("centerPos");
+                h.SetY();
+                h.SetY();
+                h.SetIndentLevel(false);
             }
-            hel.SetY(-Height / 2f);
+            h.SetY(-Height / 2f);
 
-            hel.DrawLine();
+            h.DrawLine();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

@@ -64,7 +64,7 @@ namespace NoteGenerating.Editor
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
 
-                if (GUILayout.Button("未使用のNoteGeneratorDataを削除する"))
+                if (GUILayout.Button("未使用のGeneratorDataを削除"))
                 {
                     FumenEditorUtility.RemoveUnusedGenerateData();
                 }

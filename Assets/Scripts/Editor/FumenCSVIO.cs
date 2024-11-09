@@ -49,15 +49,12 @@ namespace NoteGenerating.Editor
                 sb.AddCell(generateData.Enable.ToString());
                 // 3列目 発火タイミング
                 sb.AddCell(generateData.BeatTiming.ToString());
-                // 4列目 コンテント1
+                // 4列目 通常コンテント
                 var content1 = cmdBase?.CSVContent;
                 sb.AddCell(content1);
-                // 5列目 コンテント2
+                // 5列目 追加コンテント1
                 var content2 = cmdBase?.CSVContent1;
                 sb.AddCell(content2);
-                // 5列目 コンテント3
-                var content3 = cmdBase?.CSVContent2;
-                sb.AddCell(content3);
 
                 sw.WriteLine(sb.ToString());
                 sb.Clear();
@@ -268,10 +265,6 @@ namespace NoteGenerating.Editor
                     if (colomn_base != null && colomn_array.Length > 4)
                     {
                         colomn_base.CSVContent1 = colomn_array[4];
-                    }
-                    if (colomn_base != null && colomn_array.Length > 5)
-                    {
-                        colomn_base.CSVContent2 = colomn_array[5];
                     }
 				}
 			}

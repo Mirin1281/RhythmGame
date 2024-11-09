@@ -1,10 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using Cysharp.Threading.Tasks;
 
 public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
 {
@@ -38,7 +35,7 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
     {
 #if UNITY_EDITOR
         // エディタ上かつ実行中でない時に呼ばれた際は生成のみ行う
-        if(EditorApplication.isPlaying == false)
+        if(UnityEditor.EditorApplication.isPlaying == false)
         {
             var t = GameObject.Instantiate(prepareStatuses[0].Prefab);
             t.SetActive(true);  
@@ -73,6 +70,12 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
         return NewInstantiate(status, true);
     }
 
+    void Start()
+    {
+        if(initOnStart)
+            Init();
+    }
+
     public void Init(int poolCount = -1)
     {
         int prepare = poolCount == -1 ? prepareStatuses[0].Prepare : poolCount;
@@ -82,12 +85,6 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
             PooledTable.Add(new List<T>(prepare));
         }
         StartInstance(prepare);
-    }
-
-    void Start()
-    {
-        if(initOnStart)
-            Init();
     }
 
     void StartInstance(int prepareCount)
@@ -127,15 +124,26 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
     }
 
 #if UNITY_EDITOR
-    [SerializeField] int maxUseCount;
+    public int MaxUseCount;
 
-    void Update()
+    void Awake()
     {
-        var pooledList = PooledTable[0];
-        int count = pooledList.Count(t => t.IsActive);
-        if(maxUseCount < count)
+        LoopCheckPoolCount().Forget();
+    }
+    async UniTaskVoid LoopCheckPoolCount()
+    {
+        await MyUtility.WaitSeconds(0.5f, destroyCancellationToken);
+        while(this)
         {
-            maxUseCount = count;
+            if(PooledTable == null) return;
+            var pooledList = PooledTable[0];
+            if(pooledList == null) return;
+            int count = pooledList.Count(t => t.IsActiveForPool);
+            if(MaxUseCount < count)
+            {
+                MaxUseCount = count;
+            }
+            await UniTask.Yield(destroyCancellationToken);
         }
     }
 #endif

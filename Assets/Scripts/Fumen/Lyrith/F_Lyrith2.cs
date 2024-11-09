@@ -20,7 +20,7 @@ namespace NoteGenerating
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
             await Helper.WaitSeconds(moveTime);
-            Helper.CameraMover.Shake(10, 0.4f);
+            //Helper.CameraMover.Shake(10, 0.4f);
         }
 
         void Create(Vector2 startPos, float rotationSpeed)

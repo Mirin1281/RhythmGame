@@ -42,13 +42,13 @@ namespace NoteGenerating
             await Note(2).Note(-1).Wait(8);
             await Note(0).Wait(8);
 
-            await Note(2).Note(0).Wait(8);
+            await Note(-2).Wait(8);
             await Note(1).Wait(8);
-            await Note(2).Note(-2).Wait(8);
-            await Note(0).Wait(8);
-            await Note(2).Note(-1).Wait(8);
-            await Note(0).Wait(8);
-            await Note(2).Note(0).Wait(8);
+            await Note(2).Wait(8);
+            await Note(-1).Wait(8);
+            await Note(2).Wait(8);
+            await Note(-1).Wait(8);
+            await Note(-2).Wait(8);
             await Note(1).Wait(8);
             await Note(-1).Wait(8);
             await Note(0).Wait(8);

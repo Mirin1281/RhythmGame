@@ -37,7 +37,19 @@ namespace NoteGenerating
             this.start3D = start3D;
         }
 
-        [SerializeField] Fumen fumen;
+        public void SetPoolCount(int[] poolCounts)
+        {
+            NormalPoolCount = poolCounts[0];
+            CirclePoolCount = poolCounts[1];
+            SlidePoolCount = poolCounts[2];
+            FlickPoolCount = poolCounts[3];
+            HoldPoolCount = poolCounts[4];
+            SkyPoolCount = poolCounts[5];
+            ArcPoolCount = poolCounts[6];
+            LinePoolCount = poolCounts[7];
+        }
+
+        [SerializeField, HideInInspector] Fumen fumen;
         public Fumen Fumen => fumen;
     }
 

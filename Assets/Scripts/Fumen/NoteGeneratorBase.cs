@@ -91,11 +91,6 @@ namespace NoteGenerating
             {
                 delta = Delta;
             }
-            if(time == 0)
-            {
-                action.Invoke(time);
-                return;
-            }
             float baseTime = CurrentTime - delta;
             float t = 0f;
             while(t < time)
@@ -167,6 +162,5 @@ namespace NoteGenerating
             set => FumenDebugUtility.SetMember(this, value);
         }
         public virtual string CSVContent1 { get; set; }
-        public virtual string CSVContent2 { get; set; }
     }
 }

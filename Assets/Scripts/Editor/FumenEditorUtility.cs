@@ -87,14 +87,14 @@ namespace NoteGenerating.Editor
         /// </summary>
         public static void RemoveUnusedGenerateData(string folderPath = null)
         {
-            // Undo等で破損状態のファイルを削除 //
+            // Undo等で破損状態のファイルを削除
             var guids = AssetDatabase.FindAssets(null, new string[] { folderPath ??= ConstContainer.DATA_PATH });
             int removeCount = 0;
             for(int i = 0; i < guids.Length; i++)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guids[i]);
                 var obj = AssetDatabase.LoadAllAssetsAtPath(path);
-                if(obj.Length == 0) // アセットがない > 破損している 
+                if(obj.Length == 0) // アセットがない = 破損している 
                 {
                     File.Delete(path);
                     File.Delete($"{path}.meta");
@@ -103,7 +103,7 @@ namespace NoteGenerating.Editor
             }
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
-            // どのフローチャートにも属していないCommandDataを削除 //
+            // どのフローチャートにも属していないCommandDataを削除
             var datas = GetAllScriptableObjects<GenerateData>();
             var fumenDatas = GetAllScriptableObjects<FumenData>();
             foreach (var d in datas)

@@ -108,7 +108,7 @@ public class CameraMover : MonoBehaviour
     }
 
     public void Move(Vector3? nullablePos, Vector3? nullableRot, CameraMoveType moveType,
-        float time, EaseType easeType, bool isRotateClamp = true, bool isInverse = false)
+        float time, EaseType easeType, bool isRotateClamp = true, float delta = 0, bool isInverse = false)
     {
         CameraMoveSetting m = new(
             nullablePos.HasValue, nullablePos.GetValueOrDefault(),
@@ -117,27 +117,27 @@ public class CameraMover : MonoBehaviour
             time,
             easeType,
             moveType);
-        Move(m, isInverse);
+        Move(m, delta, isInverse);
     }
-    public void Move(CameraMoveSetting m, bool isInverse = false)
+    public void Move(CameraMoveSetting m, float delta, bool isInverse = false)
     {
         if(m.MoveType == CameraMoveType.Absolute)
         {
-            MoveTo(m, isInverse);
+            MoveTo(m, delta, isInverse);
         }
         else if (m.MoveType == CameraMoveType.Relative)
         {
-            MoveRelative(m, isInverse).Forget();
+            MoveRelative(m, delta, isInverse).Forget();
         }
     }
 
     /// <summary>
     /// 相対移動させます。複数登録すると動きが加算されます
     /// </summary>
-    async UniTask MoveRelative(CameraMoveSetting m, bool isInverse = false)
+    async UniTask MoveRelative(CameraMoveSetting m, float delta, bool isInverse = false)
     {
         int a = isInverse ? -1 : 1;
-        await WhileYieldAsync(m.Time, t => 
+        await WhileYieldAsync(m.Time, delta, t => 
         {
             if(m.IsPosMove)
             {
@@ -167,7 +167,7 @@ public class CameraMover : MonoBehaviour
         return Mathf.Repeat(angle - min, max - min) + min;
     }
 
-    void MoveTo(CameraMoveSetting m, bool isInverse = false)
+    void MoveTo(CameraMoveSetting m, float delta, bool isInverse = false)
     {
         if(m.IsPosMove == false && m.IsRotateMove == false) return;
         int a = isInverse ? -1 : 1;
@@ -176,7 +176,7 @@ public class CameraMover : MonoBehaviour
 
         if(m.IsPosMove)
         {
-            WhileYield(m.Time, t => 
+            WhileYield(m.Time, delta, t => 
             {
                 basePos = new Vector3(
                     a * t.Ease(startPos.x, m.Pos.x, m.Time, m.EaseType),
@@ -189,7 +189,7 @@ public class CameraMover : MonoBehaviour
         {
             if(m.IsRotateClamp)
             {
-                WhileYield(m.Time, t => 
+                WhileYield(m.Time, delta, t => 
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), m.Time, m.EaseType),
@@ -199,7 +199,7 @@ public class CameraMover : MonoBehaviour
             }
             else
             {
-                WhileYield(m.Time, t => 
+                WhileYield(m.Time, delta, t => 
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, m.Rotate.x, m.Time, m.EaseType),
@@ -210,20 +210,10 @@ public class CameraMover : MonoBehaviour
         }
     }
 
-    public void Shake(float strength, float time, EaseType easeType = EaseType.OutBack, bool isInverse = false)
+    void WhileYield(float time, float delta, Action<float> action) => WhileYieldAsync(time, delta, action).Forget();
+    async UniTask WhileYieldAsync(float time, float delta, Action<float> action)
     {
-        int a = isInverse ? -1 : 1;
-        baseRot = Quaternion.Euler(0f, 0f, a * strength);
-        WhileYield(time, t => 
-        {
-            baseRot = Quaternion.Euler(0f, 0f, a * t.Ease(strength, 0, time, easeType));
-        });
-    }
-
-    void WhileYield(float time, Action<float> action) => WhileYieldAsync(time, action).Forget();
-    async UniTask WhileYieldAsync(float time, Action<float> action)
-    {
-        float baseTime = metronome.CurrentTime;
+        float baseTime = metronome.CurrentTime - delta;
         float t = 0f;
         while(t < time)
         {

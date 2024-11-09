@@ -10,7 +10,7 @@ public class NoteGenerateHelper : MonoBehaviour
 {
     static readonly float DebugBPM = 200;
 
-    [field: SerializeField] public NotePoolManager PoolManager { get; private set; }    
+    [field: SerializeField] public PoolManager PoolManager { get; private set; }    
     [field: SerializeField] public NoteInput NoteInput { get; private set; }
     [field: SerializeField] public Metronome Metronome { get; private set; }
     [field: SerializeField] public CameraMover CameraMover { get; private set; }
@@ -44,7 +44,7 @@ public class NoteGenerateHelper : MonoBehaviour
     public Line GetLine()
     {
         var line = PoolManager.LinePool.GetLine();
-        line.SetWidth(30f);
+        line.SetWidth(50f);
         line.SetHeight(0.1f);
         line.SetAlpha(1);
         return line;

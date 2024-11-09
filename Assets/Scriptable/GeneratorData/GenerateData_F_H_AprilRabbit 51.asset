@@ -10,60 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: GenerateData_F_H_AprilRabbit 61
+  m_Name: GenerateData_F_H_AprilRabbit 51
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 94
+  beatTiming: 125
   generatable:
-    rid: 176941289690103829
+    rid: 176941317377228801
   references:
     version: 2
     RefIds:
-    - rid: 176941289690103829
+    - rid: 176941317377228801
       type: {class: F_Line, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
         isInverse: 0
         summary: 
-        loopCount: 14
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 0.4
+        loopCount: 1
+        loopWaitLPB: 4
+        timeMode: 1
+        time: 0.125
         isChainWait: 0
-        easeType: 2
-        basePos: {x: 0, y: 0}
+        easeType: 1
+        basePos: {x: 0, y: 4}
         datas:
         - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 0, y: 10}
-          fromPos: {x: 0, y: 0}
+          isPosEase: 1
+          startPos: {x: 0, y: 12}
+          fromPos: {x: 0, y: -10}
           overridePosEaseTime: -1
           overridePosEaseType: 0
           isRotateEase: 1
-          startRotate: -30
-          fromRotate: -100
+          startRotate: 0
+          fromRotate: 1000
           overrideRotateEaseTime: -1
           overrideRotateEaseType: 0
           isAlphaEase: 1
-          startAlpha: 0.2
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 0
-          startPos: {x: 0, y: 10}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 30
-          fromRotate: 100
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.2
+          startAlpha: 0.3
           fromAlpha: 0
           overrideAlphaEaseTime: -1
           overrideAlphaEaseType: 0

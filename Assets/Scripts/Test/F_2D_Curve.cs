@@ -11,16 +11,16 @@ namespace NoteGenerating
         [Serializable]
         public struct NoteData : INoteData
         {
+            [SerializeField, Min(0)] float wait;
             [SerializeField] CreateNoteType type;
             [SerializeField] float x;
-            [SerializeField, Min(0)] float wait;
             [SerializeField, Min(0)] float width;
             [SerializeField] bool isCurveInverse;
             [SerializeField, Min(0)] float length;
 
+            public readonly float Wait => wait;
             public readonly CreateNoteType Type => type;
             public readonly float X => x;
-            public readonly float Wait => wait;
             public readonly float Width => width;
             public readonly bool IsCurveInverse => isCurveInverse;
             public readonly float Length => length;
@@ -53,6 +53,7 @@ namespace NoteGenerating
 
             foreach(var data in noteDatas)
             {
+                await Wait(data.Wait);
                 var type = data.Type;
                 if(type == CreateNoteType.Normal)
                 {
@@ -75,7 +76,6 @@ namespace NoteGenerating
                     }
                     MyHold(data.X, data.Length, data.Width, data.IsCurveInverse, radius, parentTs);
                 }
-                await Wait(data.Wait);
             }
 
 

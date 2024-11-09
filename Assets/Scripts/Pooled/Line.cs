@@ -70,7 +70,7 @@ public class Line : PooledBase, ITransformable
         FadeAlphaAsync(toAlpha, time, easing).Forget();
     }
 
-    public void FadeOut(float time, float delaySeconds = 0f, bool inActive = true, Easing easing = default)
+    public void FadeOut(float time, float delaySeconds = 0f, bool inActive = true, Easing easing = default, float delta = 0)
     {
         UniTask.Void(async () => 
         {

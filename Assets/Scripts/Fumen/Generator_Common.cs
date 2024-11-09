@@ -3,10 +3,15 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    public abstract class Generator_Common : NoteGeneratorBase
+    public abstract class Generator_Common : NoteGeneratorBase, IInversableCommand
     {
         [SerializeField] bool isInverse;
-        protected bool IsInverse => isInverse ^ RhythmGameManager.SettingIsMirror;
+        public bool IsInverse => isInverse ^ RhythmGameManager.SettingIsMirror;
+
+        void IInversableCommand.SetIsInverse(bool i)
+        {
+            isInverse = i;
+        }
         
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
@@ -218,12 +223,6 @@ namespace NoteGenerating
             {
                 return string.Empty;
             }
-        }
-
-        public override string CSVContent2
-        {
-            get => IsInverse.ToString();
-            set => isInverse = bool.Parse(value);
         }
     }
 }

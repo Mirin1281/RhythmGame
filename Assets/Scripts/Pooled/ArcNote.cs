@@ -104,7 +104,7 @@ public class ArcNote : NoteBase
         {
             var data = datas[i];
             z += GetDistanceInterval(data.Pos.z);
-            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, i == 0 ? 0 : z));
+            var knot = new BezierKnot(new Vector3((isInverse ? -1 : 1f) * data.Pos.x, data.Pos.y, z));
             TangentMode tangentMode = data.VertexMode switch
             {
                 ArcCreateData.ArcVertexMode.Auto => TangentMode.AutoSmooth,
@@ -220,6 +220,7 @@ public class ArcNote : NoteBase
     /// </summary>
     public Vector3 GetAnyPointOnZPlane(float target)
     {
+        if(Spline == null) return default;
         BezierKnot behindKnot = Spline[0];
         BezierKnot aheadKnot = Spline[0];
         var downPos = Is2D ? -GetPos().y : GetPos().z;

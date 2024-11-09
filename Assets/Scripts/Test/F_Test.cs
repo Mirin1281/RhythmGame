@@ -10,9 +10,7 @@ namespace NoteGenerating
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;
 
-        [SerializeField] string a = "bbb";
-        [SerializeField] NoteData[] noteDatas;
-        //[SerializeField] int[] ints;
+        [SerializeField] int[] a;
 
         protected override async UniTask GenerateAsync()
         {

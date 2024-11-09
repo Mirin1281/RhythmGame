@@ -10,13 +10,13 @@ namespace NoteGenerating
         [Serializable]
         public struct SkyNoteData
         {
-            [SerializeField] Vector2 pos;
-            [SerializeField, Min(0)] float wait;
             [SerializeField] bool disable;
+            [SerializeField, Min(0)] float wait;
+            [SerializeField] Vector2 pos;
             
-            public readonly Vector2 Pos => pos;
-            public readonly float Wait => wait;
             public readonly bool Disable => disable;
+            public readonly float Wait => wait;
+            public readonly Vector2 Pos => pos;
         }
 
         [SerializeField] SkyNoteData[] noteDatas = new SkyNoteData[1];
@@ -25,11 +25,9 @@ namespace NoteGenerating
         {
             foreach(var data in noteDatas)
             {
-                if(data.Disable == false)
-                {
-                    Sky(data.Pos);
-                }
                 await Wait(data.Wait);
+                if(data.Disable) continue;
+                Sky(data.Pos);
             }
         }
 

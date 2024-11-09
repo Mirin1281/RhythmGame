@@ -8,41 +8,41 @@ namespace NoteGenerating.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var hel = new PropertyDrawerHelper(position, property);
-            var width = hel.StartWidth;
+            var h = new PropertyDrawerHelper(position, property);
+            var width = h.GetWidth();
 
-            hel.PropertyField(width / 2f, "pos", false);
+            h.PropertyField(width / 2f, "pos", false);
 
-            hel.SetX(width / 1.8f);
-            hel.PropertyField(width / 2.2f, "vertexMode", false);
+            h.SetX(width / 1.8f);
+            h.PropertyField(width / 2.2f, "vertexMode", false);
 
-            hel.SetY();
-            hel.SetWidth(width / 2f);
-            var disableProp = hel.PropertyField("isJudgeDisable");
+            h.SetY();
+            h.SetWidth(width / 2f);
+            var disableProp = h.PropertyField("isJudgeDisable");
 
             using (new EditorGUI.DisabledGroupScope(disableProp.boolValue))
             {
-                hel.SetX(width / 2f);
-                hel.PropertyField("isDuplicated");
+                h.SetX(width / 2f);
+                h.PropertyField("isDuplicated");
 
-                hel.SetY();
+                h.SetY();
                 var w = width / 4f;
-                hel.SetWidth(w);
+                h.SetWidth(w);
 
-                hel.SetX(0);
-                hel.LabelField("手前");
+                h.SetX(0);
+                h.LabelField("手前");
 
-                hel.SetX(w - 30);
-                hel.PropertyField("behindJudgeRange", false);
+                h.SetX(w - 30);
+                h.PropertyField("behindJudgeRange", false);
 
-                hel.SetX(w * 2f);
-                hel.LabelField("奥");
+                h.SetX(w * 2f);
+                h.LabelField("奥");
 
-                hel.SetX(w * 3f - 30);
-                hel.PropertyField("aheadJudgeRange", false);
+                h.SetX(w * 3f - 30);
+                h.PropertyField("aheadJudgeRange", false);
             }
-            hel.SetY(10);
-            hel.DrawLine();
+            h.SetY(10);
+            h.DrawLine();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
