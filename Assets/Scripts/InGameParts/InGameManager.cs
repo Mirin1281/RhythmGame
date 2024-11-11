@@ -7,10 +7,9 @@ using ArcVertexMode = ArcCreateData.ArcVertexMode;
 
 public class InGameManager : MonoBehaviour
 {
+#if UNITY_EDITOR
     [SerializeField] FumenData editorFumenData;
-    [SerializeField] Metronome metronome;
-    [SerializeField] PoolManager notePoolManager;
-    [SerializeField] Judgement judgement;
+#endif
     [SerializeField] TMP_Text titleTmpro;
     FumenData fumenData;
 
@@ -22,17 +21,23 @@ public class InGameManager : MonoBehaviour
     }
     async UniTask Init()
     {
-        if(RhythmGameManager.Instance != null && string.IsNullOrEmpty(RhythmGameManager.FumenName) == false)
+        // インスタンスの取得 //
+        var metronome = Metronome.Instance;
+        var poolManager = FindAnyObjectByType<PoolManager>();
+        var judgement = FindAnyObjectByType<Judgement>();
+
+        if(RhythmGameManager.Instance != null && string.IsNullOrEmpty(RhythmGameManager.FumenAddress) == false)
         {
-            fumenData = await Addressables.LoadAssetAsync<FumenData>(RhythmGameManager.FumenName);
+            fumenData = await Addressables.LoadAssetAsync<FumenData>(RhythmGameManager.FumenAddress);
         }
         else
         {
+#if UNITY_EDITOR
             fumenData = editorFumenData;
+#endif
         }
         
         // 初期化 //
-
         if(fumenData.Start3D)
         {
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
@@ -45,7 +50,7 @@ public class InGameManager : MonoBehaviour
             );
         }
 
-        notePoolManager.InitPools(fumenData);
+        poolManager.InitPools(fumenData);
 
         judgement.Init(fumenData);
 
@@ -78,5 +83,7 @@ public class InGameManager : MonoBehaviour
         
         await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
         metronome.Play(fumenData);
+
+        titleTmpro = null;
     }
 }

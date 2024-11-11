@@ -1,4 +1,5 @@
 using CriWare;
+using NoteGenerating;
 using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
@@ -26,7 +27,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     public static bool SettingIsMirror { get; set; }
 
-    public static string FumenName { get; set; }
+    public static string FumenAddress { get; set; }
     public Result Result { get; set; }
     public static Difficulty Difficulty { get; set; } = Difficulty.Normal;
     public static int SelectedIndex { get; set; } = -1;
@@ -50,7 +51,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     static void InitBeforeSceneLoad()
     {
         SpeedBase = 1f;
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         
         if(useJsonData)
         {
@@ -66,7 +67,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
             SettingIsMirror = gameData.IsMirror;
 
-            FumenName = null;
+            FumenAddress = null;
             Difficulty = gameData.Difficulty;
             SelectedIndex = gameData.SelectedIndex;
         }
@@ -82,7 +83,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
             SettingIsMirror = false;
 
-            FumenName = null;
+            FumenAddress = null;
             Difficulty = Difficulty.Hard;
             SelectedIndex = -1;
         }

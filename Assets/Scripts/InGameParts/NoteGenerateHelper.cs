@@ -12,9 +12,10 @@ public class NoteGenerateHelper : MonoBehaviour
 
     [field: SerializeField] public PoolManager PoolManager { get; private set; }    
     [field: SerializeField] public NoteInput NoteInput { get; private set; }
-    [field: SerializeField] public Metronome Metronome { get; private set; }
     [field: SerializeField] public CameraMover CameraMover { get; private set; }
     [field: SerializeField] public DebugSphere DebugSpherePrefab { get; private set; }
+
+    public Metronome Metronome => Metronome.Instance;
 
     public CancellationToken Token => destroyCancellationToken;
 

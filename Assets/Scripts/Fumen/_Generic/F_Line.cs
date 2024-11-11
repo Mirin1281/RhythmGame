@@ -244,13 +244,14 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
+            string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{GetInverseSummary()}";
             if(string.IsNullOrWhiteSpace(summary))
             {
-                return loopCount + GetInverseSummary();
+                return s;
             }
             else
             {
-                return summary + " : " + loopCount + GetInverseSummary();
+                return summary + " : " + s;
             }
         }
 

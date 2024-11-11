@@ -9,15 +9,19 @@ using NoteGenerating;
 using UnityEditor;
 #endif
 
-public class Metronome : MonoBehaviour, IVolumeChangable
+/// <summary>
+/// シングルトン
+/// </summary>
+public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 {
     [SerializeField] CriAtomSource atomSource;
-    [Space(10)]
+    [Space(20)]
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
-    readonly int tolerance = 10;
-    FumenData fumenData;
 
+    readonly int tolerance = 10;
+    
+    FumenData fumenData;
     float bpm;
     bool isLooping;
     double currentTime;
@@ -31,7 +35,14 @@ public class Metronome : MonoBehaviour, IVolumeChangable
     /// (ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
-    public float CurrentTime => (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
+    public float CurrentTime
+    {
+        get
+        {
+            if(fumenData == null) return (float)currentTime + RhythmGameManager.Offset;
+            return (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
+        }
+    }
     public float Bpm => bpm;
 
     public void Play(FumenData fumenData)
@@ -64,7 +75,7 @@ public class Metronome : MonoBehaviour, IVolumeChangable
         UpdateTimerAsync(beatCount).Forget();
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
         Stop();
         OnBeat = null;

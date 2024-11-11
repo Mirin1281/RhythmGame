@@ -3,13 +3,14 @@ using Cysharp.Threading.Tasks;
 
 public class LineGenerator : MonoBehaviour
 {
-    [SerializeField] Metronome metronome;
+    Metronome metronome;
     [SerializeField] LinePool linePool;
     [SerializeField] bool isCreateLine = true;
     [SerializeField] bool isCreate3DLine = false;
 
     void Start()
     {
+        metronome = Metronome.Instance;
         metronome.OnBeat += GenerateProcessAsync;
     }
 

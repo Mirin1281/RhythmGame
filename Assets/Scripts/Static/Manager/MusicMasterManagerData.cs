@@ -12,6 +12,9 @@ using System.Threading;
 public class MusicMasterManagerData : ScriptableObject
 {
     [SerializeField] MusicSelectData[] selectDatas;
+    /// <summary>
+    /// 分離してもいいかも
+    /// </summary>
     public MusicSelectData[] SelectDatas => selectDatas;
 
     [ContextMenu("ResetScoreData")]

@@ -45,14 +45,20 @@ public class DifficultyGroup : MonoBehaviour
     void UpdateButton(MusicSelectData data)
     {
         this.selectData = data;
-        buttons[0].SetLevel(data.GetFumenLevel(Difficulty.Normal));
-        buttons[1].SetLevel(data.GetFumenLevel(Difficulty.Hard));
+        ActiveDiffButton(Difficulty.Normal);
+        ActiveDiffButton(Difficulty.Hard);
+        ActiveDiffButton(Difficulty.Extra);
+        
 
-        bool isExistExtra = string.IsNullOrEmpty(data.ExtraFumenAddress) == false;
-        buttons[2].gameObject.SetActive(isExistExtra);
-        if(isExistExtra)
+        void ActiveDiffButton(Difficulty difficulty)
         {
-            buttons[2].SetLevel(data.GetFumenLevel(Difficulty.Extra));
+            int index = (int)difficulty - 1;
+            bool isExist = string.IsNullOrEmpty(data.GetFumenAddress(difficulty)) == false;
+            buttons[index].gameObject.SetActive(isExist);
+            if(isExist)
+            {
+                buttons[index].SetLevel(data.GetFumenLevel(difficulty));
+            }
         }
     }
 

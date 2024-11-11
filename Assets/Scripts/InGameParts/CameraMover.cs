@@ -58,7 +58,7 @@ public class CameraMoveSetting
 
 public class CameraMover : MonoBehaviour
 {
-    [SerializeField] Metronome metronome;
+    Metronome Metronome => Metronome.Instance;
     Vector3 deltaPos;
     Quaternion deltaRot;
     Vector3 basePos;
@@ -213,11 +213,11 @@ public class CameraMover : MonoBehaviour
     void WhileYield(float time, float delta, Action<float> action) => WhileYieldAsync(time, delta, action).Forget();
     async UniTask WhileYieldAsync(float time, float delta, Action<float> action)
     {
-        float baseTime = metronome.CurrentTime - delta;
+        float baseTime = Metronome.CurrentTime - delta;
         float t = 0f;
         while(t < time)
         {
-            t = metronome.CurrentTime - baseTime;
+            t = Metronome.CurrentTime - baseTime;
             action.Invoke(t);
             await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         }

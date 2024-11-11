@@ -18,7 +18,7 @@ public abstract class NoteBase : PooledBase, ITransformable
 {
     [SerializeField] NoteType type;
     public NoteType Type => type;
-    public float Width { get; set; } = 1f;
+    public float Width { get; protected set; } = 1f;
 
     public virtual Vector3 GetPos(bool isWorld = false)
     {

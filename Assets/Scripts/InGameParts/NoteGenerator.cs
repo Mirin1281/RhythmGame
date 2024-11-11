@@ -6,12 +6,11 @@ namespace NoteGenerating
     public class NoteGenerator : MonoBehaviour
     {
         [SerializeField] InGameManager inGameManager;
-        [SerializeField] Metronome metronome;
         [SerializeField] NoteGenerateHelper noteGenerateHelper;
 
         void Awake()
         {
-            metronome.OnBeat += GenerateProcessAsync;
+            Metronome.Instance.OnBeat += GenerateProcessAsync;
         }
 
         void GenerateProcessAsync(int beatCount, float delta)

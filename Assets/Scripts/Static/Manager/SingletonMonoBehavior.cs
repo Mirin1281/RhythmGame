@@ -9,12 +9,12 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
     {
         get
         {
-            if (instance is not null) return instance;
-            instance = FindObjectOfType<T>();
+            if (instance != null) return instance;
+            instance = FindAnyObjectByType<T>();
 
-            if (instance is null)
+            if (instance == null)
             {
-                Debug.LogWarning(typeof(T) + " is nothing");
+                Debug.LogWarning(typeof(T).Name + " is nothing");
             }
             return instance;
         }
@@ -22,7 +22,7 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
 
     protected virtual void Awake()
     {
-        if (instance is not null && instance != this)
+        if (instance != null && instance != this)
         {
             Debug.LogWarning(typeof(T) + " is multiple created", this);
             return;

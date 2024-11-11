@@ -27,14 +27,8 @@ public class MusicSelectDataEditor : Editor
                     Debug.LogWarning("譜面データの名前は原則として\"F_\"で始めてください");
                 }
 
-                Difficulty difficulty = d.name[2] switch
-                {
-                    'N' => Difficulty.Normal,
-                    'H' => Difficulty.Hard,
-                    'E' => Difficulty.Extra,
-                    _ => Difficulty.None
-                };
-                if(difficulty == Difficulty.None)
+                Difficulty diff = d.Difficulty;
+                if(diff == Difficulty.None)
                 {
                     Debug.LogWarning($"名前がフォーマットに合わなかったためキャンセルされました\n{d.name}");
                     continue;
@@ -43,7 +37,7 @@ public class MusicSelectDataEditor : Editor
                 var self = target as MusicSelectData;
                 var serializedObject = new SerializedObject(self);
                 serializedObject.Update();
-                var levelProp = difficulty switch
+                var levelProp = diff switch
                 {
                     Difficulty.Normal => serializedObject.FindProperty("level_normal"),
                     Difficulty.Hard => serializedObject.FindProperty("level_hard"),
@@ -63,7 +57,7 @@ public class MusicSelectDataEditor : Editor
                 else
                 {
                     string address = group.GetAssetEntry(guid).address;
-                    self.SetFumenAddress(address, difficulty);
+                    self.SetFumenAddress(address, diff);
                     EditorUtility.SetDirty(target);
                     AssetDatabase.SaveAssetIfDirty(target);
                 }

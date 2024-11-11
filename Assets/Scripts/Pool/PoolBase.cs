@@ -23,13 +23,15 @@ public abstract class PoolBase<T> : MonoBehaviour where T : PooledBase
     }
 
     [SerializeField] List<PrepareStatus> prepareStatuses;
-
     [SerializeField] bool initOnStart;
 
+#if UNITY_EDITOR
     [SerializeField, Tooltip("–‘O‚É¶¬‚µ‚Ä‚¨‚¢‚½”‚ğ’´‰ß‚µ‚½ê‡‚ÉƒƒO‚ğo‚·")]
     bool showLog = true;
+#endif
 
     protected List<List<T>> PooledTable;
+
 
     protected T GetInstance(int index = 0)
     {

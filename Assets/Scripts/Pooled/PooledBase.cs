@@ -7,20 +7,17 @@ using UnityEngine;
 public abstract class PooledBase : MonoBehaviour
 {
     bool isActiveForPool;
-    bool isActive;
     public bool IsActiveForPool => isActiveForPool;
-    public bool IsActive => isActive;
+    public bool IsActive => gameObject.activeInHierarchy;
 
     void OnEnable()
     {
         isActiveForPool = true;
-        isActive = true;
     }
 
     // プール時に2フレーム開けるとバグらない
-    async UniTask OnDisable()
+    async UniTaskVoid OnDisable()
     {
-        isActive = false;
         await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
         isActiveForPool = false;
     }
@@ -28,7 +25,6 @@ public abstract class PooledBase : MonoBehaviour
     public void SetActive(bool enabled)
     {
         gameObject.SetActive(enabled);
-        isActive = enabled;
     }
 }
 
@@ -36,6 +32,5 @@ public interface ITransformable
 {
     public Vector3 GetPos(bool isWorld = false);
     public void SetPos(Vector3 pos);
-
     public void SetRotate(float deg);
 }

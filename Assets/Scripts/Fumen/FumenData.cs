@@ -10,6 +10,7 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
+        [SerializeField] Difficulty difficulty;
         [SerializeField] MusicSelectData musicSelectData;
         [SerializeField, Tooltip("参考用です。実際は" + nameof(MusicSelectData) + "の値が使用されます")]
         int level;
@@ -26,6 +27,7 @@ namespace NoteGenerating
         [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
         [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
 
+        public Difficulty Difficulty => difficulty;
         public MusicSelectData MusicSelectData => musicSelectData;
         public int Level => level;
         public int NoteCount => noteCount;

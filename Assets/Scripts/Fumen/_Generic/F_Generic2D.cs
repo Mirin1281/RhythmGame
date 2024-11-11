@@ -44,13 +44,7 @@ namespace NoteGenerating
 
     [AddTypeMenu("◆汎用 ジェネレータ2D", -2), System.Serializable]
     public class F_Generic2D : Generator_Common
-    {
-        [UnityEditor.MenuItem("CONTEXT/F_Generic2D/DisplayLogMyComponent")]
-        static void DisplayLogMyComponent()
-        {
-            Debug.Log("DisplayLogMyComponent Called");
-        }
-    
+    {    
         [SerializeField] float speedRate = 1f;
 
         [SerializeField] bool isSpeedChangable;

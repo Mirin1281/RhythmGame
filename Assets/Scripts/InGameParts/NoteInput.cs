@@ -40,12 +40,14 @@ public class NoteExpect
 
 public class NoteInput : MonoBehaviour
 {
-    [SerializeField] Metronome metronome;
-    [SerializeField] InputManager inputManager;
     [SerializeField] Judgement judge;
     [SerializeField] ArcLightOperator arcLightOperator;
     [SerializeField] PoolManager notePoolManager;
+#if UNITY_EDITOR
     [SerializeField] bool isAuto;
+#else
+    bool isAuto = false;
+#endif
 
     readonly List<NoteExpect> allExpects = new(63);
     readonly List<HoldNote> holds = new(4);
@@ -54,16 +56,14 @@ public class NoteInput : MonoBehaviour
 
     static readonly float defaultTolerance = 0.1f;
     static readonly float wideTolerance = 0.25f;
-
     static readonly float arcDuplicateSqrDistance = 8f;
+
+    Metronome Metronome => Metronome.Instance;
 
     void Start()
     {
-#if UNITY_EDITOR
-#else
-        isAuto = false;
-#endif
         if(isAuto) return;
+        var inputManager = FindAnyObjectByType<InputManager>();
         inputManager.OnDown += OnDown;
         inputManager.OnHold += OnHold;
         inputManager.OnUp += OnUp;
@@ -74,8 +74,7 @@ public class NoteInput : MonoBehaviour
         {
             UniTask.Void(async () => 
             {
-                await UniTask.Yield(destroyCancellationToken);
-                await UniTask.Yield(destroyCancellationToken);
+                await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
                 foreach(var arc in arcs)
                 {
                     if(arc.FingerIndex == input.index && arc.IsInvalid == false)
@@ -97,7 +96,7 @@ public class NoteInput : MonoBehaviour
     public void AddExpect(NoteBase note, Vector2 pos, float time, float holdingTime = 0,
         bool isCheckSimultaneous = true, NoteExpect.ExpectMode mode = NoteExpect.ExpectMode.Static)
     {
-        float absoluteTime = metronome.CurrentTime + time;
+        float absoluteTime = Metronome.CurrentTime + time;
         if(isCheckSimultaneous)
         {
             foreach(var e in allExpects)
@@ -145,7 +144,7 @@ public class NoteInput : MonoBehaviour
         for(int i = 0; i < allExpects.Count; )
         {
             var expect = allExpects[i];
-            if(isAuto && metronome.CurrentTime > expect.Time)
+            if(isAuto && Metronome.CurrentTime > expect.Time)
             {
                 // オート
                 if(expect.Note.Type == NoteType.Hold)
@@ -164,7 +163,7 @@ public class NoteInput : MonoBehaviour
 #endif
                 PlayNoteSE(expect.Note.Type);
             }
-            else if(metronome.CurrentTime > expect.Time + 0.12f)
+            else if(Metronome.CurrentTime > expect.Time + 0.12f)
             {
                 // 遅れたらノーツを除去
                 if(expect.Note.Type == NoteType.Hold)
@@ -185,7 +184,7 @@ public class NoteInput : MonoBehaviour
     void OnDown(Input input)
     {
         (NoteExpect expect, float delta) = FetchNearestNote(
-            input.pos, metronome.CurrentTime, NoteType.Normal, NoteType.Circle, NoteType.Hold, NoteType.Sky);
+            input.pos, Metronome.CurrentTime, NoteType.Normal, NoteType.Circle, NoteType.Hold, NoteType.Sky);
         if(expect == null) return;
 
         NoteGrade grade = judge.GetGradeAndSetText(delta);
@@ -220,7 +219,7 @@ public class NoteInput : MonoBehaviour
         
         foreach(var input in inputs)
         {
-            List<(NoteExpect, float)> expects = FetchSomeNotes(input.pos, metronome.CurrentTime, wideTolerance);
+            List<(NoteExpect, float)> expects = FetchSomeNotes(input.pos, Metronome.CurrentTime, wideTolerance);
             if(expects == null) continue;
 
             foreach(var (expect, delta) in expects)
@@ -245,7 +244,7 @@ public class NoteInput : MonoBehaviour
     
     void OnFlick(Input input)
     {
-        List<(NoteExpect, float)> expects = FetchSomeNotes(input.pos, metronome.CurrentTime, wideTolerance);
+        List<(NoteExpect, float)> expects = FetchSomeNotes(input.pos, Metronome.CurrentTime, wideTolerance);
         if(expects == null) return;
 
         foreach(var (expect, delta) in expects)
@@ -336,7 +335,7 @@ public class NoteInput : MonoBehaviour
                 {
                     hold.NoInputTime = 0f;
                     // ギリギリまで取らなくても判定されるように
-                    if(metronome.CurrentTime > hold.EndTime - 0.2f)
+                    if(Metronome.CurrentTime > hold.EndTime - 0.2f)
                     {
                         hold.State = HoldState.Got;
                         judge.SetCombo(NoteGrade.Perfect);
@@ -355,7 +354,7 @@ public class NoteInput : MonoBehaviour
             }
             else if(hold.State is HoldState.Missed)
             {
-                if(metronome.CurrentTime > hold.EndTime)
+                if(Metronome.CurrentTime > hold.EndTime)
                 {
                     hold.SetActive(false);
                     holds.RemoveAt(i);
@@ -364,7 +363,7 @@ public class NoteInput : MonoBehaviour
             else if(hold.State is HoldState.Got)
             {
                 // ちょっと早めに表示
-                if(metronome.CurrentTime > hold.EndTime - 0.02f)
+                if(Metronome.CurrentTime > hold.EndTime - 0.02f)
                 {
                     hold.SetActive(false);
                     holds.RemoveAt(i);
