@@ -35,7 +35,7 @@ public class Result
         this.fumenData = fumenData;
     }
 
-    public void SetCombo(NoteGrade grade)
+    public void SetComboAndScore(NoteGrade grade)
     {
         if(grade == NoteGrade.Miss)
         {

@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 namespace NoteGenerating
@@ -38,4 +38,4 @@ namespace NoteGenerating
             geratorBase.Preview();
         }
     }
-}
+}*/

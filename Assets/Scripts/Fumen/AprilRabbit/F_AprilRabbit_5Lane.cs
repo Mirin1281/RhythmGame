@@ -96,9 +96,9 @@ namespace NoteGenerating
             }
             NoteBase_2D note = Helper.GetNote2D(type, parentTs);
             note.SetWidth(1.2f);
-            int dir = 10 * x;
+            int dir = 10 * Inv(x);
             note.SetRotate(dir);
-            Vector3 toPos = x switch
+            Vector3 toPos = Inv(x) switch
             {
                 -2 => new Vector3(-8, 1.5f),
                 -1 => new Vector3(-4, 0.5f),
@@ -145,8 +145,8 @@ namespace NoteGenerating
         void Line(float dir, Vector3 pos)
         {
             var line = Helper.GetLine();
-            line.SetRotate(dir);
-            line.SetPos(pos);
+            line.SetRotate(Inv(dir));
+            line.SetPos(Inv(pos));
             line.FadeIn(0.5f, 0.6f);
             UniTask.Void(async () => 
             {

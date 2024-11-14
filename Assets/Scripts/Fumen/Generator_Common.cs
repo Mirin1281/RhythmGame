@@ -15,8 +15,11 @@ namespace NoteGenerating
         
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
-        /// </summary>
+        /// </summary>s
         protected float Inv(float x) => x * (IsInverse ? -1 : 1);
+        protected int Inv(int x) => x * (IsInverse ? -1 : 1);
+        protected Vector3 Inv(Vector3 pos) => new Vector3(Inv(pos.x), pos.y);
+        protected Vector2 Inv(Vector2 pos) => new Vector2(Inv(pos.x), pos.y);
 
         protected virtual float Speed => RhythmGameManager.Speed;
         protected virtual float Speed3D => RhythmGameManager.Speed3D;
@@ -24,8 +27,10 @@ namespace NoteGenerating
         /// <summary>
         /// ノーツの初期生成地点
         /// </summary>
-        protected float StartBase => (2f * Speed + 0.2f) * 177f / Helper.Metronome.Bpm;
-        protected float StartBase3D => (2f * Speed3D + 0.2f) * 177f / Helper.Metronome.Bpm;
+        protected float StartBase => 359.3f * Speed / Helper.Metronome.Bpm;
+        //protected float StartBase => (2f * Speed + 0.2f) * 177f / Helper.Metronome.Bpm;
+        protected float StartBase3D => 359.3f * Speed3D / Helper.Metronome.Bpm;
+        //protected float StartBase3D => (2f * Speed3D + 0.2f) * 177f / Helper.Metronome.Bpm;
 
 
         #region Notes

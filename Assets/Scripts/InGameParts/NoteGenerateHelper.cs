@@ -52,13 +52,13 @@ public class NoteGenerateHelper : MonoBehaviour
     }
 
 
-    public UniTask Yield(CancellationToken token = default)
+    public UniTask Yield(CancellationToken token = default, PlayerLoopTiming timing = PlayerLoopTiming.Update)
     {
         if(token == default)
         {
-            return UniTask.Yield(Token);
+            return UniTask.Yield(timing, Token);
         }
-        return UniTask.Yield(token);
+        return UniTask.Yield(timing, token);
     }
     public async UniTask WaitSeconds(float wait, CancellationToken token = default)
     {

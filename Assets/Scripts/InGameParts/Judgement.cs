@@ -17,7 +17,6 @@ public enum NoteGrade
 
 public class Judgement : MonoBehaviour
 {
-    [SerializeField] InGameManager inGameManager;
     [SerializeField] TMP_Text comboText;
     [SerializeField] TMP_Text deltaText;
     [SerializeField] TMP_Text judgeText;
@@ -31,37 +30,36 @@ public class Judgement : MonoBehaviour
 #endif
     
     Result result;
-    float updateScore = -1;
+    float showScore;
     CancellationTokenSource cts = new();
+
     public Result Result => result;
     const float Range = 4.6f;
-
-    void Awake()
-    {
-        comboText.SetText("0");
-        judgeText.SetText("");
-    }
 
     public void Init(FumenData fumenData)
     {
         result = new Result(fumenData);
     }
-
-    void LateUpdate()
+    void Awake()
     {
-        if(updateScore != -1)
-        {
-            var easing = new Easing(updateScore, result.Score, 0.3f, EaseType.OutQuad);
-            easing.EaseAsync(destroyCancellationToken, t => scoreText.SetText("{0:00000000}", t)).Forget();
-            updateScore = -1;
-        }
+        comboText.SetText("0");
+        judgeText.SetText("");
     }
-
-    
-    public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2, float rangeW = Range)
+    void OnDestroy()
     {
-        var distance = Vector2.Distance(pos1, pos2);
-        return distance < rangeW / 2f;
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
+        result = null;
+    }
+    
+    
+    public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
+    {
+        return MyUtility.IsPointInsideRectangle(
+            new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
+            inputPos,
+            expect.Note.transform.eulerAngles.z);
     }
     public bool IsNearPositionHold(HoldNote hold, Vector2 inputPos)
     {
@@ -70,12 +68,10 @@ public class Judgement : MonoBehaviour
             inputPos,
             hold.transform.eulerAngles.z);
     }
-    public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
+    public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2)
     {
-        return MyUtility.IsPointInsideRectangle(
-            new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
-            inputPos,
-            expect.Note.transform.eulerAngles.z);
+        var distance = Vector2.Distance(pos1, pos2);
+        return distance < Range / 2f;
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
@@ -85,12 +81,29 @@ public class Judgement : MonoBehaviour
 
     public void SetCombo(NoteGrade grade)
     {
-        if(updateScore == -1)
-        {
-            updateScore = result.Score;
-        }
-        result.SetCombo(grade);
+        int beforeScore = result.Score;
+        result.SetComboAndScore(grade);
         comboText.SetText("{0}", result.Combo);
+        SetScoreTextAsync(beforeScore, result.Score).Forget();
+
+
+        async UniTaskVoid SetScoreTextAsync(float beforeScore, float toScore)
+        {
+            float t = 0;
+            var easing = new Easing(beforeScore, toScore, 0.3f, EaseType.OutQuad);
+            while(t < 0.3f)
+            {
+                var s = easing.Ease(t);
+                if(showScore < s)
+                {
+                    showScore = s;
+                    scoreText.SetText("{0:00000000}", s);
+                }
+                
+                t += Time.deltaTime;
+                await UniTask.Yield(destroyCancellationToken);
+            }
+        }
     }
 
     public NoteGrade GetGradeAndSetText(float delta)

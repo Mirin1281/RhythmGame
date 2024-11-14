@@ -17,6 +17,12 @@ public class NoteVolumeSlider : MonoBehaviour
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
+    void OnDestroy()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
+    }
 
     void SetText(float val)
     {

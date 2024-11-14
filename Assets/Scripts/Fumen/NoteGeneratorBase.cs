@@ -83,6 +83,11 @@ namespace NoteGenerating
             return Wait(lpb, 1, delta);
         }
 
+        /// <summary>
+        /// 発火するタイミングがBeatTimingと同期する分のWaitで待機します
+        /// </summary>
+        protected UniTask<float> WaitOnTiming() => Wait(4, 6);
+
         protected void WhileYield(float time, Action<float> action, float delta = -1)
             => WhileYieldAsync(time, action, delta).Forget();
         protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)

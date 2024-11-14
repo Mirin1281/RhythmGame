@@ -19,7 +19,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static int SettingSpeed { get; set; } = 70;
     public static int SettingSpeed3D { get; set; } = 70;
     public static float Speed => SpeedBase * SettingSpeed / 5f;
-    public static float Speed3D => SpeedBase * SettingSpeed3D;
+    public static float Speed3D => SpeedBase * SettingSpeed; // 
 
     // -100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
     public static int SettingOffset { get; set; }
@@ -51,7 +51,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     static void InitBeforeSceneLoad()
     {
         SpeedBase = 1f;
-        //Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
         
         if(useJsonData)
         {

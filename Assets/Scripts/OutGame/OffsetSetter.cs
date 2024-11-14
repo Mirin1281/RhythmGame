@@ -19,11 +19,11 @@ public class OffsetSetter : MonoBehaviour
         || isAdd == false && RhythmGameManager.Offset <= -1f) return;
         if(isAdd)
         {
-            RhythmGameManager.SettingOffset++;
+            RhythmGameManager.SettingOffset += 5;
         }
         else
         {
-            RhythmGameManager.SettingOffset--;
+            RhythmGameManager.SettingOffset -= 5;
         }
         SetText();
         SEManager.Instance.PlaySE(SEType.ti);

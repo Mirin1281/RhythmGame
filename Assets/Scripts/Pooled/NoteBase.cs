@@ -8,7 +8,6 @@ public enum NoteType
     Slide,
     Hold,
     Flick,
-    Floor,
     Sky,
     Arc,
     Circle,
