@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using NoteGenerating;
 
 public class SESlider : MonoBehaviour
 {

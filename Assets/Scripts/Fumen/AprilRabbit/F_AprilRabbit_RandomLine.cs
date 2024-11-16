@@ -27,7 +27,7 @@ namespace NoteGenerating
         {
             var line = Helper.GetLine();
             line.SetRotate(90);
-            line.SetPos(new Vector3(x, 0));
+            line.SetPos(new Vector3(Inv(x), 0));
             line.FadeIn(0, 0.4f);
             line.FadeOut(0.3f);
         }

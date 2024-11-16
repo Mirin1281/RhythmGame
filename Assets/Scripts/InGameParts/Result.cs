@@ -10,10 +10,11 @@ public class Result
     int lateFar;
     int miss;
 
+    int noteCount;
     int combo;
     int maxCombo;
     double score;
-    readonly FumenData fumenData;
+    readonly MusicSelectData musicData;
     
     static readonly int MaxScore = 10000000;
 
@@ -27,12 +28,13 @@ public class Result
     public int Combo => combo;
     public int MaxCombo => maxCombo;
     public int Score => Mathf.RoundToInt((float)score);
-    public FumenData FumenData => fumenData;
+    public MusicSelectData MusicData => musicData;
     public bool IsFullCombo => miss == 0;
 
     public Result(FumenData fumenData)
     {
-        this.fumenData = fumenData;
+        noteCount = fumenData.NoteCount;
+        this.musicData = fumenData.MusicSelectData;
     }
 
     public void SetComboAndScore(NoteGrade grade)
@@ -72,7 +74,7 @@ public class Result
             NoteGrade.Miss => 0,
             _ => throw new System.Exception()
         };
-        double baseScore = (double)MaxScore / fumenData.NoteCount;
+        double baseScore = (double)MaxScore / noteCount;
         score += baseScore * rate;
     }
 }

@@ -7,7 +7,7 @@ using DG.Tweening;
 namespace NoteGenerating
 {
     [AddTypeMenu("AprilRabbit/チュートリアルのテキスト"), System.Serializable]
-    public class F_AprilRabbit_TutorialText : NoteGeneratorBase
+    public class F_AprilRabbit_TutorialText : Generator_Common
     {
         [SerializeField] TMP_Text tmproPrefab;
         [SerializeField, TextArea] string text;
@@ -47,7 +47,7 @@ namespace NoteGenerating
             Fade(tmpro, 1f, 0f);
             if(isMove)
             {
-                tmpro.transform.DOMove(pos, 0.3f).SetRelative(true);
+                tmpro.transform.DOMove(Inv(pos), 0.3f).SetRelative(true);
             }
             tmpro.SetText(text);
 

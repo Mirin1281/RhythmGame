@@ -89,10 +89,12 @@ public class Judgement : MonoBehaviour
 
         async UniTaskVoid SetScoreTextAsync(float beforeScore, float toScore)
         {
+            float baseTime = Metronome.Instance.CurrentTime;
             float t = 0;
             var easing = new Easing(beforeScore, toScore, 0.3f, EaseType.OutQuad);
             while(t < 0.3f)
             {
+                t = Metronome.Instance.CurrentTime - baseTime;
                 var s = easing.Ease(t);
                 if(showScore < s)
                 {
@@ -100,7 +102,6 @@ public class Judgement : MonoBehaviour
                     scoreText.SetText("{0:00000000}", s);
                 }
                 
-                t += Time.deltaTime;
                 await UniTask.Yield(destroyCancellationToken);
             }
         }

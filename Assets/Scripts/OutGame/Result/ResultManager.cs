@@ -24,8 +24,6 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] Image illustImage;
     [SerializeField] TMP_Text illustratorTmpro;
-
-    [SerializeField] TMP_Text debugTmpro;
     
 #if UNITY_EDITOR
     [SerializeField] bool isSavable;
@@ -45,11 +43,12 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if(result == null) return;
 
-        SetUI(result);
+        string fumenAddress = result.MusicData.GetFumenAddress(RhythmGameManager.Difficulty);
+        SetUI(result, fumenAddress);
         if(isSavable == false) return;
 
         var gameScore = new GameScore(
-            result.FumenData.name,
+            fumenAddress,
             result.Score,
             result.IsFullCombo);
         masterManagerData.SetScoreJsonAsync(gameScore).Forget();
@@ -58,18 +57,17 @@ public class ResultManager : MonoBehaviour
         RhythmGameManager.Instance.Result = null;
     }
 
-    void SetUI(Result r)
+    void SetUI(Result r, string fumenAddress)
     {
-        var d = r.FumenData.MusicSelectData;
+        var d = r.MusicData;
         musicTitleTmpro.SetText(d.MusicName);
         composerTmpro.SetText(d.ComposerName);
 
         scoreTmpro.SetText(r.Score.ToString());
 
-        string fumenName = r.FumenData.name;
         UniTask.Void(async () => 
         {
-            int s = await GetHighScore(fumenName);
+            int s = await GetHighScore(fumenAddress);
             highScoreTmpro.SetText(s.ToString("00000000"));
         });
 
@@ -85,10 +83,10 @@ public class ResultManager : MonoBehaviour
 
 
         // ハイスコアを譜面データの名前から取得します
-        async UniTask<int> GetHighScore(string fumenName)
+        async UniTask<int> GetHighScore(string fumenAddress)
         {
             var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);     
-            var score = list.FirstOrDefault(s => s.FumenName == fumenName);
+            var score = list.FirstOrDefault(s => s.FumenAddress == fumenAddress);
             return score.Score;
         }
     }

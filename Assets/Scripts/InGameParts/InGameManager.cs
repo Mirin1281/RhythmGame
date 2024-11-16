@@ -11,6 +11,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] FumenData editorFumenData;
 #endif
     [SerializeField] TMP_Text titleTmpro;
+    [SerializeField] bool isMirror;
     FumenData fumenData;
 
     public FumenData FumenData => fumenData;
@@ -58,6 +59,10 @@ public class InGameManager : MonoBehaviour
 
         metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
+#if UNITY_EDITOR
+        if(isMirror)
+            RhythmGameManager.SettingIsMirror = true;
+#endif
 
         // 音楽データをロード
         await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);

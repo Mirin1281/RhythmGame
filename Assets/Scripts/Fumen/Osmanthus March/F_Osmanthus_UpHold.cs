@@ -39,14 +39,14 @@ namespace NoteGenerating
             judgeHold.SetWidth(5);
             judgeHold.transform.localRotation = Quaternion.Euler(0, 0, 90);
             judgeHold.SetPos(Vector3.zero);
-            judgeHold.SetMaskLocalPos(new Vector3(0, -x));
+            judgeHold.SetMaskLocalPos(new Vector3(0, -Inv(x)));
             JudgeMoveAsync(judgeHold).Forget();
 
 
             async UniTaskVoid VisualMoveAsync(HoldNote hold)
             {
                 float baseTime = CurrentTime - Delta;
-                Vector3 startPos = new Vector3(x, StartBase);
+                Vector3 startPos = new Vector3(Inv(x), StartBase);
                 var vec = Speed * Vector3.down;
 
                 float time = 0f;
@@ -62,7 +62,7 @@ namespace NoteGenerating
                 while (hold.IsActive && time < holdTime)
                 {
                     time = CurrentTime - baseTime;
-                    hold.SetMaskLocalPos(new Vector3(x, 0) - time * vec);
+                    hold.SetMaskLocalPos(new Vector3(Inv(x), 0) - time * vec);
                     hold.SetMaskLength(time * holdTime * Speed);
                     await Helper.Yield();
                 }
@@ -77,7 +77,7 @@ namespace NoteGenerating
                 while (hold.IsActive && time < expectTime)
                 {
                     time = CurrentTime - baseTime;
-                    hold.SetPos(new Vector3(0, StartBase - x) + time * vec);
+                    hold.SetPos(new Vector3(0, StartBase - Inv(x)) + time * vec);
                     await Helper.Yield();
                 }
                 hold.SetActive(false);

@@ -27,7 +27,7 @@ namespace NoteGenerating
             line2.FadeIn(2f, 0.1f);
 
             float time = 2.6f;
-            var easing = new Easing(0, 360 * 5, time, EaseType.OutCubic);
+            var easing = new Easing(0, Inv(360 * 5), time, EaseType.OutCubic);
             WhileYield(time, t => 
             {
                 note.SetRotate(easing.Ease(t));
@@ -39,18 +39,16 @@ namespace NoteGenerating
 
             var judgeLine = Helper.GetLine();
             judgeLine.SetWidth(100);
-            judgeLine.SetPos(new Vector3(11, 4));
-            judgeLine.SetRotate(90);
+            judgeLine.SetPos(new Vector3(Inv(11), 4));
             judgeLine.SetAlpha(0.5f);
             
             var judgeLine2 = Helper.GetLine();
             judgeLine2.SetWidth(100);
-            judgeLine2.SetPos(new Vector3(-11, 4));
-            judgeLine2.SetRotate(90);
+            judgeLine2.SetPos(new Vector3(Inv(-11), 4));
             judgeLine2.SetAlpha(0.5f);
 
             float judgeTime = 0.6f;
-            var judgeEasing = new Easing(90, 270, judgeTime, EaseType.InQuad);
+            var judgeEasing = new Easing(Inv(90), Inv(270), judgeTime, EaseType.InQuad);
             WhileYield(judgeTime, t => 
             {
                 judgeLine.SetRotate(judgeEasing.Ease(t));

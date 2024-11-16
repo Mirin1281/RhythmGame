@@ -13,7 +13,7 @@ public class NoteVolumeSlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.SettingNoteVolume;
+        var val = RhythmGameManager.SettingNoteSEVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
@@ -33,7 +33,7 @@ public class NoteVolumeSlider : MonoBehaviour
     {
         var val = slider.value;
         SetText(val);
-        RhythmGameManager.SettingNoteVolume = val;
+        RhythmGameManager.SettingNoteSEVolume = val;
         SEManager.Instance.SetCategoryVolume(ConstContainer.NoteSECategory, RhythmGameManager.GetNoteVolume());
 
         cts?.Cancel();
@@ -45,5 +45,27 @@ public class NoteVolumeSlider : MonoBehaviour
             await MyUtility.WaitSeconds(0.3f, token);
             SEManager.Instance.PlaySE(SEType.my2);
         });
+    }
+
+    public void SetInteractable(bool enabled)
+    {
+        slider.interactable = enabled;
+        SetColor(slider.fillRect);
+        SetColor(slider.handleRect);
+        SetText(enabled ? RhythmGameManager.SettingNoteSEVolume : 0);
+
+
+        void SetColor(RectTransform rect)
+        {
+            var image = rect.GetComponent<Image>();
+            if(enabled)
+            {
+                image.color = Color.black;
+            }
+            else
+            {
+                image.color = new Color(0.7f, 0.7f, 0.7f, 1f);
+            }
+        }
     }
 }

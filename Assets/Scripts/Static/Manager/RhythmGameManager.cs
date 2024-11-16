@@ -1,36 +1,85 @@
 using CriWare;
-using NoteGenerating;
 using UnityEngine;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
+    // 不変の音量
     static readonly float MasterVolume = 0.8f;
-    public static float SettingBGMVolume { get; set; } = 0.8f;
-    public static float SettingSEVolume { get; set; } = 0.8f;
-    public static float SettingNoteVolume { get; set; } = 0.8f;
-    public static float GetBGMVolume() => MasterVolume * SettingBGMVolume * 0.6f;
-    public static float GetSEVolume() => MasterVolume * SettingSEVolume;
-    public static float GetNoteVolume() => MasterVolume * SettingNoteVolume;
-
-    // スクリプト上で変更可能な値
+    
+    // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
 
+    public static string FumenAddress { get; set; }
+    public Result Result { get; set; }
+
+    static GameSetting Setting { get; set; }
+    static GameStatus Status { get; set; }
+
+
+    public static float SettingBGMVolume
+    {
+        get => Setting.BGMVolume;
+        set => Setting.BGMVolume = value;
+    }
+    public static float SettingSEVolume
+    {
+        get => Setting.SEVolume;
+        set => Setting.SEVolume = value;
+    }
+    public static float SettingNoteSEVolume
+    {
+        get => Setting.NoteSEVolume;
+        set => Setting.NoteSEVolume = value;
+    }
+    public static bool SettingIsNoteMute
+    {
+        get => Setting.IsNoteMute;
+        set => Setting.IsNoteMute = value;
+    }
+    public static float GetBGMVolume() => MasterVolume * SettingBGMVolume * 0.6f;
+    public static float GetSEVolume() => MasterVolume * SettingSEVolume;
+    public static float GetNoteVolume() => MasterVolume * SettingNoteSEVolume;    
+
+
     // 50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
-    public static int SettingSpeed { get; set; } = 70;
-    public static int SettingSpeed3D { get; set; } = 70;
+    public static int SettingSpeed
+    {
+        get => Setting.Speed;
+        set => Setting.Speed = value;
+    }
+    public static int SettingSpeed3D
+    {
+        get => Setting.Speed3D;
+        set => Setting.Speed3D = value;
+    }
     public static float Speed => SpeedBase * SettingSpeed / 5f;
     public static float Speed3D => SpeedBase * SettingSpeed; // 
 
     // -100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
-    public static int SettingOffset { get; set; }
+    public static int SettingOffset
+    {
+        get => Setting.Offset;
+        set => Setting.Offset = value;
+    }
     public static float Offset => SettingOffset / 1000f;
 
-    public static bool SettingIsMirror { get; set; }
+    public static bool SettingIsMirror
+    {
+        get => Setting.IsMirror;
+        set => Setting.IsMirror = value;
+    }
 
-    public static string FumenAddress { get; set; }
-    public Result Result { get; set; }
-    public static Difficulty Difficulty { get; set; } = Difficulty.Normal;
-    public static int SelectedIndex { get; set; } = -1;
+    
+    public static Difficulty Difficulty
+    {
+        get => Status.Difficulty;
+        set => Status.Difficulty = value;
+    }
+    public static int SelectedIndex
+    {
+        get => Status.SelectedIndex;
+        set => Status.SelectedIndex = value;
+    }
 
 #if UNITY_EDITOR
     /// <summary>
@@ -52,40 +101,18 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     {
         SpeedBase = 1f;
         Application.targetFrameRate = 60;
+        FumenAddress = null;
         
         if(useJsonData)
         {
             var gameData = SaveLoadUtility.GetDataImmediately<GameData>(ConstContainer.GameDataName);
-            gameData ??= new GameData();
-            SettingBGMVolume = gameData.BGMVolume;
-            SettingSEVolume = gameData.SEVolume;
-            SettingNoteVolume = gameData.NoteVolume;
-
-            SettingSpeed = gameData.Speed;
-            SettingSpeed3D = gameData.Speed3D;
-            SettingOffset = gameData.Offset;
-
-            SettingIsMirror = gameData.IsMirror;
-
-            FumenAddress = null;
-            Difficulty = gameData.Difficulty;
-            SelectedIndex = gameData.SelectedIndex;
+            Setting = gameData.Setting ?? new GameSetting();
+            Status = gameData.Status ?? new GameStatus();
         }
         else
         {
-            SettingBGMVolume = 0.8f;
-            SettingSEVolume = 0.8f;
-            SettingNoteVolume = 0.8f;
-            
-            SettingSpeed = 70;
-            SettingSpeed3D = 70;
-            SettingOffset = 0;
-
-            SettingIsMirror = false;
-
-            FumenAddress = null;
-            Difficulty = Difficulty.Hard;
-            SelectedIndex = -1;
+            Setting = new GameSetting();
+            Status = new GameStatus();
         }
     }
 
@@ -127,15 +154,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             var gameData = new GameData
             {
-                BGMVolume = SettingBGMVolume,
-                SEVolume = SettingSEVolume,
-                NoteVolume = SettingNoteVolume,
-                Speed = SettingSpeed,
-                Speed3D = SettingSpeed3D,
-                Offset = SettingOffset,
-                IsMirror = SettingIsMirror,
-                Difficulty = Difficulty == Difficulty.None ? Difficulty.Normal : Difficulty,
-                SelectedIndex = SelectedIndex,
+                Setting = Setting,
+                Status = Status
             };
             SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
         }

@@ -57,7 +57,7 @@ public class UpdatorOnChange : MonoBehaviour
     {
         if(string.IsNullOrEmpty(fumenName)) return;
         var list = await GetGameScoresAsync();  
-        var gameScore = list.FirstOrDefault(s => s.FumenName == fumenName);
+        var gameScore = list.FirstOrDefault(s => s.FumenAddress == fumenName);
         (int highScore, bool isFullCombo) = (gameScore.Score, gameScore.IsFullCombo);
         string fullComboText = isFullCombo ? "[F]" : string.Empty;
         highScoreTmpro.SetText($"{fullComboText} {highScore:00000000}");

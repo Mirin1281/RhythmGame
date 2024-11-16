@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 [CreateAssetMenu(
     fileName = "MasterManager",
@@ -44,46 +45,35 @@ public class MusicMasterManagerData : ScriptableObject
 
     /// <summary>
     /// もしスコアに更新があればJsonに保存します
-    /// 返り値は元のスコアです
     /// </summary>
-    public async UniTask<int> SetScoreJsonAsync(GameScore gameScore)
+    public async UniTask SetScoreJsonAsync(GameScore gameScore)
     {
         var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName);
         scoreData ??= ResetScoreData();
 
-        int index = -1;
-        GameScore s = null;
-        for(int i = 0; i < scoreData.GameScores.Count; i++)
-        {
-            if(scoreData.GameScores[i].FumenName == gameScore.FumenName)
-            {
-                s = scoreData.GameScores[i];
-                index = i;
-            }
-        }
+        var s = scoreData.GameScores.FirstOrDefault(s => s.FumenAddress == gameScore.FumenAddress);
+
         if(s == null)
         {
             Debug.LogWarning($"{nameof(GameScore)}がnullでした\n{nameof(ScoreData)}を初期化していない可能性があります");
-            return -1;
+            Debug.LogWarning($"FumenAddress: {gameScore.FumenAddress}");
+            return;
         }
 
-        int beforeScore = s.Score;
         int score = s.Score;
         if(s.Score < gameScore.Score)
         {
             score = gameScore.Score;
         }
-
         bool isFullCombo = s.IsFullCombo;
         if(isFullCombo == false && gameScore.IsFullCombo)
         {
             isFullCombo = gameScore.IsFullCombo;
         }
 
-        scoreData.GameScores[index] = new GameScore(s.FumenName, score, isFullCombo);
+        s.UpdateScore(score, isFullCombo);
         await SaveLoadUtility.SetData(scoreData, ConstContainer.ScoreDataName);
         Debug.Log("データが保存されました");
-        return beforeScore;
     }
 
     /// <summary>
@@ -103,17 +93,23 @@ public class MusicMasterManagerData : ScriptableObject
 [Serializable]
 public class GameScore
 {
-    [SerializeField] readonly string fumenName;
-    [SerializeField] readonly int score;
-    [SerializeField] readonly bool isFullCombo;
+    readonly string fumenAddress;
+    int score;
+    bool isFullCombo;
 
-    public string FumenName => fumenName;
+    public string FumenAddress => fumenAddress;
     public int Score => score;
     public bool IsFullCombo => isFullCombo;
 
-    public GameScore(string fumenName, int score, bool isFullCombo)
+    public GameScore(string fumenAddress, int score, bool isFullCombo)
     {
-        this.fumenName = fumenName;
+        this.fumenAddress = fumenAddress;
+        this.score = score;
+        this.isFullCombo = isFullCombo;
+    }
+
+    public void UpdateScore(int score, bool isFullCombo)
+    {
         this.score = score;
         this.isFullCombo = isFullCombo;
     }

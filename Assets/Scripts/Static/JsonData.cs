@@ -1,11 +1,48 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using NoteGenerating;
 using UnityEngine;
 
 [JsonObject]
 public abstract class JsonObject { }
+
+[Serializable]
+public class GameSetting
+{
+    [JsonProperty("BGM音量")]
+    public float BGMVolume { get; set; } = 0.8f;
+
+    [JsonProperty("SE音量")]
+    public float SEVolume { get; set; } = 0.8f;
+
+    [JsonProperty("ノーツ音量")]
+    public float NoteSEVolume { get; set; } = 0.8f;
+
+    [JsonProperty("ノーツ音量のミュート")]
+    public bool IsNoteMute { get; set; } = false;
+
+    [JsonProperty("スピード")]
+    public int Speed { get; set; } = 70;
+
+    [JsonProperty("スピード3D")]
+    public int Speed3D { get; set; } = 70;
+
+    [JsonProperty("オフセット")]
+    public int Offset { get; set; } = 0;
+
+    [JsonProperty("ミラー譜面")]
+    public bool IsMirror { get; set; } = false;
+}
+
+[Serializable]
+public class GameStatus
+{
+    [JsonProperty("難易度")]
+    public Difficulty Difficulty { get; set; } = Difficulty.Normal;
+
+    [JsonProperty("選択した曲インデックス")]
+    public int SelectedIndex { get; set; } = -1;
+}
 
 public class ScoreData : JsonObject
 {
@@ -13,34 +50,11 @@ public class ScoreData : JsonObject
     public List<GameScore> GameScores { get; set; } = new();
 }
 
-
 public class GameData : JsonObject
 {
-    [JsonProperty("設定: BGM音量")]
-    public float BGMVolume { get; set; } = 0.8f;
+    [JsonProperty("設定")]
+    public GameSetting Setting { get; set; }
 
-    [JsonProperty("設定: SE音量")]
-    public float SEVolume { get; set; } = 0.8f;
-
-    [JsonProperty("設定: ノーツ音量")]
-    public float NoteVolume { get; set; } = 0.8f;
-
-    [JsonProperty("設定: スピード")]
-    public int Speed { get; set; } = 70;
-
-    [JsonProperty("設定: スピード3D")]
-    public int Speed3D { get; set; } = 70;
-
-    [JsonProperty("設定: オフセット")]
-    public int Offset { get; set; } = 0;
-
-    [JsonProperty("設定: ミラー譜面")]
-    public bool IsMirror { get; set; }
-    
-
-    [JsonProperty("難易度")]
-    public Difficulty Difficulty { get; set; } = Difficulty.Normal;
-
-    [JsonProperty("選択した曲インデックス")]
-    public int SelectedIndex { get; set; } = -1;
+    [JsonProperty("その他の状態")]
+    public GameStatus Status { get; set; }
 }

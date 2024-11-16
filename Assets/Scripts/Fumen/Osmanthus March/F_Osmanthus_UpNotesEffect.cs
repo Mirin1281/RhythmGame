@@ -32,7 +32,7 @@ namespace NoteGenerating
             var easing = new Easing(-6f, 14f, time, EaseType.InOutQuad);
             await WhileYieldAsync(time, t => 
             {
-                note.SetPos(new Vector3(x, easing.Ease(t)));
+                note.SetPos(new Vector3(Inv(x), easing.Ease(t)));
             });
             note.SetActive(false);
         }
