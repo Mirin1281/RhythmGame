@@ -16,7 +16,7 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
             await Helper.WaitSeconds(moveTime);
@@ -26,7 +26,7 @@ namespace NoteGenerating
         void Create(Vector2 startPos, float rotationSpeed)
         {
             NoteBase_2D note = Helper.GetNote2D(noteType);
-            WhileYield(moveTime, t => 
+            WhileYield(moveTime, t =>
             {
                 note.SetRotate(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));
                 note.SetPos(startPos - new Vector2(0, t.Ease(0f, startPos.y, moveTime, EaseType.InQuint)));

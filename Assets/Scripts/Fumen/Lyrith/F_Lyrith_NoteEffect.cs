@@ -16,7 +16,7 @@ namespace NoteGenerating
             var list = new List<NoteBase>(30);
             var camera = Camera.main;
 
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
             //CameraShake(camera, 10, 0.3f);
             CreateNotes(new Vector2(-3, 4), NoteType.Slide);
             await Wait(4);
@@ -27,7 +27,7 @@ namespace NoteGenerating
             CreateNotes(new Vector2(3, 4), NoteType.Slide);
             await Wait(4);
 
-            foreach(var slide in list)
+            foreach (var slide in list)
             {
                 Move(slide).Forget();
             }
@@ -36,7 +36,7 @@ namespace NoteGenerating
             void CreateNotes(Vector2 pos, NoteType type, bool flg = false)
             {
                 int count = 10;
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     NoteBase note = Helper.PoolManager.GetNote2D(type);
                     list.Add(note);
@@ -48,7 +48,7 @@ namespace NoteGenerating
                 void Move(NoteBase note, Vector2 startPos, float dir, bool flg)
                 {
                     int a = flg ? -1 : 1;
-                    WhileYield(time, t => 
+                    WhileYield(time, t =>
                     {
                         var d = t.Ease(0.1f, 2, time, EaseType.OutQuart) * speed * a;
                         var d2 = t.Ease(0.3f, 50, time, EaseType.OutQuart) * speed * a;
@@ -66,7 +66,7 @@ namespace NoteGenerating
             var startPos = note.GetPos();
             float rand = UnityEngine.Random.Range(-100, 100);
             var vec = new Vector3(rand / 10f, 16, 0);
-            
+
             float startRotateZ = note.transform.localEulerAngles.z;
             while (note.IsActive && time < 1.5f)
             {
@@ -82,7 +82,7 @@ namespace NoteGenerating
         void CameraShake(Camera camera, float strength, float time)
         {
             camera.transform.localRotation = Quaternion.Euler(0f, 0f, strength);
-            WhileYield(time, t => 
+            WhileYield(time, t =>
             {
                 camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
             });

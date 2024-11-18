@@ -20,7 +20,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     [SerializeField, Range(0, 1)] float timeRate;
 
     readonly int tolerance = 10;
-    
+
     FumenData fumenData;
     float bpm;
     bool isLooping;
@@ -39,7 +39,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     {
         get
         {
-            if(fumenData == null) return (float)currentTime + RhythmGameManager.Offset;
+            if (fumenData == null) return (float)currentTime + RhythmGameManager.Offset;
             return (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
         }
     }
@@ -53,17 +53,17 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 
 #if UNITY_EDITOR
         EditorApplication.pauseStateChanged += SwitchMusic;
-        if(skipOnStart)
+        if (skipOnStart)
         {
             float skipTime = atomSource.GetLength() * timeRate;
             currentTime = skipTime;
             atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
             int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
             beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
-            
-            foreach(var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
+
+            foreach (var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
             {
-                if(b >= generateData.BeatTiming + tolerance && generateData.GetNoteGeneratorBase() is IZoneCommand zone)
+                if (b >= generateData.BeatTiming + tolerance && generateData.GetNoteGeneratorBase() is IZoneCommand zone)
                 {
                     zone.CallZone(skipTime - (generateData.BeatTiming + tolerance) * (float)BeatInterval);
                 }
@@ -90,17 +90,17 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
         isLooping = true;
         double baseTime = Time.timeAsDouble - currentTime;
         double nextBeat = BeatInterval * (beatCount + 1);
-        while(isLooping)
+        while (isLooping)
         {
             currentTime = Time.timeAsDouble - baseTime;
-            if(CurrentTime > nextBeat)
+            if (CurrentTime > nextBeat)
             {
                 int offsetedBeatCount = beatCount - SelectData.StartBeatOffset;
 
                 // BPMの変化がある場合 //
-                if(SelectData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount))
+                if (SelectData.TryGetBPMChangeBeatCount(bpmChangeCount, out int changeBeatCount))
                 {
-                    if(offsetedBeatCount == changeBeatCount)
+                    if (offsetedBeatCount == changeBeatCount)
                     {
                         bpm = SelectData.GetChangeBPM(bpmChangeCount);
                         bpmChangeCount++;
@@ -136,11 +136,11 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     {
         atomSource.volume = value;
     }
-    
+
 #if UNITY_EDITOR
     void SwitchMusic(PauseState state)
     {
-        if(state == PauseState.Paused)
+        if (state == PauseState.Paused)
         {
             playback.Pause();
         }

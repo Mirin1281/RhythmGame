@@ -19,18 +19,18 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
             await Helper.WaitSeconds(delay);
             Process(time);
         }
 
         void IZoneCommand.CallZone(float delta)
         {
-            UniTask.Void(async () => 
+            UniTask.Void(async () =>
             {
                 Delta = delta;
                 await Helper.WaitSeconds(delay - delta);
-                await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+                await WaitOnTiming();
                 Process(Mathf.Clamp(time - delta, 0, Mathf.Infinity));
             });
         }
@@ -38,7 +38,7 @@ namespace NoteGenerating
         void Process(float time)
         {
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
-            if(moveType == MoveType.Move2DTo3D)
+            if (moveType == MoveType.Move2DTo3D)
             {
                 rendererShower.ShowLaneAsync(time).Forget();
                 Helper.CameraMover.Move(new Vector3(0f, 7f, -6.5f), new Vector3(25f, 0f, 0f),
@@ -47,7 +47,7 @@ namespace NoteGenerating
                     easeType
                 );
             }
-            else if(moveType == MoveType.Move3DTo2D)
+            else if (moveType == MoveType.Move3DTo2D)
             {
                 rendererShower.HideLaneAsync(time).Forget();
                 Helper.CameraMover.Move(new Vector3(0f, 4f, -10f), Vector3.zero,
@@ -65,7 +65,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            if(moveType == MoveType.Move2DTo3D)
+            if (moveType == MoveType.Move2DTo3D)
             {
                 return "3D";
             }

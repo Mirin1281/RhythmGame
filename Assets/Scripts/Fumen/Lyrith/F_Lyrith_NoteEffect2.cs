@@ -9,9 +9,9 @@ namespace NoteGenerating
     {
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
             int count = 12;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 var slide = Helper.GetNote2D(NoteType.Slide);
                 float a = i - count / 2f + 0.5f;
@@ -25,7 +25,7 @@ namespace NoteGenerating
             Vector2 startPos = note.GetPos();
             float time = 0.6f;
             var vec = Vector2.up;
-            await WhileYieldAsync(time, t => 
+            await WhileYieldAsync(time, t =>
             {
                 note.SetPos(startPos + vec * (t + 0.1f).Ease(0f, 13f, time, EaseType.InQuart));
                 note.SetRotate(90 + t * 100f);

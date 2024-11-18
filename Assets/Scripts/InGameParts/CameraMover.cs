@@ -53,7 +53,7 @@ public class CameraMoveSetting
         this.moveType = moveType;
     }
 
-    public CameraMoveSetting() {} // デフォルトコンストラクタ
+    public CameraMoveSetting() { } // デフォルトコンストラクタ
 }
 
 public class CameraMover : MonoBehaviour
@@ -67,12 +67,12 @@ public class CameraMover : MonoBehaviour
     [ContextMenu("Switch")]
     void SwitchDimension()
     {
-        if(transform.localPosition.y == 4f)
+        if (transform.localPosition.y == 4f)
         {
             transform.localPosition = new Vector3(0f, 7f, -6.5f);
             transform.localRotation = Quaternion.Euler(25f, 0f, 0f);
         }
-        else if(transform.localPosition.y == 7f)
+        else if (transform.localPosition.y == 7f)
         {
             transform.localPosition = new Vector3(0f, 4f, -10f);
             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -121,7 +121,7 @@ public class CameraMover : MonoBehaviour
     }
     public void Move(CameraMoveSetting m, float delta, bool isInverse = false)
     {
-        if(m.MoveType == CameraMoveType.Absolute)
+        if (m.MoveType == CameraMoveType.Absolute)
         {
             MoveTo(m, delta, isInverse);
         }
@@ -137,9 +137,9 @@ public class CameraMover : MonoBehaviour
     async UniTask MoveRelative(CameraMoveSetting m, float delta, bool isInverse = false)
     {
         int a = isInverse ? -1 : 1;
-        await WhileYieldAsync(m.Time, delta, t => 
+        await WhileYieldAsync(m.Time, delta, t =>
         {
-            if(m.IsPosMove)
+            if (m.IsPosMove)
             {
                 deltaPos += new Vector3(
                     a * t.Ease(0, m.Pos.x, m.Time, m.EaseType),
@@ -147,7 +147,7 @@ public class CameraMover : MonoBehaviour
                     t.Ease(0, m.Pos.z, m.Time, m.EaseType)
                 );
             }
-            if(m.IsRotateMove)
+            if (m.IsRotateMove)
             {
                 deltaRot = Quaternion.Euler(
                     t.Ease(0, m.Rotate.x, m.Time, m.EaseType),
@@ -156,9 +156,9 @@ public class CameraMover : MonoBehaviour
             }
         });
         await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
-        if(m.IsPosMove)
+        if (m.IsPosMove)
             basePos += new Vector3(a * m.Pos.x, m.Pos.y, m.Pos.z);
-        if(m.IsRotateMove)
+        if (m.IsRotateMove)
             baseRot *= Quaternion.Euler(new Vector3(m.Rotate.x, a * m.Rotate.y, a * m.Rotate.z));
     }
 
@@ -169,14 +169,14 @@ public class CameraMover : MonoBehaviour
 
     void MoveTo(CameraMoveSetting m, float delta, bool isInverse = false)
     {
-        if(m.IsPosMove == false && m.IsRotateMove == false) return;
+        if (m.IsPosMove == false && m.IsRotateMove == false) return;
         int a = isInverse ? -1 : 1;
         var startPos = transform.position;
-        var startRot = transform.eulerAngles;
+        var startRot = a * transform.eulerAngles;
 
-        if(m.IsPosMove)
+        if (m.IsPosMove)
         {
-            WhileYield(m.Time, delta, t => 
+            WhileYield(m.Time, delta, t =>
             {
                 basePos = new Vector3(
                     a * t.Ease(startPos.x, m.Pos.x, m.Time, m.EaseType),
@@ -185,26 +185,26 @@ public class CameraMover : MonoBehaviour
                 );
             });
         }
-        if(m.IsRotateMove)
+        if (m.IsRotateMove)
         {
-            if(m.IsRotateClamp)
+            if (m.IsRotateClamp)
             {
-                WhileYield(m.Time, delta, t => 
+                WhileYield(m.Time, delta, t =>
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), m.Time, m.EaseType),
-                        t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType),
-                        t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType));
+                        a * t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType),
+                        a * t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType));
                 });
             }
             else
             {
-                WhileYield(m.Time, delta, t => 
+                WhileYield(m.Time, delta, t =>
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, m.Rotate.x, m.Time, m.EaseType),
-                        t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType),
-                        t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType));
+                        a * t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType),
+                        a * t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType));
                 });
             }
         }
@@ -215,7 +215,7 @@ public class CameraMover : MonoBehaviour
     {
         float baseTime = Metronome.CurrentTime - delta;
         float t = 0f;
-        while(t < time)
+        while (t < time)
         {
             t = Metronome.CurrentTime - baseTime;
             action.Invoke(t);

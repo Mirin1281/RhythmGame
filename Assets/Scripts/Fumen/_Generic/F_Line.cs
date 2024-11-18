@@ -97,29 +97,29 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            float delta = await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            float delta = await WaitOnTiming();
 
-            for(int i = 0; i < loopCount; i++)
+            for (int i = 0; i < loopCount; i++)
             {
-                if(isChainWait)
+                if (isChainWait)
                 {
                     LoopCreateLine(datas, delta).Forget();
                 }
                 else
                 {
-                    for(int k = 0; k < datas.Length; k++)
+                    for (int k = 0; k < datas.Length; k++)
                     {
                         CreateLine(datas[k], delta).Forget();
                     }
                 }
-                
+
                 delta = await Wait(loopWaitLPB, delta: delta);
             }
         }
 
         async UniTaskVoid LoopCreateLine(LineCreateData[] datas, float delta)
         {
-            for(int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < datas.Length; i++)
             {
                 delta = await Wait(datas[i].DelayLPB, delta: delta);
                 CreateLine(datas[i], delta, true).Forget();
@@ -128,26 +128,26 @@ namespace NoteGenerating
 
         async UniTaskVoid CreateLine(LineCreateData data, float delta, bool isDisableWait = false)
         {
-            if(!isDisableWait)
+            if (!isDisableWait)
             {
                 delta = await Wait(data.DelayLPB, delta: delta);
             }
 
             var line = Helper.GetLine();
 
-            if(data.IsPosEase)
+            if (data.IsPosEase)
             {
                 float posTime = ConvertTime(data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime);
                 var posEasing = new EasingVector2(
                     data.StartPos,
                     data.FromPos,
                     posTime,
-                    data.OverridePosEaseType == EaseType.None ? easeType: data.OverridePosEaseType
-                );            
+                    data.OverridePosEaseType == EaseType.None ? easeType : data.OverridePosEaseType
+                );
                 WhileYield(posTime, t =>
                 {
                     Vector2 p = basePos;
-                    if(data.IsRotateFromPos)
+                    if (data.IsRotateFromPos)
                     {
                         p += MyUtility.GetRotatedPos(posEasing.Ease(t), data.RotateFromPos, data.CenterPos);
                     }
@@ -161,7 +161,7 @@ namespace NoteGenerating
             else
             {
                 Vector2 p = basePos;
-                if(data.IsRotateFromPos)
+                if (data.IsRotateFromPos)
                 {
                     p += MyUtility.GetRotatedPos(data.StartPos, data.RotateFromPos, data.CenterPos);
                 }
@@ -171,20 +171,20 @@ namespace NoteGenerating
                 }
                 line.SetPos(new Vector3(Inv(p.x), p.y));
             }
-            
-            if(data.IsRotateEase)
+
+            if (data.IsRotateEase)
             {
                 float rotateTime = ConvertTime(data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime);
                 var rotateEasing = new Easing(
                     data.StartRotate,
                     data.FromRotate,
                     rotateTime,
-                    data.OverrideRotateEaseType == EaseType.None ? easeType: data.OverrideRotateEaseType
+                    data.OverrideRotateEaseType == EaseType.None ? easeType : data.OverrideRotateEaseType
                 );
                 WhileYield(rotateTime, t =>
                 {
                     float r = default;
-                    if(data.IsRotateFromPos)
+                    if (data.IsRotateFromPos)
                     {
                         r = rotateEasing.Ease(t) + data.RotateFromPos;
                     }
@@ -198,7 +198,7 @@ namespace NoteGenerating
             else
             {
                 float r = default;
-                if(data.IsRotateFromPos)
+                if (data.IsRotateFromPos)
                 {
                     r = data.StartRotate + data.RotateFromPos;
                 }
@@ -209,14 +209,14 @@ namespace NoteGenerating
                 line.SetRotate(Inv(r));
             }
 
-            if(data.IsAlphaEase)
+            if (data.IsAlphaEase)
             {
                 float alphaTime = ConvertTime(data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime);
                 var alphaEasing = new Easing(
                     data.StartAlpha,
                     data.FromAlpha,
                     alphaTime,
-                    data.OverrideAlphaEaseType == EaseType.None ? easeType: data.OverrideAlphaEaseType
+                    data.OverrideAlphaEaseType == EaseType.None ? easeType : data.OverrideAlphaEaseType
                 );
                 WhileYield(alphaTime, t =>
                 {
@@ -245,7 +245,7 @@ namespace NoteGenerating
         protected override string GetSummary()
         {
             string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{GetInverseSummary()}";
-            if(string.IsNullOrWhiteSpace(summary))
+            if (string.IsNullOrWhiteSpace(summary))
             {
                 return s;
             }
@@ -259,11 +259,11 @@ namespace NoteGenerating
         public override async void Preview()
         {
             var previewObj = FumenDebugUtility.GetPreviewObject();
-            if(loopCount > 3)
+            if (loopCount > 3)
                 loopCount = 3;
-            for(int i = 0; i < loopCount; i++)
+            for (int i = 0; i < loopCount; i++)
             {
-                for(int k = 0; k < datas.Length; k++)
+                for (int k = 0; k < datas.Length; k++)
                 {
                     DebugCreateLine(datas[k]).Forget();
                 }
@@ -278,19 +278,19 @@ namespace NoteGenerating
                 var line = Helper.GetLine();
                 line.transform.SetParent(previewObj.transform);
 
-                if(data.IsPosEase)
+                if (data.IsPosEase)
                 {
                     float posTime = ConvertTime(data.OverridePosEaseTime == -1 ? time : data.OverridePosEaseTime);
                     var posEasing = new EasingVector2(
                         data.StartPos,
                         data.FromPos,
                         posTime,
-                        data.OverridePosEaseType == EaseType.None ? easeType: data.OverridePosEaseType
-                    );            
+                        data.OverridePosEaseType == EaseType.None ? easeType : data.OverridePosEaseType
+                    );
                     WhileYield(posTime, t =>
                     {
                         Vector2 p = basePos;
-                        if(data.IsRotateFromPos)
+                        if (data.IsRotateFromPos)
                         {
                             p += MyUtility.GetRotatedPos(posEasing.Ease(t), data.RotateFromPos, data.CenterPos);
                         }
@@ -304,7 +304,7 @@ namespace NoteGenerating
                 else
                 {
                     Vector2 p = basePos;
-                    if(data.IsRotateFromPos)
+                    if (data.IsRotateFromPos)
                     {
                         p += MyUtility.GetRotatedPos(data.StartPos, data.RotateFromPos, data.CenterPos);
                     }
@@ -314,20 +314,20 @@ namespace NoteGenerating
                     }
                     line.SetPos(new Vector3(Inv(p.x), p.y));
                 }
-                
-                if(data.IsRotateEase)
+
+                if (data.IsRotateEase)
                 {
                     float rotateTime = ConvertTime(data.OverrideRotateEaseTime == -1 ? time : data.OverrideRotateEaseTime);
                     var rotateEasing = new Easing(
                         data.StartRotate,
                         data.FromRotate,
                         rotateTime,
-                        data.OverrideRotateEaseType == EaseType.None ? easeType: data.OverrideRotateEaseType
+                        data.OverrideRotateEaseType == EaseType.None ? easeType : data.OverrideRotateEaseType
                     );
                     WhileYield(rotateTime, t =>
                     {
                         float r = default;
-                        if(data.IsRotateFromPos)
+                        if (data.IsRotateFromPos)
                         {
                             r = rotateEasing.Ease(t) + data.RotateFromPos;
                         }
@@ -341,7 +341,7 @@ namespace NoteGenerating
                 else
                 {
                     float r = default;
-                    if(data.IsRotateFromPos)
+                    if (data.IsRotateFromPos)
                     {
                         r = data.StartRotate + data.RotateFromPos;
                     }
@@ -352,14 +352,14 @@ namespace NoteGenerating
                     line.SetRotate(Inv(r));
                 }
 
-                if(data.IsAlphaEase)
+                if (data.IsAlphaEase)
                 {
                     float alphaTime = ConvertTime(data.OverrideAlphaEaseTime == -1 ? time : data.OverrideAlphaEaseTime);
                     var alphaEasing = new Easing(
                         data.StartAlpha,
                         data.FromAlpha,
                         alphaTime,
-                        data.OverrideAlphaEaseType == EaseType.None ? easeType: data.OverrideAlphaEaseType
+                        data.OverrideAlphaEaseType == EaseType.None ? easeType : data.OverrideAlphaEaseType
                     );
                     WhileYield(alphaTime, t =>
                     {
@@ -377,16 +377,16 @@ namespace NoteGenerating
 
             void WhileYield(float time, Action<float> action)
             {
-                UniTask.Void(async () => 
+                UniTask.Void(async () =>
                 {
-                    if(time == 0)
+                    if (time == 0)
                     {
                         action.Invoke(time);
                         return;
                     }
                     double baseTime = EditorApplication.timeSinceStartup;
                     double t = 0f;
-                    while(t < time)
+                    while (t < time)
                     {
                         t = EditorApplication.timeSinceStartup - baseTime;
                         action.Invoke((float)t);

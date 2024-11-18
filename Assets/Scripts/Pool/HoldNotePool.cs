@@ -6,9 +6,10 @@ public class HoldNotePool : PoolBase<HoldNote>
     public HoldNote GetNote()
     {
         var n = GetInstance();
-        n.State =  HoldNote.InputState.Idle;
+        n.State = HoldNote.InputState.Idle;
         n.SetRotate(Vector3.zero);
         n.SetRotate(0);
+        n.transform.localPosition = default;
         n.transform.localRotation = default;
         n.SetWidth(1f);
         n.SetMaskLength(5f);

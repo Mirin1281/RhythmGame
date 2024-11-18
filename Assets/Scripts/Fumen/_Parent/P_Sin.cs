@@ -18,7 +18,7 @@ namespace NoteGenerating
 
         async UniTask SinMove(NoteBase parent, float delta = -1)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
                 delta = Delta;
             }
@@ -27,7 +27,7 @@ namespace NoteGenerating
             while (parent.IsActive && t < moveTime)
             {
                 t = CurrentTime - baseTime;
-                parent.SetPos(new Vector3(amplitude * Mathf.Sin(t * period), 0));
+                parent.SetPos(Inv(new Vector3(amplitude * Mathf.Sin(t * period), 0)));
                 await Helper.Yield();
             }
         }

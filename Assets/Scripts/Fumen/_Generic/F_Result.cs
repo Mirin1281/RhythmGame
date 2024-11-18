@@ -8,9 +8,9 @@ namespace NoteGenerating
     {
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);
-            
+
             RhythmGameManager.Instance.Result = judge.Result;
             await FadeLoadSceneManager.Instance.LoadSceneAsync(1, "Result", 1, Color.white);
             RhythmGameManager.SpeedBase = 1f;

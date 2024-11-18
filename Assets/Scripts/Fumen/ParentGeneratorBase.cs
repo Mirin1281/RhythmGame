@@ -49,20 +49,23 @@ namespace NoteGenerating
 
         bool isInverse;
         protected bool IsInverse { get => isInverse; set => isInverse = value; }
-        
+
         /// <summary>
         /// IsInverseがtrueの時、-1倍して返します
         /// </summary>
-        protected float Inv(float x) => x * (isInverse ? -1 : 1);
+        protected float Inv(float x) => x * (IsInverse ? -1 : 1);
+        protected int Inv(int x) => x * (IsInverse ? -1 : 1);
+        protected Vector3 Inv(Vector3 pos) => new Vector3(Inv(pos.x), pos.y);
+        protected Vector2 Inv(Vector2 pos) => new Vector2(Inv(pos.x), pos.y);
 
         protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
-                if(lpb == 0 || num == 0) return Delta;
+                if (lpb == 0 || num == 0) return Delta;
                 float baseTime = CurrentTime;
                 float interval = Helper.GetTimeInterval(lpb, num);
-                if(Delta > interval)
+                if (Delta > interval)
                 {
                     Delta -= interval;
                 }
@@ -75,10 +78,10 @@ namespace NoteGenerating
             }
             else
             {
-                if(lpb == 0 || num == 0) return delta;
+                if (lpb == 0 || num == 0) return delta;
                 float baseTime = CurrentTime;
                 float interval = Helper.GetTimeInterval(lpb, num);
-                if(delta > interval)
+                if (delta > interval)
                 {
                     delta -= interval;
                 }
@@ -92,12 +95,12 @@ namespace NoteGenerating
         }
         protected async UniTask<float> Wait(float lpb, float delta)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
-                if(lpb == 0) return Delta;
+                if (lpb == 0) return Delta;
                 float baseTime = CurrentTime;
                 float interval = Helper.GetTimeInterval(lpb, 1);
-                if(Delta > interval)
+                if (Delta > interval)
                 {
                     Delta -= interval;
                 }
@@ -110,10 +113,10 @@ namespace NoteGenerating
             }
             else
             {
-                if(lpb == 0) return delta;
+                if (lpb == 0) return delta;
                 float baseTime = CurrentTime;
                 float interval = Helper.GetTimeInterval(lpb, 1);
-                if(delta > interval)
+                if (delta > interval)
                 {
                     delta -= interval;
                 }
@@ -130,18 +133,18 @@ namespace NoteGenerating
             => WhileYieldAsync(time, action, delta).Forget();
         protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
                 delta = Delta;
             }
-            if(time == 0)
+            if (time == 0)
             {
                 action.Invoke(time);
                 return;
             }
             float baseTime = CurrentTime - delta;
             float t = 0f;
-            while(t < time)
+            while (t < time)
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
@@ -155,12 +158,12 @@ namespace NoteGenerating
         /// </summary>
         static void AutoDispose(Transform ts, CancellationToken token)
         {
-            UniTask.Void(async () => 
+            UniTask.Void(async () =>
             {
                 await UniTask.DelayFrame(2, cancellationToken: token);
                 await UniTask.WaitUntil(() => !IsAnyChildrenActive(ts) && ts.childCount != 0, cancellationToken: token);
                 int childCount = ts.childCount;
-                for(int i = 0; i < childCount; i++)
+                for (int i = 0; i < childCount; i++)
                 {
                     ts.GetChild(0).SetParent(null);
                 }
@@ -170,9 +173,9 @@ namespace NoteGenerating
 
             static bool IsAnyChildrenActive(Transform ts)
             {
-                for(int i = 0; i < ts.childCount; i++)
+                for (int i = 0; i < ts.childCount; i++)
                 {
-                    if(ts.GetChild(i).gameObject.activeSelf)
+                    if (ts.GetChild(i).gameObject.activeSelf)
                     {
                         return true;
                     }
@@ -183,11 +186,11 @@ namespace NoteGenerating
 
         public static ParentGeneratorBase CreateFrom(string content)
         {
-            if(string.IsNullOrEmpty(content)) return null;
+            if (string.IsNullOrEmpty(content)) return null;
             var className = content.Split(Separator)[0];
             var instance = FumenDebugUtility.CreateInstance<ParentGeneratorBase>(className);
             int index = content.IndexOf(Separator);
-            if(index == -1)
+            if (index == -1)
             {
                 return instance;
             }
@@ -197,13 +200,13 @@ namespace NoteGenerating
         }
 
         const string Separator = "!";
-        
+
         string IParentGeneratable.GetContent()
         {
             var tmpArray = this.ToString().Split('.');
             var className = tmpArray[^1];
             var addStatus = CSVContent1;
-            if(addStatus == null)
+            if (addStatus == null)
             {
                 return className;
             }

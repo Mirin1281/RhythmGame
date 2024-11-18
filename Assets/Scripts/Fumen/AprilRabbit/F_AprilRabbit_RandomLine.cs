@@ -13,10 +13,10 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
 
             var rand = new System.Random();
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 Line(rand.Next(-10, 10));
                 await Wait(waitLPB);

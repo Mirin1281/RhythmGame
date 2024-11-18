@@ -10,13 +10,13 @@ namespace NoteGenerating
     {
         [SerializeField] int seed = 222;
         [SerializeField] int count = 70;
-        
+
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
 
             var rand = new System.Random(seed);
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 var flick = Helper.GetNote2D(NoteType.Flick);
                 Helper.PoolManager.SetSimultaneousSprite(flick);
@@ -30,7 +30,7 @@ namespace NoteGenerating
         async UniTask MoveAsync(NoteBase_2D note, float x, float time)
         {
             var easing = new Easing(-6f, 14f, time, EaseType.InOutQuad);
-            await WhileYieldAsync(time, t => 
+            await WhileYieldAsync(time, t =>
             {
                 note.SetPos(new Vector3(Inv(x), easing.Ease(t)));
             });

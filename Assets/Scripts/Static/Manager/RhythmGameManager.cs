@@ -5,7 +5,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
     // 不変の音量
     static readonly float MasterVolume = 0.8f;
-    
+
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
 
@@ -38,7 +38,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     }
     public static float GetBGMVolume() => MasterVolume * SettingBGMVolume * 0.6f;
     public static float GetSEVolume() => MasterVolume * SettingSEVolume;
-    public static float GetNoteVolume() => MasterVolume * SettingNoteSEVolume;    
+    public static float GetNoteVolume() => MasterVolume * SettingNoteSEVolume;
 
 
     // 50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
@@ -69,7 +69,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         set => Setting.IsMirror = value;
     }
 
-    
+
     public static Difficulty Difficulty
     {
         get => Status.Difficulty;
@@ -85,16 +85,10 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     /// <summary>
     /// falseにするとデフォルトの設定が使用されます
     /// </summary>
-    static readonly bool useJsonData = false;
+    static readonly bool useJsonData = true;
 #else
     static readonly bool useJsonData = true;
 #endif
-
-    /// <summary>
-    /// カメラ制御の際など、ノーツの生成と異なり即座に影響を与えるコマンドは待機
-    /// させた方が扱いが簡単になるため、LPB=4でこの回数分待機してから処理を行う
-    /// </summary>
-    public static readonly int DefaultWaitOnAction = 6;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitBeforeSceneLoad()
@@ -102,8 +96,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         SpeedBase = 1f;
         Application.targetFrameRate = 60;
         FumenAddress = null;
-        
-        if(useJsonData)
+
+        if (useJsonData)
         {
             var gameData = SaveLoadUtility.GetDataImmediately<GameData>(ConstContainer.GameDataName);
             Setting = gameData.Setting ?? new GameSetting();
@@ -128,11 +122,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             ("ti", "ti"),
         };
 
-        for(int i = 0; i < cueSheetAndNames.Length; i++)
+        for (int i = 0; i < cueSheetAndNames.Length; i++)
         {
             var c = cueSheetAndNames[i];
             var sheet = CriAtom.GetCueSheet(c.sheet);
-            if(sheet == null)
+            if (sheet == null)
             {
                 CriAtom.AddCueSheet(c.sheet, c.name + ".acb", "");
             }
@@ -150,7 +144,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     void OnApplicationQuit()
     {
-        if(useJsonData)
+        if (useJsonData)
         {
             var gameData = new GameData
             {
@@ -159,5 +153,13 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             };
             SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
         }
+    }
+
+    public void ResetData()
+    {
+        var gameData = new GameData();
+        Setting = gameData.Setting ?? new GameSetting();
+        Status = gameData.Status ?? new GameStatus();
+        SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
     }
 }

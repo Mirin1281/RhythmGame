@@ -12,6 +12,6 @@ public class BeatCountTMPro : MonoBehaviour
 
     void SetText(int beatCount, float _)
     {
-        tmpro.SetText("{0}", beatCount - RhythmGameManager.DefaultWaitOnAction);
+        tmpro.SetText("{0}", beatCount - 6); // 6はノーツが生成されてから落下するまでの拍数
     }
 }

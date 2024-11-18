@@ -19,21 +19,21 @@ public class MusicMasterManagerData : ScriptableObject
     public MusicSelectData[] SelectDatas => selectDatas;
 
     [ContextMenu("ResetScoreData")]
-    ScoreData ResetScoreData()
+    public ScoreData ResetScoreData()
     {
         var scoreData = new ScoreData();
-        for(int i = 0; i < selectDatas.Length; i++)
+        for (int i = 0; i < selectDatas.Length; i++)
         {
             var d = selectDatas[i];
-            if(!string.IsNullOrEmpty(d.NormalFumenAddress))
+            if (!string.IsNullOrEmpty(d.NormalFumenAddress))
             {
                 scoreData.GameScores.Add(new GameScore(d.NormalFumenAddress, 0, false));
             }
-            if(!string.IsNullOrEmpty(d.HardFumenAddress))
+            if (!string.IsNullOrEmpty(d.HardFumenAddress))
             {
                 scoreData.GameScores.Add(new GameScore(d.HardFumenAddress, 0, false));
             }
-            if(!string.IsNullOrEmpty(d.ExtraFumenAddress))
+            if (!string.IsNullOrEmpty(d.ExtraFumenAddress))
             {
                 scoreData.GameScores.Add(new GameScore(d.ExtraFumenAddress, 0, false));
             }
@@ -53,7 +53,7 @@ public class MusicMasterManagerData : ScriptableObject
 
         var s = scoreData.GameScores.FirstOrDefault(s => s.FumenAddress == gameScore.FumenAddress);
 
-        if(s == null)
+        if (s == null)
         {
             Debug.LogWarning($"{nameof(GameScore)}がnullでした\n{nameof(ScoreData)}を初期化していない可能性があります");
             Debug.LogWarning($"FumenAddress: {gameScore.FumenAddress}");
@@ -61,12 +61,12 @@ public class MusicMasterManagerData : ScriptableObject
         }
 
         int score = s.Score;
-        if(s.Score < gameScore.Score)
+        if (s.Score < gameScore.Score)
         {
             score = gameScore.Score;
         }
         bool isFullCombo = s.IsFullCombo;
-        if(isFullCombo == false && gameScore.IsFullCombo)
+        if (isFullCombo == false && gameScore.IsFullCombo)
         {
             isFullCombo = gameScore.IsFullCombo;
         }

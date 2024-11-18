@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace NoteGenerating
 {
-    [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下(上昇)"), System.Serializable]
     public class F_AprilRabbit_EffectNoteDrop : Generator_Common
     {
         [SerializeField] NoteType noteType = NoteType.Flick;
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
 
             var rand = new System.Random(221);
             await Wait(16);
@@ -35,7 +35,7 @@ namespace NoteGenerating
                 note.SetAlpha(0.5f);
                 int a = rand.Next(0, 2) == 0 ? 1 : -1;
                 float time = 0.5f;
-                await WhileYieldAsync(time, t => 
+                await WhileYieldAsync(time, t =>
                 {
                     var pos = startPos + 10f * t * Vector2.up;
                     note.SetPos(new Vector3(Inv(pos.x), pos.y));

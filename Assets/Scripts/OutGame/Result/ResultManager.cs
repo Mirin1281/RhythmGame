@@ -24,7 +24,7 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] Image illustImage;
     [SerializeField] TMP_Text illustratorTmpro;
-    
+
 #if UNITY_EDITOR
     [SerializeField] bool isSavable;
 #else
@@ -41,18 +41,18 @@ public class ResultManager : MonoBehaviour
         uiMover.MoveUI().Forget();
 
         var result = RhythmGameManager.Instance.Result;
-        if(result == null) return;
+        if (result == null) return;
 
         string fumenAddress = result.MusicData.GetFumenAddress(RhythmGameManager.Difficulty);
         SetUI(result, fumenAddress);
-        if(isSavable == false) return;
+        if (isSavable == false) return;
 
         var gameScore = new GameScore(
             fumenAddress,
             result.Score,
             result.IsFullCombo);
         masterManagerData.SetScoreJsonAsync(gameScore).Forget();
-        
+
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         RhythmGameManager.Instance.Result = null;
     }
@@ -65,7 +65,7 @@ public class ResultManager : MonoBehaviour
 
         scoreTmpro.SetText(r.Score.ToString());
 
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             int s = await GetHighScore(fumenAddress);
             highScoreTmpro.SetText(s.ToString("00000000"));
@@ -85,8 +85,12 @@ public class ResultManager : MonoBehaviour
         // ハイスコアを譜面データの名前から取得します
         async UniTask<int> GetHighScore(string fumenAddress)
         {
-            var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);     
+            var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);
             var score = list.FirstOrDefault(s => s.FumenAddress == fumenAddress);
+            if (score == null)
+            {
+                return 0;
+            }
             return score.Score;
         }
     }

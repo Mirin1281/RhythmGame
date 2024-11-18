@@ -9,7 +9,7 @@ public class MusicButtonManager : MonoBehaviour
     [SerializeField] MusicSelectManager sceneManager;
     [SerializeField] SelectMusicButton buttonPrefab;
     [SerializeField] MusicMasterManagerData managerData;
-    
+
     SelectMusicButton[] buttons;
     MusicSelectData[] sortedDatas;
     int selectedIndex = -1;
@@ -19,7 +19,7 @@ public class MusicButtonManager : MonoBehaviour
     public async UniTask Init()
     {
         // エディタ上の子ボタンを消去
-        for(int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
         }
@@ -41,16 +41,16 @@ public class MusicButtonManager : MonoBehaviour
     {
         // 現在selectedIndexがソート後にどこにいくかを調べるため
         string beforeName = selectedIndex == -1 ? null : buttons[selectedIndex].MusicName;
-        
+
         sortedDatas = managerData.SelectDatas.Where(d => !string.IsNullOrEmpty(d.GetFumenAddress(diff))) // 難易度が存在するものを選定
             .OrderBy(d => d.GetFumenLevel(diff)) // レベルの数値で並べ替え
             .ThenBy(d => d.MusicName) // 楽曲名で並べ替え
             .ToArray();
-        
-        for(int i = 0; i < buttons.Length; i++)
+
+        for (int i = 0; i < buttons.Length; i++)
         {
             var b = buttons[i];
-            if(sortedDatas.Length <= i)
+            if (sortedDatas.Length <= i)
             {
                 b.gameObject.SetActive(false);
                 b.SetData(null, i);
@@ -61,7 +61,7 @@ public class MusicButtonManager : MonoBehaviour
                 b.SetData(sortedDatas[i], i);
             }
 
-            if(beforeName == b.MusicName && beforeName != null)
+            if (beforeName == b.MusicName && beforeName != null)
             {
                 // 1画面8楽曲まで表示、1つあたり120ほどの高さ
                 float toPosY = i < 4 ? 0 : 120f * (i - 6f);
@@ -76,16 +76,20 @@ public class MusicButtonManager : MonoBehaviour
 
     public void NotifyInput(int index)
     {
+        if (index < 0 || index > sortedDatas.Length - 1)
+        {
+            index = 0;
+        }
         MusicSelectData data = sortedDatas[index];
         RhythmGameManager.SelectedIndex = index;
-        if(selectedIndex == index)
+        if (selectedIndex == index)
         {
             sceneManager.StartGame(data, RhythmGameManager.Difficulty);
             return;
         }
-        
-        
-        if(selectedIndex != -1)
+
+
+        if (selectedIndex != -1)
         {
             buttons[selectedIndex].Deselect();
         }

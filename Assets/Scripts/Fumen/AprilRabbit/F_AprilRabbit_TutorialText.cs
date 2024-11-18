@@ -16,13 +16,13 @@ namespace NoteGenerating
         [SerializeField] Vector3 pos;
 
         [SerializeField] bool isHide;
-        [SerializeField] float time = 3; 
+        [SerializeField] float time = 3;
         const string TmproName = "TutorialTMP";
         const string CanvasName = "Canvas";
 
         protected override async UniTask GenerateAsync()
         {
-            await Wait(4, RhythmGameManager.DefaultWaitOnAction);
+            await WaitOnTiming();
 
             TMP_Text tmpro;
             if (tmproPrefab != null)
@@ -36,7 +36,7 @@ namespace NoteGenerating
             else
             {
                 var o = GameObject.Find(TmproName);
-                if(o == null)
+                if (o == null)
                 {
                     Debug.Log("TMPが設定されていません");
                     return;
@@ -45,24 +45,24 @@ namespace NoteGenerating
             }
 
             Fade(tmpro, 1f, 0f);
-            if(isMove)
+            if (isMove)
             {
                 tmpro.transform.DOMove(Inv(pos), 0.3f).SetRelative(true);
             }
             tmpro.SetText(text);
 
-            if(isHide)
+            if (isHide)
             {
                 await Helper.WaitSeconds(time);
                 Fade(tmpro, 0);
             }
-            
+
         }
 
         void Fade(TMP_Text tmpro, float alpha, float? from = null)
         {
             var easing = new Easing(from ?? tmpro.color.a, alpha, 0.3f, EaseType.OutQuad);
-            WhileYield(0.3f, t => 
+            WhileYield(0.3f, t =>
             {
                 tmpro.color = new Color(0, 0, 0, easing.Ease(t));
             });
