@@ -57,31 +57,31 @@ public class UIMover : MonoBehaviour
         foreach(var t in tmpros1)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
-            MoveAnimAsync(t, 40, 0.5f).Forget();
+            MoveAnimAsync(t, 80, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         foreach(var t in tmpros2)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
-            MoveAnimAsync(t, 40, 0.5f).Forget();
+            MoveAnimAsync(t, 80, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         foreach(var t in tmpros3)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
-            MoveAnimAsync(t, 20, 0.5f).Forget();
+            MoveAnimAsync(t, 40, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         foreach(var t in tmpros4)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
-            MoveAnimAsync(t, 20, 0.5f).Forget();
+            MoveAnimAsync(t, 40, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         foreach(var t in tmpros5)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
-            MoveAnimAsync(t, 20, 0.5f).Forget();
+            MoveAnimAsync(t, 40, 0.5f).Forget();
         }
         
         foreach(var i in Images)
