@@ -12,7 +12,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static string FumenAddress { get; set; }
     public Result Result { get; set; }
 
-    static GameSetting Setting { get; set; }
+    static GameSetting Setting { get; set; } = new();
     static GameStatus Status { get; set; }
 
 
@@ -85,7 +85,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     /// <summary>
     /// falseにするとデフォルトの設定が使用されます
     /// </summary>
-    static readonly bool useJsonData = true;
+    static readonly bool useJsonData = false;
 #else
     static readonly bool useJsonData = true;
 #endif
@@ -113,11 +113,19 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     // AwakeだとCriWare側でエラーを吐く 許さない
     void Start()
     {
-        // キューデータをスクリプトから流す
-        (string sheet, string name)[] cueSheetAndNames = new (string, string)[]
+        var sheet = CriAtom.GetCueSheet("SESheet");
+        if (sheet == null)
         {
-            ("my1", "my1"),
+            CriAtom.AddCueSheet("SESheet", "SESheet.acb", "");
+        }
+
+        // キューデータをスクリプトから流す
+        /*(string sheet, string name)[] cueSheetAndNames = new (string, string)[]
+        {
+            ("SESheet", "SESheet"),
+            /*("my1", "my1"),
             ("my2", "my2"),
+            ("my2_low", "low_my2"),
             ("start_freeze", "start_freeze"),
             ("ti", "ti"),
         };
@@ -130,7 +138,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             {
                 CriAtom.AddCueSheet(c.sheet, c.name + ".acb", "");
             }
-        }
+        }*/
     }
 
     // OnApplicationQuitはタスクキルすると呼ばれないっぽい

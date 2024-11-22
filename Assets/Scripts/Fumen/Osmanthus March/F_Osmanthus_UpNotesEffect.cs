@@ -22,14 +22,15 @@ namespace NoteGenerating
                 Helper.PoolManager.SetSimultaneousSprite(flick);
                 flick.SetRotate(90);
                 flick.SetAlpha(0.2f);
-                MoveAsync(flick, rand.GetInt(-10, 10), rand.GetFloat(0.5f, 4f)).Forget();
+                flick.transform.localScale = rand.GetFloat(0.5f, 1.5f) * Vector3.one;
+                MoveAsync(flick, rand.GetInt(-12, 12), rand.GetFloat(0.5f, 4f)).Forget();
                 await Wait(rand.GetFloat(3f, 6f));
             }
         }
 
         async UniTask MoveAsync(NoteBase_2D note, float x, float time)
         {
-            var easing = new Easing(-6f, 14f, time, EaseType.InOutQuad);
+            var easing = new Easing(-6f, 14f, time, EaseType.OutQuad);
             await WhileYieldAsync(time, t =>
             {
                 note.SetPos(new Vector3(Inv(x), easing.Ease(t)));

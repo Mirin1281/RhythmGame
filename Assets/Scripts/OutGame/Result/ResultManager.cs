@@ -78,7 +78,7 @@ public class ResultManager : MonoBehaviour
         detailGreatTmpro.SetText($"F:{r.FastGreat} L:{r.LateGreat}");
         detailFarTmpro.SetText($"F:{r.FastFar} L:{r.LateFar}");
 
-        illustratorTmpro.SetText(d.IllustratorName);
+        illustratorTmpro.SetText($"illust: {d.IllustratorName}");
         illustImage.sprite = d.Illust;
 
 

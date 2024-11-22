@@ -17,14 +17,16 @@ namespace NoteGenerating
         [SerializeField] float easeTime;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField] float delayLPB;
+        [SerializeField] bool IsVerticalRange;
 
         protected override async UniTask GenerateAsync()
         {
             await Wait(delayLPB);
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-                Note2D(easing.Ease(i), noteType);
+                var note = Note2D(easing.Ease(i), noteType);
+                note.IsVerticalRange = IsVerticalRange;
                 await Wait(wait);
             }
         }
@@ -58,7 +60,7 @@ namespace NoteGenerating
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             var previewObj = FumenDebugUtility.GetPreviewObject(isClearPreview);
             float y = 0;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 var note = Helper.GetNote2D(noteType);
                 note.transform.SetParent(previewObj.transform);

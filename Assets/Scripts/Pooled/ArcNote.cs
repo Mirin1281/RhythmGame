@@ -41,6 +41,15 @@ public class ArcNote : NoteBase
 
     public bool Is2D { get; set; }
 
+    public float StartZ
+    {
+        get
+        {
+            if (JudgeIndex >= judges.Count) return 0;
+            return judges[0].StartPos.z;
+        }
+    }
+
     /// <summary>
     /// 最後尾のz座標
     /// </summary>
@@ -48,7 +57,7 @@ public class ArcNote : NoteBase
     {
         get
         {
-            if(Spline == null || Spline.Knots.Count() == 0) return 0;
+            if (Spline == null || Spline.Knots.Count() == 0) return 0;
             return Spline.Knots.Last().Position.z;
         }
     }
@@ -67,7 +76,7 @@ public class ArcNote : NoteBase
     void Update()
     {
         noInputTime += Time.deltaTime;
-        if(Is2D)
+        if (Is2D)
         {
             meshRenderer.material.SetFloat("_ZThreshold", -1);
         }
@@ -84,7 +93,7 @@ public class ArcNote : NoteBase
     {
         // 初期化
         Spline.Clear();
-        if(judges == null)
+        if (judges == null)
         {
             judges = new(datas.Length);
         }
@@ -100,7 +109,7 @@ public class ArcNote : NoteBase
 
         // 頂点を追加
         float z = 0;
-        for(int i = 0; i < datas.Length; i++)
+        for (int i = 0; i < datas.Length; i++)
         {
             var data = datas[i];
             z += GetDistanceInterval(data.Pos.z);
@@ -113,7 +122,7 @@ public class ArcNote : NoteBase
             };
             Spline.Add(knot, tangentMode);
 
-            if(i % 3 == 0)
+            if (i % 3 == 0)
             {
                 await UniTask.Yield(destroyCancellationToken);
             }
@@ -123,9 +132,9 @@ public class ArcNote : NoteBase
 
         // 判定を追加
         int k = 0;
-        foreach(var knot in Spline.Knots)
+        foreach (var knot in Spline.Knots)
         {
-            if(datas[k].IsJudgeDisable || k == Spline.Knots.Count() - 1)
+            if (datas[k].IsJudgeDisable || k == Spline.Knots.Count() - 1)
             {
                 k++;
                 continue;
@@ -134,7 +143,7 @@ public class ArcNote : NoteBase
             float knotZ = knot.Position.z - (Is2D ? -GetPos().y : GetPos().z);
             float behindJudgePosZ = knotZ - GetDistanceInterval(datas[k].BehindJudgeRange);
             var startPos = GetAnyPointOnZPlane(behindJudgePosZ);
-            if(k == 0) startPos = Vector3.zero;
+            //if (k == 0) startPos = Vector3.zero;
             float aheadJudgePosZ = knotZ + GetDistanceInterval(datas[k].AheadJudgeRange);
             var endPos = GetAnyPointOnZPlane(aheadJudgePosZ);
 
@@ -145,7 +154,7 @@ public class ArcNote : NoteBase
 
         float GetDistanceInterval(float lpb)
         {
-            if(lpb == 0f) return 0f;
+            if (lpb == 0f) return 0f;
             return wholeNoteInterval / lpb;
         }
     }
@@ -154,16 +163,16 @@ public class ArcNote : NoteBase
     {
         meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
         await CreateNewArcAsync(datas, wholeNoteInterval, isInverse);
-        foreach(var child in transform.OfType<Transform>().ToArray())
+        foreach (var child in transform.OfType<Transform>().ToArray())
         {
             DestroyImmediate(child.gameObject);
         }
 
-        for(int i = 0; i < Spline.Count; i++)
+        for (int i = 0; i < Spline.Count; i++)
         {
             var data = datas[i];
             var knot = Spline[i];
-            if(datas[i].IsJudgeDisable)
+            if (datas[i].IsJudgeDisable)
             {
                 continue;
             }
@@ -175,10 +184,10 @@ public class ArcNote : NoteBase
                 sphere.SetColor(new Color(1, 1, 1, 0.5f));
             }
 
-            if(i == Spline.Knots.Count() - 1) break;
+            if (i == Spline.Knots.Count() - 1) break;
             float knotZ = knot.Position.z - GetPos().z;
 
-            if(i != 0)
+            if (i != 0)
             {
                 float behindDistance = knotZ - GetDistanceInterval(datas[i].BehindJudgeRange);
                 var startPos = GetAnyPointOnZPlane(behindDistance);
@@ -197,10 +206,10 @@ public class ArcNote : NoteBase
         }
 
 #if UNITY_EDITOR
-        for(int k = 0; k < judges.Count; k++)
+        for (int k = 0; k < judges.Count; k++)
         {
-            if(k == judges.Count - 1) break;
-            if(judges[k].EndPos.z - 0.01f > judges[k + 1].StartPos.z)
+            if (k == judges.Count - 1) break;
+            if (judges[k].EndPos.z - 0.01f > judges[k + 1].StartPos.z)
             {
                 Debug.LogWarning($"{k} end: {judges[k].EndPos.z}  next: {judges[k + 1].StartPos.z}");
             }
@@ -209,7 +218,7 @@ public class ArcNote : NoteBase
 
         float GetDistanceInterval(float lpb)
         {
-            if(lpb == 0f) return 0f;
+            if (lpb == 0f) return 0f;
             return wholeNoteInterval / lpb;
         }
     }
@@ -220,15 +229,15 @@ public class ArcNote : NoteBase
     /// </summary>
     public Vector3 GetAnyPointOnZPlane(float target)
     {
-        if(Spline == null) return default;
+        if (Spline == null) return default;
         BezierKnot behindKnot = Spline[0];
         BezierKnot aheadKnot = Spline[0];
         var downPos = Is2D ? -GetPos().y : GetPos().z;
-        foreach(BezierKnot knot in Spline)
+        foreach (BezierKnot knot in Spline)
         {
-            if(knot.Position.z < target + downPos)
+            if (knot.Position.z < target + downPos)
             {
-                
+
                 behindKnot = knot;
             }
             else
@@ -239,7 +248,7 @@ public class ArcNote : NoteBase
         }
 
         float knotInterval = aheadKnot.Position.z - behindKnot.Position.z;
-        if(knotInterval == 0f) return aheadKnot.Position;
+        if (knotInterval == 0f) return aheadKnot.Position;
         float delta = target + downPos - behindKnot.Position.z;
         float rate = delta / knotInterval;
         return rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
@@ -250,7 +259,7 @@ public class ArcNote : NoteBase
     /// </summary>
     public ArcJudge GetCurrentJudge()
     {
-        if(JudgeIndex >= judges.Count) return null;
+        if (JudgeIndex >= judges.Count) return null;
         return judges[JudgeIndex];
     }
 
@@ -271,17 +280,22 @@ public class ArcNote : NoteBase
 
     public void SetInput(bool enabled)
     {
-        if(enabled)
+        if (enabled)
         {
-            if(IsInvalid)
+            if (IsInvalid)
             {
                 meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
                 return;
             }
             noInputTime = 0f;
         }
-        var c = meshRenderer.material.color;
-        meshRenderer.material.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
+        SetColor(enabled);
+    }
+
+    public void SetColor(bool enabled)
+    {
+        var c = meshRenderer.sharedMaterial.color;
+        meshRenderer.sharedMaterial.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
     }
 
     public void SetRadius(float radius)
@@ -349,7 +363,7 @@ public struct ArcCreateData
     [SerializeField] bool isDuplicated;
     [SerializeField] float behindJudgeRange;
     [SerializeField] float aheadJudgeRange;
-    
+
     public readonly Vector3 Pos => pos;
     public readonly ArcVertexMode VertexMode => vertexMode;
     public readonly bool IsJudgeDisable => isJudgeDisable;

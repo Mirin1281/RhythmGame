@@ -28,13 +28,14 @@ public class Judgement : MonoBehaviour
 #else
     bool showDebugRange = false;
 #endif
-    
+
     Result result;
     float showScore;
     CancellationTokenSource cts = new();
 
     public Result Result => result;
     const float Range = 4.6f;
+    const float ArcRange = 5f;
 
     public void Init(FumenData fumenData)
     {
@@ -52,26 +53,26 @@ public class Judgement : MonoBehaviour
         cts = null;
         result = null;
     }
-    
-    
+
+
     public bool IsNearPosition(NoteExpect expect, Vector2 inputPos)
     {
         return MyUtility.IsPointInsideRectangle(
-            new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, Range)),
+            new Rect(expect.Pos, new Vector2(expect.Note.Width * Range, expect.Note.IsVerticalRange ? 30f : Range)),
             inputPos,
             expect.Note.transform.eulerAngles.z);
     }
     public bool IsNearPositionHold(HoldNote hold, Vector2 inputPos)
     {
         return MyUtility.IsPointInsideRectangle(
-            new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, Range)),
+            new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, hold.IsVerticalRange ? 30f : Range)),
             inputPos,
             hold.transform.eulerAngles.z);
     }
     public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2)
     {
         var distance = Vector2.Distance(pos1, pos2);
-        return distance < Range / 2f;
+        return distance < ArcRange / 2f;
     }
 
     public void PlayParticle(NoteGrade grade, Vector2 pos)
@@ -92,16 +93,16 @@ public class Judgement : MonoBehaviour
             float baseTime = Metronome.Instance.CurrentTime;
             float t = 0;
             var easing = new Easing(beforeScore, toScore, 0.3f, EaseType.OutQuad);
-            while(t < 0.3f)
+            while (t < 0.3f)
             {
                 t = Metronome.Instance.CurrentTime - baseTime;
                 var s = easing.Ease(t);
-                if(showScore < s)
+                if (showScore < s)
                 {
                     showScore = s;
                     scoreText.SetText("{0:00000000}", s);
                 }
-                
+
                 await UniTask.Yield(destroyCancellationToken);
             }
         }
@@ -110,7 +111,7 @@ public class Judgement : MonoBehaviour
     public NoteGrade GetGradeAndSetText(float delta)
     {
         var grade = GetGrade(delta);
-        if(grade != NoteGrade.Perfect)
+        if (grade != NoteGrade.Perfect)
             SetJudgeText(grade).Forget();
         deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
         return grade;
@@ -130,13 +131,13 @@ public class Judgement : MonoBehaviour
 
     public static NoteGrade GetGrade(float delta)
     {
-        if(Mathf.Abs(delta) < 0.05f)
+        if (Mathf.Abs(delta) < 0.05f)
         {
             return NoteGrade.Perfect;
         }
-        else if(Mathf.Abs(delta) < 0.08f)
+        else if (Mathf.Abs(delta) < 0.08f)
         {
-            if(delta > 0)
+            if (delta > 0)
             {
                 return NoteGrade.LateGreat;
             }
@@ -145,9 +146,9 @@ public class Judgement : MonoBehaviour
                 return NoteGrade.FastGreat;
             }
         }
-        else if(Mathf.Abs(delta) < 0.12f)
+        else if (Mathf.Abs(delta) < 0.12f)
         {
-            if(delta > 0)
+            if (delta > 0)
             {
                 return NoteGrade.LateFar;
             }
@@ -165,12 +166,12 @@ public class Judgement : MonoBehaviour
 #if UNITY_EDITOR
     public void DebugShowRange(NoteExpect expect)
     {
-        if(showDebugRange == false) return;
+        if (showDebugRange == false) return;
         var obj = Instantiate(debugNoteRangePrefab, transform);
         obj.transform.localPosition = expect.Pos;
         obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.eulerAngles.z, Vector3.forward);
-        obj.transform.localScale = new Vector3(expect.Note.Width * 4.6f, 4.6f);
-        UniTask.Void(async () => 
+        obj.transform.localScale = new Vector3(expect.Note.Width * Range, expect.Note.IsVerticalRange ? 30f : Range);
+        UniTask.Void(async () =>
         {
             await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
             Destroy(obj);
@@ -181,7 +182,7 @@ public class Judgement : MonoBehaviour
         var obj = Instantiate(debugNoteRangePrefab, transform);
         obj.transform.localPosition = pos;
         obj.transform.localScale = new Vector3(2f, 2f);
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
             Destroy(obj);

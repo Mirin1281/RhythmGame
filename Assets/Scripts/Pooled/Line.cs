@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class Line : PooledBase, ITransformable
+public class Line : PooledBase
 {
     [SerializeField] SpriteRenderer spriteRenderer;
 
     public virtual Vector3 GetPos(bool isWorld = false)
     {
-        if(isWorld)
+        if (isWorld)
         {
             return transform.position;
         }
@@ -50,7 +48,7 @@ public class Line : PooledBase, ITransformable
 
     public async UniTask FadeAlphaAsync(float toAlpha, float time, Easing easing = default)
     {
-        if(easing.EaseType == EaseType.None)
+        if (easing.EaseType == EaseType.None)
         {
             easing = new Easing(spriteRenderer.color.a, toAlpha, time, EaseType.OutQuad);
         }
@@ -72,18 +70,18 @@ public class Line : PooledBase, ITransformable
 
     public void FadeOut(float time, float delaySeconds = 0f, bool inActive = true, Easing easing = default, float delta = 0)
     {
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             await MyUtility.WaitSeconds(delaySeconds, destroyCancellationToken);
             await FadeAlphaAsync(0, time, easing);
-            if(inActive)
+            if (inActive)
             {
                 SetActive(false);
             }
         });
     }
 
-    public async UniTask MoveAsync(Vector3 toPos, float time, float delta = 0)
+    /*public async UniTask MoveAsync(Vector3 toPos, float time, float delta = 0)
     {
         var xEasing = new Easing(GetPos().x, toPos.x, time, EaseType.OutQuad);
         var yEasing = new Easing(GetPos().y, toPos.y, time, EaseType.OutQuad);
@@ -108,5 +106,5 @@ public class Line : PooledBase, ITransformable
             SetRotate(easing.Ease(t));
             await UniTask.Yield(destroyCancellationToken);
         }
-    }
+    }*/
 }

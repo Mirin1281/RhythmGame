@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlickNotePool : PoolBase<FlickNote> 
+public class FlickNotePool : PoolBase<FlickNote>
 {
     [SerializeField] Sprite defaultSprite;
     [SerializeField] Sprite simultaneousSprite;
@@ -16,6 +16,7 @@ public class FlickNotePool : PoolBase<FlickNote>
         n.SetSprite(defaultSprite);
         n.SetAlpha(1f);
         n.transform.SetParent(this.transform);
+        n.IsVerticalRange = false;
         return n;
     }
 

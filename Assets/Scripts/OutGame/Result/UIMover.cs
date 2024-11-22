@@ -17,23 +17,23 @@ public class UIMover : MonoBehaviour
 
     void HideUI()
     {
-        foreach(var t in tmpros1)
+        foreach (var t in tmpros1)
         {
             t.alpha = 0;
         }
-        foreach(var t in tmpros2)
+        foreach (var t in tmpros2)
         {
             t.alpha = 0;
         }
-        foreach(var t in tmpros3)
+        foreach (var t in tmpros3)
         {
             t.alpha = 0;
         }
-        foreach(var t in tmpros4)
+        foreach (var t in tmpros4)
         {
             t.alpha = 0;
         }
-        foreach(var t in tmpros5)
+        foreach (var t in tmpros5)
         {
             t.alpha = 0;
         }
@@ -41,7 +41,7 @@ public class UIMover : MonoBehaviour
         illustratorTmpro.alpha = 0;
         illustImage.color = new Color(1, 1, 1, 0);
 
-        foreach(var i in Images)
+        foreach (var i in Images)
         {
             i.color = new Color(0, 0, 0, 0);
         }
@@ -50,41 +50,41 @@ public class UIMover : MonoBehaviour
     public async UniTask MoveUI()
     {
         HideUI();
-        await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
+        await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         FadeAlphaAsync(illustratorTmpro, 1, 1f).Forget();
         FadeAlphaAsync(illustImage, 1, 1f).Forget();
 
-        foreach(var t in tmpros1)
+        foreach (var t in tmpros1)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
             MoveAnimAsync(t, 80, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
-        foreach(var t in tmpros2)
+        foreach (var t in tmpros2)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
             MoveAnimAsync(t, 80, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
-        foreach(var t in tmpros3)
+        foreach (var t in tmpros3)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
             MoveAnimAsync(t, 40, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
-        foreach(var t in tmpros4)
+        foreach (var t in tmpros4)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
             MoveAnimAsync(t, 40, 0.5f).Forget();
         }
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
-        foreach(var t in tmpros5)
+        foreach (var t in tmpros5)
         {
             FadeAlphaAsync(t, 1, 0.4f).Forget();
             MoveAnimAsync(t, 40, 0.5f).Forget();
         }
-        
-        foreach(var i in Images)
+
+        foreach (var i in Images)
         {
             FadeAlphaAsync(i, 1, 0.2f).Forget();
         }
@@ -92,7 +92,7 @@ public class UIMover : MonoBehaviour
 
     async UniTask FadeAlphaAsync(TMP_Text tmpro, float toAlpha, float time, Easing easing = default)
     {
-        if(easing.EaseType == EaseType.None)
+        if (easing.EaseType == EaseType.None)
         {
             easing = new Easing(tmpro.color.a, toAlpha, time, EaseType.OutQuad);
         }
@@ -107,7 +107,7 @@ public class UIMover : MonoBehaviour
     }
     async UniTask FadeAlphaAsync(Image image, float toAlpha, float time, Easing easing = default)
     {
-        if(easing.EaseType == EaseType.None)
+        if (easing.EaseType == EaseType.None)
         {
             easing = new Easing(image.color.a, toAlpha, time, EaseType.OutQuad);
         }
@@ -124,7 +124,7 @@ public class UIMover : MonoBehaviour
     async UniTask MoveAnimAsync(TMP_Text tmpro, float beforeDelta, float time, Easing easing = default)
     {
         Vector3 p = tmpro.transform.localPosition;
-        if(easing.EaseType == EaseType.None)
+        if (easing.EaseType == EaseType.None)
         {
             easing = new Easing(p.x + beforeDelta, p.x, time, EaseType.OutQuad);
         }

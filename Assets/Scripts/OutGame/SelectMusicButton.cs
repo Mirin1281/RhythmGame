@@ -19,7 +19,7 @@ public class SelectMusicButton : MonoBehaviour
     {
         this.index = index;
         diff = RhythmGameManager.Difficulty;
-        if(data == null)
+        if (data == null)
         {
             musicName = null;
             return;
@@ -48,16 +48,16 @@ public class SelectMusicButton : MonoBehaviour
         creator.NotifyInput(index);
         Pop();
     }
-    
+
     public void Pop()
     {
         plateImage.color = GetDifficultyColor(alpha: 230);
-        transform.DOLocalMoveX(300f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOLocalMoveX(300f, 0.2f).SetEase(Ease.OutBack).SetLink(gameObject);
     }
 
     public void Deselect()
     {
         plateImage.color = GetDifficultyColor();
-        transform.DOLocalMoveX(460f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOLocalMoveX(460f, 0.2f).SetEase(Ease.OutBack).SetLink(gameObject);
     }
 }

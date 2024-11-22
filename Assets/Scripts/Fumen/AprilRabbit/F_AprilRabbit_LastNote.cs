@@ -15,6 +15,7 @@ namespace NoteGenerating
             NoteBase_2D note = Helper.GetNote2D(NoteType.Normal);
             Vector3 pos = new Vector3(0, 4);
             note.SetPos(pos);
+            note.IsVerticalRange = true;
             Helper.PoolManager.SetSimultaneousSprite(note);
             float expectTime = Helper.GetTimeInterval(4, 7) - Delta;
             Helper.NoteInput.AddExpect(note, pos, expectTime);

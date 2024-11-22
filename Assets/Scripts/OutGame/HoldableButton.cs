@@ -11,10 +11,12 @@ public class HoldableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     CancellationTokenSource _cts;
 
     public event Action OnInput;
+    public event Action OnHold;
 
     void OnDestroy()
     {
         OnInput = null;
+        OnHold = null;
     }
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
@@ -33,12 +35,24 @@ public class HoldableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         float downTime = 0f;
         int i = 0;
-        while(!token.IsCancellationRequested)
+        while (!token.IsCancellationRequested)
         {
-            if(downTime > holdTime && i % holdRepeatInterval == 0)
+            if (holdRepeatInterval == -1)
             {
-                OnInput?.Invoke();
+                if (downTime > holdTime)
+                {
+                    OnHold?.Invoke();
+                    return;
+                }
             }
+            else
+            {
+                if (downTime > holdTime && i % holdRepeatInterval == 0)
+                {
+                    OnInput?.Invoke();
+                }
+            }
+
             downTime += Time.deltaTime;
             i++;
             await UniTask.Yield(token);

@@ -42,5 +42,6 @@ public class ManagerCreator : SingletonMonoBehaviour<ManagerCreator>
                 obj.SetActive(false);
             }
         }
+        Destroy(this);
     }
 }

@@ -25,6 +25,12 @@ public class HoldNote : NoteBase_2D
         spriteMask.transform.localScale = new Vector3(spriteMask.transform.localScale.x, SpriteRenderer.size.y);
     }
 
+    public override void SetHeight(float height)
+    {
+        var scale = SpriteRenderer.transform.localScale;
+        SpriteRenderer.transform.localScale = new Vector3(scale.x, height, scale.z);
+    }
+
     public void SetLength(float length)
     {
         SpriteRenderer.size = new Vector2(SpriteRenderer.size.x, length);
@@ -33,7 +39,7 @@ public class HoldNote : NoteBase_2D
 
     public override Vector3 GetPos(bool isWorld = false)
     {
-        if(isWorld)
+        if (isWorld)
         {
             return SpriteRenderer.transform.position;
         }

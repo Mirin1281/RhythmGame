@@ -22,6 +22,7 @@ public class UpdatorOnChange : MonoBehaviour
     List<GameScore> scores;
     MusicSelectData pickedData;
     string selectedFumenName;
+    public string SelectedFumenAddress => selectedFumenName;
 
     void Awake()
     {
@@ -48,6 +49,7 @@ public class UpdatorOnChange : MonoBehaviour
     // 難易度が変更された際に呼ばれる
     void UpdateHighScore(Difficulty difficulty)
     {
+        if (pickedData == null) return;
         selectedFumenName = pickedData.GetFumenAddress(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.ti);
         SetHighScoreText(selectedFumenName).Forget();
@@ -55,8 +57,8 @@ public class UpdatorOnChange : MonoBehaviour
 
     async UniTask SetHighScoreText(string fumenName)
     {
-        if(string.IsNullOrEmpty(fumenName)) return;
-        var list = await GetGameScoresAsync();  
+        if (string.IsNullOrEmpty(fumenName)) return;
+        var list = await GetGameScoresAsync();
         var gameScore = list.FirstOrDefault(s => s.FumenAddress == fumenName);
         (int highScore, bool isFullCombo) = (gameScore.Score, gameScore.IsFullCombo);
         string fullComboText = isFullCombo ? "[F]" : string.Empty;

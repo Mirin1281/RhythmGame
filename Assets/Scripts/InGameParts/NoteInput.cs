@@ -70,19 +70,16 @@ public class NoteInput : MonoBehaviour
         inputManager.OnFlick += OnFlick;
 
 
-        void OnUp(Input input)
+        async UniTaskVoid OnUp(Input input)
         {
-            UniTask.Void(async () =>
+            await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
+            foreach (var arc in arcs)
             {
-                await UniTask.DelayFrame(2, cancellationToken: destroyCancellationToken);
-                foreach (var arc in arcs)
+                if (arc.FingerIndex == input.index && arc.IsInvalid == false)
                 {
-                    if (arc.FingerIndex == input.index && arc.IsInvalid == false)
-                    {
-                        arc.InvalidArcJudgeAsync().Forget();
-                    }
+                    arc.InvalidArcJudgeAsync().Forget();
                 }
-            });
+            }
         }
     }
 
@@ -131,7 +128,14 @@ public class NoteInput : MonoBehaviour
         if (RhythmGameManager.SettingIsNoteMute) return;
         var volume = RhythmGameManager.GetNoteVolume();
         if (volume == 0f) return;
-        SEManager.Instance.PlaySE(SEType.my2);
+        if (noteType == NoteType.Slide)
+        {
+            SEManager.Instance.PlayNoteSE(SEType.my2_low);
+        }
+        else
+        {
+            SEManager.Instance.PlayNoteSE(SEType.my2);
+        }
     }
 
     void Update()
@@ -182,7 +186,7 @@ public class NoteInput : MonoBehaviour
         }
     }
 
-    void OnDown(Input input)
+    async UniTaskVoid OnDown(Input input)
     {
         (NoteExpect expect, float delta) = FetchNearestNote(
             input.pos, Metronome.CurrentTime, NoteType.Normal, NoteType.Circle, NoteType.Hold, NoteType.Sky);
@@ -198,7 +202,6 @@ public class NoteInput : MonoBehaviour
         }
 
         judge.PlayParticle(grade, expect.Pos);
-        PlayNoteSE(expect.Note.Type);
         allExpects.Remove(expect);
         if (expect.Note.Type == NoteType.Hold)
         {
@@ -208,6 +211,12 @@ public class NoteInput : MonoBehaviour
         {
             expect.Note.SetActive(false);
         }
+
+        if (delta < 0)
+        {
+            await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
+        }
+        PlayNoteSE(expect.Note.Type);
     }
 
     void OnHold(List<Input> inputs)
@@ -226,19 +235,7 @@ public class NoteInput : MonoBehaviour
             foreach (var (expect, delta) in expects)
             {
                 if (expect.Note.Type != NoteType.Slide) continue;
-                allExpects.Remove(expect);
-                UniTask.Void(async () =>
-                {
-                    if (delta < 0)
-                    {
-                        await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
-                    }
-
-                    judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                    PlayNoteSE(expect.Note.Type);
-                    expect.Note.SetActive(false);
-                    judge.SetCombo(NoteGrade.Perfect);
-                });
+                PickNote(expect, delta).Forget();
             }
         }
     }
@@ -251,20 +248,21 @@ public class NoteInput : MonoBehaviour
         foreach (var (expect, delta) in expects)
         {
             if (expect.Note.Type != NoteType.Flick) continue;
-            allExpects.Remove(expect);
-            UniTask.Void(async () =>
-            {
-                if (delta < 0)
-                {
-                    await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
-                }
-
-                judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
-                PlayNoteSE(expect.Note.Type);
-                expect.Note.SetActive(false);
-                judge.SetCombo(NoteGrade.Perfect);
-            });
+            PickNote(expect, delta).Forget();
         }
+    }
+
+    async UniTaskVoid PickNote(NoteExpect expect, float delta)
+    {
+        allExpects.Remove(expect);
+        if (delta < 0)
+        {
+            await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
+        }
+        judge.PlayParticle(NoteGrade.Perfect, expect.Pos);
+        PlayNoteSE(expect.Note.Type);
+        expect.Note.SetActive(false);
+        judge.SetCombo(NoteGrade.Perfect);
     }
 
     (NoteExpect, float) FetchNearestNote(Vector2 inputPos, float inputTime, params NoteType[] fetchTypes)
@@ -379,10 +377,11 @@ public class NoteInput : MonoBehaviour
         for (int i = 0; i < arcs.Count; i++)
         {
             var arc = arcs[i];
+            var arcJ = arc.GetCurrentJudge();
             var arcPos = arc.GetPos();
-            var arcDownPos = arc.Is2D ? -arcPos.y : arcPos.z;
-            if (arcDownPos < 0) continue; // まだ到達していない
-            if (arcDownPos > arc.LastZ + 3) // アークが完全に通り過ぎた
+            var downPosZ = arc.Is2D ? -arcPos.y : arcPos.z;
+            if (downPosZ < 0) continue; // まだ到達していない
+            if (downPosZ > arc.LastZ + 3) // アークが完全に通り過ぎた
             {
                 arcs.RemoveAt(i);
                 arc.SetActive(false);
@@ -391,7 +390,6 @@ public class NoteInput : MonoBehaviour
             }
 
             // 距離の近いアークを調べる
-            var arcJ = arc.GetCurrentJudge();
             arc.IsPosDuplicated = arcJ == null || arcJ.IsDuplicated;
             var worldPos = arc.GetAnyPointOnZPlane(0);
             foreach (var otherArc in arcs)
@@ -443,14 +441,14 @@ public class NoteInput : MonoBehaviour
 
             if (arcJ == null) continue; // 最後の判定を終えた
 
-            if (arcJ.EndPos.z < arcDownPos)
+            if (arcJ.EndPos.z < downPosZ)
             {
                 arcJ.State = ArcJudgeState.Miss;
                 arc.JudgeIndex++;
                 judge.SetCombo(NoteGrade.Miss);
             }
 
-            if ((arcJ.StartPos.z < arcDownPos && arcDownPos < arcJ.EndPos.z) == false) continue; // 判定の範囲外
+            if ((arcJ.StartPos.z < downPosZ && downPosZ < arcJ.EndPos.z) == false) continue; // 判定の範囲外
 
             if (arcJ.State is ArcJudgeState.None)
             {

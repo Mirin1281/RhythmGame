@@ -13,15 +13,16 @@ public enum NoteType
     Circle,
 }
 
-public abstract class NoteBase : PooledBase, ITransformable
+public abstract class NoteBase : PooledBase
 {
     [SerializeField] NoteType type;
     public NoteType Type => type;
     public float Width { get; protected set; } = 1f;
+    public bool IsVerticalRange { get; set; }
 
     public virtual Vector3 GetPos(bool isWorld = false)
     {
-        if(isWorld)
+        if (isWorld)
         {
             return transform.position;
         }
@@ -44,9 +45,9 @@ public abstract class NoteBase : PooledBase, ITransformable
         transform.localRotation = Quaternion.Euler(rot.x, rot.y, rot.z);
     }
 
-    public virtual void SetRendererEnabled(bool enabled) {}
+    public virtual void SetRendererEnabled(bool enabled) { }
 
-    public virtual void SetSimultaneous() {}
+    public virtual void SetSimultaneous() { }
 
     public virtual void OnMiss()
     {

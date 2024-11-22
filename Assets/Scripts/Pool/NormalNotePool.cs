@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalNotePool : PoolBase<NormalNote> 
+public class NormalNotePool : PoolBase<NormalNote>
 {
     [Space(20)]
     [SerializeField] Sprite defaultSprite;
@@ -19,6 +19,7 @@ public class NormalNotePool : PoolBase<NormalNote>
         n.SetAlpha(1f);
         //n.SetColor(isDarkMode ? Color.white : Color.black);
         n.transform.SetParent(this.transform);
+        n.IsVerticalRange = false;
         return n;
     }
 

@@ -7,7 +7,6 @@ public class HoldNotePool : PoolBase<HoldNote>
     {
         var n = GetInstance();
         n.State = HoldNote.InputState.Idle;
-        n.SetRotate(Vector3.zero);
         n.SetRotate(0);
         n.transform.localPosition = default;
         n.transform.localRotation = default;
@@ -18,6 +17,7 @@ public class HoldNotePool : PoolBase<HoldNote>
         n.SetRendererEnabled(true);
         n.SetAlpha(1f);
         n.transform.SetParent(this.transform);
+        n.IsVerticalRange = false;
         return n;
     }
 }

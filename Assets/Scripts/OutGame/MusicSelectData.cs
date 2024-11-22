@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 [CreateAssetMenu(
     fileName = "M_",
     menuName = "ScriptableObject/MusicSelect",
-    order = 0)
+    order = 1)
 ]
 public class MusicSelectData : ScriptableObject
 {
@@ -56,7 +56,7 @@ public class MusicSelectData : ScriptableObject
     /// </summary>
     public string GetFumenAddress(Difficulty difficulty = Difficulty.None)
     {
-        if(difficulty == Difficulty.None)
+        if (difficulty == Difficulty.None)
         {
             difficulty = RhythmGameManager.Difficulty;
         }
@@ -74,7 +74,7 @@ public class MusicSelectData : ScriptableObject
     /// </summary>
     public int GetFumenLevel(Difficulty difficulty = Difficulty.None)
     {
-        if(difficulty == Difficulty.None)
+        if (difficulty == Difficulty.None)
         {
             difficulty = RhythmGameManager.Difficulty;
         }
@@ -93,7 +93,7 @@ public class MusicSelectData : ScriptableObject
     public bool TryGetBPMChangeBeatCount(int index, out int beatCount)
     {
         beatCount = 0;
-        if(bpmChangePoints.Length > index)
+        if (bpmChangePoints.Length > index)
         {
             beatCount = bpmChangePoints[index].BeatCount;
             return true;
@@ -106,15 +106,15 @@ public class MusicSelectData : ScriptableObject
 #if UNITY_EDITOR
     public void SetFumenAddress(string name, Difficulty difficulty)
     {
-        if(difficulty == Difficulty.Normal)
+        if (difficulty == Difficulty.Normal)
         {
             NormalFumenAddress = name;
         }
-        else if(difficulty == Difficulty.Hard)
+        else if (difficulty == Difficulty.Hard)
         {
             HardFumenAddress = name;
         }
-        else if(difficulty == Difficulty.Extra)
+        else if (difficulty == Difficulty.Extra)
         {
             ExtraFumenAddress = name;
         }

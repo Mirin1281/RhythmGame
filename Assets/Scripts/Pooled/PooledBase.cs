@@ -27,10 +27,3 @@ public abstract class PooledBase : MonoBehaviour
         gameObject.SetActive(enabled);
     }
 }
-
-public interface ITransformable
-{
-    public Vector3 GetPos(bool isWorld = false);
-    public void SetPos(Vector3 pos);
-    public void SetRotate(float deg);
-}

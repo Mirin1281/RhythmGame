@@ -44,7 +44,7 @@ namespace NoteGenerating
 
     [AddTypeMenu("◆汎用 ジェネレータ2D", -2), System.Serializable]
     public class F_Generic2D : Generator_Common
-    {    
+    {
         [SerializeField] float speedRate = 1f;
 
         [SerializeField] bool isSpeedChangable;
@@ -54,7 +54,9 @@ namespace NoteGenerating
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = true;
-        
+
+        [SerializeField] bool IsVerticalRange;
+
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
         protected override float Speed => base.Speed * speedRate;
@@ -67,26 +69,26 @@ namespace NoteGenerating
 
             var parentTs = CreateParent(parentGeneratable);
 
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
                 await Wait(data.Wait);
 
                 var type = data.Type;
-                if(type == CreateNoteType.Normal)
+                if (type == CreateNoteType.Normal)
                 {
                     MyNote(data.X, NoteType.Normal, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Slide)
+                else if (type == CreateNoteType.Slide)
                 {
                     MyNote(data.X, NoteType.Slide, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Flick)
+                else if (type == CreateNoteType.Flick)
                 {
                     MyNote(data.X, NoteType.Flick, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Hold)
+                else if (type == CreateNoteType.Hold)
                 {
-                    if(data.Length == 0)
+                    if (data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
@@ -99,12 +101,13 @@ namespace NoteGenerating
             void MyNote(float x, NoteType type, float width, Transform parentTs)
             {
                 NoteBase_2D note = Helper.GetNote2D(type, parentTs);
-                if((width is 0 or 1) == false)
+                note.IsVerticalRange = IsVerticalRange;
+                if ((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
                 Vector3 startPos = new(Inv(x), StartBase);
-                if(isSpeedChangable)
+                if (isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(note).Forget();
                 }
@@ -113,8 +116,8 @@ namespace NoteGenerating
                     DropAsync(note, startPos).Forget();
                 }
 
-                float expectTime = startPos.y/Speed - Delta;
-                if(parentTs == null)
+                float expectTime = startPos.y / Speed - Delta;
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
                 }
@@ -146,13 +149,14 @@ namespace NoteGenerating
             {
                 float holdTime = Helper.GetTimeInterval(length);
                 HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-                if((width is 0 or 1) == false)
+                hold.IsVerticalRange = IsVerticalRange;
+                if ((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
-                Vector3 startPos = new (Inv(x), StartBase);
+                Vector3 startPos = new(Inv(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                if(isSpeedChangable)
+                if (isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(hold).Forget();
                 }
@@ -161,8 +165,8 @@ namespace NoteGenerating
                     DropAsync(hold, startPos).Forget();
                 }
 
-                float expectTime = startPos.y/Speed - Delta;
-                if(parentTs == null)
+                float expectTime = startPos.y / Speed - Delta;
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
                 }
@@ -196,11 +200,11 @@ namespace NoteGenerating
             void SetSimultaneous(NoteBase_2D note, float expectTime)
             {
                 // NoteInput内で行う場合は不要
-                if(isCheckSimultaneous) return;
+                if (isCheckSimultaneous) return;
 
-                if(beforeTime == expectTime)
+                if (beforeTime == expectTime)
                 {
-                    if(simultaneousCount == 1)
+                    if (simultaneousCount == 1)
                     {
                         Helper.PoolManager.SetSimultaneousSprite(beforeNote);
                     }

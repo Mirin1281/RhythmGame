@@ -17,6 +17,7 @@ public class SlideNotePool : PoolBase<SlideNote>
         n.SetSprite(defaultSprite);
         n.SetAlpha(0.5f);
         n.transform.SetParent(this.transform);
+        n.IsVerticalRange = false;
         return n;
     }
 

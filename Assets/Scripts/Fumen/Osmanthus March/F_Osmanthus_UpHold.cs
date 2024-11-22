@@ -19,17 +19,49 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            for(int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < datas.Length; i++)
             {
                 var d = datas[i];
                 await Wait(d.Wait);
-                UpHold(d.Length, d.X);
+                UpHold(d.Length, d.X).Forget();
             }
 
             await UniTask.CompletedTask;
         }
 
-        void UpHold(float length, float x)
+        async UniTaskVoid UpHold(float length, float x)
+        {
+            var hold = Hold(x, length, isMove: false);
+            hold.IsVerticalRange = true;
+            float expectTime = StartBase / Speed;
+            float holdTime = Helper.GetTimeInterval(length);
+
+            float baseTime = CurrentTime - Delta;
+            Vector3 startPos = new Vector3(Inv(x), StartBase);
+            var vec = Speed * Vector3.down;
+
+            float time = 0f;
+            while (hold.IsActive && time < expectTime)
+            {
+                time = CurrentTime - baseTime;
+                hold.SetPos(startPos + time * vec);
+                await Helper.Yield();
+            }
+
+            baseTime = CurrentTime - Delta;
+            time = 0f;
+            while (hold.IsActive && time < holdTime)
+            {
+                time = CurrentTime - baseTime;
+                hold.SetMaskLocalPos(new Vector3(Inv(x), 0) - time * vec);
+                hold.SetMaskLength(time * holdTime * Speed);
+                await Helper.Yield();
+            }
+            hold.SetActive(false);
+        }
+
+        // 旧実装
+        /*void UpHold(float length, float x)
         {
             var (visualHold, expectTime, holdTime) = VisualHold(x, length, isMove: false);
             VisualMoveAsync(visualHold).Forget();
@@ -103,7 +135,7 @@ namespace NoteGenerating
                 hold.SetPos(startPos);
             }
             return (hold, startPos.y / Speed, holdTime);
-        }
+        }*/
 
         protected override string GetName()
         {

@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: GenerateData_F_H_OsmanthusMarch 13
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 29
+  beatTiming: 28
   generatable:
     rid: 176941210122846242
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 176941210122846242
       type: {class: F_Generic2D, ns: NoteGenerating, asm: Assembly-CSharp}
       data:
@@ -28,10 +26,11 @@ MonoBehaviour:
         speedRate: 1
         isSpeedChangable: 0
         parentGeneratable:
-          rid: -2
+          rid: 176941550405681153
         isCheckSimultaneous: 0
+        IsVerticalRange: 0
         noteDatas:
-        - wait: 0
+        - wait: 4
           type: 4
           x: 3
           width: 1
@@ -66,3 +65,9 @@ MonoBehaviour:
           x: 6
           width: 1
           length: 2
+    - rid: 176941550405681153
+      type: {class: P_Sin, ns: NoteGenerating, asm: Assembly-CSharp}
+      data:
+        moveTime: 10
+        amplitude: 0.5
+        period: -1.5

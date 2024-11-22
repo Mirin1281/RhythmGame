@@ -15,8 +15,23 @@ public class SEManager : SingletonMonoBehaviour<SEManager>
 
     public void PlaySE(SEType type)
     {
-        source.cueSheet = type.ToString();
         source.Play(type.ToString());
+    }
+
+    public void PlayNoteSE(SEType type)
+    {
+        source.Play(ToStringFromEnum(type));
+    }
+
+    static string ToStringFromEnum(SEType value)
+    {
+        return value switch
+        {
+            SEType.my2 => "my2",
+            SEType.my2_low => "my2_low",
+
+            _ => throw new System.InvalidOperationException(),
+        };
     }
 }
 
@@ -25,6 +40,7 @@ public enum SEType
     None,
     my1,
     my2,
+    my2_low,
     start_freeze,
     ti,
 }

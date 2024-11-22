@@ -13,6 +13,7 @@ public class ArcNotePool : PoolBase<ArcNote>
         n.SetRendererEnabled(true);
         n.transform.SetParent(lane3D.transform);
         n.SetRadius(0.5f);
+        n.SetColor(true);
         return n;
     }
 }

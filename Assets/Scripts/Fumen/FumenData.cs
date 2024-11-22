@@ -6,7 +6,7 @@ namespace NoteGenerating
     [CreateAssetMenu(
         fileName = "F_",
         menuName = "ScriptableObject/Fumen",
-        order = 1)
+        order = 0)
     ]
     public class FumenData : ScriptableObject
     {
@@ -74,7 +74,7 @@ namespace NoteGenerating
         /// </summary>
         public bool IsUsed(GenerateData targetData)
         {
-            foreach(var generateData in GetReadOnlyGenerateDataList())
+            foreach (var generateData in GetReadOnlyGenerateDataList())
             {
                 if (generateData == targetData) return true;
             }

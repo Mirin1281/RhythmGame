@@ -5,11 +5,11 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 
-[CreateAssetMenu(
+/*[CreateAssetMenu(
     fileName = "MasterManager",
     menuName = "ScriptableObject/MasterManager",
-    order = 4)
-]
+    order = 10)
+]*/
 public class MusicMasterManagerData : ScriptableObject
 {
     [SerializeField] MusicSelectData[] selectDatas;

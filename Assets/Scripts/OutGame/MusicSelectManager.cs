@@ -11,19 +11,19 @@ public class MusicSelectManager : MonoBehaviour
 
     void Awake()
     {
-        musicButtonManager.Init().Forget();
-        difficultyGroup.Init();
+        Init();
     }
 
-    public void StartGame(FumenData fumenData)
+    public void Init()
     {
-        StartGame(fumenData.MusicSelectData, fumenData.Difficulty);
+        musicButtonManager.Init().Forget();
+        difficultyGroup.Init();
     }
 
     public void StartGame(MusicSelectData selectData, Difficulty difficulty = Difficulty.None)
     {
         RhythmGameManager.FumenAddress = selectData.GetFumenAddress(difficulty);
-        if(difficulty != Difficulty.None)
+        if (difficulty != Difficulty.None)
         {
             RhythmGameManager.Difficulty = difficulty;
         }

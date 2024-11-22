@@ -32,7 +32,7 @@ public abstract class NoteBase_2D : NoteBase
 
     public async UniTask FadeAlphaAsync(float toAlpha, float time, Easing easing = default)
     {
-        if(easing.EaseType == EaseType.None)
+        if (easing.EaseType == EaseType.None)
         {
             easing = new Easing(spriteRenderer.color.a, toAlpha, time, EaseType.OutQuad);
         }
@@ -58,7 +58,7 @@ public abstract class NoteBase_2D : NoteBase
 
     public override void OnMiss()
     {
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             await FadeAlphaAsync(0f, 0.1f);
             SetActive(false);

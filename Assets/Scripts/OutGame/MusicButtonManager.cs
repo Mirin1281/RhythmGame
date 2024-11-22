@@ -76,6 +76,13 @@ public class MusicButtonManager : MonoBehaviour
 
     public void NotifyInput(int index)
     {
+        if (sortedDatas.Length == 0)
+        {
+            RhythmGameManager.Difficulty = Difficulty.Normal;
+            RhythmGameManager.SelectedIndex = -1;
+            FindAnyObjectByType<MusicSelectManager>().Init();
+            return;
+        }
         if (index < 0 || index > sortedDatas.Length - 1)
         {
             index = 0;

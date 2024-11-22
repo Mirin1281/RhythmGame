@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Linq;
 
 namespace NoteGenerating
 {
@@ -14,9 +15,12 @@ namespace NoteGenerating
         IParentGeneratable parentGeneratable;
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
-        bool isCheckSimultaneous = false;
-        
+        bool isCheckSimultaneous = true;
+
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
+
+        const float noteWidth = 1.4f;
+        const float noteHeight = 4.6f;
 
         protected override float Speed3D => base.Speed3D * speedRate;
 
@@ -28,31 +32,31 @@ namespace NoteGenerating
 
             var parentTs = CreateParent(parentGeneratable);
 
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
+                await Wait(data.Wait);
                 var type = data.Type;
-                if(type == CreateNoteType.Normal)
+                if (type == CreateNoteType.Normal)
                 {
                     MyNote(data.X, NoteType.Normal, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Slide)
+                else if (type == CreateNoteType.Slide)
                 {
                     MyNote(data.X, NoteType.Slide, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Flick)
+                else if (type == CreateNoteType.Flick)
                 {
                     MyNote(data.X, NoteType.Flick, data.Width, parentTs);
                 }
-                else if(type == CreateNoteType.Hold)
+                else if (type == CreateNoteType.Hold)
                 {
-                    if(data.Length == 0)
+                    if (data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
                     }
                     MyHold(data.X, data.Length, data.Width, parentTs);
                 }
-                await Wait(data.Wait);
             }
 
 
@@ -60,17 +64,17 @@ namespace NoteGenerating
             {
                 NoteBase_2D note = Helper.GetNote2D(type, parentTs);
                 note.SetRotate(new Vector3(90, 0, 0));
-                if((width is 0 or 1) == false)
+                if ((width is 0 or 1) == false)
                 {
-                    note.SetWidth(1.4f * width);
+                    note.SetWidth(noteWidth * width);
                 }
                 else
                 {
-                    note.SetWidth(1.4f);
+                    note.SetWidth(noteWidth);
                 }
-                note.SetHeight(5f);
+                note.SetHeight(noteHeight);
                 Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
-                if(isSpeedChangable)
+                if (isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(note).Forget();
                 }
@@ -79,8 +83,8 @@ namespace NoteGenerating
                     DropAsync3D(note, startPos).Forget();
                 }
 
-                float expectTime = startPos.z/Speed3D - Delta;
-                if(parentTs == null)
+                float expectTime = startPos.z / Speed3D - Delta;
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime, isCheckSimultaneous: isCheckSimultaneous);
                 }
@@ -111,19 +115,20 @@ namespace NoteGenerating
             void MyHold(float x, float length, float width, Transform parentTs)
             {
                 float holdTime = Helper.GetTimeInterval(length);
-                HoldNote hold = Helper.GetHold(holdTime * Speed3D, parentTs);
+                HoldNote hold = Helper.GetHold(holdTime * Speed3D / noteHeight, parentTs);
                 hold.SetRotate(new Vector3(90, 0, 0));
-                if((width is 0 or 1) == false)
+                if ((width is 0 or 1) == false)
                 {
-                    hold.SetWidth(1.4f * width);
+                    hold.SetWidth(noteWidth * width);
                 }
                 else
                 {
-                    hold.SetWidth(1.4f);
+                    hold.SetWidth(noteWidth);
                 }
+                hold.SetHeight(noteHeight);
                 Vector3 startPos = new Vector3(Inv(x), 0.04f, StartBase3D);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-                if(isSpeedChangable)
+                if (isSpeedChangable)
                 {
                     DropAsync_SpeedChangable(hold).Forget();
                 }
@@ -132,8 +137,8 @@ namespace NoteGenerating
                     DropAsync3D(hold, startPos).Forget();
                 }
 
-                float expectTime = startPos.z/Speed3D - Delta;
-                if(parentTs == null)
+                float expectTime = startPos.z / Speed3D - Delta;
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
                 }
@@ -163,15 +168,14 @@ namespace NoteGenerating
             }
 
             // 同時押しをこのコマンド内でのみチェックします。
-            // NoteInput内でするよりも軽量なのでデフォルトではこちらを使用します
             void SetSimultaneous(NoteBase_2D note, float expectTime)
             {
                 // NoteInput内で行う場合は不要
-                if(isCheckSimultaneous) return;
+                if (isCheckSimultaneous) return;
 
-                if(beforeTime == expectTime)
+                if (beforeTime == expectTime)
                 {
-                    if(simultaneousCount == 1)
+                    if (simultaneousCount == 1)
                     {
                         Helper.PoolManager.SetSimultaneousSprite(beforeNote);
                     }
@@ -217,98 +221,8 @@ namespace NoteGenerating
 
         void DebugPreview(bool isClearPreview)
         {
-            GameObject previewObj = FumenDebugUtility.GetPreviewObject(isClearPreview);
-            int simultaneousCount = 0;
-            float beforeY = -1;
-            NoteBase_2D beforeNote = null;
-
-            float y = 0f;
-            foreach(var data in noteDatas)
-            {
-                var type = data.Type;
-                if(type == CreateNoteType.Normal)
-                {
-                    DebugNote(data.X, y, NoteType.Normal, data.Width);
-                }
-                else if(type == CreateNoteType.Slide)
-                {
-                    DebugNote(data.X, y, NoteType.Slide, data.Width);
-                }
-                else if(type == CreateNoteType.Flick)
-                {
-                    DebugNote(data.X, y, NoteType.Flick, data.Width);
-                }
-                else if(type == CreateNoteType.Hold)
-                {
-                    if(data.Length == 0)
-                    {
-                        Debug.LogWarning("ホールドの長さが0です");
-                        continue;
-                    }
-                    DebugHold(data.X, y, data.Length, data.Width);
-                }
-                y += Helper.GetTimeInterval(data.Wait) * Speed;
-            }
-
-            float lineY = 0f;
-            for(int i = 0; i < 10000; i++)
-            {
-                var line = Helper.PoolManager.LinePool.GetLine();
-                line.SetPos(new Vector3(0, lineY));
-                line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * Speed;
-                if(lineY > y) break;
-            }
-
-
-            void DebugNote(float x, float y, NoteType type, float width)
-            {
-                NoteBase_2D note = Helper.GetNote2D(type);
-                if((width is 0 or 1) == false)
-                {
-                    note.SetWidth(width);
-                }
-                var startPos = new Vector3(Inv(x), y);
-                note.SetPos(startPos);
-                note.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(note, y);
-            }
-
-            void DebugHold(float x, float y, float length, float width)
-            {
-                var holdTime = Helper.GetTimeInterval(length);
-                var hold = Helper.GetHold(holdTime * Speed);
-                if((width is 0 or 1) == false)
-                {
-                    hold.SetWidth(width);
-                }
-                hold.SetMaskLocalPos(new Vector2(Inv(x), 0));
-                var startPos = new Vector3(Inv(x), y);
-                hold.SetPos(startPos);
-                hold.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(hold, y);
-            }
-
-            void SetSimultaneous(NoteBase_2D note, float y)
-            {
-                if(beforeY == y)
-                {
-                    if(simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(note);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeY = y;
-                beforeNote = note;
-            }
+            FumenDebugUtility.DebugPreview2DNotes(
+                noteDatas.Select(d => (INoteData)d), Helper, IsInverse, isClearPreview);
         }
 
         public override string CSVContent1
