@@ -6,7 +6,7 @@ public class DifficultyGroup : MonoBehaviour
     [SerializeField] MusicSelectManager sceneManager;
     [SerializeField] DifficultyButton buttonPrefab;
     [SerializeField] MusicButtonManager buttonManager;
-    
+
     DifficultyButton[] buttons;
     Difficulty selectedDiff = Difficulty.None;
     MusicSelectData selectData;
@@ -15,7 +15,7 @@ public class DifficultyGroup : MonoBehaviour
 
     public void Init()
     {
-        for(int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
         }
@@ -23,7 +23,7 @@ public class DifficultyGroup : MonoBehaviour
         buttonManager.OnOtherSelect += UpdateButton;
 
         buttons = new DifficultyButton[3];
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             var b = Instantiate(buttonPrefab, this.transform);
             buttons[i] = b;
@@ -48,14 +48,14 @@ public class DifficultyGroup : MonoBehaviour
         ActiveDiffButton(Difficulty.Normal);
         ActiveDiffButton(Difficulty.Hard);
         ActiveDiffButton(Difficulty.Extra);
-        
+
 
         void ActiveDiffButton(Difficulty difficulty)
         {
             int index = (int)difficulty - 1;
-            bool isExist = string.IsNullOrEmpty(data.GetFumenAddress(difficulty)) == false;
+            bool isExist = data.GetFumenAddress(difficulty) != null;
             buttons[index].gameObject.SetActive(isExist);
-            if(isExist)
+            if (isExist)
             {
                 buttons[index].SetLevel(data.GetFumenLevel(difficulty));
             }
@@ -65,13 +65,13 @@ public class DifficultyGroup : MonoBehaviour
     public void NotifyByChild(Difficulty difficulty)
     {
         RhythmGameManager.Difficulty = difficulty;
-        if(selectedDiff == difficulty)
+        if (selectedDiff == difficulty)
         {
             sceneManager.StartGame(selectData, difficulty);
             return;
         }
 
-        if(selectedDiff != Difficulty.None)
+        if (selectedDiff != Difficulty.None)
         {
             GetButton(selectedDiff).Deselect();
         }

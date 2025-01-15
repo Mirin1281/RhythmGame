@@ -7,7 +7,7 @@ using UnityEditor;
 /// </summary>
 public class ForceSetDirtyToAssets
 {
-    [MenuItem("Assets/Set Assets as Dirty", false)]
+    [MenuItem("Tools/Set Assets as Dirty", false)]
     public static void SetSelectedAssetsDirty()
     {
         var selectedAssetGUIDs = Selection.assetGUIDs;

@@ -2,6 +2,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
@@ -43,12 +44,13 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if (result == null) return;
 
-        string fumenAddress = result.MusicData.GetFumenAddress(RhythmGameManager.Difficulty);
-        SetUI(result, fumenAddress);
+        AssetReference fumenReference = result.MusicData.GetFumenAddress(RhythmGameManager.Difficulty);
+        string fumenName = RhythmGameManager.FumenName;
+        SetUI(result, fumenName);
         if (isSavable == false) return;
 
         var gameScore = new GameScore(
-            fumenAddress,
+            fumenName,
             result.Score,
             result.IsFullCombo);
         masterManagerData.SetScoreJsonAsync(gameScore).Forget();
@@ -57,7 +59,7 @@ public class ResultManager : MonoBehaviour
         RhythmGameManager.Instance.Result = null;
     }
 
-    void SetUI(Result r, string fumenAddress)
+    void SetUI(Result r, string fumenName)
     {
         var d = r.MusicData;
         musicTitleTmpro.SetText(d.MusicName);
@@ -67,7 +69,7 @@ public class ResultManager : MonoBehaviour
 
         UniTask.Void(async () =>
         {
-            int s = await GetHighScore(fumenAddress);
+            int s = await GetHighScore(fumenName);
             highScoreTmpro.SetText(s.ToString("00000000"));
         });
 
@@ -83,10 +85,10 @@ public class ResultManager : MonoBehaviour
 
 
         // ハイスコアを譜面データの名前から取得します
-        async UniTask<int> GetHighScore(string fumenAddress)
+        async UniTask<int> GetHighScore(string fumenName)
         {
             var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);
-            var score = list.FirstOrDefault(s => s.FumenAddress == fumenAddress);
+            var score = list.FirstOrDefault(s => s.FumenAddress == fumenName);
             if (score == null)
             {
                 return 0;

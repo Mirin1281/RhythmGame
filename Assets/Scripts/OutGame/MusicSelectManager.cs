@@ -22,7 +22,7 @@ public class MusicSelectManager : MonoBehaviour
 
     public void StartGame(MusicSelectData selectData, Difficulty difficulty = Difficulty.None)
     {
-        RhythmGameManager.FumenAddress = selectData.GetFumenAddress(difficulty);
+        RhythmGameManager.FumenReference = selectData.GetFumenAddress(difficulty);
         if (difficulty != Difficulty.None)
         {
             RhythmGameManager.Difficulty = difficulty;
@@ -33,9 +33,9 @@ public class MusicSelectManager : MonoBehaviour
             $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
     }
 
-    public void StartGame(string fumenAddress)
+    public void StartGame(AssetReference reference)
     {
-        RhythmGameManager.FumenAddress = fumenAddress;
+        RhythmGameManager.FumenReference = reference;
         previewer.Stop(0.5f).Forget();
         FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
     }

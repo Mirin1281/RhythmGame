@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using NoteGenerating;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.AddressableAssets;
 
 // 曲選択画面で変更があった際に画面を更新する
 public class UpdatorOnChange : MonoBehaviour
@@ -21,8 +22,8 @@ public class UpdatorOnChange : MonoBehaviour
     [SerializeField] TMP_Text highScoreTmpro;
     List<GameScore> scores;
     MusicSelectData pickedData;
-    string selectedFumenName;
-    public string SelectedFumenAddress => selectedFumenName;
+    AssetReference selectedFumenRef;
+    public AssetReference SelectedFumenRef => selectedFumenRef;
 
     void Awake()
     {
@@ -41,18 +42,18 @@ public class UpdatorOnChange : MonoBehaviour
         illustImage.sprite = data.Illust;
         illustratorTmpro.SetText(data.IllustratorName);
         pickedData = data;
-        selectedFumenName = data.GetFumenAddress(RhythmGameManager.Difficulty);
+        selectedFumenRef = data.GetFumenAddress(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.my1);
-        SetHighScoreText(selectedFumenName).Forget();
+        SetHighScoreText(MyUtility.GetFumenName(data)).Forget();
     }
 
     // 難易度が変更された際に呼ばれる
     void UpdateHighScore(Difficulty difficulty)
     {
         if (pickedData == null) return;
-        selectedFumenName = pickedData.GetFumenAddress(RhythmGameManager.Difficulty);
+        selectedFumenRef = pickedData.GetFumenAddress(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.ti);
-        SetHighScoreText(selectedFumenName).Forget();
+        SetHighScoreText(MyUtility.GetFumenName(pickedData)).Forget();
     }
 
     async UniTask SetHighScoreText(string fumenName)

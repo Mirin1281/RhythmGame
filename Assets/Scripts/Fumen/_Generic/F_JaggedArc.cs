@@ -75,7 +75,7 @@ namespace NoteGenerating
             }
             else
             {
-                arc.SetRadius(0.5f);
+                arc.SetRadius(0.6f);
                 arc.SetPos(Vector3.zero);
                 arc.SetRotate(Vector3.zero);
                 arc.Is2D = false;

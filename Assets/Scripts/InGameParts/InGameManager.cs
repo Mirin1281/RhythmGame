@@ -27,9 +27,9 @@ public class InGameManager : MonoBehaviour
         var poolManager = FindAnyObjectByType<PoolManager>();
         var judgement = FindAnyObjectByType<Judgement>();
 
-        if(RhythmGameManager.Instance != null && string.IsNullOrEmpty(RhythmGameManager.FumenAddress) == false)
+        if (RhythmGameManager.Instance != null && RhythmGameManager.FumenReference != null)
         {
-            fumenData = await Addressables.LoadAssetAsync<FumenData>(RhythmGameManager.FumenAddress);
+            fumenData = await Addressables.LoadAssetAsync<FumenData>(RhythmGameManager.FumenReference);
         }
         else
         {
@@ -37,9 +37,9 @@ public class InGameManager : MonoBehaviour
             fumenData = editorFumenData;
 #endif
         }
-        
+
         // 初期化 //
-        if(fumenData.Start3D)
+        if (fumenData.Start3D)
         {
             var rendererShower = GameObject.FindAnyObjectByType<RendererShower>(FindObjectsInactive.Include);
             var cameraMover = GameObject.FindAnyObjectByType<CameraMover>(FindObjectsInactive.Include);
@@ -57,10 +57,12 @@ public class InGameManager : MonoBehaviour
 
         titleTmpro.SetText($"<size=30><b>♪</b></size>{fumenData.MusicSelectData.MusicName}");
 
+        RhythmGameManager.FumenName = MyUtility.GetFumenName(fumenData.MusicSelectData);
+
         metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
 #if UNITY_EDITOR
-        if(isMirror)
+        if (isMirror)
             RhythmGameManager.SettingIsMirror = true;
 #endif
 
@@ -69,7 +71,7 @@ public class InGameManager : MonoBehaviour
 
         await UniTask.DelayFrame(2);
 
-        if(fumenData.ArcPoolCount != 0)
+        if (fumenData.ArcPoolCount != 0)
         {
             // アークは最初が高負荷なので予め生成しておく
             var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);
@@ -85,7 +87,7 @@ public class InGameManager : MonoBehaviour
                 }, 2);
             arc.SetActive(false);
         }
-        
+
         await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
         metronome.Play(fumenData);
 

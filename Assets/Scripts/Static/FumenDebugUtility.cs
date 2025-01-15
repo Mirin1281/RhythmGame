@@ -17,11 +17,11 @@ namespace NoteGenerating
             GameObject previewObj = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
                 .Where(obj => obj.name == "Preview2D")
                 .FirstOrDefault();
-            if(previewObj == null) return null;
-            if(isClear)
+            if (previewObj == null) return null;
+            if (isClear)
             {
                 previewObj.SetActive(true);
-                foreach(var child in previewObj.transform.OfType<Transform>().ToArray())
+                foreach (var child in previewObj.transform.OfType<Transform>().ToArray())
                 {
                     GameObject.DestroyImmediate(child.gameObject);
                 }
@@ -45,7 +45,7 @@ namespace NoteGenerating
                 {
                     foreach (Type type in assembly.GetTypes())
                     {
-                        if (type.Name == className && 
+                        if (type.Name == className &&
                             type.Namespace == namespaceName)
                         {
                             return type;
@@ -57,18 +57,18 @@ namespace NoteGenerating
                 return null;
             }
         }
-        
+
         public static string GetContent<T>(T t) where T : NoteGeneratorBase
         {
             int separateLevel = 1;
-            StringBuilder sb = new ();
+            StringBuilder sb = new();
             Type type = t.GetType();
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            for(int i = 0; i < fields.Length; i++)
+            for (int i = 0; i < fields.Length; i++)
             {
                 var f = fields[i];
                 object v = f.GetValue(t);
-                if(f.FieldType.IsArray)
+                if (f.FieldType.IsArray)
                 {
                     Array array = v as Array;
                     sb.Append(GetContentFromArray(array, separateLevel));
@@ -77,11 +77,11 @@ namespace NoteGenerating
                 {
                     sb.Append(v);
                 }
-                
+
                 sb.Append(GetSeparator(separateLevel));
             }
 
-            if(t is IInversableCommand inversable)
+            if (t is IInversableCommand inversable)
             {
                 sb.Append(inversable.IsInverse);
             }
@@ -90,14 +90,14 @@ namespace NoteGenerating
 
             static StringBuilder GetContentFromArray(Array array, int separateLevel)
             {
-                if(array == null) return null;
-                StringBuilder sb = new ();
+                if (array == null) return null;
+                StringBuilder sb = new();
                 separateLevel++;
-                for(int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
                     var element = array.GetValue(i);
                     sb.Append(GetFieldContent(element, element.GetType(), separateLevel));
-                    if(i == array.Length - 1) break;
+                    if (i == array.Length - 1) break;
                     sb.Append(GetSeparator(separateLevel));
                 }
                 return sb;
@@ -105,14 +105,14 @@ namespace NoteGenerating
 
                 static StringBuilder GetFieldContent(object t, Type type, int separateLevel)
                 {
-                    StringBuilder sb = new ();
+                    StringBuilder sb = new();
                     separateLevel++;
                     FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    for(int i = 0; i < fields.Length; i++)
+                    for (int i = 0; i < fields.Length; i++)
                     {
                         var f = fields[i];
                         object v = f.GetValue(t);
-                        if(f.FieldType.IsArray)
+                        if (f.FieldType.IsArray)
                         {
                             Array array = v as Array;
                             sb.Append(GetContentFromArray(array, separateLevel));
@@ -122,7 +122,7 @@ namespace NoteGenerating
                             sb.Append(v);
                         }
 
-                        if(i == fields.Length - 1) break;
+                        if (i == fields.Length - 1) break;
                         sb.Append(GetSeparator(separateLevel));
                     }
                     return sb;
@@ -132,18 +132,18 @@ namespace NoteGenerating
 
         public static void SetMember<T>(T generator, string content) where T : NoteGeneratorBase
         {
-            if(string.IsNullOrWhiteSpace(content)) return;
+            if (string.IsNullOrWhiteSpace(content)) return;
 
             int separateLevel = 1;
 
             var type = generator.GetType();
             var fieldStrings = content.Split(GetSeparator(separateLevel));
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            for(int i = 0; i < fields.Length; i++)
+            for (int i = 0; i < fields.Length; i++)
             {
                 FieldInfo f = fields[i];
                 Type fType = f.FieldType;
-                if(fType.IsArray)
+                if (fType.IsArray)
                 {
                     var arrayType = fType.GetElementType();
                     var createdArray = CreateArray(arrayType, fieldStrings[i], separateLevel);
@@ -152,13 +152,13 @@ namespace NoteGenerating
                 else
                 {
                     var v = Convert(fType, fieldStrings[i]);
-                    if(v != null)
+                    if (v != null)
                     {
                         f.SetValue(generator, v);
                     }
                 }
             }
-            if(generator is IInversableCommand inversable)
+            if (generator is IInversableCommand inversable)
             {
                 inversable.SetIsInverse(bool.Parse(fieldStrings[fields.Length]));
             }
@@ -168,8 +168,9 @@ namespace NoteGenerating
             {
                 separateLevel++;
                 var elementStrings = value.Split(GetSeparator(separateLevel));
+                if (elementStrings.Length == 1 && string.IsNullOrEmpty(elementStrings[0])) return null;
                 var array = Array.CreateInstance(type, elementStrings.Length);
-                for(int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
                     array.SetValue(GetElement(type, elementStrings[i], separateLevel), i);
                 }
@@ -180,12 +181,13 @@ namespace NoteGenerating
                 {
                     separateLevel++;
                     var elementStrings = value.Split(GetSeparator(separateLevel));
+                    if (elementStrings.Length == 1 && string.IsNullOrEmpty(elementStrings[0])) return null;
                     object instance = Activator.CreateInstance(type);
                     FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    for(int i = 0; i < fields.Length; i++)
+                    for (int i = 0; i < fields.Length; i++)
                     {
                         FieldInfo f = fields[i];
-                        if(f.FieldType.IsArray)
+                        if (f.FieldType.IsArray)
                         {
                             var arrayType = f.FieldType.GetElementType();
                             var createdArray = CreateArray(arrayType, elementStrings[i], separateLevel);
@@ -194,7 +196,7 @@ namespace NoteGenerating
                         else
                         {
                             var v = Convert(f.FieldType, elementStrings[i]);
-                            if(v != null)
+                            if (v != null)
                             {
                                 f.SetValue(instance, v);
                             }
@@ -252,26 +254,26 @@ namespace NoteGenerating
             NoteBase_2D beforeNote = null;
 
             float y = 0f;
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
                 y += Helper.GetTimeInterval(data.Wait) * RhythmGameManager.Speed;
 
                 var type = data.Type;
-                if(type == CreateNoteType.Normal)
+                if (type == CreateNoteType.Normal)
                 {
                     DebugNote(data.X, y, NoteType.Normal, data.Width);
                 }
-                else if(type == CreateNoteType.Slide)
+                else if (type == CreateNoteType.Slide)
                 {
                     DebugNote(data.X, y, NoteType.Slide, data.Width);
                 }
-                else if(type == CreateNoteType.Flick)
+                else if (type == CreateNoteType.Flick)
                 {
                     DebugNote(data.X, y, NoteType.Flick, data.Width);
                 }
-                else if(type == CreateNoteType.Hold)
+                else if (type == CreateNoteType.Hold)
                 {
-                    if(data.Length == 0)
+                    if (data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
@@ -280,22 +282,22 @@ namespace NoteGenerating
                 }
             }
 
-            if(isClearPreview == false) return;
+            if (isClearPreview == false) return;
             float lineY = 0f;
-            for(int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var line = Helper.PoolManager.LinePool.GetLine();
                 line.SetPos(new Vector3(0, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * RhythmGameManager.Speed;
-                if(lineY > y) break;
+                if (lineY > y) break;
             }
 
 
             void DebugNote(float x, float y, NoteType type, float width)
             {
                 NoteBase_2D note = Helper.GetNote2D(type);
-                if((width is 0 or 1) == false)
+                if ((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
@@ -310,7 +312,7 @@ namespace NoteGenerating
             {
                 var holdTime = Helper.GetTimeInterval(length);
                 var hold = Helper.GetHold(holdTime * RhythmGameManager.Speed);
-                if((width is 0 or 1) == false)
+                if ((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
@@ -324,9 +326,9 @@ namespace NoteGenerating
 
             void SetSimultaneous(NoteBase_2D note, float y)
             {
-                if(beforeY == y)
+                if (beforeY == y)
                 {
-                    if(simultaneousCount == 1)
+                    if (simultaneousCount == 1)
                     {
                         Helper.PoolManager.SetSimultaneousSprite(beforeNote);
                     }

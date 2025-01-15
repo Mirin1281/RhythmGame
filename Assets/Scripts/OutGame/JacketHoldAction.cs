@@ -5,7 +5,7 @@ public class JacketHoldAction : MonoBehaviour
     [SerializeField] UpdatorOnChange updator;
     [SerializeField] HoldableButton holdableButton;
 
-    void Awake()
+    /*void Awake()
     {
         if (holdableButton != null)
         {
@@ -20,5 +20,5 @@ public class JacketHoldAction : MonoBehaviour
             holdableButton.OnInput -= SpecialAction;
             InGameTransition.Transition2InGame("F_E_AprilRabbit", Difficulty.Extra);
         }
-    }
+    }*/
 }

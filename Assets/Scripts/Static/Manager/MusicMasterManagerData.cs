@@ -25,17 +25,17 @@ public class MusicMasterManagerData : ScriptableObject
         for (int i = 0; i < selectDatas.Length; i++)
         {
             var d = selectDatas[i];
-            if (!string.IsNullOrEmpty(d.NormalFumenAddress))
+            if (d.NormalFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(d.NormalFumenAddress, 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
             }
-            if (!string.IsNullOrEmpty(d.HardFumenAddress))
+            if (d.HardFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(d.HardFumenAddress, 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
             }
-            if (!string.IsNullOrEmpty(d.ExtraFumenAddress))
+            if (d.ExtraFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(d.ExtraFumenAddress, 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
             }
         }
         SaveLoadUtility.SetDataImmediately(scoreData, ConstContainer.ScoreDataName);

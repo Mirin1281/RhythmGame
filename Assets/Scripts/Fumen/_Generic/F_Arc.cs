@@ -35,13 +35,13 @@ namespace NoteGenerating
         public override async void Preview()
         {
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
-            if(arc == null)
+            if (arc == null)
             {
                 Debug.LogWarning("ヒエラルキー上にアークノーツを設置してください");
                 return;
             }
             arc.SetActive(true);
-            if(is2D)
+            if (is2D)
             {
                 arc.SetRadius(0.4f);
                 arc.SetPos(new Vector3(0, 0, 0.5f));
@@ -50,7 +50,7 @@ namespace NoteGenerating
             }
             else
             {
-                arc.SetRadius(0.5f);
+                arc.SetRadius(0.6f);
                 arc.SetPos(Vector3.zero);
                 arc.SetRotate(Vector3.zero);
                 arc.Is2D = false;
@@ -60,13 +60,13 @@ namespace NoteGenerating
 
             GameObject previewObj = FumenDebugUtility.GetPreviewObject();
             float lineY = 0f;
-            for(int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var line = Helper.PoolManager.LinePool.GetLine(is2D ? 0 : 1);
                 line.SetPos(is2D ? new Vector3(0, lineY) : new Vector3(0, 0.01f, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * speed;
-                if(lineY > arc.LastZ) break;
+                if (lineY > arc.LastZ) break;
             }
         }
     }

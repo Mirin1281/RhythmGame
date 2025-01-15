@@ -23,14 +23,16 @@ public class MusicSelectData : ScriptableObject
 
     [field: Space(10)]
     // 問題点: AssetReferenceのアドレスを文字列にする簡単な方法がない
-    //[field: SerializeField] public AssetReference NormalFumenReference { get; private set; } 
-    [field: SerializeField] public string NormalFumenAddress { get; private set; }
+    [field: SerializeField] public AssetReference NormalFumenReference { get; private set; }
+    //[field: SerializeField] public string NormalFumenAddress { get; private set; }
     [SerializeField] int level_normal = -1;
     public int Level_normal => level_normal;
-    [field: SerializeField] public string HardFumenAddress { get; private set; }
+    [field: SerializeField] public AssetReference HardFumenReference { get; private set; }
+    //[field: SerializeField] public string HardFumenAddress { get; private set; }
     [SerializeField] int level_hard = -1;
     public int Level_hard => level_hard;
-    [field: SerializeField] public string ExtraFumenAddress { get; private set; }
+    [field: SerializeField] public AssetReference ExtraFumenReference { get; private set; }
+    //[field: SerializeField] public string ExtraFumenAddress { get; private set; }
     [SerializeField] int level_extra = -1;
     public int Level_extra => level_extra;
 
@@ -54,7 +56,7 @@ public class MusicSelectData : ScriptableObject
     /// <summary>
     /// 譜面データをロードする際のアドレスを取得します。引数を省略するとマネージャーの情報を参照します
     /// </summary>
-    public string GetFumenAddress(Difficulty difficulty = Difficulty.None)
+    public AssetReference GetFumenAddress(Difficulty difficulty = Difficulty.None)
     {
         if (difficulty == Difficulty.None)
         {
@@ -62,9 +64,9 @@ public class MusicSelectData : ScriptableObject
         }
         return difficulty switch
         {
-            Difficulty.Normal => NormalFumenAddress,
-            Difficulty.Hard => HardFumenAddress,
-            Difficulty.Extra => ExtraFumenAddress,
+            Difficulty.Normal => NormalFumenReference,
+            Difficulty.Hard => HardFumenReference,
+            Difficulty.Extra => ExtraFumenReference,
             _ => throw new System.Exception()
         };
     }
@@ -102,24 +104,6 @@ public class MusicSelectData : ScriptableObject
     }
 
     public float GetChangeBPM(int index) => bpmChangePoints[index].Bpm;
-
-#if UNITY_EDITOR
-    public void SetFumenAddress(string name, Difficulty difficulty)
-    {
-        if (difficulty == Difficulty.Normal)
-        {
-            NormalFumenAddress = name;
-        }
-        else if (difficulty == Difficulty.Hard)
-        {
-            HardFumenAddress = name;
-        }
-        else if (difficulty == Difficulty.Extra)
-        {
-            ExtraFumenAddress = name;
-        }
-    }
-#endif
 }
 
 public enum Difficulty { None, Normal, Hard, Extra }

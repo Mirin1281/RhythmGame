@@ -53,7 +53,7 @@ Shader "Custom/ClipByZ"
             fixed4 frag (v2f i) : SV_Target
             {
                 // Z座標がしきい値より手前の場合は描画しない
-                if (i.worldPos.z < _ZThreshold)
+                if (i.worldPos.y < _ZThreshold)
                 {
                     discard;
                 }
@@ -99,7 +99,7 @@ Shader "Custom/ClipByZ"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                if (i.worldPos.z < _ZThreshold)
+                if (i.worldPos.y < _ZThreshold)
                 {
                     discard;
                 }

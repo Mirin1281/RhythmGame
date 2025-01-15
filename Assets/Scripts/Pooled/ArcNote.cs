@@ -76,14 +76,15 @@ public class ArcNote : NoteBase
     void Update()
     {
         noInputTime += Time.deltaTime;
-        if (Is2D)
+        /*if (Is2D)
         {
             meshRenderer.material.SetFloat("_ZThreshold", -1);
         }
         else
         {
             meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
-        }
+        }*/
+        meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
     }
 
     /// <summary>
@@ -374,6 +375,42 @@ public struct ArcCreateData
     public ArcCreateData(Vector3 pos, ArcVertexMode vertexMode, bool isJudgeDisable, bool isDuplicated = false, float behindJudgeRange = 0, float aheadJudgeRange = 8)
     {
         this.pos = pos;
+        this.vertexMode = vertexMode;
+        this.isJudgeDisable = isJudgeDisable;
+        this.isDuplicated = isDuplicated;
+        this.behindJudgeRange = behindJudgeRange;
+        this.aheadJudgeRange = aheadJudgeRange;
+    }
+}
+
+// 設置範囲
+// 0(下端) < y < 4(上端)
+// y = 下端の時、-8 < x < 8
+// 上端の時、-4 < x < 4
+// zと手前判定、奥判定はLPB換算
+[Serializable]
+public struct ArcCreateData2D
+{
+    [SerializeField] float x;
+    [SerializeField] float wait;
+    [SerializeField] ArcCreateData.ArcVertexMode vertexMode;
+    [SerializeField] bool isJudgeDisable;
+    [SerializeField] bool isDuplicated;
+    [SerializeField] float behindJudgeRange;
+    [SerializeField] float aheadJudgeRange;
+
+    public readonly float X => x;
+    public readonly float Wait => wait;
+    public readonly ArcCreateData.ArcVertexMode VertexMode => vertexMode;
+    public readonly bool IsJudgeDisable => isJudgeDisable;
+    public readonly bool IsDuplicated => isDuplicated;
+    public readonly float BehindJudgeRange => behindJudgeRange;
+    public readonly float AheadJudgeRange => aheadJudgeRange;
+
+    public ArcCreateData2D(float x, float wait, ArcCreateData.ArcVertexMode vertexMode, bool isJudgeDisable, bool isDuplicated = false, float behindJudgeRange = 0, float aheadJudgeRange = 8)
+    {
+        this.x = x;
+        this.wait = wait;
         this.vertexMode = vertexMode;
         this.isJudgeDisable = isJudgeDisable;
         this.isDuplicated = isDuplicated;

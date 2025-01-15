@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using CriWare;
 using Cysharp.Threading.Tasks;
+using NoteGenerating;
 using UnityEngine;
 
 public static class MyUtility
@@ -11,6 +12,9 @@ public static class MyUtility
         if (time <= 0) return UniTask.CompletedTask;
         return UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token);
     }
+
+    public static string GetFumenName(MusicSelectData musicSelectData)
+        => $"{musicSelectData.SheetName}_{RhythmGameManager.Difficulty}";
 
     /// <summary>
     /// 入力された座標が任意の四角形の中に入っているかを判定します

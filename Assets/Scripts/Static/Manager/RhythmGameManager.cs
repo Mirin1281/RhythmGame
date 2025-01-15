@@ -1,5 +1,6 @@
 using CriWare;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
@@ -9,7 +10,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
 
-    public static string FumenAddress { get; set; }
+    public static AssetReference FumenReference { get; set; }
+    public static string FumenName { get; set; }
     public Result Result { get; set; }
 
     static GameSetting Setting { get; set; } = new();
@@ -95,7 +97,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     {
         SpeedBase = 1f;
         Application.targetFrameRate = 60;
-        FumenAddress = null;
+        FumenReference = null;
 
         if (useJsonData)
         {

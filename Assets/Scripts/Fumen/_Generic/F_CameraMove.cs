@@ -1,3 +1,4 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -58,6 +59,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
+            if (settings == null || settings.Length == 0) return null;
             return $"{loopCount} - {loopWait}  Length: {settings.Length}";
         }
     }

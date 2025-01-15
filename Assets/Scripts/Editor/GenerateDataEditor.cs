@@ -14,21 +14,18 @@ namespace NoteGenerating.Editor
             {
                 _target = target as GenerateData;
             }
+
             if (_target != null)
             {
                 DrawBoxLayout(_target.GetCommandColor());
             }
-            
+
             var enabledProp = serializedObject.FindProperty("enable");
             EditorGUILayout.PropertyField(enabledProp);
-
-            var beatTimingProp = serializedObject.FindProperty("beatTiming");
-            EditorGUILayout.PropertyField(beatTimingProp);
-
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("beatTiming"));
             using (new EditorGUI.DisabledScope(!enabledProp.boolValue))
             {
-                var commandProp = serializedObject.FindProperty("generatable");
-                EditorGUILayout.PropertyField(commandProp);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("generatable"));
             }
 
             serializedObject.ApplyModifiedProperties();

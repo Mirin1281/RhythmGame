@@ -107,6 +107,8 @@ namespace NoteGenerating
             action.Invoke(time);
         }
 
+        /////////////////// 外部から使用する機能 //////////////////////
+
         /// <summary>
         /// コマンドの中身を発火します
         /// </summary>
@@ -133,7 +135,13 @@ namespace NoteGenerating
             }
         }
 
-        /////////////////// 以下のメソッドは必要に応じてオーバーライドして使います//////////////////////
+        public string CSVContent
+        {
+            get => FumenDebugUtility.GetContent(this);
+            set => FumenDebugUtility.SetMember(this, value);
+        }
+
+        /////////////////// 以下のメソッドは必要に応じてオーバーライドして使います //////////////////////
 
         /// <summary>
         /// 名前を変更します
@@ -148,7 +156,7 @@ namespace NoteGenerating
         /// <summary>
         /// コマンドの色を設定します
         /// </summary>
-        protected virtual Color GetCommandColor() => new Color(0.9f, 0.9f, 0.9f, 1f);
+        protected virtual Color GetCommandColor() => ConstContainer.DefaultCommandColor;
 
         /// <summary>
         /// ピリオドキーが押された際に呼ばれます
@@ -161,11 +169,6 @@ namespace NoteGenerating
         /// </summary>
         public virtual void OnSelect(bool isFirst) { }
 
-        public string CSVContent
-        {
-            get => FumenDebugUtility.GetContent(this);
-            set => FumenDebugUtility.SetMember(this, value);
-        }
         public virtual string CSVContent1 { get; set; }
     }
 }

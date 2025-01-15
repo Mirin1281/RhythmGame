@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NoteGenerating
 {
@@ -17,7 +18,7 @@ namespace NoteGenerating
         [SerializeField, Min(1)] int noteCount = 1;
         [SerializeField] bool start3D = false;
 
-        [field: Space(20), Header("プール数の設定")]
+        [field: Space(10), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
         [field: SerializeField] public int CirclePoolCount { get; private set; } = -1;
         [field: SerializeField] public int SlidePoolCount { get; private set; } = -1;
@@ -64,9 +65,29 @@ namespace NoteGenerating
 
 #if UNITY_EDITOR
         public List<GenerateData> GetGenerateDataList() => generateDataList;
-        public void SetGenerateDataList(List<GenerateData> list)
+        public void SetGenerateDataList(IEnumerable<GenerateData> commands)
         {
-            generateDataList = list;
+            generateDataList = commands.ToList();
+        }
+
+        public bool EqualsCommands(Fumen other)
+        {
+            if (other == null) return false;
+            var myList = GetReadOnlyGenerateDataList();
+            var otherList = other.GetReadOnlyGenerateDataList();
+            if (myList == null && otherList == null) return true;
+            if (myList == null || otherList == null || myList.Count != otherList.Count) return false;
+
+            bool isEqual = true;
+            for (int i = 0; i < myList.Count; i++)
+            {
+                if (myList[i] != otherList[i])
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+            return isEqual;
         }
 
         /// <summary>

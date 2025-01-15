@@ -22,8 +22,6 @@ public class ColorModeChanger : MonoBehaviour
     [SerializeField] SpriteRenderer judgeLine3D_Sky;
 
     [SerializeField] Image pauseImage;
-    [SerializeField] Material noteMaterial;
-    [SerializeField] Material arcMaterial;
 
     void Awake()
     {
@@ -45,23 +43,20 @@ public class ColorModeChanger : MonoBehaviour
         lane3D.sharedMaterial.color = new Color(v, v, v);
         judgeLine3D_Sky.color = new Color(k, k, k);
         pauseImage.color = new Color(k, k, k);
-
-        noteMaterial.SetFloat("_BlendRate", k);
-        arcMaterial.SetFloat("_InverseBlendRate", k);
     }
 
     // シーン内の全てのインターフェースを取得します
     // 予定: IColorChangableを使って色変更
     static List<T> FindObjectOfInterfaces<T>() where T : class
-	{
-		var list = new List<T>();
-		foreach (var component in Object.FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-		{
-			if(component is T t)
+    {
+        var list = new List<T>();
+        foreach (var component in Object.FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (component is T t)
             {
-				list.Add(t);
+                list.Add(t);
             }
-		}
-		return list;
-	}
+        }
+        return list;
+    }
 }

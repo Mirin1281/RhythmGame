@@ -35,7 +35,7 @@ public class Judgement : MonoBehaviour
 
     public Result Result => result;
     const float Range = 4.6f;
-    const float ArcRange = 5f;
+    const float ArcRange = 5.3f;
 
     public void Init(FumenData fumenData)
     {
@@ -135,7 +135,7 @@ public class Judgement : MonoBehaviour
         {
             return NoteGrade.Perfect;
         }
-        else if (Mathf.Abs(delta) < 0.08f)
+        else if (Mathf.Abs(delta) < 0.10f)
         {
             if (delta > 0)
             {
@@ -146,7 +146,7 @@ public class Judgement : MonoBehaviour
                 return NoteGrade.FastGreat;
             }
         }
-        else if (Mathf.Abs(delta) < 0.12f)
+        else if (Mathf.Abs(delta) < 0.15f)
         {
             if (delta > 0)
             {

@@ -16,7 +16,7 @@ namespace NoteGenerating
         [SerializeField] Vector2 easeX;
         [SerializeField] float easeTime;
         [SerializeField] EaseType easeType = EaseType.OutQuad;
-        [SerializeField] float delayLPB;
+        [SerializeField] float delayLPB; // Obsolute
         [SerializeField] bool IsVerticalRange;
 
         protected override async UniTask GenerateAsync()

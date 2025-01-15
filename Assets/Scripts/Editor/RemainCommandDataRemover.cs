@@ -20,7 +20,7 @@ namespace NoteGenerating.Editor
 
         static void RemoveUnusedGenerateData()
         {
-            FumenEditorUtility.RemoveUnusedGenerateData();
+            FumenEditorUtility.DestroyAllUnusedGenerateData();
         }
 
         public int callbackOrder => 0;
@@ -29,7 +29,7 @@ namespace NoteGenerating.Editor
         // のチェックを外さないと、この中で呼び出されたログが表示されません
         public void OnPreprocessBuild(BuildReport report)
         {
-            FumenEditorUtility.RemoveUnusedGenerateData();
+            RemoveUnusedGenerateData();
         }
     }
 }

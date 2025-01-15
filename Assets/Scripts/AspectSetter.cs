@@ -7,7 +7,7 @@ public class AspectSetter : MonoBehaviour
 {
     void Awake()
     {
-        SetAspect();   
+        SetAspect();
     }
 
 #if UNITY_EDITOR
@@ -22,12 +22,12 @@ public class AspectSetter : MonoBehaviour
 
     void SetAspect()
     {
-        var _camera = GetComponent<Camera>();
+        var camera = GetComponent<Camera>();
 
-        var scrnAspect = Screen.width / (float)Screen.height; // 現在のアスペクト比
-        var targAspect = ConstContainer.ScreenSize.x / ConstContainer.ScreenSize.y; // 目標のアスペクト比
+        var screenAspect = Screen.width / (float)Screen.height;
+        var targetAspect = ConstContainer.ScreenSize.x / ConstContainer.ScreenSize.y;
 
-        var rate = targAspect / scrnAspect;
+        var rate = targetAspect / screenAspect;
         var rect = new Rect(0, 0, 1, 1);
 
         // 倍率が小さい場合、横をそろえる
@@ -42,6 +42,6 @@ public class AspectSetter : MonoBehaviour
             rect.y = 0.5f - rect.height * 0.5f;
         }
 
-        _camera.rect = rect;
+        camera.rect = rect;
     }
 }

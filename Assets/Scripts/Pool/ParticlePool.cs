@@ -15,8 +15,8 @@ public class ParticlePool : PoolBase<NoteParticle>
             NoteGrade.Miss => -1,
             _ => throw new System.Exception()
         };
-        if(index == -1) return;
-        
+        if (index == -1) return;
+
         var p = GetInstance(index);
         p.transform.SetParent(parent);
         p.transform.localPosition = new Vector3(pos.x, pos.y);

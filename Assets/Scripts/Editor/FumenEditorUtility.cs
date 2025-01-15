@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,48 +12,86 @@ namespace NoteGenerating.Editor
     public static class FumenEditorUtility
     {
         /// <summary>
-        /// 絶対パスから Assets/のパスに変換する
+        /// 絶対パスから Assets/のパスに変換します
         /// </summary>
         public static string AbsoluteToAssetsPath(string path)
         {
             return path.Replace("\\", "/").Replace(Application.dataPath, "Assets");
         }
 
-        public static void DestroyScritableObject(ScriptableObject obj)
+        /// <summary>
+        /// C#スクリプト名からパスを検索します
+        /// </summary>
+        public static bool TryGetScriptPath(string fileName, out string relativePath)
         {
-            var path = GetExistFolderPath(obj);
-            var deleteName = obj.name;
-            Object.DestroyImmediate(obj, true);
-            File.Delete($"{path}/{deleteName}.asset");
-            File.Delete($"{path}/{deleteName}.asset.meta");
-            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-        }
+            string path = null;
+            var pathes = AssetDatabase.FindAssets(fileName + " t:Script")
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .FirstOrDefault(str => string.Equals(Path.GetFileNameWithoutExtension(str),
+                    fileName, StringComparison.CurrentCultureIgnoreCase));
 
-        // プロジェクト上にあるアセットのパスを返します
-        public static string GetExistFolderPath(Object obj)
-        {
-            var dataPath = AssetDatabase.GetAssetPath(obj.GetInstanceID());
-            if (string.IsNullOrEmpty(dataPath)) return null;
-            var index = dataPath.LastIndexOf("/");
-            return dataPath.Substring(0, index);
+            bool isExist = !string.IsNullOrEmpty(path);
+            if (isExist)
+            {
+                relativePath = AbsoluteToAssetsPath(path);
+            }
+            else
+            {
+                relativePath = string.Empty;
+            }
+            return isExist;
         }
 
         /// <summary>
-        /// ファイル名を重複を考慮して付けます
+        /// 指定した名前を基に、フォルダ内で重複しない名前を生成します
         /// </summary>
-        /// <param name="path">パス</param>
-        /// <param name="name">名前(拡張子は除く)</param>
+        /// <param name="folderPath">対象となるフォルダのパス</param>
+        /// <param name="baseName">名前(拡張子は除く)</param>
         /// <param name="extension">拡張子(.は除く)</param>
         /// <returns></returns>
-        public static string GetFileName(string path, string name, string extension)
+        public static string GenerateAssetName(string folderPath, string baseName, string extension = null)
         {
-            int i = 1;
-            var targetName = name;
-            while (File.Exists($"{path}/{targetName}.{extension}"))
+            var paths = AssetDatabase.FindAssets(null, new string[] { folderPath })
+                .Select(AssetDatabase.GUIDToAssetPath);
+
+            var existingNames = new HashSet<string>();
+            foreach (var p in paths)
             {
-                targetName = $"{name} {i++}";
+                // サブフォルダは検索しなくていいので除外
+                if (AbsoluteToAssetsPath(Path.GetDirectoryName(p)) != folderPath.TrimEnd('/')) continue;
+                Object[] objs = AssetDatabase.LoadAllAssetsAtPath(p);
+                foreach (var o in objs)
+                {
+                    existingNames.Add(o.name);
+                }
             }
-            return $"{targetName}.{extension}";
+
+            string trimedName = baseName;
+            string regex = @" \( ?\d+\)$";
+            if (Regex.IsMatch(baseName, regex))
+            {
+                trimedName = Regex.Replace(baseName, regex, string.Empty);
+            }
+
+            string exStr = string.IsNullOrEmpty(extension) ? string.Empty : $".{extension}";
+
+            // ベース名が重複しない場合、そのまま返す
+            if (!existingNames.Contains(trimedName))
+            {
+                return $"{trimedName}{exStr}";
+            }
+
+            // 重複する場合、「(n)」を付けてユニークな名前を探す
+            int suffix = 1;
+            while (true)
+            {
+                string newName = $"{trimedName} ({suffix})";
+                if (!existingNames.Contains(newName))
+                {
+                    return $"{newName}{exStr}";
+                }
+                suffix++;
+            }
         }
 
         public static T[] GetAllScriptableObjects<T>(string folderName = null) where T : ScriptableObject
@@ -64,74 +105,81 @@ namespace NoteGenerating.Editor
         }
 
         /// <summary>
-        /// GenerateDataを作成します
+        /// GenerateDataを作成し、FumenDataの子に設定します
         /// </summary>
+        /// <param name="parentData">親となるFumenData</param>
         /// <param name="baseName">名前</param>
         /// <returns></returns>
-        public static GenerateData CreateGenerateData(string baseName)
+        public static GenerateData CreateSubGenerateData(FumenData parentData, string baseName)
         {
-            string path = ConstContainer.DATA_PATH;
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            var name = GetFileName(path, baseName, "asset");
-            var data = ScriptableObject.CreateInstance<GenerateData>();
-            AssetDatabase.CreateAsset(data, Path.Combine(path, name));
-            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
-            return data;
+            var createdCmd = ScriptableObject.CreateInstance<GenerateData>();
+            string path = AssetDatabase.GetAssetPath(parentData);
+            int lastIndex = path.LastIndexOf('/');
+            string folderPath = path.Substring(0, lastIndex);
+            createdCmd.name = GenerateAssetName(folderPath, baseName);
+            AssetDatabase.AddObjectToAsset(createdCmd, parentData);
+            Undo.RegisterCreatedObjectUndo(createdCmd, "Create Command");
+            AssetDatabase.SaveAssets();
+            return createdCmd;
+        }
+
+        public static GenerateData DuplicateSubGenerateData(FumenData parentData, GenerateData cmdData)
+        {
+            var duplicatedCmd = Object.Instantiate(cmdData);
+            string path = AssetDatabase.GetAssetPath(parentData);
+            int lastIndex = path.LastIndexOf('/');
+            string folderPath = path.Substring(0, lastIndex);
+            duplicatedCmd.name = GenerateAssetName(folderPath, cmdData.name);
+            AssetDatabase.AddObjectToAsset(duplicatedCmd, parentData);
+            Undo.RegisterCreatedObjectUndo(duplicatedCmd, "Duplicate Command");
+            AssetDatabase.SaveAssets();
+            return duplicatedCmd;
         }
 
         /// <summary>
-        /// 不要なGenerateDataを削除します
+        /// 未使用のGenerateDataを削除します
         /// </summary>
-        public static void RemoveUnusedGenerateData(string folderPath = null)
+        public static void DestroyAllUnusedGenerateData()
         {
-            // Undo等で破損状態のファイルを削除
-            var guids = AssetDatabase.FindAssets(null, new string[] { folderPath ??= ConstContainer.DATA_PATH });
             int removeCount = 0;
-            for(int i = 0; i < guids.Length; i++)
+            foreach (var data in GetAllScriptableObjects<FumenData>())
             {
-                var path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                var obj = AssetDatabase.LoadAllAssetsAtPath(path);
-                if(obj.Length == 0) // アセットがない = 破損している 
-                {
-                    File.Delete(path);
-                    File.Delete($"{path}.meta");
-                    removeCount++;
-                }
+                removeCount += DestroyUnusedGenerateData(data);
             }
-            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
-            // どのフローチャートにも属していないCommandDataを削除
-            var datas = GetAllScriptableObjects<GenerateData>();
-            var fumenDatas = GetAllScriptableObjects<FumenData>();
-            foreach (var d in datas)
-            {
-                if (IsUsed(d, fumenDatas) == false)
-                {
-                    removeCount++;
-                    DestroyScritableObject(d);
-                }
-            }
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            if(removeCount > 0)
+            AssetDatabase.SaveAssets();
+            if (removeCount > 0)
             {
-                Debug.Log($"不要なデータが{removeCount}個削除されました\nFolder: {folderPath}");
+                Debug.Log($"未使用のコマンドが合計{removeCount}個削除されました");
             }
             else
             {
-                Debug.Log($"不要なデータの検索が完了しました。削除されたデータはありません\nFolder: {folderPath}");
+                Debug.Log($"不要なデータの検索が完了しました。削除されたデータはありません");
             }
-            
 
-            static bool IsUsed(GenerateData targetData, FumenData[] fumenDatas)
+
+            // 指定したFumenDataで使われていないコマンドを削除
+            static int DestroyUnusedGenerateData(FumenData FumenData)
             {
-                foreach (var flowchartData in fumenDatas)
+                int removeCount = 0;
+                var subAssets = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(FumenData))
+                    .Where(x => AssetDatabase.IsSubAsset(x));
+                foreach (var sub in subAssets)
                 {
-                    if (flowchartData.Fumen.IsUsed(targetData)) return true;
+                    GenerateData cmdData = sub as GenerateData;
+                    if (FumenData.Fumen.IsUsed(cmdData) == false)
+                    {
+                        removeCount++;
+                        Object.DestroyImmediate(cmdData, true);
+                    }
                 }
-                return false;
+
+                if (removeCount > 0)
+                {
+                    Debug.Log($"{FumenData.name} で未使用のコマンドが{removeCount}個削除されました");
+                }
+                return removeCount;
             }
         }
     }

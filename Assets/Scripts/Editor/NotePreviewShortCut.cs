@@ -12,16 +12,17 @@ namespace NoteGenerating.Editor
         {
             string sceneName = SceneManager.GetActiveScene().name;
             if (sceneName != ConstContainer.InGameSceneName
-                && sceneName != ConstContainer.TestSceneName) return;
+             && sceneName != ConstContainer.TestSceneName) return;
+
             var window = EditorWindow.GetWindow<FumenEditorWindow>();
-            if(window == null) return;
-            var command = window.LastSelectedCommand;
-            if(command == null) return;
+            if (window == null) return;
+            var command = window.GetLastSelectedCommand();
+            if (command == null) return;
             var generatorBase = command.GetNoteGeneratorBase();
-            if(generatorBase == null) return;
-            
+            if (generatorBase == null) return;
+
+            Undo.RecordObject(command, "Preview Command");
             generatorBase.Preview();
-            Undo.RecordObject(command, "NotePreview");
         }
     }
 }

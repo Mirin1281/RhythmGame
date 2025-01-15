@@ -10,6 +10,19 @@ namespace NoteGenerating
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;
 
+        [System.Serializable]
+        public struct A
+        {
+            [SerializeField] int a;
+
+            public A(int a)
+            {
+                this.a = a;
+            }
+        }
+
+        [SerializeField] A aa = new A(2);
+
         [SerializeField] int[] a;
 
         protected override async UniTask GenerateAsync()
@@ -143,10 +156,10 @@ namespace NoteGenerating
             await Wait(2);
             Blink(0);
             await Wait(2);*/
-            
 
 
-            
+
+
 
             // ノーツ場所移動 //
             /*int flg = 0;
@@ -201,8 +214,8 @@ namespace NoteGenerating
             await Wait(16);
             DummyDropAsync(Note2D(-4, NoteType.Slide, isMove: false)).Forget();*/
 
-            
-            
+
+
 
 
             // カメラ移動して下からノーツ生成
@@ -223,13 +236,13 @@ namespace NoteGenerating
             RotateNote2(4, NoteType.Normal, 180);
             await Wait(2);
             RotateNote2(-4, NoteType.Normal, 180);*/
-            
+
 
             // 円のようにノーツ生成 (正解)
             NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
             {
                 inverse = x > 0 ^ inverse;
-                if(delta == -1)
+                if (delta == -1)
                 {
                     delta = Delta;
                 }
@@ -238,7 +251,7 @@ namespace NoteGenerating
                 CurveAsync(note, moveTime).Forget();
 
                 float expectTime = CurrentTime + StartBase / Speed - delta;
-                if(parentTs == null)
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime);
                 }
@@ -503,7 +516,7 @@ namespace NoteGenerating
             Hold(0, 1);*/
 
 
-#region Test1
+            #region Test1
 
             // グループ化のテスト //
             // 複数のノーツをいい感じに動かしたり、n軸で制御できる
@@ -542,7 +555,7 @@ namespace NoteGenerating
 
 
             // 斜め飛ばし
-            
+
             /*void RotateNote(Vector2 pos, NoteType type, float deg)
             {
                 NoteBase_2D note = Helper.GetNote2D(type);

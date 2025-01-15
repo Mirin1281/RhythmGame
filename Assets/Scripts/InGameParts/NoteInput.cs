@@ -54,7 +54,7 @@ public class NoteInput : MonoBehaviour
     readonly List<ArcNote> arcs = new(4);
     readonly List<(NoteExpect, float)> fetchedExpects = new(8);
 
-    static readonly float defaultTolerance = 0.1f;
+    static readonly float defaultTolerance = 0.15f;
     static readonly float wideTolerance = 0.25f;
     static readonly float arcDuplicateSqrDistance = 8f;
 
@@ -86,6 +86,8 @@ public class NoteInput : MonoBehaviour
     /// <summary>
     /// ノーツの打点情報を伝えます
     /// </summary>
+    ///
+    /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか
     public void AddExpect(NoteBase note, float time, float holdingTime = 0, bool isCheckSimultaneous = true)
     {
         AddExpect(note, new Vector2(default, 0), time, holdingTime, isCheckSimultaneous, NoteExpect.ExpectMode.Y_Static);
@@ -149,6 +151,11 @@ public class NoteInput : MonoBehaviour
         for (int i = 0; i < allExpects.Count;)
         {
             var expect = allExpects[i];
+            if (expect.Note == null)
+            {
+                i++;
+                continue;
+            }
             if (isAuto && Metronome.CurrentTime > expect.Time)
             {
                 // オート
@@ -384,7 +391,7 @@ public class NoteInput : MonoBehaviour
             if (downPosZ > arc.LastZ + 3) // アークが完全に通り過ぎた
             {
                 arcs.RemoveAt(i);
-                arc.SetActive(false);
+                arc.gameObject.SetActive(false);
                 arcLightOperator.RemoveLink(arc);
                 continue;
             }
