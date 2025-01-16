@@ -1,19 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcNotePool : PoolBase<ArcNote>
+namespace NoteCreating
 {
-    [SerializeField] GameObject lane3D;
-
-    public ArcNote GetNote()
+    public class ArcNotePool : PoolBase<ArcNote>
     {
-        var n = GetInstance();
-        n.transform.localRotation = default;
-        n.SetRendererEnabled(true);
-        n.transform.SetParent(lane3D.transform);
-        n.SetRadius(0.6f);
-        n.SetColor(true);
-        return n;
+        [SerializeField] GameObject lane3D;
+
+        public ArcNote GetNote()
+        {
+            var n = GetInstance();
+
+            n.transform.localRotation = default;
+            n.SetRendererEnabled(true);
+            n.transform.SetParent(lane3D.transform);
+            n.SetRadius(0.5f);
+            n.SetColor(true);
+
+            return n;
+        }
     }
 }

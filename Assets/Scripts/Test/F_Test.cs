@@ -1,11 +1,11 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using ArcVertexMode = ArcCreateData.ArcVertexMode;
+using ArcVertexMode = NoteCreating.ArcCreateData.VertexType;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("テスト用"), System.Serializable]
-    public class F_Test : Generator_Common
+    public class F_Test : Command_General
     {
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;
@@ -25,8 +25,9 @@ namespace NoteGenerating
 
         [SerializeField] int[] a;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
+            await UniTask.CompletedTask;
             // これから来る譜面がカットインするやつ
 
             // 星型にノーツやレーンを //
@@ -239,7 +240,7 @@ namespace NoteGenerating
 
 
             // 円のようにノーツ生成 (正解)
-            NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
+            /*NoteBase_2D NoteCircle(float x, NoteType type, bool inverse = false, float radius = 10, float delta = -1, Transform parentTs = null)
             {
                 inverse = x > 0 ^ inverse;
                 if (delta == -1)
@@ -286,7 +287,7 @@ namespace NoteGenerating
             NoteCircle(0, NoteType.Normal, true);
             await Wait(4);
             NoteCircle(-2, NoteType.Normal);
-            await Wait(4);
+            await Wait(4);*/
 
 
             // 円のようにノーツ生成 (失敗したけどこれもアリ)
@@ -581,7 +582,7 @@ namespace NoteGenerating
                     }
                 }
             }*/
-            void RotateNote(Vector3 pos, NoteType type, float deg)
+            /*void RotateNote(Vector3 pos, NoteType type, float deg)
             {
                 NoteBase_2D note = Helper.GetNote2D(type);
                 note.SetRotate(deg + 90);
@@ -612,6 +613,7 @@ namespace NoteGenerating
                 RotateNote(new Vector2(x, 0), type, deg);
             }
 #pragma warning restore CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
+            */
 
             /*for(int i = 0; i < 18; i++)
             {

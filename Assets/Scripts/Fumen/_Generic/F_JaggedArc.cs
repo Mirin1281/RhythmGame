@@ -2,10 +2,10 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using System;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◆ギザギザアーク", -1), System.Serializable]
-    public class F_JaggedArc : Generator_Common
+    public class F_JaggedArc : Command_General
     {
         [SerializeField] float delayLPB;
         [SerializeField] float jagInterval = 16f;
@@ -15,12 +15,9 @@ namespace NoteGenerating
         [SerializeField] float fromWidth = 6;
         [SerializeField] EaseType easeType = EaseType.Linear;
         [Space(20)]
-        [SerializeField] Vector2 posOffset = new Vector2(0, 4);
         [SerializeField] float rotate;
-        [Space(20)]
-        [SerializeField] bool is2D;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             int count = Mathf.RoundToInt(jagInterval / length);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
@@ -29,10 +26,10 @@ namespace NoteGenerating
             for (int i = 0; i < count; i++)
             {
                 int a = i % 2 == 0 ? -1 : 1;
-                Vector2 pos = is2D ? new Vector2(easing.Ease(i) * a, 0) : MyUtility.GetRotatedPos(new Vector2(easing.Ease(i) * a, 0), rotate) + posOffset;
-                datas[i] = new ArcCreateData(new Vector3(pos.x, pos.y, i == 0 ? 0 : jagInterval), ArcCreateData.ArcVertexMode.Linear, false, true, 0, jagInterval);
+                Vector2 pos = new Vector2(easing.Ease(i) * a, 0);
+                datas[i] = new ArcCreateData(pos.x, i == 0 ? 0 : jagInterval, ArcCreateData.VertexType.Linear, false, true, 0, jagInterval);
             }
-            Arc(datas, is2D);
+            Arc(datas);
         }
 
         protected override Color GetCommandColor()
@@ -42,22 +39,15 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return $"Length: {length}{GetInverseSummary()}";
+            return $"Length: {length}{GetMirrorSummary()}";
         }
 
         protected override string GetName()
         {
-            if (is2D)
-            {
-                return "2D ギザアーク";
-            }
-            else
-            {
-                return "ギザギザアーク";
-            }
+            return "ギザギザアーク";
         }
 
-        public override async void Preview()
+        /*public override async void Preview()
         {
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
             if (arc == null)
@@ -66,21 +56,12 @@ namespace NoteGenerating
                 return;
             }
             arc.SetActive(true);
-            if (is2D)
-            {
-                arc.SetRadius(0.4f);
-                arc.SetPos(new Vector3(0, 0, 0.5f));
-                arc.SetRotate(new Vector3(-90f, 0f, 0f));
-                arc.Is2D = true;
-            }
-            else
-            {
-                arc.SetRadius(0.6f);
-                arc.SetPos(Vector3.zero);
-                arc.SetRotate(Vector3.zero);
-                arc.Is2D = false;
-            }
-            float speed = is2D ? Speed : Speed3D;
+            arc.SetRadius(0.4f);
+            arc.SetPos(new Vector3(0, 0, 0.5f));
+            arc.SetRotate(new Vector3(-90f, 0f, 0f));
+            arc.Is2D = true;
+
+            float speed = Speed;
 
             int count = Mathf.RoundToInt(jagInterval / length);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
@@ -91,7 +72,7 @@ namespace NoteGenerating
                 Vector2 pos = is2D ?
                     new Vector2(easing.Ease(i) * a, 0) :
                     MyUtility.GetRotatedPos(new Vector2(easing.Ease(i) * a, 0), rotate) + Inv(posOffset);
-                datas[i] = new ArcCreateData(new Vector3(Inv(pos.x), pos.y, jagInterval), ArcCreateData.ArcVertexMode.Linear, false, true, 0, jagInterval);
+                datas[i] = new ArcCreateData(new Vector3(Inv(pos.x), pos.y, jagInterval), ArcCreateData.VertexType.Linear, false, true, 0, jagInterval);
             }
             await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse, Helper.DebugSpherePrefab);
 
@@ -106,6 +87,6 @@ namespace NoteGenerating
                 lineY += Helper.GetTimeInterval(4) * speed;
                 if (lineY > arc.LastZ) break;
             }
-        }
+        }*/
     }
 }

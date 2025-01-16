@@ -3,16 +3,16 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/最後のノーツ"), System.Serializable]
-    public class F_AprilRabbit_LastNote : Generator_Common
+    public class F_AprilRabbit_LastNote : Command_General
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
 
-            NoteBase_2D note = Helper.GetNote2D(NoteType.Normal);
+            RegularNote note = Helper.GetNote(RegularNoteType.Normal);
             Vector3 pos = new Vector3(0, 4);
             note.SetPos(pos);
             note.IsVerticalRange = true;
@@ -31,9 +31,9 @@ namespace NoteGenerating
             var easing = new Easing(0, Inv(360 * 5), time, EaseType.OutCubic);
             WhileYield(time, t =>
             {
-                note.SetRotate(easing.Ease(t));
-                line.SetRotate(easing.Ease(t));
-                line2.SetRotate(easing.Ease(t) + 90);
+                note.SetRot(easing.Ease(t));
+                line.SetRot(easing.Ease(t));
+                line2.SetRot(easing.Ease(t) + 90);
             });
 
             await Wait(4, 6);
@@ -52,8 +52,8 @@ namespace NoteGenerating
             var judgeEasing = new Easing(Inv(90), Inv(270), judgeTime, EaseType.InQuad);
             WhileYield(judgeTime, t =>
             {
-                judgeLine.SetRotate(judgeEasing.Ease(t));
-                judgeLine2.SetRotate(judgeEasing.Ease(t));
+                judgeLine.SetRot(judgeEasing.Ease(t));
+                judgeLine2.SetRot(judgeEasing.Ease(t));
             });
 
             CircleAsync(pos).Forget();

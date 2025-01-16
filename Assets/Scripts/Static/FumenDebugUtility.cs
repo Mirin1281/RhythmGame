@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     public static class FumenDebugUtility
     {
@@ -32,7 +32,7 @@ namespace NoteGenerating
         /// <summary>
         /// クラスを型名から生成します
         /// </summary>
-        public static T CreateInstance<T>(string className, string namespaceName = nameof(NoteGenerating)) where T : class
+        public static T CreateInstance<T>(string className, string namespaceName = nameof(NoteCreating)) where T : class
         {
             Type t = GetTypeByClassName(className, namespaceName);
             if (t == null) return null;
@@ -58,16 +58,16 @@ namespace NoteGenerating
             }
         }
 
-        public static string GetContent<T>(T t) where T : NoteGeneratorBase
+        public static string GetContent<T>(T cmd) where T : CommandBase
         {
             int separateLevel = 1;
             StringBuilder sb = new();
-            Type type = t.GetType();
+            Type type = cmd.GetType();
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             for (int i = 0; i < fields.Length; i++)
             {
                 var f = fields[i];
-                object v = f.GetValue(t);
+                object v = f.GetValue(cmd);
                 if (f.FieldType.IsArray)
                 {
                     Array array = v as Array;
@@ -81,9 +81,9 @@ namespace NoteGenerating
                 sb.Append(GetSeparator(separateLevel));
             }
 
-            if (t is IInversableCommand inversable)
+            if (cmd is IMirrorable inversable)
             {
-                sb.Append(inversable.IsInverse);
+                sb.Append(inversable.IsMirror);
             }
             return sb.ToString();
 
@@ -130,13 +130,13 @@ namespace NoteGenerating
             }
         }
 
-        public static void SetMember<T>(T generator, string content) where T : NoteGeneratorBase
+        public static void SetMember<T>(T command, string content) where T : CommandBase
         {
             if (string.IsNullOrWhiteSpace(content)) return;
 
             int separateLevel = 1;
 
-            var type = generator.GetType();
+            var type = command.GetType();
             var fieldStrings = content.Split(GetSeparator(separateLevel));
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             for (int i = 0; i < fields.Length; i++)
@@ -147,20 +147,21 @@ namespace NoteGenerating
                 {
                     var arrayType = fType.GetElementType();
                     var createdArray = CreateArray(arrayType, fieldStrings[i], separateLevel);
-                    f.SetValue(generator, createdArray);
+                    f.SetValue(command, createdArray);
                 }
                 else
                 {
                     var v = Convert(fType, fieldStrings[i]);
                     if (v != null)
                     {
-                        f.SetValue(generator, v);
+                        f.SetValue(command, v);
                     }
                 }
             }
-            if (generator is IInversableCommand inversable)
+            if (command is IMirrorable mirrorable)
             {
-                inversable.SetIsInverse(bool.Parse(fieldStrings[fields.Length]));
+                Debug.Log(fieldStrings[fields.Length]);
+                mirrorable.SetIsMirror(bool.Parse(fieldStrings[fields.Length]));
             }
 
 
@@ -243,7 +244,7 @@ namespace NoteGenerating
             };
         }
 
-        public static void DebugPreview2DNotes(IEnumerable<INoteData> noteDatas, NoteGenerateHelper Helper, bool isInverse, bool isClearPreview)
+        public static void DebugPreview2DNotes(IEnumerable<INoteData> noteDatas, NoteCreateHelper Helper, bool isInverse, bool isClearPreview)
         {
             float Inv(float x) => x * (isInverse ? -1 : 1);
 
@@ -251,7 +252,7 @@ namespace NoteGenerating
             GameObject previewObj = GetPreviewObject(isClearPreview);
             int simultaneousCount = 0;
             float beforeY = -1;
-            NoteBase_2D beforeNote = null;
+            RegularNote beforeNote = null;
 
             float y = 0f;
             foreach (var data in noteDatas)
@@ -261,15 +262,15 @@ namespace NoteGenerating
                 var type = data.Type;
                 if (type == CreateNoteType.Normal)
                 {
-                    DebugNote(data.X, y, NoteType.Normal, data.Width);
+                    DebugNote(data.X, y, RegularNoteType.Normal, data.Width);
                 }
                 else if (type == CreateNoteType.Slide)
                 {
-                    DebugNote(data.X, y, NoteType.Slide, data.Width);
+                    DebugNote(data.X, y, RegularNoteType.Slide, data.Width);
                 }
                 else if (type == CreateNoteType.Flick)
                 {
-                    DebugNote(data.X, y, NoteType.Flick, data.Width);
+                    DebugNote(data.X, y, RegularNoteType.Flick, data.Width);
                 }
                 else if (type == CreateNoteType.Hold)
                 {
@@ -294,9 +295,9 @@ namespace NoteGenerating
             }
 
 
-            void DebugNote(float x, float y, NoteType type, float width)
+            void DebugNote(float x, float y, RegularNoteType type, float width)
             {
-                NoteBase_2D note = Helper.GetNote2D(type);
+                RegularNote note = Helper.GetNote(type);
                 if ((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
@@ -324,7 +325,7 @@ namespace NoteGenerating
                 SetSimultaneous(hold, y);
             }
 
-            void SetSimultaneous(NoteBase_2D note, float y)
+            void SetSimultaneous(RegularNote note, float y)
             {
                 if (beforeY == y)
                 {

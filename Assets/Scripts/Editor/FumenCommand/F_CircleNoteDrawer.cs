@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomPropertyDrawer(typeof(F_CircleNote.NoteData))]
     public class F_CircleNoteDrawer : PropertyDrawer
@@ -18,7 +18,7 @@ namespace NoteGenerating.Editor
             h.SetXAsWidth(0.8f);
             var disabledProp = h.PropertyField(boxWidth, "disabled", false);
 
-            using(new EditorGUI.DisabledGroupScope(disabledProp.boolValue))
+            using (new EditorGUI.DisabledGroupScope(disabledProp.boolValue))
             {
                 h.SetXAsWidth(0f);
                 h.LabelField(labelWidth, "Pos");
@@ -31,11 +31,11 @@ namespace NoteGenerating.Editor
 
             h.SetXAsWidth(0.45f);
             h.LabelField(labelWidth, "Wait");
-            
+
             h.SetXAsWidth(0.55f);
             var waitProp = h.PropertyField(boxWidth, "wait", false);
 
-            if(waitProp.floatValue == 0f)
+            if (waitProp.floatValue == 0f)
             {
                 h.DrawBox(new Rect(20, position.y, width + 40, 2f * (Height + 2)), Color.yellow);
             }

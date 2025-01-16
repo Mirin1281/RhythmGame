@@ -2,7 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 using CriWare;
-using NoteGenerating;
+using NoteCreating;
 
 
 #if UNITY_EDITOR
@@ -61,9 +61,9 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
             int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
             beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
 
-            foreach (var generateData in fumenData.Fumen.GetReadOnlyGenerateDataList())
+            foreach (var generateData in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
-                if (b >= generateData.BeatTiming + tolerance && generateData.GetNoteGeneratorBase() is IZoneCommand zone)
+                if (b >= generateData.BeatTiming + tolerance && generateData.GetCommandBase() is IZone zone)
                 {
                     zone.CallZone(skipTime - (generateData.BeatTiming + tolerance) * (float)BeatInterval);
                 }

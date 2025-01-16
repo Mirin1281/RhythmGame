@@ -3,7 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     public enum CreateNoteType
     {
@@ -43,14 +43,14 @@ namespace NoteGenerating
     }
 
     [AddTypeMenu("◆汎用 ジェネレータ2D", -2), System.Serializable]
-    public class F_Generic2D : Generator_Common
+    public class F_Generic2D : Command_General
     {
         [SerializeField] float speedRate = 1f;
 
         [SerializeField] bool isSpeedChangable;
 
         [SerializeField, SerializeReference, SubclassSelector]
-        IParentGeneratable parentGeneratable;
+        IParentCreatable parentGeneratable;
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = true;
@@ -61,11 +61,11 @@ namespace NoteGenerating
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             int simultaneousCount = 0;
             float beforeTime = -1;
-            NoteBase_2D beforeNote = null;
+            RegularNote beforeNote = null;
 
             var parentTs = CreateParent(parentGeneratable);
 
@@ -76,15 +76,15 @@ namespace NoteGenerating
                 var type = data.Type;
                 if (type == CreateNoteType.Normal)
                 {
-                    MyNote(data.X, NoteType.Normal, data.Width, parentTs);
+                    MyNote(data.X, RegularNoteType.Normal, data.Width, parentTs);
                 }
                 else if (type == CreateNoteType.Slide)
                 {
-                    MyNote(data.X, NoteType.Slide, data.Width, parentTs);
+                    MyNote(data.X, RegularNoteType.Slide, data.Width, parentTs);
                 }
                 else if (type == CreateNoteType.Flick)
                 {
-                    MyNote(data.X, NoteType.Flick, data.Width, parentTs);
+                    MyNote(data.X, RegularNoteType.Flick, data.Width, parentTs);
                 }
                 else if (type == CreateNoteType.Hold)
                 {
@@ -98,9 +98,9 @@ namespace NoteGenerating
             }
 
 
-            void MyNote(float x, NoteType type, float width, Transform parentTs)
+            void MyNote(float x, RegularNoteType type, float width, Transform parentTs)
             {
-                NoteBase_2D note = Helper.GetNote2D(type, parentTs);
+                RegularNote note = Helper.GetNote(type, parentTs);
                 note.IsVerticalRange = IsVerticalRange;
                 if ((width is 0 or 1) == false)
                 {
@@ -126,12 +126,12 @@ namespace NoteGenerating
                     float parentDir = parentTs.eulerAngles.z * Mathf.Deg2Rad;
                     Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
                     Helper.NoteInput.AddExpect(note, new Vector2(default, parentTs.localPosition.y + pos.y), expectTime,
-                        isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
+                        isCheckSimultaneous: isCheckSimultaneous, expectType: NoteJudgeStatus.ExpectType.Y_Static);
                 }
                 SetSimultaneous(note, expectTime);
 
 
-                async UniTask DropAsync_SpeedChangable(NoteBase_2D note)
+                async UniTask DropAsync_SpeedChangable(RegularNote note)
                 {
                     float baseTime = CurrentTime - Delta;
                     float time = 0f;
@@ -175,7 +175,7 @@ namespace NoteGenerating
                     float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                     Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
                     Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime,
-                        holdTime, isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
+                        holdTime, isCheckSimultaneous: isCheckSimultaneous, expectType: NoteJudgeStatus.ExpectType.Y_Static);
                 }
                 SetSimultaneous(hold, expectTime);
 
@@ -197,7 +197,7 @@ namespace NoteGenerating
 
             // 同時押しをこのコマンド内でのみチェックします。
             // NoteInput内でするよりも軽量なのでデフォルトではこちらを使用します
-            void SetSimultaneous(NoteBase_2D note, float expectTime)
+            void SetSimultaneous(RegularNote note, float expectTime)
             {
                 // NoteInput内で行う場合は不要
                 if (isCheckSimultaneous) return;
@@ -236,7 +236,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetInverseSummary();
+            return noteDatas.Length + GetMirrorSummary();
         }
 
         public override void OnSelect(bool isFirst)
@@ -251,13 +251,13 @@ namespace NoteGenerating
         void DebugPreview(bool isClearPreview)
         {
             FumenDebugUtility.DebugPreview2DNotes(
-                noteDatas.Select(d => (INoteData)d), Helper, IsInverse, isClearPreview);
+                noteDatas.Select(d => (INoteData)d), Helper, IsMirror, isClearPreview);
         }
 
         public override string CSVContent1
         {
             get => parentGeneratable?.GetContent();
-            set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
+            set => parentGeneratable ??= ParentCreatorBase.CreateFrom(value);
         }
     }
 }

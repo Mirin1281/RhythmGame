@@ -1,13 +1,13 @@
-namespace NoteGenerating
+namespace NoteCreating
 {
-    public interface IZoneCommand
+    public interface IZone
     {
         void CallZone(float delta);
     }
 
-    public interface IInversableCommand
+    public interface IMirrorable
     {
-        bool IsInverse { get; }
-        void SetIsInverse(bool i);
+        bool IsMirror { get; }
+        void SetIsMirror(bool i);
     }
 }

@@ -32,6 +32,13 @@ public class MySplineExtrude : MonoBehaviour
 
     public Spline Spline => m_Container.Spline;
 
+
+    [ContextMenu("Rebuild")]
+    void Rebuild()
+    {
+        RebuildAsync().Forget();
+    }
+
     void Reset()
     {
         if (TryGetComponent<MeshFilter>(out var filter))
@@ -42,12 +49,12 @@ public class MySplineExtrude : MonoBehaviour
         if (TryGetComponent<MeshRenderer>(out var renderer) && renderer.sharedMaterial == null)
         {
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Material sharedMaterial = obj.GetComponent<MeshRenderer>().sharedMaterial;
-            Object.DestroyImmediate(obj);
-            renderer.sharedMaterial = sharedMaterial;
+            Material mat = obj.GetComponent<MeshRenderer>().sharedMaterial;
+            DestroyImmediate(obj);
+            renderer.sharedMaterial = mat;
         }
 
-        RebuildAsync().Forget();
+        Rebuild();
     }
 
     public async UniTask RebuildAsync()
@@ -56,10 +63,17 @@ public class MySplineExtrude : MonoBehaviour
         await MySplineMesh.ExtrudeAsync(
             m_Container.Splines, m_Mesh, m_Radius, m_Sides, m_SegmentsPerUnit, m_Capped, m_Range, destroyCancellationToken);
 
-        
+
         bool IsNullOrEmptyContainer()
         {
-            int num;
+            var isNull = m_Container == null || m_Container.Spline == null || m_Container.Splines.Count == 0;
+            if (isNull)
+            {
+                if (Application.isPlaying)
+                    Debug.LogError(k_EmptyContainerError, this);
+            }
+            return isNull;
+            /*int num;
             if (!(m_Container == null) && m_Container.Spline != null)
             {
                 num = (m_Container.Splines.Count == 0) ? 1 : 0;
@@ -80,33 +94,32 @@ public class MySplineExtrude : MonoBehaviour
 
             goto IL_0046;
         IL_0046:
-            return (byte)num != 0;
+            return (byte)num != 0;*/
         }
 
         bool IsNullOrEmptyMeshFilter()
         {
-            bool num = (m_Mesh = GetComponent<MeshFilter>().sharedMesh) == null;
-            if (num)
+            if (m_Mesh == null)
             {
-                Debug.LogError(k_EmptyMeshFilterError, this);
+                if (TryGetComponent<MeshFilter>(out var filter))
+                {
+                    m_Mesh = filter.sharedMesh;
+                }
+                else
+                {
+                    Debug.LogError(k_EmptyMeshFilterError, this);
+                    return true;
+                }
             }
-            return num;
+            return false;
         }
     }
 
-    [ContextMenu("Rebuild")]
-    void Rebuild()
+    internal Mesh CreateMeshAsset()
     {
-        RebuildAsync().Forget();
-    }
-
-    Mesh CreateMeshAsset()
-    {
+        Mesh mesh = new Mesh();
+        mesh.name = name;
 #if UNITY_EDITOR
-        Mesh mesh = new Mesh
-        {
-            name = base.name
-        };
         Scene activeScene = SceneManager.GetActiveScene();
         string text = "Assets";
         if (!string.IsNullOrEmpty(activeScene.path))
@@ -121,9 +134,8 @@ public class MySplineExtrude : MonoBehaviour
         string path = AssetDatabase.GenerateUniqueAssetPath(text + "/SplineExtrude_" + mesh.name + ".asset");
         AssetDatabase.CreateAsset(mesh, path);
         EditorGUIUtility.PingObject(mesh);
-        return mesh;
-#else
-        return null;
 #endif
+        return mesh;
+
     }
 }

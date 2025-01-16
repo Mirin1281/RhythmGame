@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEditor.ShortcutManagement;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     public static class NotePreviewShortCut
     {
@@ -18,11 +18,11 @@ namespace NoteGenerating.Editor
             if (window == null) return;
             var command = window.GetLastSelectedCommand();
             if (command == null) return;
-            var generatorBase = command.GetNoteGeneratorBase();
-            if (generatorBase == null) return;
+            var commandBase = command.GetCommandBase();
+            if (commandBase == null) return;
 
             Undo.RecordObject(command, "Preview Command");
-            generatorBase.Preview();
+            commandBase.Preview();
         }
     }
 }

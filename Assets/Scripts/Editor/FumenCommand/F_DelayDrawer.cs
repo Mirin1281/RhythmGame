@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomPropertyDrawer(typeof(F_Delay))]
     public class F_DelayDrawer : PropertyDrawer

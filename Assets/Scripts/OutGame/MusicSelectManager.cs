@@ -1,6 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using NoteGenerating;
+using NoteCreating;
 using UnityEngine.AddressableAssets;
 
 public class MusicSelectManager : MonoBehaviour

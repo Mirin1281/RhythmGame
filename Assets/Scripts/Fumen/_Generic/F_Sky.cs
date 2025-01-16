@@ -2,18 +2,22 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
-    [AddTypeMenu("◆スカイ", -1), System.Serializable]
-    public class F_Sky : Generator_Common
+    //[AddTypeMenu("◆スカイ", -1), System.Serializable]
+    public class F_Sky : Command_General
     {
-        [Serializable]
+        protected override async UniTask ExecuteAsync()
+        {
+            await UniTask.CompletedTask;
+        }
+        /*[Serializable]
         public struct SkyNoteData
         {
             [SerializeField] bool disable;
             [SerializeField, Min(0)] float wait;
             [SerializeField] Vector2 pos;
-            
+
             public readonly bool Disable => disable;
             public readonly float Wait => wait;
             public readonly Vector2 Pos => pos;
@@ -23,11 +27,11 @@ namespace NoteGenerating
 
         protected override async UniTask GenerateAsync()
         {
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
                 await Wait(data.Wait);
-                if(data.Disable) continue;
-                Sky(data.Pos);
+                if (data.Disable) continue;
+                //Sky(data.Pos);
             }
         }
 
@@ -46,10 +50,10 @@ namespace NoteGenerating
             GameObject previewObj = FumenDebugUtility.GetPreviewObject();
 
             float z = 0f;
-            for(int i = 0; i < noteDatas.Length; i++)
+            for (int i = 0; i < noteDatas.Length; i++)
             {
                 var data = noteDatas[i];
-                if(data.Disable == false)
+                if (data.Disable == false)
                 {
                     SkyNote(data.Pos, z);
                 }
@@ -57,22 +61,22 @@ namespace NoteGenerating
             }
 
             float lineZ = 0f;
-            for(int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var line = Helper.PoolManager.LinePool.GetLine(1);
                 line.transform.localPosition = new Vector3(0, 0, lineZ);
                 line.transform.SetParent(previewObj.transform);
                 lineZ += Helper.GetTimeInterval(4) * Speed3D;
-                if(lineZ > z) break;
+                if (lineZ > z) break;
             }
 
             void SkyNote(Vector2 pos, float z)
             {
-                SkyNote sky = Helper.GetSky();
+                SkyNote sky = null;//Helper.GetSky();
                 var startPos = new Vector3(Inv(pos.x), pos.y, z);
                 sky.SetPos(startPos);
                 sky.transform.SetParent(previewObj.transform);
             }
-        }
+        }*/
     }
 }

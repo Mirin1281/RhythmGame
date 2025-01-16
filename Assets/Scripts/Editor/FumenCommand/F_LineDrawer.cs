@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomPropertyDrawer(typeof(F_Line.LineCreateData))]
     public class F_LineDrawer : PropertyDrawer
@@ -19,7 +19,7 @@ namespace NoteGenerating.Editor
             var isPosEaseProp = h.PropertyField("isPosEase");
             h.SetY();
             h.SetIndentLevel(true);
-            if(isPosEaseProp.boolValue)
+            if (isPosEaseProp.boolValue)
             {
                 h.LabelField("Start");
                 h.SetX(EditorGUIUtility.labelWidth);
@@ -49,7 +49,7 @@ namespace NoteGenerating.Editor
             var isRotateEaseProp = h.PropertyField("isRotateEase");
             h.SetY();
             h.SetIndentLevel(true);
-            if(isRotateEaseProp.boolValue)
+            if (isRotateEaseProp.boolValue)
             {
                 h.PropertyField("startRotate", overrideName: "Start");
                 h.SetY();
@@ -73,7 +73,7 @@ namespace NoteGenerating.Editor
             var isAlphaEaseProp = h.PropertyField("isAlphaEase");
             h.SetY();
             h.SetIndentLevel(true);
-            if(isAlphaEaseProp.boolValue)
+            if (isAlphaEaseProp.boolValue)
             {
                 h.PropertyField("startAlpha", overrideName: "Start");
                 h.SetY();
@@ -96,7 +96,7 @@ namespace NoteGenerating.Editor
 
             var isRotateFromPosProp = h.PropertyField("isRotateFromPos");
             h.SetY();
-            if(isRotateFromPosProp.boolValue)
+            if (isRotateFromPosProp.boolValue)
             {
                 h.SetIndentLevel(true);
                 h.PropertyField("rotateFromPos");
@@ -115,19 +115,19 @@ namespace NoteGenerating.Editor
         {
             int count = 11;
 
-            if(property.FindPropertyRelative("isPosEase").boolValue)
+            if (property.FindPropertyRelative("isPosEase").boolValue)
             {
                 count += 3;
             }
-            if(property.FindPropertyRelative("isRotateEase").boolValue)
+            if (property.FindPropertyRelative("isRotateEase").boolValue)
             {
                 count += 3;
             }
-            if(property.FindPropertyRelative("isAlphaEase").boolValue)
+            if (property.FindPropertyRelative("isAlphaEase").boolValue)
             {
                 count += 3;
             }
-            if(property.FindPropertyRelative("isRotateFromPos").boolValue)
+            if (property.FindPropertyRelative("isRotateFromPos").boolValue)
             {
                 count += 3;
             }

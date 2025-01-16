@@ -2,10 +2,10 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◆円ノーツ", -1), System.Serializable]
-    public class F_CircleNote : Generator_Common
+    public class F_CircleNote : Command_General
     {
         [Serializable]
         public struct NoteData
@@ -26,16 +26,16 @@ namespace NoteGenerating
         //[SerializeField] bool isSpeedChangable;
 
         [SerializeField, SerializeReference, SubclassSelector]
-        IParentGeneratable parentGeneratable;
+        IParentCreatable parentGeneratable;
 
         //[SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         //bool isCheckSimultaneous = false;
-        
+
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             //int simultaneousCount = 0;
             //float beforeTime = -1;
@@ -44,9 +44,9 @@ namespace NoteGenerating
             //var parentTs = CreateParent(parentGeneratable);
             //await Wait(1);
 
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
-                if(data.Disabled == false)
+                if (data.Disabled == false)
                 {
                     Circle(data.X, data.Y).Forget();
                 }
@@ -56,7 +56,8 @@ namespace NoteGenerating
 
             async UniTask Circle(float x, float y)
             {
-                var circle = Helper.PoolManager.CirclePool.GetNote();
+                await UniTask.CompletedTask;
+                /*var circle = Helper.PoolManager.CirclePool.GetNote();
                 circle.SetRendererEnabled(false);
                 MoveAsync(circle, new Vector2(Inv(x), y)).Forget();
                 float expectTime = StartBase/Speed - Delta;
@@ -76,7 +77,7 @@ namespace NoteGenerating
                         circle.SetScale(Vector3.one * t.Ease(2f, 0f, StartBase/Speed, EaseType.InCubic));
                         await Helper.Yield();
                     }
-                }
+                }*/
             }
 
             /*// 同時押しをこのコマンド内でのみチェックします。
@@ -120,13 +121,13 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetInverseSummary();
+            return noteDatas.Length + GetMirrorSummary();
         }
 
         public override string CSVContent1
         {
             get => parentGeneratable?.GetContent();
-            set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
+            set => parentGeneratable ??= ParentCreatorBase.CreateFrom(value);
         }
     }
 }

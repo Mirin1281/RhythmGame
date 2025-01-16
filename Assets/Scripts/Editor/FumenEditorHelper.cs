@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [Serializable]
     public class FumenEditorHelper
@@ -17,13 +17,13 @@ namespace NoteGenerating.Editor
 
         [SerializeField] EditorWindow window;
 
-        [SerializeField] Fumen activeFlow;
-        [SerializeField] FumenData activeFlowchartData;
+        [SerializeField] Fumen fumen;
+        [SerializeField] FumenData fumenData;
 
         /// <summary>
         /// 表示用のコマンドリスト
         /// </summary>
-        [SerializeField] List<GenerateData> commandList;
+        [SerializeField] List<CommandData> commandList;
 
         List<int> selectedIndices;
         int? LastSelectedIndex
@@ -34,7 +34,7 @@ namespace NoteGenerating.Editor
                 return selectedIndices.Last();
             }
         }
-        public GenerateData LastSelectedCommand
+        public CommandData LastSelectedCommand
         {
             get
             {
@@ -49,7 +49,7 @@ namespace NoteGenerating.Editor
         /// </summary>
         List<int> updatedIndices;
 
-        List<GenerateData> copiedCommandList;
+        List<CommandData> copiedCommandList;
 
         [SerializeField] ReorderableList reorderableList;
 
@@ -83,11 +83,11 @@ namespace NoteGenerating.Editor
             }
         }
 
-        void SetCommandToFlowchart(IEnumerable<GenerateData> list)
+        void SetCommandToFlowchart(IEnumerable<CommandData> list)
         {
-            if (activeFlow == null) return;
-            activeFlow.SetGenerateDataList(list);
-            EditorUtility.SetDirty(activeFlowchartData);
+            if (fumen == null) return;
+            fumen.SetCommandDataList(list);
+            EditorUtility.SetDirty(fumenData);
         }
 
         public void SetEvents(bool enable)
@@ -115,9 +115,9 @@ namespace NoteGenerating.Editor
                 // 削除時 
                 if (Selection.activeObject == null)
                 {
-                    if (activeFlowchartData == null)
+                    if (fumenData == null)
                     {
-                        activeFlow = null;
+                        fumen = null;
                         window.Repaint();
                     }
                 }
@@ -141,17 +141,17 @@ namespace NoteGenerating.Editor
 
                 if (operate is OperateType.Remove && info.isRedo == false)
                 {
-                    var subAssets = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(activeFlowchartData))
+                    var subAssets = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(fumenData))
                         .Where(x => AssetDatabase.IsSubAsset(x));
 
                     // Unity特有の偽nullに対処するため、サブアセットを直接更新する
-                    var list = activeFlowchartData.Fumen.GetGenerateDataList();
+                    var list = fumenData.Fumen.GetCommandDataList();
                     for (int i = 0; i < list.Count; i++)
                     {
                         foreach (var sub in subAssets)
                         {
                             // Insane Code
-                            GenerateData convertedCmd = sub as GenerateData;
+                            CommandData convertedCmd = sub as CommandData;
                             if (list[i] == convertedCmd)
                             {
                                 list[i] = convertedCmd;
@@ -237,7 +237,7 @@ namespace NoteGenerating.Editor
 
         void UpdateWindow()
         {
-            if (activeFlow == null) return;
+            if (fumen == null) return;
             AssetDatabase.SaveAssets();
             reorderableList = CreateReorderableList();
             selectedIndices.ForEach(s => reorderableList.Select(s, true));
@@ -254,15 +254,15 @@ namespace NoteGenerating.Editor
                 if (data != null)
                 {
                     // Dataがヒット
-                    isChanged = data.Fumen.EqualsCommands(activeFlow) == false;
-                    activeFlowchartData = data;
-                    activeFlow = data.Fumen;
+                    isChanged = data.Fumen.EqualsCommands(fumen) == false;
+                    fumenData = data;
+                    fumen = data.Fumen;
                 }
             }
 
             if (isChanged)
             {
-                commandList = activeFlow.GetGenerateDataList();
+                commandList = fumen.GetCommandDataList();
                 selectedIndices = new();
                 updatedIndices = new();
                 listScrollPos = Vector2.zero;
@@ -273,13 +273,13 @@ namespace NoteGenerating.Editor
 
         void UpdateActiveFlowchart()
         {
-            if (activeFlowchartData != null)
+            if (fumenData != null)
             {
-                activeFlow = activeFlowchartData.Fumen;
+                fumen = fumenData.Fumen;
             }
 
-            if (activeFlow != null)
-                commandList = activeFlow.GetGenerateDataList();
+            if (fumen != null)
+                commandList = fumen.GetCommandDataList();
             UpdateWindow();
         }
 
@@ -335,7 +335,7 @@ namespace NoteGenerating.Editor
                 if (string.IsNullOrEmpty(s) == false)
                     Debug.Log(s);
             }*/
-            if (activeFlow == null) return;
+            if (fumen == null) return;
             using (var scope = new EditorGUI.ChangeCheckScope())
             {
                 using (new GUILayout.HorizontalScope())
@@ -373,7 +373,7 @@ namespace NoteGenerating.Editor
                 }
             }
 
-            void DrawCommandInspector(GenerateData cmdData)
+            void DrawCommandInspector(CommandData cmdData)
             {
                 if (cmdData == null) return;
                 using (var scroll = new GUILayout.ScrollViewScope(commandScrollPos, EditorStyles.helpBox))
@@ -431,7 +431,7 @@ namespace NoteGenerating.Editor
                             menu.AddItem(new GUIContent("Paste"), false, () => PasteFrom(copiedCommandList));
                         }
                         menu.AddSeparator(string.Empty);
-                        if (LastSelectedCommand.GetNoteGeneratorBase() == null)
+                        if (LastSelectedCommand.GetCommandBase() == null)
                         {
                             menu.AddDisabledItem(new GUIContent("Edit Script"));
                         }
@@ -463,9 +463,9 @@ namespace NoteGenerating.Editor
             }
         }
 
-        List<GenerateData> CopyFrom(IEnumerable<int> selectedIndices, bool callLog = true)
+        List<CommandData> CopyFrom(IEnumerable<int> selectedIndices, bool callLog = true)
         {
-            List<GenerateData> copiedList = selectedIndices.Select(i => commandList[i]).ToList();
+            List<CommandData> copiedList = selectedIndices.Select(i => commandList[i]).ToList();
             if (callLog)
             {
                 if (copiedList == null || copiedList.Count == 0)
@@ -480,7 +480,7 @@ namespace NoteGenerating.Editor
             Event.current?.Use();
             return copiedList;
         }
-        void PasteFrom(List<GenerateData> copiedList, bool callLog = true)
+        void PasteFrom(List<CommandData> copiedList, bool callLog = true)
         {
             if (copiedList == null || copiedList.Where(c => c != null).Count() == 0)
             {
@@ -491,13 +491,13 @@ namespace NoteGenerating.Editor
 
             SetRecordUndoName(OperateType.Paste);
 
-            List<GenerateData> createdList = new(copiedList.Count);
+            List<CommandData> createdList = new(copiedList.Count);
             for (int i = 0; i < copiedList.Count; i++)
             {
                 var cmd = copiedList[^(i + 1)];
                 if (cmd == null) continue;
 
-                GenerateData createdCmd = FumenEditorUtility.DuplicateSubGenerateData(activeFlowchartData, cmd);
+                CommandData createdCmd = FumenEditorUtility.DuplicateSubCommandData(fumenData, cmd);
                 createdList.Add(createdCmd);
             }
 
@@ -525,7 +525,7 @@ namespace NoteGenerating.Editor
         }
         void DuplicateFrom(List<int> selectedIndices, bool callLog = true)
         {
-            List<GenerateData> copiedList = CopyFrom(selectedIndices, false);
+            List<CommandData> copiedList = CopyFrom(selectedIndices, false);
             PasteFrom(copiedList, false);
             SetRecordUndoName(OperateType.Duplicate);
             if (callLog)
@@ -536,7 +536,7 @@ namespace NoteGenerating.Editor
         {
             SetRecordUndoName(OperateType.Add);
 
-            GenerateData createdCmd = FumenEditorUtility.CreateSubGenerateData(activeFlowchartData, $"Command_{activeFlowchartData.name}");
+            CommandData createdCmd = FumenEditorUtility.CreateSubCommandData(fumenData, $"Command_{fumenData.name}");
 
             Undo.RecordObject(window, "Add List");
             updatedIndices.Clear();
@@ -583,7 +583,7 @@ namespace NoteGenerating.Editor
         /// <summary>
         /// コマンドを選択状態にします
         /// </summary>
-        void SelectCommand(GenerateData command, bool append = false)
+        void SelectCommand(CommandData command, bool append = false)
         {
             if (append == false)
             {
@@ -609,7 +609,7 @@ namespace NoteGenerating.Editor
         ReorderableList CreateReorderableList()
         {
             return new ReorderableList(
-                commandList, typeof(GenerateData),
+                commandList, typeof(CommandData),
                 draggable: true,
                 displayHeader: false,
                 displayAddButton: true,
@@ -641,7 +641,7 @@ namespace NoteGenerating.Editor
                 Undo.RecordObject(window, "Reorder List");
                 reorderFromIndex = fromIndex;
                 reorderToIndex = toIndex;
-                EditorUtility.SetDirty(activeFlowchartData);
+                EditorUtility.SetDirty(fumenData);
             }
 
             void DrawElement(Rect rect, int index, bool isActive, bool isFocused)

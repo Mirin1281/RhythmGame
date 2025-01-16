@@ -1,14 +1,14 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇ラベル"), System.Serializable]
-    public class F_Label : NoteGeneratorBase
+    public class F_Label : CommandBase
     {
         [SerializeField] string summary;
 
-        protected override UniTask GenerateAsync()
+        protected override UniTask ExecuteAsync()
         {
             return UniTask.CompletedTask;
         }

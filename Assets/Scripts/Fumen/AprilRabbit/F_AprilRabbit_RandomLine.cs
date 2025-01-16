@@ -3,15 +3,15 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/ランダム線"), System.Serializable]
-    public class F_AprilRabbit_RandomLine : Generator_Common
+    public class F_AprilRabbit_RandomLine : Command_General
     {
         [SerializeField] int count = 96;
         [SerializeField] float waitLPB = 16;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
 
@@ -26,7 +26,7 @@ namespace NoteGenerating
         void Line(float x)
         {
             var line = Helper.GetLine();
-            line.SetRotate(90);
+            line.SetRot(90);
             line.SetPos(new Vector3(Inv(x), 0));
             line.FadeIn(0, 0.4f);
             line.FadeOut(0.3f);

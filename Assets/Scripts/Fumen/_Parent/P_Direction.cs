@@ -1,16 +1,16 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("角度変更"), System.Serializable]
-    public class P_Direction : ParentGeneratorBase
+    public class P_Direction : ParentCreatorBase
     {
         [SerializeField] float deg;
 
-        protected override async UniTask MoveParentAsync(NoteBase parent)
+        protected override async UniTask ExecuteAsync(RegularNote parent)
         {
-            parent.SetRotate(Inv(deg));
+            parent.SetRot(Inv(deg));
             await UniTask.CompletedTask;
         }
 

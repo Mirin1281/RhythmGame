@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     public static class FumenCSVIO
     {
@@ -32,7 +31,6 @@ namespace NoteGenerating.Editor
 
             // 2行目はデータの情報
             sw.Write($"{fumenData.NoteCount},");
-            sw.Write($"{fumenData.Start3D},");
             sw.WriteLine();
 
             // 3行目は空白
@@ -40,18 +38,18 @@ namespace NoteGenerating.Editor
 
             // 4行目以降はコマンドデータ
             var sb = new StringBuilder();
-            var list = fumenData.Fumen.GetReadOnlyGenerateDataList();
+            var list = fumenData.Fumen.GetReadOnlyCommandDataList();
             for (int i = 0; i < list.Count; i++)
             {
-                var generateData = list[i];
-                var cmdBase = generateData.GetNoteGeneratorBase();
+                var commandData = list[i];
+                var cmdBase = commandData.GetCommandBase();
 
                 // 1列目 コマンド名
                 sb.AddCell(GetCommandName(cmdBase));
                 // 2列目 有効か
-                sb.AddCell(generateData.Enable.ToString());
+                sb.AddCell(commandData.Enable.ToString());
                 // 3列目 発火タイミング
-                sb.AddCell(generateData.BeatTiming.ToString());
+                sb.AddCell(commandData.BeatTiming.ToString());
                 // 4列目 通常コンテント
                 var content1 = cmdBase?.CSVContent;
                 sb.AddCell(content1);
@@ -77,7 +75,7 @@ namespace NoteGenerating.Editor
             var dataList = LoadCSV(Path.GetDirectoryName(dataPath));
             if (dataList == null) return;
 
-            FumenEditorUtility.DestroyAllUnusedGenerateData();
+            FumenEditorUtility.DestroyAllUnusedCommandData();
 
             // 名前のチェック 
             var importName = fumenData.name;
@@ -90,8 +88,7 @@ namespace NoteGenerating.Editor
             dataList.RemoveAt(0); // もういらないのでこの行は削除する
 
             fumenData.SetData(
-                int.Parse(dataList[0][0]),
-                bool.Parse(dataList[0][1])
+                int.Parse(dataList[0][0])
             );
             dataList.RemoveAt(0);
             dataList.RemoveAt(0);
@@ -100,7 +97,7 @@ namespace NoteGenerating.Editor
 
             // セーブ
             EditorUtility.SetDirty(fumenData);
-            foreach (var data in fumenData.Fumen.GetReadOnlyGenerateDataList())
+            foreach (var data in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
                 if (data == null) continue;
                 EditorUtility.SetDirty(data);
@@ -195,27 +192,27 @@ namespace NoteGenerating.Editor
                 // 行(横)をスライド
                 for (int i = 0; i < csvList.Count; i++)
                 {
-                    NoteGeneratorBase colomn_base = null;
+                    CommandBase column_base = null;
                     var colomn_array = csvList[i];
 
                     string cellName = colomn_array[0];
                     bool notExistCell = string.IsNullOrEmpty(cellName);
 
-                    var list = fumenData.Fumen.GetGenerateDataList();
+                    var list = fumenData.Fumen.GetCommandDataList();
                     list ??= new();
 
-                    GenerateData data;
+                    CommandData data;
                     // CSVにコマンドがあるのにフローチャートにはない場合、名前から新しくつくる
                     if (i >= list.Count)
                     {
                         if (notExistCell) continue;
-                        data = FumenEditorUtility.CreateSubGenerateData(fumenData, $"Command_{fumenData.name}");
+                        data = FumenEditorUtility.CreateSubCommandData(fumenData, $"Command_{fumenData.name}");
                         if (cellName is not ("<Null>" or "Null"))
                         {
                             Type type = GetTypeByClassName(cellName);
                             if (type == null) continue;
-                            data.SetGeneratable(type);
-                            colomn_base = data.GetNoteGeneratorBase();
+                            data.SetCommand(type);
+                            column_base = data.GetCommandBase();
                         }
                         list.Add(data);
                     }
@@ -224,10 +221,10 @@ namespace NoteGenerating.Editor
                         data = list[i];
                         if (data == null)
                         {
-                            data = FumenEditorUtility.CreateSubGenerateData(fumenData, $"Command_{fumenData.name}");
+                            data = FumenEditorUtility.CreateSubCommandData(fumenData, $"Command_{fumenData.name}");
                         }
-                        colomn_base = data.GetNoteGeneratorBase();
-                        var cmdName = GetCommandName(colomn_base);
+                        column_base = data.GetCommandBase();
+                        var cmdName = GetCommandName(column_base);
 
                         if (cmdName != cellName)
                         {
@@ -249,34 +246,34 @@ namespace NoteGenerating.Editor
                             {
                                 Type type = GetTypeByClassName(cellName);
                                 if (type == null) continue;
-                                data.SetGeneratable(type);
-                                colomn_base = data.GetNoteGeneratorBase();
+                                data.SetCommand(type);
+                                column_base = data.GetCommandBase();
                             }
                             else
                             {
-                                data.SetGeneratable(null);
+                                data.SetCommand(null);
                             }
                         }
                     }
 
                     data.SetEnable(bool.Parse(colomn_array[1]));
                     data.SetBeatTiming(int.Parse(colomn_array[2]));
-                    if (colomn_base != null && colomn_array.Length > 3)
+                    if (column_base != null && colomn_array.Length > 3)
                     {
-                        colomn_base.CSVContent = colomn_array[3];
+                        column_base.CSVContent = colomn_array[3];
                     }
-                    if (colomn_base != null && colomn_array.Length > 4)
+                    if (column_base != null && colomn_array.Length > 4)
                     {
-                        colomn_base.CSVContent1 = colomn_array[4];
+                        column_base.CSVContent1 = colomn_array[4];
                     }
                 }
             }
         }
 
-        static string GetCommandName(NoteGeneratorBase generatorBase)
+        static string GetCommandName(CommandBase commandBase)
         {
-            if (generatorBase == null) return "Null";
-            return generatorBase.ToString().Replace($"{nameof(NoteGenerating)}.", string.Empty);
+            if (commandBase == null) return "Null";
+            return commandBase.ToString().Replace($"{nameof(NoteCreating)}.", string.Empty);
         }
 
         static Type GetTypeByClassName(string className)
@@ -286,14 +283,14 @@ namespace NoteGenerating.Editor
                 foreach (Type type in assembly.GetTypes())
                 {
                     if (type.Name == className &&
-                        type.Namespace == nameof(NoteGenerating))
+                        type.Namespace == nameof(NoteCreating))
                     {
                         return type;
                     }
                 }
             }
             Debug.LogWarning($"{className}クラスが見つかりませんでした！\n" +
-                $"タイポもしくは{className}クラスが名前空間{nameof(NoteGenerating)}内に存在しない可能性があります");
+                $"タイポもしくは{className}クラスが名前空間{nameof(NoteCreating)}内に存在しない可能性があります");
             return null;
         }
     }

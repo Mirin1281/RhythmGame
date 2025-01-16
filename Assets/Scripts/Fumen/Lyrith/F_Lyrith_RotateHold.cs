@@ -1,12 +1,12 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/2_1 回転ホールド"), System.Serializable]
-    public class F_Lyrith_RotateHold : Generator_Common
+    public class F_Lyrith_RotateHold : Command_General
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await UniTask.CompletedTask;
             MoveHold(-2, 4, true);
@@ -21,7 +21,7 @@ namespace NoteGenerating
             var toPos = new Vector2(Inv(x), 0);
             hold.SetMaskLocalPos(toPos);
             hold.SetMaskLength(10);
-            
+
             float expectTime = startPos.y / Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
 
@@ -50,7 +50,7 @@ namespace NoteGenerating
                     float deg = time.Ease(0, 360f, holdingTime, EaseType.OutQuad) * (left ? 1 : -1);
                     vec = Speed * new Vector2(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Cos(deg * Mathf.Deg2Rad));
                     hold.SetPos(toPos + time * vec);
-                    hold.SetRotate(deg);
+                    hold.SetRot(deg);
                     await Helper.Yield();
                 }
             }

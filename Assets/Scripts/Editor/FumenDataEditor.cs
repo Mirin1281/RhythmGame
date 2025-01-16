@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomEditor(typeof(FumenData))]
     public class FumenDataEditor : UnityEditor.Editor

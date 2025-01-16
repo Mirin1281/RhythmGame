@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class FlickNote : NoteBase_2D
+namespace NoteCreating
 {
-
+    public class FlickNote : RegularNote
+    {
+        public override RegularNoteType Type => RegularNoteType.Flick;
+    }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomPropertyDrawer(typeof(ArcCreateData))]
     public class ArcCreateDataDrawer : PropertyDrawer
@@ -11,19 +11,30 @@ namespace NoteGenerating.Editor
             var h = new PropertyDrawerHelper(position, property);
             var width = h.GetWidth();
 
-            h.PropertyField(width / 2f, "pos", false);
+            h.SetY(-14);
 
-            h.SetX(width / 1.8f);
-            h.PropertyField(width / 2.2f, "vertexMode", false);
+            h.SetWidth(width / 4f);
+
+            h.LabelField("X:");
+            h.SetX(width / 16f);
+            h.PropertyField("x", false);
+
+            h.SetX(width / 3.1f);
+            h.LabelField("待:");
+            h.SetX(width / 2.6f);
+            h.PropertyField("wait", false);
+
+            h.SetX(width / 1.5f);
+            h.PropertyField("vertexType", false);
 
             h.SetY();
             h.SetWidth(width / 2f);
-            var disableProp = h.PropertyField("isJudgeDisable");
+            var disableProp = h.PropertyField("isJudgeDisable", overrideName: "Disable");
 
             using (new EditorGUI.DisabledGroupScope(disableProp.boolValue))
             {
                 h.SetX(width / 2f);
-                h.PropertyField("isDuplicated");
+                h.PropertyField("isDuplicated", overrideName: "Overlap");
 
                 h.SetY();
                 var w = width / 4f;
@@ -41,13 +52,13 @@ namespace NoteGenerating.Editor
                 h.SetX(w * 3f - 30);
                 h.PropertyField("aheadJudgeRange", false);
             }
-            h.SetY(10);
-            h.DrawLine();
+            h.SetY(8);
+            h.DrawLine(weight: 2);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 4f * 20;
+            return 80;
         }
     }
 }

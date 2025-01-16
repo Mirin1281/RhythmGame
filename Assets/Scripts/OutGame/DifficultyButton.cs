@@ -1,6 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using NoteGenerating;
+using NoteCreating;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +18,7 @@ public class DifficultyButton : MonoBehaviour//, IPointerDownHandler, IPointerUp
     public void Init(Difficulty difficulty)
     {
         this.difficulty = difficulty;
-        
+
         string diffName = difficulty switch
         {
             Difficulty.Normal => "NR",

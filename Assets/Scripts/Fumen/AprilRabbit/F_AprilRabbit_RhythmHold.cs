@@ -2,10 +2,10 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/律動するホールド"), System.Serializable]
-    public class F_AprilRabbit_RhythmHold : Generator_Common
+    public class F_AprilRabbit_RhythmHold : Command_General
     {
         [SerializeField] float _x = 0;
         [SerializeField] float _length = 0.5f;
@@ -13,7 +13,7 @@ namespace NoteGenerating
         [SerializeField] float _shakeInterval = 2f;
         [SerializeField] float _shakeCount = 4f;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             RhythmHold(_x, _length).Forget();
             await UniTask.CompletedTask;
@@ -23,7 +23,7 @@ namespace NoteGenerating
         {
             var hold = Hold(x, length);
             await WaitOnTiming();
-            for(int i = 0; i < _shakeCount; i++)
+            for (int i = 0; i < _shakeCount; i++)
             {
                 MoveAsync(
                     hold,

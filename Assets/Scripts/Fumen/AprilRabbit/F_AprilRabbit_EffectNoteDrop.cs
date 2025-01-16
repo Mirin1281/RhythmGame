@@ -3,13 +3,13 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下(上昇)"), System.Serializable]
-    public class F_AprilRabbit_EffectNoteDrop : Generator_Common
+    public class F_AprilRabbit_EffectNoteDrop : Command_General
     {
-        [SerializeField] NoteType noteType = NoteType.Flick;
-        protected override async UniTask GenerateAsync()
+        [SerializeField] RegularNoteType noteType = RegularNoteType.Flick;
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
 
@@ -29,9 +29,9 @@ namespace NoteGenerating
                 return this;
             }
 
-            async UniTask DropNoteAsync(Vector2 startPos, NoteType noteType = NoteType.Slide)
+            async UniTask DropNoteAsync(Vector2 startPos, RegularNoteType noteType = RegularNoteType.Slide)
             {
-                var note = Helper.GetNote2D(noteType);
+                var note = Helper.GetNote(noteType);
                 note.SetAlpha(0.5f);
                 int a = rand.Next(0, 2) == 0 ? 1 : -1;
                 float time = 0.5f;
@@ -39,7 +39,7 @@ namespace NoteGenerating
                 {
                     var pos = startPos + 10f * t * Vector2.up;
                     note.SetPos(new Vector3(Inv(pos.x), pos.y));
-                    note.SetRotate(Inv(t.Ease(90f, 450, time, EaseType.OutQuad) * a));
+                    note.SetRot(Inv(t.Ease(90f, 450, time, EaseType.OutQuad) * a));
                     note.SetAlpha(t.Ease(0.5f, 0f, time, EaseType.OutQuad));
                 });
                 note.SetActive(false);

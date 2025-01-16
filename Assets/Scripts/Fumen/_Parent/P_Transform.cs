@@ -2,19 +2,19 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [MovedFrom(false, null, null, "P_Pos")]
     [AddTypeMenu("座標と角度変更"), System.Serializable]
-    public class P_Transform : ParentGeneratorBase
+    public class P_Transform : ParentCreatorBase
     {
         [SerializeField] Vector2 pos;
         [SerializeField] float deg;
 
-        protected override async UniTask MoveParentAsync(NoteBase parent)
+        protected override async UniTask ExecuteAsync(RegularNote parent)
         {
             parent.SetPos(pos);
-            parent.SetRotate(Inv(deg));
+            parent.SetRot(Inv(deg));
             await UniTask.CompletedTask;
         }
 

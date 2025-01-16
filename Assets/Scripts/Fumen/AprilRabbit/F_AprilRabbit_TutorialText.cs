@@ -4,10 +4,10 @@ using System;
 using TMPro;
 using DG.Tweening;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/チュートリアルのテキスト"), System.Serializable]
-    public class F_AprilRabbit_TutorialText : Generator_Common
+    public class F_AprilRabbit_TutorialText : Command_General
     {
         [SerializeField] TMP_Text tmproPrefab;
         [SerializeField, TextArea] string text;
@@ -20,7 +20,7 @@ namespace NoteGenerating
         const string TmproName = "TutorialTMP";
         const string CanvasName = "Canvas";
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
 

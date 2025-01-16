@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     public class FumenEditorWindow : EditorWindow
     {
@@ -36,6 +36,6 @@ namespace NoteGenerating.Editor
             helper.OnGUI();
         }
 
-        public GenerateData GetLastSelectedCommand() => helper.LastSelectedCommand;
+        public CommandData GetLastSelectedCommand() => helper.LastSelectedCommand;
     }
 }

@@ -3,10 +3,10 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEditor;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◆判定線"), System.Serializable]
-    public class F_Line : Generator_Common
+    public class F_Line : Command_General
     {
         [Serializable]
         public class LineCreateData
@@ -95,7 +95,7 @@ namespace NoteGenerating
         [SerializeField]
         LineCreateData[] datas = new LineCreateData[1];
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             float delta = await WaitOnTiming();
 
@@ -192,7 +192,7 @@ namespace NoteGenerating
                     {
                         r = rotateEasing.Ease(t);
                     }
-                    line.SetRotate(Inv(r));
+                    line.SetRot(Inv(r));
                 }, delta);
             }
             else
@@ -206,7 +206,7 @@ namespace NoteGenerating
                 {
                     r = data.StartRotate;
                 }
-                line.SetRotate(Inv(r));
+                line.SetRot(Inv(r));
             }
 
             if (data.IsAlphaEase)
@@ -244,7 +244,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{GetInverseSummary()}";
+            string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{GetMirrorSummary()}";
             if (string.IsNullOrWhiteSpace(summary))
             {
                 return s;
@@ -335,7 +335,7 @@ namespace NoteGenerating
                         {
                             r = rotateEasing.Ease(t);
                         }
-                        line.SetRotate(Inv(r));
+                        line.SetRot(Inv(r));
                     });
                 }
                 else
@@ -349,7 +349,7 @@ namespace NoteGenerating
                     {
                         r = data.StartRotate;
                     }
-                    line.SetRotate(Inv(r));
+                    line.SetRot(Inv(r));
                 }
 
                 if (data.IsAlphaEase)

@@ -3,10 +3,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◆2D 曲がって落下", -2), System.Serializable]
-    public class F_2D_Curve : Generator_Common
+    public class F_2D_Curve : Command_General
     {
         [Serializable]
         public struct NoteData : INoteData
@@ -31,45 +31,45 @@ namespace NoteGenerating
         //[SerializeField] bool isSpeedChangable;
 
         [SerializeField, SerializeReference, SubclassSelector]
-        IParentGeneratable parentGeneratable;
+        IParentCreatable parentGeneratable;
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = true;
 
         [SerializeField]
         float radius = 14;
-        
+
         [SerializeField] NoteData[] noteDatas = new NoteData[1];
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             int simultaneousCount = 0;
             float beforeTime = -1;
-            NoteBase_2D beforeNote = null;
+            RegularNote beforeNote = null;
 
             var parentTs = CreateParent(parentGeneratable);
 
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
                 await Wait(data.Wait);
                 var type = data.Type;
-                if(type == CreateNoteType.Normal)
+                if (type == CreateNoteType.Normal)
                 {
-                    MyNoteCircle(data.X, NoteType.Normal, data.Width, data.IsCurveInverse, radius, parentTs);
+                    MyNoteCircle(data.X, RegularNoteType.Normal, data.Width, data.IsCurveInverse, radius, parentTs);
                 }
-                else if(type == CreateNoteType.Slide)
+                else if (type == CreateNoteType.Slide)
                 {
-                    MyNoteCircle(data.X, NoteType.Slide, data.Width, data.IsCurveInverse, radius, parentTs);
+                    MyNoteCircle(data.X, RegularNoteType.Slide, data.Width, data.IsCurveInverse, radius, parentTs);
                 }
-                else if(type == CreateNoteType.Flick)
+                else if (type == CreateNoteType.Flick)
                 {
-                    MyNoteCircle(data.X, NoteType.Flick, data.Width, data.IsCurveInverse, radius, parentTs);
+                    MyNoteCircle(data.X, RegularNoteType.Flick, data.Width, data.IsCurveInverse, radius, parentTs);
                 }
-                else if(type == CreateNoteType.Hold)
+                else if (type == CreateNoteType.Hold)
                 {
-                    if(data.Length == 0)
+                    if (data.Length == 0)
                     {
                         Debug.LogWarning("ホールドの長さが0です");
                         continue;
@@ -79,11 +79,11 @@ namespace NoteGenerating
             }
 
 
-            NoteBase_2D MyNoteCircle(float x, NoteType type, float width, bool isCurveinverse = false, float radius = 10, Transform parentTs = null)
+            RegularNote MyNoteCircle(float x, RegularNoteType type, float width, bool isCurveinverse = false, float radius = 10, Transform parentTs = null)
             {
                 int a = x > 0 ^ isCurveinverse ? -1 : 1;
-                NoteBase_2D note = Helper.GetNote2D(type, parentTs);
-                if((width is 0 or 1) == false)
+                RegularNote note = Helper.GetNote(type, parentTs);
+                if ((width is 0 or 1) == false)
                 {
                     note.SetWidth(width);
                 }
@@ -91,7 +91,7 @@ namespace NoteGenerating
                 CurveAsync(note, moveTime).Forget();
 
                 float expectTime = StartBase / Speed - Delta;
-                if(parentTs == null)
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(note, expectTime);
                 }
@@ -99,12 +99,12 @@ namespace NoteGenerating
                 {
                     float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                     Vector3 pos = Inv(x) * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, mode: NoteExpect.ExpectMode.Y_Static);
+                    Helper.NoteInput.AddExpect(note, new Vector2(default, pos.y), expectTime, expectType: NoteJudgeStatus.ExpectType.Y_Static);
                 }
                 return note;
 
 
-                async UniTask CurveAsync(NoteBase note, float moveTime)
+                async UniTask CurveAsync(RegularNote note, float moveTime)
                 {
                     float baseTime = CurrentTime - Delta;
                     float time = 0f;
@@ -113,7 +113,7 @@ namespace NoteGenerating
                         time = CurrentTime - baseTime;
                         float dir = (moveTime - time) * Speed / radius * a + Mathf.PI * (a == 1 ? 0 : 1);
                         note.SetPos(new Vector3(Inv(x) - a * radius, 0) + radius * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir)));
-                        note.SetRotate(dir * Mathf.Rad2Deg);
+                        note.SetRot(dir * Mathf.Rad2Deg);
                         await Helper.Yield();
                     }
                 }
@@ -125,17 +125,17 @@ namespace NoteGenerating
                 isCurveinverse = x > 0 ^ isCurveinverse;
                 float holdTime = Helper.GetTimeInterval(length);
                 HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-                if((width is 0 or 1) == false)
+                if ((width is 0 or 1) == false)
                 {
                     hold.SetWidth(width);
                 }
-                Vector3 startPos = new (Inv(x), StartBase);
+                Vector3 startPos = new(Inv(x), StartBase);
                 hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
                 float moveTime = StartBase / Speed;
                 CurveAsync(hold, moveTime).Forget();
 
-                float expectTime = startPos.y/Speed - Delta;
-                if(parentTs == null)
+                float expectTime = startPos.y / Speed - Delta;
+                if (parentTs == null)
                 {
                     Helper.NoteInput.AddExpect(hold, expectTime, holdTime, isCheckSimultaneous);
                 }
@@ -144,12 +144,12 @@ namespace NoteGenerating
                     float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                     Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
                     Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime,
-                        holdTime, isCheckSimultaneous: isCheckSimultaneous, mode: NoteExpect.ExpectMode.Y_Static);
+                        holdTime, isCheckSimultaneous: isCheckSimultaneous, expectType: NoteJudgeStatus.ExpectType.Y_Static);
                 }
                 SetSimultaneous(hold, expectTime);
 
 
-                async UniTask CurveAsync(NoteBase note, float moveTime)
+                async UniTask CurveAsync(RegularNote note, float moveTime)
                 {
                     float baseTime = CurrentTime - Delta;
                     float time = 0f;
@@ -158,7 +158,7 @@ namespace NoteGenerating
                         time = CurrentTime - baseTime;
                         float dir = (moveTime - time) * Speed / radius * (isCurveinverse ? -1 : 1);
                         note.SetPos(new Vector3(x - radius, 0) + radius * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir)));
-                        note.SetRotate(dir * Mathf.Rad2Deg);
+                        note.SetRot(dir * Mathf.Rad2Deg);
                         await Helper.Yield();
                     }
                 }
@@ -166,14 +166,14 @@ namespace NoteGenerating
 
             // 同時押しをこのコマンド内でのみチェックします。
             // NoteInput内でするよりも軽量なのでデフォルトではこちらを使用します
-            void SetSimultaneous(NoteBase_2D note, float expectTime)
+            void SetSimultaneous(RegularNote note, float expectTime)
             {
                 // NoteInput内で行う場合は不要
-                if(isCheckSimultaneous) return;
+                if (isCheckSimultaneous) return;
 
-                if(beforeTime == expectTime)
+                if (beforeTime == expectTime)
                 {
-                    if(simultaneousCount == 1)
+                    if (simultaneousCount == 1)
                     {
                         Helper.PoolManager.SetSimultaneousSprite(beforeNote);
                     }
@@ -205,7 +205,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetInverseSummary();
+            return noteDatas.Length + GetMirrorSummary();
         }
 
         public override void OnSelect(bool isFirst)
@@ -220,13 +220,13 @@ namespace NoteGenerating
         void DebugPreview(bool isClearPreview)
         {
             FumenDebugUtility.DebugPreview2DNotes(
-                noteDatas.Select(d => (INoteData)d), Helper, IsInverse, isClearPreview);
+                noteDatas.Select(d => (INoteData)d), Helper, IsMirror, isClearPreview);
         }
 
         public override string CSVContent1
         {
             get => parentGeneratable?.GetContent();
-            set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
+            set => parentGeneratable ??= ParentCreatorBase.CreateFrom(value);
         }
     }
 }

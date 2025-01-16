@@ -1,76 +1,51 @@
-using NoteGenerating;
+using NoteCreating;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace NoteCreating
 {
-    [field: SerializeField] public NormalNotePool NormalPool { get; private set; }
-    [field: SerializeField] public CircleNotePool CirclePool { get; private set; }
-    [field: SerializeField] public SlideNotePool SlidePool { get; private set; }
-    [field: SerializeField] public FlickNotePool FlickPool { get; private set; }
-    [field: SerializeField] public HoldNotePool HoldPool { get; private set; }
-    [field: SerializeField] public SkyNotePool SkyPool { get; private set; }
-    [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
-    [field: SerializeField] public LinePool LinePool { get; private set; }
-
-    public NoteBase_2D GetNote2D(NoteType type, int index = 0) => type switch
+    public class PoolManager : MonoBehaviour
     {
-        NoteType.Normal => NormalPool.GetNote(index),
-        NoteType.Slide => SlidePool.GetNote(),
-        NoteType.Flick => FlickPool.GetNote(),
-        _ => throw new System.Exception()
-    };
+        [field: SerializeField] public RegularNotePool RegularPool { get; private set; }
+        [field: SerializeField] public HoldNotePool HoldPool { get; private set; }
+        [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
+        [field: SerializeField] public LinePool LinePool { get; private set; }
+        [field: SerializeField] public CircleNotePool CirclePool { get; private set; }
 
-    public void SetSimultaneousSprite(NoteBase_2D note)
-    {
-        if(note == null) return;
-        var sprite = GetSimultaneousSprite(note.Type);
-        if(sprite == null) return;
-        note.SetSprite(sprite);
-
-
-        Sprite GetSimultaneousSprite(NoteType type) => type switch
+        public void SetSimultaneousSprite(RegularNote note)
         {
-            NoteType.Normal => NormalPool.GetSimultaneousSprite(),
-            NoteType.Slide => SlidePool.GetSimultaneousSprite(),
-            NoteType.Flick => FlickPool.GetSimultaneousSprite(),
-            NoteType.Hold => null,
-            NoteType.Circle => null,
-            /*NoteType.Hold => holdNotePool,
-            NoteType.Sky => skyNotePool,
-            NoteType.Arc => arcNotePool,*/
-            _ => throw new System.Exception()
-        };
-    }
+            if (note == null) return;
+            var sprite = RegularPool.GetMultitapSprite(note.Type);
+            if (sprite == null) return;
+            note.SetSprite(sprite);
+        }
 
-    public void InitPools(FumenData fumen)
-    {
-        NormalPool.Init(fumen.NormalPoolCount);
-        CirclePool.Init(fumen.CirclePoolCount);
-        SlidePool.Init(fumen.SlidePoolCount);
-        FlickPool.Init(fumen.FlickPoolCount);
-        HoldPool.Init(fumen.HoldPoolCount);
-        SkyPool.Init(fumen.SkyPoolCount);
-        ArcPool.Init(fumen.ArcPoolCount);
-        LinePool.Init(fumen.LinePoolCount);
-    }
+        public void InitPools(FumenData fumen)
+        {
+            RegularPool.Init(fumen.NormalPoolCount, fumen.SlidePoolCount, fumen.FlickPoolCount);
+            HoldPool.Init(fumen.HoldPoolCount);
+            ArcPool.Init(fumen.ArcPoolCount);
+            LinePool.Init(fumen.LinePoolCount);
+            CirclePool.Init(fumen.CirclePoolCount);
+        }
 
-#if UNITY_EDITOR
-    [ContextMenu("Apply PoolCount")]
-    void ApplyPoolCount()
-    {
-        var inGameManager = FindAnyObjectByType<InGameManager>();
-        var fumenData = inGameManager.FumenData;
-        fumenData.SetPoolCount(new int[8] {
-            NormalPool.MaxUseCount,
-            CirclePool.MaxUseCount,
-            SlidePool.MaxUseCount,
-            FlickPool.MaxUseCount,
-            HoldPool.MaxUseCount,
-            SkyPool.MaxUseCount,
-            ArcPool.MaxUseCount,
-            LinePool.MaxUseCount,
-        });
-        UnityEditor.EditorUtility.SetDirty(fumenData);
+        /*#if UNITY_EDITOR
+            [ContextMenu("Apply PoolCount")]
+            void ApplyPoolCount()
+            {
+                var inGameManager = FindAnyObjectByType<InGameManager>();
+                var fumenData = inGameManager.FumenData;
+                fumenData.SetPoolCount(new int[7] {
+                    RegularPool.MaxUseCount,
+
+                    SlidePool.MaxUseCount,
+                    FlickPool.MaxUseCount,
+                    HoldPool.MaxUseCount,
+                    ArcPool.MaxUseCount,
+                    LinePool.MaxUseCount,
+                    CirclePool.MaxUseCount,
+                });
+                UnityEditor.EditorUtility.SetDirty(fumenData);
+            }
+        #endif*/
     }
-#endif
 }

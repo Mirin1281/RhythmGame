@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇ノーツ点滅"), System.Serializable]
-    public class F_NotesBlink : NoteGeneratorBase
+    public class F_NotesBlink : CommandBase
     {
         [Flags]
         enum BlinkTargets
@@ -29,7 +29,7 @@ namespace NoteGenerating
         [SerializeField] Vector2Int showWaitRange = new Vector2Int(1, 3);
         [SerializeField] bool isDelayOneFrame = true;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             if (target == 0) return;
             if (delay > 0)
@@ -38,36 +38,23 @@ namespace NoteGenerating
             }
             await WaitOnTiming();
 
-            List<NoteBase> notes = new(100);
+            List<ItemBase> items = new(100);
             if (target.HasFlag(BlinkTargets.Normal))
             {
-                notes.AddRange(Helper.PoolManager.NormalPool.GetInstances(0));
-            }
-            if (target.HasFlag(BlinkTargets.Slide))
-            {
-                notes.AddRange(Helper.PoolManager.SlidePool.GetInstances(0));
-            }
-            if (target.HasFlag(BlinkTargets.Flick))
-            {
-                notes.AddRange(Helper.PoolManager.FlickPool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.RegularPool.GetInstances(0));
             }
             if (target.HasFlag(BlinkTargets.Hold))
             {
-                notes.AddRange(Helper.PoolManager.HoldPool.GetInstances(0));
-            }
-            if (target.HasFlag(BlinkTargets.Sky))
-            {
-                notes.AddRange(Helper.PoolManager.SkyPool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.HoldPool.GetInstances(0));
             }
             if (target.HasFlag(BlinkTargets.Arc))
             {
-                notes.AddRange(Helper.PoolManager.ArcPool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.ArcPool.GetInstances(0));
             }
 
-            IEnumerable<Line> lines = null;
             if (target.HasFlag(BlinkTargets.Line))
             {
-                lines = Helper.PoolManager.LinePool.GetInstances(0);
+                items.AddRange(Helper.PoolManager.LinePool.GetInstances(0));
             }
 
             if (isDelayOneFrame)
@@ -80,22 +67,17 @@ namespace NoteGenerating
             for (int i = 0; i < blinkCount; i++)
             {
                 await Helper.WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
-                SetRendererEnableds(notes, lines, false);
+                SetRendererEnableds(items, false);
                 await Helper.WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
-                SetRendererEnableds(notes, lines, true);
+                SetRendererEnableds(items, true);
             }
         }
 
-        void SetRendererEnableds(IEnumerable<NoteBase> notes, IEnumerable<Line> lines, bool enabled)
+        void SetRendererEnableds(IEnumerable<ItemBase> notes, bool enabled)
         {
             foreach (var note in notes)
             {
                 note.SetRendererEnabled(enabled);
-            }
-            if (lines == null) return;
-            foreach (var line in lines)
-            {
-                line.SetRendererEnabled(enabled);
             }
         }
 

@@ -3,23 +3,22 @@ using Cysharp.Threading.Tasks;
 using UnityEngine.Serialization; // [SerializeField, FormerlySerializedAs("count")] int loopCount;
 using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_LineMove")
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◆判定線を降らせる"), System.Serializable]
-    public class F_LineDrop : Generator_Common
+    public class F_LineDrop : Command_General
     {
         [SerializeField] int loopCount;
         [SerializeField] float loopWaitLPB = 4;
-        [SerializeField] bool is3D;
         [Space(10)]
         [SerializeField] float moveDirection = 270;
         [SerializeField] bool isSpeedChangable;
         [SerializeField] float speedRate = 1f;
         [SerializeField] float lifeTime = 3f;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
-            for(int i = 0; i < loopCount; i++)
+            for (int i = 0; i < loopCount; i++)
             {
                 CreateLineAsync().Forget();
                 await Wait(loopWaitLPB);
@@ -28,28 +27,18 @@ namespace NoteGenerating
 
             async UniTaskVoid CreateLineAsync()
             {
-                Line line = GetLine(is3D);
+                Line line = GetLine();
                 await MoveAsync(line);
                 line.SetActive(false);
             }
         }
 
-        Line GetLine(bool is3D)
+        Line GetLine()
         {
             Line line = Helper.GetLine();
-            if(is3D)
-            {
-                line.SetWidth(13f);
-                line.SetHeight(0.3f);
-                line.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-                line.SetAlpha(0.5f);
-            }
-            else
-            {
-                line.SetWidth(26f);
-                line.SetHeight(0.06f);
-                line.SetAlpha(0.25f);
-            }
+            line.SetWidth(26f);
+            line.SetHeight(0.06f);
+            line.SetAlpha(0.25f);
             return line;
         }
 
@@ -57,7 +46,7 @@ namespace NoteGenerating
         {
             float baseTime = CurrentTime - Delta;
             float time = 0;
-            if(isSpeedChangable)
+            if (isSpeedChangable)
             {
                 while (line.IsActive && time < lifeTime)
                 {
@@ -80,19 +69,12 @@ namespace NoteGenerating
             }
         }
 
-        float GetStartBase() => is3D ? StartBase3D : StartBase;
-        float GetSpeed() => (is3D ? Speed3D : Speed) * speedRate;
+        float GetStartBase() => StartBase;
+        float GetSpeed() => Speed * speedRate;
 
         Vector3 GetVec()
         {
-            if(is3D)
-            {
-                return new Vector3(Inv(Mathf.Cos(moveDirection * Mathf.Deg2Rad)), -0.0001f, Mathf.Sin(moveDirection * Mathf.Deg2Rad));
-            }
-            else
-            {
-                return new Vector3(Inv(Mathf.Cos(moveDirection * Mathf.Deg2Rad)), Mathf.Sin(moveDirection * Mathf.Deg2Rad));
-            }
+            return new Vector3(Inv(Mathf.Cos(moveDirection * Mathf.Deg2Rad)), Mathf.Sin(moveDirection * Mathf.Deg2Rad));
         }
 
         protected override Color GetCommandColor()
@@ -102,7 +84,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return loopCount + GetInverseSummary();
+            return loopCount + GetMirrorSummary();
         }
     }
 }

@@ -1,4 +1,4 @@
-using NoteGenerating;
+using NoteCreating;
 using UnityEngine;
 
 public class Result
@@ -15,7 +15,7 @@ public class Result
     int maxCombo;
     double score;
     readonly MusicSelectData musicData;
-    
+
     static readonly int MaxScore = 10000000;
 
     public int Perfect => perfect;
@@ -39,7 +39,7 @@ public class Result
 
     public void SetComboAndScore(NoteGrade grade)
     {
-        if(grade == NoteGrade.Miss)
+        if (grade == NoteGrade.Miss)
         {
             combo = 0;
             miss++;
@@ -47,22 +47,33 @@ public class Result
         }
 
         combo++;
-        if(combo > maxCombo)
+        if (combo > maxCombo)
         {
             maxCombo = combo;
         }
-        
-        if(grade == NoteGrade.Perfect) {
+
+        if (grade == NoteGrade.Perfect)
+        {
             perfect++;
-        } else if(grade == NoteGrade.FastGreat) {
+        }
+        else if (grade == NoteGrade.FastGreat)
+        {
             fastGreat++;
-        } else if(grade == NoteGrade.LateGreat) {
+        }
+        else if (grade == NoteGrade.LateGreat)
+        {
             lateGreat++;
-        } else if(grade == NoteGrade.FastFar) {
+        }
+        else if (grade == NoteGrade.FastFar)
+        {
             fastFar++;
-        } else if(grade == NoteGrade.LateFar) {
+        }
+        else if (grade == NoteGrade.LateFar)
+        {
             lateFar++;
-        } else {
+        }
+        else
+        {
             throw new System.Exception();
         }
 

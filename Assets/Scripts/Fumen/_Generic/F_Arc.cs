@@ -3,17 +3,17 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
-    [AddTypeMenu("◆アーク", -1), System.Serializable]
-    public class F_Arc : Generator_Common
+    //[AddTypeMenu("◆アーク", -1), System.Serializable]
+    public class F_Arc : Command_General
     {
         [SerializeField] bool is2D;
         [SerializeField] ArcCreateData[] datas;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
-            Arc(datas, is2D);
+            //Arc(datas, is2D);
             await UniTask.CompletedTask;
         }
 
@@ -24,7 +24,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{GetInverseSummary()}";
+            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{GetMirrorSummary()}";
         }
 
         protected override string GetName()
@@ -32,7 +32,7 @@ namespace NoteGenerating
             return is2D ? "2DArc" : base.GetName();
         }
 
-        public override async void Preview()
+        /*public override async void Preview()
         {
             var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
             if (arc == null)
@@ -66,8 +66,8 @@ namespace NoteGenerating
                 line.SetPos(is2D ? new Vector3(0, lineY) : new Vector3(0, 0.01f, lineY));
                 line.transform.SetParent(previewObj.transform);
                 lineY += Helper.GetTimeInterval(4) * speed;
-                if (lineY > arc.LastZ) break;
+                if (lineY > arc.LastY) break;
             }
-        }
+        }*/
     }
 }

@@ -1,44 +1,44 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
-    public class F_Lyrith_MoveHold : Generator_Common
+    public class F_Lyrith_MoveHold : Command_General
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             float moveX = 2.4f / Speed;
 
             MoveHold(-9, 4, moveX);
-            await LoopNote(8, NoteType.Normal,
+            await LoopNote(8, RegularNoteType.Normal,
                 3,
                 5,
                 3
             );
 
             MoveHold(9, 4, -moveX);
-            await LoopNote(8, NoteType.Normal,
+            await LoopNote(8, RegularNoteType.Normal,
                 -3,
                 -5,
                 -3
             );
 
             MoveHold(-11, 4, moveX);
-            await LoopNote(8, NoteType.Normal,
+            await LoopNote(8, RegularNoteType.Normal,
                 1,
                 3,
                 5
             );
 
             MoveHold(11, 4, -moveX);
-            await LoopNote(8, NoteType.Normal,
+            await LoopNote(8, RegularNoteType.Normal,
                 -1,
                 -3,
                 -5
             );
 
-            await LoopNote(16, NoteType.Normal,
+            await LoopNote(16, RegularNoteType.Normal,
                 0.5f,
                 -0.5f,
                 0.5f,
@@ -48,13 +48,13 @@ namespace NoteGenerating
 
         void MoveHold(float x, float length, float moveX)
         {
-            
+
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = new (Inv(x), StartBase);
+            Vector3 startPos = new(Inv(x), StartBase);
             MoveAsync(hold, startPos, Inv(moveX)).Forget();
 
-            float expectTime = startPos.y/Speed - Delta;
+            float expectTime = startPos.y / Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
         }
 

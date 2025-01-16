@@ -2,12 +2,16 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using System.Linq;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
-    [AddTypeMenu("◆汎用 3Dに2Dノーツを流す", -1), System.Serializable]
-    public class F_3DGeneric : Generator_Common
+    //[AddTypeMenu("◆汎用 3Dに2Dノーツを流す", -1), System.Serializable]
+    public class F_3DGeneric : Command_General
     {
-        [SerializeField] float speedRate = 1f;
+        protected override UniTask ExecuteAsync()
+        {
+            return UniTask.CompletedTask;
+        }
+        /*[SerializeField] float speedRate = 1f;
 
         [SerializeField] bool isSpeedChangable;
 
@@ -229,6 +233,6 @@ namespace NoteGenerating
         {
             get => parentGeneratable?.GetContent();
             set => parentGeneratable ??= ParentGeneratorBase.CreateFrom(value);
-        }
+        }*/
     }
 }

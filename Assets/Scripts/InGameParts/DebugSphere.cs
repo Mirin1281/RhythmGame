@@ -1,16 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using NoteCreating;
 using UnityEngine;
 
-public class DebugSphere : MonoBehaviour
+public class DebugSphere : ItemBase
 {
+    [SerializeField] MeshRenderer meshRenderer;
+
+    public override float GetAlpha()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void SetAlpha(float alpha)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void SetColor(Color color)
     {
-        var renderer = GetComponent<MeshRenderer>();
-        var material = renderer.sharedMaterial;
+        var material = meshRenderer.sharedMaterial;
         var newMat = new Material(material);
         newMat.color = color;
-        renderer.material = newMat;
-        
+        meshRenderer.material = newMat;
+    }
+
+    public override void SetRendererEnabled(bool enabled)
+    {
+        throw new System.NotImplementedException();
     }
 }

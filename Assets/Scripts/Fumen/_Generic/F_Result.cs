@@ -1,12 +1,12 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇リザルト移行", 5), System.Serializable]
-    public class F_Result : NoteGeneratorBase
+    public class F_Result : CommandBase
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
-using NoteGenerating;
+using NoteCreating;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AddressableAssets;

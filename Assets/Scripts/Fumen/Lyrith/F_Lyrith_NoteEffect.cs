@@ -3,12 +3,16 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/【演出】花火みたいな"), System.Serializable]
-    public class F_Lyrith_NoteEffect : Generator_Common
+    public class F_Lyrith_NoteEffect : Command_General
     {
-        [SerializeField] float speed = 3f;
+        protected override async UniTask ExecuteAsync()
+        {
+            await UniTask.CompletedTask;
+        }
+        /*[SerializeField] float speed = 3f;
         [SerializeField] float time = 0.4f;
 
         protected override async UniTask GenerateAsync()
@@ -86,6 +90,6 @@ namespace NoteGenerating
             {
                 camera.transform.localRotation = Quaternion.Euler(0f, 0f, t.Ease(strength, 0, time, EaseType.OutBack));
             });
-        }
+        }*/
     }
 }

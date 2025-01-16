@@ -3,14 +3,14 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/5レーン"), System.Serializable]
-    public class F_AprilRabbit_5Lane : Generator_Common
+    public class F_AprilRabbit_5Lane : Command_General
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
-            UniTask.Void(async () => 
+            UniTask.Void(async () =>
             {
                 await Wait(4, 4, delta: 0);
                 Line(20, new Vector3(8, 1.5f));
@@ -88,16 +88,16 @@ namespace NoteGenerating
             await Note(1).Wait(8);
         }
 
-        F_AprilRabbit_5Lane Note(int x, NoteType type = NoteType.Normal, float delta = -1, Transform parentTs = null)
+        F_AprilRabbit_5Lane Note(int x, RegularNoteType type = RegularNoteType.Normal, float delta = -1, Transform parentTs = null)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
                 delta = Delta;
             }
-            NoteBase_2D note = Helper.GetNote2D(type, parentTs);
+            var note = Helper.GetNote(type, parentTs);
             note.SetWidth(1.2f);
             int dir = 10 * Inv(x);
-            note.SetRotate(dir);
+            note.SetRot(dir);
             Vector3 toPos = Inv(x) switch
             {
                 -2 => new Vector3(-8, 1.5f),
@@ -111,22 +111,22 @@ namespace NoteGenerating
             DropAsync(note, startPos, delta).Forget();
 
             float expectTime = StartBase / Speed - delta;
-            if(parentTs == null)
+            if (parentTs == null)
             {
-                Helper.NoteInput.AddExpect(note, toPos, expectTime, mode: NoteExpect.ExpectMode.Static);
+                Helper.NoteInput.AddExpect(note, toPos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static);
             }
             else
             {
                 float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                 Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(note, toPos + pos, expectTime, mode: NoteExpect.ExpectMode.Static);
+                Helper.NoteInput.AddExpect(note, toPos + pos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static);
             }
             return this;
 
 
-            async UniTask DropAsync(NoteBase note, Vector3 startPos, float delta = -1)
+            async UniTask DropAsync(RegularNote note, Vector3 startPos, float delta = -1)
             {
-                if(delta == -1)
+                if (delta == -1)
                 {
                     delta = Delta;
                 }
@@ -145,10 +145,11 @@ namespace NoteGenerating
         void Line(float dir, Vector3 pos)
         {
             var line = Helper.GetLine();
-            line.SetRotate(Inv(dir));
+            line.SetRot(Inv(dir));
             line.SetPos(Inv(pos));
+            line.SetAlpha(0);
             line.FadeIn(0.5f, 0.6f);
-            UniTask.Void(async () => 
+            UniTask.Void(async () =>
             {
                 await Helper.WaitSeconds(11);
                 line.FadeOut(0.5f);
@@ -164,7 +165,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return GetInverseSummary();
+            return GetMirrorSummary();
         }
     }
 }

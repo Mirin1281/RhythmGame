@@ -1,4 +1,5 @@
 using System;
+using NoteCreating;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -22,17 +23,15 @@ public class MusicSelectData : ScriptableObject
     [field: SerializeField] public string IllustratorName { get; private set; }
 
     [field: Space(10)]
-    // 問題点: AssetReferenceのアドレスを文字列にする簡単な方法がない
-    [field: SerializeField] public AssetReference NormalFumenReference { get; private set; }
-    //[field: SerializeField] public string NormalFumenAddress { get; private set; }
+    [field: SerializeField] public AssetReferenceT<FumenData> NormalFumenReference { get; private set; }
     [SerializeField] int level_normal = -1;
     public int Level_normal => level_normal;
-    [field: SerializeField] public AssetReference HardFumenReference { get; private set; }
-    //[field: SerializeField] public string HardFumenAddress { get; private set; }
+
+    [field: SerializeField] public AssetReferenceT<FumenData> HardFumenReference { get; private set; }
     [SerializeField] int level_hard = -1;
     public int Level_hard => level_hard;
-    [field: SerializeField] public AssetReference ExtraFumenReference { get; private set; }
-    //[field: SerializeField] public string ExtraFumenAddress { get; private set; }
+
+    [field: SerializeField] public AssetReferenceT<FumenData> ExtraFumenReference { get; private set; }
     [SerializeField] int level_extra = -1;
     public int Level_extra => level_extra;
 

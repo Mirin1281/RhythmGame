@@ -1,12 +1,16 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/逆走"), System.Serializable]
-    public class F_Lyrith_Reverse : Generator_Common
+    //[AddTypeMenu("Lyrith/逆走"), System.Serializable]
+    public class F_Lyrith_Reverse : Command_General
     {
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
+        {
+            await UniTask.CompletedTask;
+        }
+        /*protected override async UniTask GenerateAsync()
         {
             var d = await Wait(4, 2);
 
@@ -78,6 +82,6 @@ namespace NoteGenerating
                     await Helper.Yield();
                 }
             }
-        }
+        }*/
     }
 }

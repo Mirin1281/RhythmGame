@@ -2,10 +2,10 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇3D 2D変更"), System.Serializable]
-    public class F_Dimension : NoteGeneratorBase, IZoneCommand
+    public class F_Dimension : CommandBase, IZone
     {
         enum MoveType
         {
@@ -17,14 +17,14 @@ namespace NoteGenerating
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField, Min(0)] float delay = 0f;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
             await Helper.WaitSeconds(delay);
             Process(time);
         }
 
-        void IZoneCommand.CallZone(float delta)
+        void IZone.CallZone(float delta)
         {
             UniTask.Void(async () =>
             {

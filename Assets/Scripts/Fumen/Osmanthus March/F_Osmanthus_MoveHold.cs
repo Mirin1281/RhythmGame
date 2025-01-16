@@ -2,10 +2,10 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("Osmanthus/移動ホールド"), System.Serializable]
-    public class F_Osmanthus_MoveHold : Generator_Common
+    public class F_Osmanthus_MoveHold : Command_General
     {
         [Serializable]
         struct MoveHoldData
@@ -17,9 +17,9 @@ namespace NoteGenerating
 
         [SerializeField] MoveHoldData[] datas = new MoveHoldData[1];
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
-            for(int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < datas.Length; i++)
             {
                 var d = datas[i];
                 await Wait(d.Wait);

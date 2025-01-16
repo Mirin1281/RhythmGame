@@ -12,7 +12,7 @@ public class LightParticle : MonoBehaviour
     {
         set
         {
-            if(isActive == value) return;
+            if (isActive == value) return;
             isActive = value;
             gameObject.SetActive(isActive);
         }
@@ -20,6 +20,6 @@ public class LightParticle : MonoBehaviour
 
     public void SetPos(Vector2 pos)
     {
-        transform.localPosition = pos + ArcNote.Height * Vector2.up;
+        transform.localPosition = pos;
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     [CustomPropertyDrawer(typeof(NoteData))]
     public class F_Generic2D_NoteDataDrawer : PropertyDrawer

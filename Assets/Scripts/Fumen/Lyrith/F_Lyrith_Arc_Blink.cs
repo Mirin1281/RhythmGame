@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using ArcVertexMode = ArcCreateData.ArcVertexMode;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/アークとスカイ 点滅"), System.Serializable]
-    public class F_Lyrith_Arc_Blink : Generator_Common
+    //[AddTypeMenu("Lyrith/アークとスカイ 点滅"), System.Serializable]
+    public class F_Lyrith_Arc_Blink : Command_General
     {
-        [SerializeField] float decay = 3f;
+        protected override async UniTask ExecuteAsync()
+        {
+            await UniTask.CompletedTask;
+        }
+        /*[SerializeField] float decay = 3f;
         List<ArcNote> arcs;
         List<SkyNote> skys;
         
@@ -106,7 +109,7 @@ namespace NoteGenerating
 
         async UniTask MySky(float x, float y = 4f, bool first = false)
         {
-            var skyNote = Helper.GetSky();
+            var skyNote = null://Helper.GetSky();
             var startPos = new Vector3(Inv(x), y, StartBase3D);
             DropAsync3D(skyNote, startPos).Forget();
             skys.Add(skyNote);
@@ -125,6 +128,6 @@ namespace NoteGenerating
         protected override string GetName()
         {
             return "アーク点滅";
-        }
+        }*/
     }
 }

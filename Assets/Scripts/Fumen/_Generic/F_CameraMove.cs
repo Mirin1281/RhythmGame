@@ -2,10 +2,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇カメラ制御"), System.Serializable]
-    public class F_CameraMove : Generator_Common
+    public class F_CameraMove : Command_General
     {
         [SerializeField, Min(0)] int loopCount = 1;
         [SerializeField, Min(0)] float loopWait = 4;
@@ -14,7 +14,7 @@ namespace NoteGenerating
         bool isChainWait = true;
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             float delta = await WaitOnTiming();
             for (int i = 0; i < loopCount; i++)
@@ -49,7 +49,7 @@ namespace NoteGenerating
             {
                 delta = await Wait(s.Wait, delta: delta);
             }
-            Helper.CameraMover.Move(s, delta, IsInverse);
+            Helper.CameraMover.Move(s, delta, IsMirror);
         }
 
         protected override Color GetCommandColor()

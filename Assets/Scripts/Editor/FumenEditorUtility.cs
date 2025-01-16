@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NoteGenerating.Editor
+namespace NoteCreating.Editor
 {
     public static class FumenEditorUtility
     {
@@ -24,8 +24,7 @@ namespace NoteGenerating.Editor
         /// </summary>
         public static bool TryGetScriptPath(string fileName, out string relativePath)
         {
-            string path = null;
-            var pathes = AssetDatabase.FindAssets(fileName + " t:Script")
+            string path = AssetDatabase.FindAssets(fileName + " t:Script")
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .FirstOrDefault(str => string.Equals(Path.GetFileNameWithoutExtension(str),
                     fileName, StringComparison.CurrentCultureIgnoreCase));
@@ -105,14 +104,14 @@ namespace NoteGenerating.Editor
         }
 
         /// <summary>
-        /// GenerateDataを作成し、FumenDataの子に設定します
+        /// CommandDataを作成し、FumenDataの子に設定します
         /// </summary>
         /// <param name="parentData">親となるFumenData</param>
         /// <param name="baseName">名前</param>
         /// <returns></returns>
-        public static GenerateData CreateSubGenerateData(FumenData parentData, string baseName)
+        public static CommandData CreateSubCommandData(FumenData parentData, string baseName)
         {
-            var createdCmd = ScriptableObject.CreateInstance<GenerateData>();
+            var createdCmd = ScriptableObject.CreateInstance<CommandData>();
             string path = AssetDatabase.GetAssetPath(parentData);
             int lastIndex = path.LastIndexOf('/');
             string folderPath = path.Substring(0, lastIndex);
@@ -123,7 +122,7 @@ namespace NoteGenerating.Editor
             return createdCmd;
         }
 
-        public static GenerateData DuplicateSubGenerateData(FumenData parentData, GenerateData cmdData)
+        public static CommandData DuplicateSubCommandData(FumenData parentData, CommandData cmdData)
         {
             var duplicatedCmd = Object.Instantiate(cmdData);
             string path = AssetDatabase.GetAssetPath(parentData);
@@ -137,14 +136,14 @@ namespace NoteGenerating.Editor
         }
 
         /// <summary>
-        /// 未使用のGenerateDataを削除します
+        /// 未使用のCommandDataを削除します
         /// </summary>
-        public static void DestroyAllUnusedGenerateData()
+        public static void DestroyAllUnusedCommandData()
         {
             int removeCount = 0;
             foreach (var data in GetAllScriptableObjects<FumenData>())
             {
-                removeCount += DestroyUnusedGenerateData(data);
+                removeCount += DestroyUnusedCommandData(data);
             }
 
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
@@ -160,14 +159,14 @@ namespace NoteGenerating.Editor
 
 
             // 指定したFumenDataで使われていないコマンドを削除
-            static int DestroyUnusedGenerateData(FumenData FumenData)
+            static int DestroyUnusedCommandData(FumenData FumenData)
             {
                 int removeCount = 0;
                 var subAssets = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(FumenData))
                     .Where(x => AssetDatabase.IsSubAsset(x));
                 foreach (var sub in subAssets)
                 {
-                    GenerateData cmdData = sub as GenerateData;
+                    CommandData cmdData = sub as CommandData;
                     if (FumenData.Fumen.IsUsed(cmdData) == false)
                     {
                         removeCount++;

@@ -2,22 +2,22 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [AddTypeMenu("◇速度変更"), System.Serializable]
-    public class F_SpeedChange : NoteGeneratorBase
+    public class F_SpeedChange : CommandBase
     {
         [Header("通常を1として、全体のノーツスピードを変更します")]
         [SerializeField] float speed = 1f;
         [SerializeField] float easeTime;
         [SerializeField] EaseType easeType = EaseType.Linear;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
             var easing = new Easing(RhythmGameManager.SpeedBase, speed, easeTime, easeType);
             float baseTime = CurrentTime - Delta;
             float t = 0f;
-            while(t < easeTime)
+            while (t < easeTime)
             {
                 t = CurrentTime - baseTime;
                 SetSpeed(easing.Ease(t));

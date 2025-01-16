@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6695812817675476497}
   - component: {fileID: 268693219378288984}
+  - component: {fileID: 5554034097861853466}
+  - component: {fileID: 8259857555807457460}
   - component: {fileID: 592733306534651277}
   - component: {fileID: 1287889567377016902}
-  - component: {fileID: 8259857555807457460}
-  - component: {fileID: 347542508510782695}
   m_Layer: 0
   m_Name: ArcNote
   m_TagString: Untagged
@@ -156,6 +156,43 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &5554034097861853466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791181920714164328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Container: {fileID: 268693219378288984}
+  m_RebuildOnSplineChange: 0
+  m_RebuildFrequency: 30
+  m_UpdateColliders: 1
+  m_Sides: 8
+  m_SegmentsPerUnit: 4
+  m_Capped: 1
+  m_Radius: 0.25
+  m_Range: {x: 0, y: 1}
+--- !u!114 &8259857555807457460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791181920714164328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d768b31a014df648b40b5208efb466b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 7
+  splineExtrude: {fileID: 5554034097861853466}
+  meshRenderer: {fileID: 592733306534651277}
+  meshFilter: {fileID: 1287889567377016902}
 --- !u!23 &592733306534651277
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -205,38 +242,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5791181920714164328}
-  m_Mesh: {fileID: 4300000, guid: 99eb960d4090e9340895597a8b25f9f2, type: 2}
---- !u!114 &8259857555807457460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791181920714164328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d768b31a014df648b40b5208efb466b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 7
-  splineExtrude: {fileID: 347542508510782695}
-  meshRenderer: {fileID: 592733306534651277}
-  meshFilter: {fileID: 1287889567377016902}
---- !u!114 &347542508510782695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791181920714164328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f60e2bcf91f1f468dc93313d599e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Container: {fileID: 268693219378288984}
-  m_Sides: 4
-  m_SegmentsPerUnit: 4
-  m_Capped: 1
-  m_Radius: 0.6
-  m_Range: {x: 0, y: 1}
+  m_Mesh: {fileID: 4300000, guid: d4d5541a5b929eb4f8a615bc1e24216a, type: 2}

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [CreateAssetMenu(
         fileName = "F_",
@@ -11,12 +11,8 @@ namespace NoteGenerating
     ]
     public class FumenData : ScriptableObject
     {
-        [SerializeField] Difficulty difficulty;
         [SerializeField] MusicSelectData musicSelectData;
-        [SerializeField, Tooltip("参考用です。実際は" + nameof(MusicSelectData) + "の値が使用されます")]
-        int level;
         [SerializeField, Min(1)] int noteCount = 1;
-        [SerializeField] bool start3D = false;
 
         [field: Space(10), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
@@ -24,20 +20,15 @@ namespace NoteGenerating
         [field: SerializeField] public int SlidePoolCount { get; private set; } = -1;
         [field: SerializeField] public int FlickPoolCount { get; private set; } = -1;
         [field: SerializeField] public int HoldPoolCount { get; private set; } = -1;
-        [field: SerializeField] public int SkyPoolCount { get; private set; } = -1;
         [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
         [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
 
-        public Difficulty Difficulty => difficulty;
         public MusicSelectData MusicSelectData => musicSelectData;
-        public int Level => level;
         public int NoteCount => noteCount;
-        public bool Start3D => start3D;
 
-        public void SetData(int noteCount, bool start3D)
+        public void SetData(int noteCount)
         {
             this.noteCount = noteCount;
-            this.start3D = start3D;
         }
 
         public void SetPoolCount(int[] poolCounts)
@@ -47,9 +38,8 @@ namespace NoteGenerating
             SlidePoolCount = poolCounts[2];
             FlickPoolCount = poolCounts[3];
             HoldPoolCount = poolCounts[4];
-            SkyPoolCount = poolCounts[5];
-            ArcPoolCount = poolCounts[6];
-            LinePoolCount = poolCounts[7];
+            ArcPoolCount = poolCounts[5];
+            LinePoolCount = poolCounts[6];
         }
 
         [SerializeField, HideInInspector] Fumen fumen;
@@ -60,21 +50,21 @@ namespace NoteGenerating
     public class Fumen
     {
         // シリアライズする
-        [SerializeField] List<GenerateData> generateDataList = new();
-        public IReadOnlyList<GenerateData> GetReadOnlyGenerateDataList() => generateDataList;
+        [SerializeField] List<CommandData> commandDataList = new();
+        public IReadOnlyList<CommandData> GetReadOnlyCommandDataList() => commandDataList;
 
 #if UNITY_EDITOR
-        public List<GenerateData> GetGenerateDataList() => generateDataList;
-        public void SetGenerateDataList(IEnumerable<GenerateData> commands)
+        public List<CommandData> GetCommandDataList() => commandDataList;
+        public void SetCommandDataList(IEnumerable<CommandData> commands)
         {
-            generateDataList = commands.ToList();
+            commandDataList = commands.ToList();
         }
 
         public bool EqualsCommands(Fumen other)
         {
             if (other == null) return false;
-            var myList = GetReadOnlyGenerateDataList();
-            var otherList = other.GetReadOnlyGenerateDataList();
+            var myList = GetReadOnlyCommandDataList();
+            var otherList = other.GetReadOnlyCommandDataList();
             if (myList == null && otherList == null) return true;
             if (myList == null || otherList == null || myList.Count != otherList.Count) return false;
 
@@ -93,11 +83,11 @@ namespace NoteGenerating
         /// <summary>
         /// リストの中に特定のGenerateDataがあるか調べます
         /// </summary>
-        public bool IsUsed(GenerateData targetData)
+        public bool IsUsed(CommandData targetData)
         {
-            foreach (var generateData in GetReadOnlyGenerateDataList())
+            foreach (var commandData in GetReadOnlyCommandDataList())
             {
-                if (generateData == targetData) return true;
+                if (commandData == targetData) return true;
             }
             return false;
         }

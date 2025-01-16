@@ -64,21 +64,6 @@ public class CameraMover : MonoBehaviour
     Vector3 basePos;
     Quaternion baseRot;
 
-    [ContextMenu("Switch")]
-    void SwitchDimension()
-    {
-        if (transform.localPosition.y == 4f)
-        {
-            transform.localPosition = new Vector3(0f, 7f, -6.5f);
-            transform.localRotation = Quaternion.Euler(25f, 0f, 0f);
-        }
-        else if (transform.localPosition.y == 7f)
-        {
-            transform.localPosition = new Vector3(0f, 4f, -10f);
-            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        }
-    }
-
     void Awake()
     {
         basePos = transform.localPosition;

@@ -36,7 +36,7 @@ public class PropertyDrawerHelper
     /// </summary>
     public void SetY(float addHeight = 0, bool reset = true)
     {
-        if(reset)
+        if (reset)
         {
             SetX(0);
             SetWidth(startWidth * (1f - IndentDepth));
@@ -59,14 +59,14 @@ public class PropertyDrawerHelper
     public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
     {
         var prop = property.FindPropertyRelative(fieldName);
-        if(drawLabel)
+        if (drawLabel)
         {
-            if(overrideName == null)
+            if (overrideName == null)
             {
                 EditorGUI.PropertyField(position, prop);
             }
             else
-            {   
+            {
                 EditorGUI.PropertyField(position, prop, new GUIContent(overrideName));
             }
         }
@@ -97,11 +97,9 @@ public class PropertyDrawerHelper
         SetWidth(w);
     }
 
-    public void DrawLine()
+    public void DrawLine(Color? color = null, int weight = 1)
     {
-        EditorGUI.DrawRect(
-            new Rect(position.x, position.y, position.width, 1),
-            new Color(0.7f, 0.7f, 0.7f));
+        EditorGUI.DrawRect(new Rect(position.x, position.y, position.width, weight), color ?? new Color(0.7f, 0.7f, 0.7f));
     }
 
     public void DrawBox(Rect position, Color color, float alpha = 0.1f)

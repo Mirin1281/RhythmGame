@@ -1,12 +1,9 @@
 using UnityEngine;
 
-public class NormalNote : NoteBase_2D
+namespace NoteCreating
 {
-    static readonly float BaseScaleX = 3.6f;
-    public override void SetWidth(float width)
+    public class NormalNote : RegularNote
     {
-        Width = width;
-        width *= BaseScaleX;
-        SpriteRenderer.size = new Vector2(width, SpriteRenderer.size.y);
+        public override RegularNoteType Type => RegularNoteType.Normal;
     }
 }

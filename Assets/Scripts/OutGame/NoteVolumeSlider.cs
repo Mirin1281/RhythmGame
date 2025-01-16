@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using NoteGenerating;
+using NoteCreating;
 
 public class NoteVolumeSlider : MonoBehaviour
 {
@@ -40,7 +40,7 @@ public class NoteVolumeSlider : MonoBehaviour
         cts = new();
         var token = cts.Token;
 
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             await MyUtility.WaitSeconds(0.3f, token);
             SEManager.Instance.PlaySE(SEType.my2);
@@ -58,7 +58,7 @@ public class NoteVolumeSlider : MonoBehaviour
         void SetColor(RectTransform rect)
         {
             var image = rect.GetComponent<Image>();
-            if(enabled)
+            if (enabled)
             {
                 image.color = Color.black;
             }

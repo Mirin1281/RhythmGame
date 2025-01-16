@@ -3,7 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace NoteGenerating
+namespace NoteCreating
 {
     [Serializable]
     public struct HoldData
@@ -22,7 +22,7 @@ namespace NoteGenerating
     }
 
     [AddTypeMenu("AprilRabbit/タッチのホールド"), System.Serializable]
-    public class F_AprilRabbit_TouchHold : Generator_Common
+    public class F_AprilRabbit_TouchHold : Command_General
     {
         /*[SerializeField] float speedRate = 1f;
 
@@ -33,18 +33,18 @@ namespace NoteGenerating
 
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = true;*/
-        
+
         [SerializeField] HoldData[] noteDatas = new HoldData[1];
 
         //protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask GenerateAsync()
+        protected override async UniTask ExecuteAsync()
         {
-            foreach(var data in noteDatas)
+            foreach (var data in noteDatas)
             {
                 await Wait(data.Wait);
-                if(data.IsDisabled) continue;
-                if(data.Length == 0)
+                if (data.IsDisabled) continue;
+                if (data.Length == 0)
                 {
                     Debug.LogWarning("ホールドの長さが0です");
                     continue;
@@ -56,15 +56,15 @@ namespace NoteGenerating
 
         HoldNote TouchHold(float x, float length, float delta = -1, bool isSpeedChangable = false, Transform parentTs = null)
         {
-            if(delta == -1)
+            if (delta == -1)
             {
                 delta = Delta;
             }
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-            Vector3 startPos = new (Inv(x), StartBase, -0.04f);
+            Vector3 startPos = new(Inv(x), StartBase, -0.04f);
             hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
-            if(isSpeedChangable)
+            if (isSpeedChangable)
             {
                 DropAsync_SpeedChangable(hold, delta).Forget();
             }
@@ -74,7 +74,7 @@ namespace NoteGenerating
             }
 
             float expectTime = startPos.y / Speed - delta;
-            if(parentTs == null)
+            if (parentTs == null)
             {
                 Helper.NoteInput.AddExpect(hold, expectTime, 0);
             }
@@ -82,14 +82,14 @@ namespace NoteGenerating
             {
                 float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                 Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime, 0, mode: NoteExpect.ExpectMode.Y_Static);
+                Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime, 0, expectType: NoteJudgeStatus.ExpectType.Y_Static);
             }
             return hold;
 
 
             async UniTask DropAsync_SpeedChangable(HoldNote hold, float delta = -1)
             {
-                if(delta == -1)
+                if (delta == -1)
                 {
                     delta = Delta;
                 }
@@ -122,7 +122,7 @@ namespace NoteGenerating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetInverseSummary();
+            return noteDatas.Length + GetMirrorSummary();
         }
     }
 }
