@@ -6,9 +6,11 @@ using UnityEngine;
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下(上昇)"), System.Serializable]
-    public class F_AprilRabbit_EffectNoteDrop : Command_General
+    public class F_AprilRabbit_EffectNoteDrop : CommandBase
     {
+        [SerializeField] Mirror mirror;
         [SerializeField] RegularNoteType noteType = RegularNoteType.Flick;
+
         protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
@@ -38,17 +40,20 @@ namespace NoteCreating
                 await WhileYieldAsync(time, t =>
                 {
                     var pos = startPos + 10f * t * Vector2.up;
-                    note.SetPos(new Vector3(Inv(pos.x), pos.y));
-                    note.SetRot(Inv(t.Ease(90f, 450, time, EaseType.OutQuad) * a));
+                    note.SetPos(new Vector3(mirror.Conv(pos.x), pos.y));
+                    note.SetRot(mirror.Conv(t.Ease(90f, 450, time, EaseType.OutQuad) * a));
                     note.SetAlpha(t.Ease(0.5f, 0f, time, EaseType.OutQuad));
                 });
                 note.SetActive(false);
             }
         }
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "EffectNote";
         }
+#endif
     }
 }

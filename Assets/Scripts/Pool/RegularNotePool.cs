@@ -30,7 +30,7 @@ namespace NoteCreating
             n.transform.localScale = Vector3.one;
             n.SetRendererEnabled(true);
             n.SetSprite(isMultitap ? GetMultitapSprite(type) : GetDefaultSprite(type));
-            n.SetAlpha(type == RegularNoteType.Slide ? 0.5f : 1f);
+            n.SetAlpha(1f);
             n.transform.SetParent(this.transform);
             n.IsVerticalRange = false;
             return n;

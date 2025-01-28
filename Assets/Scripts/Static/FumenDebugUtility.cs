@@ -7,15 +7,29 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    public readonly struct CommandSelectStatus
+    {
+        public readonly int Index;
+        public readonly int BeatDelta;
+        public CommandSelectStatus(int index, int delay)
+        {
+            Index = index;
+            BeatDelta = delay;
+        }
+    }
+
     public static class FumenDebugUtility
     {
+        public static readonly float DebugBPM = 200;
+        public static readonly float DebugSpeed = 14;
+
         /// <summary>
         /// ノーツのプレビューに使用するオブジェクトの用意をします
         /// </summary>
         public static GameObject GetPreviewObject(bool isClear = true)
         {
             GameObject previewObj = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-                .Where(obj => obj.name == "Preview2D")
+                .Where(obj => obj.name == "ItemPreview")
                 .FirstOrDefault();
             if (previewObj == null) return null;
             if (isClear)
@@ -27,6 +41,94 @@ namespace NoteCreating
                 }
             }
             return previewObj;
+        }
+
+        public static void CreateGuideLine(GameObject previewObj, NoteCreateHelper helper, bool isFirst = true, int count = 16, float lpb = 4)
+        {
+            if (isFirst == false) return;
+            float y = helper.GetTimeInterval(lpb) * DebugSpeed;
+            for (int i = 0; i < count; i++)
+            {
+                var line = helper.GetLine();
+                line.SetAlpha(0.2f);
+                line.transform.SetParent(previewObj.transform);
+                line.SetPos(new Vector3(0, y));
+                y += helper.GetTimeInterval(lpb) * DebugSpeed;
+            }
+        }
+
+        public static void DebugPreview2DNotes<TData>(IEnumerable<TData> noteDatas, NoteCreateHelper helper,
+            Mirror mir, bool beforeClear, int beatDelta = 1) where TData : INoteData
+        {
+            GameObject previewObj = GetPreviewObject(beforeClear);
+            int simultaneousCount = 0;
+            float beforeY = -1;
+            RegularNote beforeNote = null;
+
+            float y = helper.GetTimeInterval(4, beatDelta) * DebugSpeed;
+            foreach (var data in noteDatas)
+            {
+                y += helper.GetTimeInterval(data.Wait) * DebugSpeed;
+
+                var type = data.Type;
+                if (type is RegularNoteType.Normal or RegularNoteType.Slide or RegularNoteType.Flick)
+                {
+                    DebugNote(data.X, y, data.Type);
+                }
+                else if (type == RegularNoteType.Hold)
+                {
+                    if (data.Length == 0)
+                    {
+                        Debug.LogWarning("ホールドの長さが0です");
+                        continue;
+                    }
+                    DebugHold(data.X, y, data.Length);
+                }
+            }
+
+            CreateGuideLine(previewObj, helper, beforeClear);
+
+
+            void DebugNote(float x, float y, RegularNoteType type)
+            {
+                RegularNote note = helper.GetNote(type);
+                var startPos = new Vector3(mir.Conv(x), y);
+                note.SetPos(startPos);
+                note.transform.SetParent(previewObj.transform);
+
+                SetSimultaneous(note, y);
+            }
+
+            void DebugHold(float x, float y, float length)
+            {
+                var holdTime = helper.GetTimeInterval(length);
+                var hold = helper.GetHold(holdTime * RhythmGameManager.Speed);
+                hold.SetMaskLocalPos(new Vector2(mir.Conv(x), 0));
+                var startPos = new Vector3(mir.Conv(x), y);
+                hold.SetPos(startPos);
+                hold.transform.SetParent(previewObj.transform);
+
+                SetSimultaneous(hold, y);
+            }
+
+            void SetSimultaneous(RegularNote note, float y)
+            {
+                if (beforeY == y)
+                {
+                    if (simultaneousCount == 1)
+                    {
+                        helper.PoolManager.SetSimultaneousSprite(beforeNote);
+                    }
+                    helper.PoolManager.SetSimultaneousSprite(note);
+                    simultaneousCount++;
+                }
+                else
+                {
+                    simultaneousCount = 1;
+                }
+                beforeY = y;
+                beforeNote = note;
+            }
         }
 
         /// <summary>
@@ -58,6 +160,9 @@ namespace NoteCreating
             }
         }
 
+        /// <summary>
+        /// リフレクションでインスタンス内の変数を全て書き出します
+        /// </summary>
         public static string GetContent<T>(T cmd) where T : CommandBase
         {
             int separateLevel = 1;
@@ -81,10 +186,6 @@ namespace NoteCreating
                 sb.Append(GetSeparator(separateLevel));
             }
 
-            if (cmd is IMirrorable inversable)
-            {
-                sb.Append(inversable.IsMirror);
-            }
             return sb.ToString();
 
 
@@ -130,6 +231,9 @@ namespace NoteCreating
             }
         }
 
+        /// <summary>
+        /// リフレクションでインスタンス内の変数を設定します
+        /// </summary>
         public static void SetMember<T>(T command, string content) where T : CommandBase
         {
             if (string.IsNullOrWhiteSpace(content)) return;
@@ -157,11 +261,6 @@ namespace NoteCreating
                         f.SetValue(command, v);
                     }
                 }
-            }
-            if (command is IMirrorable mirrorable)
-            {
-                Debug.Log(fieldStrings[fields.Length]);
-                mirrorable.SetIsMirror(bool.Parse(fieldStrings[fields.Length]));
             }
 
 
@@ -242,107 +341,6 @@ namespace NoteCreating
                 5 => '~',
                 _ => throw new ArgumentOutOfRangeException()
             };
-        }
-
-        public static void DebugPreview2DNotes(IEnumerable<INoteData> noteDatas, NoteCreateHelper Helper, bool isInverse, bool isClearPreview)
-        {
-            float Inv(float x) => x * (isInverse ? -1 : 1);
-
-
-            GameObject previewObj = GetPreviewObject(isClearPreview);
-            int simultaneousCount = 0;
-            float beforeY = -1;
-            RegularNote beforeNote = null;
-
-            float y = 0f;
-            foreach (var data in noteDatas)
-            {
-                y += Helper.GetTimeInterval(data.Wait) * RhythmGameManager.Speed;
-
-                var type = data.Type;
-                if (type == CreateNoteType.Normal)
-                {
-                    DebugNote(data.X, y, RegularNoteType.Normal, data.Width);
-                }
-                else if (type == CreateNoteType.Slide)
-                {
-                    DebugNote(data.X, y, RegularNoteType.Slide, data.Width);
-                }
-                else if (type == CreateNoteType.Flick)
-                {
-                    DebugNote(data.X, y, RegularNoteType.Flick, data.Width);
-                }
-                else if (type == CreateNoteType.Hold)
-                {
-                    if (data.Length == 0)
-                    {
-                        Debug.LogWarning("ホールドの長さが0です");
-                        continue;
-                    }
-                    DebugHold(data.X, y, data.Length, data.Width);
-                }
-            }
-
-            if (isClearPreview == false) return;
-            float lineY = 0f;
-            for (int i = 0; i < 10000; i++)
-            {
-                var line = Helper.PoolManager.LinePool.GetLine();
-                line.SetPos(new Vector3(0, lineY));
-                line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * RhythmGameManager.Speed;
-                if (lineY > y) break;
-            }
-
-
-            void DebugNote(float x, float y, RegularNoteType type, float width)
-            {
-                RegularNote note = Helper.GetNote(type);
-                if ((width is 0 or 1) == false)
-                {
-                    note.SetWidth(width);
-                }
-                var startPos = new Vector3(Inv(x), y);
-                note.SetPos(startPos);
-                note.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(note, y);
-            }
-
-            void DebugHold(float x, float y, float length, float width)
-            {
-                var holdTime = Helper.GetTimeInterval(length);
-                var hold = Helper.GetHold(holdTime * RhythmGameManager.Speed);
-                if ((width is 0 or 1) == false)
-                {
-                    hold.SetWidth(width);
-                }
-                hold.SetMaskLocalPos(new Vector2(Inv(x), 0));
-                var startPos = new Vector3(Inv(x), y);
-                hold.SetPos(startPos);
-                hold.transform.SetParent(previewObj.transform);
-
-                SetSimultaneous(hold, y);
-            }
-
-            void SetSimultaneous(RegularNote note, float y)
-            {
-                if (beforeY == y)
-                {
-                    if (simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(note);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeY = y;
-                beforeNote = note;
-            }
         }
     }
 }

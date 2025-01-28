@@ -5,7 +5,7 @@ using System;
 namespace NoteCreating
 {
     [AddTypeMenu("Osmanthus/移動ホールド"), System.Serializable]
-    public class F_Osmanthus_MoveHold : Command_General
+    public class F_Osmanthus_MoveHold : CommandBase
     {
         [Serializable]
         struct MoveHoldData
@@ -14,6 +14,8 @@ namespace NoteCreating
             [field: SerializeField] public float FromX { get; private set; }
             [field: SerializeField] public float Length { get; private set; }
         }
+
+        [SerializeField] Mirror mirror;
 
         [SerializeField] MoveHoldData[] datas = new MoveHoldData[1];
 
@@ -37,7 +39,7 @@ namespace NoteCreating
 
         void MoveHold(float length, float startX, float fromX, EaseType easeType = EaseType.Linear)
         {
-            var hold = Hold(startX, length, isMove: false);
+            var hold = Hold(startX, length);
             MoveAsync(hold).Forget();
 
 
@@ -51,7 +53,7 @@ namespace NoteCreating
                 while (hold.IsActive && time < 8f)
                 {
                     time = CurrentTime - baseTime;
-                    var posX = Inv(easing.Ease(time));
+                    var posX = mirror.Conv(easing.Ease(time));
                     var posY = startPos.y + time * -Speed;
                     hold.SetPos(new Vector3(posX, posY));
                     hold.SetMaskLocalPos(new Vector2(posX, 0));
@@ -60,9 +62,26 @@ namespace NoteCreating
             }
         }
 
+        HoldNote Hold(float x, float length)
+        {
+
+            float holdTime = Helper.GetTimeInterval(length);
+            HoldNote hold = Helper.GetHold(holdTime * Speed);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            hold.SetPos(startPos);
+
+            float expectTime = startPos.y / Speed - Delta;
+            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+            return hold;
+        }
+
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "MoveHold";
         }
+#endif
     }
 }

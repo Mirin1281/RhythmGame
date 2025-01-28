@@ -251,7 +251,7 @@ namespace NoteCreating.Editor
                             }
                             else
                             {
-                                data.SetCommand(null);
+                                data.SetCommand((Type)null);
                             }
                         }
                     }

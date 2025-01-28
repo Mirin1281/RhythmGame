@@ -22,7 +22,7 @@ namespace NoteCreating
     }
 
     [AddTypeMenu("AprilRabbit/タッチのホールド"), System.Serializable]
-    public class F_AprilRabbit_TouchHold : Command_General
+    public class F_AprilRabbit_TouchHold : CommandBase
     {
         /*[SerializeField] float speedRate = 1f;
 
@@ -34,6 +34,7 @@ namespace NoteCreating
         [SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         bool isCheckSimultaneous = true;*/
 
+        [SerializeField] Mirror mirror;
         [SerializeField] HoldData[] noteDatas = new HoldData[1];
 
         //protected override float Speed => base.Speed * speedRate;
@@ -62,7 +63,7 @@ namespace NoteCreating
             }
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-            Vector3 startPos = new(Inv(x), StartBase, -0.04f);
+            Vector3 startPos = new(mirror.Conv(x), StartBase, -0.04f);
             hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
             if (isSpeedChangable)
             {
@@ -100,11 +101,13 @@ namespace NoteCreating
                     time = CurrentTime - baseTime;
                     var vec = Speed * Vector3.down;
                     hold.SetLength(holdTime * Speed);
-                    hold.SetPos(new Vector3(Inv(x), StartBase, -0.04f) + time * vec);
+                    hold.SetPos(new Vector3(mirror.Conv(x), StartBase, -0.04f) + time * vec);
                     await Helper.Yield();
                 }
             }
         }
+
+#if UNITY_EDITOR
 
         protected override string GetName()
         {
@@ -122,7 +125,8 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetMirrorSummary();
+            return noteDatas.Length + mirror.GetStatusText();
         }
+#endif
     }
 }

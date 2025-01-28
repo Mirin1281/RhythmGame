@@ -6,29 +6,23 @@ namespace NoteCreating.Editor
     [CustomPropertyDrawer(typeof(F_Line.LineCreateData))]
     public class F_LineDrawer : PropertyDrawer
     {
-        const float Height = 20;
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var h = new PropertyDrawerHelper(position, property, Height);
+            var h = new DrawerHelper(position, property);
             h.SetY();
 
             h.PropertyField("delayLPB");
-            h.SetY(Height / 2f);
+            h.SetY(30);
 
             var isPosEaseProp = h.PropertyField("isPosEase");
             h.SetY();
             h.SetIndentLevel(true);
             if (isPosEaseProp.boolValue)
             {
-                h.LabelField("Start");
-                h.SetX(EditorGUIUtility.labelWidth);
-                h.PropertyField(h.GetWidth() / 1.8f, "startPos", false);
+                h.PropertyField("startPos");
                 h.SetY();
 
-                h.LabelField("From");
-                h.SetX(EditorGUIUtility.labelWidth);
-                h.PropertyField(h.GetWidth() / 1.8f, "fromPos", false);
+                h.PropertyField("fromPos");
                 h.SetY();
 
                 h.PropertyField("overridePosEaseTime", overrideName: "OverrideTime");
@@ -40,7 +34,7 @@ namespace NoteCreating.Editor
             {
                 h.LabelField("Pos");
                 h.SetX(EditorGUIUtility.labelWidth);
-                h.PropertyField(h.GetWidth() / 1.8f, "startPos", false);
+                h.PropertyField("startPos");
                 h.SetY();
             }
             h.SetIndentLevel(false);
@@ -106,7 +100,7 @@ namespace NoteCreating.Editor
                 h.SetY();
                 h.SetIndentLevel(false);
             }
-            h.SetY(-Height / 2f);
+            h.SetY(10);
 
             h.DrawLine();
         }
@@ -132,7 +126,7 @@ namespace NoteCreating.Editor
                 count += 3;
             }
 
-            return Height * count;
+            return DrawerHelper.Height * count;
         }
     }
 }

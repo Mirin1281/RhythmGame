@@ -42,7 +42,7 @@ public class UpdatorOnChange : MonoBehaviour
         illustImage.sprite = data.Illust;
         illustratorTmpro.SetText(data.IllustratorName);
         pickedData = data;
-        selectedFumenRef = data.GetFumenAddress(RhythmGameManager.Difficulty);
+        selectedFumenRef = data.GetFumenReference(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.my1);
         SetHighScoreText(MyUtility.GetFumenName(data)).Forget();
     }
@@ -51,7 +51,7 @@ public class UpdatorOnChange : MonoBehaviour
     void UpdateHighScore(Difficulty difficulty)
     {
         if (pickedData == null) return;
-        selectedFumenRef = pickedData.GetFumenAddress(RhythmGameManager.Difficulty);
+        selectedFumenRef = pickedData.GetFumenReference(RhythmGameManager.Difficulty);
         SEManager.Instance.PlaySE(SEType.ti);
         SetHighScoreText(MyUtility.GetFumenName(pickedData)).Forget();
     }

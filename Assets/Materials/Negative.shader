@@ -2,7 +2,7 @@ Shader "Particles/Negative" {
     Properties {
         _TintColor ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
         _MainTex ("Texture", 2D) = "white" {}
-        _Glow ("Intensity", Range(0,10)) = 1 //Allows color saturation in HDR rendering.
+        _Glow ("Intensity", Range(0,1)) = 1 //Allows color saturation in HDR rendering.
     }
     SubShader {
         Tags { "Queue" = "Transparent" "PreviewType" = "Plane"}
@@ -43,7 +43,7 @@ Shader "Particles/Negative" {
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
                 o.color = v.color * _TintColor * 2;
-                o.color.rgb *=  _Glow;
+                o.color.rgb *= _Glow;
                 return o;
             }
 

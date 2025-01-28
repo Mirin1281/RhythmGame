@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     //[AddTypeMenu("Lyrith/アークとスカイ 点滅"), System.Serializable]
-    public class F_Lyrith_Arc_Blink : Command_General
+    public class F_Lyrith_Arc_Blink : CommandBase
     {
         protected override async UniTask ExecuteAsync()
         {

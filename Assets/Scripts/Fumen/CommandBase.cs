@@ -4,14 +4,6 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    public interface ICommand
-    {
-        void Execute(NoteCreateHelper helper, float delta);
-        string GetName(bool rawName = false);
-        string GetSummary();
-        Color GetColor();
-    }
-
     [Serializable]
     public abstract class CommandBase : ICommand
     {
@@ -38,6 +30,13 @@ namespace NoteCreating
         protected float Delta { get; set; }
 
         protected float CurrentTime => Helper.Metronome.CurrentTime;
+
+        protected virtual float Speed => RhythmGameManager.Speed;
+
+        /// <summary>
+        /// ノーツの初期生成地点
+        /// </summary>
+        protected float StartBase => 359.3f * Speed / Helper.Metronome.Bpm;
 
         protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {
@@ -84,9 +83,13 @@ namespace NoteCreating
         }
 
         /// <summary>
-        /// 発火するタイミングがBeatTimingと同期する分のWaitで待機します
+        /// 4分音符6拍分待機します。ノーツが普通に生成されてから着弾するまでの時間です
         /// </summary>
-        protected UniTask<float> WaitOnTiming() => Wait(4, 6, Delta - RhythmGameManager.Offset);
+        protected async UniTask<float> WaitOnTiming()
+        {
+            Delta = await Wait(4, 6, Delta - RhythmGameManager.Offset);
+            return Delta;
+        }
 
         protected void WhileYield(float time, Action<float> action, float delta = -1)
             => WhileYieldAsync(time, action, delta).Forget();
@@ -107,6 +110,23 @@ namespace NoteCreating
             action.Invoke(time);
         }
 
+        protected async UniTask DropAsync(ItemBase note, Vector3 startPos, float delta = -1)
+        {
+            if (delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = CurrentTime - delta;
+            float time = 0f;
+            var vec = Speed * Vector3.down;
+            while (note.IsActive && time < 8f)
+            {
+                time = CurrentTime - baseTime;
+                note.SetPos(startPos + time * vec);
+                await Helper.Yield();
+            }
+        }
+
         /////////////////// 外部から使用する機能 //////////////////////
 
         /// <summary>
@@ -120,6 +140,7 @@ namespace NoteCreating
             ExecuteAsync().Forget();
         }
 
+#if UNITY_EDITOR
         string ICommand.GetSummary() => GetSummary();
         Color ICommand.GetColor() => GetCommandColor();
         string ICommand.GetName(bool rawName)
@@ -135,40 +156,44 @@ namespace NoteCreating
             }
         }
 
-        public string CSVContent
+        /////////////////// 以下のメソッドは必要に応じてオーバーライドして使います //////////////////////
+
+        /// <summary>
+        /// オーバーライドすると、コマンドリストの表示名を変更します
+        /// </summary>
+        protected virtual string GetName() => null;
+
+        /// <summary>
+        /// オーバーライドすると、コマンドリストにサマリーを表示します
+        /// </summary>
+        protected virtual string GetSummary() => null;
+
+        /// <summary>
+        /// オーバーライドすると、コマンドの色を変更します
+        /// </summary>
+        protected virtual Color GetCommandColor() => ConstContainer.DefaultCommandColor;
+
+        /// <summary>
+        /// コマンドが選択された際に呼ばれます。引数は選択された順番です
+        /// </summary>
+        public virtual void OnSelect(CommandSelectStatus selectStatus) { }
+
+        /// <summary>
+        /// コマンドの選択中、ピリオドキーが押された際に呼ばれます
+        /// </summary>
+        public virtual void OnPeriod() { }
+
+        public virtual string CSVContent
         {
             get => FumenDebugUtility.GetContent(this);
             set => FumenDebugUtility.SetMember(this, value);
         }
 
-        /////////////////// 以下のメソッドは必要に応じてオーバーライドして使います //////////////////////
-
-        /// <summary>
-        /// 名前を変更します
-        /// </summary>
-        protected virtual string GetName() => null;
-
-        /// <summary>
-        /// エディタのコマンドに状態を記述します
-        /// </summary>
-        protected virtual string GetSummary() => null;
-
-        /// <summary>
-        /// コマンドの色を設定します
-        /// </summary>
-        protected virtual Color GetCommandColor() => ConstContainer.DefaultCommandColor;
-
-        /// <summary>
-        /// ピリオドキーが押された際に呼ばれます
-        /// エディタ上でノーツのプレビューをします
-        /// </summary>
-        public virtual void Preview() { }
-
-        /// <summary>
-        /// コマンドが選択された際に呼ばれます
-        /// </summary>
-        public virtual void OnSelect(bool isFirst) { }
-
         public virtual string CSVContent1 { get; set; }
+#else
+        string ICommand.GetSummary() => null;
+        Color ICommand.GetColor() => default;
+        string ICommand.GetName(bool rawName) => null;
+#endif
     }
 }

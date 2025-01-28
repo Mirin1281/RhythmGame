@@ -10,8 +10,6 @@ namespace NoteCreating
 {
     public class NoteCreateHelper : MonoBehaviour
     {
-        static readonly float DebugBPM = 200;
-
         [field: SerializeField] public PoolManager PoolManager { get; private set; }
         [field: SerializeField] public NoteInput NoteInput { get; private set; }
         [field: SerializeField] public CameraMover CameraMover { get; private set; }
@@ -82,7 +80,7 @@ namespace NoteCreating
 #if UNITY_EDITOR
             if (EditorApplication.isPlaying == false)
             {
-                return 240f / DebugBPM / lpb * num;
+                return 240f / FumenDebugUtility.DebugBPM / lpb * num;
             }
 #endif
             return 240f / Metronome.Bpm / lpb * num;

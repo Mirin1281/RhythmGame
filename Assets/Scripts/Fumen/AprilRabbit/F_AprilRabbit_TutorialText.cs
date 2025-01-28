@@ -7,8 +7,9 @@ using DG.Tweening;
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/チュートリアルのテキスト"), System.Serializable]
-    public class F_AprilRabbit_TutorialText : Command_General
+    public class F_AprilRabbit_TutorialText : CommandBase
     {
+        [SerializeField] Mirror mirror;
         [SerializeField] TMP_Text tmproPrefab;
         [SerializeField, TextArea] string text;
 
@@ -47,7 +48,7 @@ namespace NoteCreating
             Fade(tmpro, 1f, 0f);
             if (isMove)
             {
-                tmpro.transform.DOMove(Inv(pos), 0.3f).SetRelative(true);
+                tmpro.transform.DOMove(mirror.Conv(pos), 0.3f).SetRelative(true);
             }
             tmpro.SetText(text);
 
@@ -68,9 +69,12 @@ namespace NoteCreating
             });
         }
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "Text";
         }
+#endif
     }
 }

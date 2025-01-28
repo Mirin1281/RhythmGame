@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 namespace NoteCreating
 {
     //[AddTypeMenu("Lyrith/逆走"), System.Serializable]
-    public class F_Lyrith_Reverse : Command_General
+    public class F_Lyrith_Reverse : CommandBase
     {
         protected override async UniTask ExecuteAsync()
         {

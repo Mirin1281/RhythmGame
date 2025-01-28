@@ -42,7 +42,7 @@ public class MusicButtonManager : MonoBehaviour
         // 現在selectedIndexがソート後にどこにいくかを調べるため
         string beforeName = selectedIndex == -1 ? null : buttons[selectedIndex].MusicName;
 
-        sortedDatas = managerData.SelectDatas.Where(d => d.GetFumenAddress(diff) != null) // 難易度が存在するものを選定
+        sortedDatas = managerData.SelectDatas.Where(d => d.GetFumenReference(diff) != null) // 難易度が存在するものを選定
             .OrderBy(d => d.GetFumenLevel(diff)) // レベルの数値で並べ替え
             .ThenBy(d => d.MusicName) // 楽曲名で並べ替え
             .ToArray();

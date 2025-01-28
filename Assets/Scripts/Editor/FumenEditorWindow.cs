@@ -10,7 +10,6 @@ namespace NoteCreating.Editor
             GetWindow<FumenEditorWindow>("Fumen Editor", typeof(SceneView));
         }
 
-
         [SerializeField] FumenEditorHelper helper;
 
         void OnEnable()

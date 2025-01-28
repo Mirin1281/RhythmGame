@@ -22,7 +22,7 @@ public class MusicSelectManager : MonoBehaviour
 
     public void StartGame(MusicSelectData selectData, Difficulty difficulty = Difficulty.None)
     {
-        RhythmGameManager.FumenReference = selectData.GetFumenAddress(difficulty);
+        RhythmGameManager.FumenReference = selectData.GetFumenReference(difficulty);
         if (difficulty != Difficulty.None)
         {
             RhythmGameManager.Difficulty = difficulty;

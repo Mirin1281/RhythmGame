@@ -1,5 +1,26 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8995300673016261536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_N_AprilRabbit (19)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-8678100236528474436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +108,27 @@ MonoBehaviour:
         pos: {x: 0, y: 0, z: 0}
         isHide: 1
         time: 2.5
+--- !u!114 &-6273892775115297357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_N_AprilRabbit (18)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-5439707821591680003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,35 +151,28 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470087
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isMirror: 0
         speedRate: 1
-        isSpeedChangable: 0
         parentGeneratable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: -5
-          width: 0
           length: 0
 --- !u!114 &-5015963009304643635
 MonoBehaviour:
@@ -248,20 +283,16 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470091
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isMirror: 0
         speedRate: 1
-        isSpeedChangable: 0
         parentGeneratable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 3
           x: 5
-          width: 0
           length: 0
 --- !u!114 &-1131084393490436766
 MonoBehaviour:
@@ -304,9 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6499c9e5f97f6048932ce06d2a22cf2, type: 3}
   m_Name: F_N_AprilRabbit
   m_EditorClassIdentifier: 
-  difficulty: 1
   musicSelectData: {fileID: 11400000, guid: 02450ed7bca928849921c12d2d898d0b, type: 2}
-  level: 3
   noteCount: 43
   <NormalPoolCount>k__BackingField: 4
   <CirclePoolCount>k__BackingField: 0
@@ -334,6 +363,9 @@ MonoBehaviour:
     - {fileID: 520527908258871870}
     - {fileID: -8117332817654864637}
     - {fileID: 239075719116219423}
+    - {fileID: 4213416266513273841}
+    - {fileID: -6273892775115297357}
+    - {fileID: -8995300673016261536}
 --- !u!114 &239075719116219423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,155 +410,124 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470096
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isMirror: 0
         speedRate: 1
-        isSpeedChangable: 0
         parentGeneratable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: -4.5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: -1.5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: 1.5
-          width: 0
           length: 0
         - wait: 2
           type: 1
           x: 4.5
-          width: 0
           length: 0
         - wait: 2
           type: 0
           x: 4.5
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 4
           x: 5
-          width: 0
           length: 2
         - wait: 2
           type: 4
           x: -5
-          width: 0
           length: 2
         - wait: 2
           type: 4
           x: 5
-          width: 0
           length: 2
         - wait: 2
           type: 4
           x: -5
-          width: 0
           length: 2
         - wait: 2
           type: 4
           x: 5
-          width: 0
           length: 1
         - wait: 2
           type: 1
           x: -2
-          width: 0
           length: 1
         - wait: 2
           type: 3
           x: -4
-          width: 0
           length: 1
 --- !u!114 &1065514934163552132
 MonoBehaviour:
@@ -637,6 +638,27 @@ MonoBehaviour:
         pos: {x: 0, y: 0, z: 0}
         isHide: 0
         time: 3
+--- !u!114 &4213416266513273841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_N_AprilRabbit (17)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &4644405212642717289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,45 +681,36 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470089
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isMirror: 0
         speedRate: 1
-        isSpeedChangable: 0
         parentGeneratable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 6
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 4
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 5
-          width: 0
           length: 0
 --- !u!114 &5616645671503050862
 MonoBehaviour:
@@ -750,23 +763,18 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470093
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isMirror: 0
         speedRate: 1
-        isSpeedChangable: 0
         parentGeneratable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: -5
-          width: 0
           length: 2
         - wait: 1
           type: 4
           x: -5
-          width: 0
           length: 2

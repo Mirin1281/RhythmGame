@@ -1,21 +1,27 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using System.Linq;
-using System;
 
 namespace NoteCreating
 {
-    //[AddTypeMenu("◆アーク", -1), System.Serializable]
-    public class F_Arc : Command_General
+    [AddTypeMenu("◆アーク", -50), System.Serializable]
+    public class F_Arc : CommandBase
     {
-        [SerializeField] bool is2D;
-        [SerializeField] ArcCreateData[] datas;
+        [SerializeField] Mirror mirror;
+        [SerializeField] ArcCreateData[] datas = new ArcCreateData[1];
 
         protected override async UniTask ExecuteAsync()
         {
-            //Arc(datas, is2D);
+            ArcNote arc = Helper.GetArc();
+            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror).Forget();
+
+            Vector3 startPos = new Vector3(0, StartBase);
+            DropAsync(arc, startPos, Delta).Forget();
+            Helper.NoteInput.AddArc(arc);
             await UniTask.CompletedTask;
         }
+
+#if UNITY_EDITOR
 
         protected override Color GetCommandColor()
         {
@@ -24,50 +30,27 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{GetMirrorSummary()}";
+            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{mirror.GetStatusText()}";
         }
 
-        protected override string GetName()
+        public override void OnSelect(CommandSelectStatus selectStatus)
         {
-            return is2D ? "2DArc" : base.GetName();
+            Preview(selectStatus.Index == 0, selectStatus.BeatDelta);
         }
-
-        /*public override async void Preview()
+        public override void OnPeriod()
         {
-            var arc = GameObject.FindAnyObjectByType<ArcNote>(FindObjectsInactive.Include);
-            if (arc == null)
-            {
-                Debug.LogWarning("ヒエラルキー上にアークノーツを設置してください");
-                return;
-            }
-            arc.SetActive(true);
-            if (is2D)
-            {
-                arc.SetRadius(0.4f);
-                arc.SetPos(new Vector3(0, 0, 0.5f));
-                arc.SetRotate(new Vector3(-90f, 0f, 0f));
-                arc.Is2D = true;
-            }
-            else
-            {
-                arc.SetRadius(0.6f);
-                arc.SetPos(Vector3.zero);
-                arc.SetRotate(Vector3.zero);
-                arc.Is2D = false;
-            }
-            float speed = is2D ? Speed : Speed3D;
-            await arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * speed, IsInverse, Helper.DebugSpherePrefab);
+            Preview();
+        }
+        void Preview(bool beforeClear = true, int beatDelta = 1)
+        {
+            var previewObj = FumenDebugUtility.GetPreviewObject(beforeClear);
+            FumenDebugUtility.CreateGuideLine(previewObj, Helper, beforeClear);
 
-            GameObject previewObj = FumenDebugUtility.GetPreviewObject();
-            float lineY = 0f;
-            for (int i = 0; i < 10000; i++)
-            {
-                var line = Helper.PoolManager.LinePool.GetLine(is2D ? 0 : 1);
-                line.SetPos(is2D ? new Vector3(0, lineY) : new Vector3(0, 0.01f, lineY));
-                line.transform.SetParent(previewObj.transform);
-                lineY += Helper.GetTimeInterval(4) * speed;
-                if (lineY > arc.LastY) break;
-            }
-        }*/
+            var arc = Helper.GetArc();
+            arc.transform.SetParent(previewObj.transform);
+            arc.SetPos(new Vector3(0, Helper.GetTimeInterval(4, beatDelta) * Speed));
+            arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror, Helper.DebugSpherePrefab).Forget();
+        }
+#endif
     }
 }

@@ -430,6 +430,35 @@ namespace NoteCreating.Editor
                         {
                             menu.AddItem(new GUIContent("Paste"), false, () => PasteFrom(copiedCommandList));
                         }
+
+                        menu.AddSeparator(string.Empty);
+                        if (LastSelectedCommand.GetCommandBase() == null)
+                        {
+                            menu.AddDisabledItem(new GUIContent("Loopalize"));
+                        }
+                        else
+                        {
+                            if (LastSelectedCommand.GetCommandBase() is F_LoopDelay loopDelay)
+                            {
+                                menu.AddItem(new GUIContent("Loopalize Off"), false, () =>
+                                {
+                                    var childCommand = loopDelay.GetChildCommand();
+                                    loopDelay.SetChildCommand(null);
+                                    LastSelectedCommand.SetCommand(childCommand);
+                                });
+                            }
+                            else
+                            {
+                                menu.AddItem(new GUIContent("Loopalize"), false, () =>
+                                {
+                                    var tmpCmdBase = LastSelectedCommand.GetCommandBase();
+                                    LastSelectedCommand.SetCommand(typeof(F_LoopDelay));
+                                    var loopDelayCmd = LastSelectedCommand.GetCommandBase() as F_LoopDelay;
+                                    loopDelayCmd.SetChildCommand(tmpCmdBase);
+                                });
+                            }
+                        }
+
                         menu.AddSeparator(string.Empty);
                         if (LastSelectedCommand.GetCommandBase() == null)
                         {
@@ -439,7 +468,16 @@ namespace NoteCreating.Editor
                         {
                             menu.AddItem(new GUIContent("Edit Script"), false, () =>
                             {
-                                var cmdName = LastSelectedCommand.GetName(true);
+                                string cmdName = null;
+                                if (LastSelectedCommand.GetCommandBase() is F_LoopDelay loopDelay)
+                                {
+                                    cmdName = loopDelay.GetChildCommand().GetName(true);
+                                }
+                                else
+                                {
+                                    cmdName = LastSelectedCommand.GetName(true);
+                                }
+
                                 if (FumenEditorUtility.TryGetScriptPath(cmdName, out var scriptPath))
                                 {
                                     var scriptAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scriptPath);
@@ -598,6 +636,20 @@ namespace NoteCreating.Editor
             if (selectedIndices.Count >= 2)
                 selectedIndices.Sort();
             reorderableList.Select(commandList.IndexOf(command), append);
+
+            // 選択したコマンドに対してOnSelectを叩く
+            var cmds = selectedIndices.Select(i => commandList[i]).OrderBy(d => d.BeatTiming);
+            int minBeatTiming = cmds.First().BeatTiming;
+
+            if (selectedIndices.Count > 8) return; // 全選択とかすると重そうなので上限を設定
+            int i = 0;
+            foreach (var cmd in cmds)
+            {
+                var cmdBase = cmd.GetCommandBase();
+                if (cmdBase == null) continue;
+                cmdBase.OnSelect(new CommandSelectStatus(i, cmd.BeatTiming - minBeatTiming + 1));
+                i++;
+            }
         }
         void SelectCommand(int index, bool append = false)
         {
@@ -646,7 +698,7 @@ namespace NoteCreating.Editor
 
             void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
             {
-                if (index < 0 || commandList.Count <= index) return;
+                if (index < 0 || commandList.Count <= index || IsInWindow(index) == false) return;
                 var cmd = commandList[index];
 
                 var style = new GUIStyle(EditorStyles.label)
@@ -674,7 +726,7 @@ namespace NoteCreating.Editor
 
             void DrawElementBackground(Rect rect, int index, bool isActive, bool isFocused)
             {
-                if (index < 0 || commandList.Count <= index) return;
+                if (index < 0 || commandList.Count <= index || IsInWindow(index) == false) return;
                 var cmd = commandList[index];
 
                 Color color = cmd.Enable ?
@@ -693,9 +745,16 @@ namespace NoteCreating.Editor
                 GUI.color = tmpColor;
             }
 
-            float GetElementHeight(int index)
+            float GetElementHeight(int index = 0)
             {
                 return 30;
+            }
+
+            bool IsInWindow(int index)
+            {
+                int commandPosY = (int)GetElementHeight() * index;
+                return listScrollPos.y - GetElementHeight() * 2f - index * 2 < commandPosY
+                 && commandPosY < listScrollPos.y + window.position.height;
             }
         }
 

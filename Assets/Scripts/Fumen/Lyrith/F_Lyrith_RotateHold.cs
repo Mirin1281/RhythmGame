@@ -4,8 +4,9 @@ using Cysharp.Threading.Tasks;
 namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/2_1 回転ホールド"), System.Serializable]
-    public class F_Lyrith_RotateHold : Command_General
+    public class F_Lyrith_RotateHold : CommandBase
     {
+        [SerializeField] Mirror mirror;
         protected override async UniTask ExecuteAsync()
         {
             await UniTask.CompletedTask;
@@ -17,8 +18,8 @@ namespace NoteCreating
         {
             var holdTime = Helper.GetTimeInterval(length);
             var hold = Helper.GetHold(holdTime * Speed);
-            var startPos = new Vector2(Inv(x), StartBase);
-            var toPos = new Vector2(Inv(x), 0);
+            var startPos = new Vector2(mirror.Conv(x), StartBase);
+            var toPos = new Vector2(mirror.Conv(x), 0);
             hold.SetMaskLocalPos(toPos);
             hold.SetMaskLength(10);
 
@@ -56,9 +57,12 @@ namespace NoteCreating
             }
         }
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "RotateHold";
         }
+#endif
     }
 }

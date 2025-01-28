@@ -1,12 +1,11 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
-using UnityEditor;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線"), System.Serializable]
-    public class F_Line : Command_General
+    [AddTypeMenu("Obsolete/◆判定線"), System.Serializable]
+    public class F_Line : CommandBase
     {
         [Serializable]
         public class LineCreateData
@@ -66,7 +65,7 @@ namespace NoteCreating
             [InspectorName("N分音符")] LPB,
         }
 
-        [SerializeField, Tooltip("このコマンドの説明(ビルドに含まれません)")]
+        /*[SerializeField, Tooltip("このコマンドの説明(ビルドに含まれません)")]
         string summary;
 
         [Space(10)]
@@ -93,11 +92,11 @@ namespace NoteCreating
 
         [Space(10)]
         [SerializeField]
-        LineCreateData[] datas = new LineCreateData[1];
+        LineCreateData[] datas = new LineCreateData[1];*/
 
         protected override async UniTask ExecuteAsync()
         {
-            float delta = await WaitOnTiming();
+            /*float delta = await WaitOnTiming();
 
             for (int i = 0; i < loopCount; i++)
             {
@@ -114,10 +113,11 @@ namespace NoteCreating
                 }
 
                 delta = await Wait(loopWaitLPB, delta: delta);
-            }
+            }*/
+            await UniTask.CompletedTask;
         }
 
-        async UniTaskVoid LoopCreateLine(LineCreateData[] datas, float delta)
+        /*async UniTaskVoid LoopCreateLine(LineCreateData[] datas, float delta)
         {
             for (int i = 0; i < datas.Length; i++)
             {
@@ -155,7 +155,7 @@ namespace NoteCreating
                     {
                         p += posEasing.Ease(t);
                     }
-                    line.SetPos(new Vector3(Inv(p.x), p.y));
+                    line.SetPos(new Vector3(Mir.Conv(p.x), p.y));
                 }, delta);
             }
             else
@@ -169,7 +169,7 @@ namespace NoteCreating
                 {
                     p += data.StartPos;
                 }
-                line.SetPos(new Vector3(Inv(p.x), p.y));
+                line.SetPos(new Vector3(Mir.Conv(p.x), p.y));
             }
 
             if (data.IsRotateEase)
@@ -192,7 +192,7 @@ namespace NoteCreating
                     {
                         r = rotateEasing.Ease(t);
                     }
-                    line.SetRot(Inv(r));
+                    line.SetRot(Mir.Conv(r));
                 }, delta);
             }
             else
@@ -206,7 +206,7 @@ namespace NoteCreating
                 {
                     r = data.StartRotate;
                 }
-                line.SetRot(Inv(r));
+                line.SetRot(Mir.Conv(r));
             }
 
             if (data.IsAlphaEase)
@@ -244,7 +244,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{GetMirrorSummary()}";
+            string s = $"{loopCount} - {loopWaitLPB}  Length: {datas.Length}{Mir.GetStatusText()}";
             if (string.IsNullOrWhiteSpace(summary))
             {
                 return s;
@@ -298,7 +298,7 @@ namespace NoteCreating
                         {
                             p += posEasing.Ease(t);
                         }
-                        line.SetPos(new Vector3(Inv(p.x), p.y));
+                        line.SetPos(new Vector3(Mir.Conv(p.x), p.y));
                     });
                 }
                 else
@@ -312,7 +312,7 @@ namespace NoteCreating
                     {
                         p += data.StartPos;
                     }
-                    line.SetPos(new Vector3(Inv(p.x), p.y));
+                    line.SetPos(new Vector3(Mir.Conv(p.x), p.y));
                 }
 
                 if (data.IsRotateEase)
@@ -335,7 +335,7 @@ namespace NoteCreating
                         {
                             r = rotateEasing.Ease(t);
                         }
-                        line.SetRot(Inv(r));
+                        line.SetRot(Mir.Conv(r));
                     });
                 }
                 else
@@ -349,7 +349,7 @@ namespace NoteCreating
                     {
                         r = data.StartRotate;
                     }
-                    line.SetRot(Inv(r));
+                    line.SetRot(Mir.Conv(r));
                 }
 
                 if (data.IsAlphaEase)
@@ -396,6 +396,6 @@ namespace NoteCreating
                 });
             }
         }
-#endif
+#endif*/
     }
 }

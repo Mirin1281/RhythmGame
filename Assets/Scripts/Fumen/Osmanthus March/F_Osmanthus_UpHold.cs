@@ -5,7 +5,7 @@ using System;
 namespace NoteCreating
 {
     [AddTypeMenu("Osmanthus/昇るホールド"), System.Serializable]
-    public class F_Osmanthus_UpHold : Command_General
+    public class F_Osmanthus_UpHold : CommandBase
     {
         [Serializable]
         struct MoveHoldData
@@ -14,6 +14,8 @@ namespace NoteCreating
             [field: SerializeField] public float X { get; private set; }
             [field: SerializeField] public float Length { get; private set; }
         }
+
+        [SerializeField] Mirror mirror;
 
         [SerializeField] MoveHoldData[] datas = new MoveHoldData[1];
 
@@ -31,13 +33,13 @@ namespace NoteCreating
 
         async UniTaskVoid UpHold(float length, float x)
         {
-            var hold = Hold(x, length, isMove: false);
+            var hold = Hold(x, length);
             hold.IsVerticalRange = true;
             float expectTime = StartBase / Speed;
             float holdTime = Helper.GetTimeInterval(length);
 
             float baseTime = CurrentTime - Delta;
-            Vector3 startPos = new Vector3(Inv(x), StartBase);
+            Vector3 startPos = new Vector3(mirror.Conv(x), StartBase);
             var vec = Speed * Vector3.down;
 
             float time = 0f;
@@ -53,11 +55,24 @@ namespace NoteCreating
             while (hold.IsActive && time < holdTime)
             {
                 time = CurrentTime - baseTime;
-                hold.SetMaskLocalPos(new Vector3(Inv(x), 0) - time * vec);
+                hold.SetMaskLocalPos(new Vector3(mirror.Conv(x), 0) - time * vec);
                 hold.SetMaskLength(time * holdTime * Speed);
                 await Helper.Yield();
             }
             hold.SetActive(false);
+        }
+
+        HoldNote Hold(float x, float length)
+        {
+            float holdTime = Helper.GetTimeInterval(length);
+            HoldNote hold = Helper.GetHold(holdTime * Speed);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            hold.SetPos(startPos);
+
+            float expectTime = startPos.y / Speed - Delta;
+            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+            return hold;
         }
 
         // 旧実装
@@ -137,9 +152,12 @@ namespace NoteCreating
             return (hold, startPos.y / Speed, holdTime);
         }*/
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "UpHold";
         }
+#endif
     }
 }

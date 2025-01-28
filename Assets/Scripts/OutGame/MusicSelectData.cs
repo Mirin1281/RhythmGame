@@ -53,9 +53,9 @@ public class MusicSelectData : ScriptableObject
     }
 
     /// <summary>
-    /// 譜面データをロードする際のアドレスを取得します。引数を省略するとマネージャーの情報を参照します
+    /// 譜面データのReferenceを取得します。難易度は引数を省略するとマネージャーの情報を参照します
     /// </summary>
-    public AssetReference GetFumenAddress(Difficulty difficulty = Difficulty.None)
+    public AssetReference GetFumenReference(Difficulty difficulty = Difficulty.None)
     {
         if (difficulty == Difficulty.None)
         {
@@ -71,7 +71,7 @@ public class MusicSelectData : ScriptableObject
     }
 
     /// <summary>
-    /// 譜面データの難易度を取得します。引数を省略するとマネージャーの情報を参照します
+    /// 譜面データの難易度を取得します。難易度は引数を省略するとマネージャーの情報を参照します
     /// </summary>
     public int GetFumenLevel(Difficulty difficulty = Difficulty.None)
     {

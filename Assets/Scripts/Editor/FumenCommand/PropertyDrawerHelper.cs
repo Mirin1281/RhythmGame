@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class PropertyDrawerHelper
+public class DrawerHelper
 {
     Rect position;
     readonly SerializedProperty property;
@@ -9,9 +9,11 @@ public class PropertyDrawerHelper
     readonly float startWidth;
     int indentLevel;
 
-    public PropertyDrawerHelper(Rect position, SerializedProperty property, float contentHeight = 20)
+    public const int Height = 20;
+
+    public DrawerHelper(Rect position, SerializedProperty property)
     {
-        this.position = new Rect(position.x, position.y, position.width, contentHeight);
+        this.position = new Rect(position.x, position.y, position.width, Height);
         this.property = property;
         this.startX = position.x;
         this.startWidth = position.width;
@@ -34,14 +36,21 @@ public class PropertyDrawerHelper
     /// <summary>
     /// 次の行へ移ります。通常、X座標と幅はリセットされます
     /// </summary>
-    public void SetY(float addHeight = 0, bool reset = true)
+    public void SetY(float overrideHeight = 0, bool reset = true)
     {
         if (reset)
         {
             SetX(0);
             SetWidth(startWidth * (1f - IndentDepth));
         }
-        position.y += position.height + addHeight;
+        if (overrideHeight == 0)
+        {
+            position.y += position.height;
+        }
+        else
+        {
+            position.y += overrideHeight;
+        }
     }
 
     public float GetWidth() => position.width;
@@ -59,6 +68,11 @@ public class PropertyDrawerHelper
     public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
     {
         var prop = property.FindPropertyRelative(fieldName);
+        if (prop.propertyType is SerializedPropertyType.Vector2 or SerializedPropertyType.Vector2Int
+            or SerializedPropertyType.Vector3 or SerializedPropertyType.Vector3Int)
+        {
+            return VectorField(prop, drawLabel, overrideName);
+        }
         if (drawLabel)
         {
             if (overrideName == null)
@@ -83,6 +97,28 @@ public class PropertyDrawerHelper
         var prop = PropertyField(fieldName, drawLabel, overrideName);
         SetWidth(w);
         return prop;
+    }
+
+    SerializedProperty VectorField(SerializedProperty vectorProperty, bool drawLabel = true, string overrideName = null)
+    {
+        if (drawLabel)
+        {
+            if (overrideName == null)
+            {
+                LabelField(vectorProperty.displayName);
+            }
+            else
+            {
+                LabelField(overrideName);
+            }
+        }
+
+        SetX(EditorGUIUtility.labelWidth + 5);
+        SetWidth(GetWidth() - EditorGUIUtility.labelWidth - 5);
+        EditorGUI.PropertyField(position, vectorProperty, GUIContent.none);
+        SetX(startX);
+        SetWidth(GetWidth());
+        return vectorProperty;
     }
 
     public void LabelField(string name)
@@ -118,5 +154,34 @@ public class PropertyDrawerHelper
         GUI.Box(position, string.Empty, style);
 
         GUI.color = originalColor;
+    }
+
+    public int GetArrayElementIndex()
+    {
+        static bool IsArrayElement(SerializedProperty property)
+        {
+            string path = property.propertyPath;
+            return path.Contains(".Array.data[");
+        }
+        if (IsArrayElement(property) == false)
+        {
+            Debug.LogError("Property is not ArrayElement");
+            return -1;
+        }
+        string path = property.propertyPath;
+
+        int startIndex = path.LastIndexOf('[');
+        int endIndex = path.LastIndexOf(']');
+        if (startIndex != -1 && endIndex != -1 && endIndex > startIndex)
+        {
+            string indexString = path.Substring(startIndex + 1, endIndex - startIndex - 1);
+            if (int.TryParse(indexString, out int index))
+            {
+                return index;
+            }
+        }
+
+        Debug.LogError("Unknown Error");
+        return -1;
     }
 }

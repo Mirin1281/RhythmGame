@@ -10,7 +10,7 @@ namespace NoteCreating
 
         protected override async UniTask ExecuteAsync(RegularNote parent)
         {
-            parent.SetRot(Inv(deg));
+            parent.SetRot(Mir.Conv(deg));
             await UniTask.CompletedTask;
         }
 

@@ -8,10 +8,10 @@ namespace NoteCreating.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var h = new PropertyDrawerHelper(position, property);
+            var h = new DrawerHelper(position, property);
             var width = h.GetWidth();
 
-            h.SetY(-14);
+            h.SetY(6);
 
             h.SetWidth(width / 4f);
 
@@ -34,7 +34,7 @@ namespace NoteCreating.Editor
             using (new EditorGUI.DisabledGroupScope(disableProp.boolValue))
             {
                 h.SetX(width / 2f);
-                h.PropertyField("isDuplicated", overrideName: "Overlap");
+                h.PropertyField("isOverlappable", overrideName: "Overlap");
 
                 h.SetY();
                 var w = width / 4f;
@@ -52,7 +52,7 @@ namespace NoteCreating.Editor
                 h.SetX(w * 3f - 30);
                 h.PropertyField("aheadJudgeRange", false);
             }
-            h.SetY(8);
+            h.SetY(28);
             h.DrawLine(weight: 2);
         }
 

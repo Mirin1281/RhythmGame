@@ -13,7 +13,7 @@ namespace NoteCreating
             Get, // 終点を取得できている
         }
 
-        [SerializeField] SpriteMask spriteMask;
+        [SerializeField] Transform maskTs;
 
         public override RegularNoteType Type => RegularNoteType.Hold;
 
@@ -26,13 +26,13 @@ namespace NoteCreating
         {
             this.width = width;
             spriteRenderer.size = new Vector2(width * BaseScaleX, spriteRenderer.size.y);
-            spriteMask.transform.localScale = new Vector3(spriteMask.transform.localScale.x, spriteRenderer.size.y);
+            maskTs.localScale = new Vector3(maskTs.localScale.x, spriteRenderer.size.y);
         }
 
         public void SetLength(float length)
         {
             spriteRenderer.size = new Vector2(spriteRenderer.size.x, length);
-            spriteMask.transform.localScale = new Vector3(spriteRenderer.size.x, spriteMask.transform.localScale.y);
+            maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y);
         }
 
         public override Vector3 GetPos(bool isWorld = false)
@@ -62,16 +62,16 @@ namespace NoteCreating
         /// <summary>
         /// ホールドの着地地点の座標
         /// </summary>
-        public Vector2 GetLandingPos() => spriteMask.transform.position;
+        public Vector2 GetLandingPos() => maskTs.position;
 
 
         public void SetMaskLocalPos(Vector2 pos)
         {
-            spriteMask.transform.localPosition = pos;
+            maskTs.localPosition = pos;
         }
         public void SetMaskLength(float length)
         {
-            spriteMask.transform.localScale = new Vector3(spriteMask.transform.localScale.x, length);
+            maskTs.localScale = new Vector3(maskTs.localScale.x, length);
         }
 
         public override void SetRot(float deg, bool isWorld = false)
@@ -79,12 +79,12 @@ namespace NoteCreating
             if (isWorld)
             {
                 spriteRenderer.transform.rotation = Quaternion.AngleAxis(deg, Vector3.forward);
-                spriteMask.transform.rotation = Quaternion.AngleAxis(deg, Vector3.forward);
+                maskTs.rotation = Quaternion.AngleAxis(deg, Vector3.forward);
             }
             else
             {
                 spriteRenderer.transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
-                spriteMask.transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
+                maskTs.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
             }
         }
 

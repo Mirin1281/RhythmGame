@@ -6,11 +6,9 @@ namespace NoteCreating.Editor
     [CustomPropertyDrawer(typeof(F_CircleNote.NoteData))]
     public class F_CircleNoteDrawer : PropertyDrawer
     {
-        const float Height = 20;
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var h = new PropertyDrawerHelper(position, property, Height);
+            var h = new DrawerHelper(position, property);
             float width = h.GetWidth();
             float labelWidth = width * 0.2f;
             float boxWidth = width * 0.12f;
@@ -37,10 +35,11 @@ namespace NoteCreating.Editor
 
             if (waitProp.floatValue == 0f)
             {
-                h.DrawBox(new Rect(20, position.y, width + 40, 2f * (Height + 2)), Color.yellow);
+                h.DrawBox(new Rect(20, position.y, width + 40, 2f * 22), Color.yellow);
             }
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => Height;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+            => DrawerHelper.Height;
     }
 }

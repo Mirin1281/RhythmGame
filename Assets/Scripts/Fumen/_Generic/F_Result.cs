@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇リザルト移行", 5), System.Serializable]
+    [AddTypeMenu("◇リザルト移行", 100), System.Serializable]
     public class F_Result : CommandBase
     {
         protected override async UniTask ExecuteAsync()
@@ -16,9 +16,12 @@ namespace NoteCreating
             RhythmGameManager.SpeedBase = 1f;
         }
 
+#if UNITY_EDITOR
+
         protected override Color GetCommandColor()
         {
             return ConstContainer.UnNoteCommandColor;
         }
+#endif
     }
 }

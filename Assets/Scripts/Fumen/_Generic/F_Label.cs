@@ -6,12 +6,14 @@ namespace NoteCreating
     [AddTypeMenu("◇ラベル"), System.Serializable]
     public class F_Label : CommandBase
     {
-        [SerializeField] string summary;
-
         protected override UniTask ExecuteAsync()
         {
             return UniTask.CompletedTask;
         }
+
+#if UNITY_EDITOR
+
+        [SerializeField] string summary;
 
         protected override Color GetCommandColor()
         {
@@ -22,5 +24,6 @@ namespace NoteCreating
         {
             return summary;
         }
+#endif
     }
 }

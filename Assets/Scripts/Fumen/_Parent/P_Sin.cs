@@ -27,7 +27,7 @@ namespace NoteCreating
             while (parent.IsActive && t < moveTime)
             {
                 t = CurrentTime - baseTime;
-                parent.SetPos(Inv(new Vector3(amplitude * Mathf.Sin(t * period), 0)));
+                parent.SetPos(Mir.Conv(new Vector3(amplitude * Mathf.Sin(t * period), 0)));
                 await Helper.Yield();
             }
         }

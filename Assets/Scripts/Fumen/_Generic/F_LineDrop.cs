@@ -5,41 +5,25 @@ using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.Mo
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線を降らせる"), System.Serializable]
-    public class F_LineDrop : Command_General
+    [AddTypeMenu("◆判定線を降らせる", -70), System.Serializable]
+    public class F_LineDrop : CommandBase
     {
-        [SerializeField] int loopCount;
-        [SerializeField] float loopWaitLPB = 4;
+        [SerializeField] Mirror mirror;
         [Space(10)]
         [SerializeField] float moveDirection = 270;
         [SerializeField] bool isSpeedChangable;
         [SerializeField] float speedRate = 1f;
         [SerializeField] float lifeTime = 3f;
 
+        protected override float Speed => base.Speed * speedRate;
+
         protected override async UniTask ExecuteAsync()
         {
-            for (int i = 0; i < loopCount; i++)
-            {
-                CreateLineAsync().Forget();
-                await Wait(loopWaitLPB);
-            }
-
-
-            async UniTaskVoid CreateLineAsync()
-            {
-                Line line = GetLine();
-                await MoveAsync(line);
-                line.SetActive(false);
-            }
-        }
-
-        Line GetLine()
-        {
             Line line = Helper.GetLine();
-            line.SetWidth(26f);
             line.SetHeight(0.06f);
             line.SetAlpha(0.25f);
-            return line;
+            await MoveAsync(line);
+            line.SetActive(false);
         }
 
         async UniTask MoveAsync(Line line)
@@ -51,15 +35,15 @@ namespace NoteCreating
                 while (line.IsActive && time < lifeTime)
                 {
                     time = CurrentTime - baseTime;
-                    var vec = GetSpeed() * GetVec();
-                    line.SetPos(-GetStartBase() * GetVec() + time * vec);
+                    var vec = Speed * GetVec();
+                    line.SetPos(-StartBase * GetVec() + time * vec);
                     await Helper.Yield();
                 }
             }
             else
             {
-                Vector3 startPos = -GetStartBase() * GetVec();
-                var vec = GetSpeed() * GetVec();
+                Vector3 startPos = -StartBase * GetVec();
+                var vec = Speed * GetVec();
                 while (line.IsActive && time < lifeTime)
                 {
                     time = CurrentTime - baseTime;
@@ -69,13 +53,12 @@ namespace NoteCreating
             }
         }
 
-        float GetStartBase() => StartBase;
-        float GetSpeed() => Speed * speedRate;
-
         Vector3 GetVec()
         {
-            return new Vector3(Inv(Mathf.Cos(moveDirection * Mathf.Deg2Rad)), Mathf.Sin(moveDirection * Mathf.Deg2Rad));
+            return mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
         }
+
+#if UNITY_EDITOR
 
         protected override Color GetCommandColor()
         {
@@ -84,7 +67,8 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return loopCount + GetMirrorSummary();
+            return mirror.GetStatusText();
         }
+#endif
     }
 }

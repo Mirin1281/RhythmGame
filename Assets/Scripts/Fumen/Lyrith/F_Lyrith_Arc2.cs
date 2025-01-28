@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/アーク2"), System.Serializable]
-    public class F_Lyrith_Arc2 : Command_General
+    public class F_Lyrith_Arc2 : CommandBase
     {
         protected override async UniTask ExecuteAsync()
         {

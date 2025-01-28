@@ -44,7 +44,7 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if (result == null) return;
 
-        AssetReference fumenReference = result.MusicData.GetFumenAddress(RhythmGameManager.Difficulty);
+        AssetReference fumenReference = result.MusicData.GetFumenReference(RhythmGameManager.Difficulty);
         string fumenName = RhythmGameManager.FumenName;
         SetUI(result, fumenName);
         if (isSavable == false) return;

@@ -5,8 +5,9 @@ using System;
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/律動するホールド"), System.Serializable]
-    public class F_AprilRabbit_RhythmHold : Command_General
+    public class F_AprilRabbit_RhythmHold : CommandBase
     {
+        [SerializeField] Mirror mirror;
         [SerializeField] float _x = 0;
         [SerializeField] float _length = 0.5f;
         [SerializeField] float _shakeX = 0.5f;
@@ -27,7 +28,7 @@ namespace NoteCreating
             {
                 MoveAsync(
                     hold,
-                    Inv(i % 2 == 0 ? _shakeX : -_shakeX)
+                    mirror.Conv(i % 2 == 0 ? _shakeX : -_shakeX)
                 ).Forget();
                 await Wait(_shakeInterval);
             }
@@ -51,9 +52,26 @@ namespace NoteCreating
             }
         }
 
+        HoldNote Hold(float x, float length)
+        {
+            float holdTime = Helper.GetTimeInterval(length);
+            HoldNote hold = Helper.GetHold(holdTime * Speed);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            hold.SetPos(startPos);
+
+            float expectTime = startPos.y / Speed - Delta;
+            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+
+            return hold;
+        }
+
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "RhythmHold";
         }
+#endif
     }
 }

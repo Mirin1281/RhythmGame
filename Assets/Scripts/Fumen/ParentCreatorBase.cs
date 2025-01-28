@@ -7,18 +7,18 @@ namespace NoteCreating
 {
     public interface IParentCreatable
     {
-        Transform CreateParent(float delta, NoteCreateHelper helper, bool isInverse);
+        Transform CreateParent(float delta, NoteCreateHelper helper, Mirror mir);
         string GetContent();
         string CSVContent1 { get; set; }
     }
 
     public abstract class ParentCreatorBase : IParentCreatable
     {
-        Transform IParentCreatable.CreateParent(float delta, NoteCreateHelper helper, bool isInverse)
+        Transform IParentCreatable.CreateParent(float delta, NoteCreateHelper helper, Mirror mir)
         {
             Delta = delta;
             Helper = helper;
-            this.isInverse = isInverse;
+            this.mir = mir;
 
             var note = Helper.GetNote(RegularNoteType.Normal);
             note.SetAlpha(0);
@@ -47,16 +47,8 @@ namespace NoteCreating
 
         protected float CurrentTime => Helper.Metronome.CurrentTime;
 
-        bool isInverse;
-        protected bool IsInverse { get => isInverse; set => isInverse = value; }
-
-        /// <summary>
-        /// IsInverseがtrueの時、-1倍して返します
-        /// </summary>
-        protected float Inv(float x) => x * (IsInverse ? -1 : 1);
-        protected int Inv(int x) => x * (IsInverse ? -1 : 1);
-        protected Vector3 Inv(Vector3 pos) => new Vector3(Inv(pos.x), pos.y);
-        protected Vector2 Inv(Vector2 pos) => new Vector2(Inv(pos.x), pos.y);
+        Mirror mir;
+        protected Mirror Mir => mir;
 
         protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
         {

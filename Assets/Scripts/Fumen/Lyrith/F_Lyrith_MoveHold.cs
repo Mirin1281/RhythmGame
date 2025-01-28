@@ -4,11 +4,13 @@ using Cysharp.Threading.Tasks;
 namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
-    public class F_Lyrith_MoveHold : Command_General
+    public class F_Lyrith_MoveHold : CommandBase
     {
         protected override async UniTask ExecuteAsync()
         {
-            float moveX = 2.4f / Speed;
+            await UniTask.CompletedTask;
+
+            /*float moveX = 2.4f / Speed;
 
             MoveHold(-9, 4, moveX);
             await LoopNote(8, RegularNoteType.Normal,
@@ -43,16 +45,16 @@ namespace NoteCreating
                 -0.5f,
                 0.5f,
                 -0.5f
-            );
+            );*/
         }
 
-        void MoveHold(float x, float length, float moveX)
+        /*void MoveHold(float x, float length, float moveX)
         {
 
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = new(Inv(x), StartBase);
-            MoveAsync(hold, startPos, Inv(moveX)).Forget();
+            Vector3 startPos = new(Mir.Conv(x), StartBase);
+            MoveAsync(hold, startPos, Mir.Conv(moveX)).Forget();
 
             float expectTime = startPos.y / Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
@@ -71,6 +73,6 @@ namespace NoteCreating
                 hold.SetMaskLocalPos(new Vector2(pos.x, 0));
                 await Helper.Yield();
             }
-        }
+        }*/
     }
 }

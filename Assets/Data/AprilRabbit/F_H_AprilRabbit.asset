@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (2)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 0
   command:
     rid: 8267576847255470099
@@ -22,9 +22,8 @@ MonoBehaviour:
     - rid: 8267576847255470099
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 6
@@ -33,8 +32,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 6
           isPosMove: 1
@@ -42,8 +41,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 6
           isPosMove: 1
@@ -51,8 +50,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -60,8 +59,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -69,8 +68,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -78,8 +77,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -87,8 +86,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 4
           isPosMove: 1
@@ -96,8 +95,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 4
           isPosMove: 1
@@ -105,8 +104,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -114,8 +113,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -123,8 +122,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -132,8 +131,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -141,8 +140,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 0
 --- !u!114 &-8972916508809641590
 MonoBehaviour:
@@ -166,9 +165,8 @@ MonoBehaviour:
     - rid: 8267576847255470146
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 32
-        loopWaitLPB: 4
+        mirror:
+          enabled: 0
         moveDirection: 270
         isSpeedChangable: 0
         speedRate: 1
@@ -194,55 +192,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470147
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 16
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 1
-        isChainWait: 0
-        easeType: 4
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 20}
-          fromPos: {x: 0, y: -3}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: -40
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.6
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 0, y: 20}
-          fromPos: {x: 0, y: -3}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 40
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.6
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-8537272063692918318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,9 +215,8 @@ MonoBehaviour:
     - rid: 8267576847255470159
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 1
@@ -276,8 +225,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -285,8 +234,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -294,8 +243,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -303,8 +252,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -312,8 +261,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -321,8 +270,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -330,8 +279,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
+          easeType: 3
           time: 0.6
-          easeType: 3
           moveType: 1
         - wait: 2
           isPosMove: 0
@@ -339,8 +288,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
 --- !u!114 &-7841656300892861057
 MonoBehaviour:
@@ -363,93 +312,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470121
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 1
-        loopWaitLPB: 1.6
-        timeMode: 0
-        time: 2
-        isChainWait: 0
-        easeType: 9
-        basePos: {x: 0, y: 4}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: 7}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 0
-          fromRotate: 360
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.5
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: -12, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 90
-          fromRotate: 450
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.5
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -7}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 180
-          fromRotate: 540
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.5
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 12, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 270
-          fromRotate: 630
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.5
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-7440336762903681691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,188 +334,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470141
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 1
-        loopWaitLPB: 4
-        timeMode: 1
-        time: 0.13
-        isChainWait: 1
-        easeType: 1
-        basePos: {x: 12, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -10
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -20
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -30
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -40
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -50
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -60
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -70
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 1
-          startRotate: -80
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 16
-          isPosEase: 1
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: -2}
-          overridePosEaseTime: -1
-          overridePosEaseType: 17
-          isRotateEase: 0
-          startRotate: 0
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 17
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.15
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-7385288013414640684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,20 +357,17 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470170
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: 0
-          width: 0
           length: 0
 --- !u!114 &-7359081784283242647
 MonoBehaviour:
@@ -712,100 +391,81 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470169
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: -7
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 1
         - wait: 8
           type: 4
           x: 6
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 1
         - wait: 8
           type: 4
           x: -5
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 1
         - wait: 8
           type: 4
           x: 4
-          width: 0
           length: 1
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 1
         - wait: 8
           type: 4
           x: -4
-          width: 0
           length: 1.33333
         - wait: 8
           type: 2
           x: -4
-          width: 0
           length: 1
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 1
         - wait: 8
           type: 2
           x: -4
-          width: 0
           length: 1
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 1
         - wait: 8
           type: 2
           x: -4
-          width: 0
           length: 1
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 1
         - wait: 8
           type: 2
           x: -4
-          width: 0
           length: 1
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 1
 --- !u!114 &-7315570464629427147
 MonoBehaviour:
@@ -829,9 +489,8 @@ MonoBehaviour:
     - rid: 8267576847255470123
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 16
-        loopWait: 2
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 0
@@ -840,8 +499,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 0
           isPosMove: 1
@@ -849,8 +508,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0.2
           easeType: 3
+          time: 0.2
           moveType: 1
 --- !u!114 &-7312501041379287400
 MonoBehaviour:
@@ -874,15 +533,14 @@ MonoBehaviour:
     - rid: 8267576847255470112
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 24
         noteType: 2
         wait: 16
         easeX: {x: 6, y: -6}
-        easeTime: 13
         easeType: 3
-        delayLPB: 0
-        IsVerticalRange: 0
+        easeTime: 13
 --- !u!114 &-7247413396898743941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (8)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 16
   command:
     rid: 8267576847255470105
@@ -905,7 +563,8 @@ MonoBehaviour:
     - rid: 8267576847255470105
       type: {class: F_AprilRabbit_TouchHold, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         noteDatas:
         - isDiabled: 0
           wait: 0
@@ -999,55 +658,45 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470152
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 6
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 4
-          width: 0
           length: 0
         - wait: 12
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 4
-          width: 0
           length: 0
 --- !u!114 &-6759361981757736089
 MonoBehaviour:
@@ -1070,36 +719,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470129
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 1
-        summary: 
-        loopCount: 8
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 0.5
-        isChainWait: 0
-        easeType: 24
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 5.5, y: 0}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 80
-          fromRotate: 70
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.7
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-6547329170713964382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,9 +742,8 @@ MonoBehaviour:
     - rid: 8267576847255470107
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 8
-        loopWaitLPB: 4
+        mirror:
+          enabled: 0
         moveDirection: 270
         isSpeedChangable: 0
         speedRate: 1
@@ -1151,9 +770,8 @@ MonoBehaviour:
     - rid: 8267576847255470109
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 5
-        loopWaitLPB: 0.6666667
+        mirror:
+          enabled: 0
         moveDirection: 270
         isSpeedChangable: 0
         speedRate: 1
@@ -1203,90 +821,73 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470108
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: -5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 5
-          width: 0
           length: 0
 --- !u!114 &-6119731438749541444
 MonoBehaviour:
@@ -1310,9 +911,8 @@ MonoBehaviour:
     - rid: 8267576847255470148
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 1
@@ -1321,8 +921,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1330,8 +930,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1339,8 +939,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1348,8 +948,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1357,8 +957,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1366,8 +966,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1375,8 +975,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
         - wait: 1
           isPosMove: 0
@@ -1384,8 +984,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 5}
           isRotateClamp: 1
-          time: 1
           easeType: 3
+          time: 1
           moveType: 1
 --- !u!114 &-6050158854588540150
 MonoBehaviour:
@@ -1409,185 +1009,149 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470143
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 0.8
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 2
           x: 4
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 5.5
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 4
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 2.5
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 1
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 6
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 12
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
 --- !u!114 &-5970836079987120667
 MonoBehaviour:
@@ -1601,46 +1165,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (4)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 0
   command:
-    rid: 8267576847255470334
+    rid: 8267576847255470422
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470334
-      type: {class: F_Arc2D, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 8267576847255470422
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         datas:
         - x: 0
           wait: 0
           vertexType: 0
           isJudgeDisable: 0
-          isDuplicated: 0
+          isOverlappable: 0
           behindJudgeRange: 0
-          aheadJudgeRange: 4
+          aheadJudgeRange: 2
         - x: 4
-          wait: 4
+          wait: 2
           vertexType: 0
           isJudgeDisable: 0
-          isDuplicated: 0
+          isOverlappable: 0
           behindJudgeRange: 0
-          aheadJudgeRange: 4
+          aheadJudgeRange: 2
         - x: -4
-          wait: 4
+          wait: 2
           vertexType: 0
           isJudgeDisable: 0
-          isDuplicated: 0
+          isOverlappable: 0
           behindJudgeRange: 0
-          aheadJudgeRange: 4
+          aheadJudgeRange: 2
         - x: 4
-          wait: 4
+          wait: 2
           vertexType: 0
-          isJudgeDisable: 1
-          isDuplicated: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
           behindJudgeRange: 0
-          aheadJudgeRange: 4
+          aheadJudgeRange: 2
+        - x: -4
+          wait: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange: 0
+          aheadJudgeRange: 2
+        - x: 4
+          wait: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange: 0
+          aheadJudgeRange: 2
+        - x: -4
+          wait: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange: 0
+          aheadJudgeRange: 2
+        - x: 4
+          wait: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange: 0
+          aheadJudgeRange: 2
 --- !u!114 &-5048367918199398611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1663,7 +1256,8 @@ MonoBehaviour:
     - rid: 8267576847255470136
       type: {class: F_AprilRabbit_5Lane, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
 --- !u!114 &-4905826027611706765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,85 +1303,69 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470128
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 0
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 3
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 2
           x: 4.5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 1.5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -1.5
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: -4.5
-          width: 0
           length: 0
 --- !u!114 &-4557952037317823730
 MonoBehaviour:
@@ -1810,55 +1388,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470158
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 15
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 1
-        isChainWait: 0
-        easeType: 4
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: -10}
-          fromPos: {x: 0, y: 16}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: -40
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.4
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 0, y: -10}
-          fromPos: {x: 0, y: 16}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 40
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.4
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-4108859746051277179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,220 +1411,177 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470144
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 0.8
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 24
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 24
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 24
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 6
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 2
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 6
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -3.5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 3
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -1.5
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 0.5
-          width: 0
           length: 0
 --- !u!114 &-4068561220121420500
 MonoBehaviour:
@@ -2117,74 +1604,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470157
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 1
-        summary: 
-        loopCount: 7
-        loopWaitLPB: 1
-        timeMode: 1
-        time: 4
-        isChainWait: 0
-        easeType: 3
-        basePos: {x: 0, y: 4}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 15, y: 0}
-          fromPos: {x: 5, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 0
-          startAlpha: 0.5
-          fromAlpha: 1
-          overrideAlphaEaseTime: 1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 5, y: 0}
-          fromPos: {x: 15, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 2
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.3
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 2
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 5, y: 0}
-          fromPos: {x: -5, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 2
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.3
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 2
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &-4056796364878396861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,20 +1627,17 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470138
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: 0
-          width: 0
           length: 1.333333
 --- !u!114 &-4022349626142848309
 MonoBehaviour:
@@ -2244,15 +1661,14 @@ MonoBehaviour:
     - rid: 8267576847255470116
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 24
         noteType: 2
         wait: 16
         easeX: {x: 6, y: -6}
-        easeTime: 12
         easeType: 9
-        delayLPB: 0
-        IsVerticalRange: 0
+        easeTime: 12
 --- !u!114 &-3589205620100905118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2297,15 +1713,14 @@ MonoBehaviour:
     - rid: 8267576847255470119
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 12
         noteType: 2
         wait: 16
         easeX: {x: -5, y: 6}
-        easeTime: 12
         easeType: 3
-        delayLPB: 0
-        IsVerticalRange: 0
+        easeTime: 12
 --- !u!114 &-3332964828172653873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2328,155 +1743,125 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470149
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: -5
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 4
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 6
-          width: 0
           length: 4
         - wait: 8
           type: 0
           x: -3
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: 1
-          width: 0
           length: 4
         - wait: 16
           type: 1
           x: -1
-          width: 0
           length: 4
         - wait: 16
           type: 4
           x: 5
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: -6
-          width: 0
           length: 4
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: 0
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: -3
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: -6
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 3
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: 6
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: -1
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: 2
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: -2
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 2
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 4
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 4
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 2
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: -2
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: -4
-          width: 0
           length: 4
 --- !u!114 &-3327644921802365631
 MonoBehaviour:
@@ -2523,7 +1908,8 @@ MonoBehaviour:
     - rid: 8267576847255470111
       type: {class: F_AprilRabbit_RandomLine, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 96
         waitLPB: 16
 --- !u!114 &-2975073301392862944
@@ -2548,75 +1934,61 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470162
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 5.333333
         - wait: 4
           type: 1
           x: -2
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -2
-          width: 0
           length: 5.333333
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -6
-          width: 0
           length: 5.333333
         - wait: 4
           type: 1
           x: 0
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: 0
-          width: 0
           length: 5.333333
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -3
-          width: 0
           length: 5.333333
 --- !u!114 &-2580858073171945224
 MonoBehaviour:
@@ -2640,15 +2012,14 @@ MonoBehaviour:
     - rid: 8267576847255470163
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 8
         noteType: 2
         wait: 16
         easeX: {x: 0, y: 6}
-        easeTime: 2
         easeType: 15
-        delayLPB: 5.333333
-        IsVerticalRange: 1
+        easeTime: 2
 --- !u!114 &-1939005678878522539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2671,75 +2042,61 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470167
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 3
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 3
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 4
-          width: 0
           length: 8
         - wait: 8
           type: 0
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 3
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 3
-          width: 0
           length: 5.333333
 --- !u!114 &-1892585842575541725
 MonoBehaviour:
@@ -2763,7 +2120,8 @@ MonoBehaviour:
     - rid: 8267576847255470102
       type: {class: F_AprilRabbit_TouchHold, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         noteDatas:
         - isDiabled: 0
           wait: 0
@@ -2857,9 +2215,8 @@ MonoBehaviour:
     - rid: 8267576847255470124
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 32
-        loopWaitLPB: 4
+        mirror:
+          enabled: 0
         moveDirection: 270
         isSpeedChangable: 0
         speedRate: 1
@@ -2886,85 +2243,69 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470131
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 16
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 2
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 3
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 3
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
 --- !u!114 &-836788986323939715
 MonoBehaviour:
@@ -2988,136 +2329,148 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470130
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 0
           x: 6
-          width: 0
           length: 4
         - wait: 4
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 6
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
+--- !u!114 &-707967509402721511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (85)
+  m_EditorClassIdentifier: 
+  enable: 0
+  beatTiming: 0
+  command:
+    rid: 8267577112277025337
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025333
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        count: 16
+        noteType: 1
+        wait: 16
+        easeX: {x: 0, y: 5}
+        easeType: 3
+        easeTime: 16
+    - rid: 8267577112277025337
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay: 0
+        loopCount: 1
+        loopWait: 1
+        command:
+          rid: 8267577112277025333
 --- !u!114 &-619215705141571307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3130,7 +2483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (7)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 14
   command:
     rid: 8267576847255470104
@@ -3140,30 +2493,25 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470104
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 8
-          type: 1
+          type: 4
           x: 6
-          width: 0
           length: 0.5
         - wait: 8
           type: 2
           x: 4
-          width: 0
           length: 0.5
         - wait: 8
           type: 2
           x: 2
-          width: 0
           length: 0.5
 --- !u!114 &-244925653863331955
 MonoBehaviour:
@@ -3187,7 +2535,8 @@ MonoBehaviour:
     - rid: 8267576847255470175
       type: {class: F_AprilRabbit_LastNote, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
 --- !u!114 &-235293804775287717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3207,27 +2556,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 8267576847255470171
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 0.5
-        isSpeedChangable: 0
-        parentGeneratable:
-          rid: 8267576847255470172
-        isCheckSimultaneous: 1
-        IsVerticalRange: 1
+        parentCreatable:
+          rid: -2
         noteDatas:
         - wait: 300
           type: 2
           x: 0
-          width: 0
           length: 0
-    - rid: 8267576847255470172
-      type: {class: P_Transform, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        pos: {x: 0, y: 4}
-        deg: 0
 --- !u!114 &-17488931088108626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3250,35 +2593,29 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470117
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 2.5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 5
-          width: 0
           length: 0
         - wait: 8
           type: 4
           x: -4
-          width: 0
           length: 4
 --- !u!114 &11400000
 MonoBehaviour:
@@ -3292,24 +2629,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6499c9e5f97f6048932ce06d2a22cf2, type: 3}
   m_Name: F_H_AprilRabbit
   m_EditorClassIdentifier: 
-  difficulty: 2
   musicSelectData: {fileID: 11400000, guid: 02450ed7bca928849921c12d2d898d0b, type: 2}
-  level: 14
   noteCount: 606
   <NormalPoolCount>k__BackingField: 22
   <CirclePoolCount>k__BackingField: 1
   <SlidePoolCount>k__BackingField: 28
   <FlickPoolCount>k__BackingField: 5
   <HoldPoolCount>k__BackingField: 12
-  <ArcPoolCount>k__BackingField: 0
+  <ArcPoolCount>k__BackingField: 1
   <LinePoolCount>k__BackingField: 15
   fumen:
     commandDataList:
+    - {fileID: -707967509402721511}
+    - {fileID: 6788231265716196214}
+    - {fileID: 1190381152559060364}
+    - {fileID: 7178221479281646827}
+    - {fileID: 5605351401804193787}
     - {fileID: 8366329233979958297}
     - {fileID: 9120491526077302105}
     - {fileID: -9163643265773263655}
-    - {fileID: 4498083311138453686}
     - {fileID: -5970836079987120667}
+    - {fileID: 5763698112790514273}
     - {fileID: -1892585842575541725}
     - {fileID: 1631738462873919897}
     - {fileID: -619215705141571307}
@@ -3405,15 +2745,50 @@ MonoBehaviour:
     - rid: 8267576847255470114
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 24
         noteType: 2
         wait: 16
         easeX: {x: -6, y: 6}
-        easeTime: 24
         easeType: 3
-        delayLPB: 0
-        IsVerticalRange: 0
+        easeTime: 24
+--- !u!114 &1190381152559060364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (78)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: 8267577112277025336
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025335
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        moveDirection: 270
+        isSpeedChangable: 0
+        speedRate: 1
+        lifeTime: 3
+    - rid: 8267577112277025336
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay: 0
+        loopCount: 16
+        loopWait: 4
+        command:
+          rid: 8267577112277025335
 --- !u!114 &1250324670891103878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3436,15 +2811,14 @@ MonoBehaviour:
     - rid: 8267576847255470118
       type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         count: 12
         noteType: 2
         wait: 16
         easeX: {x: 6, y: -3.4}
-        easeTime: 8
         easeType: 24
-        delayLPB: 0
-        IsVerticalRange: 0
+        easeTime: 8
 --- !u!114 &1535515768321248530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3467,7 +2841,8 @@ MonoBehaviour:
     - rid: 8267576847255470150
       type: {class: F_AprilRabbit_EffectNoteDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         noteType: 2
 --- !u!114 &1604301922629324026
 MonoBehaviour:
@@ -3491,100 +2866,81 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470168
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 5.333333
         - wait: 4
           type: 1
           x: -2
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -2
-          width: 0
           length: 5.333333
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -6
-          width: 0
           length: 5.333333
         - wait: 4
           type: 1
           x: 0
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: 0
-          width: 0
           length: 5.333333
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 5.333333
         - wait: 16
           type: 1
           x: -4
-          width: 0
           length: 5.333333
         - wait: 24
           type: 1
           x: 5
-          width: 0
           length: 5.333333
         - wait: 24
           type: 1
           x: -2
-          width: 0
           length: 5.333333
         - wait: 24
           type: 0
           x: -5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 5.333333
         - wait: 4
           type: 1
           x: 5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 5.333333
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 5.333333
 --- !u!114 &1631738462873919897
 MonoBehaviour:
@@ -3598,7 +2954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (6)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 8
   command:
     rid: 8267576847255470103
@@ -3608,7 +2964,8 @@ MonoBehaviour:
     - rid: 8267576847255470103
       type: {class: F_AprilRabbit_RhythmHold, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         _x: 0
         _length: 0.52
         _shakeX: 0.2
@@ -3636,9 +2993,8 @@ MonoBehaviour:
     - rid: 8267576847255470134
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 0
@@ -3647,8 +3003,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 2
           easeType: 3
+          time: 2
           moveType: 1
 --- !u!114 &2274590421409267070
 MonoBehaviour:
@@ -3672,7 +3028,8 @@ MonoBehaviour:
     - rid: 8267576847255470164
       type: {class: F_AprilRabbit_EffectNoteDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         noteType: 3
 --- !u!114 &2381890261610214882
 MonoBehaviour:
@@ -3696,115 +3053,93 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470166
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: 1
-          width: 0
           length: 0
         - wait: 0
           type: 2
           x: 5
-          width: 0
           length: 0
         - wait: 6
           type: 2
           x: -2
-          width: 0
           length: 0
         - wait: 0
           type: 1
           x: 3
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 0
         - wait: 12
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 0
           type: 2
           x: -1
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -1
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 5
-          width: 0
           length: 0
 --- !u!114 &2469656637693245573
 MonoBehaviour:
@@ -3828,35 +3163,29 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470120
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 8
           type: 1
           x: -6
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 2
-          width: 0
           length: 0
         - wait: 8
           type: 3
           x: 6
-          width: 0
           length: 4
 --- !u!114 &2892175907538498301
 MonoBehaviour:
@@ -3880,85 +3209,69 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470126
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 16
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 2
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 3
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 3
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
 --- !u!114 &2892293822274571875
 MonoBehaviour:
@@ -4005,80 +3318,65 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470132
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4.5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 3
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 4
           type: 0
           x: 4.5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 1.5
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: -4
-          width: 0
           length: 0
 --- !u!114 &3793402613370992386
 MonoBehaviour:
@@ -4102,130 +3400,105 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470127
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 6
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
         - wait: 10.66667
           type: 0
           x: 7
-          width: 0
           length: 4
         - wait: 2.666667
           type: 1
           x: 5
-          width: 0
           length: 4
         - wait: 32
           type: 2
           x: 6
-          width: 0
           length: 4
 --- !u!114 &3984204401419123782
 MonoBehaviour:
@@ -4248,36 +3521,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470140
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 1
-        loopWaitLPB: 4
-        timeMode: 1
-        time: 0.125
-        isChainWait: 0
-        easeType: 1
-        basePos: {x: 0, y: 4}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: 12}
-          fromPos: {x: 0, y: -10}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 0
-          fromRotate: 1000
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.3
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &4419442600316133285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4300,158 +3544,106 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470153
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 1
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: -5
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 4
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 2
-          width: 0
           length: 4
         - wait: 0
           type: 0
           x: -5
-          width: 0
           length: 4
         - wait: 8
           type: 0
           x: -3
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: 0
-          width: 1.2
           length: 4
         - wait: 16
           type: 1
           x: 0
-          width: 1.2
           length: 4
         - wait: 16
           type: 4
           x: 5
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 4
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: -2
-          width: 0
           length: 4
         - wait: 8
           type: 0
           x: 5
-          width: 0
           length: 4
         - wait: 0
           type: 1
           x: -6
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: -3
-          width: 0
           length: 4
         - wait: 16
           type: 2
           x: 0
-          width: 0
           length: 4
         - wait: 8
           type: 1
           x: 6
-          width: 0
           length: 4
         - wait: 24
           type: 1
           x: 2
-          width: 0
           length: 4
         - wait: 24
           type: 1
           x: -2
-          width: 0
           length: 4
         - wait: 24
           type: 1
           x: -6
-          width: 0
           length: 4
         - wait: 8
           type: 4
           x: 0
-          width: 0
           length: 4
         - wait: 4
           type: 2
           x: -2
-          width: 0
           length: 4
         - wait: 8
           type: 2
           x: 2
-          width: 0
           length: 4
         - wait: 8
           type: 2
           x: -2
-          width: 0
           length: 4
---- !u!114 &4498083311138453686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_AprilRabbit (3)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 0
-  command:
-    rid: 8267576847255470100
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 8267576847255470100
-      type: {class: F_Delay, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        wait: 4
-        noteGeneratable:
-          rid: -2
 --- !u!114 &4959233362392112431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4473,74 +3665,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470156
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 8
-        loopWaitLPB: 1
-        timeMode: 1
-        time: 4
-        isChainWait: 0
-        easeType: 3
-        basePos: {x: 0, y: 4}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 15, y: 0}
-          fromPos: {x: 5, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 0
-          startAlpha: 0.5
-          fromAlpha: 1
-          overrideAlphaEaseTime: 1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 5, y: 0}
-          fromPos: {x: 15, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 2
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.3
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 2
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 5, y: 0}
-          fromPos: {x: -5, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 2
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 1080
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.3
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 2
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &5053181875607714971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4562,36 +3687,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470135
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 1
-        loopWaitLPB: 4
-        timeMode: 0
-        time: 11
-        isChainWait: 0
-        easeType: 3
-        basePos: {x: 0, y: 4}
-        datas:
-        - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 90
-          fromRotate: 0
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 0.2
-          overrideAlphaEaseTime: 1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &5066995649650505276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4614,9 +3710,8 @@ MonoBehaviour:
     - rid: 8267576847255470137
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 0
@@ -4625,8 +3720,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 2
           easeType: 3
+          time: 2
           moveType: 1
 --- !u!114 &5217158169241468903
 MonoBehaviour:
@@ -4650,9 +3745,8 @@ MonoBehaviour:
     - rid: 8267576847255470106
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 1
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 0
@@ -4661,8 +3755,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 6
           isPosMove: 1
@@ -4670,8 +3764,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 6
           isPosMove: 1
@@ -4679,8 +3773,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 6
           isPosMove: 1
@@ -4688,8 +3782,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4697,8 +3791,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4706,8 +3800,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4715,8 +3809,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4724,8 +3818,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 4
           isPosMove: 1
@@ -4733,8 +3827,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 4
           isPosMove: 1
@@ -4742,8 +3836,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4751,8 +3845,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4760,8 +3854,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4769,8 +3863,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 8
           isPosMove: 1
@@ -4778,8 +3872,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 0
 --- !u!114 &5518611630785790565
 MonoBehaviour:
@@ -4803,9 +3897,8 @@ MonoBehaviour:
     - rid: 8267576847255470160
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 30
-        loopWait: 4
+        mirror:
+          enabled: 0
         isChainWait: 1
         settings:
         - wait: 0
@@ -4814,8 +3907,8 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 0
           isPosMove: 1
@@ -4823,9 +3916,61 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0.2
           easeType: 3
+          time: 0.2
           moveType: 1
+--- !u!114 &5605351401804193787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (3)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: 8267577112277025334
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025334
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        summary: 
+--- !u!114 &5763698112790514273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (80)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: 8267577112277025344
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025344
+      type: {class: F_JaggedArc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        jagInterval: 4
+        length: 0.5
+        startWidth: 6
+        fromWidth: 6
+        easeType: 1
 --- !u!114 &5910176855156506666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4848,90 +3993,73 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470142
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 3
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: 6
-          width: 0.8
           length: 0
         - wait: 2
           type: 2
           x: -6
-          width: 0.8
           length: 0
 --- !u!114 &6347607037352991939
 MonoBehaviour:
@@ -4955,7 +4083,8 @@ MonoBehaviour:
     - rid: 8267576847255470165
       type: {class: F_AprilRabbit_TouchHold, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         noteDatas:
         - isDiabled: 0
           wait: 0
@@ -4977,6 +4106,69 @@ MonoBehaviour:
           x: 2
           width: 0
           length: 2
+--- !u!114 &6788231265716196214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (79)
+  m_EditorClassIdentifier: 
+  enable: 0
+  beatTiming: 2
+  command:
+    rid: 8267577112277025337
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025333
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        count: 16
+        noteType: 1
+        wait: 16
+        easeX: {x: 5, y: -5}
+        easeType: 3
+        easeTime: 16
+    - rid: 8267577112277025337
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay: 0
+        loopCount: 1
+        loopWait: 1
+        command:
+          rid: 8267577112277025333
+--- !u!114 &7178221479281646827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (81)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: 8267577112277025346
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267577112277025346
+      type: {class: F_SpeedChange, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        speed: 2
+        easeTimeLPB: 0
+        easeType: 1
 --- !u!114 &7212882800183450257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4999,100 +4191,81 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470154
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 4
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 6
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 1.9
-          width: 3.1
           length: 0
         - wait: 12
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 0
           x: 1.9
-          width: 3.1
           length: 0
         - wait: 0
           type: 1
           x: 4
-          width: 0
           length: 0
         - wait: 16
           type: 1
           x: 3.5
-          width: 1.5
           length: 0
         - wait: 16
           type: 1
           x: 3
-          width: 2
           length: 0
         - wait: 16
           type: 1
           x: 2.5
-          width: 2.5
           length: 0
         - wait: 16
           type: 1
           x: 2
-          width: 3
           length: 0
         - wait: 16
           type: 1
           x: 1.5
-          width: 3.5
           length: 0
         - wait: 16
           type: 1
           x: 1
-          width: 4
           length: 0
         - wait: 16
           type: 1
           x: 0.5
-          width: 4.5
           length: 0
 --- !u!114 &7234820822542081988
 MonoBehaviour:
@@ -5109,43 +4282,42 @@ MonoBehaviour:
   enable: 1
   beatTiming: 36
   command:
-    rid: 8267576847255470113
+    rid: 8267577112277025339
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 8267576847255470113
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 8267577112277025339
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
-          rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
-        noteDatas:
-        - wait: 8
-          type: 1
-          x: 6
-          width: 0
-          length: 0
-        - wait: 8
-          type: 1
-          x: 4.5
-          width: 0
-          length: 0
-        - wait: 8
-          type: 1
-          x: 3
-          width: 0
-          length: 0
-        - wait: 8
-          type: 1
-          x: -6
-          width: 0
-          length: 4
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 4
+        option: 1
+        setJudge: 0
+        lifeTime: 0.5
+        isChainWait: 0
+        basePos: {x: 0, y: 4}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB: 0
+          startPos: {x: 0, y: 0}
+          posEaseDatas:
+          - from: {x: 0, y: 0}
+            easeTime: 0
+            easeType: 3
+          startRot: 0
+          rotEaseDatas:
+          - from: 0
+            easeTime: 0
+            easeType: 3
+          startAlpha: 1
+          alphaEaseDatas:
+          - from: 1
+            easeTime: 0
+            easeType: 3
 --- !u!114 &7552675690412487716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5168,75 +4340,61 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470161
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 4
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 3
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 3
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 5
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 4
-          width: 0
           length: 5.333333
         - wait: 8
           type: 4
           x: 6
-          width: 0
           length: 5.333333
         - wait: 8
           type: 2
           x: 6
-          width: 0
           length: 5.333333
 --- !u!114 &8094539120129822247
 MonoBehaviour:
@@ -5260,9 +4418,8 @@ MonoBehaviour:
     - rid: 8267576847255470139
       type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 8
-        loopWait: 1
+        mirror:
+          enabled: 0
         isChainWait: 0
         settings:
         - wait: 0
@@ -5271,8 +4428,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -3}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 0
           isPosMove: 0
@@ -5280,8 +4437,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0.2
           easeType: 24
+          time: 0.2
           moveType: 1
         - wait: 2
           isPosMove: 0
@@ -5289,8 +4446,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: 3}
           isRotateClamp: 1
-          time: 0
           easeType: 3
+          time: 0
           moveType: 1
         - wait: 2
           isPosMove: 0
@@ -5298,8 +4455,8 @@ MonoBehaviour:
           isRotateMove: 1
           rotate: {x: 0, y: 0, z: -3}
           isRotateClamp: 1
-          time: 0.2
           easeType: 24
+          time: 0.2
           moveType: 1
 --- !u!114 &8340944664346698668
 MonoBehaviour:
@@ -5323,85 +4480,69 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470151
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 0
           type: 3
           x: 4
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: 5.5
-          width: 0
           length: 8
         - wait: 16
           type: 2
           x: 6.5
-          width: 0
           length: 8
         - wait: 16
           type: 2
           x: 6.5
-          width: 0
           length: 8
         - wait: 16
           type: 0
           x: 6.5
-          width: 0
           length: 8
         - wait: 0
           type: 3
           x: -4
-          width: 0
           length: 0
         - wait: 16
           type: 2
           x: -5.5
-          width: 0
           length: 8
         - wait: 16
           type: 2
           x: -6.5
-          width: 0
           length: 8
         - wait: 16
           type: 2
           x: -6.5
-          width: 0
           length: 8
         - wait: 16
           type: 0
           x: -6.5
-          width: 0
           length: 8
         - wait: 0
           type: 4
           x: 4.5
-          width: 0
           length: 8
         - wait: 8
           type: 4
           x: 1.5
-          width: 0
           length: 8
         - wait: 8
           type: 4
           x: -1.5
-          width: 0
           length: 8
         - wait: 8
           type: 4
           x: -4.5
-          width: 0
           length: 8
 --- !u!114 &8366329233979958297
 MonoBehaviour:
@@ -5415,7 +4556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: -2
   command:
     rid: 8267576847255470080
@@ -5424,36 +4565,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470080
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: "\u30D9\u30FC\u30B9"
-        loopCount: 1
-        loopWaitLPB: 4
-        timeMode: 1
-        time: 0.01785714
-        isChainWait: 0
-        easeType: 3
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: 0
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 0
-          fromRotate: 0
-          overrideRotateEaseTime: 0
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 1
-          overrideAlphaEaseTime: 0.5
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &8846162077882305433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5475,55 +4587,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470110
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 12
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 1
-        isChainWait: 0
-        easeType: 2
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 1
-          startPos: {x: 0, y: -7}
-          fromPos: {x: 0, y: 10}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 30
-          fromRotate: 0
-          overrideRotateEaseTime: 0
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.2
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
-        - delayLPB: 4
-          isPosEase: 1
-          startPos: {x: 0, y: -7}
-          fromPos: {x: 0, y: 10}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: -30
-          fromRotate: 0
-          overrideRotateEaseTime: 0
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.2
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &8918048374321972695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5545,36 +4609,7 @@ MonoBehaviour:
     RefIds:
     - rid: 8267576847255470125
       type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: 
-        loopCount: 8
-        loopWaitLPB: 2
-        timeMode: 0
-        time: 0.5
-        isChainWait: 0
-        easeType: 24
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 5.5, y: 0}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: -1
-          overridePosEaseType: 0
-          isRotateEase: 1
-          startRotate: 80
-          fromRotate: 70
-          overrideRotateEaseTime: -1
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0.7
-          fromAlpha: 0
-          overrideAlphaEaseTime: -1
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+      data: 
 --- !u!114 &9046525905376199653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5597,35 +4632,29 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 8267576847255470115
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        isSpeedChangable: 0
-        parentGeneratable:
+        parentCreatable:
           rid: -2
-        isCheckSimultaneous: 1
-        IsVerticalRange: 0
         noteDatas:
         - wait: 8
           type: 1
           x: 0
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -4
-          width: 0
           length: 0
         - wait: 8
           type: 1
           x: -2
-          width: 0
           length: 0
         - wait: 8
           type: 4
           x: -6
-          width: 0
           length: 4
 --- !u!114 &9120491526077302105
 MonoBehaviour:
@@ -5639,7 +4668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (1)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 0
   command:
     rid: 8267576847255470081
@@ -5649,9 +4678,8 @@ MonoBehaviour:
     - rid: 8267576847255470081
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
-        loopCount: 12
-        loopWaitLPB: 2
+        mirror:
+          enabled: 0
         moveDirection: 270
         isSpeedChangable: 0
         speedRate: 1
@@ -5675,24 +4703,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 8267576847255470173
-      type: {class: F_Generic2D, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 0.5
-        isSpeedChangable: 0
-        parentGeneratable:
-          rid: 8267576847255470174
-        isCheckSimultaneous: 1
-        IsVerticalRange: 1
+        parentCreatable:
+          rid: -2
         noteDatas:
         - wait: 300
           type: 2
           x: 0
-          width: 0
           length: 0
-    - rid: 8267576847255470174
-      type: {class: P_Transform, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        pos: {x: 0, y: 4}
-        deg: 180

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace NoteCreating
 {
     [AddTypeMenu("Lyrith/【演出】花火みたいな"), System.Serializable]
-    public class F_Lyrith_NoteEffect : Command_General
+    public class F_Lyrith_NoteEffect : CommandBase
     {
         protected override async UniTask ExecuteAsync()
         {

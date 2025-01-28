@@ -1,36 +1,31 @@
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace NoteCreating
 {
     [AddTypeMenu("◇カメラ制御"), System.Serializable]
-    public class F_CameraMove : Command_General
+    public class F_CameraMove : CommandBase
     {
-        [SerializeField, Min(0)] int loopCount = 1;
-        [SerializeField, Min(0)] float loopWait = 4;
+        [SerializeField] Mirror mirror;
 
         [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと基準の時間からの差で発火します")]
         bool isChainWait = true;
+
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
         protected override async UniTask ExecuteAsync()
         {
             float delta = await WaitOnTiming();
-            for (int i = 0; i < loopCount; i++)
+            if (isChainWait)
             {
-                if (isChainWait)
+                LoopMove(settings, delta).Forget();
+            }
+            else
+            {
+                for (int k = 0; k < settings.Length; k++)
                 {
-                    LoopMove(settings, delta).Forget();
+                    Move(settings[k], delta).Forget();
                 }
-                else
-                {
-                    for (int k = 0; k < settings.Length; k++)
-                    {
-                        Move(settings[k], delta).Forget();
-                    }
-                }
-                delta = await Wait(loopWait, delta);
             }
         }
 
@@ -49,8 +44,10 @@ namespace NoteCreating
             {
                 delta = await Wait(s.Wait, delta: delta);
             }
-            Helper.CameraMover.Move(s, delta, IsMirror);
+            Helper.CameraMover.Move(s, delta, mirror);
         }
+
+#if UNITY_EDITOR
 
         protected override Color GetCommandColor()
         {
@@ -60,7 +57,8 @@ namespace NoteCreating
         protected override string GetSummary()
         {
             if (settings == null || settings.Length == 0) return null;
-            return $"{loopCount} - {loopWait}  Length: {settings.Length}";
+            return $"Length: {settings.Length}";
         }
+#endif
     }
 }

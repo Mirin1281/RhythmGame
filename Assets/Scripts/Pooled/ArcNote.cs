@@ -16,11 +16,13 @@ namespace NoteCreating
         [SerializeField] MeshRenderer meshRenderer;
 
         /// <summary>
-        /// アークの判定
+        /// アークの判定リスト
         /// </summary>
-        List<ArcJudge> judges = new();
-        float noInputTime;
-        Spline Spline => splineExtrude.Spline;
+        [SerializeField] List<ArcJudge> judges;
+
+        float notHoldTime;
+
+        Spline spline => splineExtrude.Spline;
 
         /// <summary>
         /// 取得が無効か
@@ -30,7 +32,24 @@ namespace NoteCreating
         /// <summary>
         /// 他のアークと位置が近い
         /// </summary>
-        public bool IsOverlaped { get; set; }
+        public bool IsOverlaped { get; private set; }
+
+        public void SetOverlaped(IEnumerable<ArcNote> arcs, float sqrDistance)
+        {
+            var judge = GetCurrentJudge();
+            IsOverlaped = judge == null || judge.IsOverlappable;
+            var landingPos = GetPointOnYPlane(0) + GetPos();
+            foreach (var otherArc in arcs)
+            {
+                if (otherArc == this || otherArc.HeadY > 0 || otherArc.TailY < 0) continue;
+                var otherLandingPos = otherArc.GetPointOnYPlane(0) + otherArc.GetPos();
+                if (Vector2.SqrMagnitude(landingPos - otherLandingPos) < sqrDistance)
+                {
+                    IsOverlaped = true;
+                    otherArc.IsOverlaped = true;
+                }
+            }
+        }
 
         /// <summary>
         /// 押された指のインデックス
@@ -43,44 +62,66 @@ namespace NoteCreating
         public int JudgeIndex { get; set; }
 
         /// <summary>
-        /// 最後尾のY座標
+        /// 入力されているか
         /// </summary>
-        public float LastY
+        public bool IsHold { get; set; }
+
+        /// <summary>
+        /// 先端のワールドY座標
+        /// </summary>
+        public float HeadY
         {
             get
             {
-                if (Spline == null || Spline.Knots.Count() == 0) return 0;
-                return Spline.Knots.Last().Position.y;
+                if (spline == null || spline.Knots.Count() == 0) throw new Exception();
+                return GetPos().y + spline.Knots.First().Position.y;
+            }
+        }
+
+        /// <summary>
+        /// 終端のワールドY座標
+        /// </summary>
+        public float TailY
+        {
+            get
+            {
+                if (spline == null || spline.Knots.Count() == 0) throw new Exception();
+                return GetPos().y + spline.Knots.Last().Position.y;
             }
         }
 
         void Awake()
         {
-            //meshRenderer.material = new Material(meshRenderer.material);
             meshFilter.mesh = meshFilter.mesh.Duplicate();
         }
 
         void Update()
         {
-            noInputTime += Time.deltaTime;
-            /*if (Is2D)
+            if (IsHold)
             {
-                meshRenderer.material.SetFloat("_ZThreshold", -1);
+                notHoldTime = 0;
+                if (IsInvalid)
+                {
+                    meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
+                    return;
+                }
             }
             else
             {
-                meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
-            }*/
-            meshRenderer.material.SetFloat("_ZThreshold", -Mathf.Clamp(noInputTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed3D);
+                notHoldTime += Time.deltaTime;
+            }
+
+            meshRenderer.material.SetFloat("_YThreshold", -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
+            SetAlpha(IsHold ? 0.8f : 0.5f);
         }
 
         /// <summary>
         /// アークを作成します
         /// </summary>
-        public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, bool isMirror = false)
+        public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, Mirror mir = default)
         {
             // 初期化
-            Spline.Clear();
+            spline.Clear();
             if (judges == null)
             {
                 judges = new(datas.Length);
@@ -90,6 +131,7 @@ namespace NoteCreating
                 judges.Clear();
             }
             IsInvalid = false;
+            IsOverlaped = false;
             FingerIndex = -1;
             JudgeIndex = 0;
 
@@ -101,14 +143,14 @@ namespace NoteCreating
             {
                 var data = datas[i];
                 y += GetDistanceInterval(data.Wait);
-                var knot = new BezierKnot(new Vector3((isMirror ? -1 : 1f) * data.X, y, 0));
+                var knot = new BezierKnot(new Vector3(mir.Conv(data.X), y, 0));
                 TangentMode tangentMode = data.Vertex switch
                 {
                     ArcCreateData.VertexType.Auto => TangentMode.AutoSmooth,
                     ArcCreateData.VertexType.Linear => TangentMode.Linear,
                     _ => throw new ArgumentOutOfRangeException(),
                 };
-                Spline.Add(knot, tangentMode);
+                spline.Add(knot, tangentMode);
 
                 if (i % 3 == 0)
                 {
@@ -120,22 +162,24 @@ namespace NoteCreating
 
             // 判定を追加
             int k = 0;
-            foreach (var knot in Spline.Knots)
+            foreach (var knot in spline)
             {
-                if (datas[k].IsJudgeDisable || k == Spline.Knots.Count() - 1)
+                ArcCreateData data = datas[k];
+                // 判定無効だったり、最後尾の場合は次へ
+                if (data.IsJudgeDisable || k == spline.Knots.Count() - 1)
                 {
                     k++;
                     continue;
                 }
 
-                float knotY = knot.Position.y + GetPos().y;
-                float behindJudgePosY = knotY - GetDistanceInterval(datas[k].BehindJudgeRange);
-                var startPos = GetPointOnYPlane(behindJudgePosY);
-                //if (k == 0) startPos = Vector3.zero;
-                float aheadJudgePosY = knotY + GetDistanceInterval(datas[k].AheadJudgeRange);
-                var endPos = GetPointOnYPlane(aheadJudgePosY);
+                float knotY = GetPos().y + knot.Position.y; // ある頂点のワールドY座標
 
-                judges.Add(new ArcJudge(startPos, endPos, datas[k].IsDuplicated));
+                float behindJudgeY = knotY + GetDistanceInterval(data.BehindJudgeRange);
+                var startPos = GetPointOnYPlane(behindJudgeY);
+                float aheadJudgeY = knotY + GetDistanceInterval(data.AheadJudgeRange);
+                var endPos = GetPointOnYPlane(aheadJudgeY);
+
+                judges.Add(new ArcJudge(startPos, endPos, data.IsOverlappable));
                 k++;
             }
 
@@ -147,19 +191,19 @@ namespace NoteCreating
             }
         }
 
-        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, bool isInverse, DebugSphere debugSphere)
+        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, Mirror mirror, DebugSphere debugSphere)
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
-            await CreateNewArcAsync(datas, wholeNoteInterval, isInverse);
+            await CreateNewArcAsync(datas, wholeNoteInterval, mirror);
             foreach (var child in transform.OfType<Transform>().ToArray())
             {
                 DestroyImmediate(child.gameObject);
             }
 
-            for (int i = 0; i < Spline.Count; i++)
+            for (int i = 0; i < spline.Count; i++)
             {
                 var data = datas[i];
-                var knot = Spline[i];
+                var knot = spline[i];
                 if (datas[i].IsJudgeDisable)
                 {
                     continue;
@@ -172,12 +216,12 @@ namespace NoteCreating
                     sphere.SetColor(new Color(1, 1, 1, 0.5f));
                 }
 
-                if (i == Spline.Knots.Count() - 1) break;
-                float knotY = knot.Position.y - GetPos().y;
+                if (i == spline.Knots.Count() - 1) break;
+                float knotY = GetPos().y + knot.Position.y; // ある頂点のワールドY座標
 
                 if (i != 0)
                 {
-                    float behindDistance = knotY - GetDistanceInterval(datas[i].BehindJudgeRange);
+                    float behindDistance = knotY + GetDistanceInterval(datas[i].BehindJudgeRange);
                     var startPos = GetPointOnYPlane(behindDistance);
                     var blueSphere = Instantiate(debugSphere, transform);
                     blueSphere.transform.localPosition = startPos;
@@ -217,15 +261,24 @@ namespace NoteCreating
         /// </summary>
         public Vector3 GetPointOnYPlane(float target)
         {
-            if (Spline == null) return default;
-            BezierKnot behindKnot = Spline[0];
-            BezierKnot aheadKnot = Spline[0];
-            var headY = GetPos().y;
-            foreach (BezierKnot knot in Spline)
+            float headY = HeadY;
+            float tailY = TailY;
+            if (spline == null
+             || (target < headY && Mathf.Approximately(headY, target) == false)
+             || (tailY < target) && Mathf.Approximately(tailY, target) == false)
             {
-                if (knot.Position.y < target + headY)
-                {
+                Debug.LogError($"Head: {headY}, Tail: {tailY}, \ntarget: {target}");
+                return default;
+            }
 
+            BezierKnot behindKnot, aheadKnot;
+            aheadKnot = behindKnot = spline[0];
+            float relativeCut = target - headY; // アークの先端Y座標から切り出すY座標までの長さ
+            int debug_i = 0;
+            foreach (BezierKnot knot in spline)
+            {
+                if (knot.Position.y < relativeCut)
+                {
                     behindKnot = knot;
                 }
                 else
@@ -233,13 +286,20 @@ namespace NoteCreating
                     aheadKnot = knot;
                     break;
                 }
+                debug_i++;
             }
 
-            float knotInterval = aheadKnot.Position.y - behindKnot.Position.y;
-            if (knotInterval == 0f) return aheadKnot.Position;
-            float delta = target + headY - behindKnot.Position.y;
-            float rate = delta / knotInterval;
-            return rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
+            float knotsYInterval = aheadKnot.Position.y - behindKnot.Position.y;
+            if (Mathf.Approximately(knotsYInterval, 0f))
+            {
+                return aheadKnot.Position;
+            }
+            float delta = relativeCut - behindKnot.Position.y; // 一つ前の頂点Y座標から切り出すY座標までの差
+            float rate = delta / knotsYInterval;
+            Vector3 arcPos = rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
+            //Debug.Log($"Head: {headY}, Tail: {tailY}, JudgeNum: {debug_i}\n"
+            //        + $"target: {target}, value: {arcPos}");
+            return arcPos;
         }
 
         /// <summary>
@@ -266,26 +326,6 @@ namespace NoteCreating
             FingerIndex = -1;
         }
 
-        public void SetInput(bool enabled)
-        {
-            if (enabled)
-            {
-                if (IsInvalid)
-                {
-                    meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
-                    return;
-                }
-                noInputTime = 0f;
-            }
-            SetColor(enabled);
-        }
-
-        public void SetColor(bool enabled)
-        {
-            var c = meshRenderer.sharedMaterial.color;
-            meshRenderer.sharedMaterial.color = new Color(c.r, c.g, c.b, enabled ? 0.8f : 0.6f);
-        }
-
         public void SetRadius(float radius)
         {
             splineExtrude.Radius = radius;
@@ -307,6 +347,7 @@ namespace NoteCreating
         }
     }
 
+    [Serializable]
     public class ArcJudge
     {
         public enum InputState
@@ -316,9 +357,10 @@ namespace NoteCreating
             Get,
             Miss,
         }
-        public readonly Vector3 StartPos;
-        public readonly Vector3 EndPos;
-        public readonly bool IsOverlappable;
+
+        public Vector3 StartPos;
+        public Vector3 EndPos;
+        public bool IsOverlappable;
         public InputState State;
 
         public ArcJudge(Vector3 start, Vector3 end, bool isDuplicated)
@@ -348,7 +390,7 @@ namespace NoteCreating
         [SerializeField] float wait;
         [SerializeField] VertexType vertexType;
         [SerializeField] bool isJudgeDisable;
-        [SerializeField] bool isDuplicated;
+        [SerializeField] bool isOverlappable;
         [SerializeField] float behindJudgeRange;
         [SerializeField] float aheadJudgeRange;
 
@@ -356,17 +398,17 @@ namespace NoteCreating
         public readonly float Wait => wait;
         public readonly VertexType Vertex => vertexType;
         public readonly bool IsJudgeDisable => isJudgeDisable;
-        public readonly bool IsDuplicated => isDuplicated;
+        public readonly bool IsOverlappable => isOverlappable;
         public readonly float BehindJudgeRange => behindJudgeRange;
         public readonly float AheadJudgeRange => aheadJudgeRange;
 
-        public ArcCreateData(float x, float wait, VertexType vertexMode, bool isJudgeDisable, bool isDuplicated, float behindJudgeRange, float aheadJudgeRange)
+        public ArcCreateData(float x, float wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, float behindJudgeRange, float aheadJudgeRange)
         {
             this.x = x;
             this.wait = wait;
-            this.vertexType = vertexMode;
+            this.vertexType = vertexType;
             this.isJudgeDisable = isJudgeDisable;
-            this.isDuplicated = isDuplicated;
+            this.isOverlappable = isOverlappable;
             this.behindJudgeRange = behindJudgeRange;
             this.aheadJudgeRange = aheadJudgeRange;
         }

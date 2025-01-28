@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    // TODO: アークに依存しない設計
     public class ArcLightOperator : MonoBehaviour
     {
         [SerializeField] LightParticle[] lights;

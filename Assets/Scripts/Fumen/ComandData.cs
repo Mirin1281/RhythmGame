@@ -62,6 +62,10 @@ namespace NoteCreating
             }
             command = Activator.CreateInstance(type) as CommandBase;
         }
+        public void SetCommand(ICommand command)
+        {
+            this.command = command;
+        }
 
         public void SetEnable(bool e) => enable = e;
         public void SetBeatTiming(int t) => beatTiming = t;

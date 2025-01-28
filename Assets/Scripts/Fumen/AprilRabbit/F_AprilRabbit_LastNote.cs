@@ -6,8 +6,10 @@ using UnityEngine;
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/最後のノーツ"), System.Serializable]
-    public class F_AprilRabbit_LastNote : Command_General
+    public class F_AprilRabbit_LastNote : CommandBase
     {
+        [SerializeField] Mirror mirror;
+
         protected override async UniTask ExecuteAsync()
         {
             await WaitOnTiming();
@@ -28,7 +30,7 @@ namespace NoteCreating
             line2.FadeIn(2f, 0.1f);
 
             float time = 2.6f;
-            var easing = new Easing(0, Inv(360 * 5), time, EaseType.OutCubic);
+            var easing = new Easing(0, mirror.Conv(360 * 5), time, EaseType.OutCubic);
             WhileYield(time, t =>
             {
                 note.SetRot(easing.Ease(t));
@@ -40,16 +42,16 @@ namespace NoteCreating
 
             var judgeLine = Helper.GetLine();
             judgeLine.SetWidth(100);
-            judgeLine.SetPos(new Vector3(Inv(11), 4));
+            judgeLine.SetPos(new Vector3(mirror.Conv(11), 4));
             judgeLine.SetAlpha(0.5f);
 
             var judgeLine2 = Helper.GetLine();
             judgeLine2.SetWidth(100);
-            judgeLine2.SetPos(new Vector3(Inv(-11), 4));
+            judgeLine2.SetPos(new Vector3(mirror.Conv(-11), 4));
             judgeLine2.SetAlpha(0.5f);
 
             float judgeTime = 0.6f;
-            var judgeEasing = new Easing(Inv(90), Inv(270), judgeTime, EaseType.InQuad);
+            var judgeEasing = new Easing(mirror.Conv(90), mirror.Conv(270), judgeTime, EaseType.InQuad);
             WhileYield(judgeTime, t =>
             {
                 judgeLine.SetRot(judgeEasing.Ease(t));
@@ -65,7 +67,7 @@ namespace NoteCreating
 
         async UniTask CircleAsync(Vector3 startPos)
         {
-            var circle = Helper.PoolManager.CirclePool.GetNote();
+            var circle = Helper.PoolManager.CirclePool.GetCircle();
             circle.SetPos(startPos);
             circle.SetAlpha(0.2f);
             float baseTime = CurrentTime - Delta;
@@ -73,15 +75,18 @@ namespace NoteCreating
             while (circle.IsActive && t < 3f)
             {
                 t = CurrentTime - baseTime;
-                circle.SetScale(Vector3.one * t.Ease(4f, 0f, Helper.GetTimeInterval(4), EaseType.InQuad));
+                circle.SetScale(t.Ease(4f, 0f, Helper.GetTimeInterval(4), EaseType.InQuad));
                 await Helper.Yield();
             }
             circle.SetActive(false);
         }
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "LastNote";
         }
+#endif
     }
 }

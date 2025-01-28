@@ -42,14 +42,14 @@ public readonly struct Easing
 
     public Easing(float start, float from, float easeTime, EaseType type)
     {
-        this.type = easeTime == 0 ? EaseType.INTERNAL_Zero : type;
+        this.type = type;
         this.start = start;
         this.inversedEaseTime = 1f / (easeTime == 0 ? 0.001f : easeTime);
         this.delta = from - start;
     }
     public Easing(EasingStatus easingStatus)
     {
-        this.type = easingStatus.EaseTime == 0 ? EaseType.INTERNAL_Zero : easingStatus.EaseType;
+        this.type = easingStatus.EaseType;
         this.start = easingStatus.Start;
         this.inversedEaseTime = 1f / (easingStatus.EaseTime == 0 ? 0.001f : easingStatus.EaseTime);
         this.delta = easingStatus.From - start;
@@ -58,14 +58,14 @@ public readonly struct Easing
     public static float Ease(float start, float from, float easeTime, EaseType type, float time)
     {
         float t = time / easeTime;
-        if(easeTime == 0)
+        if (easeTime == 0)
         {
-            type = EaseType.INTERNAL_Zero;
+            type = EaseType.Zero;
         }
         float v = Operate(type, t);
         return start + (from - start) * v;
     }
-    
+
     public float Ease(float time)
     {
         float t = time * inversedEaseTime;
@@ -76,7 +76,7 @@ public readonly struct Easing
     public async UniTask EaseAsync(CancellationToken token, Action<float> action)
     {
         float time = 0f;
-        while(time < 1f / inversedEaseTime)
+        while (time < 1f / inversedEaseTime)
         {
             float t = time * inversedEaseTime;
             float v = Operate(type, t);
@@ -91,8 +91,9 @@ public readonly struct Easing
     {
         return type switch
         {
+            EaseType.None => 0f,
             EaseType.Linear => t,
-            
+
             EaseType.InQuad => Pow(t, 2),
             EaseType.InCubic => Pow(t, 3),
             EaseType.InQuart => Pow(t, 4),
@@ -109,11 +110,11 @@ public readonly struct Easing
                     : 1 - Pow(-2 * t + 2, 2) / 2f,
             EaseType.InOutCubic =>
                 t < 0.5f
-                    ? 4 * Pow(t, 3) 
+                    ? 4 * Pow(t, 3)
                     : 1 - Pow(-2 * t + 2, 3) / 2f,
             EaseType.InOutQuart =>
                 t < 0.5f
-                    ? 8 * Pow(t, 4) 
+                    ? 8 * Pow(t, 4)
                     : 1 - Pow(-2 * t + 2, 4) / 2f,
             EaseType.InOutQuint =>
                 t < 0.5f
@@ -139,7 +140,7 @@ public readonly struct Easing
                 t < 0.5f
                     ? (1 - Mathf.Sqrt(1 - 4 * t)) / 2f
                     : (Mathf.Sqrt(1 - Pow(-2 * t + 2, 2)) + 1) / 2f,
-            
+
             EaseType.InBack => (GetOption(type) + 1) * Pow(t, 3) - GetOption(type) * Pow(t, 2),
             EaseType.OutBack => 1 + (GetOption(type) + 1) * Pow(t - 1, 3) + GetOption(type) * Pow(t - 1, 2),
             EaseType.InOutBack =>
@@ -163,16 +164,16 @@ public readonly struct Easing
                     ? (1 - EaseOutBounce(1 - 2 * t)) / 2f
                     : (1 + EaseOutBounce(2 * t - 1)) / 2f,
 
-            EaseType.INTERNAL_Zero => 1f,
+            EaseType.Zero => 1f,
 
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentException(),
         };
 
 
         static float Pow(float value, int p)
         {
             float result = 1;
-            for(int i = 0; i < p; i++)
+            for (int i = 0; i < p; i++)
             {
                 result *= value;
             }
@@ -192,15 +193,15 @@ public readonly struct Easing
         {
             float n = 7.5625f;
             float d = 2.75f;
-            if(t < 1 / d)
+            if (t < 1 / d)
             {
                 return n * t * t;
             }
-            else if(t < 2 / d)
+            else if (t < 2 / d)
             {
                 return n * (t -= 1.5f / d) * t + 0.75f;
             }
-            else if(t < 2.5f / d)
+            else if (t < 2.5f / d)
             {
                 return n * (t -= 2.25f / d) * t + 0.9375f;
             }
@@ -249,42 +250,9 @@ public enum EaseType
     InBounce,
     OutBounce,
     InOutBounce,
-    
-    [InspectorName("")] INTERNAL_Zero,
+
+    Zero,
 }
-
-/*public readonly struct EasingVector3
-{
-    readonly Easing easingX;
-    readonly Easing easingY;
-    readonly Easing easingZ;
-
-    public EasingVector3(Vector3 start, Vector3 from, float easeTime, EaseType type)
-    {
-        easingX = new Easing(start.x, from.x, easeTime, type);
-        easingY = new Easing(start.y, from.y, easeTime, type);
-        easingZ = new Easing(start.z, from.z, easeTime, type);
-    }
-    public EasingVector3(EasingStatusVector3 easingStatus)
-    {
-        easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
-        easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
-        easingZ = new Easing(easingStatus.Start.z, easingStatus.From.z, easingStatus.EaseTime, easingStatus.EaseType);
-    }
-
-    public static Vector3 Ease(Vector3 start, Vector3 from, float easeTime, EaseType type, float time)
-    {
-        return new Vector3(
-            Easing.Ease(start.x, from.x, easeTime, type, time),
-            Easing.Ease(start.y, from.y, easeTime, type, time),
-            Easing.Ease(start.z, from.z, easeTime, type, time));
-    }
-    
-    public Vector3 Ease(float time)
-    {
-        return new Vector3(easingX.Ease(time), easingY.Ease(time), easingZ.Ease(time));
-    }
-}*/
 
 public readonly struct EasingVector2
 {
@@ -296,11 +264,6 @@ public readonly struct EasingVector2
         easingX = new Easing(start.x, from.x, easeTime, type);
         easingY = new Easing(start.y, from.y, easeTime, type);
     }
-    /*public EasingVector2(EasingStatusVector3 easingStatus)
-    {
-        easingX = new Easing(easingStatus.Start.x, easingStatus.From.x, easingStatus.EaseTime, easingStatus.EaseType);
-        easingY = new Easing(easingStatus.Start.y, easingStatus.From.y, easingStatus.EaseTime, easingStatus.EaseType);
-    }*/
 
     public static Vector2 Ease(Vector2 start, Vector2 from, float easeTime, EaseType type, float time)
     {
@@ -308,7 +271,7 @@ public readonly struct EasingVector2
             Easing.Ease(start.x, from.x, easeTime, type, time),
             Easing.Ease(start.y, from.y, easeTime, type, time));
     }
-    
+
     public Vector2 Ease(float time)
     {
         return new Vector2(easingX.Ease(time), easingY.Ease(time));
@@ -348,71 +311,3 @@ public struct EasingStatus : IEquatable<EasingStatus>
         return HashCode.Combine(start, from, easeTime, easeType);
     }
 }
-
-/*[Serializable]
-public struct EasingStatusVector3 : IEquatable<EasingStatusVector3>
-{
-    [SerializeField] Vector3 start;
-    [SerializeField] Vector3 from;
-    [SerializeField] float easeTime;
-    [SerializeField] EaseType easeType;
-
-    public readonly Vector3 Start => start;
-    public readonly Vector3 From => from;
-    public readonly float EaseTime => easeTime;
-    public readonly EaseType EaseType => easeType;
-
-    public readonly bool Equals(EasingStatusVector3 other)
-    {
-        return start == other.Start
-            && from == other.From
-            && easeTime == other.EaseTime
-            && easeType == other.EaseType;
-    }
-
-    public override readonly bool Equals(object other)
-    {
-        if (other is EasingStatusVector3)
-            return Equals((EasingStatusVector3)other);
-        return false;
-    }
-
-    public override readonly int GetHashCode()
-    {
-        return HashCode.Combine(start, from, easeTime, easeType);
-    }
-}
-
-[Serializable]
-public struct EasingStatusVector2 : IEquatable<EasingStatusVector2>
-{
-    [SerializeField] Vector2 start;
-    [SerializeField] Vector2 from;
-    [SerializeField] float easeTime;
-    [SerializeField] EaseType easeType;
-
-    public readonly Vector2 Start => start;
-    public readonly Vector2 From => from;
-    public readonly float EaseTime => easeTime;
-    public readonly EaseType EaseType => easeType;
-
-    public readonly bool Equals(EasingStatusVector2 other)
-    {
-        return start == other.Start
-            && from == other.From
-            && easeTime == other.EaseTime
-            && easeType == other.EaseType;
-    }
-
-    public override readonly bool Equals(object other)
-    {
-        if (other is EasingStatusVector2)
-            return Equals((EasingStatusVector2)other);
-        return false;
-    }
-
-    public override readonly int GetHashCode()
-    {
-        return HashCode.Combine(start, from, easeTime, easeType);
-    }
-}*/

@@ -1,35 +1,45 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆連続的なノーツ", -1), System.Serializable]
-    public class F_ContinuousNotes : Command_General
+    [AddTypeMenu("◆連続的なノーツ", -80), System.Serializable]
+    public class F_ContinuousNotes : CommandBase
     {
-        [Space(20)]
+        [SerializeField] Mirror mirror;
+        [Space(10)]
         [SerializeField] int count = 16;
         [SerializeField, Tooltip("Normal, Slide, Flickのどれかを指定してください")]
         RegularNoteType noteType = RegularNoteType.Slide;
         [SerializeField] float wait = 16;
-        [Space(20)]
-        [SerializeField] Vector2 easeX;
-        [SerializeField] float easeTime;
+        [Space(10)]
+        [SerializeField] Vector2 easeX = new Vector2(-5f, 5f);
         [SerializeField] EaseType easeType = EaseType.OutQuad;
-        [SerializeField] float delayLPB; // Obsolute
-        [SerializeField] bool IsVerticalRange;
+        [SerializeField] float easeTime = 16;
 
         protected override async UniTask ExecuteAsync()
         {
-            await Wait(delayLPB);
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for (int i = 0; i < count; i++)
             {
-                var note = Note(easing.Ease(i), noteType);
-                note.IsVerticalRange = IsVerticalRange;
+                Note(easing.Ease(i * ((float)(count + 1) / count)), noteType);
                 await Wait(wait);
             }
         }
+
+        RegularNote Note(float x, RegularNoteType type)
+        {
+            RegularNote note = Helper.GetNote(type);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            DropAsync(note, startPos, Delta).Forget();
+
+            // 現在の時間から何秒後に着弾するか
+            float expectTime = startPos.y / Speed - Delta;
+            Helper.NoteInput.AddExpect(note, expectTime);
+            return note;
+        }
+
+#if UNITY_EDITOR
 
         protected override Color GetCommandColor()
         {
@@ -38,7 +48,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return GetMirrorSummary();
+            return mirror.GetStatusText();
         }
 
         protected override string GetName()
@@ -46,28 +56,31 @@ namespace NoteCreating
             return "Continuous";
         }
 
-        public override void OnSelect(bool isFirst)
+        public override void OnSelect(CommandSelectStatus selectStatus)
         {
-            DebugPreview(isFirst);
+            DebugPreview(selectStatus.Index == 0, selectStatus.BeatDelta);
         }
-        public override void Preview()
+        public override void OnPeriod()
         {
-            DebugPreview(false);
+            DebugPreview();
         }
 
-        void DebugPreview(bool isClearPreview)
+        void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
+            var previewObj = FumenDebugUtility.GetPreviewObject(beforeClear);
+            FumenDebugUtility.CreateGuideLine(previewObj, Helper, beforeClear);
+
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            var previewObj = FumenDebugUtility.GetPreviewObject(isClearPreview);
-            float y = 0;
+            float y = Helper.GetTimeInterval(4, beatDelta) * Speed;
             for (int i = 0; i < count; i++)
             {
                 var note = Helper.GetNote(noteType);
                 note.transform.SetParent(previewObj.transform);
-                note.SetPos(new Vector3(Inv(easing.Ease(i)), y));
+                float x = easing.Ease(i * ((float)(count + 1) / count));
+                note.SetPos(mirror.Conv(new Vector3(x, y)));
                 y += Helper.GetTimeInterval(wait) * Speed;
             }
-            ;
         }
+#endif
     }
 }

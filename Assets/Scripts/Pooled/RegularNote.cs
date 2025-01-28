@@ -4,11 +4,11 @@ namespace NoteCreating
 {
     public enum RegularNoteType
     {
-        _None,
-        Normal,
-        Slide,
-        Flick,
-        Hold,
+        [InspectorName("なし")] _None,
+        [InspectorName("タップ")] Normal,
+        [InspectorName("スライド")] Slide,
+        [InspectorName("フリック")] Flick,
+        [InspectorName("ホールド")] Hold,
     }
 
     /// <summary>

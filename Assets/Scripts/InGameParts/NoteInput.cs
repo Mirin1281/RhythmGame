@@ -24,7 +24,7 @@ namespace NoteCreating
         }
 
         public readonly RegularNote Note;
-        Vector2 pos;
+        readonly Vector2 pos;
         public Vector2 Pos => Type switch
         {
             ExpectType.Static => pos,
@@ -50,7 +50,7 @@ namespace NoteCreating
     {
         [SerializeField] Judgement judge;
         [SerializeField] ArcLightOperator lightOperator;
-        [SerializeField] PoolManager notePoolManager;
+        [SerializeField] PoolManager poolManager;
 #if UNITY_EDITOR
         [SerializeField] bool isAuto;
 #else
@@ -64,7 +64,7 @@ namespace NoteCreating
 
         static readonly float defaultTolerance = 0.15f;
         static readonly float wideTolerance = 0.25f;
-        static readonly float arcDuplicateSqrDistance = 8f;
+        static readonly float arcOverlappableSqrDistance = 8f;
 
         Metronome Metronome => Metronome.Instance;
 
@@ -110,8 +110,8 @@ namespace NoteCreating
                 {
                     if (Mathf.Approximately(absoluteTime, e.Time))
                     {
-                        notePoolManager.SetSimultaneousSprite(note);
-                        notePoolManager.SetSimultaneousSprite(e.Note);
+                        poolManager.SetSimultaneousSprite(note);
+                        poolManager.SetSimultaneousSprite(e.Note);
                     }
                 }
             }
@@ -203,8 +203,7 @@ namespace NoteCreating
 
         async UniTaskVoid OnDown(Input input)
         {
-            (NoteJudgeStatus status, float delta) = FetchNearestNote(
-                input.pos, Metronome.CurrentTime, RegularNoteType.Normal, RegularNoteType.Hold);
+            (NoteJudgeStatus status, float delta) = FetchNearestNote(input.pos, Metronome.CurrentTime, RegularNoteType.Normal, RegularNoteType.Hold);
             if (status == null) return;
 
             NoteGrade grade = judge.GetGradeAndSetText(delta);
@@ -227,11 +226,12 @@ namespace NoteCreating
                 status.Note.SetActive(false);
             }
 
-            if (delta < 0)
+            /*if (delta < 0) // 早い場合はその分待ってSEを鳴らす(いらない)
             {
                 await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
-            }
+            }*/
             PlayNoteSE(status.Note.Type);
+            await UniTask.CompletedTask;
         }
 
         void OnHold(List<Input> inputs)
@@ -280,6 +280,9 @@ namespace NoteCreating
             judge.SetCombo(NoteGrade.Perfect);
         }
 
+        /// <summary>
+        /// 条件に適合するノーツを1つ返します
+        /// </summary>
         (NoteJudgeStatus, float) FetchNearestNote(Vector2 inputPos, float inputTime, params RegularNoteType[] fetchTypes)
         {
             var fetchedStatuses = FetchSomeNotes(inputPos, inputTime, defaultTolerance);
@@ -312,7 +315,7 @@ namespace NoteCreating
         }
 
         /// <summary>
-        /// 入力の範囲に適合するノーツを返します
+        /// 入力の範囲に適合するノーツを全て返します
         /// </summary>
         List<(NoteJudgeStatus, float)> FetchSomeNotes(Vector2 inputPos, float inputTime, float tolerance)
         {
@@ -390,88 +393,82 @@ namespace NoteCreating
             for (int i = 0; i < arcs.Count; i++)
             {
                 var arc = arcs[i];
-                var arcJ = arc.GetCurrentJudge();
-                var pos = arc.GetPos();
-                if (pos.y > 0) continue; // まだ到達していない
-                if (pos.y < -(arc.LastY + 3)) // アークが完全に通り過ぎた
+                float headY = arc.HeadY;
+
+                // アークの一部分が判定に入っていなければここで弾かれる
+                if (headY > 0) continue; // まだ到達していない
+                else if (arc.TailY < -3) // アークが完全に通り過ぎた
                 {
                     arcs.RemoveAt(i);
                     arc.SetActive(false);
                     lightOperator.RemoveLink(arc);
                     continue;
                 }
+                else if (arc.TailY < 0) continue;　// アークの終端が通り過ぎた
 
-                // 距離の近いアークを調べる
-                arc.IsOverlaped = arcJ == null || arcJ.IsOverlappable;
-                var worldPos = arc.GetPointOnYPlane(0);
-                foreach (var otherArc in arcs)
-                {
-                    var otherArcZ = otherArc.GetPos().z;
-                    if (otherArc == arc || otherArcZ < 0 || otherArcZ > otherArc.LastY) continue;
-                    var otherWorldPos = otherArc.GetPointOnYPlane(0);
-                    if (Vector2.SqrMagnitude(worldPos - otherWorldPos) < arcDuplicateSqrDistance)
-                    {
-                        arc.IsOverlaped = true;
-                        otherArc.IsOverlaped = true;
-                    }
-                }
+                // 距離の近いアークがあったらオーバーラップ判定を有効にする
+                arc.SetOverlaped(arcs, arcOverlappableSqrDistance);
+                var landingPos = arc.GetPointOnYPlane(0) + arc.GetPos();
 
+                // 入力が範囲内にあるかなどを判定
                 bool isHold = isAuto;
                 if (inputs != null)
                 {
                     foreach (var input in inputs)
                     {
-                        if (judge.IsNearPositionArc(input.pos, worldPos) == false) continue;
+                        if (arc.IsInvalid) break; // 無効か
+                        if (judge.IsNearPositionArc(input.pos, landingPos) == false) continue; // 入力と近いか
 
-                        if (arc.IsOverlaped)
+                        if (arc.IsOverlaped) // オーバーラップだったら押下
                         {
                             isHold = true;
                             arc.FingerIndex = -1;
                             break;
                         }
 
-                        if (arc.IsInvalid) continue;
-
-                        if (arc.FingerIndex == -1)
+                        if (arc.FingerIndex == -1) // 指がデフォルトだったら登録して押下
                         {
                             isHold = true;
                             arc.FingerIndex = input.index;
                         }
-                        else if (arc.FingerIndex == input.index)
+                        else if (arc.FingerIndex == input.index) // 指が同じだったら押下
                         {
                             isHold = true;
                         }
-                        else
+                        else // 指が一致しなかったら一定時間判定無効(ミス)
                         {
                             arc.InvalidArcJudgeAsync().Forget();
+                            break;
                         }
                     }
                 }
 
-                lightOperator.SetShowLight(arc, worldPos, isHold);
-                arc.SetInput(isHold);
+                lightOperator.SetShowLight(arc, landingPos, false);
+                arc.IsHold = isHold;
 
+                var arcJ = arc.GetCurrentJudge();
                 if (arcJ == null) continue; // 最後の判定を終えた
-
-                if (arcJ.EndPos.z < pos.y)
+                else if (headY < -arcJ.EndPos.y) // 判定の終端を過ぎたらミス
                 {
                     arcJ.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;
                     judge.SetCombo(NoteGrade.Miss);
+                    continue;
                 }
-
-                if ((arcJ.StartPos.z < pos.y && pos.y < arcJ.EndPos.z) == false) continue; // 判定の範囲外
+                else if (headY > -arcJ.StartPos.y) // まだ次の判定が来ていないときはスルー
+                {
+                    continue;
+                }
 
                 if (arcJ.State is ArcJudgeState.None)
                 {
                     throw new Exception();
                 }
-                else if (arcJ.State is ArcJudgeState.Idle && isHold && arc.IsInvalid == false)
+                else if (arcJ.State is ArcJudgeState.Idle && isHold)
                 {
-                    if (arc.JudgeIndex == 0)
-                        //PlayNoteSE(NoteType.Arc);
-                        arcJ.State = ArcJudgeState.Get;
-                    judge.PlayParticle(NoteGrade.Perfect, worldPos);
+                    //if (arc.JudgeIndex == 0) PlayNoteSE(NoteType.Arc);
+                    arcJ.State = ArcJudgeState.Get;
+                    judge.PlayParticle(NoteGrade.Perfect, landingPos);
                     judge.SetCombo(NoteGrade.Perfect);
                     arc.JudgeIndex++;
                 }

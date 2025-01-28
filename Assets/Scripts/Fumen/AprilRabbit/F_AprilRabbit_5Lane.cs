@@ -6,8 +6,10 @@ using UnityEngine;
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/5レーン"), System.Serializable]
-    public class F_AprilRabbit_5Lane : Command_General
+    public class F_AprilRabbit_5Lane : CommandBase
     {
+        [SerializeField] Mirror mirror;
+
         protected override async UniTask ExecuteAsync()
         {
             UniTask.Void(async () =>
@@ -96,9 +98,9 @@ namespace NoteCreating
             }
             var note = Helper.GetNote(type, parentTs);
             note.SetWidth(1.2f);
-            int dir = 10 * Inv(x);
+            int dir = 10 * mirror.Conv(x);
             note.SetRot(dir);
-            Vector3 toPos = Inv(x) switch
+            Vector3 toPos = mirror.Conv(x) switch
             {
                 -2 => new Vector3(-8, 1.5f),
                 -1 => new Vector3(-4, 0.5f),
@@ -145,8 +147,8 @@ namespace NoteCreating
         void Line(float dir, Vector3 pos)
         {
             var line = Helper.GetLine();
-            line.SetRot(Inv(dir));
-            line.SetPos(Inv(pos));
+            line.SetRot(mirror.Conv(dir));
+            line.SetPos(mirror.Conv(pos));
             line.SetAlpha(0);
             line.FadeIn(0.5f, 0.6f);
             UniTask.Void(async () =>
@@ -156,7 +158,9 @@ namespace NoteCreating
             });
         }
 
-        UniTask Wait(float lpb) => base.Wait(lpb);
+        //UniTask Wait(float lpb) => base.Wait(lpb);
+
+#if UNITY_EDITOR
 
         protected override string GetName()
         {
@@ -165,7 +169,8 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return GetMirrorSummary();
+            return mirror.GetStatusText();
         }
+#endif
     }
 }

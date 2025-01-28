@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆円ノーツ", -1), System.Serializable]
-    public class F_CircleNote : Command_General
+    [AddTypeMenu("Obsolete/◆円"), System.Serializable]
+    public class F_CircleNote : CommandBase
     {
         [Serializable]
         public struct NoteData
@@ -21,12 +21,13 @@ namespace NoteCreating
             public readonly bool Disabled => disabled;
         }
 
+        [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 2f;
 
         //[SerializeField] bool isSpeedChangable;
 
         [SerializeField, SerializeReference, SubclassSelector]
-        IParentCreatable parentGeneratable;
+        IParentCreatable parentCreatable;
 
         //[SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         //bool isCheckSimultaneous = false;
@@ -105,6 +106,8 @@ namespace NoteCreating
             }*/
         }
 
+#if UNITY_EDITOR
+
         protected override string GetName()
         {
             return "Circle";
@@ -121,13 +124,14 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return noteDatas.Length + GetMirrorSummary();
+            return noteDatas.Length + mirror.GetStatusText();
         }
 
         public override string CSVContent1
         {
-            get => parentGeneratable?.GetContent();
-            set => parentGeneratable ??= ParentCreatorBase.CreateFrom(value);
+            get => parentCreatable?.GetContent();
+            set => parentCreatable ??= ParentCreatorBase.CreateFrom(value);
         }
+#endif
     }
 }

@@ -5,7 +5,7 @@ using ArcVertexMode = NoteCreating.ArcCreateData.VertexType;
 namespace NoteCreating
 {
     [AddTypeMenu("テスト用"), System.Serializable]
-    public class F_Test : Command_General
+    public class F_Test : CommandBase
     {
         //[SerializeField, SerializeReference, SubclassSelector]
         //IParentGeneratable parentGeneratable;

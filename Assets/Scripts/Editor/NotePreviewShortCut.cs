@@ -22,7 +22,7 @@ namespace NoteCreating.Editor
             if (commandBase == null) return;
 
             Undo.RecordObject(command, "Preview Command");
-            commandBase.Preview();
+            commandBase.OnPeriod();
         }
     }
 }

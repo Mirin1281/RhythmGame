@@ -53,7 +53,7 @@ public class DifficultyGroup : MonoBehaviour
         void ActiveDiffButton(Difficulty difficulty)
         {
             int index = (int)difficulty - 1;
-            bool isExist = data.GetFumenAddress(difficulty) != null;
+            bool isExist = data.GetFumenReference(difficulty) != null;
             buttons[index].gameObject.SetActive(isExist);
             if (isExist)
             {

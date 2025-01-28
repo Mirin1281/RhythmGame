@@ -9,7 +9,7 @@ namespace NoteCreating
         [field: SerializeField] public HoldNotePool HoldPool { get; private set; }
         [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
         [field: SerializeField] public LinePool LinePool { get; private set; }
-        [field: SerializeField] public CircleNotePool CirclePool { get; private set; }
+        [field: SerializeField] public CirclePool CirclePool { get; private set; }
 
         public void SetSimultaneousSprite(RegularNote note)
         {

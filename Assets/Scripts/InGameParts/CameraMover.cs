@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using NoteCreating;
 using UnityEngine;
 
 public enum CameraMoveType
@@ -19,14 +20,14 @@ public enum CameraMoveType
 public class CameraMoveSetting
 {
     [SerializeField] float wait;
-    [SerializeField] bool isPosMove = false;
+    [SerializeField] bool isPosMove = true;
     [SerializeField] Vector3 pos;
-    [SerializeField] bool isRotateMove = true;
+    [SerializeField] bool isRotateMove = false;
     [SerializeField] Vector3 rotate;
     [SerializeField, Tooltip("現在の回転から目標の回転までの差が\nより近いような回り方を選んで回転します")]
     bool isRotateClamp = true;
-    [SerializeField] float time = 1f;
     [SerializeField] EaseType easeType = EaseType.OutQuad;
+    [SerializeField] float time = 1f;
     [SerializeField] CameraMoveType moveType = CameraMoveType.Absolute;
 
     public float Wait => wait;
@@ -35,8 +36,8 @@ public class CameraMoveSetting
     public bool IsRotateMove => isRotateMove;
     public Vector3 Rotate => rotate;
     public bool IsRotateClamp => isRotateClamp;
-    public float Time => time;
     public EaseType EaseType => easeType;
+    public float Time => time;
     public CameraMoveType MoveType => moveType;
 
     public CameraMoveSetting(bool isPosMove, Vector3 pos, bool isRotateMove, Vector3 rotate,
@@ -93,7 +94,7 @@ public class CameraMover : MonoBehaviour
     }
 
     public void Move(Vector3? nullablePos, Vector3? nullableRot, CameraMoveType moveType,
-        float time, EaseType easeType, bool isRotateClamp = true, float delta = 0, bool isInverse = false)
+        float time, EaseType easeType, bool isRotateClamp = true, float delta = 0, Mirror mir = default)
     {
         CameraMoveSetting m = new(
             nullablePos.HasValue, nullablePos.GetValueOrDefault(),
@@ -102,32 +103,31 @@ public class CameraMover : MonoBehaviour
             time,
             easeType,
             moveType);
-        Move(m, delta, isInverse);
+        Move(m, delta, mir);
     }
-    public void Move(CameraMoveSetting m, float delta, bool isInverse = false)
+    public void Move(CameraMoveSetting m, float delta, Mirror mir = default)
     {
         if (m.MoveType == CameraMoveType.Absolute)
         {
-            MoveTo(m, delta, isInverse);
+            MoveTo(m, delta, mir);
         }
         else if (m.MoveType == CameraMoveType.Relative)
         {
-            MoveRelative(m, delta, isInverse).Forget();
+            MoveRelative(m, delta, mir).Forget();
         }
     }
 
     /// <summary>
     /// 相対移動させます。複数登録すると動きが加算されます
     /// </summary>
-    async UniTask MoveRelative(CameraMoveSetting m, float delta, bool isInverse = false)
+    async UniTask MoveRelative(CameraMoveSetting m, float delta, Mirror mir = default)
     {
-        int a = isInverse ? -1 : 1;
         await WhileYieldAsync(m.Time, delta, t =>
         {
             if (m.IsPosMove)
             {
                 deltaPos += new Vector3(
-                    a * t.Ease(0, m.Pos.x, m.Time, m.EaseType),
+                    mir.Conv(t.Ease(0, m.Pos.x, m.Time, m.EaseType)),
                     t.Ease(0, m.Pos.y, m.Time, m.EaseType),
                     t.Ease(0, m.Pos.z, m.Time, m.EaseType)
                 );
@@ -136,15 +136,15 @@ public class CameraMover : MonoBehaviour
             {
                 deltaRot = Quaternion.Euler(
                     t.Ease(0, m.Rotate.x, m.Time, m.EaseType),
-                    a * t.Ease(0, m.Rotate.y, m.Time, m.EaseType),
-                    a * t.Ease(0, m.Rotate.z, m.Time, m.EaseType));
+                    mir.Conv(t.Ease(0, m.Rotate.y, m.Time, m.EaseType)),
+                    mir.Conv(t.Ease(0, m.Rotate.z, m.Time, m.EaseType)));
             }
         });
         await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         if (m.IsPosMove)
-            basePos += new Vector3(a * m.Pos.x, m.Pos.y, m.Pos.z);
+            basePos += new Vector3(mir.Conv(m.Pos.x), m.Pos.y, m.Pos.z);
         if (m.IsRotateMove)
-            baseRot *= Quaternion.Euler(new Vector3(m.Rotate.x, a * m.Rotate.y, a * m.Rotate.z));
+            baseRot *= Quaternion.Euler(new Vector3(m.Rotate.x, mir.Conv(m.Rotate.y), mir.Conv(m.Rotate.z)));
     }
 
     static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
@@ -152,19 +152,18 @@ public class CameraMover : MonoBehaviour
         return Mathf.Repeat(angle - min, max - min) + min;
     }
 
-    void MoveTo(CameraMoveSetting m, float delta, bool isInverse = false)
+    void MoveTo(CameraMoveSetting m, float delta, Mirror mir = default)
     {
         if (m.IsPosMove == false && m.IsRotateMove == false) return;
-        int a = isInverse ? -1 : 1;
         var startPos = transform.position;
-        var startRot = a * transform.eulerAngles;
+        var startRot = mir.Conv(transform.eulerAngles);
 
         if (m.IsPosMove)
         {
             WhileYield(m.Time, delta, t =>
             {
                 basePos = new Vector3(
-                    a * t.Ease(startPos.x, m.Pos.x, m.Time, m.EaseType),
+                    mir.Conv(t.Ease(startPos.x, m.Pos.x, m.Time, m.EaseType)),
                     t.Ease(startPos.y, m.Pos.y, m.Time, m.EaseType),
                     t.Ease(startPos.z, m.Pos.z, m.Time, m.EaseType)
                 );
@@ -178,8 +177,8 @@ public class CameraMover : MonoBehaviour
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), m.Time, m.EaseType),
-                        a * t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType),
-                        a * t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType));
+                        mir.Conv(t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType)),
+                        mir.Conv(t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType)));
                 });
             }
             else
@@ -188,8 +187,8 @@ public class CameraMover : MonoBehaviour
                 {
                     baseRot = Quaternion.Euler(
                         t.Ease(startRot.x, m.Rotate.x, m.Time, m.EaseType),
-                        a * t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType),
-                        a * t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType));
+                        mir.Conv(t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType)),
+                        mir.Conv(t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType)));
                 });
             }
         }

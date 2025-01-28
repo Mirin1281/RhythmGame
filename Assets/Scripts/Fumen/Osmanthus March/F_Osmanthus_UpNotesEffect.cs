@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [AddTypeMenu("Osmanthus/上昇するノーツエフェクト"), System.Serializable]
-    public class F_Osmanthus_UpNotesEffect : Command_General
+    public class F_Osmanthus_UpNotesEffect : CommandBase
     {
         [SerializeField] int seed = 222;
         [SerializeField] int count = 70;
@@ -33,14 +33,17 @@ namespace NoteCreating
             var easing = new Easing(-6f, 14f, time, EaseType.OutQuad);
             await WhileYieldAsync(time, t =>
             {
-                note.SetPos(new Vector3(Inv(x), easing.Ease(t)));
+                note.SetPos(new Vector3(x, easing.Ease(t)));
             });
             note.SetActive(false);
         }
+
+#if UNITY_EDITOR
 
         protected override string GetName()
         {
             return "UpNotesEffect";
         }
+#endif
     }
 }
