@@ -36,5 +36,7 @@ namespace NoteCreating.Editor
         }
 
         public CommandData GetLastSelectedCommand() => helper.LastSelectedCommand;
+
+        public void Init() => helper.Init();
     }
 }

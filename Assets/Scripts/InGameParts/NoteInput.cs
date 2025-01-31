@@ -110,6 +110,7 @@ namespace NoteCreating
                 {
                     if (Mathf.Approximately(absoluteTime, e.Time))
                     {
+                        //Debug.Log("同時押し");
                         poolManager.SetSimultaneousSprite(note);
                         poolManager.SetSimultaneousSprite(e.Note);
                     }

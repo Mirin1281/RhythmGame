@@ -18,7 +18,7 @@ namespace NoteCreating
             var rand = new System.Random(seed);
             for (int i = 0; i < count; i++)
             {
-                var flick = Helper.GetNote(RegularNoteType.Flick);
+                var flick = Helper.GetRegularNote(RegularNoteType.Flick);
                 Helper.PoolManager.SetSimultaneousSprite(flick);
                 flick.SetRot(90);
                 flick.SetAlpha(0.2f);

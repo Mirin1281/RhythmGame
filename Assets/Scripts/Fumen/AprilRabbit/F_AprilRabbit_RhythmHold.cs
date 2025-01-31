@@ -1,13 +1,12 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System;
 
 namespace NoteCreating
 {
     [AddTypeMenu("AprilRabbit/律動するホールド"), System.Serializable]
     public class F_AprilRabbit_RhythmHold : CommandBase
     {
-        [SerializeField] Mirror mirror;
+        [SerializeField] Mirror _mirror;
         [SerializeField] float _x = 0;
         [SerializeField] float _length = 0.5f;
         [SerializeField] float _shakeX = 0.5f;
@@ -16,20 +15,11 @@ namespace NoteCreating
 
         protected override async UniTask ExecuteAsync()
         {
-            RhythmHold(_x, _length).Forget();
-            await UniTask.CompletedTask;
-        }
-
-        async UniTask RhythmHold(float x, float length)
-        {
-            var hold = Hold(x, length);
+            var hold = Hold(_x, _length);
             await WaitOnTiming();
             for (int i = 0; i < _shakeCount; i++)
             {
-                MoveAsync(
-                    hold,
-                    mirror.Conv(i % 2 == 0 ? _shakeX : -_shakeX)
-                ).Forget();
+                MoveAsync(hold, _mirror.Conv(i % 2 == 0 ? _shakeX : -_shakeX)).Forget();
                 await Wait(_shakeInterval);
             }
 
@@ -50,15 +40,19 @@ namespace NoteCreating
                     await Helper.Yield(timing: PlayerLoopTiming.PreLateUpdate);
                 }
             }
+            await UniTask.CompletedTask;
         }
+
 
         HoldNote Hold(float x, float length)
         {
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            Vector3 startPos = _mirror.Conv(new Vector3(x, StartBase));
             hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
+
+            DropAsync(hold, startPos).Forget();
 
             float expectTime = startPos.y / Speed - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, holdTime);

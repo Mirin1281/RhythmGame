@@ -24,7 +24,7 @@ namespace NoteCreating
             set
             {
                 var texts = value.Split("=");
-                pos = texts[0].ToVector3();
+                //pos = texts[0].ToVector3();
                 deg = float.Parse(texts[1]);
             }
         }

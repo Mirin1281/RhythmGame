@@ -96,7 +96,7 @@ namespace NoteCreating
             {
                 delta = Delta;
             }
-            var note = Helper.GetNote(type, parentTs);
+            var note = Helper.GetRegularNote(type, parentTs);
             note.SetWidth(1.2f);
             int dir = 10 * mirror.Conv(x);
             note.SetRot(dir);

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using UnityEngine;
 
 namespace NoteCreating
@@ -91,7 +90,7 @@ namespace NoteCreating
 
             void DebugNote(float x, float y, RegularNoteType type)
             {
-                RegularNote note = helper.GetNote(type);
+                RegularNote note = helper.GetRegularNote(type);
                 var startPos = new Vector3(mir.Conv(x), y);
                 note.SetPos(startPos);
                 note.transform.SetParent(previewObj.transform);
@@ -158,189 +157,6 @@ namespace NoteCreating
                     $"タイポもしくは{className}クラスが名前空間{namespaceName}内に存在しない可能性があります");
                 return null;
             }
-        }
-
-        /// <summary>
-        /// リフレクションでインスタンス内の変数を全て書き出します
-        /// </summary>
-        public static string GetContent<T>(T cmd) where T : CommandBase
-        {
-            int separateLevel = 1;
-            StringBuilder sb = new();
-            Type type = cmd.GetType();
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            for (int i = 0; i < fields.Length; i++)
-            {
-                var f = fields[i];
-                object v = f.GetValue(cmd);
-                if (f.FieldType.IsArray)
-                {
-                    Array array = v as Array;
-                    sb.Append(GetContentFromArray(array, separateLevel));
-                }
-                else
-                {
-                    sb.Append(v);
-                }
-
-                sb.Append(GetSeparator(separateLevel));
-            }
-
-            return sb.ToString();
-
-
-            static StringBuilder GetContentFromArray(Array array, int separateLevel)
-            {
-                if (array == null) return null;
-                StringBuilder sb = new();
-                separateLevel++;
-                for (int i = 0; i < array.Length; i++)
-                {
-                    var element = array.GetValue(i);
-                    sb.Append(GetFieldContent(element, element.GetType(), separateLevel));
-                    if (i == array.Length - 1) break;
-                    sb.Append(GetSeparator(separateLevel));
-                }
-                return sb;
-
-
-                static StringBuilder GetFieldContent(object t, Type type, int separateLevel)
-                {
-                    StringBuilder sb = new();
-                    separateLevel++;
-                    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    for (int i = 0; i < fields.Length; i++)
-                    {
-                        var f = fields[i];
-                        object v = f.GetValue(t);
-                        if (f.FieldType.IsArray)
-                        {
-                            Array array = v as Array;
-                            sb.Append(GetContentFromArray(array, separateLevel));
-                        }
-                        else
-                        {
-                            sb.Append(v);
-                        }
-
-                        if (i == fields.Length - 1) break;
-                        sb.Append(GetSeparator(separateLevel));
-                    }
-                    return sb;
-                }
-            }
-        }
-
-        /// <summary>
-        /// リフレクションでインスタンス内の変数を設定します
-        /// </summary>
-        public static void SetMember<T>(T command, string content) where T : CommandBase
-        {
-            if (string.IsNullOrWhiteSpace(content)) return;
-
-            int separateLevel = 1;
-
-            var type = command.GetType();
-            var fieldStrings = content.Split(GetSeparator(separateLevel));
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            for (int i = 0; i < fields.Length; i++)
-            {
-                FieldInfo f = fields[i];
-                Type fType = f.FieldType;
-                if (fType.IsArray)
-                {
-                    var arrayType = fType.GetElementType();
-                    var createdArray = CreateArray(arrayType, fieldStrings[i], separateLevel);
-                    f.SetValue(command, createdArray);
-                }
-                else
-                {
-                    var v = Convert(fType, fieldStrings[i]);
-                    if (v != null)
-                    {
-                        f.SetValue(command, v);
-                    }
-                }
-            }
-
-
-            static Array CreateArray(Type type, string value, int separateLevel)
-            {
-                separateLevel++;
-                var elementStrings = value.Split(GetSeparator(separateLevel));
-                if (elementStrings.Length == 1 && string.IsNullOrEmpty(elementStrings[0])) return null;
-                var array = Array.CreateInstance(type, elementStrings.Length);
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array.SetValue(GetElement(type, elementStrings[i], separateLevel), i);
-                }
-                return array;
-
-
-                static object GetElement(Type type, string value, int separateLevel)
-                {
-                    separateLevel++;
-                    var elementStrings = value.Split(GetSeparator(separateLevel));
-                    if (elementStrings.Length == 1 && string.IsNullOrEmpty(elementStrings[0])) return null;
-                    object instance = Activator.CreateInstance(type);
-                    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    for (int i = 0; i < fields.Length; i++)
-                    {
-                        FieldInfo f = fields[i];
-                        if (f.FieldType.IsArray)
-                        {
-                            var arrayType = f.FieldType.GetElementType();
-                            var createdArray = CreateArray(arrayType, elementStrings[i], separateLevel);
-                            f.SetValue(instance, createdArray);
-                        }
-                        else
-                        {
-                            var v = Convert(f.FieldType, elementStrings[i]);
-                            if (v != null)
-                            {
-                                f.SetValue(instance, v);
-                            }
-                        }
-                    }
-                    return instance;
-                }
-            }
-
-            static object Convert(Type type, string stringValue)
-            {
-                if (type == typeof(Vector2))
-                {
-                    return stringValue.ToVector2();
-                }
-                else if (type == typeof(Vector3))
-                {
-                    return stringValue.ToVector3();
-                }
-                var converter = System.ComponentModel.TypeDescriptor.GetConverter(type);
-                object obj;
-                try
-                {
-                    obj = converter.ConvertFrom(stringValue);
-                }
-                catch
-                {
-                    return null;
-                }
-                return obj;
-            }
-        }
-
-        static char GetSeparator(int level)
-        {
-            return level switch
-            {
-                1 => '|',
-                2 => '#',
-                3 => '%',
-                4 => '&',
-                5 => '~',
-                _ => throw new ArgumentOutOfRangeException()
-            };
         }
     }
 }

@@ -25,7 +25,7 @@ namespace NoteCreating
 
         void Create(Vector2 startPos, float rotationSpeed)
         {
-            RegularNote note = Helper.GetNote(noteType);
+            RegularNote note = Helper.GetRegularNote(noteType);
             WhileYield(moveTime, t =>
             {
                 note.SetRot(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));

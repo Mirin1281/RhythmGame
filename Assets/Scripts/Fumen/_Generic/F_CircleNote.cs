@@ -126,12 +126,6 @@ namespace NoteCreating
         {
             return noteDatas.Length + mirror.GetStatusText();
         }
-
-        public override string CSVContent1
-        {
-            get => parentCreatable?.GetContent();
-            set => parentCreatable ??= ParentCreatorBase.CreateFrom(value);
-        }
 #endif
     }
 }

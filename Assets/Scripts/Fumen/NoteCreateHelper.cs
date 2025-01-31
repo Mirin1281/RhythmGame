@@ -13,13 +13,14 @@ namespace NoteCreating
         [field: SerializeField] public PoolManager PoolManager { get; private set; }
         [field: SerializeField] public NoteInput NoteInput { get; private set; }
         [field: SerializeField] public CameraMover CameraMover { get; private set; }
+#if UNITY_EDITOR
         [field: SerializeField] public DebugSphere DebugSpherePrefab { get; private set; }
+#endif
 
         public Metronome Metronome => Metronome.Instance;
-
         public CancellationToken Token => destroyCancellationToken;
 
-        public RegularNote GetNote(RegularNoteType type, Transform parentTs = null)
+        public RegularNote GetRegularNote(RegularNoteType type, Transform parentTs = null)
         {
             var note = PoolManager.RegularPool.GetNote(type);
             if (parentTs != null)
@@ -40,14 +41,17 @@ namespace NoteCreating
             }
             return hold;
         }
-        public ArcNote GetArc() => PoolManager.ArcPool.GetNote();
+        public ArcNote GetArc()
+        {
+            return PoolManager.ArcPool.GetNote();
+        }
         public Line GetLine()
         {
-            var line = PoolManager.LinePool.GetLine();
-            line.SetWidth(50f);
-            line.SetHeight(0.1f);
-            line.SetAlpha(1);
-            return line;
+            return PoolManager.LinePool.GetLine();
+        }
+        public Circle GetCircle()
+        {
+            return PoolManager.CirclePool.GetCircle();
         }
 
 

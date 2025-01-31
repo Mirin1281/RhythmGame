@@ -20,7 +20,7 @@ namespace NoteCreating
             Helper = helper;
             this.mir = mir;
 
-            var note = Helper.GetNote(RegularNoteType.Normal);
+            var note = Helper.GetRegularNote(RegularNoteType.Normal);
             note.SetAlpha(0);
             note.SetPos(Vector3.zero);
             note.transform.SetParent(null);

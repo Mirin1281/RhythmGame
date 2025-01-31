@@ -13,7 +13,7 @@ namespace NoteCreating
             int count = 12;
             for (int i = 0; i < count; i++)
             {
-                var slide = Helper.GetNote(RegularNoteType.Slide);
+                var slide = Helper.GetRegularNote(RegularNoteType.Slide);
                 float a = i - count / 2f + 0.5f;
                 slide.SetPos(new Vector2(a, a * 0.5f + 4f));
                 MoveAndRotateAsync(slide).Forget();

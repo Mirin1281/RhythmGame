@@ -16,12 +16,12 @@ namespace NoteCreating
 
         [field: Space(10), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
-        [field: SerializeField] public int CirclePoolCount { get; private set; } = -1;
         [field: SerializeField] public int SlidePoolCount { get; private set; } = -1;
         [field: SerializeField] public int FlickPoolCount { get; private set; } = -1;
         [field: SerializeField] public int HoldPoolCount { get; private set; } = -1;
         [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
         [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
+        [field: SerializeField] public int CirclePoolCount { get; private set; } = -1;
 
         public MusicSelectData MusicSelectData => musicSelectData;
         public int NoteCount => noteCount;

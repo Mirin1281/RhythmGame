@@ -14,7 +14,7 @@ namespace NoteCreating
         {
             await WaitOnTiming();
 
-            RegularNote note = Helper.GetNote(RegularNoteType.Normal);
+            RegularNote note = Helper.GetRegularNote(RegularNoteType.Normal);
             Vector3 pos = new Vector3(0, 4);
             note.SetPos(pos);
             note.IsVerticalRange = true;

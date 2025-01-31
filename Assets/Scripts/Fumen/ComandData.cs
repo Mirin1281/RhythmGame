@@ -14,7 +14,7 @@ namespace NoteCreating
         int beatTiming;
         public int BeatTiming => beatTiming;
 
-        [SerializeField, SerializeReference, SubclassSelector]
+        [SerializeField, SerializeReference, SubclassSelector, Tooltip("表示されない場合はラベル名をクリックしてください")]
         ICommand command;
 
         public void Execute(NoteCreateHelper helper, float delta)
@@ -23,6 +23,8 @@ namespace NoteCreating
             command.Execute(helper, delta);
         }
 
+#if UNITY_EDITOR
+
         /// <summary>
         /// NoteGeneratorBaseをキャストして返します
         /// </summary>
@@ -30,8 +32,6 @@ namespace NoteCreating
         {
             return command as CommandBase;
         }
-
-#if UNITY_EDITOR
 
         static readonly Color NullColor = new Color(0.8f, 0.8f, 0.8f, 1f);
 

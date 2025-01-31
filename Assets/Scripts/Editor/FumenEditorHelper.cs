@@ -585,6 +585,11 @@ namespace NoteCreating.Editor
             updatedIndices.Add(insertIndex);
             SelectCommand(createdCmd);
             reorderableList.GrabKeyboardFocus();
+
+            if (commandList.IndexOf(createdCmd) != 0)
+            {
+                createdCmd.SetBeatTiming(commandList[insertIndex - 1].BeatTiming);
+            }
         }
 
         void Remove(ReorderableList list = null)

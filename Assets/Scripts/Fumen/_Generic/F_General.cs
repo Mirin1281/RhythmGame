@@ -28,7 +28,7 @@ namespace NoteCreating
 
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Generic2D")]
     [AddTypeMenu("◆一般ノーツ生成", -100), System.Serializable]
-    public class F_General : CommandBase
+    public class F_General : CommandBase, IFieldAddHandler, IFieldDeleteHandler
     {
         [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 1f;
@@ -67,7 +67,7 @@ namespace NoteCreating
 
         RegularNote Note(float x, RegularNoteType type, Transform parentTs = null)
         {
-            RegularNote note = Helper.GetNote(type, parentTs);
+            RegularNote note = Helper.GetRegularNote(type, parentTs);
             Vector3 startPos = new(mirror.Conv(x), StartBase);
             DropAsync(note, startPos, Delta).Forget();
 
@@ -110,6 +110,10 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
 
+        //string[] IFieldChengeHandler.AddedFieldNames => new string[] { nameof(mirror), nameof(parentCreatable) };
+        string[] IFieldAddHandler.AddedFieldNames => new string[] { };
+        int[] IFieldDeleteHandler.DeletedFieldIndices => new int[] { };
+
         protected override string GetName()
         {
             return "汎用2D";
@@ -127,12 +131,6 @@ namespace NoteCreating
         protected override string GetSummary()
         {
             return noteDatas.Length + mirror.GetStatusText();
-        }
-
-        public override string CSVContent1
-        {
-            get => parentCreatable?.GetContent();
-            set => parentCreatable ??= ParentCreatorBase.CreateFrom(value);
         }
 
         public override void OnSelect(CommandSelectStatus selectStatus)

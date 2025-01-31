@@ -7,6 +7,7 @@ namespace NoteCreating
     public class F_ContinuousNotes : CommandBase
     {
         [SerializeField] Mirror mirror;
+        //[SerializeField] int tmp = 0;
         [Space(10)]
         [SerializeField] int count = 16;
         [SerializeField, Tooltip("Normal, Slide, Flickのどれかを指定してください")]
@@ -29,7 +30,7 @@ namespace NoteCreating
 
         RegularNote Note(float x, RegularNoteType type)
         {
-            RegularNote note = Helper.GetNote(type);
+            RegularNote note = Helper.GetRegularNote(type);
             Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
             DropAsync(note, startPos, Delta).Forget();
 
@@ -40,6 +41,14 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
+
+        /*public override string CSVContent
+        {
+            get => FumenDebugUtility.GetFieldContent(this);
+            //set => FumenDebugUtility.SetField(this, value, false, 0, 10);
+            set => FumenDebugUtility.SetField(this, value, true, 3);
+            //set => FumenDebugUtility.SetField(this, value);
+        }*/
 
         protected override Color GetCommandColor()
         {
@@ -67,6 +76,7 @@ namespace NoteCreating
 
         void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
+            if (noteType == RegularNoteType._None) return;
             var previewObj = FumenDebugUtility.GetPreviewObject(beforeClear);
             FumenDebugUtility.CreateGuideLine(previewObj, Helper, beforeClear);
 
@@ -74,7 +84,7 @@ namespace NoteCreating
             float y = Helper.GetTimeInterval(4, beatDelta) * Speed;
             for (int i = 0; i < count; i++)
             {
-                var note = Helper.GetNote(noteType);
+                var note = Helper.GetRegularNote(noteType);
                 note.transform.SetParent(previewObj.transform);
                 float x = easing.Ease(i * ((float)(count + 1) / count));
                 note.SetPos(mirror.Conv(new Vector3(x, y)));

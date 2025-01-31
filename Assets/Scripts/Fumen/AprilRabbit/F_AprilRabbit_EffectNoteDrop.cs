@@ -33,7 +33,7 @@ namespace NoteCreating
 
             async UniTask DropNoteAsync(Vector2 startPos, RegularNoteType noteType = RegularNoteType.Slide)
             {
-                var note = Helper.GetNote(noteType);
+                var note = Helper.GetRegularNote(noteType);
                 note.SetAlpha(0.5f);
                 int a = rand.Next(0, 2) == 0 ? 1 : -1;
                 float time = 0.5f;

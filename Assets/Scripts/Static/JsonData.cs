@@ -24,9 +24,6 @@ public class GameSetting
     [JsonProperty("スピード")]
     public int Speed { get; set; } = 70;
 
-    [JsonProperty("スピード3D")]
-    public int Speed3D { get; set; } = 70;
-
     [JsonProperty("オフセット")]
     public int Offset { get; set; } = 0;
 

@@ -7,9 +7,8 @@ namespace NoteCreating.Editor
     [CustomEditor(typeof(FumenData))]
     public class FumenDataEditor : UnityEditor.Editor
     {
-        static float _floatAField;
-        static int popupIndex;
-        static float _floatBField;
+        static string _stringField;
+        static float _resultField;
 
         public override void OnInspectorGUI()
         {
@@ -38,65 +37,35 @@ namespace NoteCreating.Editor
 
 
             EditorGUILayout.Space(20);
-
             EditorGUI.indentLevel++;
-
             EditorGUILayout.LabelField("LPB Culculate");
-
             EditorGUILayout.Space(5);
 
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                _floatAField = EditorGUILayout.FloatField(_floatAField);
-
-                popupIndex = EditorGUILayout.Popup(popupIndex, new[] { "＋", "－" });
-
-                _floatBField = EditorGUILayout.FloatField(_floatBField);
-            }
-
-            float result = CulcLPB(_floatAField, _floatBField, popupIndex == 0);
-
+            _stringField = EditorGUILayout.TextField(_stringField);
             EditorGUILayout.Space(5);
 
-            EditorGUILayout.FloatField("Result", result);
-
-            EditorGUI.indentLevel--;
-        }
-
-        float CulcLPB(float a, float b, bool addOrExcept)
-        {
-            if (a == 0)
+            if (string.IsNullOrEmpty(_stringField))
             {
-                if (b == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    if (addOrExcept)
-                    {
-                        return b;
-                    }
-                    else
-                    {
-                        return -b;
-                    }
-                }
-            }
-            else if (b == 0)
-            {
-                return a;
-            }
-
-            if (addOrExcept)
-            {
-                return a * b / (a + b);
+                _resultField = 0;
             }
             else
             {
-                if (a == b) return 0;
-                return a * b / (b - a);
+                try
+                {
+                    var formura = Calc.Calc.Analyze(_stringField);
+                    if (formura.IsCalcable)
+                    {
+                        _resultField = formura.Calc(null);
+                    }
+                }
+                catch
+                {
+                    // 今回はエディタ上で入力する状況なので、エラーを出したくないから握り
+                }
             }
+            EditorGUILayout.FloatField("Result", _resultField);
+
+            EditorGUI.indentLevel--;
         }
     }
 }

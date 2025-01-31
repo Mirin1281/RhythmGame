@@ -82,12 +82,12 @@ namespace NoteCreating
         public override void OnSelect(CommandSelectStatus selectStatus)
         {
             var commandBase = command as CommandBase;
-            commandBase.OnSelect(selectStatus);
+            commandBase?.OnSelect(selectStatus);
         }
         public override void OnPeriod()
         {
             var commandBase = command as CommandBase;
-            commandBase.OnPeriod();
+            commandBase?.OnPeriod();
         }
 #endif
     }

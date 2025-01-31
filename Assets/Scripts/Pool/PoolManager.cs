@@ -28,24 +28,21 @@ namespace NoteCreating
             CirclePool.Init(fumen.CirclePoolCount);
         }
 
-        /*#if UNITY_EDITOR
-            [ContextMenu("Apply PoolCount")]
-            void ApplyPoolCount()
-            {
-                var inGameManager = FindAnyObjectByType<InGameManager>();
-                var fumenData = inGameManager.FumenData;
-                fumenData.SetPoolCount(new int[7] {
-                    RegularPool.MaxUseCount,
-
-                    SlidePool.MaxUseCount,
-                    FlickPool.MaxUseCount,
-                    HoldPool.MaxUseCount,
-                    ArcPool.MaxUseCount,
-                    LinePool.MaxUseCount,
-                    CirclePool.MaxUseCount,
-                });
-                UnityEditor.EditorUtility.SetDirty(fumenData);
-            }
-        #endif*/
+#if UNITY_EDITOR
+        [ContextMenu("Apply PoolCount")]
+        void ApplyPoolCount()
+        {
+            var inGameManager = FindAnyObjectByType<InGameManager>();
+            var fumenData = inGameManager.FumenData;
+            fumenData.SetPoolCount(new int[5] {
+                RegularPool.MaxUseCount,
+                HoldPool.MaxUseCount,
+                ArcPool.MaxUseCount,
+                LinePool.MaxUseCount,
+                CirclePool.MaxUseCount,
+            });
+            UnityEditor.EditorUtility.SetDirty(fumenData);
+        }
+#endif
     }
 }

@@ -49,13 +49,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         get => Setting.Speed;
         set => Setting.Speed = value;
     }
-    public static int SettingSpeed3D
-    {
-        get => Setting.Speed3D;
-        set => Setting.Speed3D = value;
-    }
     public static float Speed => SpeedBase * SettingSpeed / 5f;
-    public static float Speed3D => SpeedBase * SettingSpeed; // 
 
     // -100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
     public static int SettingOffset
@@ -112,7 +106,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         }
     }
 
-    // AwakeだとCriWare側でエラーを吐く 許さない
+    // AwakeだとCriWare側でエラーを吐く
     void Start()
     {
         var sheet = CriAtom.GetCueSheet("SESheet");
@@ -120,27 +114,6 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             CriAtom.AddCueSheet("SESheet", "SESheet.acb", "");
         }
-
-        // キューデータをスクリプトから流す
-        /*(string sheet, string name)[] cueSheetAndNames = new (string, string)[]
-        {
-            ("SESheet", "SESheet"),
-            /*("my1", "my1"),
-            ("my2", "my2"),
-            ("my2_low", "low_my2"),
-            ("start_freeze", "start_freeze"),
-            ("ti", "ti"),
-        };
-
-        for (int i = 0; i < cueSheetAndNames.Length; i++)
-        {
-            var c = cueSheetAndNames[i];
-            var sheet = CriAtom.GetCueSheet(c.sheet);
-            if (sheet == null)
-            {
-                CriAtom.AddCueSheet(c.sheet, c.name + ".acb", "");
-            }
-        }*/
     }
 
     // OnApplicationQuitはタスクキルすると呼ばれないっぽい

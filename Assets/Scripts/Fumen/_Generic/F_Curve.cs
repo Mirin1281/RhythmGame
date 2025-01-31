@@ -66,7 +66,7 @@ namespace NoteCreating
             RegularNote MyNote(float x, RegularNoteType type, bool isCurveinverse = false, float radius = 10, Transform parentTs = null)
             {
                 int a = (x > 0 ^ isCurveinverse) ? -1 : 1;
-                RegularNote note = Helper.GetNote(type, parentTs);
+                RegularNote note = Helper.GetRegularNote(type, parentTs);
                 float moveTime = StartBase / Speed;
                 CurveAsync(note, moveTime).Forget();
 
@@ -159,12 +159,6 @@ namespace NoteCreating
         protected override string GetSummary()
         {
             return noteDatas.Length + mirror.GetStatusText();
-        }
-
-        public override string CSVContent1
-        {
-            get => parentCreatable?.GetContent();
-            set => parentCreatable ??= ParentCreatorBase.CreateFrom(value);
         }
 
         public override void OnSelect(CommandSelectStatus selectStatus)

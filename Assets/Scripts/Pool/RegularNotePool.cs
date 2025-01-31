@@ -21,8 +21,9 @@ namespace NoteCreating
                 RegularNoteType.Normal => 0,
                 RegularNoteType.Slide => 1,
                 RegularNoteType.Flick => 2,
-                _ => throw new System.Exception()
+                _ => -1
             };
+            if (index == -1) return null;
 
             var n = GetInstance(index);
             n.SetRot(0);

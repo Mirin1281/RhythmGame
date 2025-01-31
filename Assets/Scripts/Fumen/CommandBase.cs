@@ -36,15 +36,18 @@ namespace NoteCreating
         /// <summary>
         /// ノーツの初期生成地点
         /// </summary>
-        protected float StartBase => 359.3f * Speed / Helper.Metronome.Bpm;
+        protected float StartBase => 360f * Speed / Helper.Metronome.Bpm;
 
-        protected async UniTask<float> Wait(float lpb, int num = 1, float delta = -1)
+        /// <summary>
+        /// N分音符の間隔で待機します、返り値はフレーム間の誤差です
+        /// </summary>
+        protected async UniTask<float> Wait(float lpb, int count = 1, float delta = -1)
         {
             if (delta == -1)
             {
-                if (lpb == 0 || num == 0) return Delta;
+                if (lpb == 0 || count == 0) return Delta;
 
-                float interval = Helper.GetTimeInterval(lpb, num);
+                float interval = Helper.GetTimeInterval(lpb, count);
 
                 float baseTime = CurrentTime;
                 while (true)
@@ -60,9 +63,9 @@ namespace NoteCreating
             }
             else
             {
-                if (lpb == 0 || num == 0) return delta;
+                if (lpb == 0 || count == 0) return delta;
 
-                float interval = Helper.GetTimeInterval(lpb, num);
+                float interval = Helper.GetTimeInterval(lpb, count);
 
                 float baseTime = CurrentTime;
                 while (true)
@@ -110,7 +113,7 @@ namespace NoteCreating
             action.Invoke(time);
         }
 
-        protected async UniTask DropAsync(ItemBase note, Vector3 startPos, float delta = -1)
+        protected async UniTask DropAsync(ItemBase item, Vector3 startPos, float delta = -1)
         {
             if (delta == -1)
             {
@@ -119,10 +122,10 @@ namespace NoteCreating
             float baseTime = CurrentTime - delta;
             float time = 0f;
             var vec = Speed * Vector3.down;
-            while (note.IsActive && time < 8f)
+            while (item.IsActive && time < 8f)
             {
                 time = CurrentTime - baseTime;
-                note.SetPos(startPos + time * vec);
+                item.SetPos(startPos + time * vec);
                 await Helper.Yield();
             }
         }
@@ -183,14 +186,15 @@ namespace NoteCreating
         /// </summary>
         public virtual void OnPeriod() { }
 
-        public virtual string CSVContent
+        public string CSVContent
         {
-            get => FumenDebugUtility.GetContent(this);
-            set => FumenDebugUtility.SetMember(this, value);
+            get => CommandCSVParser.GetFieldContent(this);
+            set => CommandCSVParser.SetField(this, value);
         }
 
         public virtual string CSVContent1 { get; set; }
 #else
+        // ランタイムでは使用しない
         string ICommand.GetSummary() => null;
         Color ICommand.GetColor() => default;
         string ICommand.GetName(bool rawName) => null;

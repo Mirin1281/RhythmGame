@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
-    [AddTypeMenu("◇ノーツ点滅"), System.Serializable]
+    [AddTypeMenu("◇アイテム点滅"), System.Serializable]
     public class F_ItemBlink : CommandBase
     {
         [Flags]
@@ -22,6 +21,7 @@ namespace NoteCreating
             Line = 1 << 6,
         }
 
+        [Space(20)]
         [SerializeField] BlinkTargets target = BlinkTargets.Normal | BlinkTargets.Slide | BlinkTargets.Flick | BlinkTargets.Hold;
         [SerializeField, Min(0)] float delay;
         [SerializeField] int blinkCount = 20;
