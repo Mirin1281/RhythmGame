@@ -13,7 +13,7 @@ namespace NoteCreating
             n.transform.SetLocalPositionAndRotation(default, default);
             n.SetWidth(1f);
             n.SetMaskLength(5f);
-            n.SetMaskLocalPos(Vector2.zero);
+            n.SetMaskPos(Vector2.zero);
             n.transform.localScale = Vector3.one;
             n.SetRendererEnabled(true);
             n.SetAlpha(1f);

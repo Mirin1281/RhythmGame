@@ -102,7 +102,7 @@ namespace NoteCreating
             {
                 var holdTime = helper.GetTimeInterval(length);
                 var hold = helper.GetHold(holdTime * RhythmGameManager.Speed);
-                hold.SetMaskLocalPos(new Vector2(mir.Conv(x), 0));
+                hold.SetMaskPos(new Vector2(mir.Conv(x), 0));
                 var startPos = new Vector3(mir.Conv(x), y);
                 hold.SetPos(startPos);
                 hold.transform.SetParent(previewObj.transform);

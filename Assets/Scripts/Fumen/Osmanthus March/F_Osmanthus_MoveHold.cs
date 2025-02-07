@@ -47,7 +47,7 @@ namespace NoteCreating
             {
                 float baseTime = CurrentTime - Delta;
                 var startPos = hold.GetPos();
-                Easing easing = new Easing(startX, fromX, StartBase / Speed, easeType);
+                Easing easing = new Easing(startX, fromX, Helper.GetTimeInterval(4, 6), easeType);
 
                 float time = 0f;
                 while (hold.IsActive && time < 8f)
@@ -56,7 +56,7 @@ namespace NoteCreating
                     var posX = mirror.Conv(easing.Ease(time));
                     var posY = startPos.y + time * -Speed;
                     hold.SetPos(new Vector3(posX, posY));
-                    hold.SetMaskLocalPos(new Vector2(posX, 0));
+                    hold.SetMaskPos(new Vector2(posX, 0));
                     await Helper.Yield();
                 }
             }
@@ -67,8 +67,8 @@ namespace NoteCreating
 
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
-            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            Vector3 startPos = mirror.Conv(new Vector3(x, GetStartBase()));
+            hold.SetMaskPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
 
             float expectTime = startPos.y / Speed - Delta;

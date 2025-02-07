@@ -9,7 +9,7 @@ public class DebugBuildDestroyer : MonoBehaviour
     {
         foreach(var o in objs)
         {
-            Destroy(o);
+            if(o != null) Destroy(o);
         }
         Destroy(gameObject);
     }

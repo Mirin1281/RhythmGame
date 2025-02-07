@@ -1,3 +1,4 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -51,8 +52,18 @@ namespace NoteCreating
             metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
 #if UNITY_EDITOR
-            if (isMirror)
-                RhythmGameManager.SettingIsMirror = true;
+            {
+                RhythmGameManager.SettingIsMirror = isMirror;
+                var cameraScalers = FindObjectsByType<CameraScaler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+                var mainCameraScaler = cameraScalers.First(c => c.gameObject.name == "Main Camera");
+                var effectCameraScaler = cameraScalers.First(c => c.gameObject.name == "EffectCamera");
+                var negativeCameraScaler = cameraScalers.First(c => c.gameObject.name == "NegativeCamera");
+
+                Vector3 scale = new Vector3(isMirror ? -1 : 1, 1, 1);
+                mainCameraScaler.ScreenScale = scale;
+                effectCameraScaler.ScreenScale = scale;
+                negativeCameraScaler.ScreenScale = scale;
+            }
 #endif
 
             // 音楽データをロード

@@ -26,9 +26,6 @@ namespace NoteCreating
 
         //[SerializeField] bool isSpeedChangable;
 
-        [SerializeField, SerializeReference, SubclassSelector]
-        IParentCreatable parentCreatable;
-
         //[SerializeField, Tooltip("他コマンドのノーツと同時押しをする場合はチェックしてください")]
         //bool isCheckSimultaneous = false;
 

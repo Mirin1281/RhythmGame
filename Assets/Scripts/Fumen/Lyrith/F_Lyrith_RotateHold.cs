@@ -18,9 +18,9 @@ namespace NoteCreating
         {
             var holdTime = Helper.GetTimeInterval(length);
             var hold = Helper.GetHold(holdTime * Speed);
-            var startPos = new Vector2(mirror.Conv(x), StartBase);
+            var startPos = new Vector2(mirror.Conv(x), GetStartBase());
             var toPos = new Vector2(mirror.Conv(x), 0);
-            hold.SetMaskLocalPos(toPos);
+            hold.SetMaskPos(toPos);
             hold.SetMaskLength(10);
 
             float expectTime = startPos.y / Speed - Delta;
@@ -38,7 +38,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     hold.SetPos(startPos + time * vec);
-                    hold.SetMaskLocalPos(new Vector2(startPos.x + time * vec.x, 0));
+                    hold.SetMaskPos(new Vector2(startPos.x + time * vec.x, 0));
                     await Helper.Yield();
                 }
 

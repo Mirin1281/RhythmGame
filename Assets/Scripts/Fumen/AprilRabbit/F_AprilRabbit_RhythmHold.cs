@@ -36,7 +36,7 @@ namespace NoteCreating
                 {
                     t = CurrentTime - baseTime;
                     hold.SetPos(new Vector3(easing.Ease(t), hold.GetPos().y));
-                    hold.SetMaskLocalPos(new Vector3(easing.Ease(t), 0));
+                    hold.SetMaskPos(new Vector3(easing.Ease(t), 0));
                     await Helper.Yield(timing: PlayerLoopTiming.PreLateUpdate);
                 }
             }
@@ -48,8 +48,8 @@ namespace NoteCreating
         {
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = _mirror.Conv(new Vector3(x, StartBase));
-            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            Vector3 startPos = _mirror.Conv(new Vector3(x, GetStartBase()));
+            hold.SetMaskPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
 
             DropAsync(hold, startPos).Forget();

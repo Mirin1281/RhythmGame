@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -20,7 +18,7 @@ namespace NoteCreating
             note.IsVerticalRange = true;
             Helper.PoolManager.SetSimultaneousSprite(note);
             float expectTime = Helper.GetTimeInterval(4, 7) - Delta;
-            Helper.NoteInput.AddExpect(note, pos, expectTime);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, expectTime));
 
             var line = Helper.GetLine();
             line.SetPos(pos);

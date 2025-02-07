@@ -7,7 +7,7 @@ Shader "Particles/Negative" {
     SubShader {
         Tags { "Queue" = "Transparent" "PreviewType" = "Plane"}
         LOD 100
-        Cull Off
+        Cull Off // 裏面の表示
         ZWrite Off
         BlendOp Add
         Blend OneMinusDstColor OneMinusSrcColor //Opacity depends on grey scale. Alpha value is irrelevant, hence "alpha source" in texture properties can be "none" for maximum performance.

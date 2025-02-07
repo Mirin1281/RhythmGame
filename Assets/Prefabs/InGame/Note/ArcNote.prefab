@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6695812817675476497}
+  - component: {fileID: 8259857555807457460}
   - component: {fileID: 268693219378288984}
   - component: {fileID: 5554034097861853466}
-  - component: {fileID: 8259857555807457460}
   - component: {fileID: 592733306534651277}
   - component: {fileID: 1287889567377016902}
   m_Layer: 0
@@ -36,6 +36,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8259857555807457460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791181920714164328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d768b31a014df648b40b5208efb466b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  splineExtrude: {fileID: 5554034097861853466}
+  meshFilter: {fileID: 1287889567377016902}
+  meshRenderer: {fileID: 592733306534651277}
+  judges: []
+  NotHoldTime: 0
+  <IsHold>k__BackingField: 0
+  <IsHold2>k__BackingField: 0
 --- !u!114 &268693219378288984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,22 +196,6 @@ MonoBehaviour:
   m_Capped: 1
   m_Radius: 0.25
   m_Range: {x: 0, y: 1}
---- !u!114 &8259857555807457460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791181920714164328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d768b31a014df648b40b5208efb466b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 7
-  splineExtrude: {fileID: 5554034097861853466}
-  meshRenderer: {fileID: 592733306534651277}
-  meshFilter: {fileID: 1287889567377016902}
 --- !u!23 &592733306534651277
 MeshRenderer:
   m_ObjectHideFlags: 0

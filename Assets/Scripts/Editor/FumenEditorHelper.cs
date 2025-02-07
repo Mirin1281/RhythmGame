@@ -352,7 +352,7 @@ namespace NoteCreating.Editor
                 HandleMenu(e, isOnCmdList);
                 if (isOnCmdList)
                 {
-                    reorderableList.GrabKeyboardFocus();
+                    //reorderableList.GrabKeyboardFocus();
                 }
 
                 if (scope.changed)

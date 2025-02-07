@@ -18,9 +18,12 @@ namespace NoteCreating
         /// <summary>
         /// アークの判定リスト
         /// </summary>
-        [SerializeField] List<ArcJudge> judges;
+        List<ArcJudge> judges;
 
-        float notHoldTime;
+        static readonly int yThresholdID = Shader.PropertyToID("_YThreshold");
+
+        [SerializeField] public float NotHoldTime;
+        [SerializeField] public float NotHoldTime2;
 
         Spline spline => splineExtrude.Spline;
 
@@ -64,7 +67,8 @@ namespace NoteCreating
         /// <summary>
         /// 入力されているか
         /// </summary>
-        public bool IsHold { get; set; }
+        [field: SerializeField] public bool IsHold { get; set; }
+        [field: SerializeField] public bool IsHold2 { get; set; }
 
         /// <summary>
         /// 先端のワールドY座標
@@ -97,9 +101,12 @@ namespace NoteCreating
 
         void Update()
         {
+            // 要するにhold後0.2秒くらいのバッファがほしい
             if (IsHold)
             {
-                notHoldTime = 0;
+                IsHold2 = true;
+                NotHoldTime = 0;
+                NotHoldTime2 = 0;
                 if (IsInvalid)
                 {
                     meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
@@ -108,11 +115,31 @@ namespace NoteCreating
             }
             else
             {
-                notHoldTime += Time.deltaTime;
+                NotHoldTime += Time.deltaTime;
+                NotHoldTime2 += Time.deltaTime;
             }
 
-            meshRenderer.material.SetFloat("_YThreshold", -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
-            SetAlpha(IsHold ? 0.8f : 0.5f);
+            if (NotHoldTime < 0.2f)
+            {
+                IsHold2 = true;
+            }
+            else
+            {
+                IsHold2 = false;
+            }
+
+            bool isHold = IsHold || IsHold2;
+            if (isHold)
+            {
+                NotHoldTime2 = 0;
+            }
+            else
+            {
+                NotHoldTime2 += Time.deltaTime;
+            }
+
+            meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(NotHoldTime2 - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
+            SetAlpha(isHold ? 0.8f : 0.5f);
         }
 
         /// <summary>
@@ -134,6 +161,7 @@ namespace NoteCreating
             IsOverlaped = false;
             FingerIndex = -1;
             JudgeIndex = 0;
+            NotHoldTime = 100;
 
             await UniTask.Yield(destroyCancellationToken);
 
@@ -411,6 +439,17 @@ namespace NoteCreating
             this.isOverlappable = isOverlappable;
             this.behindJudgeRange = behindJudgeRange;
             this.aheadJudgeRange = aheadJudgeRange;
+        }
+
+        public ArcCreateData(bool _)
+        {
+            this.x = 0;
+            this.wait = 4;
+            this.vertexType = VertexType.Auto;
+            this.isJudgeDisable = false;
+            this.isOverlappable = false;
+            this.behindJudgeRange = 0;
+            this.aheadJudgeRange = 4;
         }
     }
 }

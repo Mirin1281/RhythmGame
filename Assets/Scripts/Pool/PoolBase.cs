@@ -41,7 +41,7 @@ namespace NoteCreating
             // エディタ上かつ実行中でない時に呼ばれた際は生成のみ行う
             if (UnityEditor.EditorApplication.isPlaying == false)
             {
-                var t = Instantiate(prepareStatuses[0].Prefab);
+                var t = Instantiate(prepareStatuses[index].Prefab);
                 t.SetActive(true);
                 return t;
             }

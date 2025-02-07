@@ -63,8 +63,8 @@ namespace NoteCreating
             }
             float holdTime = Helper.GetTimeInterval(length);
             HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-            Vector3 startPos = new(mirror.Conv(x), StartBase, -0.04f);
-            hold.SetMaskLocalPos(new Vector2(startPos.x, 0));
+            Vector3 startPos = new(mirror.Conv(x), GetStartBase(), -0.04f);
+            hold.SetMaskPos(new Vector2(startPos.x, 0));
             if (isSpeedChangable)
             {
                 DropAsync_SpeedChangable(hold, delta).Forget();
@@ -83,7 +83,7 @@ namespace NoteCreating
             {
                 float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
                 Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(hold, new Vector2(default, pos.y), expectTime, 0, expectType: NoteJudgeStatus.ExpectType.Y_Static);
+                Helper.NoteInput.AddExpect(new NoteJudgeStatus(hold, new Vector2(default, pos.y), expectTime, 0, expectType: NoteJudgeStatus.ExpectType.Y_Static));
             }
             return hold;
 
@@ -101,7 +101,7 @@ namespace NoteCreating
                     time = CurrentTime - baseTime;
                     var vec = Speed * Vector3.down;
                     hold.SetLength(holdTime * Speed);
-                    hold.SetPos(new Vector3(mirror.Conv(x), StartBase, -0.04f) + time * vec);
+                    hold.SetPos(new Vector3(mirror.Conv(x), GetStartBase(), -0.04f) + time * vec);
                     await Helper.Yield();
                 }
             }

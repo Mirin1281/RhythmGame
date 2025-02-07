@@ -10,52 +10,59 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
         [Space(10)]
+        [SerializeField, Min(0)]
+        int loopCount = 16;
+
+        [SerializeField, Min(0)]
+        float loopWait = 4;
+        [Space(10)]
         [SerializeField] float moveDirection = 270;
-        [SerializeField] bool isSpeedChangable;
+        [SerializeField] bool isAdaptiveSpeed = true;
         [SerializeField] float speedRate = 1f;
-        [SerializeField] float lifeTime = 3f;
 
         protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTask ExecuteAsync()
         {
+            for (int i = 0; i < loopCount; i++)
+            {
+                CreateLine().Forget();
+                await Wait(loopWait);
+            }
+        }
+
+        async UniTaskVoid CreateLine()
+        {
             Line line = Helper.GetLine();
-            line.SetHeight(0.06f);
             line.SetAlpha(0.25f);
-            await MoveAsync(line);
+            Vector3 dirPos = mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
+            await DropAsync(line, -GetStartBase() * dirPos, isAdaptiveSpeed: isAdaptiveSpeed);
             line.SetActive(false);
         }
 
-        async UniTask MoveAsync(Line line)
+        new async UniTask DropAsync(ItemBase item, Vector3 startPos, bool isAdaptiveSpeed = true)
         {
             float baseTime = CurrentTime - Delta;
-            float time = 0;
-            if (isSpeedChangable)
+            float time = 0f;
+            if (isAdaptiveSpeed)
             {
-                while (line.IsActive && time < lifeTime)
+                while (item.IsActive && time < 3f * RhythmGameManager.DefauleSpeed / Speed)
                 {
                     time = CurrentTime - baseTime;
-                    var vec = Speed * GetVec();
-                    line.SetPos(-StartBase * GetVec() + time * vec);
+                    item.SetPos(new Vector3(startPos.x, GetStartBase() - time * Speed));
                     await Helper.Yield();
                 }
             }
             else
             {
-                Vector3 startPos = -StartBase * GetVec();
-                var vec = Speed * GetVec();
-                while (line.IsActive && time < lifeTime)
+                var vec = Speed * Vector3.down;
+                while (item.IsActive && time < 3f * RhythmGameManager.DefauleSpeed / Speed)
                 {
                     time = CurrentTime - baseTime;
-                    line.SetPos(startPos + time * vec);
+                    item.SetPos(startPos + time * vec);
                     await Helper.Yield();
                 }
             }
-        }
-
-        Vector3 GetVec()
-        {
-            return mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
         }
 
 #if UNITY_EDITOR
@@ -67,7 +74,8 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return mirror.GetStatusText();
+            string status = $"Count: {loopCount} - Wait:{loopWait}";
+            return status + mirror.GetStatusText();
         }
 #endif
     }

@@ -24,6 +24,23 @@ namespace NoteCreating
         }
 
         public readonly RegularNote Note;
+
+        readonly RegularNoteType noteType;
+        public RegularNoteType NoteType
+        {
+            get
+            {
+                if (Note == null)
+                {
+                    return noteType;
+                }
+                else
+                {
+                    return Note.Type;
+                }
+            }
+        }
+
         readonly Vector2 pos;
         public Vector2 Pos => Type switch
         {
@@ -32,17 +49,70 @@ namespace NoteCreating
             ExpectType.Dynamic => Note.GetPos(true),
             _ => throw new Exception()
         };
-        public readonly float Time;
-        public readonly float HoldEndTime;
+
+        readonly float rot;
+        public float Rot
+        {
+            get
+            {
+                if (Note == null)
+                {
+                    return rot;
+                }
+                else
+                {
+                    return Note.GetRot(true);
+                }
+            }
+        }
+
+        readonly bool isVerticalRange;
+        public bool IsVerticalRange
+        {
+            get
+            {
+                if (Note == null)
+                {
+                    return isVerticalRange;
+                }
+                else
+                {
+                    return Note.IsVerticalRange;
+                }
+            }
+        }
+
+        public float Time { get; set; }
+        public float HoldEndTime { get; set; }
         public readonly ExpectType Type;
 
-        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, float holdEndTime = 0, ExpectType mode = ExpectType.Static)
+        public void DisableActive()
+        {
+            if (Note == null) return;
+            Note.SetActive(false);
+        }
+
+        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, float holdEndTime = 0, ExpectType expectType = ExpectType.Y_Static)
         {
             Note = note;
             this.pos = pos;
             Time = time;
             HoldEndTime = holdEndTime;
-            Type = mode;
+            Type = expectType;
+        }
+
+        public NoteJudgeStatus(RegularNoteType noteType, Vector2 pos, float time, bool isVerticalRange = false, float rot = 0)
+        {
+            if (noteType is RegularNoteType._None or RegularNoteType.Hold)
+            {
+                Debug.LogWarning("RegularNoteTypeが適切ではありません");
+            }
+            this.noteType = noteType;
+            this.pos = pos;
+            Time = time;
+            Type = ExpectType.Static;
+            this.isVerticalRange = isVerticalRange;
+            this.rot = rot;
         }
     }
 
@@ -96,14 +166,15 @@ namespace NoteCreating
         /// </summary>
         ///
         /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか
-        public void AddExpect(RegularNote note, float time, float holdingTime = 0, bool isCheckSimultaneous = true)
+        public void AddExpect(RegularNote note, float time, float holdingTime = 0, ExpectType expectType = ExpectType.Y_Static, bool isCheckSimultaneous = true)
         {
-            AddExpect(note, new Vector2(default, 0), time, holdingTime, isCheckSimultaneous, ExpectType.Y_Static);
+            AddExpect(new NoteJudgeStatus(note, new Vector2(default, 0), time, holdingTime, expectType), isCheckSimultaneous);
         }
-        public void AddExpect(RegularNote note, Vector2 pos, float time, float holdingTime = 0,
-            bool isCheckSimultaneous = true, ExpectType expectType = ExpectType.Static)
+        public void AddExpect(NoteJudgeStatus judgeStatus, bool isCheckSimultaneous = true)
         {
-            float absoluteTime = Metronome.CurrentTime + time;
+            float absoluteTime = Metronome.CurrentTime + judgeStatus.Time;
+            judgeStatus.Time = absoluteTime;
+            judgeStatus.HoldEndTime += absoluteTime;
             if (isCheckSimultaneous)
             {
                 foreach (var e in allStatuses)
@@ -111,13 +182,12 @@ namespace NoteCreating
                     if (Mathf.Approximately(absoluteTime, e.Time))
                     {
                         //Debug.Log("同時押し");
-                        poolManager.SetSimultaneousSprite(note);
+                        poolManager.SetSimultaneousSprite(judgeStatus.Note);
                         poolManager.SetSimultaneousSprite(e.Note);
                     }
                 }
             }
-
-            allStatuses.Add(new NoteJudgeStatus(note, pos, absoluteTime, absoluteTime + holdingTime, expectType));
+            allStatuses.Add(judgeStatus);
         }
 
         HoldNote AddHold(NoteJudgeStatus status, bool isMiss = false)
@@ -160,40 +230,41 @@ namespace NoteCreating
             for (int i = 0; i < allStatuses.Count;)
             {
                 var status = allStatuses[i];
-                if (status.Note == null)
+                /*if (status.Note == null)
                 {
                     i++;
                     continue;
-                }
+                }*/
                 if (isAuto && Metronome.CurrentTime > status.Time)
                 {
                     // オート
-                    if (status.Note.Type == RegularNoteType.Hold)
+                    if (status.NoteType == RegularNoteType.Hold)
                     {
                         AddHold(status);
                     }
                     else
                     {
-                        status.Note.SetActive(false);
+                        status.DisableActive();
                     }
+
                     allStatuses.Remove(status);
                     judge.PlayParticle(NoteGrade.Perfect, status.Pos);
                     judge.SetCombo(NoteGrade.Perfect);
 #if UNITY_EDITOR
                     judge.DebugShowRange(status);
 #endif
-                    PlayNoteSE(status.Note.Type);
+                    PlayNoteSE(status.NoteType);
                 }
                 else if (Metronome.CurrentTime > status.Time + 0.12f)
                 {
                     // 遅れたらノーツを除去
-                    if (status.Note.Type == RegularNoteType.Hold)
+                    if (status.NoteType == RegularNoteType.Hold)
                     {
                         AddHold(status, true);
                     }
                     allStatuses.Remove(status);
-                    status.Note.OnMiss();
                     judge.SetCombo(NoteGrade.Miss);
+                    if (status.Note != null) status.Note.OnMiss();
                 }
                 else
                 {
@@ -209,29 +280,29 @@ namespace NoteCreating
 
             NoteGrade grade = judge.GetGradeAndSetText(delta);
             judge.SetCombo(grade);
-            if (grade == NoteGrade.Miss && status.Note.Type != RegularNoteType.Hold) // ホールドは判定が2つあるので除外
+            if (grade == NoteGrade.Miss && status.NoteType != RegularNoteType.Hold) // ホールドは判定が2つあるので除外
             {
                 allStatuses.Remove(status);
-                status.Note.OnMiss();
+                status.DisableActive();
                 return;
             }
 
             judge.PlayParticle(grade, status.Pos);
             allStatuses.Remove(status);
-            if (status.Note.Type == RegularNoteType.Hold)
+            if (status.NoteType == RegularNoteType.Hold)
             {
                 AddHold(status);
             }
             else
             {
-                status.Note.SetActive(false);
+                status.DisableActive();
             }
 
             /*if (delta < 0) // 早い場合はその分待ってSEを鳴らす(いらない)
             {
                 await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
             }*/
-            PlayNoteSE(status.Note.Type);
+            PlayNoteSE(status.NoteType);
             await UniTask.CompletedTask;
         }
 
@@ -250,7 +321,7 @@ namespace NoteCreating
 
                 foreach (var (status, delta) in statuses)
                 {
-                    if (status.Note.Type != RegularNoteType.Slide) continue;
+                    if (status.NoteType != RegularNoteType.Slide) continue;
                     PickNote(status, delta).Forget();
                 }
             }
@@ -263,7 +334,7 @@ namespace NoteCreating
 
             foreach (var (status, delta) in statuses)
             {
-                if (status.Note.Type != RegularNoteType.Flick) continue;
+                if (status.NoteType != RegularNoteType.Flick) continue;
                 PickNote(status, delta).Forget();
             }
         }
@@ -276,8 +347,8 @@ namespace NoteCreating
                 await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
             }
             judge.PlayParticle(NoteGrade.Perfect, status.Pos);
-            PlayNoteSE(status.Note.Type);
-            status.Note.SetActive(false);
+            PlayNoteSE(status.NoteType);
+            status.DisableActive();
             judge.SetCombo(NoteGrade.Perfect);
         }
 
@@ -294,7 +365,7 @@ namespace NoteCreating
                 bool isMatch = false;
                 foreach (var type in fetchTypes)
                 {
-                    if (status.Note.Type == type)
+                    if (status.NoteType == type)
                     {
                         isMatch = true;
                         break;
@@ -321,6 +392,7 @@ namespace NoteCreating
         List<(NoteJudgeStatus, float)> FetchSomeNotes(Vector2 inputPos, float inputTime, float tolerance)
         {
             fetchedStatuses.Clear();
+
             foreach (var status in allStatuses)
             {
                 // 入力時間とノーツの着地予定時間を比較

@@ -21,15 +21,6 @@ static class ValueEaseExtension
     {
         return Easing.Ease(start, from, easeTime, type, self);
     }
-
-    public static float Ease(this int self, EasingStatus easingStatus)
-    {
-        return Easing.Ease(easingStatus.Start, easingStatus.From, easingStatus.EaseTime, easingStatus.EaseType, self);
-    }
-    public static float Ease(this float self, EasingStatus easingStatus)
-    {
-        return Easing.Ease(easingStatus.Start, easingStatus.From, easingStatus.EaseTime, easingStatus.EaseType, self);
-    }
 }
 
 public readonly struct Easing
@@ -46,13 +37,6 @@ public readonly struct Easing
         this.start = start;
         this.inversedEaseTime = 1f / (easeTime == 0 ? 0.001f : easeTime);
         this.delta = from - start;
-    }
-    public Easing(EasingStatus easingStatus)
-    {
-        this.type = easingStatus.EaseType;
-        this.start = easingStatus.Start;
-        this.inversedEaseTime = 1f / (easingStatus.EaseTime == 0 ? 0.001f : easingStatus.EaseTime);
-        this.delta = easingStatus.From - start;
     }
 
     public static float Ease(float start, float from, float easeTime, EaseType type, float time)
@@ -275,39 +259,5 @@ public readonly struct EasingVector2
     public Vector2 Ease(float time)
     {
         return new Vector2(easingX.Ease(time), easingY.Ease(time));
-    }
-}
-
-[Serializable]
-public struct EasingStatus : IEquatable<EasingStatus>
-{
-    [SerializeField] float start;
-    [SerializeField] float from;
-    [SerializeField] float easeTime;
-    [SerializeField] EaseType easeType;
-
-    public readonly float Start => start;
-    public readonly float From => from;
-    public readonly float EaseTime => easeTime;
-    public readonly EaseType EaseType => easeType;
-
-    public readonly bool Equals(EasingStatus other)
-    {
-        return start == other.Start
-            && from == other.From
-            && easeTime == other.EaseTime
-            && easeType == other.EaseType;
-    }
-
-    public override readonly bool Equals(object other)
-    {
-        if (other is EasingStatus)
-            return Equals((EasingStatus)other);
-        return false;
-    }
-
-    public override readonly int GetHashCode()
-    {
-        return HashCode.Combine(start, from, easeTime, easeType);
     }
 }

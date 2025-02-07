@@ -65,26 +65,46 @@ namespace NoteCreating
         public Vector2 GetLandingPos() => maskTs.position;
 
 
-        public void SetMaskLocalPos(Vector2 pos)
+        public void SetMaskPos(Vector2 pos, bool isWorld = false)
         {
-            maskTs.localPosition = pos;
+            if (isWorld)
+            {
+                maskTs.position = pos;
+            }
+            else
+            {
+                maskTs.localPosition = pos;
+            }
         }
         public void SetMaskLength(float length)
         {
             maskTs.localScale = new Vector3(maskTs.localScale.x, length);
         }
 
+        public override float GetRot(bool isWorld = false)
+        {
+            if (isWorld)
+            {
+                return spriteRenderer.transform.eulerAngles.z;
+            }
+            else
+            {
+                return spriteRenderer.transform.localEulerAngles.z;
+            }
+        }
         public override void SetRot(float deg, bool isWorld = false)
         {
             if (isWorld)
             {
-                spriteRenderer.transform.rotation = Quaternion.AngleAxis(deg, Vector3.forward);
-                maskTs.rotation = Quaternion.AngleAxis(deg, Vector3.forward);
+                Vector3 angles = spriteRenderer.transform.eulerAngles;
+                spriteRenderer.transform.eulerAngles = new Vector3(angles.x, angles.y, deg);
+                maskTs.transform.eulerAngles = new Vector3(angles.x, angles.y, deg);
             }
             else
             {
-                spriteRenderer.transform.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
-                maskTs.localRotation = Quaternion.AngleAxis(deg, Vector3.forward);
+                Vector3 angles = spriteRenderer.transform.localEulerAngles;
+                spriteRenderer.transform.localEulerAngles = new Vector3(angles.x, angles.y, deg);
+                maskTs.transform.localEulerAngles = new Vector3(angles.x, angles.y, deg);
             }
         }
 

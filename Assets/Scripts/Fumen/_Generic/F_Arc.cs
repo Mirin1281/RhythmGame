@@ -8,14 +8,14 @@ namespace NoteCreating
     public class F_Arc : CommandBase
     {
         [SerializeField] Mirror mirror;
-        [SerializeField] ArcCreateData[] datas = new ArcCreateData[1];
+        [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
         protected override async UniTask ExecuteAsync()
         {
             ArcNote arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror).Forget();
 
-            Vector3 startPos = new Vector3(0, StartBase);
+            Vector3 startPos = new Vector3(0, GetStartBase());
             DropAsync(arc, startPos, Delta).Forget();
             Helper.NoteInput.AddArc(arc);
             await UniTask.CompletedTask;

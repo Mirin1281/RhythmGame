@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Obsolete/◆判定線"), System.Serializable]
+    //[AddTypeMenu("Obsolete/◆判定線"), System.Serializable]
     public class F_Line : CommandBase
     {
         [Serializable]

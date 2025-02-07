@@ -58,15 +58,17 @@ namespace NoteCreating
 
         public bool IsNearPosition(NoteJudgeStatus judgeStatus, Vector2 inputPos)
         {
+            float width = judgeStatus.Note == null ? 1 : judgeStatus.Note.Width;
+            float height = judgeStatus.IsVerticalRange ? 10f : 1f;
             return MyUtility.IsPointInsideRectangle(
-                new Rect(judgeStatus.Pos, new Vector2(judgeStatus.Note.Width * Range, judgeStatus.Note.IsVerticalRange ? 30f : Range)),
+                new Rect(judgeStatus.Pos, Range * new Vector2(width, height)),
                 inputPos,
-                judgeStatus.Note.GetRot());
+                judgeStatus.Rot);
         }
         public bool IsNearPositionHold(HoldNote hold, Vector2 inputPos)
         {
             return MyUtility.IsPointInsideRectangle(
-                new Rect(hold.GetLandingPos(), new Vector2(hold.Width * Range, hold.IsVerticalRange ? 30f : Range)),
+                new Rect(hold.GetLandingPos(), Range * new Vector2(hold.Width, hold.IsVerticalRange ? 10f : 1)),
                 inputPos,
                 hold.GetRot());
         }
@@ -165,13 +167,14 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
-        public void DebugShowRange(NoteJudgeStatus expect)
+        public void DebugShowRange(NoteJudgeStatus judgeStatus)
         {
             if (showDebugRange == false) return;
             var obj = Instantiate(debugNoteRangePrefab, transform);
-            obj.transform.localPosition = expect.Pos;
-            obj.transform.localRotation = Quaternion.AngleAxis(expect.Note.transform.eulerAngles.z, Vector3.forward);
-            obj.transform.localScale = new Vector3(expect.Note.Width * Range, expect.Note.IsVerticalRange ? 30f : Range);
+            obj.transform.localPosition = judgeStatus.Pos;
+            obj.transform.localRotation = Quaternion.AngleAxis(judgeStatus.Rot, Vector3.forward);
+            obj.transform.localScale = Range * new Vector3(
+                judgeStatus.Note == null ? 1 : judgeStatus.Note.Width, judgeStatus.IsVerticalRange ? 10f : 1f);
             UniTask.Void(async () =>
             {
                 await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);

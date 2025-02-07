@@ -121,7 +121,7 @@ namespace NoteCreating
             {
                 var hold = item as HoldNote;
                 hold.SetLength(Helper.GetTimeInterval(option) * Speed);
-                hold.SetMaskLocalPos(Vector2.one * 100);
+                hold.SetMaskPos(Vector2.one * 100);
             }
             else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote or ItemType.FlickNote)
             {

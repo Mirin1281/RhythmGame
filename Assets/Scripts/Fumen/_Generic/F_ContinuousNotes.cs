@@ -31,7 +31,7 @@ namespace NoteCreating
         RegularNote Note(float x, RegularNoteType type)
         {
             RegularNote note = Helper.GetRegularNote(type);
-            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
+            Vector3 startPos = mirror.Conv(new Vector3(x, GetStartBase()));
             DropAsync(note, startPos, Delta).Forget();
 
             // 現在の時間から何秒後に着弾するか

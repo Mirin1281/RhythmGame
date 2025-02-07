@@ -34,12 +34,12 @@ namespace NoteCreating
         protected virtual float Speed => RhythmGameManager.Speed;
 
         /// <summary>
-        /// ノーツの初期生成地点
+        /// ノーツの初期生成地点。デフォルトは4分音符6拍で着地する間隔
         /// </summary>
-        protected float StartBase => 360f * Speed / Helper.Metronome.Bpm;
+        protected float GetStartBase(float lpb = 4, int num = 6) => Speed * Helper.GetTimeInterval(lpb, num);
 
         /// <summary>
-        /// N分音符の間隔で待機します、返り値はフレーム間の誤差です
+        /// N分音符の間隔で待機します、返り値は理想の時間と現在フレームとの誤差です
         /// </summary>
         protected async UniTask<float> Wait(float lpb, int count = 1, float delta = -1)
         {
@@ -86,7 +86,7 @@ namespace NoteCreating
         }
 
         /// <summary>
-        /// 4分音符6拍分待機します。ノーツが普通に生成されてから着弾するまでの時間です
+        /// 4分音符6拍分待機します。ノーツが普通に生成されてから着地するまでの時間です
         /// </summary>
         protected async UniTask<float> WaitOnTiming()
         {
@@ -113,7 +113,7 @@ namespace NoteCreating
             action.Invoke(time);
         }
 
-        protected async UniTask DropAsync(ItemBase item, Vector3 startPos, float delta = -1)
+        protected async UniTask DropAsync(ItemBase item, Vector3 startPos, float delta = -1, bool isAdaptiveSpeed = true)
         {
             if (delta == -1)
             {
@@ -121,12 +121,24 @@ namespace NoteCreating
             }
             float baseTime = CurrentTime - delta;
             float time = 0f;
-            var vec = Speed * Vector3.down;
-            while (item.IsActive && time < 8f)
+            if (isAdaptiveSpeed)
             {
-                time = CurrentTime - baseTime;
-                item.SetPos(startPos + time * vec);
-                await Helper.Yield();
+                while (item.IsActive && time < 8f)
+                {
+                    time = CurrentTime - baseTime;
+                    item.SetPos(new Vector3(startPos.x, GetStartBase() - time * Speed));
+                    await Helper.Yield();
+                }
+            }
+            else
+            {
+                var vec = Speed * Vector3.down;
+                while (item.IsActive && time < 8f)
+                {
+                    time = CurrentTime - baseTime;
+                    item.SetPos(startPos + time * vec);
+                    await Helper.Yield();
+                }
             }
         }
 

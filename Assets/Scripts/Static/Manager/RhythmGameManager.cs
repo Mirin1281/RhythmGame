@@ -6,6 +6,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
     // 不変の音量
     static readonly float MasterVolume = 0.8f;
+    public static readonly float DefauleSpeed = 14f;
 
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
