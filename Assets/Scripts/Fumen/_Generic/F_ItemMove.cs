@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線やノーツを生成して制御", -70), System.Serializable]
+    [AddTypeMenu("◆判定線やノーツを生成して制御", -70)]
     public class F_ItemMove : CommandBase, INotSkipCommand
     {
         [Serializable]
@@ -128,7 +128,7 @@ namespace NoteCreating
                     Helper.NoteInput.AddExpect(item as RegularNote, lpbLifeTime);
             }
 
-            await Helper.WaitSeconds(lpbLifeTime);
+            await WaitSeconds(lpbLifeTime);
             item.SetActive(false);
 
 

@@ -9,15 +9,15 @@ namespace NoteCreating
         [SerializeField] protected Mirror mirror;
         [SerializeField] float speedRate = 1f;
 
-        protected abstract T[] NoteDatas { get; }
-        protected abstract void Move(RegularNote note, T data);
-
         /// <summary>
         /// NoteData内のWaitの加算
         /// </summary>
         protected Lpb WaitDelta { get; private set; }
 
         protected override float Speed => base.Speed * speedRate;
+
+        protected abstract T[] NoteDatas { get; }
+        protected abstract void Move(RegularNote note, T data);
 
         protected override async UniTaskVoid ExecuteAsync()
         {
@@ -58,59 +58,8 @@ namespace NoteCreating
         /// </summary>
         /// <param name="time"></param>
         /// <param name="action"></param>
-        /// <param name="loopCount">タイミングの数</param>
-        /// <param name="loopWait">タイミングの間隔(LPB)</param>
-        /// <param name="timingAction"></param>
-        /// <param name="waitDelta"></param>
-        /// <param name="delta"></param>
-        /// <returns></returns>
-        protected async UniTask WhileYieldGroupAsync(
-            float time, Action<float> action, int loopCount, Lpb loopWait, Action<(int index, float t, float d)> timingAction, float delta = -1)
-        {
-            int index = 0;
-            Lpb next = loopWait - WaitDelta;
-            while (next.Time < 0 && index < loopCount)
-            {
-                next += loopWait;
-                index++;
-            }
-
-            if (delta == -1)
-            {
-                delta = Delta;
-            }
-            float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while (t < time)
-            {
-                t = CurrentTime - baseTime;
-                action.Invoke(t);
-                if (t >= next.Time)
-                {
-                    if (index < loopCount)
-                    {
-                        float d = t - next.Time;
-                        next += loopWait;
-                        timingAction.Invoke((index, t, d));
-                        index++;
-                    }
-                    else
-                    {
-                        next = new Lpb(float.MinValue);
-                    }
-                }
-                await Helper.Yield();
-            }
-            action.Invoke(time);
-        }
-
-        /// <summary>
-        /// 指定したタイミングで処理ができるWhileYieldAsync
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="action"></param>
         /// <param name="timings">タイミングの配列</param>
-        /// <param name="timingAction"></param>
+        /// <param name="timingAction">引数は(インデックス, 時間, 理想の時間との差)</param>
         /// <param name="waitDelta"></param>
         /// <param name="delta"></param>
         /// <returns></returns>
@@ -149,10 +98,58 @@ namespace NoteCreating
                         next = new Lpb(float.MinValue);
                     }
                 }
-                await Helper.Yield();
+                await Yield();
             }
             action.Invoke(time);
         }
+
+        protected UniTask WhileYieldGroupAsync(
+            float time, Action<float> action, int loopCount, Lpb loopWait, Action<(int index, float t, float d)> timingAction, float delta = -1)
+        {
+            Lpb[] timings = new Lpb[loopCount];
+            for (int i = 0; i < timings.Length; i++)
+            {
+                timings[i] = loopWait;
+            }
+            return WhileYieldGroupAsync(time, action, timings, timingAction, delta);
+
+            /*int index = 0;
+            Lpb next = loopWait - WaitDelta;
+            while (next.Time < 0 && index < loopCount)
+            {
+                next += loopWait;
+                index++;
+            }
+
+            if (delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = CurrentTime - delta;
+            float t = 0f;
+            while (t < time)
+            {
+                t = CurrentTime - baseTime;
+                action.Invoke(t);
+                if (t >= next.Time)
+                {
+                    if (index < loopCount)
+                    {
+                        float d = t - next.Time;
+                        next += loopWait;
+                        timingAction.Invoke((index, t, d));
+                        index++;
+                    }
+                    else
+                    {
+                        next = new Lpb(float.MinValue);
+                    }
+                }
+                await Helper.Yield();
+            }
+            action.Invoke(time);*/
+        }
+
 
 #if UNITY_EDITOR
 

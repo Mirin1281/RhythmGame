@@ -7,7 +7,7 @@ namespace NoteCreating
 {
     // 生成 → 移動
     // AddExpectを動的に設定できたら面白そう
-    [AddTypeMenu("Lyrith/2 回転して着地"), System.Serializable]
+    [AddTypeMenu("Lyrith/2 回転して着地")]
     public class F_Lyrith2 : CommandBase
     {
         [SerializeField] float startY = 7f;
@@ -19,7 +19,7 @@ namespace NoteCreating
             await WaitOnTiming();
             Create(new Vector2(-3f, startY), 720f);
             Create(new Vector2(3f, startY), -720f);
-            await Helper.WaitSeconds(moveTime);
+            await WaitSeconds(moveTime);
             //Helper.CameraMover.Shake(10, 0.4f);
         }
 

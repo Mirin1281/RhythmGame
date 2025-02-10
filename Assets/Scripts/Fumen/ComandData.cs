@@ -26,33 +26,28 @@ namespace NoteCreating
 #if UNITY_EDITOR
 
         /// <summary>
-        /// NoteGeneratorBaseをキャストして返します
+        /// CommandBaseをキャストして返します
         /// </summary>
         public CommandBase GetCommandBase()
         {
             return command as CommandBase;
         }
 
-        static readonly Color NullColor = new Color(0.8f, 0.8f, 0.8f, 1f);
-
         /// <summary>
-        /// エディタのコマンドに状態を記述します
+        /// エディタのコマンド部にステータスを記述します
         /// </summary>
         public string GetSummary() => command?.GetSummary();
 
         /// <summary>
         /// コマンドの色を設定します
         /// </summary>
-        public Color GetCommandColor() => command == null ? NullColor : command.GetColor();
+        public Color GetCommandColor() => command == null ? CommandEditorUtility.CommandColor_Null : command.GetColor();
 
         /// <summary>
         /// コマンド名を取得します
         /// </summary>
         public string GetName(bool rawName = false) => command?.GetName(rawName);
 
-        /// <summary>
-        /// CSV用
-        /// </summary>
         public void SetCommand(Type type)
         {
             if (type == null)

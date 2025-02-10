@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Obsolete/◆円"), System.Serializable]
+    [AddTypeMenu("Obsolete/◆円")]
     public class F_CircleNote : CommandBase
     {
         [Serializable]

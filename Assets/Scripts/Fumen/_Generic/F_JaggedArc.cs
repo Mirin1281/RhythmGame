@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆ギザギザアーク", -40), System.Serializable]
+    [AddTypeMenu("◆ギザギザアーク", -40)]
     public class F_JaggedArc : CommandBase
     {
         [SerializeField] Mirror mirror;

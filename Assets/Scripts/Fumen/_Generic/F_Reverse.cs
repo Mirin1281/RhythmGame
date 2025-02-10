@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆逆走ノーツ", 50), System.Serializable]
+    [AddTypeMenu("◆逆走ノーツ", 50)]
     public class F_Reverse : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -88,7 +88,7 @@ namespace NoteCreating
                 {
                     t = CurrentTime - baseTime;
                     note.SetPos(new Vector3(mirror.Conv(x), easing.Ease(t) * Speed));
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
 
@@ -113,7 +113,7 @@ namespace NoteCreating
                     }
                     note.SetPos(new Vector3(mirror.Conv(x), (c + w) * Speed));
 
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
 

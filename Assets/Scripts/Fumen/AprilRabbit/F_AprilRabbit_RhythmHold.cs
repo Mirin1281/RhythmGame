@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/律動するホールド"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/律動するホールド")]
     public class F_AprilRabbit_RhythmHold : CommandBase
     {
         [SerializeField] Mirror _mirror;
@@ -37,7 +37,7 @@ namespace NoteCreating
                     t = CurrentTime - baseTime;
                     hold.SetPos(new Vector3(easing.Ease(t), hold.GetPos().y));
                     hold.SetMaskPos(new Vector3(easing.Ease(t), 0));
-                    await Helper.Yield(timing: PlayerLoopTiming.PreLateUpdate);
+                    await Yield(timing: PlayerLoopTiming.PreLateUpdate);
                 }
             }
             await UniTask.CompletedTask;

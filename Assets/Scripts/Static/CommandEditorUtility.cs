@@ -22,6 +22,7 @@ namespace NoteCreating
         static readonly float DebugSpeed = 14f;
 
         public static readonly Color CommandColor_Default = new Color(0.9f, 0.9f, 0.9f, 1f);
+        public static readonly Color CommandColor_Null = new Color(0.8f, 0.8f, 0.8f, 1f);
         public static readonly Color CommandColor_Note = new Color32(255, 226, 200, 255);
         public static readonly Color CommandColor_UnNote = new Color(0.8f, 0.8f, 0.9f);
         public static readonly Color CommandColor_Line = new Color(0.95f, 0.8f, 0.85f);

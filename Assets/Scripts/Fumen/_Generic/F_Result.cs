@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇リザルト移行", 100), System.Serializable]
+    [AddTypeMenu("◇リザルト移行", 100)]
     public class F_Result : CommandBase
     {
         protected override async UniTaskVoid ExecuteAsync()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下(上昇)"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/エフェクト ノーツ落下(上昇)")]
     public class F_AprilRabbit_EffectNoteDrop : CommandBase
     {
         [SerializeField] Mirror mirror;

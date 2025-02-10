@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/最後のノーツ"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/最後のノーツ")]
     public class F_AprilRabbit_LastNote : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -74,7 +74,7 @@ namespace NoteCreating
             {
                 t = CurrentTime - baseTime;
                 circle.SetScale(t.Ease(4f, 0f, new Lpb(4).Time, EaseType.InQuad));
-                await Helper.Yield();
+                await Yield();
             }
             circle.SetActive(false);
         }

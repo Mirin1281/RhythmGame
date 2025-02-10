@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/5レーン"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/5レーン")]
     public class F_AprilRabbit_5Lane : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -135,7 +135,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     note.SetPos(startPos + time * vec);
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace NoteCreating
             line.FadeIn(0.5f, 0.6f);
             UniTask.Void(async () =>
             {
-                await Helper.WaitSeconds(11);
+                await WaitSeconds(11);
                 line.FadeOut(0.5f);
             });
         }

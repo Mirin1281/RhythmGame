@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace NoteCreating
 {
@@ -18,10 +19,6 @@ namespace NoteCreating
                 }
                 return helper;
             }
-            private set
-            {
-                helper = value;
-            }
         }
 
         /// <summary>
@@ -29,7 +26,7 @@ namespace NoteCreating
         /// </summary>
         protected float Delta { get; set; }
 
-        protected float CurrentTime => Helper.Metronome.CurrentTime;
+        protected float CurrentTime => Metronome.Instance.CurrentTime;
 
         protected virtual float Speed => RhythmGameManager.Speed;
 
@@ -38,9 +35,10 @@ namespace NoteCreating
         protected float MoveTime => MoveLpb.Time;
 
         /// <summary>
-        /// ノーツの初期生成地点。デフォルトは4分音符6拍で着地する間隔
+        /// ノーツの初期生成地点。デフォルトは4分音符6回で着地する間隔
         /// </summary>
         protected float StartBase => MoveTime * Speed;
+
 
         protected async UniTask<float> Wait(Lpb lpb, float delta = -1)
         {
@@ -57,7 +55,7 @@ namespace NoteCreating
                         Delta += t - lpb.Time;
                         return Delta;
                     }
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
             else
@@ -73,19 +71,19 @@ namespace NoteCreating
                         delta += t - lpb.Time;
                         return delta;
                     }
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }
 
         /// <summary>
-        /// 4分音符6拍分待機します。ノーツが普通に生成されてから着地するまでの時間です
+        /// ノーツが生成されてから着地するまでの時間分待機します
         /// </summary>
         protected async UniTask<float> WaitOnTiming(float delta = -1)
         {
             if (delta == -1)
             {
-                Delta = await Wait(MoveLpb, Delta/* - RhythmGameManager.Offset*/);
+                Delta = await Wait(MoveLpb, Delta/* - RhythmGameManager.Offset*/); // なぜオフセットを引いた？ 消して問題無ければ消す
                 return Delta;
             }
             else
@@ -109,9 +107,38 @@ namespace NoteCreating
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
-                await Helper.Yield();
+                await Yield();
             }
             action.Invoke(time);
+        }
+
+        protected async UniTask<float> WaitSeconds(float wait, float delta = -1, CancellationToken token = default)
+        {
+            if (token == default)
+            {
+                token = Helper.Token;
+            }
+            if (delta == -1)
+            {
+                delta = Delta;
+            }
+            float baseTime = Metronome.Instance.CurrentTime - delta;
+            float time = 0f;
+            while (time < wait)
+            {
+                time = Metronome.Instance.CurrentTime - baseTime;
+                await UniTask.Yield(token);
+            }
+            return baseTime - wait;
+        }
+
+        protected UniTask Yield(CancellationToken token = default, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+        {
+            if (token == default)
+            {
+                token = Helper.Token;
+            }
+            return UniTask.Yield(timing, token);
         }
 
         protected async UniTask DropAsync(ItemBase item, float x, float delta = -1, bool isAdaptiveSpeed = true)
@@ -128,7 +155,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(new Vector3(x, StartBase - time * Speed));
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
             else
@@ -139,7 +166,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(basePos + time * vec);
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }
@@ -152,7 +179,7 @@ namespace NoteCreating
         protected abstract UniTaskVoid ExecuteAsync();
         void ICommand.Execute(NoteCreateHelper helper, float delta)
         {
-            Helper = helper;
+            this.helper = helper;
             Delta = delta;
             ExecuteAsync().Forget();
         }
@@ -191,7 +218,7 @@ namespace NoteCreating
         protected virtual Color GetCommandColor() => CommandEditorUtility.CommandColor_Default;
 
         /// <summary>
-        /// コマンドが選択された際に呼ばれます。引数は選択された順番です
+        /// コマンドが選択された際に呼ばれます
         /// </summary>
         public virtual void OnSelect(CommandSelectStatus selectStatus) { }
 
@@ -205,8 +232,6 @@ namespace NoteCreating
             get => CommandCSVParser.GetFieldContent(this);
             set => CommandCSVParser.SetField(this, value);
         }
-
-        public virtual string CSVContent1 { get; set; }
 #endif
     }
 }

@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/チュートリアルのテキスト"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/チュートリアルのテキスト")]
     public class F_AprilRabbit_TutorialText : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -54,7 +54,7 @@ namespace NoteCreating
 
             if (isHide)
             {
-                await Helper.WaitSeconds(time);
+                await WaitSeconds(time);
                 Fade(tmpro, 0);
             }
 

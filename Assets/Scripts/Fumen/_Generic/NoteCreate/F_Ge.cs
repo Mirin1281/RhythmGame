@@ -221,7 +221,7 @@ namespace NoteCreating
                     c = MoveTime - t;
                 }
                 note.SetPos(new Vector3(mirror.Conv(data.X), (c + w) * Speed));
-                await Helper.Yield();
+                await Yield();
             }
 
 

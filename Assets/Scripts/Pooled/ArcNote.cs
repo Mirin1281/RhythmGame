@@ -214,11 +214,11 @@ namespace NoteCreating
 
             float GetDistanceInterval(Lpb lpb)
             {
-                if (lpb == default) return 0f;
-                return lpb / new Lpb(1);
+                return lpb.Time * speed;
             }
         }
 
+#if UNITY_EDITOR
         public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugSphere)
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
@@ -232,7 +232,7 @@ namespace NoteCreating
             {
                 var data = datas[i];
                 var knot = spline[i];
-                if (datas[i].IsJudgeDisable)
+                if (data.IsJudgeDisable)
                 {
                     continue;
                 }
@@ -249,7 +249,7 @@ namespace NoteCreating
 
                 if (i != 0)
                 {
-                    float behindDistance = knotY + GetDistanceInterval(datas[i].BehindJudgeRange);
+                    float behindDistance = knotY + GetDistanceInterval(data.BehindJudgeRange);
                     var startPos = GetPointOnYPlane(behindDistance);
                     var blueSphere = Instantiate(debugSphere, transform);
                     blueSphere.transform.localPosition = startPos;
@@ -257,7 +257,7 @@ namespace NoteCreating
                     blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
                 }
 
-                float aheadDistance = knotY + GetDistanceInterval(datas[i].AheadJudgeRange);
+                float aheadDistance = knotY + GetDistanceInterval(data.AheadJudgeRange);
                 var endPos = GetPointOnYPlane(aheadDistance);
                 var redSphere = Instantiate(debugSphere, transform);
                 redSphere.transform.localPosition = endPos;
@@ -265,7 +265,6 @@ namespace NoteCreating
                 redSphere.SetColor(new Color(1, 0, 0, 0.5f));
             }
 
-#if UNITY_EDITOR
             for (int k = 0; k < judges.Count; k++)
             {
                 if (k == judges.Count - 1) break;
@@ -274,14 +273,14 @@ namespace NoteCreating
                     Debug.LogWarning($"{k} end: {judges[k].EndPos.y}  next: {judges[k + 1].StartPos.y}");
                 }
             }
-#endif
+
 
             float GetDistanceInterval(Lpb lpb)
             {
-                if (lpb == default) return 0f;
-                return lpb / new Lpb(1);
+                return lpb.Time * speed;
             }
         }
+#endif
 
         /// <summary>
         /// Y=target平面上におけるアークの座標を返します

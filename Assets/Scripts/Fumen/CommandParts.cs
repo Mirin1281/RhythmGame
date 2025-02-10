@@ -24,7 +24,7 @@ namespace NoteCreating
 
     // コマンドにフィールドとして持たせて使います
     [Serializable]
-    public struct Mirror
+    public struct Mirror : IEquatable<Mirror>
     {
         [SerializeField] bool enabled;
 
@@ -49,6 +49,28 @@ namespace NoteCreating
             {
                 return string.Empty;
             }
+        }
+
+        public readonly bool Equals(Mirror other)
+        {
+            return enabled == other.enabled;
+        }
+
+        public override readonly bool Equals(object obj)
+        {
+            if (obj is Mirror mirror)
+            {
+                return Equals(mirror);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override readonly int GetHashCode()
+        {
+            return enabled.GetHashCode();
         }
     }
 

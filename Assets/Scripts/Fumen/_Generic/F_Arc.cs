@@ -4,20 +4,19 @@ using System.Linq;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆アーク", -50), System.Serializable]
+    [AddTypeMenu("◆アーク", -50)]
     public class F_Arc : CommandBase
     {
         [SerializeField] Mirror mirror;
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
-        protected override async UniTaskVoid ExecuteAsync()
+        protected override UniTaskVoid ExecuteAsync()
         {
             ArcNote arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
-
             DropAsync(arc, 0, Delta).Forget();
             Helper.NoteInput.AddArc(arc);
-            await UniTask.CompletedTask;
+            return default;
         }
 
 #if UNITY_EDITOR

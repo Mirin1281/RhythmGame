@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/2_1 回転ホールド"), System.Serializable]
+    [AddTypeMenu("Lyrith/2_1 回転ホールド")]
     public class F_Lyrith_RotateHold : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -38,7 +38,7 @@ namespace NoteCreating
                     time = CurrentTime - baseTime;
                     hold.SetPos(startPos + time * vec);
                     hold.SetMaskPos(new Vector2(startPos.x + time * vec.x, 0));
-                    await Helper.Yield();
+                    await Yield();
                 }
 
                 // ここから着地後
@@ -51,7 +51,7 @@ namespace NoteCreating
                     vec = Speed * new Vector2(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Cos(deg * Mathf.Deg2Rad));
                     hold.SetPos(toPos + time * vec);
                     hold.SetRot(deg);
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }

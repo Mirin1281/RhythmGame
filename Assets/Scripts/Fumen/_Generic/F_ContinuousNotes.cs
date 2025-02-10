@@ -3,14 +3,13 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆連続的なノーツ", -80), System.Serializable]
+    [AddTypeMenu("◆連続的なノーツ", -80)]
     public class F_ContinuousNotes : CommandBase
     {
         [SerializeField] Mirror mirror;
         [Space(10)]
         [SerializeField] int count = 16;
-        [SerializeField, Tooltip("NormalかSlideを指定してください")]
-        RegularNoteType noteType = RegularNoteType.Slide;
+        [SerializeField, Tooltip("NormalかSlideを指定してください")] RegularNoteType noteType = RegularNoteType.Slide;
         [SerializeField] Lpb wait = new Lpb(16);
         [Space(10)]
         [SerializeField] Vector2 easeX = new Vector2(-5f, 5f);
@@ -22,21 +21,16 @@ namespace NoteCreating
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for (int i = 0; i < count; i++)
             {
-                Note(easing.Ease(i * ((float)(count + 1) / count)), noteType);
+                CreateDropNote(easing.Ease(i * ((float)(count + 1) / count)), noteType);
                 await Wait(wait);
             }
         }
 
-        RegularNote Note(float x, RegularNoteType type)
+        void CreateDropNote(float x, RegularNoteType type)
         {
             RegularNote note = Helper.GetRegularNote(type);
-            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
-            DropAsync(note, startPos.x, Delta).Forget();
-
-            // 現在の時間から何秒後に着弾するか
-            float expectTime = startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(note, expectTime);
-            return note;
+            DropAsync(note, mirror.Conv(x), Delta).Forget();
+            Helper.NoteInput.AddExpect(note, MoveTime - Delta);
         }
 
 #if UNITY_EDITOR

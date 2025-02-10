@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/移動ホールド"), System.Serializable]
+    [AddTypeMenu("Osmanthus/移動ホールド")]
     public class F_Osmanthus_MoveHold : CommandBase
     {
         [Serializable]
@@ -57,7 +57,7 @@ namespace NoteCreating
                     var posY = startPos.y + time * -Speed;
                     hold.SetPos(new Vector3(posX, posY));
                     hold.SetMaskPos(new Vector2(posX, 0));
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }

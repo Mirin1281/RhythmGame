@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇速度変更"), System.Serializable]
+    [AddTypeMenu("◇速度変更")]
     public class F_SpeedChange : CommandBase
     {
         [Header("通常を1として、全体のノーツスピードを変更します")]

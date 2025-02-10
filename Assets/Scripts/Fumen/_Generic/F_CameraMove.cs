@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇カメラ制御"), System.Serializable]
+    [AddTypeMenu("◇カメラ制御")]
     public class F_CameraMove : CommandBase
     {
         [SerializeField] Mirror mirror;

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
-    [AddTypeMenu("◇アイテム点滅"), System.Serializable]
+    [AddTypeMenu("◇アイテム点滅")]
     public class F_ItemBlink : CommandBase
     {
         [Flags]
@@ -34,7 +34,7 @@ namespace NoteCreating
             if (target == 0) return;
             if (delay > 0)
             {
-                await Helper.WaitSeconds(delay + Delta);
+                await WaitSeconds(delay + Delta);
             }
             await WaitOnTiming();
 
@@ -70,9 +70,9 @@ namespace NoteCreating
             float interval = 1 / 120f;
             for (int i = 0; i < blinkCount; i++)
             {
-                await Helper.WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
+                await WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
                 SetRendererEnableds(items, false);
-                await Helper.WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
+                await WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
                 SetRendererEnableds(items, true);
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.Mo
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線を降らせる", -70), System.Serializable]
+    [AddTypeMenu("◆判定線を降らせる", -70)]
     public class F_LineDrop : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -50,7 +50,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(new Vector3(startPos.x, StartBase - time * Speed));
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
             else
@@ -60,7 +60,7 @@ namespace NoteCreating
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(startPos + time * vec);
-                    await Helper.Yield();
+                    await Yield();
                 }
             }
         }

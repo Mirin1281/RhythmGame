@@ -5,23 +5,22 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [Serializable]
-    public struct HoldData
-    {
-        [SerializeField] bool isDiabled;
-        [SerializeField, Min(0)] Lpb wait;
-        [SerializeField, Space(10)] float x;
-        [SerializeField, Min(0)] Lpb length;
-
-        public readonly bool IsDisabled => isDiabled;
-        public readonly Lpb Wait => wait;
-        public readonly float X => x;
-        public readonly Lpb Length => length;
-    }
-
-    [AddTypeMenu("AprilRabbit/タッチのホールド"), System.Serializable]
+    [AddTypeMenu("AprilRabbit/タッチのホールド")]
     public class F_AprilRabbit_TouchHold : CommandBase
     {
+        [Serializable]
+        public struct HoldData
+        {
+            [SerializeField] bool isDiabled;
+            [SerializeField, Min(0)] Lpb wait;
+            [SerializeField, Space(10)] float x;
+            [SerializeField, Min(0)] Lpb length;
+
+            public readonly bool IsDisabled => isDiabled;
+            public readonly Lpb Wait => wait;
+            public readonly float X => x;
+            public readonly Lpb Length => length;
+        }
         /*[SerializeField] float speedRate = 1f;
 
         [SerializeField] bool isSpeedChangable;

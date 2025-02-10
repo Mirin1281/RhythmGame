@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/昇るホールド"), System.Serializable]
+    [AddTypeMenu("Osmanthus/昇るホールド")]
     public class F_Osmanthus_UpHold : CommandBase
     {
         [Serializable]
@@ -47,7 +47,7 @@ namespace NoteCreating
             {
                 time = CurrentTime - baseTime;
                 hold.SetPos(startPos + time * vec);
-                await Helper.Yield();
+                await Yield();
             }
 
             baseTime = CurrentTime - Delta;
@@ -57,7 +57,7 @@ namespace NoteCreating
                 time = CurrentTime - baseTime;
                 hold.SetMaskPos(new Vector3(mirror.Conv(x), 0) - time * vec);
                 hold.SetMaskLength(time * holdTime * Speed);
-                await Helper.Yield();
+                await Yield();
             }
             hold.SetActive(false);
         }

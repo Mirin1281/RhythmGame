@@ -53,9 +53,6 @@ namespace NoteCreating.Editor
                 // 4列目 通常コンテント
                 var content1 = cmdBase?.CSVContent;
                 sb.AddCell(content1);
-                // 5列目 追加コンテント1
-                var content2 = cmdBase?.CSVContent1;
-                sb.AddCell(content2);
 
                 sw.WriteLine(sb.ToString());
                 sb.Clear();
@@ -263,10 +260,6 @@ namespace NoteCreating.Editor
                     if (column_base != null && colomn_array.Length > 3)
                     {
                         column_base.CSVContent = colomn_array[3];
-                    }
-                    if (column_base != null && colomn_array.Length > 4)
-                    {
-                        column_base.CSVContent1 = colomn_array[4];
                     }
                 }
             }

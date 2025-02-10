@@ -69,7 +69,8 @@ namespace NoteCreating
             // 音楽データをロード
             await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);
 
-            await UniTask.DelayFrame(2);
+            await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
+            metronome.Play(fumenData);
 
             if (fumenData.ArcPoolCount != 0)
             {
@@ -85,9 +86,6 @@ namespace NoteCreating
                     }, RhythmGameManager.Speed);
                 arc.SetActive(false);
             }
-
-            await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
-            metronome.Play(fumenData);
 
             titleTmpro = null;
         }
