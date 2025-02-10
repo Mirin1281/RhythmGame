@@ -33,29 +33,28 @@ namespace NoteCreating
 
         protected virtual float Speed => RhythmGameManager.Speed;
 
+        protected virtual Lpb MoveLpb => new Lpb(4, 6);
+
+        protected float MoveTime => MoveLpb.Time;
+
         /// <summary>
         /// ノーツの初期生成地点。デフォルトは4分音符6拍で着地する間隔
         /// </summary>
-        protected float GetStartBase(float lpb = 4, int num = 6) => Speed * Helper.GetTimeInterval(lpb, num);
+        protected float StartBase => MoveTime * Speed;
 
-        /// <summary>
-        /// N分音符の間隔で待機します、返り値は理想の時間と現在フレームとの誤差です
-        /// </summary>
-        protected async UniTask<float> Wait(float lpb, int count = 1, float delta = -1)
+        protected async UniTask<float> Wait(Lpb lpb, float delta = -1)
         {
             if (delta == -1)
             {
-                if (lpb == 0 || count == 0) return Delta;
-
-                float interval = Helper.GetTimeInterval(lpb, count);
+                if (lpb.Time == 0) return Delta;
 
                 float baseTime = CurrentTime;
                 while (true)
                 {
                     float t = CurrentTime - baseTime;
-                    if (t + Delta > interval)
+                    if (t + Delta > lpb.Time)
                     {
-                        Delta += t - interval;
+                        Delta += t - lpb.Time;
                         return Delta;
                     }
                     await Helper.Yield();
@@ -63,35 +62,37 @@ namespace NoteCreating
             }
             else
             {
-                if (lpb == 0 || count == 0) return delta;
-
-                float interval = Helper.GetTimeInterval(lpb, count);
+                if (lpb.Time == 0) return delta;
 
                 float baseTime = CurrentTime;
                 while (true)
                 {
                     float t = CurrentTime - baseTime;
-                    if (t + delta > interval)
+                    if (t + delta > lpb.Time)
                     {
-                        delta += t - interval;
+                        delta += t - lpb.Time;
                         return delta;
                     }
                     await Helper.Yield();
                 }
             }
         }
-        protected UniTask<float> Wait(float lpb, float delta)
-        {
-            return Wait(lpb, 1, delta);
-        }
 
         /// <summary>
         /// 4分音符6拍分待機します。ノーツが普通に生成されてから着地するまでの時間です
         /// </summary>
-        protected async UniTask<float> WaitOnTiming()
+        protected async UniTask<float> WaitOnTiming(float delta = -1)
         {
-            Delta = await Wait(4, 6, Delta - RhythmGameManager.Offset);
-            return Delta;
+            if (delta == -1)
+            {
+                Delta = await Wait(MoveLpb, Delta/* - RhythmGameManager.Offset*/);
+                return Delta;
+            }
+            else
+            {
+                delta = await Wait(MoveLpb, delta/* - RhythmGameManager.Offset*/);
+                return delta;
+            }
         }
 
         protected void WhileYield(float time, Action<float> action, float delta = -1)
@@ -113,7 +114,7 @@ namespace NoteCreating
             action.Invoke(time);
         }
 
-        protected async UniTask DropAsync(ItemBase item, Vector3 startPos, float delta = -1, bool isAdaptiveSpeed = true)
+        protected async UniTask DropAsync(ItemBase item, float x, float delta = -1, bool isAdaptiveSpeed = true)
         {
             if (delta == -1)
             {
@@ -126,17 +127,18 @@ namespace NoteCreating
                 while (item.IsActive && time < 8f)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(new Vector3(startPos.x, GetStartBase() - time * Speed));
+                    item.SetPos(new Vector3(x, StartBase - time * Speed));
                     await Helper.Yield();
                 }
             }
             else
             {
                 var vec = Speed * Vector3.down;
+                Vector3 basePos = new Vector3(x, StartBase);
                 while (item.IsActive && time < 8f)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(startPos + time * vec);
+                    item.SetPos(basePos + time * vec);
                     await Helper.Yield();
                 }
             }
@@ -147,7 +149,7 @@ namespace NoteCreating
         /// <summary>
         /// コマンドの中身を発火します
         /// </summary>
-        protected abstract UniTask ExecuteAsync();
+        protected abstract UniTaskVoid ExecuteAsync();
         void ICommand.Execute(NoteCreateHelper helper, float delta)
         {
             Helper = helper;
@@ -186,7 +188,7 @@ namespace NoteCreating
         /// <summary>
         /// オーバーライドすると、コマンドの色を変更します
         /// </summary>
-        protected virtual Color GetCommandColor() => ConstContainer.DefaultCommandColor;
+        protected virtual Color GetCommandColor() => CommandEditorUtility.CommandColor_Default;
 
         /// <summary>
         /// コマンドが選択された際に呼ばれます。引数は選択された順番です
@@ -205,11 +207,6 @@ namespace NoteCreating
         }
 
         public virtual string CSVContent1 { get; set; }
-#else
-        // ランタイムでは使用しない
-        string ICommand.GetSummary() => null;
-        Color ICommand.GetColor() => default;
-        string ICommand.GetName(bool rawName) => null;
 #endif
     }
 }

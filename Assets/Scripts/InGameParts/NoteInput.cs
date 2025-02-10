@@ -92,12 +92,12 @@ namespace NoteCreating
             Note.SetActive(false);
         }
 
-        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, float holdEndTime = 0, ExpectType expectType = ExpectType.Y_Static)
+        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, Lpb holdEndTime = default, ExpectType expectType = ExpectType.Y_Static)
         {
             Note = note;
             this.pos = pos;
             Time = time;
-            HoldEndTime = holdEndTime;
+            HoldEndTime = holdEndTime.Time;
             Type = expectType;
         }
 
@@ -145,7 +145,6 @@ namespace NoteCreating
             inputManager.OnDown += OnDown;
             inputManager.OnHold += OnHold;
             inputManager.OnUp += OnUp;
-            inputManager.OnFlick += OnFlick;
 
 
             async UniTaskVoid OnUp(Input input)
@@ -166,7 +165,7 @@ namespace NoteCreating
         /// </summary>
         ///
         /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか
-        public void AddExpect(RegularNote note, float time, float holdingTime = 0, ExpectType expectType = ExpectType.Y_Static, bool isCheckSimultaneous = true)
+        public void AddExpect(RegularNote note, float time, Lpb holdingTime = default, ExpectType expectType = ExpectType.Y_Static, bool isCheckSimultaneous = true)
         {
             AddExpect(new NoteJudgeStatus(note, new Vector2(default, 0), time, holdingTime, expectType), isCheckSimultaneous);
         }
@@ -324,18 +323,6 @@ namespace NoteCreating
                     if (status.NoteType != RegularNoteType.Slide) continue;
                     PickNote(status, delta).Forget();
                 }
-            }
-        }
-
-        void OnFlick(Input input)
-        {
-            List<(NoteJudgeStatus, float)> statuses = FetchSomeNotes(input.pos, Metronome.CurrentTime, wideTolerance);
-            if (statuses == null) return;
-
-            foreach (var (status, delta) in statuses)
-            {
-                if (status.NoteType != RegularNoteType.Flick) continue;
-                PickNote(status, delta).Forget();
             }
         }
 

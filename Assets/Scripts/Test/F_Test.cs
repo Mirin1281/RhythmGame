@@ -5,14 +5,30 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("テスト用"), System.Serializable]
+    [AddTypeMenu("テスト用")]
     public class F_Test : CommandBase
     {
         [SerializeField] Mirror mirror;
+        [SerializeField] bool guideLine = true;
+        [SerializeField] Lpb guideInterval = new Lpb(4f);
+        [SerializeField] Lpb wait = new Lpb(4);
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
+
+
+            if (guideLine)
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    var line = Helper.GetLine();
+                    line.SetAlpha(0.2f);
+                    line.SetPos(new Vector3(0, i * guideInterval.Time * Speed));
+                }
+            }
+
+
             // これから来る譜面がカットインするやつ
 
             /*// 星型にノーツやレーンを //
@@ -139,48 +155,27 @@ namespace NoteCreating
             }*/
         }
 
-        RegularNote Note(float x, RegularNoteType type, Transform parentTs = null, bool isMove = true)
+        RegularNote Note(float x, RegularNoteType type, bool isMove = true)
         {
-            RegularNote note = Helper.GetRegularNote(type, parentTs);
-            Vector3 startPos = new(mirror.Conv(x), GetStartBase());
-            if (isMove) DropAsync(note, startPos, Delta).Forget();
+            RegularNote note = Helper.GetRegularNote(type);
+            Vector3 startPos = new(mirror.Conv(x), StartBase);
+            if (isMove) DropAsync(note, startPos.x, Delta).Forget();
 
             // 現在の時間から何秒後に着弾するか
             float expectTime = startPos.y / Speed - Delta;
-            if (parentTs == null)
-            {
-                Helper.NoteInput.AddExpect(note, expectTime);
-            }
-            else
-            {
-                float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
-                Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, new Vector2(default, pos.y), expectTime, expectType: NoteJudgeStatus.ExpectType.Y_Static));
-            }
+            Helper.NoteInput.AddExpect(note, expectTime);
             return note;
         }
 
-        HoldNote Hold(float x, float length, Transform parentTs = null)
+        HoldNote Hold(float x, Lpb length)
         {
-            float holdTime = Helper.GetTimeInterval(length);
-            HoldNote hold = Helper.GetHold(holdTime * Speed, parentTs);
-            Vector3 startPos = mirror.Conv(new Vector3(x, GetStartBase()));
+            HoldNote hold = Helper.GetHold(length * Speed);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
             hold.SetMaskPos(new Vector2(startPos.x, 0));
-            DropAsync(hold, startPos, Delta).Forget();
+            DropAsync(hold, startPos.x, Delta).Forget();
 
             float expectTime = startPos.y / Speed - Delta;
-            if (parentTs == null)
-            {
-                Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
-            }
-            else
-            {
-                float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
-                Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    hold, new Vector2(default, pos.y), expectTime, holdTime, expectType: NoteJudgeStatus.ExpectType.Y_Static));
-            }
+            Helper.NoteInput.AddExpect(hold, expectTime, length);
             return hold;
         }
     }

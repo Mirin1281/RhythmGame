@@ -19,7 +19,7 @@ public enum CameraMoveType
 [Serializable]
 public class CameraMoveSetting
 {
-    [SerializeField] float wait;
+    [SerializeField] Lpb wait;
     [SerializeField] bool isPosMove = true;
     [SerializeField] Vector3 pos;
     [SerializeField] bool isRotateMove = false;
@@ -27,21 +27,21 @@ public class CameraMoveSetting
     [SerializeField, Tooltip("現在の回転から目標の回転までの差が\nより近いような回り方を選んで回転します")]
     bool isRotateClamp = true;
     [SerializeField] EaseType easeType = EaseType.OutQuad;
-    [SerializeField] float time = 1f;
+    [SerializeField] Lpb lpb = new Lpb(4f);
     [SerializeField] CameraMoveType moveType = CameraMoveType.Absolute;
 
-    public float Wait => wait;
+    public Lpb Wait => wait;
     public bool IsPosMove => isPosMove;
     public Vector3 Pos => pos;
     public bool IsRotateMove => isRotateMove;
     public Vector3 Rotate => rotate;
     public bool IsRotateClamp => isRotateClamp;
     public EaseType EaseType => easeType;
-    public float Time => time;
+    public Lpb Lpb => lpb;
     public CameraMoveType MoveType => moveType;
 
     public CameraMoveSetting(bool isPosMove, Vector3 pos, bool isRotateMove, Vector3 rotate,
-        bool isRotateClamp, float time, EaseType easeType, CameraMoveType moveType, int wait = 0)
+        bool isRotateClamp, Lpb lpb, EaseType easeType, CameraMoveType moveType, Lpb wait = default)
     {
         this.wait = wait;
         this.isPosMove = isPosMove;
@@ -49,17 +49,14 @@ public class CameraMoveSetting
         this.isRotateMove = isRotateMove;
         this.rotate = rotate;
         this.isRotateClamp = isRotateClamp;
-        this.time = time;
+        this.lpb = lpb;
         this.easeType = easeType;
         this.moveType = moveType;
     }
-
-    public CameraMoveSetting() { } // デフォルトコンストラクタ
 }
 
 public class CameraMover : MonoBehaviour
 {
-    Metronome Metronome => Metronome.Instance;
     Vector3 deltaPos;
     Quaternion deltaRot;
     Vector3 basePos;
@@ -94,13 +91,13 @@ public class CameraMover : MonoBehaviour
     }
 
     public void Move(Vector3? nullablePos, Vector3? nullableRot, CameraMoveType moveType,
-        float time, EaseType easeType, bool isRotateClamp = true, float delta = 0, Mirror mir = default)
+        Lpb lpb, EaseType easeType, bool isRotateClamp = true, float delta = 0, Mirror mir = default)
     {
         CameraMoveSetting m = new(
             nullablePos.HasValue, nullablePos.GetValueOrDefault(),
             nullableRot.HasValue, nullableRot.GetValueOrDefault(),
             isRotateClamp,
-            time,
+            lpb,
             easeType,
             moveType);
         Move(m, delta, mir);
@@ -122,22 +119,24 @@ public class CameraMover : MonoBehaviour
     /// </summary>
     async UniTask MoveRelative(CameraMoveSetting m, float delta, Mirror mir = default)
     {
-        await WhileYieldAsync(m.Time, delta, t =>
+        if (m.IsPosMove == false && m.IsRotateMove == false) return;
+        float time = m.Lpb.Time;
+        await WhileYieldAsync(time - 0.04f, delta, t => // TODO: ピッタリにすると被る。なぜ
         {
             if (m.IsPosMove)
             {
                 deltaPos += new Vector3(
-                    mir.Conv(t.Ease(0, m.Pos.x, m.Time, m.EaseType)),
-                    t.Ease(0, m.Pos.y, m.Time, m.EaseType),
-                    t.Ease(0, m.Pos.z, m.Time, m.EaseType)
+                    mir.Conv(t.Ease(0, m.Pos.x, time, m.EaseType)),
+                    t.Ease(0, m.Pos.y, time, m.EaseType),
+                    t.Ease(0, m.Pos.z, time, m.EaseType)
                 );
             }
             if (m.IsRotateMove)
             {
                 deltaRot = Quaternion.Euler(
-                    t.Ease(0, m.Rotate.x, m.Time, m.EaseType),
-                    mir.Conv(t.Ease(0, m.Rotate.y, m.Time, m.EaseType)),
-                    mir.Conv(t.Ease(0, m.Rotate.z, m.Time, m.EaseType)));
+                    t.Ease(0, m.Rotate.x, time, m.EaseType),
+                    mir.Conv(t.Ease(0, m.Rotate.y, time, m.EaseType)),
+                    mir.Conv(t.Ease(0, m.Rotate.z, time, m.EaseType)));
             }
         });
         await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
@@ -147,61 +146,61 @@ public class CameraMover : MonoBehaviour
             baseRot *= Quaternion.Euler(new Vector3(m.Rotate.x, mir.Conv(m.Rotate.y), mir.Conv(m.Rotate.z)));
     }
 
-    static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
-    {
-        return Mathf.Repeat(angle - min, max - min) + min;
-    }
-
+    /// <summary>
+    /// 絶対移動させます
+    /// </summary>
     void MoveTo(CameraMoveSetting m, float delta, Mirror mir = default)
     {
         if (m.IsPosMove == false && m.IsRotateMove == false) return;
         var startPos = transform.position;
         var startRot = mir.Conv(transform.eulerAngles);
+        float time = m.Lpb.Time;
 
         if (m.IsPosMove)
         {
-            WhileYield(m.Time, delta, t =>
+            WhileYieldAsync(time, delta, t =>
             {
                 basePos = new Vector3(
-                    mir.Conv(t.Ease(startPos.x, m.Pos.x, m.Time, m.EaseType)),
-                    t.Ease(startPos.y, m.Pos.y, m.Time, m.EaseType),
-                    t.Ease(startPos.z, m.Pos.z, m.Time, m.EaseType)
+                    mir.Conv(t.Ease(startPos.x, m.Pos.x, time, m.EaseType)),
+                    t.Ease(startPos.y, m.Pos.y, time, m.EaseType),
+                    t.Ease(startPos.z, m.Pos.z, time, m.EaseType)
                 );
-            });
+            }).Forget();
         }
         if (m.IsRotateMove)
         {
+            Func<float, Quaternion> rot;
             if (m.IsRotateClamp)
             {
-                WhileYield(m.Time, delta, t =>
-                {
-                    baseRot = Quaternion.Euler(
-                        t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), m.Time, m.EaseType),
-                        mir.Conv(t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), m.Time, m.EaseType)),
-                        mir.Conv(t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), m.Time, m.EaseType)));
-                });
+                rot = t => Quaternion.Euler(
+                    t.Ease(startRot.x, GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180), time, m.EaseType),
+                    mir.Conv(t.Ease(startRot.y, GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180), time, m.EaseType)),
+                    mir.Conv(t.Ease(startRot.z, GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180), time, m.EaseType)));
             }
             else
             {
-                WhileYield(m.Time, delta, t =>
-                {
-                    baseRot = Quaternion.Euler(
-                        t.Ease(startRot.x, m.Rotate.x, m.Time, m.EaseType),
-                        mir.Conv(t.Ease(startRot.y, m.Rotate.y, m.Time, m.EaseType)),
-                        mir.Conv(t.Ease(startRot.z, m.Rotate.z, m.Time, m.EaseType)));
-                });
+                rot = t => Quaternion.Euler(
+                    t.Ease(startRot.x, m.Rotate.x, time, m.EaseType),
+                    mir.Conv(t.Ease(startRot.y, m.Rotate.y, time, m.EaseType)),
+                    mir.Conv(t.Ease(startRot.z, m.Rotate.z, time, m.EaseType)));
             }
+            WhileYieldAsync(time, delta, t => baseRot = rot(t)).Forget();
+        }
+
+
+        static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
+        {
+            return Mathf.Repeat(angle - min, max - min) + min;
         }
     }
 
-    void WhileYield(float time, float delta, Action<float> action) => WhileYieldAsync(time, delta, action).Forget();
     async UniTask WhileYieldAsync(float time, float delta, Action<float> action)
     {
-        float baseTime = Metronome.CurrentTime - delta;
+        float baseTime = Metronome.Instance.CurrentTime - delta;
         float t = 0f;
         while (t < time)
         {
-            t = Metronome.CurrentTime - baseTime;
+            t = Metronome.Instance.CurrentTime - baseTime;
             action.Invoke(t);
             await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         }

@@ -6,7 +6,7 @@ namespace NoteCreating
     //[AddTypeMenu("Lyrith/逆走"), System.Serializable]
     public class F_Lyrith_Reverse : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
         }

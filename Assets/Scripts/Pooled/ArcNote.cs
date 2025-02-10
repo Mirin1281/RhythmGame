@@ -145,7 +145,7 @@ namespace NoteCreating
         /// <summary>
         /// アークを作成します
         /// </summary>
-        public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, Mirror mir = default)
+        public async UniTask CreateNewArcAsync(ArcCreateData[] datas, float speed, Mirror mir = default)
         {
             // 初期化
             spline.Clear();
@@ -212,17 +212,17 @@ namespace NoteCreating
             }
 
 
-            float GetDistanceInterval(float lpb)
+            float GetDistanceInterval(Lpb lpb)
             {
-                if (lpb == 0f) return 0f;
-                return wholeNoteInterval / lpb;
+                if (lpb == default) return 0f;
+                return lpb / new Lpb(1);
             }
         }
 
-        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float wholeNoteInterval, Mirror mirror, DebugSphere debugSphere)
+        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugSphere)
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
-            await CreateNewArcAsync(datas, wholeNoteInterval, mirror);
+            await CreateNewArcAsync(datas, speed, mirror);
             foreach (var child in transform.OfType<Transform>().ToArray())
             {
                 DestroyImmediate(child.gameObject);
@@ -276,10 +276,10 @@ namespace NoteCreating
             }
 #endif
 
-            float GetDistanceInterval(float lpb)
+            float GetDistanceInterval(Lpb lpb)
             {
-                if (lpb == 0f) return 0f;
-                return wholeNoteInterval / lpb;
+                if (lpb == default) return 0f;
+                return lpb / new Lpb(1);
             }
         }
 
@@ -415,22 +415,22 @@ namespace NoteCreating
         }
 
         [SerializeField] float x;
-        [SerializeField] float wait;
+        [SerializeField] Lpb wait;
         [SerializeField] VertexType vertexType;
         [SerializeField] bool isJudgeDisable;
         [SerializeField] bool isOverlappable;
-        [SerializeField] float behindJudgeRange;
-        [SerializeField] float aheadJudgeRange;
+        [SerializeField] Lpb behindJudgeRange;
+        [SerializeField] Lpb aheadJudgeRange;
 
         public readonly float X => x;
-        public readonly float Wait => wait;
+        public readonly Lpb Wait => wait;
         public readonly VertexType Vertex => vertexType;
         public readonly bool IsJudgeDisable => isJudgeDisable;
         public readonly bool IsOverlappable => isOverlappable;
-        public readonly float BehindJudgeRange => behindJudgeRange;
-        public readonly float AheadJudgeRange => aheadJudgeRange;
+        public readonly Lpb BehindJudgeRange => behindJudgeRange;
+        public readonly Lpb AheadJudgeRange => aheadJudgeRange;
 
-        public ArcCreateData(float x, float wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, float behindJudgeRange, float aheadJudgeRange)
+        public ArcCreateData(float x, Lpb wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, Lpb behindJudgeRange, Lpb aheadJudgeRange)
         {
             this.x = x;
             this.wait = wait;
@@ -444,12 +444,12 @@ namespace NoteCreating
         public ArcCreateData(bool _)
         {
             this.x = 0;
-            this.wait = 4;
+            this.wait = new Lpb(4);
             this.vertexType = VertexType.Auto;
             this.isJudgeDisable = false;
             this.isOverlappable = false;
-            this.behindJudgeRange = 0;
-            this.aheadJudgeRange = 4;
+            this.behindJudgeRange = new Lpb(0);
+            this.aheadJudgeRange = new Lpb(4);
         }
     }
 }

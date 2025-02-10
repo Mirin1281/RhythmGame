@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using NoteCreating;
 
 public class DrawerHelper
 {
@@ -68,11 +69,21 @@ public class DrawerHelper
     public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
     {
         var prop = property.FindPropertyRelative(fieldName);
+        if (prop == null)
+        {
+            Debug.LogError($"{fieldName}が存在しませんでした");
+        }
+
         if (prop.propertyType is SerializedPropertyType.Vector2 or SerializedPropertyType.Vector2Int
             or SerializedPropertyType.Vector3 or SerializedPropertyType.Vector3Int)
         {
             return VectorField(prop, drawLabel, overrideName);
         }
+        else if (prop.type is nameof(Lpb))
+        {
+            prop = prop.FindPropertyRelative("_value");
+        }
+
         if (drawLabel)
         {
             if (overrideName == null)

@@ -20,25 +20,14 @@ namespace NoteCreating
         public Metronome Metronome => Metronome.Instance;
         public CancellationToken Token => destroyCancellationToken;
 
-        public RegularNote GetRegularNote(RegularNoteType type, Transform parentTs = null)
+        public RegularNote GetRegularNote(RegularNoteType type)
         {
-            var note = PoolManager.RegularPool.GetNote(type);
-            if (parentTs != null)
-            {
-                note.transform.SetParent(parentTs);
-                note.transform.localRotation = default;
-            }
-            return note;
+            return PoolManager.RegularPool.GetNote(type);
         }
-        public HoldNote GetHold(float length, Transform parentTs = null)
+        public HoldNote GetHold(Lpb length)
         {
             var hold = PoolManager.HoldPool.GetNote();
             hold.SetLength(length);
-            if (parentTs != null)
-            {
-                hold.transform.SetParent(parentTs);
-                hold.transform.localRotation = default;
-            }
             return hold;
         }
         public ArcNote GetArc()
@@ -76,18 +65,6 @@ namespace NoteCreating
                 time = Metronome.CurrentTime - baseTime;
                 await UniTask.Yield(token);
             }
-        }
-
-        public float GetTimeInterval(float lpb, int num = 1)
-        {
-            if (lpb == 0) return 0;
-#if UNITY_EDITOR
-            if (EditorApplication.isPlaying == false)
-            {
-                return 240f / FumenDebugUtility.DebugBPM / lpb * num;
-            }
-#endif
-            return 240f / Metronome.Bpm / lpb * num;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
+#if UNITY_EDITOR
 namespace NoteCreating
 {
     // CSVエクスポート後、変数を追加・削除した場合は該当クラスor構造体にこのインターフェースを
@@ -15,8 +16,9 @@ namespace NoteCreating
     {
         string[] AddedFieldNames { get; }
     }
+
     // ゲッターには削除した変数のインデックスを入れてください
-    // 一番最初の変数を削除した場合は0となります
+    // 例えば一番最初の変数を削除した場合は0となります
     public interface IFieldDeleteHandler
     {
         int[] DeletedFieldIndices { get; }
@@ -24,8 +26,6 @@ namespace NoteCreating
 
     public static class CommandCSVParser
     {
-        const char InterfaceDelimiter = '(';
-
         /// <summary>
         /// 入出力時にデバッグ用のログを出す
         /// </summary>
@@ -35,6 +35,9 @@ namespace NoteCreating
         /// Unity標準のコンポーネントは変数の数が大きすぎるため、この値を超えたら入出力を無視します
         /// </summary>
         const int LimitClassFieldCount = 50;
+
+        const char InterfaceDelimiter = '(';
+
 
         /// <summary>
         /// リフレクションでインスタンス内の変数を全て書き出します
@@ -136,11 +139,12 @@ namespace NoteCreating
         public static void SetField<T>(T command, string content) where T : CommandBase
         {
             SetFieldGeneric(command, content);
-            if (ShowDebugLog) Debug.Log("<color=red>sep</color>");
+            if (ShowDebugLog) Debug.Log($"<color=red>End: {(command as ICommand).GetName(true)}</color>");
         }
 
         static object SetFieldGeneric(object obj, string content, List<int> fieldIndexList = null)
         {
+
             if (string.IsNullOrWhiteSpace(content) || obj == null) return null;
 
             fieldIndexList ??= new();
@@ -153,10 +157,15 @@ namespace NoteCreating
                 fieldInfos.ForEach(v => Debug.Log(v.FieldType));
                 fieldValues.ForEach(v => Debug.LogWarning(v));
             }
+            //Debug.Log("aaaaa");
+            //fieldValues.ForEach(v => Debug.LogWarning(v));
 
             AdjustFieldsAndValuesOrder(obj, fieldInfos, fieldValues);
 
-            if (fieldInfos.Count != fieldValues.Count) Debug.LogError($"Mismatch: {fieldInfos.Count} vs {fieldValues.Count}");
+            if (fieldInfos.Count != fieldValues.Count)
+            {
+                Debug.LogError($"Mismatch: Fields - {fieldInfos.Count}  Contents - {fieldValues.Count}\nContent - {content}");
+            }
 
             for (int i = 0; i < fieldInfos.Count; i++)
             {
@@ -174,118 +183,150 @@ namespace NoteCreating
 
             fieldIndexList.RemoveAt(fieldIndexList.Count - 1);
             return obj;
-        }
 
-        static void AdjustFieldsAndValuesOrder(object obj, List<FieldInfo> fieldInfos, List<string> fieldValues)
-        {
-            if (obj is IFieldAddHandler addHandler)
+
+
+            static void AdjustFieldsAndValuesOrder(object obj, List<FieldInfo> fieldInfos, List<string> fieldValues)
             {
-                var addIndices = addHandler.AddedFieldNames
-                    .Select(name => fieldInfos.FindIndex(f => f.Name == name))
-                    .Where(i => i >= 0).ToList();
-                for (int i = addIndices.Count - 1; i >= 0; i--)
+                if (obj is IFieldAddHandler addHandler)
                 {
-                    fieldInfos.RemoveAt(addIndices[i]);
+                    var addIndices = addHandler.AddedFieldNames
+                        .Select(name => fieldInfos.FindIndex(f => f.Name == name))
+                        .Where(i => i >= 0).ToList();
+                    for (int i = addIndices.Count - 1; i >= 0; i--)
+                    {
+                        fieldInfos.RemoveAt(addIndices[i]);
+                    }
+                }
+                if (obj is IFieldDeleteHandler deleteHandler)
+                {
+                    var deleteIndices = deleteHandler.DeletedFieldIndices;
+                    for (int i = deleteIndices.Length - 1; i >= 0; i--)
+                    {
+                        fieldValues.RemoveAt(deleteIndices[i]);
+                    }
                 }
             }
-            if (obj is IFieldDeleteHandler deleteHandler)
+
+            static bool TrySetPrimitiveOrEnum(FieldInfo field, object obj, string value, List<int> fieldIndexList)
             {
-                var deleteIndices = deleteHandler.DeletedFieldIndices;
-                for (int i = deleteIndices.Length - 1; i >= 0; i--)
+                if ((field.FieldType.IsPrimitive || field.FieldType == typeof(string) || field.FieldType.IsEnum) == false) return false;
+                if (ShowDebugLog)
                 {
-                    fieldValues.RemoveAt(deleteIndices[i]);
+                    string s = string.Empty;
+                    fieldIndexList.ForEach(i => s += i + "-");
+                    Debug.Log($"{s[..^1]}  {field.Name}  {field.FieldType}  {value}");
                 }
+
+                try
+                {
+                    var converter = System.ComponentModel.TypeDescriptor.GetConverter(field.FieldType);
+                    var instance = converter.ConvertFrom(value);
+                    if (instance != null) field.SetValue(obj, instance);
+                }
+                catch
+                {
+                    Debug.LogWarning($"{value} could not be converted to {field.FieldType}");
+                }
+                return true;
             }
-        }
 
-        static bool TrySetPrimitiveOrEnum(FieldInfo field, object obj, string value, List<int> fieldIndexList)
-        {
-            if ((field.FieldType.IsPrimitive || field.FieldType == typeof(string) || field.FieldType.IsEnum) == false) return false;
-            if (ShowDebugLog)
+            static void HandleArrayField(FieldInfo arrayField, object obj, string value, List<int> fieldIndexList)
             {
-                string s = string.Empty;
-                fieldIndexList.ForEach(i => s += i + "-");
-                Debug.Log($"{s[..^1]}  {field.FieldType}  {field.Name}  {value}");
+                fieldIndexList.Add(0);
+                var elementType = arrayField.FieldType.GetElementType();
+                var elementValues = value.Split(GetDelimiter(fieldIndexList.Count - 1));
+
+                if (elementValues.Length == 0 || (elementValues.Length == 1 && string.IsNullOrEmpty(elementValues[0])))
+                {
+                    fieldIndexList.RemoveAt(fieldIndexList.Count - 1);
+                    return;
+                }
+
+                var array = Array.CreateInstance(elementType, elementValues.Length);
+                for (int i = 0; i < elementValues.Length; i++)
+                {
+                    var element = Activator.CreateInstance(elementType);
+                    array.SetValue(SetFieldGeneric(element, elementValues[i], fieldIndexList), i);
+                    fieldIndexList[fieldIndexList.Count - 1]++;
+                }
+                arrayField.SetValue(obj, array);
+                fieldIndexList.RemoveAt(fieldIndexList.Count - 1);
             }
 
-            try
+            static void HandleInterfaceField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
             {
-                var converter = System.ComponentModel.TypeDescriptor.GetConverter(field.FieldType);
-                var instance = converter.ConvertFrom(value);
-                if (instance != null) field.SetValue(obj, instance);
-            }
-            catch
-            {
-                Debug.LogWarning($"{value} could not be converted to {field.FieldType}");
-            }
-            return true;
-        }
+                int endIndex = value.IndexOf(InterfaceDelimiter);
+                if (endIndex < 0) return;
 
-        static void HandleArrayField(FieldInfo arrayField, object obj, string value, List<int> fieldIndexList)
-        {
-            fieldIndexList.Add(0);
-            var elementType = arrayField.FieldType.GetElementType();
-            var elementValues = value.Split(GetDelimiter(fieldIndexList.Count - 1));
+                string className = value[..endIndex];
+                string content = value[(endIndex + 1)..];
+                var instance = CreateInstance<object>(className);
 
-            if (elementValues.Length == 0 || (elementValues.Length == 1 && string.IsNullOrEmpty(elementValues[0]))) return;
-
-            var array = Array.CreateInstance(elementType, elementValues.Length);
-            for (int i = 0; i < elementValues.Length; i++)
-            {
-                var element = Activator.CreateInstance(elementType);
-                array.SetValue(SetFieldGeneric(element, elementValues[i], fieldIndexList), i);
-                fieldIndexList[fieldIndexList.Count - 1]++;
-            }
-            arrayField.SetValue(obj, array);
-            fieldIndexList.RemoveAt(fieldIndexList.Count - 1);
-        }
-
-        static void HandleInterfaceField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
-        {
-            int endIndex = value.IndexOf(InterfaceDelimiter);
-            if (endIndex < 0) return;
-
-            string className = value[..endIndex];
-            string content = value[(endIndex + 1)..];
-            var instance = FumenDebugUtility.CreateInstance<object>(className);
-
-            if (instance != null)
-            {
-                instance = SetFieldGeneric(instance, content, fieldIndexList);
                 if (instance != null)
                 {
-                    field.SetValue(obj, instance);
+                    instance = SetFieldGeneric(instance, content, fieldIndexList);
+                    if (instance != null)
+                    {
+                        field.SetValue(obj, instance);
+                    }
                 }
             }
-        }
 
-        static void HandleClassField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
-        {
-            int fieldCount = field.FieldType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length;
-            if (fieldCount < LimitClassFieldCount)
+            static void HandleClassField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
             {
-                HandleOtherField(field, obj, value, fieldIndexList);
-            }
-            else
-            {
-                Debug.LogWarning($"{field.FieldType} はサイズが大きすぎたため読み込みをスキップされました");
-            }
-        }
-
-        static void HandleOtherField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
-        {
-            try
-            {
-                var instance = Activator.CreateInstance(field.FieldType);
-                instance = SetFieldGeneric(instance, value, fieldIndexList);
-                if (instance != null)
+                int fieldCount = field.FieldType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length;
+                if (fieldCount < LimitClassFieldCount)
                 {
-                    field.SetValue(obj, instance);
+                    HandleOtherField(field, obj, value, fieldIndexList);
+                }
+                else
+                {
+                    Debug.LogWarning($"{field.FieldType} はサイズが大きすぎたため読み込みをスキップされました");
                 }
             }
-            catch
+
+            static void HandleOtherField(FieldInfo field, object obj, string value, List<int> fieldIndexList)
             {
-                Debug.LogWarning($"Failed to convert {field.FieldType}");
+                try
+                {
+                    var instance = Activator.CreateInstance(field.FieldType);
+                    instance = SetFieldGeneric(instance, value, fieldIndexList);
+                    if (instance != null)
+                    {
+                        field.SetValue(obj, instance);
+                    }
+                }
+                catch
+                {
+                    Debug.LogWarning($"Failed to convert {field.FieldType}");
+                }
+            }
+
+            static T CreateInstance<T>(string className, string namespaceName = nameof(NoteCreating)) where T : class
+            {
+                Type t = GetTypeByClassName(className, namespaceName);
+                if (t == null) return null;
+                return Activator.CreateInstance(t) as T;
+
+
+                static Type GetTypeByClassName(string className, string namespaceName)
+                {
+                    foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        foreach (Type type in assembly.GetTypes())
+                        {
+                            if (type.Name == className &&
+                                type.Namespace == namespaceName)
+                            {
+                                return type;
+                            }
+                        }
+                    }
+                    Debug.LogWarning($"{className}クラスが見つかりませんでした！\n" +
+                        $"タイポもしくは{className}クラスが名前空間{namespaceName}内に存在しない可能性があります");
+                    return null;
+                }
             }
         }
 
@@ -309,3 +350,4 @@ namespace NoteCreating
         };
     }
 }
+#endif

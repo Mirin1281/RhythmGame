@@ -10,13 +10,12 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror).Forget();
+            arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
 
-            Vector3 startPos = new Vector3(0, GetStartBase());
-            DropAsync(arc, startPos, Delta).Forget();
+            DropAsync(arc, 0, Delta).Forget();
             Helper.NoteInput.AddArc(arc);
             await UniTask.CompletedTask;
         }
@@ -43,13 +42,13 @@ namespace NoteCreating
         }
         void Preview(bool beforeClear = true, int beatDelta = 1)
         {
-            var previewObj = FumenDebugUtility.GetPreviewObject(beforeClear);
-            FumenDebugUtility.CreateGuideLine(previewObj, Helper, beforeClear);
+            var previewObj = CommandEditorUtility.GetPreviewObject(beforeClear);
+            CommandEditorUtility.CreateGuideLine(previewObj, Helper, beforeClear);
 
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewObj.transform);
-            arc.SetPos(new Vector3(0, Helper.GetTimeInterval(4, beatDelta) * Speed));
-            arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror, Helper.DebugSpherePrefab).Forget();
+            arc.SetPos(new Vector3(0, new Lpb(4, beatDelta).Time * Speed));
+            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugSpherePrefab).Forget();
         }
 #endif
     }

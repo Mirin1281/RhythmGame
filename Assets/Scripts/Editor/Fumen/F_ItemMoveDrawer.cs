@@ -28,13 +28,13 @@ namespace NoteCreating.Editor
                 h.PropertyField("option", overrideName: "Length");
                 h.SetY();
             }
-            else if (itemType is ItemType.NormalNote or ItemType.SlideNote or ItemType.FlickNote)
+            else if (itemType is ItemType.NormalNote or ItemType.SlideNote)
             {
                 h.PropertyField("setJudge");
                 h.SetY();
             }
 
-            h.PropertyField("lifeTime");
+            h.PropertyField("lifeLpb");
             h.SetY();
 
             h.PropertyField("isChainWait");

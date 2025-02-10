@@ -6,7 +6,7 @@ namespace NoteCreating
     [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
     public class F_Lyrith_MoveHold : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
 

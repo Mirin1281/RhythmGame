@@ -4,37 +4,16 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆一般 ノーツ生成", -100), System.Serializable]
+    [AddTypeMenu("◆一般 ノーツ生成", -100)]
     public class F_General : NoteCreateBase<NoteData>
     {
-        [SerializeField] NoteData[] noteDatas;
+        [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override async UniTask MoveAsync(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data)
         {
-            await UniTask.CompletedTask;
-
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, Helper.GetTimeInterval(data.Length), expectType));
-            }
-
-            /*AddExpect();
-            float baseTime = CurrentTime - Delta;
-            float time = 0f;
-            while (note.IsActive && time < 8f)
-            {
-                time = CurrentTime - baseTime;
-                note.SetPos(new Vector3(data.X, GetStartBase() - time * Speed));
-                await Helper.Yield();
-            }*/
-            WhileYield(8f, t =>
-            {
-                if (note.IsActive == false) return;
-                note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
-            });
-            AddExpect();
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, Vector2.zero, MoveTime - Delta, data.Length, ExpectType.Y_Static));
+            DropAsync(note, data.X).Forget();
         }
 
 #if UNITY_EDITOR

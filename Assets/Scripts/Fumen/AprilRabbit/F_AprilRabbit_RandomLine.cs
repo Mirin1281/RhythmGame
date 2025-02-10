@@ -10,9 +10,9 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
         [SerializeField] int count = 96;
-        [SerializeField] float waitLPB = 16;
+        [SerializeField] Lpb waitLPB = new Lpb(16);
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
 

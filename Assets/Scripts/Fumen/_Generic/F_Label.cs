@@ -6,9 +6,9 @@ namespace NoteCreating
     [AddTypeMenu("◇ラベル"), System.Serializable]
     public class F_Label : CommandBase
     {
-        protected override UniTask ExecuteAsync()
+        protected override UniTaskVoid ExecuteAsync()
         {
-            return UniTask.CompletedTask;
+            return default;
         }
 
 #if UNITY_EDITOR

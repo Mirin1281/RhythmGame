@@ -7,26 +7,25 @@ namespace NoteCreating
     public class F_Lyrith_RotateHold : CommandBase
     {
         [SerializeField] Mirror mirror;
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
-            MoveHold(-2, 4, true);
-            MoveHold(2, 4, false);
+            MoveHold(-2, new Lpb(4), true);
+            MoveHold(2, new Lpb(4), false);
         }
 
-        void MoveHold(float x, float length, bool left)
+        void MoveHold(float x, Lpb length, bool left)
         {
-            var holdTime = Helper.GetTimeInterval(length);
-            var hold = Helper.GetHold(holdTime * Speed);
-            var startPos = new Vector2(mirror.Conv(x), GetStartBase());
+            var hold = Helper.GetHold(length * Speed);
+            var startPos = new Vector2(mirror.Conv(x), StartBase);
             var toPos = new Vector2(mirror.Conv(x), 0);
             hold.SetMaskPos(toPos);
             hold.SetMaskLength(10);
 
             float expectTime = startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+            Helper.NoteInput.AddExpect(hold, expectTime, length);
 
-            MoveRotateAsync(hold, startPos, toPos, expectTime, holdTime, left).Forget();
+            MoveRotateAsync(hold, startPos, toPos, expectTime, length.Time, left).Forget();
 
 
             async UniTask MoveRotateAsync(HoldNote hold, Vector2 startPos, Vector2 toPos, float expectTime, float holdingTime, bool left)

@@ -13,7 +13,7 @@ namespace NoteCreating
 
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             float delta = await WaitOnTiming();
             if (isChainWait)
@@ -51,7 +51,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.UnNoteCommandColor;
+            return CommandEditorUtility.CommandColor_UnNote;
         }
 
         protected override string GetSummary()

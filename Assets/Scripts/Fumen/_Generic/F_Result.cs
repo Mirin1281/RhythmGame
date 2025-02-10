@@ -6,7 +6,7 @@ namespace NoteCreating
     [AddTypeMenu("◇リザルト移行", 100), System.Serializable]
     public class F_Result : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);
@@ -20,7 +20,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.UnNoteCommandColor;
+            return CommandEditorUtility.CommandColor_UnNote;
         }
 #endif
     }

@@ -7,14 +7,14 @@ namespace NoteCreating
     public class F_JaggedArc : CommandBase
     {
         [SerializeField] Mirror mirror;
-        [SerializeField] float jagInterval = 16f;
-        [SerializeField] float length = 2;
+        [SerializeField] Lpb jagInterval = new Lpb(16f);
+        [SerializeField] Lpb length = new Lpb(2);
         [Space(20)]
         [SerializeField] float startWidth;
         [SerializeField] float fromWidth = 6;
         [SerializeField] EaseType easeType = EaseType.Linear;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             int count = Mathf.RoundToInt(jagInterval / length);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
@@ -25,14 +25,14 @@ namespace NoteCreating
                 if (i == 0)
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), 0,
-                        ArcCreateData.VertexType.Linear, true, true, 0, jagInterval);
+                        mirror.Conv(easing.Ease(i) * a), default,
+                        ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
                 }
                 else
                 {
                     datas[i] = new ArcCreateData(
                         mirror.Conv(easing.Ease(i) * a), jagInterval,
-                        ArcCreateData.VertexType.Linear, false, true, 0, jagInterval);
+                        ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
             Arc(datas);
@@ -46,10 +46,9 @@ namespace NoteCreating
                 delta = Delta;
             }
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror).Forget();
+            arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
 
-            Vector3 startPos = new Vector3(0, GetStartBase());
-            DropAsync(arc, startPos, delta).Forget();
+            DropAsync(arc, 0, delta).Forget();
             Helper.NoteInput.AddArc(arc);
             return arc;
         }
@@ -82,12 +81,12 @@ namespace NoteCreating
 
         void Preview(bool beforeClear = true, int beatDelta = 1)
         {
-            GameObject previewObj = FumenDebugUtility.GetPreviewObject();
-            FumenDebugUtility.CreateGuideLine(previewObj, Helper, beforeClear);
+            GameObject previewObj = CommandEditorUtility.GetPreviewObject();
+            CommandEditorUtility.CreateGuideLine(previewObj, Helper, beforeClear);
 
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewObj.transform);
-            arc.SetPos(new Vector3(0, Helper.GetTimeInterval(4, beatDelta) * Speed));
+            arc.SetPos(new Vector3(0, new Lpb(4, beatDelta).Time * Speed));
 
             int count = Mathf.RoundToInt(jagInterval / length);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
@@ -98,17 +97,17 @@ namespace NoteCreating
                 if (i == 0)
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), 0,
-                        ArcCreateData.VertexType.Linear, true, true, 0, jagInterval);
+                        mirror.Conv(easing.Ease(i) * a), default,
+                        ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
                 }
                 else
                 {
                     datas[i] = new ArcCreateData(
                         mirror.Conv(easing.Ease(i) * a), jagInterval,
-                        ArcCreateData.VertexType.Linear, false, true, 0, jagInterval);
+                        ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
-            arc.DebugCreateNewArcAsync(datas, Helper.GetTimeInterval(1) * Speed, mirror, Helper.DebugSpherePrefab).Forget();
+            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugSpherePrefab).Forget();
         }
 #endif
     }

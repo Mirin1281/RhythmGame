@@ -21,7 +21,7 @@ namespace NoteCreating
 
         public void InitPools(FumenData fumen)
         {
-            RegularPool.Init(fumen.NormalPoolCount, fumen.SlidePoolCount, fumen.FlickPoolCount);
+            RegularPool.Init(fumen.NormalPoolCount, fumen.SlidePoolCount);
             HoldPool.Init(fumen.HoldPoolCount);
             ArcPool.Init(fumen.ArcPoolCount);
             LinePool.Init(fumen.LinePoolCount);

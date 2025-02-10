@@ -4,13 +4,12 @@ using System;
 using CriWare;
 using NoteCreating;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 /// <summary>
-/// シングルトン
+/// オーディオと全体のタイミングを管理するシングルトン
 /// </summary>
 public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 {
@@ -19,7 +18,9 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     [SerializeField] bool skipOnStart;
     [SerializeField, Range(0, 1)] float timeRate;
 
-    readonly int tolerance = 10;
+#if UNITY_EDITOR
+    static readonly int skipExecuteTolerance = 10; // 途中再生時、値x4分音符前のコマンドを発火します
+#endif
 
     FumenData fumenData;
     float bpm;
@@ -32,7 +33,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     MusicSelectData SelectData => fumenData.MusicSelectData;
 
     /// <summary>
-    /// (ビートの回数, 誤差)
+    /// 引数は(ビートの回数, 誤差)
     /// </summary>
     public event Action<int, float> OnBeat;
     public float CurrentTime
@@ -58,14 +59,16 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
             float skipTime = atomSource.GetLength() * timeRate;
             currentTime = skipTime;
             atomSource.startTime = Mathf.RoundToInt(skipTime * 1000f);
-            int b = Mathf.RoundToInt(skipTime / (float)BeatInterval);
-            beatCount = Mathf.Clamp(b - tolerance, 0, int.MaxValue);
 
-            foreach (var generateData in fumenData.Fumen.GetReadOnlyCommandDataList())
+            int culcedBeatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval);
+            beatCount = Mathf.Clamp(culcedBeatCount - skipExecuteTolerance, 0, int.MaxValue);
+
+            foreach (var commandData in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
-                if (b >= generateData.BeatTiming + tolerance && generateData.GetCommandBase() is IZone zone)
+                if (culcedBeatCount >= commandData.BeatTiming + skipExecuteTolerance && commandData.GetCommandBase() is INotSkipCommand)
                 {
-                    zone.CallZone(skipTime - (generateData.BeatTiming + tolerance) * (float)BeatInterval);
+                    float delta = skipTime - (commandData.BeatTiming + skipExecuteTolerance + SelectData.StartBeatOffset - 8) * (float)BeatInterval;
+                    commandData.Execute(GameObject.FindAnyObjectByType<NoteCreateHelper>(), delta);
                 }
             }
         }

@@ -10,9 +10,6 @@ namespace NoteCreating
         [Space(10)]
         [SerializeField] Sprite slideSprite;
         [SerializeField] Sprite slideMultitapSprite;
-        [Space(10)]
-        [SerializeField] Sprite flickSprite;
-        [SerializeField] Sprite flickMultitapSprite;
 
         public RegularNote GetNote(RegularNoteType type, bool isMultitap = false)
         {
@@ -20,7 +17,6 @@ namespace NoteCreating
             {
                 RegularNoteType.Normal => 0,
                 RegularNoteType.Slide => 1,
-                RegularNoteType.Flick => 2,
                 _ => -1
             };
             if (index == -1) return null;
@@ -41,7 +37,6 @@ namespace NoteCreating
         {
             RegularNoteType.Normal => normalSprite,
             RegularNoteType.Slide => slideSprite,
-            RegularNoteType.Flick => flickSprite,
             RegularNoteType.Hold => null,
             _ => throw new System.Exception()
         };
@@ -50,7 +45,6 @@ namespace NoteCreating
         {
             RegularNoteType.Normal => normalMultitapSprite,
             RegularNoteType.Slide => slideMultitapSprite,
-            RegularNoteType.Flick => flickMultitapSprite,
             RegularNoteType.Hold => null,
             _ => throw new System.Exception()
         };

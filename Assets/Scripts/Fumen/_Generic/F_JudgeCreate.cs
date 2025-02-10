@@ -10,11 +10,11 @@ namespace NoteCreating
         [SerializeField] Vector2 pos;
         [SerializeField] bool isVerticalRange;
         [SerializeField] float rotate;
-        [SerializeField] float delayAfter;
+        [SerializeField] Lpb delayAfter;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
-            float time = Helper.GetTimeInterval(4, 6) + Helper.GetTimeInterval(delayAfter);
+            float time = MoveTime + delayAfter.Time;
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(judgeNoteType, pos, time - Delta, isVerticalRange, rotate));
             await UniTask.CompletedTask;
         }

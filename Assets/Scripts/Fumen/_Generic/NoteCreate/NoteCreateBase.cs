@@ -1,142 +1,77 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections.Generic;
 
 namespace NoteCreating
 {
-    public interface INoteData
-    {
-        public RegularNoteType Type { get; }
-        public float X { get; }
-        public float Wait { get; }
-        public float Length { get; }
-    }
-
-    [Serializable]
-    public struct NoteData : INoteData
-    {
-        [SerializeField, Min(0)] float wait;
-        [SerializeField] RegularNoteType type;
-        [SerializeField] float x;
-        [SerializeField, Min(0)] float length;
-
-        public readonly float Wait => wait;
-        public readonly RegularNoteType Type => type;
-        public readonly float X => x;
-        public readonly float Length => length;
-
-        public NoteData(float wait, RegularNoteType noteType = RegularNoteType.Normal, float x = 0, float length = 4)
-        {
-            this.wait = wait;
-            this.type = noteType;
-            this.x = x;
-            this.length = length;
-        }
-    }
-
-    [Serializable]
-    public struct NoteDataAdvanced : INoteData
-    {
-        [SerializeField, Min(0)] float wait;
-        [SerializeField] RegularNoteType type;
-        [SerializeField] float x;
-        [SerializeField, Min(0)] float length;
-        [SerializeField] float option1;
-        [SerializeField] float option2;
-
-        public readonly float Wait => wait;
-        public readonly RegularNoteType Type => type;
-        public readonly float X => x;
-        public readonly float Length => length;
-        public readonly float Option1 => option1;
-        public readonly float Option2 => option2;
-
-        public NoteDataAdvanced(float wait, RegularNoteType noteType = RegularNoteType.Normal, float x = 0, float length = 4, float option1 = 0, float option2 = 0)
-        {
-            this.wait = wait;
-            this.type = noteType;
-            this.x = x;
-            this.length = length;
-            this.option1 = option1;
-            this.option2 = option2;
-        }
-    }
-
     public abstract class NoteCreateBase<T> : CommandBase where T : struct, INoteData
     {
         [SerializeField] protected Mirror mirror;
         [SerializeField] float speedRate = 1f;
 
+        protected abstract T[] NoteDatas { get; }
+        protected abstract void Move(RegularNote note, T data);
+
         /// <summary>
-        /// NoteData内のWaitの加算(秒単位)
+        /// NoteData内のWaitの加算
         /// </summary>
-        protected float WaitDelta { get; private set; }
+        protected Lpb WaitDelta { get; private set; }
+
         protected override float Speed => base.Speed * speedRate;
 
-        protected abstract T[] NoteDatas { get; }
-        protected abstract UniTask MoveAsync(RegularNote note, T data);
-        protected virtual void OnExecute() { }
-        protected virtual float MoveTime => Helper.GetTimeInterval(4, 6);
-
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
-            WaitDelta = 0;
-            OnExecute();
+            WaitDelta = default;
             foreach (var data in NoteDatas)
             {
                 await Wait(data.Wait);
-                WaitDelta += Helper.GetTimeInterval(data.Wait);
+                WaitDelta += data.Wait;
                 CreateNote(data);
             }
-        }
 
-        void CreateNote(in T noteData)
-        {
-            var type = noteData.Type;
-            if (type is RegularNoteType.Normal or RegularNoteType.Slide or RegularNoteType.Flick)
+
+            void CreateNote(in T noteData)
             {
-                RegularNote note = Helper.GetRegularNote(type);
-                MoveAsync(note, noteData).Forget();
-            }
-            else if (type is RegularNoteType.Hold)
-            {
-                if (noteData.Length == 0)
+                var type = noteData.Type;
+                if (type is RegularNoteType.Normal or RegularNoteType.Slide)
                 {
-                    Debug.LogWarning("ホールドの長さが0です");
-                    return;
+                    RegularNote note = Helper.GetRegularNote(type);
+                    Move(note, noteData);
                 }
-                float holdTime = Helper.GetTimeInterval(noteData.Length);
-                HoldNote hold = Helper.GetHold(holdTime * Speed);
-                Vector3 startPos = mirror.Conv(new Vector3(noteData.X, GetStartBase()));
-                hold.SetMaskPos(new Vector2(startPos.x, 0));
-                MoveAsync(hold, noteData).Forget();
+                else if (type is RegularNoteType.Hold)
+                {
+                    if (noteData.Length == default)
+                    {
+                        Debug.LogWarning("ホールドの長さが0です");
+                        return;
+                    }
+                    HoldNote hold = Helper.GetHold(noteData.Length * Speed);
+                    Vector3 startPos = mirror.Conv(new Vector3(noteData.X, StartBase));
+                    hold.SetMaskPos(new Vector2(startPos.x, 0));
+                    Move(hold, noteData);
+                }
             }
         }
 
         /// <summary>
         /// 指定したタイミングで処理ができるWhileYieldAsync
         /// </summary>
-        /// <param name="waitDelta">グループ先頭からとの時間の差(秒)</param>
         /// <param name="time"></param>
         /// <param name="action"></param>
         /// <param name="loopCount">タイミングの数</param>
         /// <param name="loopWait">タイミングの間隔(LPB)</param>
         /// <param name="timingAction"></param>
+        /// <param name="waitDelta"></param>
         /// <param name="delta"></param>
         /// <returns></returns>
         protected async UniTask WhileYieldGroupAsync(
-            float time, Action<float> action, int loopCount, float loopWait, Action<(int index, float t, float d)> timingAction, float waitDelta = -1, float delta = -1)
+            float time, Action<float> action, int loopCount, Lpb loopWait, Action<(int index, float t, float d)> timingAction, float delta = -1)
         {
-            if (waitDelta == -1)
-            {
-                waitDelta = WaitDelta;
-            }
             int index = 0;
-            float next = Helper.GetTimeInterval(loopWait) - waitDelta;
-            while (next < 0 && index < loopCount)
+            Lpb next = loopWait - WaitDelta;
+            while (next.Time < 0 && index < loopCount)
             {
-                next += Helper.GetTimeInterval(loopWait);
+                next += loopWait;
                 index++;
             }
 
@@ -150,18 +85,18 @@ namespace NoteCreating
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
-                if (t >= next)
+                if (t >= next.Time)
                 {
                     if (index < loopCount)
                     {
-                        float d = t - next;
-                        next += Helper.GetTimeInterval(loopWait);
+                        float d = t - next.Time;
+                        next += loopWait;
                         timingAction.Invoke((index, t, d));
                         index++;
                     }
                     else
                     {
-                        next = float.MaxValue;
+                        next = new Lpb(float.MinValue);
                     }
                 }
                 await Helper.Yield();
@@ -172,25 +107,21 @@ namespace NoteCreating
         /// <summary>
         /// 指定したタイミングで処理ができるWhileYieldAsync
         /// </summary>
-        /// <param name="waitDelta">グループ先頭からとの時間の差(秒)</param>
         /// <param name="time"></param>
         /// <param name="action"></param>
         /// <param name="timings">タイミングの配列</param>
         /// <param name="timingAction"></param>
+        /// <param name="waitDelta"></param>
         /// <param name="delta"></param>
         /// <returns></returns>
         protected async UniTask WhileYieldGroupAsync(
-            float time, Action<float> action, float[] timings, Action<(int index, float t, float d)> timingAction, float waitDelta = -1, float delta = -1)
+            float time, Action<float> action, Lpb[] timings, Action<(int index, float t, float d)> timingAction, float delta = -1)
         {
-            if (waitDelta == -1)
-            {
-                waitDelta = WaitDelta;
-            }
-            float next = Helper.GetTimeInterval(timings[0]) - waitDelta;
+            Lpb next = timings[0] - WaitDelta;
             int index = 1;
-            while (next < 0 && index < timings.Length)
+            while (next.Time < 0 && index < timings.Length)
             {
-                next += Helper.GetTimeInterval(timings[index]);
+                next += timings[index];
                 index++;
             }
 
@@ -204,18 +135,18 @@ namespace NoteCreating
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
-                if (t >= next)
+                if (t >= next.Time)
                 {
                     if (index < timings.Length)
                     {
-                        float d = t - next;
-                        next += Helper.GetTimeInterval(timings[index]);
+                        float d = t - next.Time;
+                        next += timings[index];
                         timingAction.Invoke((index, t, d));
                         index++;
                     }
                     else
                     {
-                        next = float.MaxValue;
+                        next = new Lpb(float.MinValue);
                     }
                 }
                 await Helper.Yield();
@@ -251,7 +182,7 @@ namespace NoteCreating
 
         void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
-            FumenDebugUtility.DebugPreview2DNotes(NoteDatas, Helper, mirror, beforeClear, beatDelta);
+            CommandEditorUtility.DebugPreview2DNotes(NoteDatas, Helper, mirror, beforeClear, beatDelta);
         }
 #endif
     }

@@ -21,7 +21,7 @@ namespace NoteCreating
         const string TmproName = "TutorialTMP";
         const string CanvasName = "Canvas";
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
 

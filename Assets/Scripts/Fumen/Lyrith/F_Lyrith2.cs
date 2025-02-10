@@ -11,10 +11,10 @@ namespace NoteCreating
     public class F_Lyrith2 : CommandBase
     {
         [SerializeField] float startY = 7f;
-        [SerializeField] RegularNoteType noteType = RegularNoteType.Flick;
+        [SerializeField] RegularNoteType noteType = RegularNoteType.Slide;
         [SerializeField] float moveTime = 1.37f;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
             Create(new Vector2(-3f, startY), 720f);

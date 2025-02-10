@@ -17,7 +17,6 @@ namespace NoteCreating
         [field: Space(10), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;
         [field: SerializeField] public int SlidePoolCount { get; private set; } = -1;
-        [field: SerializeField] public int FlickPoolCount { get; private set; } = -1;
         [field: SerializeField] public int HoldPoolCount { get; private set; } = -1;
         [field: SerializeField] public int ArcPoolCount { get; private set; } = -1;
         [field: SerializeField] public int LinePoolCount { get; private set; } = -1;
@@ -36,7 +35,6 @@ namespace NoteCreating
             NormalPoolCount = poolCounts[0];
             CirclePoolCount = poolCounts[1];
             SlidePoolCount = poolCounts[2];
-            FlickPoolCount = poolCounts[3];
             HoldPoolCount = poolCounts[4];
             ArcPoolCount = poolCounts[5];
             LinePoolCount = poolCounts[6];

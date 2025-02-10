@@ -93,6 +93,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         SpeedBase = 1f;
         Application.targetFrameRate = 60;
         FumenReference = null;
+        Application.quitting += SaveData;
 
         if (useJsonData)
         {
@@ -118,15 +119,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     }
 
     // OnApplicationQuitはタスクキルすると呼ばれないっぽい
-    void OnApplicationPause(bool goBack)
-    {
-        if (goBack)
-        {
-            OnApplicationQuit();
-        }
-    }
-
-    void OnApplicationQuit()
+    static void SaveData()
     {
         if (useJsonData)
         {

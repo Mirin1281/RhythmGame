@@ -14,7 +14,7 @@ namespace NoteCreating
         int loopCount = 16;
 
         [SerializeField, Min(0)]
-        float loopWait = 4;
+        Lpb loopWait = new Lpb(4);
         [Space(10)]
         [SerializeField] float moveDirection = 270;
         [SerializeField] bool isAdaptiveSpeed = true;
@@ -22,7 +22,7 @@ namespace NoteCreating
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             for (int i = 0; i < loopCount; i++)
             {
@@ -36,11 +36,11 @@ namespace NoteCreating
             Line line = Helper.GetLine();
             line.SetAlpha(0.25f);
             Vector3 dirPos = mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
-            await DropAsync(line, -GetStartBase() * dirPos, isAdaptiveSpeed: isAdaptiveSpeed);
+            await DropAsync(line, -StartBase * dirPos, isAdaptiveSpeed: isAdaptiveSpeed);
             line.SetActive(false);
         }
 
-        new async UniTask DropAsync(ItemBase item, Vector3 startPos, bool isAdaptiveSpeed = true)
+        async UniTask DropAsync(ItemBase item, Vector3 startPos, bool isAdaptiveSpeed = true)
         {
             float baseTime = CurrentTime - Delta;
             float time = 0f;
@@ -49,7 +49,7 @@ namespace NoteCreating
                 while (item.IsActive && time < 3f * RhythmGameManager.DefauleSpeed / Speed)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(new Vector3(startPos.x, GetStartBase() - time * Speed));
+                    item.SetPos(new Vector3(startPos.x, StartBase - time * Speed));
                     await Helper.Yield();
                 }
             }
@@ -69,7 +69,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.LineCommandColor;
+            return CommandEditorUtility.CommandColor_Line;
         }
 
         protected override string GetSummary()

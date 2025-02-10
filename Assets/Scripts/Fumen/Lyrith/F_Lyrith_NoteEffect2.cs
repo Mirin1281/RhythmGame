@@ -7,7 +7,7 @@ namespace NoteCreating
     [AddTypeMenu("Lyrith/【演出】ノーツ上昇"), System.Serializable]
     public class F_Lyrith_NoteEffect2 : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
             int count = 12;

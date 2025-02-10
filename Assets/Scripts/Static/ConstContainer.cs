@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public static class ConstContainer
@@ -11,11 +10,6 @@ public static class ConstContainer
 
     public static readonly string NoteSECategory = "NoteSE";
     public static readonly string SECategory = "SE";
-
-    public static readonly Color DefaultCommandColor = new Color(0.9f, 0.9f, 0.9f, 1f);
-    public static readonly Color UnNoteCommandColor = new Color(0.8f, 0.8f, 0.9f);
-    public static readonly Color LineCommandColor = new Color(0.95f, 0.8f, 0.85f);
-    public static readonly Color NoteCommandColor = new Color32(255, 226, 200, 255);
 
     public static readonly Vector2 ScreenSize = new Vector2(1920, 1080);
 }

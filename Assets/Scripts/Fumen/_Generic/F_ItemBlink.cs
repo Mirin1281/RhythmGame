@@ -14,7 +14,6 @@ namespace NoteCreating
         {
             Normal = 1 << 0,
             Slide = 1 << 1,
-            Flick = 1 << 2,
             Hold = 1 << 3,
             Sky = 1 << 4,
             Arc = 1 << 5,
@@ -22,7 +21,7 @@ namespace NoteCreating
         }
 
         [Space(20)]
-        [SerializeField] BlinkTargets target = BlinkTargets.Normal | BlinkTargets.Slide | BlinkTargets.Flick | BlinkTargets.Hold;
+        [SerializeField] BlinkTargets target = BlinkTargets.Normal | BlinkTargets.Slide | BlinkTargets.Hold;
         [SerializeField, Min(0)] float delay;
         [SerializeField] int blinkCount = 20;
         [SerializeField] int seed = 222;
@@ -30,7 +29,7 @@ namespace NoteCreating
         [SerializeField] Vector2Int showWaitRange = new Vector2Int(1, 3);
         [SerializeField] bool isDelayOneFrame = true;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             if (target == 0) return;
             if (delay > 0)
@@ -44,18 +43,22 @@ namespace NoteCreating
             {
                 items.AddRange(Helper.PoolManager.RegularPool.GetInstances(0));
             }
+            if (target.HasFlag(BlinkTargets.Slide))
+            {
+                items.AddRange(Helper.PoolManager.RegularPool.GetInstances(1));
+            }
             if (target.HasFlag(BlinkTargets.Hold))
             {
-                items.AddRange(Helper.PoolManager.HoldPool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.HoldPool.GetInstances());
             }
             if (target.HasFlag(BlinkTargets.Arc))
             {
-                items.AddRange(Helper.PoolManager.ArcPool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.ArcPool.GetInstances());
             }
 
             if (target.HasFlag(BlinkTargets.Line))
             {
-                items.AddRange(Helper.PoolManager.LinePool.GetInstances(0));
+                items.AddRange(Helper.PoolManager.LinePool.GetInstances());
             }
 
             if (isDelayOneFrame)
@@ -86,7 +89,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.UnNoteCommandColor;
+            return CommandEditorUtility.CommandColor_UnNote;
         }
 #endif
     }

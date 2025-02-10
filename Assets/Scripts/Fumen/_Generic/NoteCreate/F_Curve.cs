@@ -4,41 +4,46 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆ノーツ生成 曲がって落下", -60), System.Serializable]
+    [AddTypeMenu("◆ノーツ生成 カーブノーツ", -60)]
     public class F_Curve : NoteCreateBase<NoteDataAdvanced>
     {
-        [SerializeField] NoteDataAdvanced[] noteDatas = new NoteDataAdvanced[] { new(0, option1: 15) };
+        [Header("オプション1 : カーブの半径 値が小さいほど効果が大きくなります")]
+        [SerializeField] NoteDataAdvanced[] noteDatas = new NoteDataAdvanced[] { new(length: new Lpb(4), option1: 15) };
         protected override NoteDataAdvanced[] NoteDatas => noteDatas;
 
-        protected override async UniTask MoveAsync(RegularNote note, NoteDataAdvanced data)
+        protected override void Move(RegularNote note, NoteDataAdvanced data)
         {
-            await UniTask.CompletedTask;
-            if (data.Option2 != 0) Debug.LogWarning("未使用の値");
-
             void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
             {
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, Helper.GetTimeInterval(data.Length), expectType));
+                    note, pos, MoveTime - Delta, data.Length, expectType));
             }
 
 
-            float moveTime = MoveTime;
-            WhileYield(8f, t =>
+            AddExpect();
+            float lifeTime = MoveTime + 0.5f;
+            if (note.Type == RegularNoteType.Hold)
+            {
+                lifeTime += data.Length.Time;
+            }
+
+            WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;
-                if (t < moveTime)
+                if (t < MoveTime)
                 {
-                    float dir = (moveTime - t) * Speed / data.Option1;
+                    float dir = (MoveTime - t) * Speed / data.Option1;
                     note.SetPos(mirror.Conv(new Vector3(data.X - data.Option1, 0) + data.Option1 * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir))));
                     note.SetRot(mirror.Conv(dir * Mathf.Rad2Deg));
                 }
                 else // ロングの場合、始点を取った後は真っ直ぐ落とす
                 {
-                    note.SetPos(mirror.Conv(new Vector3(data.X, GetStartBase() - t * Speed)));
+                    note.SetPos(mirror.Conv(new Vector3(data.X, StartBase - t * Speed)));
                     note.SetRot(0);
                 }
             });
-            AddExpect();
+
+            if (data.Option2 != 0) Debug.LogWarning("未使用の値");
         }
 
 #if UNITY_EDITOR

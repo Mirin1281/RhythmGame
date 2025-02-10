@@ -6,7 +6,7 @@ namespace NoteCreating
     [AddTypeMenu("Lyrith/アーク2"), System.Serializable]
     public class F_Lyrith_Arc2 : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
             /*Arc(new ArcCreateData[]

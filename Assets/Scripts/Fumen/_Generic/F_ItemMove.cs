@@ -5,20 +5,20 @@ using System;
 namespace NoteCreating
 {
     [AddTypeMenu("◆判定線やノーツを生成して制御", -70), System.Serializable]
-    public class F_ItemMove : CommandBase
+    public class F_ItemMove : CommandBase, INotSkipCommand
     {
         [Serializable]
         public struct EaseData<T> where T : struct
         {
             [SerializeField] T from;
-            [SerializeField, Min(0)] float easeTime;
+            [SerializeField, Min(0)] Lpb easeTime;
             [SerializeField] EaseType easeType;
 
             public readonly T From => from;
-            public readonly float EaseTime => easeTime;
+            public readonly Lpb EaseLpb => easeTime;
             public readonly EaseType EaseType => easeType;
 
-            public EaseData(T from = default, float easeTime = 0, EaseType easeType = EaseType.OutQuad)
+            public EaseData(T from = default, Lpb easeTime = default, EaseType easeType = EaseType.OutQuad)
             {
                 this.from = from;
                 this.easeTime = easeTime;
@@ -29,7 +29,7 @@ namespace NoteCreating
         [Serializable]
         public class CreateData
         {
-            [SerializeField, Min(0), Tooltip("生成を遅らせます")] float delayLPB;
+            [SerializeField, Min(0), Tooltip("生成を遅らせます")] Lpb delayLPB;
             [SerializeField] Vector2 startPos;
             [SerializeField] EaseData<Vector2>[] posEaseDatas = new EaseData<Vector2>[1] { new(default) };
             [SerializeField] float startRot;
@@ -37,7 +37,7 @@ namespace NoteCreating
             [SerializeField, Min(0)] float startAlpha = 1f;
             [SerializeField] EaseData<float>[] alphaEaseDatas = new EaseData<float>[1] { new(1) };
 
-            public float DelayLPB => delayLPB;
+            public Lpb DelayLPB => delayLPB;
             public Vector2 StartPos => startPos;
             public EaseData<Vector2>[] PosEaseDatas => posEaseDatas;
             public float StartRot => startRot;
@@ -50,7 +50,6 @@ namespace NoteCreating
         {
             NormalNote,
             SlideNote,
-            FlickNote,
             HoldNote,
             Line,
         }
@@ -64,7 +63,7 @@ namespace NoteCreating
         [SerializeField] bool setJudge;
 
         [SerializeField, Min(0), Tooltip("判定線の生存時間")]
-        float lifeTime = 0.5f;
+        Lpb lifeLpb = new Lpb(0.5f);
 
         [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと元の時間からの差で発火します")]
         bool isChainWait = false;
@@ -79,7 +78,7 @@ namespace NoteCreating
 
         [SerializeField] CreateData[] createDatas = new CreateData[1];
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             float delta = await WaitOnTiming();
             if (isChainWait)
@@ -116,16 +115,17 @@ namespace NoteCreating
             RotEase(item, data.StartRot, data.RotEaseDatas, delta).Forget();
             AlphaEase(item, data.StartAlpha, data.AlphaEaseDatas, delta).Forget();
 
-            float lpbLifeTime = Helper.GetTimeInterval(lifeTime) + delta;
+            float lpbLifeTime = lifeLpb.Time - delta;
             if (itemType == ItemType.HoldNote)
             {
                 var hold = item as HoldNote;
-                hold.SetLength(Helper.GetTimeInterval(option) * Speed);
+                hold.SetLength(new Lpb(option) * Speed);
                 hold.SetMaskPos(Vector2.one * 100);
             }
-            else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote or ItemType.FlickNote)
+            else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote)
             {
-                Helper.NoteInput.AddExpect(item as RegularNote, lpbLifeTime);
+                if (lpbLifeTime > 0)
+                    Helper.NoteInput.AddExpect(item as RegularNote, lpbLifeTime);
             }
 
             await Helper.WaitSeconds(lpbLifeTime);
@@ -139,7 +139,7 @@ namespace NoteCreating
                 {
                     var data = datas[i];
                     Vector2 start = i == 0 ? startPos + basePos : item.GetPos();
-                    float posTime = Helper.GetTimeInterval(data.EaseTime);
+                    float posTime = data.EaseLpb.Time;
                     var posEasing = new EasingVector2(start, data.From + basePos, posTime, data.EaseType);
                     await WhileYieldAsync(posTime, t =>
                     {
@@ -164,7 +164,7 @@ namespace NoteCreating
                 {
                     var data = datas[i];
                     float start = i == 0 ? startRot : GetNormalizedAngle(item.GetRot());
-                    float rotTime = Helper.GetTimeInterval(data.EaseTime);
+                    float rotTime = data.EaseLpb.Time;
                     var rotEasing = new Easing(start, data.From, rotTime, data.EaseType);
                     await WhileYieldAsync(rotTime, t =>
                     {
@@ -185,7 +185,7 @@ namespace NoteCreating
                 {
                     var data = datas[i];
                     float start = i == 0 ? startAlpha : item.GetAlpha();
-                    float fadeTime = Helper.GetTimeInterval(data.EaseTime);
+                    float fadeTime = data.EaseLpb.Time;
                     var alphaEasing = new Easing(start, data.From, fadeTime, data.EaseType);
                     await WhileYieldAsync(fadeTime, t =>
                     {
@@ -201,7 +201,6 @@ namespace NoteCreating
             {
                 ItemType.NormalNote => Helper.PoolManager.RegularPool.GetNote(RegularNoteType.Normal),
                 ItemType.SlideNote => Helper.PoolManager.RegularPool.GetNote(RegularNoteType.Slide),
-                ItemType.FlickNote => Helper.PoolManager.RegularPool.GetNote(RegularNoteType.Flick),
                 ItemType.HoldNote => Helper.PoolManager.HoldPool.GetNote(),
                 ItemType.Line => Helper.GetLine(),
                 _ => throw new ArgumentException()
@@ -210,7 +209,7 @@ namespace NoteCreating
             if (itemType == ItemType.HoldNote)
             {
                 var hold = item as HoldNote;
-                hold.SetLength(option);
+                hold.SetLength(new Lpb(option) * Speed);
                 return hold;
             }
             return item;
@@ -220,7 +219,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return ConstContainer.LineCommandColor;
+            return CommandEditorUtility.CommandColor_Line;
         }
 
         protected override string GetSummary()

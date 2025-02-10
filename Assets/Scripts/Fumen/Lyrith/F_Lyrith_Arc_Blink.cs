@@ -7,7 +7,7 @@ namespace NoteCreating
     //[AddTypeMenu("Lyrith/アークとスカイ 点滅"), System.Serializable]
     public class F_Lyrith_Arc_Blink : CommandBase
     {
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
         }

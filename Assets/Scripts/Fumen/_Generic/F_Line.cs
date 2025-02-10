@@ -94,7 +94,7 @@ namespace NoteCreating
         [SerializeField]
         LineCreateData[] datas = new LineCreateData[1];*/
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             /*float delta = await WaitOnTiming();
 

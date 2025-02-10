@@ -7,7 +7,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆一般ノーツ生成 テスト", 100), System.Serializable]
+    [AddTypeMenu("◆一般ノーツ生成 テスト", 100)]
     public class F_Ge : NoteCreateBase<NoteData>
     {
         [SerializeField] float radius = 16;
@@ -20,15 +20,13 @@ namespace NoteCreating
         protected override NoteData[] NoteDatas => noteDatas; // インスペクタで一番後ろにしたい
 
 
-        protected override async UniTask MoveAsync(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data)
         {
-            await UniTask.CompletedTask;
-
 #pragma warning disable CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
             void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
             {
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, Helper.GetTimeInterval(data.Length), expectType));
+                    note, pos, MoveTime - Delta, data.Length, expectType));
             }
 #pragma warning restore CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
 
@@ -88,14 +86,11 @@ namespace NoteCreating
 
 
             // 左右に揺れる(waitを加算するとノーツが揃ってグループ化っぽくなる) //
-            /*wait += Helper.GetTimeInterval(data.Wait);
-            float w = wait;
+            /*float w = WaitDelta;
             WhileYield(8f, t =>
             {
                 if (note.IsActive == false) return;
-
                 var addX = 3f * Mathf.Cos((t + w) * 2f);
-
                 var pos = mirror.Conv(new Vector3(data.X + addX, (MoveTime - t) * Speed));
                 note.SetPos(pos);
             });
@@ -132,78 +127,16 @@ namespace NoteCreating
         }).Forget();*/
 
 
-            // 上の関数を展開すると //
-            /*wait += Helper.GetTimeInterval(data.Wait);
-
-            float[] timings = new float[] { 0.6667f, 4, 8, 4, 8, 4, 4, 4, 4 };
-            int index = 0;
-            float next = -wait;
-            while (next < 0 && index < timings.Length)
-            {
-                next += Helper.GetTimeInterval(timings[index]);
-                index++;
-            }
-
-            WhileYield(8f, t => // 普通の落下
-            {
-                if (note.IsActive == false) return;
-                note.SetPos(new Vector3(data.X, (MoveTime - t) * Speed));
-
-                if (t >= next)
-                {
-                    if (index < timings.Length)
-                    {
-                        float d = t - next;
-                        next += Helper.GetTimeInterval(timings[index]);
-
-                        WhileYield(0.2f, s =>
-                        {
-                            s -= d;
-                            float amp = Mathf.Sin(180 / (8 - 1) * s.Ease(0, 8, 0.2f, EaseType.Linear) * Mathf.Deg2Rad) * 0.5f;
-                            var randPos = note.GetPos() + amp * new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
-                            note.SetPos(randPos);
-                        });
-
-                        index++;
-                    }
-                    else
-                    {
-                        next = float.MaxValue;
-                    }
-                }
-            });
-            AddExpect();*/
-
-
-            // イージング変速 タイプ1 //
-            /*float easeTime = Helper.GetTimeInterval(4);
-            float unEaseTime = MoveTime - easeTime;
-
-            WhileYield(8f, t => // 普通の落下 → 着地Lpb4前からイージングして着地
-            {
-                if (note.IsActive == false) return;
-                float c;
-                if (t < unEaseTime)
-                {
-                    c = MoveTime - t;
-                }
-                else
-                {
-                    float t2 = t - unEaseTime;
-                    c = easeTime - t2.Ease(0, easeTime, easeTime, EaseType.InOutQuad);
-                }
-                note.SetPos(new Vector3(data.X, c * Speed));
-            });
-            AddExpect();*/
-
 
             // イージング変速 タイプ2 //
-            // グループ化し、滑らかに繋ぐ (速度変更コマンドでノーツ間隔縮小 → 拡大するとよりよい)
-            //EasingNote(note, data, easeTime: 1f);
+            // グループ化し、滑らかに繋ぐ
+            EasingDropGroupNote(note, data, wholeLpb: new Lpb(2f), easingRate: 0.5f, acceleration: 2f).Forget();
+            //EasingSqrtDropGroupNote(note, data, wholeTime: 2f, easingRate: 0.5f).Forget();
+            AddExpect();
 
 
             // 翻るノーツ //
-            AddExpect();
+            /*AddExpect();
 
             WhileYieldGroupAsync(8f, t =>
             {
@@ -221,46 +154,75 @@ namespace NoteCreating
                     float rot = s.Ease(0, status.index % 2 == 0 ? 180 : -180, time, EaseType.OutQuad);
                     note.SetRot(rot);
                 });
-            }).Forget();
+            }).Forget();*/
 
 
-            // ノーツ移動 //
+            // イージングで座標移動と回転 //
+            //var expectPos = EasingTransformGroupNote(note, data, deg, pos, Helper.GetTimeInterval(0.5f));
+            //AddExpect(expectPos, ExpectType.Static);
 
 
-        }
-
-        void EasingNote(RegularNote note, NoteData data, float easeTime, float acceleration = 2f)
-        {
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, Helper.GetTimeInterval(data.Length), expectType));
-            }
-
-            float w = WaitDelta;
-
-            easeTime = Helper.GetTimeInterval(easeTime);
-            AddExpect();
-            WhileYield(8f, t =>
+            // 判定無しノーツ //
+            /*WhileYield(8f, t => // 普通に落下
             {
                 if (note.IsActive == false) return;
-                t += w;
-                float c = 0;
-                if (t < MoveTime - easeTime)
+                note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
+            });
+            UniTask.Void(async () =>
+            {
+                float time = MoveTime - Delta;
+                if (note is HoldNote hold)
                 {
-                    c = easeTime / acceleration;
+                    time += Helper.GetTimeInterval(data.Length);
                 }
-                else if (t < MoveTime)
+                await UniTask.Delay(System.TimeSpan.FromSeconds(time));
+                note.SetActive(false);
+            });*/
+
+
+            // 逆走 // => 
+        }
+
+        /// <summary>
+        /// ノーツをイージングさせながら落下します
+        /// </summary>
+        /// <param name="note"></param>
+        /// <param name="data"></param>
+        /// <param name="wholeLpb">落下に使う総時間</param>
+        /// <param name="easingRate">wholeTimeの内、この値の割合をイージングに使用する</param>
+        /// <param name="acceleration">加速度</param>
+        async UniTaskVoid EasingDropGroupNote(RegularNote note, NoteData data, Lpb wholeLpb, float easingRate = 0.5f, float acceleration = 2f)
+        {
+            float w = WaitDelta.Time;
+            Lpb stopLpb = MoveLpb - wholeLpb;
+            Lpb easeLpb = wholeLpb * easingRate;
+            float startY = wholeLpb.Time * (easingRate / acceleration - easingRate + 1);
+
+            //var easing = new Easing(wholeTime, wholeTime - easeTime / acceleration, easeTime, EaseType.InQuad);
+            float baseTime = CurrentTime - Delta;
+            while (note.IsActive)
+            {
+                float t = CurrentTime - baseTime + w;
+
+                float c;
+                if (t < stopLpb.Time)
                 {
-                    float t2 = t - (MoveTime - easeTime);
-                    c = easeTime / acceleration * (1 - Pow(t2 / easeTime, acceleration));
+                    c = startY;
+                }
+                else if (t < MoveTime - wholeLpb.Time * (1 - easingRate))
+                {
+                    float t2 = t - stopLpb.Time;
+                    //c = easing.Ease(t2) - deltaY; // Easing使用時。下記は展開したもので、実数乗に対応
+                    float v = Pow(t2 / easeLpb.Time, acceleration);
+                    c = startY - easeLpb.Time / acceleration * v;
                 }
                 else
                 {
                     c = MoveTime - t;
                 }
-                note.SetPos(new Vector3(data.X, (c + w) * Speed));
-            });
+                note.SetPos(new Vector3(mirror.Conv(data.X), (c + w) * Speed));
+                await Helper.Yield();
+            }
 
 
             // 累乗の計算 (intに近いものは最適化されます (されてんのか？))
@@ -282,6 +244,80 @@ namespace NoteCreating
                     return Mathf.Pow(value, pow);
                 }
             }
+        }
+
+        /*async UniTaskVoid EasingSqrtDropGroupNote(RegularNote note, NoteData data, float wholeTime = 2f, float easingRate = 0.5f)
+        {
+            float w = WaitDelta.Time;
+            wholeTime = Helper.GetTimeInterval(wholeTime);
+            float stopTime = MoveTime - wholeTime;
+            float easeTime = MoveTime - wholeTime * (1 - easingRate);
+            float startY = wholeTime * (1 - easingRate / 2f);
+
+            float baseTime = CurrentTime - Delta;
+            while (note.IsActive)
+            {
+                float t = CurrentTime - baseTime + w;
+
+                float c;
+                if (t < stopTime)
+                {
+                    c = startY;
+                }
+                else if (t < easeTime)
+                {
+                    float t2 = t - stopTime;
+                    c = startY - t2 * t2 / (wholeTime * easingRate * 2f);
+                }
+                else
+                {
+                    c = MoveTime - t;
+                }
+                note.SetPos(new Vector3(mirror.Conv(data.X), (c + w) * Speed));
+                await Helper.Yield();
+            }
+        }*/
+
+        Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float toDeg, Vector2 toPos, float easeTime, EaseType easeType = EaseType.OutQuad)
+        {
+            var dEasing = new Easing(0, toDeg, easeTime, easeType);
+            var pEasing = new EasingVector2(Vector2.zero, toPos, easeTime, easeType);
+
+            // 先頭を基準とした着地時間、着地座標を求める
+            float w = WaitDelta.Time;
+            float expectTime = MoveTime + w;
+            float a = Mathf.Clamp(expectTime, 0, easeTime);
+            float d = dEasing.Ease(a);
+            Vector2 p = pEasing.Ease(a);
+
+            var expectPos = mirror.Conv(p + MyUtility.GetRotatedPos(new Vector2(data.X, 0), d));
+
+            // 移動
+            WhileYield(8f, t =>
+            {
+                float d;
+                Vector2 p;
+                if (t < easeTime)
+                {
+                    float a = Mathf.Clamp(t + w, 0, easeTime);
+                    d = dEasing.Ease(a);
+                    p = pEasing.Ease(a);
+                }
+                else
+                {
+                    d = toDeg;
+                    p = toPos;
+                }
+                note.SetRot(mirror.Conv(d));
+                var basePos = MyUtility.GetRotatedPos(new Vector2(data.X, (MoveTime - t) * Speed), d);
+                note.SetPos(mirror.Conv(basePos + p));
+                if (note.Type == RegularNoteType.Hold)
+                {
+                    var hold = note as HoldNote;
+                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(data.X, 0), d) + p));
+                }
+            });
+            return expectPos;
         }
     }
 }

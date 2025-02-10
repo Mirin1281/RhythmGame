@@ -8,7 +8,7 @@ namespace NoteCreating
     {
         //[SerializeField] float decay = 15f;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
             /*MyArc(new ArcCreateData[]

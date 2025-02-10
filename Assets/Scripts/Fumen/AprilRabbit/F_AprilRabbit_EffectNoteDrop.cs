@@ -9,20 +9,20 @@ namespace NoteCreating
     public class F_AprilRabbit_EffectNoteDrop : CommandBase
     {
         [SerializeField] Mirror mirror;
-        [SerializeField] RegularNoteType noteType = RegularNoteType.Flick;
+        [SerializeField] RegularNoteType noteType = RegularNoteType.Slide;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
 
             var rand = new System.Random(221);
-            await Wait(16);
-            await DropNote(new Vector2(0, 6)).Wait(16);
-            await DropNote(new Vector2(2, 5.5f)).Wait(16);
-            await DropNote(new Vector2(-3, 5.5f)).Wait(8);
-            await DropNote(new Vector2(5, 5)).Wait(8);
-            await DropNote(new Vector2(-7, 5)).Wait(8);
-            await DropNote(new Vector2(-8.5f, 4.5f)).Wait(8);
+            await Wait(new Lpb(16));
+            await DropNote(new Vector2(0, 6)).Wait(new Lpb(16));
+            await DropNote(new Vector2(2, 5.5f)).Wait(new Lpb(16));
+            await DropNote(new Vector2(-3, 5.5f)).Wait(new Lpb(8));
+            await DropNote(new Vector2(5, 5)).Wait(new Lpb(8));
+            await DropNote(new Vector2(-7, 5)).Wait(new Lpb(8));
+            await DropNote(new Vector2(-8.5f, 4.5f)).Wait(new Lpb(8));
 
 
             F_AprilRabbit_EffectNoteDrop DropNote(Vector2 startPos)

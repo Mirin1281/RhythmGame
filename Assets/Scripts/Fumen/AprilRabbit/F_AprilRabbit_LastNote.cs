@@ -8,7 +8,7 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             await WaitOnTiming();
 
@@ -17,7 +17,7 @@ namespace NoteCreating
             note.SetPos(pos);
             note.IsVerticalRange = true;
             Helper.PoolManager.SetSimultaneousSprite(note);
-            float expectTime = Helper.GetTimeInterval(4, 7) - Delta;
+            float expectTime = new Lpb(4, 7).Time - Delta;
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, expectTime));
 
             var line = Helper.GetLine();
@@ -36,7 +36,7 @@ namespace NoteCreating
                 line2.SetRot(easing.Ease(t) + 90);
             });
 
-            await Wait(4, 6);
+            await WaitOnTiming();
 
             var judgeLine = Helper.GetLine();
             judgeLine.SetWidth(100);
@@ -58,7 +58,7 @@ namespace NoteCreating
 
             CircleAsync(pos).Forget();
 
-            await Wait(4, 1);
+            await Wait(new Lpb(4));
             line.FadeOut(0);
             line2.FadeOut(0);
         }
@@ -73,7 +73,7 @@ namespace NoteCreating
             while (circle.IsActive && t < 3f)
             {
                 t = CurrentTime - baseTime;
-                circle.SetScale(t.Ease(4f, 0f, Helper.GetTimeInterval(4), EaseType.InQuad));
+                circle.SetScale(t.Ease(4f, 0f, new Lpb(4).Time, EaseType.InQuad));
                 await Helper.Yield();
             }
             circle.SetActive(false);

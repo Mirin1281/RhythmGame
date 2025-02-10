@@ -6,18 +6,18 @@ namespace NoteCreating
     [AddTypeMenu("◇ループ＆遅延", 100), System.Serializable]
     public class F_LoopDelay : CommandBase
     {
-        [SerializeField] float delay;
+        [SerializeField] Lpb delay;
 
         [SerializeField, Min(0), Tooltip("生成する回数")]
         int loopCount = 1;
 
         [SerializeField, Min(0), Tooltip("生成する間隔")]
-        float loopWait = 4;
+        Lpb loopWait = new Lpb(4);
 
         [SerializeField, SerializeReference, SubclassSelector]
         ICommand command;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             if (command == null) return;
             float delta = await Wait(delay);
@@ -43,7 +43,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            if (command == null) return ConstContainer.DefaultCommandColor;
+            if (command == null) return CommandEditorUtility.CommandColor_Default;
             return command.GetColor();
         }
 

@@ -12,12 +12,12 @@ namespace NoteCreating
         {
             [SerializeField] float x;
             [SerializeField] float y;
-            [SerializeField, Min(0)] float wait;
+            [SerializeField, Min(0)] Lpb wait;
             [SerializeField] bool disabled;
 
             public readonly float X => x;
             public readonly float Y => y;
-            public readonly float Wait => wait;
+            public readonly Lpb Wait => wait;
             public readonly bool Disabled => disabled;
         }
 
@@ -33,7 +33,7 @@ namespace NoteCreating
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             //int simultaneousCount = 0;
             //float beforeTime = -1;

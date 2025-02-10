@@ -29,9 +29,9 @@ namespace NoteCreating
             maskTs.localScale = new Vector3(maskTs.localScale.x, spriteRenderer.size.y);
         }
 
-        public void SetLength(float length)
+        public void SetLength(Lpb length)
         {
-            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length);
+            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length.Time);
             maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y);
         }
 

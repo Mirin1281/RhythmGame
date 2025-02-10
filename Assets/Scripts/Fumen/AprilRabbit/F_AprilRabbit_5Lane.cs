@@ -10,7 +10,7 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             UniTask.Void(async () =>
             {
@@ -90,13 +90,18 @@ namespace NoteCreating
             await Note(1).Wait(8);
         }
 
-        F_AprilRabbit_5Lane Note(int x, RegularNoteType type = RegularNoteType.Normal, float delta = -1, Transform parentTs = null)
+        UniTask Wait(float lpb, int num = 1, float delta = -1)
+        {
+            return base.Wait(new Lpb(lpb, num), delta);
+        }
+
+        F_AprilRabbit_5Lane Note(int x, RegularNoteType type = RegularNoteType.Normal, float delta = -1)
         {
             if (delta == -1)
             {
                 delta = Delta;
             }
-            var note = Helper.GetRegularNote(type, parentTs);
+            var note = Helper.GetRegularNote(type);
             note.SetWidth(1.2f);
             int dir = 10 * mirror.Conv(x);
             note.SetRot(dir);
@@ -109,20 +114,11 @@ namespace NoteCreating
                 2 => new Vector3(8, 1.5f),
                 _ => throw new System.Exception()
             };
-            Vector3 startPos = toPos + GetStartBase() * new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad));
+            Vector3 startPos = toPos + StartBase * new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad));
             DropAsync(note, startPos, delta).Forget();
 
-            float expectTime = GetStartBase() / Speed - delta;
-            if (parentTs == null)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, toPos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static));
-            }
-            else
-            {
-                float parentDir = parentTs.transform.eulerAngles.z * Mathf.Deg2Rad;
-                Vector3 pos = x * new Vector3(Mathf.Cos(parentDir), Mathf.Sin(parentDir));
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, toPos + pos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static));
-            }
+            float expectTime = StartBase / Speed - delta;
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, toPos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static));
             return this;
 
 

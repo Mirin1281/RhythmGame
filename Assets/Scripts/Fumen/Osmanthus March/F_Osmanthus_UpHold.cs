@@ -10,16 +10,16 @@ namespace NoteCreating
         [Serializable]
         struct MoveHoldData
         {
-            [field: SerializeField] public float Wait { get; private set; }
+            [field: SerializeField] public Lpb Wait { get; private set; }
             [field: SerializeField] public float X { get; private set; }
-            [field: SerializeField] public float Length { get; private set; }
+            [field: SerializeField] public Lpb Length { get; private set; }
         }
 
         [SerializeField] Mirror mirror;
 
         [SerializeField] MoveHoldData[] datas = new MoveHoldData[1];
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             for (int i = 0; i < datas.Length; i++)
             {
@@ -31,15 +31,15 @@ namespace NoteCreating
             await UniTask.CompletedTask;
         }
 
-        async UniTaskVoid UpHold(float length, float x)
+        async UniTaskVoid UpHold(Lpb length, float x)
         {
             var hold = Hold(x, length);
             hold.IsVerticalRange = true;
-            float expectTime = Helper.GetTimeInterval(4, 6);
-            float holdTime = Helper.GetTimeInterval(length);
+            float expectTime = MoveLpb.Time;
+            float holdTime = length.Time;
 
             float baseTime = CurrentTime - Delta;
-            Vector3 startPos = new Vector3(mirror.Conv(x), GetStartBase());
+            Vector3 startPos = new Vector3(mirror.Conv(x), StartBase);
             var vec = Speed * Vector3.down;
 
             float time = 0f;
@@ -62,16 +62,15 @@ namespace NoteCreating
             hold.SetActive(false);
         }
 
-        HoldNote Hold(float x, float length)
+        HoldNote Hold(float x, Lpb length)
         {
-            float holdTime = Helper.GetTimeInterval(length);
-            HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = mirror.Conv(new Vector3(x, GetStartBase()));
+            HoldNote hold = Helper.GetHold(length * Speed);
+            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
             hold.SetMaskPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
 
             float expectTime = startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+            Helper.NoteInput.AddExpect(hold, expectTime, length);
             return hold;
         }
 

@@ -26,7 +26,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -35,7 +36,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -44,7 +46,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -53,7 +56,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.3, y: 0, z: 0}
           isRotateMove: 0
@@ -62,7 +66,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -71,7 +76,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -80,7 +86,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -89,7 +96,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 4
+        - wait:
+            _value: 4
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -98,7 +106,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 4
+        - wait:
+            _value: 4
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -107,7 +116,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -116,7 +126,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -125,7 +136,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -134,7 +146,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0, y: 4, z: -10}
           isRotateMove: 0
@@ -167,10 +180,12 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        loopCount: 16
+        loopWait:
+          _value: 4
         moveDirection: 270
-        isSpeedChangable: 0
+        isAdaptiveSpeed: 1
         speedRate: 1
-        lifeTime: 3
 --- !u!114 &-8758195631498933391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +234,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -228,7 +244,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -237,7 +254,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -246,7 +264,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -255,7 +274,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -264,7 +284,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -273,7 +294,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -282,7 +304,8 @@ MonoBehaviour:
           easeType: 3
           time: 0.6
           moveType: 1
-        - wait: 2
+        - wait:
+            _value: 2
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -354,21 +377,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470170
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-7359081784283242647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,85 +409,115 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470169
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: -7
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 1
-        - wait: 8
-          type: 4
+          length:
+            _value: 1
+        - wait:
+            _value: 8
+          type: 3
           x: 6
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 1
-        - wait: 8
-          type: 4
+          length:
+            _value: 1
+        - wait:
+            _value: 8
+          type: 3
           x: -5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 1
-        - wait: 8
-          type: 4
+          length:
+            _value: 1
+        - wait:
+            _value: 8
+          type: 3
           x: 4
-          length: 1
-        - wait: 8
+          length:
+            _value: 1
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 1
-        - wait: 8
-          type: 4
+          length:
+            _value: 1
+        - wait:
+            _value: 8
+          type: 3
           x: -4
-          length: 1.33333
-        - wait: 8
+          length:
+            _value: 1.33333
+        - wait:
+            _value: 8
           type: 2
           x: -4
-          length: 1
-        - wait: 0
+          length:
+            _value: 1
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 1
-        - wait: 8
+          length:
+            _value: 1
+        - wait:
+            _value: 8
           type: 2
           x: -4
-          length: 1
-        - wait: 0
+          length:
+            _value: 1
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 1
-        - wait: 8
+          length:
+            _value: 1
+        - wait:
+            _value: 8
           type: 2
           x: -4
-          length: 1
-        - wait: 0
+          length:
+            _value: 1
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 1
-        - wait: 8
+          length:
+            _value: 1
+        - wait:
+            _value: 8
           type: 2
           x: -4
-          length: 1
-        - wait: 0
+          length:
+            _value: 1
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 1
+          length:
+            _value: 1
 --- !u!114 &-7315570464629427147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +544,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: 0.2, z: 0}
           isRotateMove: 0
@@ -502,7 +554,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: -0.2, z: 0}
           isRotateMove: 0
@@ -537,7 +590,8 @@ MonoBehaviour:
           enabled: 0
         count: 24
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: 6, y: -6}
         easeType: 3
         easeTime: 13
@@ -567,75 +621,89 @@ MonoBehaviour:
           enabled: 0
         noteDatas:
         - isDiabled: 0
-          wait: 0
+          wait:
+            _value: 0
           x: 2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 6
+          wait:
+            _value: 6
           x: -6
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 1
-          wait: 8
+          wait:
+            _value: 8
           x: 5
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 12
+          wait:
+            _value: 12
           x: -2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 6
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -6
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 0
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 4
+          wait:
+            _value: 4
           x: 4
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 4
+          wait:
+            _value: 4
           x: -3
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -5
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 5
-          width: 0
-          length: 2
+          length:
+            _value: 0
 --- !u!114 &-7169505297302420289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,49 +723,61 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470152
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: 4
-          length: 0
-        - wait: 6
+          length:
+            _value: 0
+        - wait:
+            _value: 6
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 4
-          length: 0
-        - wait: 12
+          length:
+            _value: 0
+        - wait:
+            _value: 12
           type: 1
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 4
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-6759361981757736089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,10 +824,12 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        loopCount: 16
+        loopWait:
+          _value: 4
         moveDirection: 270
-        isSpeedChangable: 0
+        isAdaptiveSpeed: 1
         speedRate: 1
-        lifeTime: 3
 --- !u!114 &-6434474111336218708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,10 +854,12 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        loopCount: 16
+        loopWait:
+          _value: 4
         moveDirection: 270
-        isSpeedChangable: 0
+        isAdaptiveSpeed: 1
         speedRate: 1
-        lifeTime: 3
 --- !u!114 &-6386566204128415334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,77 +902,103 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470108
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: -5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-6119731438749541444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +1025,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -924,7 +1035,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -933,7 +1045,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -942,7 +1055,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -951,7 +1065,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -960,7 +1075,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -969,7 +1085,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -978,7 +1095,8 @@ MonoBehaviour:
           easeType: 3
           time: 1
           moveType: 1
-        - wait: 1
+        - wait:
+            _value: 1
           isPosMove: 0
           pos: {x: 0, y: 0, z: 0}
           isRotateMove: 1
@@ -1006,153 +1124,217 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470143
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 0.8
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 5.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 2.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 1
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -6
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 6
+          length:
+            _value: 0
+        - wait:
+            _value: 6
           type: 2
           x: 0
-          length: 0
-        - wait: 12
+          length:
+            _value: 0
+        - wait:
+            _value: 12
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-5048367918199398611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,73 +1401,97 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470128
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 0
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 0
-        - wait: 8
-          type: 1
-          x: -2
-          length: 0
-        - wait: 8
-          type: 0
-          x: -4
-          length: 0
-        - wait: 4
-          type: 0
-          x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -2
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: -4
+          length:
+            _value: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: -4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 3
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 2
           x: 4.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 1.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: -1.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: -4.5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-4557952037317823730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1327,181 +1533,259 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470144
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 0.8
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 2
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 24
+          length:
+            _value: 0
+        - wait:
+            _value: 24
           type: 2
           x: 0
-          length: 0
-        - wait: 24
+          length:
+            _value: 0
+        - wait:
+            _value: 24
           type: 2
           x: 0
-          length: 0
-        - wait: 24
+          length:
+            _value: 0
+        - wait:
+            _value: 24
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 6
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 2
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: -6
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 6
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -3.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 3
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -1.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 0.5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-4068561220121420500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,21 +1827,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470138
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: 0
-          length: 1.333333
+          length:
+            _value: 1.333333
 --- !u!114 &-4022349626142848309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,7 +1866,8 @@ MonoBehaviour:
           enabled: 0
         count: 24
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: 6, y: -6}
         easeType: 9
         easeTime: 12
@@ -1636,7 +1919,8 @@ MonoBehaviour:
           enabled: 0
         count: 12
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: -5, y: 6}
         easeType: 3
         easeTime: 12
@@ -1659,129 +1943,181 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470149
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: -5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 4
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 0
           x: -3
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: 1
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 1
           x: -1
-          length: 4
-        - wait: 16
-          type: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 16
+          type: 3
           x: 5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: -6
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 0
           x: 5
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: -3
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: -6
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 3
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: 6
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: -1
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: 2
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: -2
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 2
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 4
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 6
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 4
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 2
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: -2
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: -4
-          length: 4
+          length:
+            _value: 4
 --- !u!114 &-3327644921802365631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1830,7 +2166,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         count: 96
-        waitLPB: 16
+        waitLPB:
+          _value: 16
 --- !u!114 &-2975073301392862944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,65 +2187,85 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470162
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 5.333333
-        - wait: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 4
           type: 1
           x: -2
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -2
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -6
-          length: 5.333333
-        - wait: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 4
           type: 1
           x: 0
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: 0
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -6
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -3
-          length: 5.333333
+          length:
+            _value: 5.333333
 --- !u!114 &-2580858073171945224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1935,7 +2292,8 @@ MonoBehaviour:
           enabled: 0
         count: 8
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: 0, y: 6}
         easeType: 15
         easeTime: 2
@@ -1958,65 +2316,85 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470167
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: 4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 4
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 6
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 6
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 3
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 3
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 5
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 5
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 4
-          length: 8
-        - wait: 8
+          length:
+            _value: 8
+        - wait:
+            _value: 8
           type: 0
           x: 4
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 3
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 3
-          length: 5.333333
+          length:
+            _value: 5.333333
 --- !u!114 &-1892585842575541725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2043,75 +2421,89 @@ MonoBehaviour:
           enabled: 0
         noteDatas:
         - isDiabled: 0
-          wait: 0
+          wait:
+            _value: 0
           x: -5
-          width: 0
-          length: 6
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 6
+          wait:
+            _value: 6
           x: 5
-          width: 0
-          length: 4
+          length:
+            _value: 0
         - isDiabled: 1
-          wait: 8
+          wait:
+            _value: 8
           x: 6
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 12
+          wait:
+            _value: 12
           x: -5
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 3
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -3
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -5
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 0
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 6
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 4
+          wait:
+            _value: 4
           x: 0
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 4
+          wait:
+            _value: 4
           x: -6
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: -2
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 2
-          width: 0
-          length: 8
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 8
+          wait:
+            _value: 8
           x: 6
-          width: 0
-          length: 8
+          length:
+            _value: 0
 --- !u!114 &-1676137826906530084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2136,10 +2528,12 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        loopCount: 16
+        loopWait:
+          _value: 4
         moveDirection: 270
-        isSpeedChangable: 0
+        isAdaptiveSpeed: 1
         speedRate: 1
-        lifeTime: 3
 --- !u!114 &-1613365720070156802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2159,73 +2553,97 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470131
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 0
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 0
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 3
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 3
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-836788986323939715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2245,113 +2663,157 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470130
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 0
           x: 6
-          length: 4
-        - wait: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 4
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 6
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
-          type: 0
-          x: 7
-          length: 4
-        - wait: 2.666667
-          type: 1
-          x: 5
-          length: 4
-        - wait: 32
-          type: 2
-          x: 6
-          length: 4
-        - wait: 10.66667
-          type: 0
-          x: 7
-          length: 4
-        - wait: 2.666667
-          type: 1
-          x: 5
-          length: 4
-        - wait: 32
-          type: 2
-          x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
+          type: 0
+          x: 7
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: 5
+          length:
+            _value: 4
+        - wait:
+            _value: 32
+          type: 2
+          x: 6
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
+          type: 0
+          x: 7
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: 5
+          length:
+            _value: 4
+        - wait:
+            _value: 32
+          type: 2
+          x: 6
+          length:
+            _value: 4
 --- !u!114 &-619215705141571307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2371,29 +2833,31 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470104
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 8
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 0.5
-        - wait: 8
+          length:
+            _value: 0.5
+        - wait:
+            _value: 8
           type: 2
           x: 4
-          length: 0.5
-        - wait: 8
+          length:
+            _value: 0.5
+        - wait:
+            _value: 8
           type: 2
           x: 2
-          length: 0.5
+          length:
+            _value: 0.5
 --- !u!114 &-244925653863331955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2437,21 +2901,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470171
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 0.5
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 300
+        - wait:
+            _value: 300
           type: 2
           x: 0
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &-17488931088108626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,33 +2933,37 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470117
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 8
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 2.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 5
-          length: 0
-        - wait: 8
-          type: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 8
+          type: 3
           x: -4
-          length: 4
+          length:
+            _value: 4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2513,12 +2979,11 @@ MonoBehaviour:
   musicSelectData: {fileID: 11400000, guid: 02450ed7bca928849921c12d2d898d0b, type: 2}
   noteCount: 606
   <NormalPoolCount>k__BackingField: 22
-  <CirclePoolCount>k__BackingField: 1
   <SlidePoolCount>k__BackingField: 28
-  <FlickPoolCount>k__BackingField: 5
   <HoldPoolCount>k__BackingField: 12
   <ArcPoolCount>k__BackingField: 1
   <LinePoolCount>k__BackingField: 15
+  <CirclePoolCount>k__BackingField: 1
   fumen:
     commandDataList:
     - {fileID: -9163643265773263655}
@@ -2619,7 +3084,8 @@ MonoBehaviour:
           enabled: 0
         count: 24
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: -6, y: 6}
         easeType: 3
         easeTime: 24
@@ -2649,7 +3115,8 @@ MonoBehaviour:
           enabled: 0
         count: 12
         noteType: 2
-        wait: 16
+        wait:
+          _value: 16
         easeX: {x: 6, y: -3.4}
         easeType: 24
         easeTime: 8
@@ -2697,85 +3164,115 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470168
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 5.333333
-        - wait: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 4
           type: 1
           x: -2
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -2
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -6
-          length: 5.333333
-        - wait: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 4
           type: 1
           x: 0
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: 0
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 5.333333
-        - wait: 16
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 16
           type: 1
           x: -4
-          length: 5.333333
-        - wait: 24
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 24
           type: 1
           x: 5
-          length: 5.333333
-        - wait: 24
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 24
           type: 1
           x: -2
-          length: 5.333333
-        - wait: 24
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 24
           type: 0
           x: -5
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 5.333333
-        - wait: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 4
           type: 1
           x: 5
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 5.333333
+          length:
+            _value: 5.333333
 --- !u!114 &1631738462873919897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2801,9 +3298,11 @@ MonoBehaviour:
         _mirror:
           enabled: 0
         _x: 0
-        _length: 0.52
+        _length:
+          _value: 0.52
         _shakeX: 0.2
-        _shakeInterval: 2
+        _shakeInterval:
+          _value: 2
         _shakeCount: 4
 --- !u!114 &1735175215530555310
 MonoBehaviour:
@@ -2831,7 +3330,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: 0.5, z: 0}
           isRotateMove: 0
@@ -2884,97 +3384,133 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470166
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 0
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 0
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 0
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: 4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: 1
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 6
+          length:
+            _value: 0
+        - wait:
+            _value: 6
           type: 2
           x: -2
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: 3
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 5
-          length: 0
-        - wait: 12
+          length:
+            _value: 0
+        - wait:
+            _value: 12
           type: 1
           x: -5
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 2
           x: -1
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -1
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &2469656637693245573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2994,33 +3530,37 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470120
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 8
+        - wait:
+            _value: 8
           type: 1
           x: -6
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 2
-          length: 0
-        - wait: 8
-          type: 3
+          length:
+            _value: 0
+        - wait:
+            _value: 8
+          type: 0
           x: 6
-          length: 4
+          length:
+            _value: 4
 --- !u!114 &2892175907538498301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3040,73 +3580,97 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470126
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 0
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: -4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 0
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 3
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 3
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &2892293822274571875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3149,69 +3713,91 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470132
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 0
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -2
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 3
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 0
           x: 4.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 1.5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: -4
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &3793402613370992386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3231,109 +3817,151 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470127
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 6
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
-          type: 0
-          x: 7
-          length: 4
-        - wait: 2.666667
-          type: 1
-          x: 5
-          length: 4
-        - wait: 32
-          type: 2
-          x: 6
-          length: 4
-        - wait: 10.66667
-          type: 0
-          x: 7
-          length: 4
-        - wait: 2.666667
-          type: 1
-          x: 5
-          length: 4
-        - wait: 32
-          type: 2
-          x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
-        - wait: 10.66667
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
           type: 0
           x: 7
-          length: 4
-        - wait: 2.666667
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
           type: 1
           x: 5
-          length: 4
-        - wait: 32
+          length:
+            _value: 4
+        - wait:
+            _value: 32
           type: 2
           x: 6
-          length: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
+          type: 0
+          x: 7
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: 5
+          length:
+            _value: 4
+        - wait:
+            _value: 32
+          type: 2
+          x: 6
+          length:
+            _value: 4
+        - wait:
+            _value: 10.66667
+          type: 0
+          x: 7
+          length:
+            _value: 4
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: 5
+          length:
+            _value: 4
+        - wait:
+            _value: 32
+          type: 2
+          x: 6
+          length:
+            _value: 4
 --- !u!114 &3984204401419123782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3375,109 +4003,151 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470153
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: -5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 4
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 2
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 0
           x: -5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 0
           x: -3
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: 0
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 1
           x: 0
-          length: 4
-        - wait: 16
-          type: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 16
+          type: 3
           x: 5
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 0
           x: 5
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: -2
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 0
           x: 5
-          length: 4
-        - wait: 0
+          length:
+            _value: 4
+        - wait:
+            _value: 0
           type: 1
           x: -6
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: -3
-          length: 4
-        - wait: 16
+          length:
+            _value: 4
+        - wait:
+            _value: 16
           type: 2
           x: 0
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 1
           x: 6
-          length: 4
-        - wait: 24
+          length:
+            _value: 4
+        - wait:
+            _value: 24
           type: 1
           x: 2
-          length: 4
-        - wait: 24
+          length:
+            _value: 4
+        - wait:
+            _value: 24
           type: 1
           x: -2
-          length: 4
-        - wait: 24
+          length:
+            _value: 4
+        - wait:
+            _value: 24
           type: 1
           x: -6
-          length: 4
-        - wait: 8
-          type: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 8
+          type: 3
           x: 0
-          length: 4
-        - wait: 4
+          length:
+            _value: 4
+        - wait:
+            _value: 4
           type: 2
           x: -2
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 2
           x: 2
-          length: 4
-        - wait: 8
+          length:
+            _value: 4
+        - wait:
+            _value: 8
           type: 2
           x: -2
-          length: 4
+          length:
+            _value: 4
 --- !u!114 &4959233362392112431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3548,7 +4218,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: -0.5, z: 0}
           isRotateMove: 0
@@ -3583,7 +4254,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: -0.1, y: 0, z: 0}
           isRotateMove: 0
@@ -3592,7 +4264,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3601,7 +4274,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3610,7 +4284,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 6
+        - wait:
+            _value: 6
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3619,7 +4294,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.3, y: 0, z: 0}
           isRotateMove: 0
@@ -3628,7 +4304,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3637,7 +4314,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3646,7 +4324,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3655,7 +4334,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 4
+        - wait:
+            _value: 4
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3664,7 +4344,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 4
+        - wait:
+            _value: 4
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3673,7 +4354,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3682,7 +4364,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3691,7 +4374,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -3700,7 +4384,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 8
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0, y: 4, z: -10}
           isRotateMove: 0
@@ -3735,7 +4420,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 1
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: 0.2, z: 0}
           isRotateMove: 0
@@ -3744,7 +4430,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: -0.2, z: 0}
           isRotateMove: 0
@@ -3772,77 +4459,103 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470142
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 3
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 2
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: 6
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+        - wait:
+            _value: 2
           type: 2
           x: -6
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &6347607037352991939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3869,25 +4582,29 @@ MonoBehaviour:
           enabled: 0
         noteDatas:
         - isDiabled: 0
-          wait: 0
+          wait:
+            _value: 0
           x: -5
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 0
+          wait:
+            _value: 0
           x: 5
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 4
+          wait:
+            _value: 4
           x: -2
-          width: 0
-          length: 2
+          length:
+            _value: 0
         - isDiabled: 0
-          wait: 0
+          wait:
+            _value: 0
           x: 2
-          width: 0
-          length: 2
+          length:
+            _value: 0
 --- !u!114 &7212882800183450257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3907,85 +4624,115 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470154
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: 4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 4
           type: 1
           x: -4
-          length: 0
-        - wait: 6
+          length:
+            _value: 0
+        - wait:
+            _value: 6
           type: 1
           x: 4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 1.9
-          length: 0
-        - wait: 12
+          length:
+            _value: 0
+        - wait:
+            _value: 12
           type: 1
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 0
           x: 1.9
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+        - wait:
+            _value: 0
           type: 1
           x: 4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 3.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 3
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 2.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 2
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 1.5
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 1
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 1
           x: 0.5
-          length: 0
+          length:
+            _value: 0
 --- !u!114 &7552675690412487716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4005,65 +4752,85 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470161
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 4
+        - wait:
+            _value: 0
+          type: 3
           x: 4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 4
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 6
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 6
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 3
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 3
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 5
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 5
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 4
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 4
-          length: 5.333333
-        - wait: 8
-          type: 4
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
+          type: 3
           x: 6
-          length: 5.333333
-        - wait: 8
+          length:
+            _value: 5.333333
+        - wait:
+            _value: 8
           type: 2
           x: 6
-          length: 5.333333
+          length:
+            _value: 5.333333
 --- !u!114 &8094539120129822247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4090,7 +4857,8 @@ MonoBehaviour:
           enabled: 0
         isChainWait: 0
         settings:
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 0
           pos: {x: 0, y: 0.2, z: 0}
           isRotateMove: 1
@@ -4099,7 +4867,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 0
+        - wait:
+            _value: 0
           isPosMove: 0
           pos: {x: 0, y: -0.2, z: 0}
           isRotateMove: 1
@@ -4108,7 +4877,8 @@ MonoBehaviour:
           easeType: 24
           time: 0.2
           moveType: 1
-        - wait: 2
+        - wait:
+            _value: 2
           isPosMove: 0
           pos: {x: 0, y: -0.2, z: 0}
           isRotateMove: 1
@@ -4117,7 +4887,8 @@ MonoBehaviour:
           easeType: 3
           time: 0
           moveType: 1
-        - wait: 2
+        - wait:
+            _value: 2
           isPosMove: 0
           pos: {x: 0, y: -0.2, z: 0}
           isRotateMove: 1
@@ -4145,73 +4916,97 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470151
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 0
-          type: 3
+        - wait:
+            _value: 0
+          type: 0
           x: 4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: 5.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 2
           x: 6.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 2
           x: 6.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 0
           x: 6.5
-          length: 8
-        - wait: 0
-          type: 3
+          length:
+            _value: 8
+        - wait:
+            _value: 0
+          type: 0
           x: -4
-          length: 0
-        - wait: 16
+          length:
+            _value: 0
+        - wait:
+            _value: 16
           type: 2
           x: -5.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 2
           x: -6.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 2
           x: -6.5
-          length: 8
-        - wait: 16
+          length:
+            _value: 8
+        - wait:
+            _value: 16
           type: 0
           x: -6.5
-          length: 8
-        - wait: 0
-          type: 4
+          length:
+            _value: 8
+        - wait:
+            _value: 0
+          type: 3
           x: 4.5
-          length: 8
-        - wait: 8
-          type: 4
+          length:
+            _value: 8
+        - wait:
+            _value: 8
+          type: 3
           x: 1.5
-          length: 8
-        - wait: 8
-          type: 4
+          length:
+            _value: 8
+        - wait:
+            _value: 8
+          type: 3
           x: -1.5
-          length: 8
-        - wait: 8
-          type: 4
+          length:
+            _value: 8
+        - wait:
+            _value: 8
+          type: 3
           x: -4.5
-          length: 8
+          length:
+            _value: 8
 --- !u!114 &8918048374321972695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4253,33 +5048,37 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470115
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 8
+        - wait:
+            _value: 8
           type: 1
           x: 0
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -4
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+        - wait:
+            _value: 8
           type: 1
           x: -2
-          length: 0
-        - wait: 8
-          type: 4
+          length:
+            _value: 0
+        - wait:
+            _value: 8
+          type: 3
           x: -6
-          length: 4
+          length:
+            _value: 4
 --- !u!114 &9161837465721001965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4299,18 +5098,16 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470173
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 0.5
-        parentCreatable:
-          rid: -2
         noteDatas:
-        - wait: 300
+        - wait:
+            _value: 300
           type: 2
           x: 0
-          length: 0
+          length:
+            _value: 0

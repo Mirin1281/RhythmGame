@@ -8,12 +8,12 @@ namespace NoteCreating
     {
         [SerializeField] Mirror _mirror;
         [SerializeField] float _x = 0;
-        [SerializeField] float _length = 0.5f;
+        [SerializeField] Lpb _length = new Lpb(0.5f);
         [SerializeField] float _shakeX = 0.5f;
-        [SerializeField] float _shakeInterval = 2f;
+        [SerializeField] Lpb _shakeInterval = new Lpb(2f);
         [SerializeField] float _shakeCount = 4f;
 
-        protected override async UniTask ExecuteAsync()
+        protected override async UniTaskVoid ExecuteAsync()
         {
             var hold = Hold(_x, _length);
             await WaitOnTiming();
@@ -26,7 +26,7 @@ namespace NoteCreating
 
             async UniTaskVoid MoveAsync(HoldNote hold, float shakeX)
             {
-                float time = Helper.GetTimeInterval(_shakeInterval);
+                float time = _shakeInterval.Time;
                 float baseTime = CurrentTime - Delta;
                 var startPos = hold.GetPos();
                 Easing easing = new Easing(startPos.x + shakeX, startPos.x, time, EaseType.OutCubic);
@@ -44,18 +44,17 @@ namespace NoteCreating
         }
 
 
-        HoldNote Hold(float x, float length)
+        HoldNote Hold(float x, Lpb length)
         {
-            float holdTime = Helper.GetTimeInterval(length);
-            HoldNote hold = Helper.GetHold(holdTime * Speed);
-            Vector3 startPos = _mirror.Conv(new Vector3(x, GetStartBase()));
+            HoldNote hold = Helper.GetHold(length * Speed);
+            Vector3 startPos = _mirror.Conv(new Vector3(x, StartBase));
             hold.SetMaskPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
 
-            DropAsync(hold, startPos).Forget();
+            DropAsync(hold, startPos.x).Forget();
 
             float expectTime = startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(hold, expectTime, holdTime);
+            Helper.NoteInput.AddExpect(hold, expectTime, length);
 
             return hold;
         }

@@ -7,7 +7,6 @@ namespace NoteCreating
         [InspectorName("なし")] _None,
         [InspectorName("タップ")] Normal,
         [InspectorName("スライド")] Slide,
-        [InspectorName("フリック")] Flick,
         [InspectorName("ホールド")] Hold,
     }
 
