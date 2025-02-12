@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆アーク", -50)]
+    [AddTypeMenu("◆アーク", -50), System.Serializable]
     public class F_Arc : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -47,7 +47,7 @@ namespace NoteCreating
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewObj.transform);
             arc.SetPos(new Vector3(0, new Lpb(4, beatDelta).Time * Speed));
-            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugSpherePrefab).Forget();
+            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
         }
 #endif
     }

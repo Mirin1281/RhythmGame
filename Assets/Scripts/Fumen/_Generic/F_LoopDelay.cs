@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇ループ＆遅延", 100)]
+    [AddTypeMenu("◇ループ＆遅延", 100), System.Serializable]
     public class F_LoopDelay : CommandBase
     {
         [SerializeField] Lpb delay;

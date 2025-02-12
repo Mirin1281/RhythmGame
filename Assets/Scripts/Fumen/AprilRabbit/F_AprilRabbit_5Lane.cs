@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/5レーン")]
+    [AddTypeMenu("AprilRabbit/5レーン"), System.Serializable]
     public class F_AprilRabbit_5Lane : CommandBase
     {
         [SerializeField] Mirror mirror;

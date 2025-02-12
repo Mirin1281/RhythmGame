@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇ラベル")]
+    [AddTypeMenu("◇ラベル"), System.Serializable]
     public class F_Label : CommandBase
     {
         protected override UniTaskVoid ExecuteAsync()

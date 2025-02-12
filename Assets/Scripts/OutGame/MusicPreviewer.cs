@@ -10,11 +10,12 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
     CancellationTokenSource cts = new();
     List<string> loadedCueSheetNames;
 
-    // RemoveCueSheet()は重いので、ロードした曲を覚えてシーン移動時にまとめて削除
+    // RemoveCueSheet()は重いので、ロードした曲を覚えてシーン移動時にまとめて削除したい
+    // 問題があれば都度削除する方針に切り替える
     void OnDestroy()
     {
-        if(loadedCueSheetNames == null) return;
-        foreach(var n in loadedCueSheetNames)
+        if (loadedCueSheetNames == null) return;
+        foreach (var n in loadedCueSheetNames)
         {
             CriAtom.RemoveCueSheet(n);
         }
@@ -24,7 +25,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
     {
         source.volume = value;
     }
-    
+
     public async UniTask MusicPreview(MusicSelectData musicData)
     {
         loadedCueSheetNames ??= new();
@@ -36,7 +37,7 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
         string sheet = musicData.SheetName;
         source.cueSheet = source.cueName = sheet;
         source.startTime = Mathf.RoundToInt(musicData.PreviewStartTime * 1000f);
-        if(loadedCueSheetNames.Contains(sheet) == false)
+        if (loadedCueSheetNames.Contains(sheet) == false)
         {
             await MyUtility.LoadCueSheetAsync(sheet);
             loadedCueSheetNames.Add(sheet);
@@ -44,10 +45,10 @@ public class MusicPreviewer : MonoBehaviour, IVolumeChangable
 
         float time = musicData.PreviewStartTime;
         FadeInAsync(0.5f, token).Forget();
-        
-        while(token.IsCancellationRequested == false)
+
+        while (token.IsCancellationRequested == false)
         {
-            if(time > musicData.PreviewEndTime)
+            if (time > musicData.PreviewEndTime)
             {
                 await FadeOutAsync(0.5f, token);
                 time = musicData.PreviewStartTime;

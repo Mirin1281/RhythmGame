@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/最後の低速アーク")]
+    [AddTypeMenu("Lyrith/最後の低速アーク"), System.Serializable]
     public class F_Lyrith_FinalArc : CommandBase
     {
         //[SerializeField] float decay = 15f;

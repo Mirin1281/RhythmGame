@@ -95,6 +95,8 @@ namespace NoteCreating
             }
         }
 
+        public readonly float Value => _value;
+
         public readonly float Time
         {
             get

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Obsolete/◆円")]
+    [AddTypeMenu("Obsolete/◆円"), System.Serializable]
     public class F_CircleNote : CommandBase
     {
         [Serializable]
@@ -77,30 +77,6 @@ namespace NoteCreating
                     }
                 }*/
             }
-
-            /*// 同時押しをこのコマンド内でのみチェックします。
-            // NoteInput内でするよりも軽量なのでデフォルトではこちらを使用します
-            void SetSimultaneous(NoteBase_2D note, float expectTime)
-            {
-                // NoteInput内で行う場合は不要
-                if(isCheckSimultaneous) return;
-
-                if(beforeTime == expectTime)
-                {
-                    if(simultaneousCount == 1)
-                    {
-                        Helper.PoolManager.SetSimultaneousSprite(beforeNote);
-                    }
-                    Helper.PoolManager.SetSimultaneousSprite(note);
-                    simultaneousCount++;
-                }
-                else
-                {
-                    simultaneousCount = 1;
-                }
-                beforeTime = expectTime;
-                beforeNote = note;
-            }*/
         }
 
 #if UNITY_EDITOR

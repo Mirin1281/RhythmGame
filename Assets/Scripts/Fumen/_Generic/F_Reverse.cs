@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆逆走ノーツ", 50)]
+    [AddTypeMenu("◆逆走ノーツ", 50), System.Serializable]
     public class F_Reverse : CommandBase
     {
         [SerializeField] Mirror mirror;

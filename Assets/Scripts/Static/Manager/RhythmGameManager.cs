@@ -6,7 +6,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
     // 不変の音量
     static readonly float MasterVolume = 0.8f;
-    public static readonly float DefauleSpeed = 14f;
+    public static readonly float DefaultSpeed = 14f;
 
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
@@ -90,7 +90,6 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitBeforeSceneLoad()
     {
-        SpeedBase = 1f;
         Application.targetFrameRate = 60;
         FumenReference = null;
         Application.quitting += SaveData;
@@ -121,6 +120,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     // OnApplicationQuitはタスクキルすると呼ばれないっぽい
     static void SaveData()
     {
+        SpeedBase = 1f;
         if (useJsonData)
         {
             var gameData = new GameData

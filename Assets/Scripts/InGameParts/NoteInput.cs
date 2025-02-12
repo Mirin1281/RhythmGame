@@ -469,6 +469,7 @@ namespace NoteCreating
                 // 距離の近いアークがあったらオーバーラップ判定を有効にする
                 arc.SetOverlaped(arcs, arcOverlappableSqrDistance);
                 var landingPos = arc.GetPointOnYPlane(0) + arc.GetPos();
+                landingPos = new Vector3(landingPos.x, 0);
 
                 // 入力が範囲内にあるかなどを判定
                 bool isHold = isAuto;
@@ -503,7 +504,7 @@ namespace NoteCreating
                     }
                 }
 
-                lightOperator.SetShowLight(arc, landingPos, false);
+                lightOperator.SetShowLight(arc, landingPos, isHold);
                 arc.IsHold = isHold;
 
                 var arcJ = arc.GetCurrentJudge();

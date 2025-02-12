@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/移動ホールド")]
+    [AddTypeMenu("Osmanthus/移動ホールド"), System.Serializable]
     public class F_Osmanthus_MoveHold : CommandBase
     {
         [Serializable]

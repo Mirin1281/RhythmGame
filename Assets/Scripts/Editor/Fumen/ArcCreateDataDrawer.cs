@@ -15,14 +15,14 @@ namespace NoteCreating.Editor
 
             h.SetWidth(width / 4f);
 
-            h.LabelField("X:");
+            h.LabelField("待:");
             h.SetX(width / 16f);
-            h.PropertyField("x", false);
+            h.PropertyField("wait", false);
 
             h.SetX(width / 3.1f);
-            h.LabelField("待:");
+            h.LabelField("X:");
             h.SetX(width / 2.6f);
-            h.PropertyField("wait", false);
+            h.PropertyField("x", false);
 
             h.SetX(width / 1.5f);
             h.PropertyField("vertexType", false);

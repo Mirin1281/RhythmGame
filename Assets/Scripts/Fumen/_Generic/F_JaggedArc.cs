@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆ギザギザアーク", -40)]
+    [AddTypeMenu("◆ギザギザアーク", -40), System.Serializable]
     public class F_JaggedArc : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -107,7 +107,7 @@ namespace NoteCreating
                         ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
-            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugSpherePrefab).Forget();
+            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
         }
 #endif
     }

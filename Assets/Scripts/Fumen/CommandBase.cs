@@ -44,7 +44,7 @@ namespace NoteCreating
         {
             if (delta == -1)
             {
-                if (lpb.Time == 0) return Delta;
+                if (lpb == default) return Delta;
 
                 float baseTime = CurrentTime;
                 while (true)
@@ -60,7 +60,7 @@ namespace NoteCreating
             }
             else
             {
-                if (lpb.Time == 0) return delta;
+                if (lpb == default) return delta;
 
                 float baseTime = CurrentTime;
                 while (true)

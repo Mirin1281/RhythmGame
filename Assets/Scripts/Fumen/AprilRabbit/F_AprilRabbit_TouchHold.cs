@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/タッチのホールド")]
+    [AddTypeMenu("AprilRabbit/タッチのホールド"), System.Serializable]
     public class F_AprilRabbit_TouchHold : CommandBase
     {
         [Serializable]

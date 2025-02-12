@@ -22,8 +22,8 @@ namespace NoteCreating
 
         static readonly int yThresholdID = Shader.PropertyToID("_YThreshold");
 
-        [SerializeField] public float NotHoldTime;
-        [SerializeField] public float NotHoldTime2;
+        float notHoldTime;
+        float notHoldTime2;
 
         Spline spline => splineExtrude.Spline;
 
@@ -68,7 +68,7 @@ namespace NoteCreating
         /// 入力されているか
         /// </summary>
         [field: SerializeField] public bool IsHold { get; set; }
-        [field: SerializeField] public bool IsHold2 { get; set; }
+        bool isHold2;
 
         /// <summary>
         /// 先端のワールドY座標
@@ -104,9 +104,9 @@ namespace NoteCreating
             // 要するにhold後0.2秒くらいのバッファがほしい
             if (IsHold)
             {
-                IsHold2 = true;
-                NotHoldTime = 0;
-                NotHoldTime2 = 0;
+                isHold2 = true;
+                notHoldTime = 0;
+                notHoldTime2 = 0;
                 if (IsInvalid)
                 {
                     meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
@@ -115,30 +115,30 @@ namespace NoteCreating
             }
             else
             {
-                NotHoldTime += Time.deltaTime;
-                NotHoldTime2 += Time.deltaTime;
+                notHoldTime += Time.deltaTime;
+                notHoldTime2 += Time.deltaTime;
             }
 
-            if (NotHoldTime < 0.2f)
+            if (notHoldTime < 0.2f)
             {
-                IsHold2 = true;
+                isHold2 = true;
             }
             else
             {
-                IsHold2 = false;
+                isHold2 = false;
             }
 
-            bool isHold = IsHold || IsHold2;
+            bool isHold = IsHold || isHold2;
             if (isHold)
             {
-                NotHoldTime2 = 0;
+                notHoldTime2 = 0;
             }
             else
             {
-                NotHoldTime2 += Time.deltaTime;
+                notHoldTime2 += Time.deltaTime;
             }
 
-            meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(NotHoldTime2 - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
+            meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime2 - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
             SetAlpha(isHold ? 0.8f : 0.5f);
         }
 
@@ -161,17 +161,17 @@ namespace NoteCreating
             IsOverlaped = false;
             FingerIndex = -1;
             JudgeIndex = 0;
-            NotHoldTime = 100;
+            notHoldTime = 100;
 
             await UniTask.Yield(destroyCancellationToken);
 
-            // 頂点を追加
+            // 頂点を追加 //
             float y = 0;
             for (int i = 0; i < datas.Length; i++)
             {
                 var data = datas[i];
-                y += GetDistanceInterval(data.Wait);
-                var knot = new BezierKnot(new Vector3(mir.Conv(data.X), y, 0));
+                y += data.Wait.Time * speed;
+                var knot = new BezierKnot(new Unity.Mathematics.float3(mir.Conv(data.X), y, 0));
                 TangentMode tangentMode = data.Vertex switch
                 {
                     ArcCreateData.VertexType.Auto => TangentMode.AutoSmooth,
@@ -180,46 +180,40 @@ namespace NoteCreating
                 };
                 spline.Add(knot, tangentMode);
 
-                if (i % 3 == 0)
+                /*if (i % 3 == 0)
                 {
                     await UniTask.Yield(destroyCancellationToken);
-                }
+                }*/
             }
 
             splineExtrude.Rebuild();
 
-            // 判定を追加
+            // 判定を追加 //
             int k = 0;
             foreach (var knot in spline)
             {
                 ArcCreateData data = datas[k];
-                // 判定無効だったり、最後尾の場合は次へ
+                // 判定が無効であったり、最後尾の場合はスキップ
                 if (data.IsJudgeDisable || k == spline.Knots.Count() - 1)
                 {
                     k++;
                     continue;
                 }
 
-                float knotY = GetPos().y + knot.Position.y; // ある頂点のワールドY座標
+                float knotY = GetPos().y + knot.Position.y; // 頂点のワールドY座標
 
-                float behindJudgeY = knotY + GetDistanceInterval(data.BehindJudgeRange);
+                float behindJudgeY = knotY + data.BehindJudgeRange.Time * speed;
                 var startPos = GetPointOnYPlane(behindJudgeY);
-                float aheadJudgeY = knotY + GetDistanceInterval(data.AheadJudgeRange);
+                float aheadJudgeY = knotY + data.AheadJudgeRange.Time * speed;
                 var endPos = GetPointOnYPlane(aheadJudgeY);
 
                 judges.Add(new ArcJudge(startPos, endPos, data.IsOverlappable));
                 k++;
             }
-
-
-            float GetDistanceInterval(Lpb lpb)
-            {
-                return lpb.Time * speed;
-            }
         }
 
 #if UNITY_EDITOR
-        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugSphere)
+        public async UniTask DebugCreateNewArcAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugCircle)
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
             await CreateNewArcAsync(datas, speed, mirror);
@@ -231,37 +225,20 @@ namespace NoteCreating
             for (int i = 0; i < spline.Count; i++)
             {
                 var data = datas[i];
-                var knot = spline[i];
-                if (data.IsJudgeDisable)
-                {
-                    continue;
-                }
-                else
-                {
-                    var sphere = Instantiate(debugSphere, transform);
-                    sphere.transform.localPosition = knot.Position;
-                    sphere.transform.localScale = Vector3.one;
-                    sphere.SetColor(new Color(1, 1, 1, 0.5f));
-                }
+                if (data.IsJudgeDisable || i == spline.Knots.Count() - 1) continue;
 
-                if (i == spline.Knots.Count() - 1) break;
-                float knotY = GetPos().y + knot.Position.y; // ある頂点のワールドY座標
+                float knotY = GetPos().y + spline[i].Position.y; // ある頂点のワールドY座標
 
-                if (i != 0)
-                {
-                    float behindDistance = knotY + GetDistanceInterval(data.BehindJudgeRange);
-                    var startPos = GetPointOnYPlane(behindDistance);
-                    var blueSphere = Instantiate(debugSphere, transform);
-                    blueSphere.transform.localPosition = startPos;
-                    blueSphere.transform.localScale = 1.4f * Vector3.one;
-                    blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
-                }
+                float behindDistance = knotY + data.BehindJudgeRange.Time * speed;
+                var startPos = GetPointOnYPlane(behindDistance);
+                var blueSphere = Instantiate(debugCircle, transform);
+                blueSphere.transform.localPosition = new Vector3(startPos.x, startPos.y, -1);
+                blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
 
-                float aheadDistance = knotY + GetDistanceInterval(data.AheadJudgeRange);
-                var endPos = GetPointOnYPlane(aheadDistance);
-                var redSphere = Instantiate(debugSphere, transform);
-                redSphere.transform.localPosition = endPos;
-                redSphere.transform.localScale = 1.4f * Vector3.one;
+                float aheadDistance = knotY + data.AheadJudgeRange.Time * speed;
+                var endPos = GetPointOnYPlane(aheadDistance) + new Vector3(0, i == 0 ? data.Wait.Time * speed : 0);
+                var redSphere = Instantiate(debugCircle, transform);
+                redSphere.transform.localPosition = new Vector3(endPos.x, endPos.y, -1);
                 redSphere.SetColor(new Color(1, 0, 0, 0.5f));
             }
 
@@ -272,12 +249,6 @@ namespace NoteCreating
                 {
                     Debug.LogWarning($"{k} end: {judges[k].EndPos.y}  next: {judges[k + 1].StartPos.y}");
                 }
-            }
-
-
-            float GetDistanceInterval(Lpb lpb)
-            {
-                return lpb.Time * speed;
             }
         }
 #endif

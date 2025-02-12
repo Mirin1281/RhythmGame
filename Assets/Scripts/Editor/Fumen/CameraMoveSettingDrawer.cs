@@ -11,7 +11,7 @@ namespace NoteCreating.Editor
             var h = new DrawerHelper(position, property);
             h.SetY(10);
 
-            h.PropertyField("wait", overrideName: "Wait");
+            h.PropertyField("wait");
             h.SetY();
             h.SetY(10);
 

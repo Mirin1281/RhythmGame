@@ -6,10 +6,10 @@ namespace NoteCreating
     // TODO: アークに依存しない設計
     public class ArcLightOperator : MonoBehaviour
     {
-        [SerializeField] LightParticle[] lights;
-        readonly Dictionary<ArcNote, LightParticle> lightDic = new(4);
+        [SerializeField] GameObject[] lights;
+        readonly Dictionary<ArcNote, GameObject> lightDic = new(4);
 
-        LightParticle GetLight(ArcNote arcNote)
+        GameObject GetLight(ArcNote arcNote)
         {
             if (lightDic.TryGetValue(arcNote, out var particle))
             {
@@ -28,20 +28,20 @@ namespace NoteCreating
         }
         public void SetShowLight(ArcNote arcNote, Vector2 pos, bool enabled)
         {
-            LightParticle light = GetLight(arcNote);
+            GameObject light = GetLight(arcNote);
             if (light != null)
             {
-                light.IsActive = enabled;
+                light.SetActive(enabled);
                 if (enabled)
                 {
-                    light.SetPos(pos);
+                    light.transform.localPosition = pos;
                 }
             }
         }
         public void RemoveLink(ArcNote arcNote)
         {
             if (lightDic.TryGetValue(arcNote, out var p) == false) return;
-            p.IsActive = false;
+            p.SetActive(false);
             lightDic.Remove(arcNote);
         }
     }

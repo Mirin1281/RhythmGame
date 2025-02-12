@@ -5,13 +5,17 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("テスト用")]
+    [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : CommandBase
     {
         [SerializeField] Mirror mirror;
         [SerializeField] bool guideLine = true;
         [SerializeField] Lpb guideInterval = new Lpb(4f);
-        [SerializeField] Lpb wait = new Lpb(4);
+        [Space(20)]
+        [SerializeField] Vector2 pos;
+        [SerializeField] float scale = 1f;
+        [SerializeField] float width = 0.2f;
+        [SerializeField] Lpb lpb = new Lpb(2);
 
         protected override async UniTaskVoid ExecuteAsync()
         {
@@ -27,6 +31,28 @@ namespace NoteCreating
                     line.SetPos(new Vector3(0, i * guideInterval.Time * Speed));
                 }
             }
+
+            await WaitOnTiming();
+            var circle = Helper.GetCircle();
+            circle.SetPos(pos);
+            circle.SetScale(scale);
+            circle.SetWidth(width);
+            /*circle.SetScaleAsync(0, lpb.Time, EaseType.InCubic).Forget();
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(RegularNoteType.Normal, pos, lpb.Time - Delta));
+            await Wait(lpb / 2f);
+            circle.FadeAlphaAsync(0f, lpb.Time / 2f, EaseType.InQuad).Forget();*/
+            await Wait(new Lpb(2));
+            circle.SetScale(1);
+            circle.SetWidth(0.1f);
+            await Wait(new Lpb(2));
+            circle.SetWidth(0.1f);
+            circle.SetScale(1);
+
+            await Wait(new Lpb(2));
+            circle.SetScale(2f);
+            await Wait(new Lpb(2));
+            circle.SetScale(1f);
+            await Wait(new Lpb(2));
 
 
             // これから来る譜面がカットインするやつ

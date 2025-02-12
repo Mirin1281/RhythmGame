@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇判定の発生")]
+    [AddTypeMenu("◇判定の発生"), System.Serializable]
     public class F_JudgeCreate : CommandBase
     {
         [SerializeField] RegularNoteType judgeNoteType = RegularNoteType.Slide;

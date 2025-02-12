@@ -11,9 +11,10 @@ namespace NoteCreating
     {
 #if UNITY_EDITOR
         [SerializeField] FumenData editorFumenData;
+        [SerializeField] bool isEarphone;
+        [SerializeField] bool isMirror;
 #endif
         [SerializeField] TMP_Text titleTmpro;
-        [SerializeField] bool isMirror;
         FumenData fumenData;
 
         public FumenData FumenData => fumenData;
@@ -52,6 +53,9 @@ namespace NoteCreating
             metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
 #if UNITY_EDITOR
+
+            if (isEarphone) RhythmGameManager.SettingOffset = -100;
+
             {
                 RhythmGameManager.SettingIsMirror = isMirror;
                 var cameraScalers = FindObjectsByType<CameraScaler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
@@ -89,5 +93,8 @@ namespace NoteCreating
 
             titleTmpro = null;
         }
+#if UNITY_EDITOR
+        public FumenData GetEditorFumenData() => editorFumenData;
+#endif
     }
 }

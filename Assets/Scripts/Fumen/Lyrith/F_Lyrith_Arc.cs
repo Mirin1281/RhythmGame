@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/アーク1")]
+    [AddTypeMenu("Lyrith/アーク1"), System.Serializable]
     public class F_Lyrith_Arc : CommandBase
     {
         protected override async UniTaskVoid ExecuteAsync()

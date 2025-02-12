@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
-    [AddTypeMenu("◇アイテム点滅")]
+    [AddTypeMenu("◇アイテム点滅"), System.Serializable]
     public class F_ItemBlink : CommandBase
     {
         [Flags]

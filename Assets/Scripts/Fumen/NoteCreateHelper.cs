@@ -10,7 +10,7 @@ namespace NoteCreating
         [field: SerializeField] public NoteInput NoteInput { get; private set; }
         [field: SerializeField] public CameraMover CameraMover { get; private set; }
 #if UNITY_EDITOR
-        [field: SerializeField] public DebugSphere DebugSpherePrefab { get; private set; }
+        [field: SerializeField] public DebugSphere DebugCirclePrefab { get; private set; }
 #endif
 
         public CancellationToken Token => destroyCancellationToken;

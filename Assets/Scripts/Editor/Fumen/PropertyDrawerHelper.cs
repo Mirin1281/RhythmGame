@@ -81,6 +81,7 @@ public class DrawerHelper
         }
         else if (prop.type is nameof(Lpb))
         {
+            overrideName = prop.displayName;
             prop = prop.FindPropertyRelative("_value");
         }
 

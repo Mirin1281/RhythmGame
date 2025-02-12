@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線やノーツを生成して制御", -70)]
+    [AddTypeMenu("◆判定線やノーツを生成して制御", -70), System.Serializable]
     public class F_ItemMove : CommandBase, INotSkipCommand
     {
         [Serializable]
@@ -115,7 +115,8 @@ namespace NoteCreating
             RotEase(item, data.StartRot, data.RotEaseDatas, delta).Forget();
             AlphaEase(item, data.StartAlpha, data.AlphaEaseDatas, delta).Forget();
 
-            float lpbLifeTime = lifeLpb.Time - delta;
+            float lifeTime = lifeLpb.Time - delta;
+
             if (itemType == ItemType.HoldNote)
             {
                 var hold = item as HoldNote;
@@ -124,11 +125,11 @@ namespace NoteCreating
             }
             else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote)
             {
-                if (lpbLifeTime > 0)
-                    Helper.NoteInput.AddExpect(item as RegularNote, lpbLifeTime);
+                if (lifeTime > 0)
+                    Helper.NoteInput.AddExpect(item as RegularNote, lifeTime);
             }
 
-            await WaitSeconds(lpbLifeTime);
+            await WaitSeconds(lifeLpb.Time);
             item.SetActive(false);
 
 

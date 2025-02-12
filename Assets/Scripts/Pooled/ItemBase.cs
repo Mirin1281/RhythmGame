@@ -89,12 +89,9 @@ namespace NoteCreating
         public abstract float GetAlpha();
         public abstract void SetAlpha(float alpha);
 
-        public async UniTask FadeAlphaAsync(float endAlpha, float time, Easing easing = default)
+        public async UniTask FadeAlphaAsync(float endAlpha, float time, EaseType easeType = EaseType.OutQuad)
         {
-            if (easing.EaseType == default)
-            {
-                easing = new Easing(GetAlpha(), endAlpha, time, EaseType.OutQuad);
-            }
+            var easing = new Easing(GetAlpha(), endAlpha, time, easeType);
             var t = 0f;
             while (t < time)
             {
@@ -105,23 +102,23 @@ namespace NoteCreating
             SetAlpha(endAlpha);
         }
 
-        public void FadeIn(float time, float endAlpha, Easing easing = default)
+        public void FadeIn(float time, float endAlpha, EaseType easeType = EaseType.OutQuad)
         {
-            FadeInAsync(time, endAlpha, easing);
+            FadeInAsync(time, endAlpha, easeType);
         }
-        public UniTask FadeInAsync(float time, float endAlpha, Easing easing = default)
+        public UniTask FadeInAsync(float time, float endAlpha, EaseType easeType = EaseType.OutQuad)
         {
             SetAlpha(0);
-            return FadeAlphaAsync(endAlpha, time, easing);
+            return FadeAlphaAsync(endAlpha, time, easeType);
         }
 
-        public void FadeOut(float time, Easing easing = default)
+        public void FadeOut(float time, EaseType easeType = EaseType.OutQuad)
         {
-            FadeOutAsync(time, easing).Forget();
+            FadeOutAsync(time, easeType).Forget();
         }
-        public async UniTask FadeOutAsync(float time, Easing easing = default)
+        public async UniTask FadeOutAsync(float time, EaseType easeType = EaseType.OutQuad)
         {
-            await FadeAlphaAsync(0, time, easing);
+            await FadeAlphaAsync(0, time, easeType);
             SetActive(false);
         }
     }

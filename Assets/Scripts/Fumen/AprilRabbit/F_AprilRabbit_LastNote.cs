@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/最後のノーツ")]
+    [AddTypeMenu("AprilRabbit/最後のノーツ"), System.Serializable]
     public class F_AprilRabbit_LastNote : CommandBase
     {
         [SerializeField] Mirror mirror;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DebugSphere : ItemBase
 {
-    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     public override float GetAlpha()
     {
@@ -17,10 +17,7 @@ public class DebugSphere : ItemBase
 
     public void SetColor(Color color)
     {
-        var material = meshRenderer.sharedMaterial;
-        var newMat = new Material(material);
-        newMat.color = color;
-        meshRenderer.material = newMat;
+        spriteRenderer.color = color;
     }
 
     public override void SetRendererEnabled(bool enabled)

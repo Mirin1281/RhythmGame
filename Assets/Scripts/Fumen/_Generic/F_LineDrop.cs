@@ -5,15 +5,15 @@ using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.Mo
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線を降らせる", -70)]
-    public class F_LineDrop : CommandBase
+    [AddTypeMenu("◆判定線を降らせる", -70), System.Serializable]
+    public class F_LineDrop : CommandBase, INotSkipCommand
     {
         [SerializeField] Mirror mirror;
         [Space(10)]
         [SerializeField, Min(0)]
         int loopCount = 16;
 
-        [SerializeField, Min(0)]
+        [SerializeField]
         Lpb loopWait = new Lpb(4);
         [Space(10)]
         [SerializeField] float moveDirection = 270;
@@ -35,6 +35,7 @@ namespace NoteCreating
         {
             Line line = Helper.GetLine();
             line.SetAlpha(0.25f);
+
             Vector3 dirPos = mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
             await DropAsync(line, -StartBase * dirPos, isAdaptiveSpeed: isAdaptiveSpeed);
             line.SetActive(false);
@@ -46,7 +47,7 @@ namespace NoteCreating
             float time = 0f;
             if (isAdaptiveSpeed)
             {
-                while (item.IsActive && time < 3f * RhythmGameManager.DefauleSpeed / Speed)
+                while (item.IsActive && time < 3f * RhythmGameManager.DefaultSpeed / Speed)
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(new Vector3(startPos.x, StartBase - time * Speed));
@@ -56,7 +57,7 @@ namespace NoteCreating
             else
             {
                 var vec = Speed * Vector3.down;
-                while (item.IsActive && time < 3f * RhythmGameManager.DefauleSpeed / Speed)
+                while (item.IsActive && time < 3f * RhythmGameManager.DefaultSpeed / Speed)
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(startPos + time * vec);
@@ -74,7 +75,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            string status = $"Count: {loopCount} - Wait:{loopWait}";
+            string status = $"Count: {loopCount} - Wait:{loopWait.Value}";
             return status + mirror.GetStatusText();
         }
 #endif

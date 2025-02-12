@@ -83,7 +83,7 @@ namespace NoteCreating
         public void Init(params int[] poolCount)
         {
             PooledTable = new List<List<T>>(prepareStatuses.Count);
-            if (poolCount == null || poolCount.Length == 0)
+            if (poolCount == null || poolCount.Length == 0 || poolCount[0] == -1)
             {
                 for (int i = 0; i < prepareStatuses.Count; i++)
                 {

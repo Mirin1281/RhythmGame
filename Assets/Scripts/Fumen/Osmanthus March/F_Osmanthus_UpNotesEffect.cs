@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/上昇するノーツエフェクト")]
+    [AddTypeMenu("Osmanthus/上昇するノーツエフェクト"), System.Serializable]
     public class F_Osmanthus_UpNotesEffect : CommandBase
     {
         [SerializeField] int seed = 222;

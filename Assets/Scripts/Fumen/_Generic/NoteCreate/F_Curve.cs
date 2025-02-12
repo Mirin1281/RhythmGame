@@ -4,7 +4,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆ノーツ生成 カーブノーツ", -60)]
+    [AddTypeMenu("◆ノーツ生成 カーブノーツ", -60), System.Serializable]
     public class F_Curve : NoteCreateBase<NoteDataAdvanced>
     {
         [Header("オプション1 : カーブの半径 値が小さいほど効果が大きくなります")]

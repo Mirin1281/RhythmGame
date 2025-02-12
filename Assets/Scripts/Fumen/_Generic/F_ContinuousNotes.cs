@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆連続的なノーツ", -80)]
+    [AddTypeMenu("◆連続的なノーツ", -80), System.Serializable]
     public class F_ContinuousNotes : CommandBase
     {
         [SerializeField] Mirror mirror;
