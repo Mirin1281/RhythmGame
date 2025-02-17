@@ -61,6 +61,7 @@ namespace NoteCreating
         [SerializeField] ItemType itemType = ItemType.Line;
         [SerializeField] float option = 1; // Hold時に長さを設定する
         [SerializeField] bool setJudge;
+        [SerializeField] bool isMultitap;
 
         [SerializeField, Min(0), Tooltip("判定線の生存時間")]
         Lpb lifeLpb = new Lpb(0.5f);
@@ -207,11 +208,14 @@ namespace NoteCreating
                 _ => throw new ArgumentException()
             };
 
-            if (itemType == ItemType.HoldNote)
+            if (itemType == ItemType.NormalNote)
+            {
+                Helper.PoolManager.SetMultitapSprite(item as RegularNote);
+            }
+            else if (itemType == ItemType.HoldNote)
             {
                 var hold = item as HoldNote;
                 hold.SetLength(new Lpb(option) * Speed);
-                return hold;
             }
             return item;
         }

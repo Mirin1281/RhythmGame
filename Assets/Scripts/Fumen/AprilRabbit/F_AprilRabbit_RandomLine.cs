@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/ランダム線"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/ランダム線"), System.Serializable]
     public class F_AprilRabbit_RandomLine : CommandBase
     {
         [SerializeField] Mirror mirror;

@@ -16,10 +16,10 @@ public class BGMSlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.SettingBGMVolume;
+        var val = RhythmGameManager.Setting.BGMVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
-        if(musicPlayable)
+        if (musicPlayable)
         {
             volumeChanable = musicPlayable.GetComponent<IVolumeChangable>();
         }
@@ -27,14 +27,14 @@ public class BGMSlider : MonoBehaviour
 
     void SetText(float value)
     {
-        tmpro.SetText("{0:0.00}", value);
+        tmpro.SetText(Mathf.RoundToInt(value * 100).ToString());
     }
 
     public void OnValueChange()
     {
         var val = slider.value;
         SetText(val);
-        RhythmGameManager.SettingBGMVolume = val;
+        RhythmGameManager.Setting.BGMVolume = val;
         volumeChanable.ChangeVolume(RhythmGameManager.GetBGMVolume());
     }
 }

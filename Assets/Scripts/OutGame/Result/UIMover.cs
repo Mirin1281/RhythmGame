@@ -90,12 +90,9 @@ public class UIMover : MonoBehaviour
         }
     }
 
-    async UniTask FadeAlphaAsync(TMP_Text tmpro, float toAlpha, float time, Easing easing = default)
+    async UniTask FadeAlphaAsync(TMP_Text tmpro, float toAlpha, float time)
     {
-        if (easing.EaseType == EaseType.None)
-        {
-            easing = new Easing(tmpro.color.a, toAlpha, time, EaseType.OutQuad);
-        }
+        var easing = new Easing(tmpro.color.a, toAlpha, time, EaseType.OutQuad);
         var t = 0f;
         while (t < time)
         {
@@ -105,12 +102,9 @@ public class UIMover : MonoBehaviour
         }
         tmpro.alpha = toAlpha;
     }
-    async UniTask FadeAlphaAsync(Image image, float toAlpha, float time, Easing easing = default)
+    async UniTask FadeAlphaAsync(Image image, float toAlpha, float time)
     {
-        if (easing.EaseType == EaseType.None)
-        {
-            easing = new Easing(image.color.a, toAlpha, time, EaseType.OutQuad);
-        }
+        var easing = new Easing(image.color.a, toAlpha, time, EaseType.OutQuad);
         var t = 0f;
         while (t < time)
         {
@@ -121,13 +115,10 @@ public class UIMover : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, toAlpha);
     }
 
-    async UniTask MoveAnimAsync(TMP_Text tmpro, float beforeDelta, float time, Easing easing = default)
+    async UniTask MoveAnimAsync(TMP_Text tmpro, float beforeDelta, float time)
     {
         Vector3 p = tmpro.transform.localPosition;
-        if (easing.EaseType == EaseType.None)
-        {
-            easing = new Easing(p.x + beforeDelta, p.x, time, EaseType.OutQuad);
-        }
+        var easing = new Easing(p.x + beforeDelta, p.x, time, EaseType.OutQuad);
 
         var t = 0f;
         while (t < time)

@@ -1,12 +1,12 @@
 using CriWare;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    // 不変の音量
-    static readonly float MasterVolume = 0.8f;
-    public static readonly float DefaultSpeed = 14f;
+    static readonly float MasterVolume = 0.8f; // 不変の音量
+    public static readonly float DefaultSpeed = 14f; // 不変の音量
 
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
@@ -15,56 +15,33 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static string FumenName { get; set; }
     public Result Result { get; set; }
 
-    static GameSetting Setting { get; set; } = new();
-    static GameStatus Status { get; set; }
+    static GameSetting setting = new();
+    public static GameSetting Setting => setting;
 
 
-    public static float SettingBGMVolume
+    static GameStatus status;
+    static GameStatus Status
     {
-        get => Setting.BGMVolume;
-        set => Setting.BGMVolume = value;
+        get
+        {
+            return status ?? new GameStatus();
+        }
+        set
+        {
+            status = value;
+        }
     }
-    public static float SettingSEVolume
-    {
-        get => Setting.SEVolume;
-        set => Setting.SEVolume = value;
-    }
-    public static float SettingNoteSEVolume
-    {
-        get => Setting.NoteSEVolume;
-        set => Setting.NoteSEVolume = value;
-    }
-    public static bool SettingIsNoteMute
-    {
-        get => Setting.IsNoteMute;
-        set => Setting.IsNoteMute = value;
-    }
-    public static float GetBGMVolume() => MasterVolume * SettingBGMVolume * 0.6f;
-    public static float GetSEVolume() => MasterVolume * SettingSEVolume;
-    public static float GetNoteVolume() => MasterVolume * SettingNoteSEVolume;
+
+    public static float GetBGMVolume() => MasterVolume * setting.BGMVolume * 0.6f;
+    public static float GetSEVolume() => MasterVolume * setting.BGMVolume;
+    public static float GetNoteVolume() => MasterVolume * setting.BGMVolume;
 
 
-    // 50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
-    public static int SettingSpeed
-    {
-        get => Setting.Speed;
-        set => Setting.Speed = value;
-    }
-    public static float Speed => SpeedBase * SettingSpeed / 5f;
+    // setting.Speedは50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
+    public static float Speed => SpeedBase * setting.Speed / 5f;
 
-    // -100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
-    public static int SettingOffset
-    {
-        get => Setting.Offset;
-        set => Setting.Offset = value;
-    }
-    public static float Offset => SettingOffset / 1000f;
-
-    public static bool SettingIsMirror
-    {
-        get => Setting.IsMirror;
-        set => Setting.IsMirror = value;
-    }
+    // setting.Offsetは-100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
+    public static float Offset => setting.Offset / 1000f;
 
 
     public static Difficulty Difficulty
@@ -97,12 +74,12 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         if (useJsonData)
         {
             var gameData = SaveLoadUtility.GetDataImmediately<GameData>(ConstContainer.GameDataName);
-            Setting = gameData.Setting ?? new GameSetting();
+            setting = gameData.Setting ?? new GameSetting();
             Status = gameData.Status ?? new GameStatus();
         }
         else
         {
-            Setting = new GameSetting();
+            setting = new GameSetting();
             Status = new GameStatus();
         }
     }
@@ -125,7 +102,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             var gameData = new GameData
             {
-                Setting = Setting,
+                Setting = setting,
                 Status = Status
             };
             SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
@@ -135,8 +112,20 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public void ResetData()
     {
         var gameData = new GameData();
-        Setting = gameData.Setting ?? new GameSetting();
+        setting = gameData.Setting ?? new GameSetting();
         Status = gameData.Status ?? new GameStatus();
         SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
+    }
+
+    public static async UniTask SetDarkModeAsync(bool enabled)
+    {
+        setting.IsDark = enabled;
+        float value = enabled ? 1 : 0;
+        var invertMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath);
+        var negativeMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath);
+        invertMat.SetFloat("_Value", value);
+        negativeMat.SetFloat("_BlendRate", value);
+        Addressables.Release(invertMat);
+        Addressables.Release(negativeMat);
     }
 }

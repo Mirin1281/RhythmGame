@@ -35,8 +35,10 @@ namespace NoteCreating
             {
                 var data = noteDatas[i];
                 float expectTime = wholeWait - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
-                Helper.NoteInput.AddExpect(CreateNote(data, delta, createSpeedRate, wholeWait - waitDelta), expectTime, data.Length);
-                delta = await Wait(data.Wait / createSpeedRate, delta);
+                if (data.Type != RegularNoteType._None)
+                    Helper.NoteInput.AddExpect(CreateNote(data, delta, createSpeedRate, wholeWait - waitDelta), expectTime, data.Length);
+                if (float.IsInfinity(createSpeedRate) == false)
+                    delta = await Wait(data.Wait / createSpeedRate, delta);
                 waitDelta += data.Wait.Time;
             }
         }
@@ -92,7 +94,7 @@ namespace NoteCreating
                 }
             }
 
-            async UniTaskVoid Drop(RegularNote note, float x, float startY, float dropTime, float easingRate, float acceleration, float delta)
+            async UniTaskVoid Drop(RegularNote note, float baseX, float startY, float dropTime, float easingRate, float acceleration, float delta)
             {
                 float easeTime = dropTime * easingRate;
 
@@ -101,17 +103,20 @@ namespace NoteCreating
                 {
                     float t = CurrentTime - baseTime;
 
-                    float c;
+                    //float x;
+                    float y;
                     if (t < easeTime)
                     {
+                        //x = baseX + 0.1f * Mathf.Sin(t.Ease(60f, 0, easeTime, EaseType.OutCirc));
                         float v = Pow(t / easeTime, acceleration);
-                        c = startY - easeTime / acceleration * v;
+                        y = startY - easeTime / acceleration * v;
                     }
                     else
                     {
-                        c = dropTime - t;
+                        //x = baseX;
+                        y = dropTime - t;
                     }
-                    note.SetPos(new Vector3(mirror.Conv(x), (c + w) * Speed));
+                    note.SetPos(new Vector3(mirror.Conv(baseX), (y + w) * Speed));
 
                     await Yield();
                 }

@@ -16,19 +16,19 @@ namespace NoteCreating
             [SerializeField] Vector2 startPos;
             [SerializeField] Vector2 fromPos;
             [SerializeField, Min(-1)] float overridePosEaseTime = -1;
-            [SerializeField] EaseType overridePosEaseType = EaseType.None;
+            [SerializeField] EaseType overridePosEaseType = EaseType.Default;
 
             [SerializeField, Tooltip("回転を時間に沿って変化させます")] bool isRotateEase;
             [SerializeField] float startRotate;
             [SerializeField] float fromRotate;
             [SerializeField, Min(-1)] float overrideRotateEaseTime = -1;
-            [SerializeField] EaseType overrideRotateEaseType = EaseType.None;
+            [SerializeField] EaseType overrideRotateEaseType = EaseType.Default;
 
             [SerializeField, Tooltip("透明度を時間に沿って変化させます")] bool isAlphaEase;
             [SerializeField, Min(0)] float startAlpha = 1;
             [SerializeField, Min(0)] float fromAlpha;
             [SerializeField, Min(-1)] float overrideAlphaEaseTime = -1;
-            [SerializeField] EaseType overrideAlphaEaseType = EaseType.None;
+            [SerializeField] EaseType overrideAlphaEaseType = EaseType.Default;
 
             [SerializeField, Tooltip("座標を\"特定の座標を軸に\"回転させます")] bool isRotateFromPos;
             [SerializeField] float rotateFromPos;

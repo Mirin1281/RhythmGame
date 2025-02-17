@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/律動するホールド"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/律動するホールド"), System.Serializable]
     public class F_AprilRabbit_RhythmHold : CommandBase
     {
         [SerializeField] Mirror _mirror;

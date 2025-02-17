@@ -11,5 +11,14 @@ public static class ConstContainer
     public static readonly string NoteSECategory = "NoteSE";
     public static readonly string SECategory = "SE";
 
+    public static readonly string InvertColorMaterialPath = "InvertColor_Camera";
+    public static readonly string NegativeMaterialPath = "Negative";
+
     public static readonly Vector2 ScreenSize = new Vector2(1920, 1080);
+}
+
+public static class FumenPathContainer
+{
+    public const string NoteCreate = "Genericノーツ/";
+    public const string SpecificRoot = ""; // 専用譜面ギミックが増えた際にまとめられるように予めパスを挟む
 }

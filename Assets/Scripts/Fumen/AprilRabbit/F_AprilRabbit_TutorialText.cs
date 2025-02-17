@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/チュートリアルのテキスト"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/チュートリアルのテキスト"), System.Serializable]
     public class F_AprilRabbit_TutorialText : CommandBase
     {
         [SerializeField] Mirror mirror;

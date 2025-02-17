@@ -7,7 +7,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆一般ノーツ生成 テスト", 100), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "テスト", 100), System.Serializable]
     public class F_Ge : NoteCreateBase<NoteData>
     {
         [SerializeField] float radius = 16;

@@ -15,15 +15,15 @@ public class OffsetSetter : MonoBehaviour
 
     void SetOffset()
     {
-        if(isAdd && RhythmGameManager.Offset >= 1f
+        if (isAdd && RhythmGameManager.Offset >= 1f
         || isAdd == false && RhythmGameManager.Offset <= -1f) return;
-        if(isAdd)
+        if (isAdd)
         {
-            RhythmGameManager.SettingOffset += 5;
+            RhythmGameManager.Setting.Offset += 5;
         }
         else
         {
-            RhythmGameManager.SettingOffset -= 5;
+            RhythmGameManager.Setting.Offset -= 5;
         }
         SetText();
         SEManager.Instance.PlaySE(SEType.ti);

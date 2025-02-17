@@ -11,7 +11,7 @@ namespace NoteCreating
         [field: SerializeField] public LinePool LinePool { get; private set; }
         [field: SerializeField] public CirclePool CirclePool { get; private set; }
 
-        public void SetSimultaneousSprite(RegularNote note)
+        public void SetMultitapSprite(RegularNote note)
         {
             if (note == null) return;
             var sprite = RegularPool.GetMultitapSprite(note.Type);

@@ -4,7 +4,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆一般 ノーツ生成", -100), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "一般", -100), System.Serializable]
     public class F_General : NoteCreateBase<NoteData>
     {
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };

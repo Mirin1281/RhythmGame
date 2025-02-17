@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/2_1 回転ホールド"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Lyrith/2_1 回転ホールド"), System.Serializable]
     public class F_Lyrith_RotateHold : CommandBase
     {
         [SerializeField] Mirror mirror;

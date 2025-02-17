@@ -28,7 +28,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return $"判定数: {datas.SkipLast(0).Count(d => d.IsJudgeDisable == false)}{mirror.GetStatusText()}";
+            return $"判定数: {datas.SkipLast(1).Count(d => d.IsJudgeDisable == false)}{mirror.GetStatusText()}";
         }
 
         public override void OnSelect(CommandSelectStatus selectStatus)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("AprilRabbit/最後のノーツ"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/最後のノーツ"), System.Serializable]
     public class F_AprilRabbit_LastNote : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -16,7 +16,7 @@ namespace NoteCreating
             Vector3 pos = new Vector3(0, 4);
             note.SetPos(pos);
             note.IsVerticalRange = true;
-            Helper.PoolManager.SetSimultaneousSprite(note);
+            Helper.PoolManager.SetMultitapSprite(note);
             float expectTime = new Lpb(4, 7).Time - Delta;
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, expectTime));
 

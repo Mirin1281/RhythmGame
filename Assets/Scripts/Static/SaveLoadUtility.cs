@@ -13,10 +13,9 @@ public class SaveLoadUtility
     //readonly static int encryptKey = 90;
 #endif
 
-    static string GetFilePath(string fileName)
-        => $"{Application.persistentDataPath}/{fileName}.json";
+    static string GetFilePath(string fileName) => $"{Application.persistentDataPath}/{fileName}.json";
 
-    public static async UniTask SetData<T>(T saveData, string fileName) where T : JsonObject
+    public static async UniTask SetDataAsync<T>(T saveData, string fileName) where T : JsonObject
     {
         var writer = new StreamWriter(GetFilePath(fileName), false);
         var serializedJson = JsonConvert.SerializeObject(saveData);
@@ -36,10 +35,10 @@ public class SaveLoadUtility
         writer.Close();
     }
 
-    public static async UniTask<T> GetData<T>(string fileName, CancellationToken token = default) where T : JsonObject
+    public static async UniTask<T> GetDataAsync<T>(string fileName, CancellationToken token = default) where T : JsonObject
     {
-        string path = GetFilePath(fileName); 
-        if(File.Exists(path) == false)
+        string path = GetFilePath(fileName);
+        if (File.Exists(path) == false)
         {
             Debug.Log($"{path}が存在しませんでした");
             return null;
@@ -49,17 +48,15 @@ public class SaveLoadUtility
         reader.Close();
 
         var decryptedString = CaesarCipher.Decrypt(readString, encryptKey);
-
         var loadedData = await UniTask.RunOnThreadPool(() =>
-            JsonConvert.DeserializeObject<T>(decryptedString), cancellationToken: token
-        );
+            JsonConvert.DeserializeObject<T>(decryptedString), cancellationToken: token);
         return loadedData;
     }
 
     public static T GetDataImmediately<T>(string fileName) where T : JsonObject
     {
         string path = GetFilePath(fileName);
-        if(File.Exists(path) == false)
+        if (File.Exists(path) == false)
         {
             Debug.Log($"{path}が存在しませんでした");
             return null;

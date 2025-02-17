@@ -13,8 +13,11 @@ public static class MyUtility
         return UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token);
     }
 
-    public static string GetFumenName(MusicSelectData musicSelectData)
-        => $"{musicSelectData.SheetName}_{RhythmGameManager.Difficulty}";
+    public static string GetFumenName(MusicSelectData musicSelectData, Difficulty difficulty = Difficulty.None)
+    {
+        var dif = difficulty == Difficulty.None ? RhythmGameManager.Difficulty : difficulty;
+        return $"{musicSelectData.SheetName}_{dif}";
+    }
 
     /// <summary>
     /// 入力された座標が任意の四角形の中に入っているかを判定します

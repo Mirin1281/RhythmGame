@@ -85,6 +85,7 @@ namespace NoteCreating
         public float Time { get; set; }
         public float HoldEndTime { get; set; }
         public readonly ExpectType Type;
+        public bool IsMute { get; set; }
 
         public void DisableActive()
         {
@@ -181,8 +182,8 @@ namespace NoteCreating
                     if (Mathf.Approximately(absoluteTime, e.Time))
                     {
                         //Debug.Log("同時押し");
-                        poolManager.SetSimultaneousSprite(judgeStatus.Note);
-                        poolManager.SetSimultaneousSprite(e.Note);
+                        poolManager.SetMultitapSprite(judgeStatus.Note);
+                        poolManager.SetMultitapSprite(e.Note);
                     }
                 }
             }
@@ -205,7 +206,7 @@ namespace NoteCreating
 
         void PlayNoteSE(RegularNoteType noteType)
         {
-            if (RhythmGameManager.SettingIsNoteMute) return;
+            if (RhythmGameManager.Setting.IsNoteMute) return;
             var volume = RhythmGameManager.GetNoteVolume();
             if (volume == 0f) return;
             if (noteType == RegularNoteType.Slide)
@@ -252,7 +253,8 @@ namespace NoteCreating
 #if UNITY_EDITOR
                     judge.DebugShowRange(status);
 #endif
-                    PlayNoteSE(status.NoteType);
+                    if (status.IsMute == false)
+                        PlayNoteSE(status.NoteType);
                 }
                 else if (Metronome.CurrentTime > status.Time + 0.12f)
                 {
@@ -297,11 +299,8 @@ namespace NoteCreating
                 status.DisableActive();
             }
 
-            /*if (delta < 0) // 早い場合はその分待ってSEを鳴らす(いらない)
-            {
-                await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
-            }*/
-            PlayNoteSE(status.NoteType);
+            if (status.IsMute == false)
+                PlayNoteSE(status.NoteType);
             await UniTask.CompletedTask;
         }
 
@@ -334,7 +333,8 @@ namespace NoteCreating
                 await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
             }
             judge.PlayParticle(NoteGrade.Perfect, status.Pos);
-            PlayNoteSE(status.NoteType);
+            if (status.IsMute == false)
+                PlayNoteSE(status.NoteType);
             status.DisableActive();
             judge.SetCombo(NoteGrade.Perfect);
         }

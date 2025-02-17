@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/上昇するノーツエフェクト"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Osmanthus/上昇するノーツエフェクト"), System.Serializable]
     public class F_Osmanthus_UpNotesEffect : CommandBase
     {
         [SerializeField] int seed = 222;
@@ -19,7 +19,7 @@ namespace NoteCreating
             for (int i = 0; i < count; i++)
             {
                 var note = Helper.GetRegularNote(RegularNoteType.Slide);
-                Helper.PoolManager.SetSimultaneousSprite(note);
+                Helper.PoolManager.SetMultitapSprite(note);
                 note.SetRot(90);
                 note.SetAlpha(0.2f);
                 note.transform.localScale = rand.GetFloat(0.5f, 1.5f) * Vector3.one;

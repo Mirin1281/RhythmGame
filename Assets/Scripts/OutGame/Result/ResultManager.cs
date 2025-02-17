@@ -44,7 +44,6 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if (result == null) return;
 
-        AssetReference fumenReference = result.MusicData.GetFumenReference(RhythmGameManager.Difficulty);
         string fumenName = RhythmGameManager.FumenName;
         SetUI(result, fumenName);
         if (isSavable == false) return;
@@ -88,7 +87,7 @@ public class ResultManager : MonoBehaviour
         async UniTask<int> GetHighScore(string fumenName)
         {
             var list = await masterManagerData.GetScoreJsonAsync(destroyCancellationToken);
-            var score = list.FirstOrDefault(s => s.FumenAddress == fumenName);
+            var score = list.FirstOrDefault(s => s.FumenName == fumenName);
             if (score == null)
             {
                 return 0;

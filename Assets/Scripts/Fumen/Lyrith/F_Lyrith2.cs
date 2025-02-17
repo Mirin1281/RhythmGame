@@ -7,7 +7,7 @@ namespace NoteCreating
 {
     // 生成 → 移動
     // AddExpectを動的に設定できたら面白そう
-    [AddTypeMenu("Lyrith/2 回転して着地"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Lyrith/2 回転して着地"), System.Serializable]
     public class F_Lyrith2 : CommandBase
     {
         [SerializeField] float startY = 7f;
@@ -29,7 +29,7 @@ namespace NoteCreating
             WhileYield(moveTime, t =>
             {
                 note.SetRot(t.Ease(rotationSpeed, 0f, moveTime, EaseType.OutCubic));
-                note.SetPos(startPos - new Vector2(0, t.Ease(0f, startPos.y, moveTime, EaseType.InQuint)));
+                note.SetPos(startPos - new Vector2(0, t.Ease(0f, startPos.y, moveTime, EaseType.InQuart)));
             });
             Helper.NoteInput.AddExpect(note, moveTime, isCheckSimultaneous: true);
         }

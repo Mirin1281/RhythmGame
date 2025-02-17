@@ -6,11 +6,12 @@ public class SettingCanvas : MonoBehaviour
 {
     [SerializeField] Canvas canvas;
     [SerializeField] CanvasGroup canvasGroup;
-    [SerializeField] bool isFading;
+    [SerializeField] Image negativeImage;
+    bool isFading;
 
     public void Toggle()
     {
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
             Close();
         }
@@ -22,20 +23,24 @@ public class SettingCanvas : MonoBehaviour
 
     public void Open()
     {
-        if(isFading) return;
+        if (isFading) return;
         gameObject.SetActive(true);
         canvas.enabled = true;
         FadeAlphaAsync(1, 0.3f, EaseType.OutCubic).Forget();
+        if (negativeImage != null)
+            negativeImage.gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        if(isFading) return;
-        UniTask.Void(async () => 
+        if (isFading) return;
+        UniTask.Void(async () =>
         {
             await FadeAlphaAsync(0, 0.3f, EaseType.OutCubic);
             gameObject.SetActive(false);
             canvas.enabled = false;
+            if (negativeImage != null)
+                negativeImage.gameObject.SetActive(false);
         });
     }
 

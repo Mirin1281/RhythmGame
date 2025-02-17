@@ -21,6 +21,8 @@ namespace NoteCreating
         public float EndTime { get; set; }
         public float NoInputTime { get; set; }
         static readonly float BaseScaleX = 3f;
+        static readonly Vector3 fixPos = new Vector3(0, -0.35f);
+        static readonly float fixLength = 0.5f;
 
         public override void SetWidth(float width)
         {
@@ -31,19 +33,19 @@ namespace NoteCreating
 
         public void SetLength(Lpb length)
         {
-            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length.Time);
-            maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y);
+            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length.Time + fixLength);
+            maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y + fixLength);
         }
 
         public override Vector3 GetPos(bool isWorld = false)
         {
             if (isWorld)
             {
-                return spriteRenderer.transform.position;
+                return spriteRenderer.transform.position - fixPos;
             }
             else
             {
-                return spriteRenderer.transform.localPosition;
+                return spriteRenderer.transform.localPosition - fixPos;
             }
         }
 
@@ -51,11 +53,11 @@ namespace NoteCreating
         {
             if (isWorld)
             {
-                spriteRenderer.transform.position = pos;
+                spriteRenderer.transform.position = pos + fixPos;
             }
             else
             {
-                spriteRenderer.transform.localPosition = pos;
+                spriteRenderer.transform.localPosition = pos + fixPos;
             }
         }
 

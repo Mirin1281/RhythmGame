@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
-using NoteCreating;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AddressableAssets;
@@ -60,7 +59,14 @@ public class UpdatorOnChange : MonoBehaviour
     {
         if (string.IsNullOrEmpty(fumenName)) return;
         var list = await GetGameScoresAsync();
-        var gameScore = list.FirstOrDefault(s => s.FumenAddress == fumenName);
+        var gameScore = list.FirstOrDefault(s => s.FumenName == fumenName);
+        if (gameScore == null)
+        {
+            Debug.LogError($"\"{fumenName}\"でゲームスコア内を検索しましたが見つかりませんでした");
+            Debug.Log($"検索: {fumenName}");
+            list.ForEach(score => Debug.Log($"ターゲット: {score.FumenName}"));
+            return;
+        }
         (int highScore, bool isFullCombo) = (gameScore.Score, gameScore.IsFullCombo);
         string fullComboText = isFullCombo ? "[F]" : string.Empty;
         highScoreTmpro.SetText($"{fullComboText} {highScore:00000000}");

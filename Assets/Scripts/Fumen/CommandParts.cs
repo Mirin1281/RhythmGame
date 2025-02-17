@@ -103,7 +103,7 @@ namespace NoteCreating
             {
                 if (_value == 0) return 0;
 #if UNITY_EDITOR
-                if (EditorApplication.isPlaying == false)
+                if (EditorApplication.isPlaying == false || Metronome.Instance == null)
                 {
                     return 240f / CommandEditorUtility.DebugBPM / _value;
                 }

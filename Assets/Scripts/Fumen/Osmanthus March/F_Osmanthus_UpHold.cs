@@ -4,7 +4,7 @@ using System;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Osmanthus/昇るホールド"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Osmanthus/昇るホールド"), System.Serializable]
     public class F_Osmanthus_UpHold : CommandBase
     {
         [Serializable]

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +7,12 @@ public class MirrorSetter : MonoBehaviour
 
     void Awake()
     {
-        toggle.SetIsOnWithoutNotify(RhythmGameManager.SettingIsMirror);
+        toggle.SetIsOnWithoutNotify(RhythmGameManager.Setting.IsMirror);
     }
 
     public void OnToggle()
     {
-        RhythmGameManager.SettingIsMirror = toggle.isOn;
+        RhythmGameManager.Setting.IsMirror = toggle.isOn;
         SEManager.Instance.PlaySE(SEType.ti);
     }
 }

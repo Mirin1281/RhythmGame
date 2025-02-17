@@ -39,6 +39,9 @@ public class GameSetting
     [JsonProperty("ミラー譜面")]
     public bool IsMirror { get; set; } = false;
 
+    [JsonProperty("ダークモード")]
+    public bool IsDark { get; set; } = false;
+
     [JsonProperty("厳しめ判定")]
     public bool IsStrictJudge { get; set; } = false;
 

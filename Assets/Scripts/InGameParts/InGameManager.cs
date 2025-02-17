@@ -13,6 +13,7 @@ namespace NoteCreating
         [SerializeField] FumenData editorFumenData;
         [SerializeField] bool isEarphone;
         [SerializeField] bool isMirror;
+        [SerializeField] bool isDark;
 #endif
         [SerializeField] TMP_Text titleTmpro;
         FumenData fumenData;
@@ -54,10 +55,10 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
 
-            if (isEarphone) RhythmGameManager.SettingOffset = -100;
+            if (isEarphone) RhythmGameManager.Setting.Offset = -100;
 
             {
-                RhythmGameManager.SettingIsMirror = isMirror;
+                RhythmGameManager.Setting.IsMirror = isMirror;
                 var cameraScalers = FindObjectsByType<CameraScaler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
                 var mainCameraScaler = cameraScalers.First(c => c.gameObject.name == "Main Camera");
                 var effectCameraScaler = cameraScalers.First(c => c.gameObject.name == "EffectCamera");
@@ -67,6 +68,8 @@ namespace NoteCreating
                 mainCameraScaler.ScreenScale = scale;
                 effectCameraScaler.ScreenScale = scale;
                 negativeCameraScaler.ScreenScale = scale;
+
+                RhythmGameManager.SetDarkModeAsync(isDark).Forget();
             }
 #endif
 

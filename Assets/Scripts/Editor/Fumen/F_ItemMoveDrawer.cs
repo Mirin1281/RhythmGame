@@ -32,6 +32,8 @@ namespace NoteCreating.Editor
             {
                 h.PropertyField("setJudge");
                 h.SetY();
+                h.PropertyField("isMultitap");
+                h.SetY();
             }
 
             h.PropertyField("lifeLpb");

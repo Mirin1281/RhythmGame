@@ -14,11 +14,16 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             float easeTime = easeLpb.Time;
-            var easing = new Easing(RhythmGameManager.SpeedBase, speed, easeTime, easeTime == 0 ? EaseType.Zero : easeType);
-            WhileYield(easeTime, t =>
+            var easing = new Easing(RhythmGameManager.SpeedBase, speed, easeTime, easeTime == 0 ? EaseType.End : easeType);
+            float baseTime = CurrentTime - Delta;
+            float t = 0f;
+            while (t < easeTime)
             {
+                t = CurrentTime - baseTime;
                 RhythmGameManager.SpeedBase = easing.Ease(t);
-            });
+                await Yield(timing: PlayerLoopTiming.EarlyUpdate);
+            }
+            RhythmGameManager.SpeedBase = easing.Ease(easeTime);
             await UniTask.CompletedTask;
         }
 

@@ -27,15 +27,15 @@ public class MusicMasterManagerData : ScriptableObject
             var d = selectDatas[i];
             if (d.NormalFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d, Difficulty.Normal), 0, false));
             }
             if (d.HardFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d, Difficulty.Hard), 0, false));
             }
             if (d.ExtraFumenReference != null)
             {
-                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d), 0, false));
+                scoreData.GameScores.Add(new GameScore(MyUtility.GetFumenName(d, Difficulty.Extra), 0, false));
             }
         }
         SaveLoadUtility.SetDataImmediately(scoreData, ConstContainer.ScoreDataName);
@@ -48,15 +48,14 @@ public class MusicMasterManagerData : ScriptableObject
     /// </summary>
     public async UniTask SetScoreJsonAsync(GameScore gameScore)
     {
-        var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName);
+        var scoreData = await SaveLoadUtility.GetDataAsync<ScoreData>(ConstContainer.ScoreDataName);
         scoreData ??= ResetScoreData();
 
-        var s = scoreData.GameScores.FirstOrDefault(s => s.FumenAddress == gameScore.FumenAddress);
-
+        var s = scoreData.GameScores.FirstOrDefault(s => s.FumenName == gameScore.FumenName);
         if (s == null)
         {
             Debug.LogWarning($"{nameof(GameScore)}がnullでした\n{nameof(ScoreData)}を初期化していない可能性があります");
-            Debug.LogWarning($"FumenAddress: {gameScore.FumenAddress}");
+            Debug.LogWarning($"FumenAddress: {gameScore.FumenName}");
             return;
         }
 
@@ -72,7 +71,7 @@ public class MusicMasterManagerData : ScriptableObject
         }
 
         s.UpdateScore(score, isFullCombo);
-        await SaveLoadUtility.SetData(scoreData, ConstContainer.ScoreDataName);
+        await SaveLoadUtility.SetDataAsync(scoreData, ConstContainer.ScoreDataName);
         Debug.Log("データが保存されました");
     }
 
@@ -81,8 +80,12 @@ public class MusicMasterManagerData : ScriptableObject
     /// </summary>
     public async UniTask<List<GameScore>> GetScoreJsonAsync(CancellationToken token)
     {
-        var scoreData = await SaveLoadUtility.GetData<ScoreData>(ConstContainer.ScoreDataName, token);
+        var scoreData = await SaveLoadUtility.GetDataAsync<ScoreData>(ConstContainer.ScoreDataName, token);
         scoreData ??= ResetScoreData();
+        if (scoreData == null || scoreData.GameScores == null)
+        {
+            Debug.LogError("スコアデータの取得で問題が発生しました");
+        }
         return scoreData.GameScores;
     }
 }
@@ -93,17 +96,17 @@ public class MusicMasterManagerData : ScriptableObject
 [Serializable]
 public class GameScore
 {
-    readonly string fumenAddress;
+    readonly string fumenName;
     int score;
     bool isFullCombo;
 
-    public string FumenAddress => fumenAddress;
+    public string FumenName => fumenName;
     public int Score => score;
     public bool IsFullCombo => isFullCombo;
 
-    public GameScore(string fumenAddress, int score, bool isFullCombo)
+    public GameScore(string fumenName, int score, bool isFullCombo)
     {
-        this.fumenAddress = fumenAddress;
+        this.fumenName = fumenName;
         this.score = score;
         this.isFullCombo = isFullCombo;
     }

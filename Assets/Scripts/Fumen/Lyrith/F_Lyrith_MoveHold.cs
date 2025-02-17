@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("Lyrith/移動ホールド"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Lyrith/移動ホールド"), System.Serializable]
     public class F_Lyrith_MoveHold : CommandBase
     {
         protected override async UniTaskVoid ExecuteAsync()

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Lyrith_BlinkNotes")]
-    [AddTypeMenu("Lyrith/【演出】ノーツ上昇"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Lyrith/【演出】ノーツ上昇"), System.Serializable]
     public class F_Lyrith_NoteEffect2 : CommandBase
     {
         protected override async UniTaskVoid ExecuteAsync()

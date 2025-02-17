@@ -13,7 +13,7 @@ public class NoteSoundMute : MonoBehaviour
 
     void Awake()
     {
-        if (RhythmGameManager.SettingIsNoteMute)
+        if (RhythmGameManager.Setting.IsNoteMute)
         {
             isMute = true;
             slider.SetInteractable(false);
@@ -32,14 +32,14 @@ public class NoteSoundMute : MonoBehaviour
         if (isMute)
         {
             isMute = false;
-            RhythmGameManager.SettingIsNoteMute = false;
+            RhythmGameManager.Setting.IsNoteMute = false;
             slider.SetInteractable(true);
             buttonImage.sprite = soundSprite;
         }
         else
         {
             isMute = true;
-            RhythmGameManager.SettingIsNoteMute = true;
+            RhythmGameManager.Setting.IsNoteMute = true;
             slider.SetInteractable(false);
             buttonImage.sprite = muteSprite;
         }

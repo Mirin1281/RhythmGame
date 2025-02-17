@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace NoteCreating.Editor
 {
@@ -642,7 +643,11 @@ namespace NoteCreating.Editor
                 selectedIndices.Sort();
             reorderableList.Select(commandList.IndexOf(command), append);
 
-            // 選択したコマンドに対してOnSelectを叩く
+            // もしInGame内であれば選択したコマンドに対してOnSelectを叩く
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName != ConstContainer.InGameSceneName
+             && sceneName != ConstContainer.TestSceneName) return;
+
             var cmds = selectedIndices.Select(i => commandList[i]).OrderBy(d => d.BeatTiming);
             int minBeatTiming = cmds.First().BeatTiming;
 

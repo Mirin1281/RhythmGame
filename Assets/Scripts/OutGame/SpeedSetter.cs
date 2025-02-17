@@ -15,22 +15,26 @@ public class SpeedSetter : MonoBehaviour
 
     void SetSpeed()
     {
-        if(isAdd && RhythmGameManager.SettingSpeed >= 100f
-        || isAdd == false && RhythmGameManager.SettingSpeed <= 50f) return;
-        if(isAdd)
+        int speed = RhythmGameManager.Setting.Speed;
+        if (isAdd && speed >= 100f
+        || isAdd == false && speed <= 50f) return;
+
+        int a;
+        if (isAdd)
         {
-            RhythmGameManager.SettingSpeed++;
+            a = 1;
         }
         else
         {
-            RhythmGameManager.SettingSpeed--;
+            a = -1;
         }
+        RhythmGameManager.Setting.Speed += a;
         SetText();
         SEManager.Instance.PlaySE(SEType.ti);
     }
 
     void SetText()
     {
-        speedTmpro.SetText("{0:0.0}", RhythmGameManager.SettingSpeed / 10f);
+        speedTmpro.SetText("{0:0.0}", RhythmGameManager.Setting.Speed / 10f);
     }
 }

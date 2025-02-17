@@ -22,7 +22,6 @@ namespace NoteCreating
 
         [Space(20)]
         [SerializeField] BlinkTargets target = BlinkTargets.Normal | BlinkTargets.Slide | BlinkTargets.Hold;
-        [SerializeField, Min(0)] float delay;
         [SerializeField] int blinkCount = 20;
         [SerializeField] int seed = 222;
         [SerializeField] Vector2Int hideWaitRange = new Vector2Int(1, 5);
@@ -32,10 +31,6 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             if (target == 0) return;
-            if (delay > 0)
-            {
-                await WaitSeconds(delay + Delta);
-            }
             await WaitOnTiming();
 
             List<ItemBase> items = new(100);

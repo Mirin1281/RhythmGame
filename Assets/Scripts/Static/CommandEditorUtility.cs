@@ -121,9 +121,9 @@ namespace NoteCreating
                 {
                     if (simultaneousCount == 1)
                     {
-                        helper.PoolManager.SetSimultaneousSprite(beforeNote);
+                        helper.PoolManager.SetMultitapSprite(beforeNote);
                     }
-                    helper.PoolManager.SetSimultaneousSprite(note);
+                    helper.PoolManager.SetMultitapSprite(note);
                     simultaneousCount++;
                 }
                 else

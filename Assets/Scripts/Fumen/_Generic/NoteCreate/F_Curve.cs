@@ -4,14 +4,14 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆ノーツ生成 カーブノーツ", -60), System.Serializable]
-    public class F_Curve : NoteCreateBase<NoteDataAdvanced>
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "カーブ", -60), System.Serializable]
+    public class F_Curve : NoteCreateBase<NoteData>
     {
         [Header("オプション1 : カーブの半径 値が小さいほど効果が大きくなります")]
-        [SerializeField] NoteDataAdvanced[] noteDatas = new NoteDataAdvanced[] { new(length: new Lpb(4), option1: 15) };
-        protected override NoteDataAdvanced[] NoteDatas => noteDatas;
+        [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option1: 15) };
+        protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteDataAdvanced data)
+        protected override void Move(RegularNote note, NoteData data)
         {
             void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
             {
@@ -34,7 +34,7 @@ namespace NoteCreating
                 {
                     float dir = (MoveTime - t) * Speed / data.Option1;
                     note.SetPos(mirror.Conv(new Vector3(data.X - data.Option1, 0) + data.Option1 * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir))));
-                    note.SetRot(mirror.Conv(dir * Mathf.Rad2Deg));
+                    note.SetRot(mirror.Conv(t.Ease(MoveTime * Speed / data.Option1, 0, MoveTime, EaseType.OutQuad) * Mathf.Rad2Deg));
                 }
                 else // ロングの場合、始点を取った後は真っ直ぐ落とす
                 {
@@ -42,8 +42,6 @@ namespace NoteCreating
                     note.SetRot(0);
                 }
             });
-
-            if (data.Option2 != 0) Debug.LogWarning("未使用の値");
         }
 
 #if UNITY_EDITOR

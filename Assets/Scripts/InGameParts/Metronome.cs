@@ -72,7 +72,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
                 if (startBeatCount > commandData.BeatTiming
                  && commandData.GetCommandBase() is INotSkipCommand)
                 {
-                    float delta = skipTime - (SelectData.StartBeatOffset + 1) * (float)BeatInterval + SelectData.Offset;
+                    float delta = skipTime - (SelectData.StartBeatOffset + 1 + commandData.BeatTiming) * (float)BeatInterval + SelectData.Offset;
                     commandData.Execute(GameObject.FindAnyObjectByType<NoteCreateHelper>(), delta);
                 }
             }

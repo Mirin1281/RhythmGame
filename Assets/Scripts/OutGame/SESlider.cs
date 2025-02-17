@@ -12,28 +12,28 @@ public class SESlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.SettingSEVolume;
+        var val = RhythmGameManager.Setting.SEVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
 
-    void SetText(float val)
+    void SetText(float value)
     {
-        tmpro.SetText(val.ToString("0.00"));
+        tmpro.SetText(Mathf.RoundToInt(value * 100).ToString());
     }
 
     public void OnValueChange()
     {
         var val = slider.value;
         SetText(val);
-        RhythmGameManager.SettingSEVolume = val;
+        RhythmGameManager.Setting.SEVolume = val;
         SEManager.Instance.SetCategoryVolume(ConstContainer.SECategory, RhythmGameManager.GetSEVolume());
 
         cts?.Cancel();
         cts = new();
         var token = cts.Token;
 
-        UniTask.Void(async () => 
+        UniTask.Void(async () =>
         {
             await MyUtility.WaitSeconds(0.3f, token);
             SEManager.Instance.PlaySE(SEType.start_freeze);

@@ -13,7 +13,7 @@ public class NoteVolumeSlider : MonoBehaviour
 
     void Awake()
     {
-        var val = RhythmGameManager.SettingNoteSEVolume;
+        var val = RhythmGameManager.Setting.NoteSEVolume;
         slider.SetValueWithoutNotify(val);
         SetText(val);
     }
@@ -24,16 +24,16 @@ public class NoteVolumeSlider : MonoBehaviour
         cts = null;
     }
 
-    void SetText(float val)
+    void SetText(float value)
     {
-        tmpro.SetText(val.ToString("0.00"));
+        tmpro.SetText(Mathf.RoundToInt(value * 100).ToString());
     }
 
     public void OnValueChange()
     {
         var val = slider.value;
         SetText(val);
-        RhythmGameManager.SettingNoteSEVolume = val;
+        RhythmGameManager.Setting.NoteSEVolume = val;
         SEManager.Instance.SetCategoryVolume(ConstContainer.NoteSECategory, RhythmGameManager.GetNoteVolume());
 
         cts?.Cancel();
@@ -52,7 +52,7 @@ public class NoteVolumeSlider : MonoBehaviour
         slider.interactable = enabled;
         SetColor(slider.fillRect);
         SetColor(slider.handleRect);
-        SetText(enabled ? RhythmGameManager.SettingNoteSEVolume : 0);
+        SetText(enabled ? RhythmGameManager.Setting.NoteSEVolume : 0);
 
 
         void SetColor(RectTransform rect)
