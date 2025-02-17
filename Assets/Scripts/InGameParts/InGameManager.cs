@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 using VertexType = NoteCreating.ArcCreateData.VertexType;
 
 namespace NoteCreating
@@ -16,6 +17,7 @@ namespace NoteCreating
         [SerializeField] bool isDark;
 #endif
         [SerializeField] TMP_Text titleTmpro;
+        [SerializeField] Image darkImage;
         FumenData fumenData;
 
         public FumenData FumenData => fumenData;
@@ -53,23 +55,24 @@ namespace NoteCreating
 
             metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
+            darkImage.gameObject.SetActive(RhythmGameManager.Setting.IsDark);
+
 #if UNITY_EDITOR
 
             if (isEarphone) RhythmGameManager.Setting.Offset = -100;
 
             {
                 RhythmGameManager.Setting.IsMirror = isMirror;
-                var cameraScalers = FindObjectsByType<CameraScaler>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-                var mainCameraScaler = cameraScalers.First(c => c.gameObject.name == "Main Camera");
-                var effectCameraScaler = cameraScalers.First(c => c.gameObject.name == "EffectCamera");
-                var negativeCameraScaler = cameraScalers.First(c => c.gameObject.name == "NegativeCamera");
+                var cameraMirrors = FindObjectsByType<CameraMirror>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+                var mainCameraMirror = cameraMirrors.First(c => c.gameObject.name == "Main Camera");
+                var effectCameraMirror = cameraMirrors.First(c => c.gameObject.name == "EffectCamera");
+                var negativeCameraMirror = cameraMirrors.First(c => c.gameObject.name == "NegativeCamera");
 
-                Vector3 scale = new Vector3(isMirror ? -1 : 1, 1, 1);
-                mainCameraScaler.ScreenScale = scale;
-                effectCameraScaler.ScreenScale = scale;
-                negativeCameraScaler.ScreenScale = scale;
+                mainCameraMirror.IsInvert = isMirror;
+                effectCameraMirror.IsInvert = isMirror;
+                negativeCameraMirror.IsInvert = isMirror;
 
-                RhythmGameManager.SetDarkModeAsync(isDark).Forget();
+                darkImage.gameObject.SetActive(isDark);
             }
 #endif
 
@@ -95,6 +98,7 @@ namespace NoteCreating
             }
 
             titleTmpro = null;
+            darkImage = null;
         }
 #if UNITY_EDITOR
         public FumenData GetEditorFumenData() => editorFumenData;

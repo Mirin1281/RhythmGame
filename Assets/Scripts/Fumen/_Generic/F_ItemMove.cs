@@ -203,7 +203,7 @@ namespace NoteCreating
             {
                 ItemType.NormalNote => Helper.PoolManager.RegularPool.GetNote(RegularNoteType.Normal),
                 ItemType.SlideNote => Helper.PoolManager.RegularPool.GetNote(RegularNoteType.Slide),
-                ItemType.HoldNote => Helper.PoolManager.HoldPool.GetNote(),
+                ItemType.HoldNote => Helper.PoolManager.HoldPool.GetNote(new Lpb(option) * Speed),
                 ItemType.Line => Helper.GetLine(),
                 _ => throw new ArgumentException()
             };
@@ -211,11 +211,6 @@ namespace NoteCreating
             if (itemType == ItemType.NormalNote)
             {
                 Helper.PoolManager.SetMultitapSprite(item as RegularNote);
-            }
-            else if (itemType == ItemType.HoldNote)
-            {
-                var hold = item as HoldNote;
-                hold.SetLength(new Lpb(option) * Speed);
             }
             return item;
         }

@@ -41,11 +41,12 @@ namespace NoteCreating
         }
         void Preview(bool beforeClear = true, int beatDelta = 1)
         {
-            var previewObj = CommandEditorUtility.GetPreviewObject(beforeClear);
-            CommandEditorUtility.CreateGuideLine(previewObj, Helper, beforeClear);
+            var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
+            if (beforeClear)
+                previewer.CreateGuideLine();
 
             var arc = Helper.GetArc();
-            arc.transform.SetParent(previewObj.transform);
+            arc.transform.SetParent(previewer.transform);
             arc.SetPos(new Vector3(0, new Lpb(4, beatDelta).Time * Speed));
             arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
         }

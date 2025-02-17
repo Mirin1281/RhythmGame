@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class ManagerCreator : SingletonMonoBehaviour<ManagerCreator>
 {
@@ -18,16 +19,19 @@ public class ManagerCreator : SingletonMonoBehaviour<ManagerCreator>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitBeforeAwake()
     {
-        var managerPrefab = Resources.Load<ManagerCreator>(nameof(ManagerCreator));
+        var handle = Addressables.LoadAssetAsync<GameObject>(nameof(ManagerCreator));
+        GameObject managerPrefab = handle.WaitForCompletion(); // 同期的にロード
+        ManagerCreator instance = Instantiate(managerPrefab).GetComponent<ManagerCreator>();
+
         if (managerPrefab == null)
         {
             Debug.LogWarning($"{nameof(ManagerCreator)}の取得に失敗しました");
             return;
         }
-        var self = Instantiate(managerPrefab);
-        self.name = managerPrefab.name;
-        DontDestroyOnLoad(self);
-        self.InitCreateManagers();
+        instance.name = managerPrefab.name;
+        DontDestroyOnLoad(instance);
+        instance.InitCreateManagers();
+        Addressables.Release(handle);
     }
 
     public void InitCreateManagers()

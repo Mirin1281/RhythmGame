@@ -158,6 +158,9 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
         }
     }
 
+    /// <summary>
+    /// エディタ上のみ有効。TimeRateからおおよそのビートカウントを求めます
+    /// </summary>
     public int GetEstimatedBeatCount(float rate)
     {
         var inGameManager = FindAnyObjectByType<InGameManager>();

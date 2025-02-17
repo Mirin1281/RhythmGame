@@ -103,17 +103,14 @@ namespace NoteCreating
                 {
                     float t = CurrentTime - baseTime;
 
-                    //float x;
                     float y;
                     if (t < easeTime)
                     {
-                        //x = baseX + 0.1f * Mathf.Sin(t.Ease(60f, 0, easeTime, EaseType.OutCirc));
                         float v = Pow(t / easeTime, acceleration);
                         y = startY - easeTime / acceleration * v;
                     }
                     else
                     {
-                        //x = baseX;
                         y = dropTime - t;
                     }
                     note.SetPos(new Vector3(mirror.Conv(baseX), (y + w) * Speed));
@@ -171,7 +168,8 @@ namespace NoteCreating
 
         void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
-            CommandEditorUtility.DebugPreview2DNotes(noteDatas, Helper, mirror, beforeClear, beatDelta);
+            var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
+            previewer.DebugPreview2DNotes(noteDatas, Helper.PoolManager, mirror, beforeClear, beatDelta);
         }
 #endif
     }

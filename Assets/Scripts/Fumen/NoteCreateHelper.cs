@@ -21,9 +21,7 @@ namespace NoteCreating
         }
         public HoldNote GetHold(Lpb length)
         {
-            var hold = PoolManager.HoldPool.GetNote();
-            hold.SetLength(length);
-            return hold;
+            return PoolManager.HoldPool.GetNote(length);
         }
         public ArcNote GetArc()
         {

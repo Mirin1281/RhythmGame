@@ -29,7 +29,7 @@ namespace Novel
             var managerPrefab = Resources.Load<NovelManager>(nameof(NovelManager));
             if (managerPrefab == null)
             {
-                Debug.LogWarning($"{nameof(NovelManager)}の取得に失敗しました");
+                //Debug.LogWarning($"{nameof(NovelManager)}の取得に失敗しました");
                 return;
             }
             var novelManager = Instantiate(managerPrefab);

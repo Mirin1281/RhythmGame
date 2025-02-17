@@ -172,7 +172,8 @@ namespace NoteCreating
 
         void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
-            CommandEditorUtility.DebugPreview2DNotes(noteDatas, Helper, mirror, beforeClear, beatDelta);
+            var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
+            previewer.DebugPreview2DNotes(noteDatas, Helper.PoolManager, mirror, beforeClear, beatDelta);
         }
 #endif
     }

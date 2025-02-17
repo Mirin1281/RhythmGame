@@ -62,15 +62,16 @@ namespace NoteCreating
         void DebugPreview(bool beforeClear = true, int beatDelta = 1)
         {
             if (noteType == RegularNoteType._None) return;
-            var previewObj = CommandEditorUtility.GetPreviewObject(beforeClear);
-            CommandEditorUtility.CreateGuideLine(previewObj, Helper, beforeClear);
+            var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
+            if (beforeClear)
+                previewer.CreateGuideLine();
 
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             float y = new Lpb(4, beatDelta).Time * Speed;
             for (int i = 0; i < count; i++)
             {
                 var note = Helper.GetRegularNote(noteType);
-                note.transform.SetParent(previewObj.transform);
+                note.transform.SetParent(previewer.transform);
                 float x = easing.Ease(i * ((float)(count + 1) / count));
                 note.SetPos(mirror.Conv(new Vector3(x, y)));
                 y += wait.Time * Speed;

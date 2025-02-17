@@ -82,6 +82,9 @@ namespace NoteCreating
     public struct Lpb : IEquatable<Lpb>, IComparable<Lpb>
     {
         [SerializeField] float _value;
+#if UNITY_EDITOR
+        static readonly float DebugBPM = 200f;
+#endif
 
         public Lpb(float lpb, int num = 1)
         {
@@ -105,7 +108,7 @@ namespace NoteCreating
 #if UNITY_EDITOR
                 if (EditorApplication.isPlaying == false || Metronome.Instance == null)
                 {
-                    return 240f / CommandEditorUtility.DebugBPM / _value;
+                    return 240f / DebugBPM / _value;
                 }
 #endif
                 return 240f / Metronome.Instance.Bpm / _value;
@@ -121,7 +124,7 @@ namespace NoteCreating
 #if UNITY_EDITOR
             if (EditorApplication.isPlaying == false)
             {
-                return new Lpb(240f / CommandEditorUtility.DebugBPM / time * num);
+                return new Lpb(240f / DebugBPM / time * num);
             }
 #endif
             return new Lpb(240f / Metronome.Instance.Bpm / time * num);
