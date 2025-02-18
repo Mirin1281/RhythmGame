@@ -30,7 +30,7 @@ namespace NoteCreating
 
         protected virtual float Speed => RhythmGameManager.Speed;
 
-        protected virtual Lpb MoveLpb => new Lpb(4, 6);
+        protected virtual Lpb MoveLpb => new Lpb(4) * 6f;
 
         protected float MoveTime => MoveLpb.Time;
 
@@ -93,31 +93,41 @@ namespace NoteCreating
             }
         }
 
-        protected void WhileYield(float time, Action<float> action, float delta = -1)
-            => WhileYieldAsync(time, action, delta).Forget();
-        protected async UniTask WhileYieldAsync(float time, Action<float> action, float delta = -1)
+        protected void WhileYield(float time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+            => WhileYieldAsync(time, action, delta, timing).Forget();
+        protected async UniTask<float> WhileYieldAsync(float time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
         {
             if (delta == -1)
             {
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            float t = 0f;
+            /*float t = 0f;
             while (t < time)
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
+                if (t >= time) break;
                 await Yield();
+            }*/
+            while (true) // 新実装(Yieldもdelta返り値を用意する。)
+            {
+                float t = CurrentTime - baseTime;
+                action.Invoke(t);
+                if (t >= time) break;
+                await Yield(timing: timing);
             }
             action.Invoke(time);
+            return CurrentTime - baseTime - time;
         }
 
-        protected async UniTask<float> WaitSeconds(float wait, float delta = -1, CancellationToken token = default)
+        protected void WhileYield(Lpb time, Action<float> action, float delta = -1)
+            => WhileYieldAsync(time.Time, action, delta).Forget();
+        protected UniTask<float> WhileYieldAsync(Lpb time, Action<float> action, float delta = -1)
+            => WhileYieldAsync(time.Time, action, delta);
+
+        protected async UniTask<float> WaitSeconds(float wait, float delta = -1)
         {
-            if (token == default)
-            {
-                token = Helper.Token;
-            }
             if (delta == -1)
             {
                 delta = Delta;
@@ -127,9 +137,9 @@ namespace NoteCreating
             while (time < wait)
             {
                 time = Metronome.Instance.CurrentTime - baseTime;
-                await UniTask.Yield(token);
+                await Yield();
             }
-            return baseTime - wait;
+            return Metronome.Instance.CurrentTime - baseTime - wait;
         }
 
         protected UniTask Yield(CancellationToken token = default, PlayerLoopTiming timing = PlayerLoopTiming.Update)
@@ -139,6 +149,19 @@ namespace NoteCreating
                 token = Helper.Token;
             }
             return UniTask.Yield(timing, token);
+            /*
+            if (delta == -1) // deltaを組み込みたかったけど無理
+            {
+                delta = Delta;
+            }
+            float baseTime = Metronome.Instance.CurrentTime - delta;
+            if (token == default)
+            {
+                token = Helper.Token;
+            }
+            await UniTask.Yield(timing, token);
+            return Metronome.Instance.CurrentTime - baseTime;
+            */
         }
 
         protected async UniTask DropAsync(ItemBase item, float x, float delta = -1, bool isAdaptiveSpeed = true)

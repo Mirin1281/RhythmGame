@@ -19,6 +19,14 @@ namespace NoteCreating
         {
             return PoolManager.RegularPool.GetNote(type);
         }
+        public RegularNote GetRegularNote(INoteData noteData)
+        {
+            if (noteData.Type == RegularNoteType.Hold)
+            {
+                return PoolManager.HoldPool.GetNote(noteData.Length * RhythmGameManager.Speed);
+            }
+            return PoolManager.RegularPool.GetNote(noteData.Type);
+        }
         public HoldNote GetHold(Lpb length)
         {
             return PoolManager.HoldPool.GetNote(length);

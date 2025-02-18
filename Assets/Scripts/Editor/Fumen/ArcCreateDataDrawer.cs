@@ -52,6 +52,7 @@ namespace NoteCreating.Editor
                 h.SetX(w * 3f - 30);
                 h.PropertyField("aheadJudgeRange", false);
             }
+
             h.SetY(28);
             h.DrawLine(weight: 2);
         }

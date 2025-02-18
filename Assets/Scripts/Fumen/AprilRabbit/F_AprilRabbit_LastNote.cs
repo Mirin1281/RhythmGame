@@ -17,7 +17,7 @@ namespace NoteCreating
             note.SetPos(pos);
             note.IsVerticalRange = true;
             Helper.PoolManager.SetMultitapSprite(note);
-            float expectTime = new Lpb(4, 7).Time - Delta;
+            float expectTime = new Lpb(4).Time * 7 - Delta;
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, expectTime));
 
             var line = Helper.GetLine();

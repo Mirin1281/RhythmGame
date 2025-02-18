@@ -50,7 +50,7 @@ namespace NoteCreating
             maskTs.gameObject.SetActive(enabled);
         }
 
-        public async UniTask SetScaleAsync(float endScale, float time, EaseType easeType = EaseType.InCirc)
+        public async UniTask SetScaleAsync(float endScale, float time, EaseType easeType = EaseType.InQuad)
         {
             var easing = new Easing(GetScale(), endScale, time, easeType);
             var t = 0f;

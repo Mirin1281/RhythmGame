@@ -87,7 +87,7 @@ namespace NoteCreating
 
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewer.transform);
-            arc.SetPos(new Vector3(0, new Lpb(4, beatDelta).Time * Speed));
+            arc.SetPos(new Vector3(0, new Lpb(4).Time * beatDelta * Speed));
 
             int count = Mathf.RoundToInt(jagInterval / length);
             var easing = new Easing(startWidth, fromWidth, count, easeType);

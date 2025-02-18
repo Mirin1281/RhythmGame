@@ -14,7 +14,7 @@ namespace NoteCreating
         {
             UniTask.Void(async () =>
             {
-                await Wait(4, 4, delta: 0);
+                await Wait(1, delta: 0);
                 Line(20, new Vector3(8, 1.5f));
                 await Wait(8, delta: 0);
                 Line(10, new Vector3(4, 0.5f));
@@ -90,9 +90,9 @@ namespace NoteCreating
             await Note(1).Wait(8);
         }
 
-        UniTask Wait(float lpb, int num = 1, float delta = -1)
+        UniTask Wait(float lpb, float delta = -1)
         {
-            return base.Wait(new Lpb(lpb, num), delta);
+            return base.Wait(new Lpb(lpb), delta);
         }
 
         F_AprilRabbit_5Lane Note(int x, RegularNoteType type = RegularNoteType.Normal, float delta = -1)

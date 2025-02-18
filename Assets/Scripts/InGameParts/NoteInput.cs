@@ -509,14 +509,14 @@ namespace NoteCreating
 
                 var arcJ = arc.GetCurrentJudge();
                 if (arcJ == null) continue; // 最後の判定を終えた
-                else if (headY < -arcJ.EndPos.y) // 判定の終端を過ぎたらミス
+                else if (headY < -arcJ.EndPos.z) // 判定の終端を過ぎたらミス
                 {
                     arcJ.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;
                     judge.SetCombo(NoteGrade.Miss);
                     continue;
                 }
-                else if (headY > -arcJ.StartPos.y) // まだ次の判定が来ていないときはスルー
+                else if (headY > -arcJ.StartPos.z) // まだ次の判定が来ていないときはスルー
                 {
                     continue;
                 }

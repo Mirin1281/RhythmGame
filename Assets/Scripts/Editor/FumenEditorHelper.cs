@@ -84,7 +84,7 @@ namespace NoteCreating.Editor
             }
         }
 
-        void SetCommandToFlowchart(IEnumerable<CommandData> list)
+        void SetCommandToFumen(IEnumerable<CommandData> list)
         {
             if (fumen == null) return;
             fumen.SetCommandDataList(list);
@@ -163,7 +163,7 @@ namespace NoteCreating.Editor
                 }
                 else
                 {
-                    SetCommandToFlowchart(commandList);
+                    SetCommandToFumen(commandList);
                 }
                 reorderableList = CreateReorderableList();
 
@@ -218,7 +218,7 @@ namespace NoteCreating.Editor
                         }
                     }
                     SelectCommand(from);
-                    SetCommandToFlowchart(commandList);
+                    SetCommandToFumen(commandList);
                 }
 
                 window.Repaint();
@@ -358,7 +358,7 @@ namespace NoteCreating.Editor
 
                 if (scope.changed)
                 {
-                    SetCommandToFlowchart(commandList);
+                    SetCommandToFumen(commandList);
                 }
             }
 
@@ -556,7 +556,7 @@ namespace NoteCreating.Editor
                 updatedIndices.Add(commandList.IndexOf(c));
             }
 
-            SetCommandToFlowchart(commandList);
+            SetCommandToFumen(commandList);
             Event.current?.Use();
 
             if (callLog)
@@ -586,6 +586,8 @@ namespace NoteCreating.Editor
             updatedIndices.Add(insertIndex);
             SelectCommand(createdCmd);
             reorderableList.GrabKeyboardFocus();
+
+            EditorUtility.SetDirty(fumenData);
 
             if (commandList.IndexOf(createdCmd) != 0)
             {

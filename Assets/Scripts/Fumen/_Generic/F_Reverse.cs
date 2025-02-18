@@ -75,7 +75,7 @@ namespace NoteCreating
             // 逆走
             float reverseTime = (w + dropLPB.Time) / createSpeedRate;
             Reverse(note, x, peakY, reverseTime, delta).Forget();
-            delta = await Wait(Lpb.GetFrom(reverseTime), delta);
+            delta = await WaitSeconds(reverseTime, delta);
 
             // 落下
             Drop(note, x, peakY, dropLPB.Time, easingRate, acceleration, delta).Forget();

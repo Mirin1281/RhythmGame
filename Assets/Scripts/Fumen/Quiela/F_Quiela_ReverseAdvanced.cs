@@ -49,7 +49,7 @@ namespace NoteCreating
             if (type is RegularNoteType.Normal or RegularNoteType.Slide)
             {
                 RegularNote note = Helper.GetRegularNote(type);
-                Move(note, noteData.X, delta, createSpeedRate, w, noteData.Option1, noteData.Option2).Forget();
+                Move(note, noteData.X, delta, createSpeedRate, w, noteData.Option1).Forget();
                 return note;
             }
             else if (type is RegularNoteType.Hold)
@@ -62,20 +62,20 @@ namespace NoteCreating
                 HoldNote hold = Helper.GetHold(noteData.Length * Speed);
                 Vector3 startPos = mirror.Conv(new Vector3(noteData.X, StartBase));
                 hold.SetMaskPos(new Vector2(startPos.x, 0));
-                Move(hold, noteData.X, delta, createSpeedRate, w, noteData.Option1, noteData.Option2).Forget();
+                Move(hold, noteData.X, delta, createSpeedRate, w, noteData.Option1).Forget();
                 return hold;
             }
             return null;
         }
 
-        async UniTaskVoid Move(RegularNote note, float x, float delta, float createSpeedRate, float w, float moveToX, float curve)
+        async UniTaskVoid Move(RegularNote note, float x, float delta, float createSpeedRate, float w, float moveToX)
         {
             float peakY = dropLPB.Time * (easingRate / acceleration - easingRate + 1);
 
             // 逆走
             float reverseTime = (w + dropLPB.Time) / createSpeedRate;
             Reverse(note, x, peakY, reverseTime, delta).Forget();
-            delta = await Wait(Lpb.GetFrom(reverseTime), delta);
+            delta = await WaitSeconds(reverseTime, delta);
 
             // 落下
             Drop(note, x, peakY, dropLPB.Time, easingRate, acceleration, delta).Forget();

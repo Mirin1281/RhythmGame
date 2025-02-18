@@ -5,7 +5,7 @@ using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.Mo
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆判定線を降らせる", -70), System.Serializable]
+    [AddTypeMenu("◆ラインを降らせる", -70), System.Serializable]
     public class F_LineDrop : CommandBase, INotSkipCommand
     {
         [SerializeField] Mirror mirror;
@@ -75,7 +75,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            string status = $"Count: {loopCount} - Wait:{loopWait.Value}";
+            string status = $"Count: {loopCount} - Wait:{loopWait.GetLpbValue()}";
             return status + mirror.GetStatusText();
         }
 #endif

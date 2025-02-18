@@ -136,23 +136,24 @@ namespace NoteCreating
 
             async UniTaskVoid PosEase(ItemBase item, Vector2 startPos, EaseData<Vector2>[] datas, float delta)
             {
-                item.SetPos(mirror.Conv(startPos));
+                item.SetPos(mirror.Conv(startPos + basePos));
                 for (int i = 0; i < datas.Length; i++)
                 {
-                    var data = datas[i];
-                    Vector2 start = i == 0 ? startPos + basePos : item.GetPos();
-                    float posTime = data.EaseLpb.Time;
-                    var posEasing = new EasingVector2(start, data.From + basePos, posTime, data.EaseType);
-                    await WhileYieldAsync(posTime, t =>
+                    Vector2 start = i == 0 ? startPos : datas[i - 1].From;
+                    var d = datas[i];
+
+                    float posTime = d.EaseLpb.Time;
+                    var posEasing = new EasingVector2(start, d.From, posTime, d.EaseType);
+                    delta = await WhileYieldAsync(posTime, t =>
                     {
                         Vector2 p = default;
                         if (isRotateFromPos)
                         {
-                            p = MyUtility.GetRotatedPos(posEasing.Ease(t), rotateFromPos, centerPos);
+                            p = MyUtility.GetRotatedPos(posEasing.Ease(t) + basePos, rotateFromPos, centerPos);
                         }
                         else
                         {
-                            p = posEasing.Ease(t);
+                            p = posEasing.Ease(t) + basePos;
                         }
                         item.SetPos(mirror.Conv(p));
                     }, delta);
@@ -161,16 +162,21 @@ namespace NoteCreating
 
             async UniTaskVoid RotEase(ItemBase item, float startRot, EaseData<float>[] datas, float delta)
             {
-                item.SetRot(mirror.Conv(startRot));
+                float addRot = 0;
+                if (isRotateFromPos)
+                {
+                    addRot = rotateFromPos;
+                }
+                item.SetRot(mirror.Conv(startRot) + addRot);
                 for (int i = 0; i < datas.Length; i++)
                 {
-                    var data = datas[i];
+                    var d = datas[i];
                     float start = i == 0 ? startRot : GetNormalizedAngle(item.GetRot());
-                    float rotTime = data.EaseLpb.Time;
-                    var rotEasing = new Easing(start, data.From, rotTime, data.EaseType);
-                    await WhileYieldAsync(rotTime, t =>
+                    float rotTime = d.EaseLpb.Time;
+                    var rotEasing = new Easing(start, d.From, rotTime, d.EaseType);
+                    delta = await WhileYieldAsync(rotTime, t =>
                     {
-                        item.SetRot(mirror.Conv(rotEasing.Ease(t)));
+                        item.SetRot(mirror.Conv(rotEasing.Ease(t) + addRot));
                     }, delta);
                 }
             }
@@ -185,11 +191,11 @@ namespace NoteCreating
                 item.SetAlpha(startAlpha);
                 for (int i = 0; i < datas.Length; i++)
                 {
-                    var data = datas[i];
+                    var d = datas[i];
                     float start = i == 0 ? startAlpha : item.GetAlpha();
-                    float fadeTime = data.EaseLpb.Time;
-                    var alphaEasing = new Easing(start, data.From, fadeTime, data.EaseType);
-                    await WhileYieldAsync(fadeTime, t =>
+                    float fadeTime = d.EaseLpb.Time;
+                    var alphaEasing = new Easing(start, d.From, fadeTime, d.EaseType);
+                    delta = await WhileYieldAsync(fadeTime, t =>
                     {
                         item.SetAlpha(alphaEasing.Ease(t));
                     }, delta);
@@ -208,7 +214,7 @@ namespace NoteCreating
                 _ => throw new ArgumentException()
             };
 
-            if (itemType == ItemType.NormalNote)
+            if (isMultitap && itemType == ItemType.NormalNote)
             {
                 Helper.PoolManager.SetMultitapSprite(item as RegularNote);
             }

@@ -58,7 +58,7 @@ namespace NoteCreating
             float beforeY = -1;
             RegularNote beforeNote = null;
 
-            float y = new Lpb(4, beatDelta).Time * RhythmGameManager.DefaultSpeed;
+            float y = new Lpb(4).Time * beatDelta * RhythmGameManager.DefaultSpeed;
             foreach (var data in noteDatas)
             {
                 y += data.Wait.Time * RhythmGameManager.DefaultSpeed;

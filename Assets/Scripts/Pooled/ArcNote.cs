@@ -78,7 +78,7 @@ namespace NoteCreating
             get
             {
                 if (spline == null || spline.Knots.Count() == 0) throw new Exception();
-                return GetPos().y + spline.Knots.First().Position.y;
+                return GetPos().y + spline.Knots.First().Position.z;
             }
         }
 
@@ -90,7 +90,7 @@ namespace NoteCreating
             get
             {
                 if (spline == null || spline.Knots.Count() == 0) throw new Exception();
-                return GetPos().y + spline.Knots.Last().Position.y;
+                return GetPos().y + spline.Knots.Last().Position.z;
             }
         }
 
@@ -163,15 +163,17 @@ namespace NoteCreating
             JudgeIndex = 0;
             notHoldTime = 100;
 
+            transform.localRotation = Quaternion.Euler(-90, 0, 0);
+
             await UniTask.Yield(destroyCancellationToken);
 
             // 頂点を追加 //
-            float y = 0;
+            float z = 0;
             for (int i = 0; i < datas.Length; i++)
             {
                 var data = datas[i];
-                y += data.Wait.Time * speed;
-                var knot = new BezierKnot(new Unity.Mathematics.float3(mir.Conv(data.X), y, 0));
+                z += data.Wait.Time * speed;
+                var knot = new BezierKnot(new Unity.Mathematics.float3(mir.Conv(data.X), 0, z));
                 TangentMode tangentMode = data.Vertex switch
                 {
                     ArcCreateData.VertexType.Auto => TangentMode.AutoSmooth,
@@ -200,7 +202,7 @@ namespace NoteCreating
                     continue;
                 }
 
-                float knotY = GetPos().y + knot.Position.y; // 頂点のワールドY座標
+                float knotY = GetPos().y + knot.Position.z; // 頂点のワールドY座標
 
                 float behindJudgeY = knotY + data.BehindJudgeRange.Time * speed;
                 var startPos = GetPointOnYPlane(behindJudgeY);
@@ -227,18 +229,20 @@ namespace NoteCreating
                 var data = datas[i];
                 if (data.IsJudgeDisable || i == spline.Knots.Count() - 1) continue;
 
-                float knotY = GetPos().y + spline[i].Position.y; // ある頂点のワールドY座標
+                float knotY = GetPos().y + spline[i].Position.z; // ある頂点のワールドY座標
 
                 float behindDistance = knotY + data.BehindJudgeRange.Time * speed;
                 var startPos = GetPointOnYPlane(behindDistance);
                 var blueSphere = Instantiate(debugCircle, transform);
-                blueSphere.transform.localPosition = new Vector3(startPos.x, startPos.y, -1);
+                blueSphere.transform.localPosition = new Vector3(startPos.x, 1, startPos.z);
+                blueSphere.transform.localRotation = Quaternion.Euler(90, 0, 0);
                 blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
 
                 float aheadDistance = knotY + data.AheadJudgeRange.Time * speed;
                 var endPos = GetPointOnYPlane(aheadDistance) + new Vector3(0, i == 0 ? data.Wait.Time * speed : 0);
                 var redSphere = Instantiate(debugCircle, transform);
-                redSphere.transform.localPosition = new Vector3(endPos.x, endPos.y, -1);
+                redSphere.transform.localPosition = new Vector3(endPos.x, 1, endPos.z);
+                redSphere.transform.localRotation = Quaternion.Euler(90, 0, 0);
                 redSphere.SetColor(new Color(1, 0, 0, 0.5f));
             }
 
@@ -275,7 +279,7 @@ namespace NoteCreating
             int debug_i = 0;
             foreach (BezierKnot knot in spline)
             {
-                if (knot.Position.y < relativeCut)
+                if (knot.Position.z < relativeCut)
                 {
                     behindKnot = knot;
                 }
@@ -287,12 +291,12 @@ namespace NoteCreating
                 debug_i++;
             }
 
-            float knotsYInterval = aheadKnot.Position.y - behindKnot.Position.y;
+            float knotsYInterval = aheadKnot.Position.z - behindKnot.Position.z;
             if (Mathf.Approximately(knotsYInterval, 0f))
             {
                 return aheadKnot.Position;
             }
-            float delta = relativeCut - behindKnot.Position.y; // 一つ前の頂点Y座標から切り出すY座標までの差
+            float delta = relativeCut - behindKnot.Position.z; // 一つ前の頂点Y座標から切り出すY座標までの差
             float rate = delta / knotsYInterval;
             Vector3 arcPos = rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
             //Debug.Log($"Head: {headY}, Tail: {tailY}, JudgeNum: {debug_i}\n"

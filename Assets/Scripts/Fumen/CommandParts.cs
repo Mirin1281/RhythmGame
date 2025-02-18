@@ -86,19 +86,10 @@ namespace NoteCreating
         static readonly float DebugBPM = 200f;
 #endif
 
-        public Lpb(float lpb, int num = 1)
+        public Lpb(float lpb)
         {
-            if (num == 0)
-            {
-                _value = 0;
-            }
-            else
-            {
-                _value = lpb / num;
-            }
+            _value = lpb;
         }
-
-        public readonly float Value => _value;
 
         public readonly float Time
         {
@@ -115,20 +106,7 @@ namespace NoteCreating
             }
         }
 
-        public static Lpb GetFrom(float time, int num = 1)
-        {
-            if (time == 0)
-            {
-                return new Lpb(0);
-            }
-#if UNITY_EDITOR
-            if (EditorApplication.isPlaying == false)
-            {
-                return new Lpb(240f / DebugBPM / time * num);
-            }
-#endif
-            return new Lpb(240f / Metronome.Instance.Bpm / time * num);
-        }
+        public readonly float GetLpbValue() => _value;
 
         #region Overrides & Interfaces
 
@@ -220,6 +198,8 @@ namespace NoteCreating
             {
                 return a;
             }
+
+            if (a == -b) return 0;
 
             return a * b / (a + b);
         }

@@ -78,6 +78,19 @@ namespace NoteCreating
                 maskTs.localPosition = pos;
             }
         }
+        public void SetMaskRot(float deg, bool isWorld = false)
+        {
+            if (isWorld)
+            {
+                Vector3 angles = spriteRenderer.transform.eulerAngles;
+                maskTs.transform.eulerAngles = new Vector3(angles.x, angles.y, deg);
+            }
+            else
+            {
+                Vector3 angles = spriteRenderer.transform.localEulerAngles;
+                maskTs.transform.localEulerAngles = new Vector3(angles.x, angles.y, deg);
+            }
+        }
         public void SetMaskLength(float length)
         {
             maskTs.localScale = new Vector3(maskTs.localScale.x, length);

@@ -9,6 +9,7 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [Space(10)]
         [SerializeField] int count = 16;
+        [SerializeField] int trimStart = 0;
         [SerializeField, Tooltip("NormalかSlideを指定してください")] RegularNoteType noteType = RegularNoteType.Slide;
         [SerializeField] Lpb wait = new Lpb(16);
         [Space(10)]
@@ -21,7 +22,10 @@ namespace NoteCreating
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for (int i = 0; i < count; i++)
             {
-                CreateDropNote(easing.Ease(i * ((float)(count + 1) / count)), noteType);
+                if (i >= trimStart)
+                {
+                    CreateDropNote(easing.Ease(i * ((float)(count + 1) / count)), noteType);
+                }
                 await Wait(wait);
             }
         }
@@ -67,13 +71,17 @@ namespace NoteCreating
                 previewer.CreateGuideLine();
 
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            float y = new Lpb(4, beatDelta).Time * Speed;
+            float y = new Lpb(4).Time * beatDelta * Speed;
             for (int i = 0; i < count; i++)
             {
-                var note = Helper.GetRegularNote(noteType);
-                note.transform.SetParent(previewer.transform);
-                float x = easing.Ease(i * ((float)(count + 1) / count));
-                note.SetPos(mirror.Conv(new Vector3(x, y)));
+                if (i >= trimStart)
+                {
+                    var note = Helper.GetRegularNote(noteType);
+                    note.transform.SetParent(previewer.transform);
+                    float x = easing.Ease(i * ((float)(count + 1) / count));
+                    note.SetPos(mirror.Conv(new Vector3(x, y)));
+                }
+
                 y += wait.Time * Speed;
             }
         }

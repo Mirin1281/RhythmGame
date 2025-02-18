@@ -84,6 +84,7 @@ namespace NoteCreating
             {
                 t = CurrentTime - baseTime;
                 action.Invoke(t);
+
                 if (t >= next.Time)
                 {
                     if (index < timings.Length)

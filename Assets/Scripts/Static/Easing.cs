@@ -79,10 +79,10 @@ public readonly struct Easing
         {
             time = Metronome.Instance.CurrentTime - baseTime;
             float t = time * inversedEaseTime;
-            action.Invoke(start + delta * GetPlaneValue(type, t));
+            action.Invoke(start + this.delta * GetPlaneValue(type, t)); // Mathf.Clamp01(t)
             await UniTask.Yield(token);
         }
-        action.Invoke(start + delta * GetPlaneValue(type, 1));
+        action.Invoke(start + this.delta * GetPlaneValue(type, 1));
     }
 
     static float GetPlaneValue(EaseType type, float t)
