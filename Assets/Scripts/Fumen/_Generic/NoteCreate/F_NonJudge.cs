@@ -34,13 +34,5 @@ namespace NoteCreating
                 note.SetActive(false);
             });
         }
-
-#if UNITY_EDITOR
-
-        protected override string GetName()
-        {
-            return "NonJudge";
-        }
-#endif
     }
 }

@@ -69,7 +69,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     {
         Application.targetFrameRate = 60;
         FumenReference = null;
-        Application.quitting += SaveData;
+        Application.quitting += OnQuit;
 
         if (useJsonData)
         {
@@ -95,9 +95,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     }
 
     // OnApplicationQuitはタスクキルすると呼ばれないっぽい
-    static void SaveData()
+    static void OnQuit()
     {
         SpeedBase = 1f;
+        SetDarkModeAsync(false, true).Forget();
+
         if (useJsonData)
         {
             var gameData = new GameData
@@ -117,12 +119,24 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
     }
 
-    public static async UniTask SetDarkModeAsync(bool enabled)
+    public static async UniTask SetDarkModeAsync(bool enabled, bool immediate = false)
     {
         setting.IsDark = enabled;
+        FadeLoadSceneManager.Instance.FadeColor = enabled ? Color.black : Color.white;
+
+        Material invertMat;
+        Material negativeMat;
+        if (immediate)
+        {
+            invertMat = Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath).WaitForCompletion();
+            negativeMat = Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath).WaitForCompletion();
+        }
+        else
+        {
+            invertMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath);
+            negativeMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath);
+        }
         float value = enabled ? 1 : 0;
-        var invertMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath);
-        var negativeMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath);
         invertMat.SetFloat("_Value", value);
         negativeMat.SetFloat("_BlendRate", value);
         Addressables.Release(invertMat);

@@ -18,15 +18,15 @@ public class TitleSceneManager : MonoBehaviour
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         LoopFlashTextAsync().Forget();
         await UniTask.WaitUntil(() => _onSceneTransition, cancellationToken: destroyCancellationToken);
-        if(FadeLoadSceneManager.IsSceneChanging) return;
+        if (FadeLoadSceneManager.IsSceneChanging) return;
         SEManager.Instance.PlaySE(SEType.start_freeze);
-        FadeLoadSceneManager.Instance.LoadScene(0.5f, _sceneName, 0.5f, Color.white);
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, _sceneName, 0.5f);
     }
 
     async UniTask LoopFlashTextAsync()
     {
         float t = 0f;
-        while(_onSceneTransition == false)
+        while (_onSceneTransition == false)
         {
             startTmpro.color = new Color(0, 0, 0, Mathf.Abs(Mathf.Cos(t)));
             t += Time.deltaTime;
@@ -35,7 +35,7 @@ public class TitleSceneManager : MonoBehaviour
 
         float a = startTmpro.color.a;
         t = 0f;
-        while(t < 0.3f)
+        while (t < 0.3f)
         {
             startTmpro.color = new Color(0, 0, 0, t.Ease(a, 0, 0.3f, EaseType.InQuad));
             t += Time.deltaTime;

@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◆逆走ノーツ", 50), System.Serializable]
+    [AddTypeMenu("◆逆走ノーツ", 0), System.Serializable]
     public class F_Reverse : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -60,8 +60,7 @@ namespace NoteCreating
                     return null;
                 }
                 HoldNote hold = Helper.GetHold(noteData.Length * Speed);
-                Vector3 startPos = mirror.Conv(new Vector3(noteData.X, StartBase));
-                hold.SetMaskPos(new Vector2(startPos.x, 0));
+                hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
                 Move(hold, noteData.X, delta, createSpeedRate, w).Forget();
                 return hold;
             }
@@ -144,12 +143,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            int noteCount = noteDatas == null ? 0 : noteDatas.Length;
-            return new Color32(
-                255,
-                (byte)Mathf.Clamp(246 - noteCount * 2, 96, 246),
-                (byte)Mathf.Clamp(230 - noteCount * 2, 130, 230),
-                255);
+            return CommandEditorUtility.GetNoteCommandColor(noteDatas);
         }
 
         protected override string GetSummary()

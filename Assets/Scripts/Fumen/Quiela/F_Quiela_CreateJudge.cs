@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/サビ判定"), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/シャウト判定"), System.Serializable]
     public class F_Quiela_CreateJudge : CommandBase
     {
         [SerializeField] Vector2 startPos = new Vector2(0, 10);

@@ -439,6 +439,56 @@ MonoBehaviour:
             _value: 4
           option1: 20
           option2: 0
+--- !u!114 &-7548078919035502736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_Test_AprilRabbit (37)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 1
+  command:
+    rid: 7519554964215562260
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519554964215562260
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 2
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 15
+          option2: 0
+        - wait:
+            _value: 2
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 15
+          option2: 0
+        - wait:
+            _value: 1
+          type: 3
+          x: 1
+          length:
+            _value: 4
+          option1: 15
+          option2: 0
 --- !u!114 &-7218479072416716174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +554,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 0, y: 0}
           posEaseDatas:
           - from: {x: 3, y: 0}
@@ -585,6 +636,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 0, y: 0}
           posEaseDatas: []
           startRot: 135
@@ -992,6 +1044,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 0, y: 8}
           posEaseDatas:
           - from: {x: 0, y: 8}
@@ -1255,6 +1308,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 15, y: 0}
           posEaseDatas:
           - from: {x: 0, y: 0}
@@ -1714,6 +1768,7 @@ MonoBehaviour:
     - {fileID: 3681450036859278061}
     - {fileID: -6676660443785986045}
     - {fileID: 6655209036819066150}
+    - {fileID: -7548078919035502736}
 --- !u!114 &30413173742259737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,6 +1808,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 0, y: 0}
           posEaseDatas:
           - from: {x: 0, y: 0}
@@ -2189,6 +2245,7 @@ MonoBehaviour:
         createDatas:
         - delayLPB:
             _value: 0
+          enabled: 1
           startPos: {x: 0, y: 0}
           posEaseDatas: []
           startRot: 0

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 
 #if UNITY_EDITOR
+
 namespace NoteCreating
 {
     public readonly struct CommandSelectStatus
@@ -18,11 +18,26 @@ namespace NoteCreating
 
     public static class CommandEditorUtility
     {
-        public static readonly Color CommandColor_Default = new Color(0.9f, 0.9f, 0.9f, 1f);
+        public static readonly Color CommandColor_Default = new Color(0.95f, 0.95f, 0.95f, 1f);
         public static readonly Color CommandColor_Null = new Color(0.8f, 0.8f, 0.8f, 1f);
-        public static readonly Color CommandColor_Note = new Color32(255, 226, 200, 255);
-        public static readonly Color CommandColor_UnNote = new Color(0.8f, 0.8f, 0.9f);
+        public static readonly Color CommandColor_Disabled = new Color(0.7f, 0.7f, 0.7f, 1f);
         public static readonly Color CommandColor_Line = new Color(0.95f, 0.8f, 0.85f);
+        public static readonly Color CommandColor_Yellow = new Color(0.95f, 0.85f, 0.6f);
+        public static readonly Color CommandColor_Other = new Color(0.8f, 0.8f, 0.9f);
+
+        public static Color GetNoteCommandColor(Array array)
+        {
+            int length = array == null ? 0 : array.Length;
+            return GetNoteCommandColor(length);
+        }
+        public static Color GetNoteCommandColor(int count = 0)
+        {
+            return new Color32(
+                255,
+                (byte)Mathf.Clamp(246 - count * 2, 96, 246),
+                (byte)Mathf.Clamp(230 - count * 2, 130, 230),
+                255);
+        }
 
         /// <summary>
         /// ノーツのプレビューに使用するオブジェクトの用意をします
@@ -37,4 +52,5 @@ namespace NoteCreating
         }
     }
 }
+
 #endif

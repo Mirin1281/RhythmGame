@@ -15,7 +15,10 @@ namespace NoteCreating
 
         [SerializeField]
         Lpb loopWait = new Lpb(4);
+
         [Space(10)]
+        [SerializeField] float alpha = 0.2f;
+        [SerializeField] Lpb lifeLpb = new Lpb(0.25f);
         [SerializeField] float moveDirection = 270;
         [SerializeField] bool isAdaptiveSpeed = true;
         [SerializeField] float speedRate = 1f;
@@ -34,33 +37,35 @@ namespace NoteCreating
         async UniTaskVoid CreateLine()
         {
             Line line = Helper.GetLine();
-            line.SetAlpha(0.25f);
+            line.SetAlpha(alpha);
+            line.SetRot(mirror.Conv(moveDirection + 90));
 
             Vector3 dirPos = mirror.Conv(new Vector3(Mathf.Cos(moveDirection * Mathf.Deg2Rad), Mathf.Sin(moveDirection * Mathf.Deg2Rad)));
-            await DropAsync(line, -StartBase * dirPos, isAdaptiveSpeed: isAdaptiveSpeed);
+            await DropAsync(line, dirPos);
             line.SetActive(false);
         }
 
-        async UniTask DropAsync(ItemBase item, Vector3 startPos, bool isAdaptiveSpeed = true)
+        async UniTask DropAsync(ItemBase item, Vector3 dirPos)
         {
             float baseTime = CurrentTime - Delta;
             float time = 0f;
             if (isAdaptiveSpeed)
             {
-                while (item.IsActive && time < 3f * RhythmGameManager.DefaultSpeed / Speed)
+                while (item.IsActive && time < lifeLpb.Time)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(new Vector3(startPos.x, StartBase - time * Speed));
+                    item.SetPos(dirPos * Speed * (time - MoveTime));
                     await Yield();
                 }
             }
             else
             {
-                var vec = Speed * Vector3.down;
-                while (item.IsActive && time < 3f * RhythmGameManager.DefaultSpeed / Speed)
+                var startPos = -MoveTime * Speed * dirPos;
+                var vec = Speed * dirPos;
+                while (item.IsActive && time < lifeLpb.Time)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(startPos + time * vec);
+                    item.SetPos(time * vec + startPos);
                     await Yield();
                 }
             }
@@ -75,7 +80,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            string status = $"Count: {loopCount} - Wait:{loopWait.GetLpbValue()}";
+            string status = $"{loopCount} - {loopWait.GetLpbValue()}";
             return status + mirror.GetStatusText();
         }
 #endif

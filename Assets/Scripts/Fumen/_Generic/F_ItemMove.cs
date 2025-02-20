@@ -2,6 +2,10 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace NoteCreating
 {
     [AddTypeMenu("◆判定線やノーツを生成して制御", -70), System.Serializable]
@@ -18,7 +22,7 @@ namespace NoteCreating
             public readonly Lpb EaseLpb => easeTime;
             public readonly EaseType EaseType => easeType;
 
-            public EaseData(T from = default, Lpb easeTime = default, EaseType easeType = EaseType.OutQuad)
+            public EaseData(T from = default, Lpb easeTime = default, EaseType easeType = EaseType.Default)
             {
                 this.from = from;
                 this.easeTime = easeTime;
@@ -30,14 +34,16 @@ namespace NoteCreating
         public class CreateData
         {
             [SerializeField, Min(0), Tooltip("生成を遅らせます")] Lpb delayLPB;
+            [SerializeField] bool enabled = true;
             [SerializeField] Vector2 startPos;
-            [SerializeField] EaseData<Vector2>[] posEaseDatas = new EaseData<Vector2>[1] { new(default) };
+            [SerializeField] EaseData<Vector2>[] posEaseDatas;
             [SerializeField] float startRot;
-            [SerializeField] EaseData<float>[] rotEaseDatas = new EaseData<float>[1] { new(default) };
+            [SerializeField] EaseData<float>[] rotEaseDatas;
             [SerializeField, Min(0)] float startAlpha = 1f;
-            [SerializeField] EaseData<float>[] alphaEaseDatas = new EaseData<float>[1] { new(1) };
+            [SerializeField] EaseData<float>[] alphaEaseDatas;
 
             public Lpb DelayLPB => delayLPB;
+            public bool Enabled => enabled;
             public Vector2 StartPos => startPos;
             public EaseData<Vector2>[] PosEaseDatas => posEaseDatas;
             public float StartRot => startRot;
@@ -55,7 +61,6 @@ namespace NoteCreating
         }
 
         [SerializeField] Mirror mirror;
-
         [SerializeField] string summary;
 
         [SerializeField] ItemType itemType = ItemType.Line;
@@ -99,14 +104,16 @@ namespace NoteCreating
             {
                 for (int i = 0; i < datas.Length; i++)
                 {
-                    delta = await Wait(datas[i].DelayLPB, delta: delta);
-                    Create(datas[i], delta, false).Forget();
+                    var d = datas[i];
+                    delta = await Wait(d.DelayLPB, delta: delta);
+                    Create(d, delta, false).Forget();
                 }
             }
         }
 
         async UniTaskVoid Create(CreateData data, float delta, bool isWait)
         {
+            if (data.Enabled == false) return;
             if (isWait)
             {
                 delta = await Wait(data.DelayLPB, delta: delta);
@@ -139,7 +146,12 @@ namespace NoteCreating
                 item.SetPos(mirror.Conv(startPos + basePos));
                 for (int i = 0; i < datas.Length; i++)
                 {
-                    Vector2 start = i == 0 ? startPos : datas[i - 1].From;
+                    if (datas[i].EaseType == EaseType.None)
+                    {
+                        delta = await Wait(datas[i].EaseLpb);
+                        continue;
+                    }
+                    Vector2 start = GetBeforePos(i, datas);
                     var d = datas[i];
 
                     float posTime = d.EaseLpb.Time;
@@ -158,6 +170,19 @@ namespace NoteCreating
                         item.SetPos(mirror.Conv(p));
                     }, delta);
                 }
+
+                Vector2 GetBeforePos(int index, EaseData<Vector2>[] datas)
+                {
+                    if (index == 0) return startPos;
+                    if (datas[index - 1].EaseType == EaseType.None)
+                    {
+                        return GetBeforePos(index - 1, datas);
+                    }
+                    else
+                    {
+                        return datas[index - 1].From;
+                    }
+                }
             }
 
             async UniTaskVoid RotEase(ItemBase item, float startRot, EaseData<float>[] datas, float delta)
@@ -170,14 +195,32 @@ namespace NoteCreating
                 item.SetRot(mirror.Conv(startRot) + addRot);
                 for (int i = 0; i < datas.Length; i++)
                 {
+                    if (datas[i].EaseType == EaseType.None)
+                    {
+                        delta = await Wait(datas[i].EaseLpb);
+                        continue;
+                    }
                     var d = datas[i];
-                    float start = i == 0 ? startRot : GetNormalizedAngle(item.GetRot());
+                    float start = GetBeforeRot(i, datas);
                     float rotTime = d.EaseLpb.Time;
                     var rotEasing = new Easing(start, d.From, rotTime, d.EaseType);
                     delta = await WhileYieldAsync(rotTime, t =>
                     {
                         item.SetRot(mirror.Conv(rotEasing.Ease(t) + addRot));
                     }, delta);
+                }
+
+                float GetBeforeRot(int index, EaseData<float>[] datas)
+                {
+                    if (index == 0) return startRot;
+                    if (datas[index - 1].EaseType == EaseType.None)
+                    {
+                        return GetBeforeRot(index - 1, datas);
+                    }
+                    else
+                    {
+                        return GetNormalizedAngle(datas[index - 1].From);
+                    }
                 }
             }
 
@@ -191,14 +234,33 @@ namespace NoteCreating
                 item.SetAlpha(startAlpha);
                 for (int i = 0; i < datas.Length; i++)
                 {
+                    if (datas[i].EaseType == EaseType.None)
+                    {
+                        delta = await Wait(datas[i].EaseLpb, delta);
+                        continue;
+                    }
+
                     var d = datas[i];
-                    float start = i == 0 ? startAlpha : item.GetAlpha();
+                    float start = GetBeforeAlpha(i, datas);
                     float fadeTime = d.EaseLpb.Time;
                     var alphaEasing = new Easing(start, d.From, fadeTime, d.EaseType);
                     delta = await WhileYieldAsync(fadeTime, t =>
                     {
                         item.SetAlpha(alphaEasing.Ease(t));
                     }, delta);
+                }
+
+                float GetBeforeAlpha(int index, EaseData<float>[] datas)
+                {
+                    if (index == 0) return startAlpha;
+                    if (datas[index - 1].EaseType == EaseType.None)
+                    {
+                        return GetBeforeAlpha(index - 1, datas);
+                    }
+                    else
+                    {
+                        return datas[index - 1].From;
+                    }
                 }
             }
         }
@@ -218,6 +280,13 @@ namespace NoteCreating
             {
                 Helper.PoolManager.SetMultitapSprite(item as RegularNote);
             }
+
+#if UNITY_EDITOR
+            if (EditorApplication.isPlaying == false)
+            {
+                item.transform.SetParent(previewer.transform);
+            }
+#endif
             return item;
         }
 
@@ -225,7 +294,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return CommandEditorUtility.CommandColor_Line;
+            return CommandEditorUtility.CommandColor_Yellow;
         }
 
         protected override string GetSummary()
@@ -243,7 +312,35 @@ namespace NoteCreating
 
         public override void OnPeriod()
         {
+            DebugPreview();
+        }
 
+        ItemPreviewer previewer;
+
+        void DebugPreview(bool beforeClear = true, int beatDelta = 1)
+        {
+            previewer = CommandEditorUtility.GetPreviewer(beforeClear);
+            if (isChainWait)
+            {
+                LoopCreate(createDatas, 0).Forget();
+            }
+            else
+            {
+                for (int k = 0; k < createDatas.Length; k++)
+                {
+                    Create(createDatas[k], 0, true).Forget();
+                }
+            }
+
+
+            async UniTaskVoid LoopCreate(CreateData[] datas, float delta)
+            {
+                for (int i = 0; i < datas.Length; i++)
+                {
+                    delta = await Wait(datas[i].DelayLPB, delta: delta);
+                    Create(datas[i], delta, false).Forget();
+                }
+            }
         }
 #endif
     }

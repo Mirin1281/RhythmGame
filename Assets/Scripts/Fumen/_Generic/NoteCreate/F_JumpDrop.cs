@@ -47,13 +47,5 @@ namespace NoteCreating
                 }
             });
         }
-
-#if UNITY_EDITOR
-
-        protected override string GetName()
-        {
-            return "JumpDrop";
-        }
-#endif
     }
 }

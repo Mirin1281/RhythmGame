@@ -24,17 +24,17 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await Wait(MoveLpb - moveLpb);
+            float delta = await Wait(MoveLpb - moveLpb);
 
             for (int i = 0; i < noteDatas.Length; i++)
             {
                 var data = noteDatas[i];
-                await Wait(data.Wait);
-                Note(data.Pos + basePos, i % 2 == 0);
+                delta = await Wait(data.Wait, delta);
+                Note(data.Pos + basePos, i % 2 == 0, delta);
             }
         }
 
-        void Note(Vector2 pos, bool invertRotate = false)
+        void Note(Vector2 pos, bool invertRotate = false, float delta = 0)
         {
             int count = 3;
             float rand = UnityEngine.Random.Range(0, 180);
@@ -45,14 +45,9 @@ namespace NoteCreating
             }
 
             var circle = Helper.GetCircle();
-            circle.SetPos(pos);
-            circle.SetScale(size * 0.4f);
-            circle.SetAlpha(0.2f);
-            circle.SetWidth(0.15f);
-            circle.SetScaleAsync(-0.1f, moveLpb.Time, easeType).Forget();
-            circle.FadeAlphaAsync(0.7f, moveLpb.Time, easeType).Forget();
+            MoveCircle(circle, pos).Forget();
 
-            Helper.NoteInput.AddExpect(new NoteJudgeStatus(RegularNoteType.Slide, pos, moveLpb.Time));
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(RegularNoteType.Slide, pos, moveLpb.Time - delta));
         }
 
         async UniTaskVoid MoveSlide(RegularNote slide, Vector2 pos, float dir, bool invertRotate = false)
@@ -65,6 +60,18 @@ namespace NoteCreating
                 slide.SetRot(rotEasing.Ease(t));
             });
             slide.SetActive(false);
+        }
+
+        async UniTaskVoid MoveCircle(Circle circle, Vector2 pos)
+        {
+            circle.SetPos(pos);
+            circle.SetScale(size * 0.4f);
+            circle.SetAlpha(0.2f);
+            circle.SetWidth(0.15f);
+            circle.SetScaleAsync(-0.1f, moveLpb.Time, easeType).Forget();
+            circle.FadeAlphaAsync(0.7f, moveLpb.Time, easeType).Forget();
+            await Wait(moveLpb);
+            circle.SetActive(false);
         }
 
 #if UNITY_EDITOR

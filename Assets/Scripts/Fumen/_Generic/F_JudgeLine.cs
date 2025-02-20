@@ -6,14 +6,18 @@ namespace NoteCreating
     [AddTypeMenu("◆判定線", -50), System.Serializable]
     public class F_JudgeLine : CommandBase, INotSkipCommand
     {
+        [Space(20)]
         [SerializeField] Mirror mirror;
 
-        [Space(20)]
+        [Space(10)]
         [SerializeField] float alpha = 1f;
 
-        [Space(20)]
+        [Space(10)]
         [SerializeField] Lpb fadeInLpb = new Lpb(4);
-        [SerializeField] Lpb lifeLpb;
+        [Space(10)]
+        [SerializeField] Lpb lifeLpb = new Lpb(1);
+        [SerializeField] float lifeCount = 1;
+        [Space(10)]
         [SerializeField] Lpb fadeOutLpb = new Lpb(4);
 
         [Space(20)]
@@ -28,9 +32,9 @@ namespace NoteCreating
             line.SetRot(deg);
             line.SetPos(pos);
             line.SetAlpha(0);
-            line.FadeAlphaAsync(alpha, fadeInLpb.Time).Forget();
-            await Wait(lifeLpb - fadeOutLpb);
-            line.FadeAlphaAsync(0, fadeOutLpb.Time).Forget();
+            line.FadeAlphaAsync(alpha, fadeInLpb.Time, delta: Delta).Forget();
+            await Wait(lifeLpb * lifeCount - fadeOutLpb);
+            line.FadeAlphaAsync(0, fadeOutLpb.Time, delta: Delta).Forget();
         }
 
 
@@ -50,6 +54,15 @@ namespace NoteCreating
         {
             string status = $"Lpb: {lifeLpb.GetLpbValue()}";
             return status + mirror.GetStatusText();
+        }
+
+        public override void OnPeriod()
+        {
+            var previewer = CommandEditorUtility.GetPreviewer();
+            Line line = Helper.GetLine();
+            line.SetRot(deg);
+            line.SetPos(pos);
+            previewer.SetChild(line);
         }
 #endif
     }

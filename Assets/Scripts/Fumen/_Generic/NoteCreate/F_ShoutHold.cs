@@ -81,13 +81,5 @@ namespace NoteCreating
                 }
             }
         }
-
-#if UNITY_EDITOR
-
-        /*protected override string GetName()
-        {
-            return "カーブノーツ";
-        }*/
-#endif
     }
 }

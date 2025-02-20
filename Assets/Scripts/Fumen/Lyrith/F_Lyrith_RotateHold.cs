@@ -17,12 +17,12 @@ namespace NoteCreating
         void MoveHold(float x, Lpb length, bool left)
         {
             var hold = Helper.GetHold(length * Speed);
-            var startPos = new Vector2(mirror.Conv(x), StartBase);
+            var startPos = new Vector2(mirror.Conv(x), MoveTime * Speed);
             var toPos = new Vector2(mirror.Conv(x), 0);
             hold.SetMaskPos(toPos);
             hold.SetMaskLength(10);
 
-            float expectTime = startPos.y / Speed - Delta;
+            float expectTime = MoveTime - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, length);
 
             MoveRotateAsync(hold, startPos, toPos, expectTime, length.Time, left).Forget();

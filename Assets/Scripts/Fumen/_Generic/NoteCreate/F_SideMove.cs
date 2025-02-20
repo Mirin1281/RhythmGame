@@ -52,13 +52,5 @@ namespace NoteCreating
                 note.SetPos(mirror.Conv(new Vector3(x, (MoveTime - t) * Speed)));
             });
         }
-
-#if UNITY_EDITOR
-
-        protected override string GetName()
-        {
-            return "横移動";
-        }
-#endif
     }
 }

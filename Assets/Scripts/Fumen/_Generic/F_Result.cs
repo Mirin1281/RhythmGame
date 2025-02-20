@@ -20,7 +20,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return CommandEditorUtility.CommandColor_UnNote;
+            return CommandEditorUtility.CommandColor_Other;
         }
 #endif
     }

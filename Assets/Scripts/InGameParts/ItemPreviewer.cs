@@ -23,6 +23,10 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
 
+        public void SetChild(Component component)
+        {
+            component.transform.SetParent(this.transform);
+        }
         public void ClearChildren()
         {
             foreach (var child in transform.OfType<Transform>().ToArray())
@@ -31,7 +35,7 @@ namespace NoteCreating
             }
         }
 
-        public void CreateGuideLine(int count = 16, Lpb lpb = default)
+        public void CreateGuideLine(int count = 32, Lpb lpb = default)
         {
             lpb = lpb == default ? new Lpb(4) : lpb;
             float y = lpb.Time * RhythmGameManager.DefaultSpeed;

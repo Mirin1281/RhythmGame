@@ -184,11 +184,10 @@ namespace NoteCreating
         RegularNote Note(float x, RegularNoteType type, bool isMove = true)
         {
             RegularNote note = Helper.GetRegularNote(type);
-            Vector3 startPos = new(mirror.Conv(x), StartBase);
-            if (isMove) DropAsync(note, startPos.x, Delta).Forget();
+            if (isMove) DropAsync(note, mirror.Conv(x), Delta).Forget();
 
             // 現在の時間から何秒後に着弾するか
-            float expectTime = startPos.y / Speed - Delta;
+            float expectTime = MoveTime - Delta;
             Helper.NoteInput.AddExpect(note, expectTime);
             return note;
         }
@@ -196,11 +195,10 @@ namespace NoteCreating
         HoldNote Hold(float x, Lpb length)
         {
             HoldNote hold = Helper.GetHold(length * Speed);
-            Vector3 startPos = mirror.Conv(new Vector3(x, StartBase));
-            hold.SetMaskPos(new Vector2(startPos.x, 0));
-            DropAsync(hold, startPos.x, Delta).Forget();
+            hold.SetMaskPos(new Vector2(mirror.Conv(x), 0));
+            DropAsync(hold, mirror.Conv(x), Delta).Forget();
 
-            float expectTime = startPos.y / Speed - Delta;
+            float expectTime = MoveTime - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, length);
             return hold;
         }

@@ -743,7 +743,7 @@ namespace NoteCreating.Editor
 
                 Color color = cmd.Enable ?
                     cmd.GetCommandColor() :
-                    color = new Color(0.7f, 0.7f, 0.7f, 1f);
+                    color = CommandEditorUtility.CommandColor_Disabled;
                 EditorGUI.DrawRect(rect, color);
 
                 if (isActive)

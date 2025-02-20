@@ -73,13 +73,5 @@ namespace NoteCreating
             });
             return expectPos;
         }
-
-#if UNITY_EDITOR
-
-        protected override string GetName()
-        {
-            return "Transform";
-        }
-#endif
     }
 }

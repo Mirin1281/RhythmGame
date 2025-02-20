@@ -3,7 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇ループ＆遅延", 100), System.Serializable]
+    // 右クリックメニューから呼び出すことを前提にしている特別なコマンドです
+    //[AddTypeMenu("◇ループ＆遅延", 100), System.Serializable]
     public class F_LoopDelay : CommandBase
     {
         [SerializeField] Lpb delay;
@@ -11,7 +12,7 @@ namespace NoteCreating
         [SerializeField, Min(0), Tooltip("生成する回数")]
         int loopCount = 1;
 
-        [SerializeField, Min(0), Tooltip("生成する間隔")]
+        [SerializeField, Tooltip("生成する間隔")]
         Lpb loopWait = new Lpb(4);
 
         [SerializeField, SerializeReference, SubclassSelector]
@@ -55,27 +56,35 @@ namespace NoteCreating
             }
             else
             {
-                return $"D-{command.GetName().Replace("F_", string.Empty)}";
+                return $"L-{command.GetName().Replace("F_", string.Empty)}";
             }
         }
 
         protected override string GetSummary()
         {
-            string status = $"{loopCount} - {loopWait}";
+            string loopStatus = string.Empty;
+            if (loopCount != 1)
+            {
+                loopStatus = $"{loopCount} - {loopWait.GetLpbValue()}";
+            }
+
+            string followStatus = string.Empty;
             if (command == null)
             {
-                return $"{status} : Null";
+                followStatus = "Null";
+            }
+            else if (string.IsNullOrEmpty(command.GetSummary()) == false)
+            {
+                followStatus = command.GetSummary();
+            }
+
+            if (string.IsNullOrEmpty(loopStatus) == false && string.IsNullOrEmpty(followStatus) == false)
+            {
+                return loopStatus + " :  " + followStatus;
             }
             else
             {
-                if (string.IsNullOrEmpty(command.GetSummary()))
-                {
-                    return status;
-                }
-                else
-                {
-                    return $"{status} : {command.GetSummary()}";
-                }
+                return loopStatus + followStatus;
             }
         }
 

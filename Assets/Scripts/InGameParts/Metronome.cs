@@ -44,6 +44,12 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     {
         get
         {
+#if UNITY_EDITOR
+            if (EditorApplication.isPlaying == false)
+            {
+                return (float)EditorApplication.timeSinceStartup;
+            }
+#endif
             if (fumenData == null) return (float)currentTime + RhythmGameManager.Offset;
             return (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
         }
@@ -69,11 +75,14 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
             int startBeatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - skipExecuteTolerance - SelectData.StartBeatOffset;
             foreach (var commandData in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
-                if (startBeatCount > commandData.BeatTiming
-                 && commandData.GetCommandBase() is INotSkipCommand)
+                if (startBeatCount > commandData.BeatTiming)
                 {
-                    float delta = skipTime - (SelectData.StartBeatOffset + 1 + commandData.BeatTiming) * (float)BeatInterval + SelectData.Offset;
-                    commandData.Execute(GameObject.FindAnyObjectByType<NoteCreateHelper>(), delta);
+                    if (commandData.GetCommandBase() is INotSkipCommand
+                    || commandData.GetCommandBase() is F_LoopDelay loopDelay && loopDelay.GetChildCommand() is INotSkipCommand)
+                    {
+                        float delta = skipTime - (SelectData.StartBeatOffset + 1 + commandData.BeatTiming) * (float)BeatInterval + SelectData.Offset;
+                        commandData.Execute(GameObject.FindAnyObjectByType<NoteCreateHelper>(), delta);
+                    }
                 }
             }
         }

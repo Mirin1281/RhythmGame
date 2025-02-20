@@ -5,28 +5,24 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [Flags]
-    public enum ItemTargets
-    {
-        Normal = 1 << 0,
-        Slide = 1 << 1,
-        Hold = 1 << 3,
-        Sky = 1 << 4,
-        Arc = 1 << 5,
-        Line = 1 << 6,
-    }
-
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
-    [AddTypeMenu("◇アイテム点滅"), System.Serializable]
-    public class F_ItemBlink : CommandBase
+    [AddTypeMenu("◇アイテム振動"), System.Serializable]
+    public class F_ItemVibrate : CommandBase
     {
         [Space(20)]
         [SerializeField] ItemTargets target = ItemTargets.Normal | ItemTargets.Slide | ItemTargets.Hold;
         [SerializeField] int capacity = 100;
-        [SerializeField] int blinkCount = 20;
-        [SerializeField] int seed = 222;
-        [SerializeField] Vector2Int hideWaitRange = new Vector2Int(1, 5);
-        [SerializeField] Vector2Int showWaitRange = new Vector2Int(1, 3);
+        [SerializeField] Lpb time = new Lpb(4);
+
+        [Space(20)]
+        [SerializeField] float startIntensity = 0.5f;
+        [SerializeField] float endIntensity = 0f;
+        [SerializeField] EaseType easeType = EaseType.OutCubic;
+
+        [Space(20)]
+        [SerializeField] float frequency = 100;
+
+        [SerializeField, Tooltip("-1に設定すると乱数を使用しません")]
+        int randomSeed = 222;
 
         [SerializeField, Tooltip("アイテムの取得後、1フレーム待ってから振動を開始します\n処理時間のスパイクを緩和することができます")]
         bool isDelayOneFrame = true;
@@ -35,6 +31,7 @@ namespace NoteCreating
         {
             if (target == 0) return;
             await WaitOnTiming();
+            await Yield(); // 同カウントだと取り逃がすことがあるので1フレーム待つ
 
             List<ItemBase> items = new(capacity);
             if (target.HasFlag(ItemTargets.Normal))
@@ -61,25 +58,35 @@ namespace NoteCreating
 
             if (isDelayOneFrame)
             {
-                await UniTask.DelayFrame(1, cancellationToken: Helper.Token);
+                await Yield();
             }
 
-            var rand = new System.Random(seed);
-            float interval = 1 / 120f;
-            for (int i = 0; i < blinkCount; i++)
+            var rand = randomSeed == -1 ? null : new System.Random(randomSeed);
+            var ampEasing = new Easing(startIntensity, endIntensity, time.Time, easeType);
+            foreach (var item in items)
             {
-                await WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
-                SetRendererEnableds(items, false);
-                await WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
-                SetRendererEnableds(items, true);
+                Vibrate(item, ampEasing, rand);
             }
         }
 
-        void SetRendererEnableds(IEnumerable<ItemBase> notes, bool enabled)
+        void Vibrate(ItemBase item, Easing ampEasing, System.Random rand)
         {
-            foreach (var note in notes)
+            float baseX = item.GetPos().x;
+            if (rand == null)
             {
-                note.SetRendererEnabled(enabled);
+                WhileYield(time.Time, t =>
+                {
+                    float x = baseX + Mathf.Sin(t * frequency) * ampEasing.Ease(t);
+                    item.SetPos(new Vector3(x, item.GetPos().y));
+                }, Delta);
+            }
+            else
+            {
+                WhileYield(time.Time, t =>
+                {
+                    float x = baseX + Mathf.Cos(t * frequency) * ampEasing.Ease(t) * rand.GetFloat(-1, 1);
+                    item.SetPos(new Vector3(x, item.GetPos().y));
+                }, Delta);
             }
         }
 

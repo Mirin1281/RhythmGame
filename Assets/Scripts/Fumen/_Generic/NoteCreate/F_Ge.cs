@@ -30,22 +30,27 @@ namespace NoteCreating
             }
 
 
-            // 左右に揺れる(waitを加算するとノーツが揃ってグループ化っぽくなる) //
-            /*float w = WaitDelta;
-            WhileYield(8f, t =>
+            // プラリザみたいな微細な揺れ + 角度 // 
+            float frequency = new System.Random(DateTime.Now.Millisecond).GetFloat(-3, 3);
+            float phase = new System.Random(DateTime.Now.Millisecond - 1).GetFloat(0, 2 * Mathf.PI);
+            WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;
-                var addX = 3f * Mathf.Cos((t + w) * 2f);
+                var addX = 0.3f * Mathf.Sin(t * frequency + phase);
                 var pos = mirror.Conv(new Vector3(data.X + addX, (MoveTime - t) * Speed));
                 note.SetPos(pos);
+                //note.SetPos(mirror.Conv(new Vector3(data.X, StartBase - t * Speed)));
+                float rot = 5f * Mathf.Sin(t * frequency + phase);
+                if (data.Type == RegularNoteType.Hold) rot = 0;
+                note.SetRot(rot);
             });
-            AddExpect();*/
+            AddExpect();
 
 
 
             // グループ化のサンプル(点滅・振動・脈動) //
             // AddExpectはStaticにした方が安全かも
-            AddExpect();
+            /*AddExpect();
 
             WhileYieldGroupAsync(lifeTime, t =>
             {
@@ -54,7 +59,7 @@ namespace NoteCreating
                 note.SetPos(new Vector3(data.X, (MoveTime - t) * Speed));
             },
             //new Lpb[] { new(0.6667f), new(4), new(4), new(4), new(4), new(4), new(4), new(4), new(4) }, status =>
-            12, new Lpb(4), status =>
+            16, new Lpb(2), status =>
             {
                 // 特定のタイミングで発火される処理
                 if (note.IsActive == false) return;
@@ -76,15 +81,24 @@ namespace NoteCreating
                     note.SetPos(randPos);
                 });*/
 
-                // 脈動 //
-                float x = note.GetPos().x;
-                float time = new Lpb(4).Time;
-                var easing = new Easing(x, x + Mathf.Sign(x), time / 2f, EaseType.OutQuad);
-                WhileYield(time, s =>
-                {
-                    note.SetPos(new Vector3(easing.Ease(s), note.GetPos().y));
-                }, timing: PlayerLoopTiming.LastUpdate);
-            }).Forget();
+            // 脈動 //
+            /*float x = note.GetPos().x;
+            float time = new Lpb(4).Time;
+            var easing = new Easing(x, x + Mathf.Sign(x), time / 2f, EaseType.OutQuad);
+            WhileYield(time, s =>
+            {
+                note.SetPos(new Vector3(easing.Ease(s), note.GetPos().y));
+            }, timing: PlayerLoopTiming.LastUpdate);*/
+
+            // // 
+            /*float x = note.GetPos().x;
+            float time = new Lpb(2).Time;
+            var easing = new Easing(x, x + Mathf.Sign(x), time / 2f, EaseType.OutQuad);
+            WhileYield(time, s =>
+            {
+                note.SetPos(new Vector3(easing.Ease(s), note.GetPos().y));
+            }, timing: PlayerLoopTiming.LastUpdate);
+        }).Forget();*/
         }
 
         /*async UniTaskVoid EasingSqrtDropGroupNote(RegularNote note, NoteData data, float wholeTime = 2f, float easingRate = 0.5f)

@@ -93,13 +93,14 @@ namespace NoteCreating
             Note.SetActive(false);
         }
 
-        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, Lpb holdEndTime = default, ExpectType expectType = ExpectType.Y_Static)
+        public NoteJudgeStatus(RegularNote note, Vector2 pos, float time, Lpb holdEndTime = default, ExpectType expectType = ExpectType.Y_Static, bool isMute = false)
         {
             Note = note;
             this.pos = pos;
             Time = time;
             HoldEndTime = holdEndTime.Time;
             Type = expectType;
+            this.IsMute = isMute;
         }
 
         public NoteJudgeStatus(RegularNoteType noteType, Vector2 pos, float time, bool isVerticalRange = false, float rot = 0)

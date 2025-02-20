@@ -114,10 +114,10 @@ namespace NoteCreating
                 2 => new Vector3(8, 1.5f),
                 _ => throw new System.Exception()
             };
-            Vector3 startPos = toPos + StartBase * new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad));
+            Vector3 startPos = toPos + MoveTime * Speed * new Vector3(Mathf.Cos((dir + 90) * Mathf.Deg2Rad), Mathf.Sin((dir + 90) * Mathf.Deg2Rad));
             DropAsync(note, startPos, delta).Forget();
 
-            float expectTime = StartBase / Speed - delta;
+            float expectTime = MoveTime - delta;
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, toPos, expectTime, expectType: NoteJudgeStatus.ExpectType.Static));
             return this;
 

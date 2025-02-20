@@ -47,13 +47,13 @@ namespace NoteCreating
         HoldNote Hold(float x, Lpb length)
         {
             HoldNote hold = Helper.GetHold(length * Speed);
-            Vector3 startPos = _mirror.Conv(new Vector3(x, StartBase));
+            Vector3 startPos = _mirror.Conv(new Vector3(x, MoveTime * Speed));
             hold.SetMaskPos(new Vector2(startPos.x, 0));
             hold.SetPos(startPos);
 
             DropAsync(hold, startPos.x).Forget();
 
-            float expectTime = startPos.y / Speed - Delta;
+            float expectTime = MoveTime - Delta;
             Helper.NoteInput.AddExpect(hold, expectTime, length);
 
             return hold;

@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEditor;
 using ItemType = NoteCreating.F_ItemMove.ItemType;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NoteCreating.Editor
 {
@@ -59,12 +64,33 @@ namespace NoteCreating.Editor
 
             h.SetY(10);
 
+            if (GUI.Button(new Rect(h.GetX(), h.GetY(), h.GetWidth(), DrawerHelper.Height), "[0]のAlpha設定を全てに適用"))
+            {
+                Undo.RecordObject(property.serializedObject.targetObject, "Set Alpha Setting");
+                var datasProp = property.FindPropertyRelative("createDatas");
+
+                var commandData = property.serializedObject.targetObject as CommandData;
+                var itemMove = commandData.GetCommandBase() as F_ItemMove;
+                var datasInfo = itemMove.GetType().GetField("createDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                var createDatas = datasInfo.GetValue(itemMove) as F_ItemMove.CreateData[];
+                var alphaEaseDatasInfo = typeof(F_ItemMove.CreateData).GetField("alphaEaseDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                var first = (F_ItemMove.EaseData<float>[])alphaEaseDatasInfo.GetValue(createDatas[0]);
+
+                for (int i = 1; i < datasProp.arraySize; i++)
+                {
+                    alphaEaseDatasInfo.SetValue(createDatas[i], first.Clone());
+                }
+            }
+
+            h.SetY();
+            h.SetY(10);
+
             h.PropertyField("createDatas");
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 12 * DrawerHelper.Height + EditorGUI.GetPropertyHeight(property.FindPropertyRelative("createDatas"));
+            return 13.5f * DrawerHelper.Height + EditorGUI.GetPropertyHeight(property.FindPropertyRelative("createDatas"));
         }
     }
 
@@ -84,29 +110,39 @@ namespace NoteCreating.Editor
 
             h.PropertyField("delayLPB");
             h.SetY();
-            h.SetY(10);
+            h.SetY(5);
 
-            h.PropertyField("startPos");
+            var enabledProp = h.PropertyField("enabled");
             h.SetY();
+            h.SetY(5);
 
-            var posDataProp = h.PropertyField("posEaseDatas");
-            h.SetY(EditorGUI.GetPropertyHeight(posDataProp) + 10);
+            using (new EditorGUI.DisabledGroupScope(enabledProp.boolValue == false))
+            {
+                h.DrawBox(new Rect(h.GetX(), h.GetY(), h.GetWidth(), DrawerHelper.Height), Color.white);
+                h.PropertyField("startPos");
+                h.SetY();
 
-            h.PropertyField("startRot");
-            h.SetY();
+                var posDataProp = h.PropertyField("posEaseDatas");
+                h.SetY(EditorGUI.GetPropertyHeight(posDataProp) + 10);
 
-            var rotDataProp = h.PropertyField("rotEaseDatas");
-            h.SetY(EditorGUI.GetPropertyHeight(rotDataProp) + 10);
+                h.DrawBox(new Rect(h.GetX(), h.GetY(), h.GetWidth(), DrawerHelper.Height), Color.white);
+                h.PropertyField("startRot");
+                h.SetY();
 
-            h.PropertyField("startAlpha");
-            h.SetY();
+                var rotDataProp = h.PropertyField("rotEaseDatas");
+                h.SetY(EditorGUI.GetPropertyHeight(rotDataProp) + 10);
 
-            h.PropertyField("alphaEaseDatas");
+                h.DrawBox(new Rect(h.GetX(), h.GetY(), h.GetWidth(), DrawerHelper.Height), Color.white);
+                h.PropertyField("startAlpha");
+                h.SetY();
+
+                h.PropertyField("alphaEaseDatas");
+            }
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            float height = 7.5f * DrawerHelper.Height;
+            float height = 8.5f * DrawerHelper.Height;
             height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("posEaseDatas"));
             height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("rotEaseDatas"));
             height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("alphaEaseDatas"));
@@ -126,8 +162,12 @@ namespace NoteCreating.Editor
 
             h.SetIndentLevel(true);
 
-            h.PropertyField("from");
-            h.SetY();
+            var easeTypeProp = property.FindPropertyRelative("easeType");
+            using (new EditorGUI.DisabledGroupScope((EaseType)easeTypeProp.enumValueIndex == EaseType.None))
+            {
+                h.PropertyField("from");
+                h.SetY();
+            }
 
             h.LabelField("Ease");
             float labelWidth = EditorGUIUtility.labelWidth;
@@ -135,7 +175,7 @@ namespace NoteCreating.Editor
             float margin = 5;
             h.SetWidth(w / 2f - margin);
             h.SetX(labelWidth);
-            h.PropertyField("easeType", false);
+            h.PropertyField(easeTypeProp, false);
 
             h.SetX(labelWidth + w / 2f + margin);
             h.PropertyField("easeTime", false);

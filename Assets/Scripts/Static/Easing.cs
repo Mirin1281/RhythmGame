@@ -184,6 +184,7 @@ public enum EaseType
 
     [InspectorName("- " + nameof(Start))] Start,
     [InspectorName("- " + nameof(End))] End,
+    [InspectorName("- " + nameof(None))] None,
 }
 
 public readonly struct EasingVector2

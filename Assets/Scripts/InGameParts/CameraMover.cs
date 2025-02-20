@@ -120,8 +120,16 @@ public class CameraMover : MonoBehaviour
     async UniTask MoveRelative(CameraMoveSetting m, float delta, Mirror mir = default)
     {
         if (m.IsPosMove == false && m.IsRotateMove == false) return;
+        if (m.Lpb == default)
+        {
+            if (m.IsPosMove)
+                basePos += new Vector3(mir.Conv(m.Pos.x), m.Pos.y, m.Pos.z);
+            if (m.IsRotateMove)
+                baseRot *= Quaternion.Euler(new Vector3(m.Rotate.x, mir.Conv(m.Rotate.y), mir.Conv(m.Rotate.z)));
+            return;
+        }
         float time = m.Lpb.Time;
-        await WhileYieldAsync(time - 0.04f, delta, t => // TODO: ピッタリにすると被る。なぜ
+        await WhileYieldAsyncRelative(time, delta, t =>
         {
             if (m.IsPosMove)
             {
@@ -139,7 +147,6 @@ public class CameraMover : MonoBehaviour
                     mir.Conv(t.Ease(0, m.Rotate.z, time, m.EaseType)));
             }
         });
-        await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         if (m.IsPosMove)
             basePos += new Vector3(mir.Conv(m.Pos.x), m.Pos.y, m.Pos.z);
         if (m.IsRotateMove)
@@ -154,11 +161,31 @@ public class CameraMover : MonoBehaviour
         if (m.IsPosMove == false && m.IsRotateMove == false) return;
         var startPos = transform.position;
         var startRot = mir.Conv(transform.eulerAngles);
+        if (m.Lpb == default)
+        {
+            if (m.IsPosMove)
+                basePos = new Vector3(mir.Conv(m.Pos.x), m.Pos.y, m.Pos.z);
+            if (m.IsRotateMove)
+            {
+                if (m.IsRotateClamp)
+                {
+                    baseRot = Quaternion.Euler(new Vector3(
+                        GetNormalizedAngle(m.Rotate.x, startRot.x - 180, startRot.x + 180),
+                        mir.Conv(GetNormalizedAngle(m.Rotate.y, startRot.y - 180, startRot.y + 180)),
+                        mir.Conv(GetNormalizedAngle(m.Rotate.z, startRot.z - 180, startRot.z + 180))));
+                }
+                else
+                {
+                    baseRot = Quaternion.Euler(new Vector3(m.Rotate.x, mir.Conv(m.Rotate.y), mir.Conv(m.Rotate.z)));
+                }
+            }
+            return;
+        }
         float time = m.Lpb.Time;
 
         if (m.IsPosMove)
         {
-            WhileYieldAsync(time, delta, t =>
+            WhileYieldAsyncAbsolute(time, delta, t =>
             {
                 basePos = new Vector3(
                     mir.Conv(t.Ease(startPos.x, m.Pos.x, time, m.EaseType)),
@@ -184,7 +211,7 @@ public class CameraMover : MonoBehaviour
                     mir.Conv(t.Ease(startRot.y, m.Rotate.y, time, m.EaseType)),
                     mir.Conv(t.Ease(startRot.z, m.Rotate.z, time, m.EaseType)));
             }
-            WhileYieldAsync(time, delta, t => baseRot = rot(t)).Forget();
+            WhileYieldAsyncAbsolute(time, delta, t => baseRot = rot(t)).Forget();
         }
 
 
@@ -194,16 +221,53 @@ public class CameraMover : MonoBehaviour
         }
     }
 
-    async UniTask WhileYieldAsync(float time, float delta, Action<float> action)
+    async UniTask WhileYieldAsyncRelative(float time, float delta, Action<float> action)
     {
+        if (time == 0)
+        {
+            action.Invoke(time);
+            return;
+        }
         float baseTime = Metronome.Instance.CurrentTime - delta;
         float t = 0f;
         while (t < time)
         {
             t = Metronome.Instance.CurrentTime - baseTime;
+            if (t >= time)
+            {
+                //action.Invoke(time);
+                break;
+            }
             action.Invoke(t);
             await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
         }
-        action.Invoke(time);
+    }
+
+    async UniTask WhileYieldAsyncAbsolute(float time, float delta, Action<float> action)
+    {
+        if (time == 0)
+        {
+            action.Invoke(time);
+            return;
+        }
+        float baseTime = Metronome.Instance.CurrentTime - delta;
+        float t = 0f;
+        while (t < time)
+        {
+            t = Metronome.Instance.CurrentTime - baseTime;
+            if (t >= time)
+            {
+                action.Invoke(time);
+                break;
+            }
+            action.Invoke(t);
+            await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
+        }
+    }
+
+    public void MoveRelative(Vector3 pos, Vector3 rot)
+    {
+        deltaPos += pos;
+        deltaRot *= Quaternion.Euler(rot);
     }
 }

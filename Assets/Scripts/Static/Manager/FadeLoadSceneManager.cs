@@ -10,6 +10,8 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
     // フェード中ボタンの多重クリックを禁止するために使う
     public static bool IsSceneChanging { get; private set; }
 
+    public Color FadeColor = Color.white;
+
     /// <summary>
     /// シーン遷移させる関数
     /// </summary>
@@ -31,14 +33,14 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
             fadeOutInterval = fadeInInterval;
         }
 
-        if(fadeInInterval != 0f)
+        if (fadeInInterval != 0f)
         {
             await FadeIn(fadeInInterval, fadeColor);
         }
-        
+
         await SceneManager.LoadSceneAsync(sceneName);
 
-        if(fadeOutInterval != 0f)
+        if (fadeOutInterval != 0f)
         {
             await FadeOut(fadeOutInterval, fadeColor);
         }
@@ -48,10 +50,10 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
     public async UniTask FadeIn(float interval, Color? fadeColor = null)
     {
         fadeImage.gameObject.SetActive(true);
-        var color = fadeColor ?? Color.black;
+        var color = fadeColor ?? FadeColor;
         var clearColor = new Color(color.r, color.g, color.b, 0f);
         var easing = new Easing(0f, 1f, interval, EaseType.InCubic);
-        
+
         var time = 0f;
         while (time <= interval)
         {
@@ -64,7 +66,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
 
     public async UniTask FadeOut(float interval, Color? fadeColor = null)
     {
-        var color = fadeColor ?? Color.black;
+        var color = fadeColor ?? FadeColor;
         var clearColor = new Color(color.r, color.g, color.b, 0f);
         var easing = new Easing(0f, 1f, interval, EaseType.InCubic);
 

@@ -89,10 +89,10 @@ namespace NoteCreating
         public abstract float GetAlpha();
         public abstract void SetAlpha(float alpha);
 
-        public async UniTask FadeAlphaAsync(float endAlpha, float time, EaseType easeType = EaseType.OutQuad)
+        public async UniTask FadeAlphaAsync(float endAlpha, float time, EaseType easeType = EaseType.OutQuad, float delta = 0)
         {
             var easing = new Easing(GetAlpha(), endAlpha, time, easeType);
-            var t = 0f;
+            var t = delta;
             while (t < time)
             {
                 SetAlpha(easing.Ease(t));

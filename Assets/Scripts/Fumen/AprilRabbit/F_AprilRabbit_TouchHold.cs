@@ -59,11 +59,10 @@ namespace NoteCreating
                 delta = Delta;
             }
             HoldNote hold = Helper.GetHold(length * Speed);
-            Vector3 startPos = new(mirror.Conv(x), StartBase, -0.04f);
-            hold.SetMaskPos(new Vector2(startPos.x, 0));
-            DropAsync(hold, startPos.x, delta).Forget();
+            hold.SetMaskPos(new Vector2(mirror.Conv(x), 0));
+            DropAsync(hold, mirror.Conv(x), delta).Forget();
 
-            float expectTime = startPos.y / Speed - delta;
+            float expectTime = MoveTime - delta;
             Helper.NoteInput.AddExpect(hold, expectTime, new Lpb(0));
             return hold;
         }

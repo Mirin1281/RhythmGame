@@ -34,12 +34,6 @@ namespace NoteCreating
 
         protected float MoveTime => MoveLpb.Time;
 
-        /// <summary>
-        /// ノーツの初期生成地点。デフォルトは4分音符6回で着地する間隔
-        /// </summary>
-        protected float StartBase => MoveTime * Speed;
-
-
         protected async UniTask<float> Wait(Lpb lpb, float delta = -1)
         {
             if (delta == -1)
@@ -102,15 +96,7 @@ namespace NoteCreating
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            /*float t = 0f;
-            while (t < time)
-            {
-                t = CurrentTime - baseTime;
-                action.Invoke(t);
-                if (t >= time) break;
-                await Yield();
-            }*/
-            while (true) // 新実装(Yieldもdelta返り値を用意する。)
+            while (true) // 新実装(Yieldもdelta返り値を用意したい)
             {
                 float t = CurrentTime - baseTime;
                 action.Invoke(t);
@@ -177,14 +163,14 @@ namespace NoteCreating
                 while (item.IsActive && time < 8f)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(new Vector3(x, StartBase - time * Speed));
+                    item.SetPos(new Vector3(x, (MoveTime - time) * Speed));
                     await Yield();
                 }
             }
             else
             {
                 var vec = Speed * Vector3.down;
-                Vector3 basePos = new Vector3(x, StartBase);
+                Vector3 basePos = new Vector3(x, MoveTime * Speed);
                 while (item.IsActive && time < 8f)
                 {
                     time = CurrentTime - baseTime;

@@ -46,8 +46,7 @@ namespace NoteCreating
                         return;
                     }
                     HoldNote hold = Helper.GetHold(noteData.Length * Speed);
-                    Vector3 startPos = mirror.Conv(new Vector3(noteData.X, StartBase));
-                    hold.SetMaskPos(new Vector2(startPos.x, 0));
+                    hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
                     Move(hold, noteData);
                 }
             }
@@ -79,10 +78,9 @@ namespace NoteCreating
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while (t < time)
+            while (true)
             {
-                t = CurrentTime - baseTime;
+                float t = CurrentTime - baseTime;
                 action.Invoke(t);
 
                 if (t >= next.Time)
@@ -99,22 +97,23 @@ namespace NoteCreating
                         next = new Lpb(float.MinValue);
                     }
                 }
+                if (t >= time) break;
                 await Yield();
             }
             action.Invoke(time);
         }
 
-        protected UniTask WhileYieldGroupAsync(
+        protected async UniTask WhileYieldGroupAsync(
             float time, Action<float> action, int loopCount, Lpb loopWait, Action<(int index, float t, float d)> timingAction, float delta = -1)
         {
-            Lpb[] timings = new Lpb[loopCount];
+            /*Lpb[] timings = new Lpb[loopCount];
             for (int i = 0; i < timings.Length; i++)
             {
                 timings[i] = loopWait;
             }
-            return WhileYieldGroupAsync(time, action, timings, timingAction, delta);
+            return WhileYieldGroupAsync(time, action, timings, timingAction, delta);*/
 
-            /*int index = 0;
+            int index = 0;
             Lpb next = loopWait - WaitDelta;
             while (next.Time < 0 && index < loopCount)
             {
@@ -127,10 +126,9 @@ namespace NoteCreating
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            float t = 0f;
-            while (t < time)
+            while (true)
             {
-                t = CurrentTime - baseTime;
+                float t = CurrentTime - baseTime;
                 action.Invoke(t);
                 if (t >= next.Time)
                 {
@@ -146,9 +144,10 @@ namespace NoteCreating
                         next = new Lpb(float.MinValue);
                     }
                 }
-                await Helper.Yield();
+                if (t >= time) break;
+                await Yield();
             }
-            action.Invoke(time);*/
+            action.Invoke(time);
         }
 
 
@@ -156,12 +155,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            int noteCount = NoteDatas == null ? 0 : NoteDatas.Length;
-            return new Color32(
-                255,
-                (byte)Mathf.Clamp(246 - noteCount * 2, 96, 246),
-                (byte)Mathf.Clamp(230 - noteCount * 2, 130, 230),
-                255);
+            return CommandEditorUtility.GetNoteCommandColor();
         }
 
         protected override string GetSummary()

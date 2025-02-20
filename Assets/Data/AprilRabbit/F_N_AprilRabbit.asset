@@ -43,7 +43,8 @@ MonoBehaviour:
     - rid: 8267576847255470085
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u3053\u308C\u304B\u3089\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u59CB\u3081\u307E\u3059\uFF01\uFF01"
         isMove: 0
@@ -72,7 +73,8 @@ MonoBehaviour:
     - rid: 8267576847255470097
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u306F\u4EE5\u4E0A\u3067\u3059\n\u304A\u4ED8\u304D\u5408\u3044\u9802\u304D\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3057\u305F\uFF01"
         isMove: 1
@@ -101,7 +103,8 @@ MonoBehaviour:
     - rid: 8267576847255470095
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u3053\u308C\u307E\u3067\u306E\u30CE\u30FC\u30C4\u3092\n\u7D44\u307F\u5408\u308F\u305B\u3066\u307F\u307E\u3057\u3087\u3046\uFF01"
         isMove: 1
@@ -148,32 +151,45 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470087
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        parentGeneratable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
 --- !u!114 &-5015963009304643635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +212,8 @@ MonoBehaviour:
     - rid: 8267576847255470092
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u9577\u3044\u30CE\u30FC\u30C4\u306F\u7D42\u308F\u308A\u307E\u3067\n\u62BC\u3057\u7D9A\u3051\u3066\u304F\u3060\u3055\u3044"
         isMove: 1
@@ -225,7 +242,8 @@ MonoBehaviour:
     - rid: 8267576847255470088
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u8272\u306E\u8584\u3044\u30CE\u30FC\u30C4\u306F\n\u306A\u305E\u308C\u3070OK\u3067\u3059"
         isMove: 1
@@ -254,7 +272,8 @@ MonoBehaviour:
     - rid: 8267576847255470084
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u3053\u306E\u30B2\u30FC\u30E0\u306B\u8208\u5473\u3092\u6301\u3063\u3066\n\u9802\u304D\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\uFF01\uFF01"
         isMove: 0
@@ -280,20 +299,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470091
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        parentGeneratable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 3
           x: 5
-          length: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &-1131084393490436766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +336,8 @@ MonoBehaviour:
     - rid: 8267576847255470094
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u30B2\u30FC\u30E0\u306E\u57FA\u672C\u7684\u306A\u30EB\u30FC\u30EB\u306F\n\u3053\u308C\u3067\u5168\u90E8\u3067\u3059"
         isMove: 1
@@ -338,15 +359,13 @@ MonoBehaviour:
   musicSelectData: {fileID: 11400000, guid: 02450ed7bca928849921c12d2d898d0b, type: 2}
   noteCount: 43
   <NormalPoolCount>k__BackingField: 4
-  <CirclePoolCount>k__BackingField: 0
   <SlidePoolCount>k__BackingField: 7
-  <FlickPoolCount>k__BackingField: 1
   <HoldPoolCount>k__BackingField: 5
   <ArcPoolCount>k__BackingField: 0
   <LinePoolCount>k__BackingField: 6
+  <CirclePoolCount>k__BackingField: 0
   fumen:
     commandDataList:
-    - {fileID: 1065514934163552132}
     - {fileID: 5616645671503050862}
     - {fileID: -2776725244891595206}
     - {fileID: -8678100236528474436}
@@ -407,179 +426,237 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470096
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        parentGeneratable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 1
           x: -4.5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -1.5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: 1.5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: 4.5
-          length: 0
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 0
           x: 4.5
-          length: 0
-        - wait: 0
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 0
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 0
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 0
           x: 5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 0
           x: -5
-          length: 0
-        - wait: 8
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: 5
-          length: 2
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: -5
-          length: 2
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: 5
-          length: 2
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: -5
-          length: 2
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: 5
-          length: 1
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 1
           x: -2
-          length: 1
-        - wait: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 3
           x: -4
-          length: 1
---- !u!114 &1065514934163552132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_N_AprilRabbit
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 0
-  command:
-    rid: 8267576847255470082
-  references:
-    version: 2
-    RefIds:
-    - rid: 8267576847255470082
-      type: {class: F_Line, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isMirror: 0
-        summary: "\u30D9\u30FC\u30B9"
-        loopCount: 1
-        loopWaitLPB: 4
-        timeMode: 0
-        time: 100
-        isChainWait: 0
-        easeType: 3
-        basePos: {x: 0, y: 0}
-        datas:
-        - delayLPB: 0
-          isPosEase: 0
-          startPos: {x: 0, y: 0}
-          fromPos: {x: 0, y: 0}
-          overridePosEaseTime: 0
-          overridePosEaseType: 0
-          isRotateEase: 0
-          startRotate: 0
-          fromRotate: 0
-          overrideRotateEaseTime: 0
-          overrideRotateEaseType: 0
-          isAlphaEase: 1
-          startAlpha: 0
-          fromAlpha: 1
-          overrideAlphaEaseTime: 0.5
-          overrideAlphaEaseType: 0
-          isRotateFromPos: 0
-          rotateFromPos: 0
-          centerPos: {x: 0, y: 0}
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
 --- !u!114 &1599388877886856735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,7 +679,8 @@ MonoBehaviour:
     - rid: 8267576847255470086
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u843D\u3061\u3066\u304F\u308B\u30CE\u30FC\u30C4\u3068\u7DDA\u304C\n\u91CD\u306A\u3063\u305F\u6642\u306B\u30BF\u30C3\u30D7\u3057\u3066\u304F\u3060\u3055\u3044"
         isMove: 1
@@ -631,7 +709,8 @@ MonoBehaviour:
     - rid: 8267576847255470090
       type: {class: F_AprilRabbit_TutorialText, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         tmproPrefab: {fileID: 0}
         text: "\u3072\u3057\u5F62\u306E\u30CE\u30FC\u30C4\u306F\n\u3059\u3070\u3084\u304F\u30D5\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044"
         isMove: 0
@@ -678,40 +757,61 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470089
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        parentGeneratable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 6
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 4
-          length: 0
-        - wait: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 2
           x: 5
-          length: 0
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
 --- !u!114 &5616645671503050862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,13 +834,14 @@ MonoBehaviour:
     - rid: 8267576847255470083
       type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         loopCount: 61
-        loopWaitLPB: 2
+        loopWait:
+          _value: 4
         moveDirection: 270
-        isSpeedChangable: 0
+        isAdaptiveSpeed: 1
         speedRate: 1
-        lifeTime: 3
 --- !u!114 &7769011454550649367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,21 +861,26 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8267576847255470093
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
-        isMirror: 0
+        mirror:
+          enabled: 0
         speedRate: 1
-        parentGeneratable:
-          rid: -2
         noteDatas:
-        - wait: 0
+        - wait:
+            _value: 0
           type: 4
           x: -5
-          length: 2
-        - wait: 1
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
           type: 4
           x: -5
-          length: 2
+          length:
+            _value: 0
+          option1: 0
+          option2: 0

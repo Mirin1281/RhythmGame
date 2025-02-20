@@ -27,7 +27,7 @@ public class MusicSelectManager : MonoBehaviour
             RhythmGameManager.Difficulty = difficulty;
         }
         previewer.Stop(0.5f).Forget();
-        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f);
         Debug.Log($"楽曲名: {selectData.MusicName}\n" +
             $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
     }
@@ -36,6 +36,6 @@ public class MusicSelectManager : MonoBehaviour
     {
         RhythmGameManager.FumenReference = reference;
         previewer.Stop(0.5f).Forget();
-        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f, Color.white);
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f);
     }
 }

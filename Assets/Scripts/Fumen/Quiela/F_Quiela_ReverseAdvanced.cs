@@ -13,6 +13,7 @@ namespace NoteCreating
         [SerializeField, Tooltip("落下に使う時間")] Lpb dropLPB = new Lpb(2f);
         [SerializeField, Tooltip("落下に使う時間のうち、加速する時間の割合")] float easingRate = 0.5f;
         [SerializeField, Tooltip("加速度")] float acceleration = 2f;
+        [Header("オプション1 : 生成時のx座標")]
         [SerializeField] NoteData[] noteDatas;
 
         protected override float Speed => base.Speed * speedRate;
@@ -60,8 +61,7 @@ namespace NoteCreating
                     return null;
                 }
                 HoldNote hold = Helper.GetHold(noteData.Length * Speed);
-                Vector3 startPos = mirror.Conv(new Vector3(noteData.X, StartBase));
-                hold.SetMaskPos(new Vector2(startPos.x, 0));
+                hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
                 Move(hold, noteData.X, delta, createSpeedRate, w, noteData.Option1).Forget();
                 return hold;
             }
@@ -146,14 +146,14 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
 
+        protected override string GetName()
+        {
+            return "Q_Reverse";
+        }
+
         protected override Color GetCommandColor()
         {
-            int noteCount = noteDatas == null ? 0 : noteDatas.Length;
-            return new Color32(
-                255,
-                (byte)Mathf.Clamp(246 - noteCount * 2, 96, 246),
-                (byte)Mathf.Clamp(230 - noteCount * 2, 130, 230),
-                255);
+            return CommandEditorUtility.GetNoteCommandColor(noteDatas);
         }
 
         protected override string GetSummary()

@@ -38,10 +38,9 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
-
         protected override string GetName()
         {
-            return "InvisibleJudge";
+            return "InvisibleEffect";
         }
 #endif
     }

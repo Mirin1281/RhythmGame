@@ -41,7 +41,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return CommandEditorUtility.CommandColor_Note;
+            return CommandEditorUtility.GetNoteCommandColor();
         }
 
         protected override string GetSummary()

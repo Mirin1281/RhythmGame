@@ -418,7 +418,7 @@ namespace NoteCreating
         public ArcCreateData(bool _)
         {
             this.x = 0;
-            this.wait = new Lpb(4);
+            this.wait = new Lpb(0);
             this.vertexType = VertexType.Auto;
             this.isJudgeDisable = false;
             this.isOverlappable = false;

@@ -34,6 +34,8 @@ public class DrawerHelper
         SetX(x * startWidth);
     }
 
+    public float GetY() => position.y;
+
     /// <summary>
     /// 次の行へ移ります。通常、X座標と幅はリセットされます
     /// </summary>
@@ -66,14 +68,8 @@ public class DrawerHelper
     }
 
 
-    public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
+    public SerializedProperty PropertyField(SerializedProperty prop, bool drawLabel = true, string overrideName = null)
     {
-        var prop = property.FindPropertyRelative(fieldName);
-        if (prop == null)
-        {
-            Debug.LogError($"{fieldName}が存在しませんでした");
-        }
-
         if (prop.propertyType is SerializedPropertyType.Vector2 or SerializedPropertyType.Vector2Int
             or SerializedPropertyType.Vector3 or SerializedPropertyType.Vector3Int)
         {
@@ -101,6 +97,15 @@ public class DrawerHelper
             EditorGUI.PropertyField(position, prop, GUIContent.none);
         }
         return prop;
+    }
+    public SerializedProperty PropertyField(string fieldName, bool drawLabel = true, string overrideName = null)
+    {
+        var prop = property.FindPropertyRelative(fieldName);
+        if (prop == null)
+        {
+            Debug.LogError($"{fieldName}が存在しませんでした");
+        }
+        return PropertyField(prop, drawLabel, overrideName);
     }
     public SerializedProperty PropertyField(float width, string fieldName, bool drawLabel = true, string overrideName = null)
     {
