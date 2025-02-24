@@ -19,6 +19,7 @@ namespace Novel
 
         void Update()
         {
+            /*
             if (Input.GetButtonDown(ConstContainer.SUBMIT_KEYNAME) || Input.GetButtonDown(ConstContainer.CANCEL_KEYNAME))
             {
                 OnInputed?.Invoke();
@@ -38,7 +39,7 @@ namespace Novel
             {
                 OnInputed?.Invoke();
                 seVolume = 0.2f;
-            }
+            }*/
         }
 
         /// <summary>
