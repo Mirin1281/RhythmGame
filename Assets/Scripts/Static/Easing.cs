@@ -71,7 +71,7 @@ public readonly struct Easing
         return start + delta * GetPlaneValue(type, t);
     }
 
-    public async UniTask EaseAsync(CancellationToken token, float delta, Action<float> action)
+    public async UniTask EaseAsync(CancellationToken token, float delta, Action<float> action, PlayerLoopTiming timing = PlayerLoopTiming.Update)
     {
         float baseTime = Metronome.Instance.CurrentTime - delta;
         float time = 0f;
@@ -80,7 +80,7 @@ public readonly struct Easing
             time = Metronome.Instance.CurrentTime - baseTime;
             float t = time * inversedEaseTime;
             action.Invoke(start + this.delta * GetPlaneValue(type, t)); // Mathf.Clamp01(t)
-            await UniTask.Yield(token);
+            await UniTask.Yield(timing, token);
         }
         action.Invoke(start + this.delta * GetPlaneValue(type, 1));
     }
@@ -132,8 +132,9 @@ public readonly struct Easing
 
             EaseType.Start => 0f,
             EaseType.End => 1f,
+            EaseType.None => 0f,
 
-            _ => throw new ArgumentException(),
+            _ => throw new ArgumentException(type.ToString()),
         };
 
 
@@ -153,6 +154,11 @@ public readonly struct Easing
             EaseType.InOutBack => 1.70158f * 1.525f,
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    public void WriteStatus()
+    {
+        Debug.Log($"Start: {start}\nEnd: {start + delta}\nTime: {1f / inversedEaseTime}\nType: {type}");
     }
 }
 
@@ -208,5 +214,11 @@ public readonly struct EasingVector2
     public Vector2 Ease(float time)
     {
         return new Vector2(easingX.Ease(time), easingY.Ease(time));
+    }
+
+    public void WriteStatus()
+    {
+        easingX.WriteStatus();
+        easingY.WriteStatus();
     }
 }

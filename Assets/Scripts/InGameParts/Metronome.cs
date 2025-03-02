@@ -14,6 +14,7 @@ using UnityEditor;
 public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 {
     [SerializeField] CriAtomSource atomSource;
+    [SerializeField] AudioWaveMeter waveMeter;
 
 #if UNITY_EDITOR
     [Space(20)]
@@ -61,6 +62,11 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
         this.fumenData = fumenData;
         bpm = SelectData.Bpm;
         atomSource.cueSheet = atomSource.cueName = SelectData.SheetName;
+
+        if (waveMeter != null)
+        {
+            waveMeter.Init(atomSource);
+        }
 
 #if UNITY_EDITOR
         EditorApplication.pauseStateChanged += SwitchMusic;

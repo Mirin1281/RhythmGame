@@ -31,7 +31,7 @@ namespace NoteCreating
             float xSpeed = Mathf.Cos((data.Option1 + 90) * Mathf.Deg2Rad);
             if (setRotate)
             {
-                note.SetRot(data.Option1);
+                note.SetRot(mirror.Conv(data.Option1));
                 if (note is HoldNote hold)
                 {
                     hold.SetMaskRot(0); // マスクの角度はつけなくていい

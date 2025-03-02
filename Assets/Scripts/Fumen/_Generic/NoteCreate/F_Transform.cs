@@ -8,6 +8,7 @@ namespace NoteCreating
     public class F_Transform : NoteCreateBase<NoteData>
     {
         [SerializeField] Lpb moveLpb = new Lpb(1);
+        [SerializeField] EaseType easeType = EaseType.Default;
         [SerializeField] float deg;
         [SerializeField] Vector2 pos;
 
@@ -22,11 +23,11 @@ namespace NoteCreating
                     note, pos, MoveTime - Delta, data.Length, expectType));
             }
 
-            var expectPos = EasingTransformGroupNote(note, data, deg, pos, moveLpb.Time);
+            var expectPos = EasingTransformGroupNote(note, data, deg, pos, moveLpb.Time, easeType);
             AddExpect(expectPos, ExpectType.Static);
         }
 
-        Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float toDeg, Vector2 toPos, float easeTime, EaseType easeType = EaseType.OutQuad)
+        Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float toDeg, Vector2 toPos, float easeTime, EaseType easeType)
         {
             var dEasing = new Easing(0, toDeg, easeTime, easeType);
             var pEasing = new EasingVector2(Vector2.zero, toPos, easeTime, easeType);

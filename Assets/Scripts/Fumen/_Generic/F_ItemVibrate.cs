@@ -10,7 +10,7 @@ namespace NoteCreating
     {
         [Space(20)]
         [SerializeField] ItemTargets target = ItemTargets.Normal | ItemTargets.Slide | ItemTargets.Hold;
-        [SerializeField] int capacity = 100;
+        [SerializeField] int capacity = 32;
         [SerializeField] Lpb time = new Lpb(4);
 
         [Space(20)]

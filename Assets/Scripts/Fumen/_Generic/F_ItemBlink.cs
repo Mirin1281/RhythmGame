@@ -22,7 +22,7 @@ namespace NoteCreating
     {
         [Space(20)]
         [SerializeField] ItemTargets target = ItemTargets.Normal | ItemTargets.Slide | ItemTargets.Hold;
-        [SerializeField] int capacity = 100;
+        [SerializeField] int capacity = 32;
         [SerializeField] int blinkCount = 20;
         [SerializeField] int seed = 222;
         [SerializeField] Vector2Int hideWaitRange = new Vector2Int(1, 5);

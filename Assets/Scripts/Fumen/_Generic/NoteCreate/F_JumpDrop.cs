@@ -7,7 +7,7 @@ namespace NoteCreating
     [AddTypeMenu(FumenPathContainer.NoteCreate + "飛び上がる", -60), System.Serializable]
     public class F_JumpDrop : NoteCreateBase<NoteData>
     {
-        [SerializeField] float defaultRadius = 12;
+        [SerializeField] float defaultRadius = 10;
         [SerializeField] float defaultHeight = 10;
 
         [Header("オプション1 : 角度,  オプション2 : 高さ")]

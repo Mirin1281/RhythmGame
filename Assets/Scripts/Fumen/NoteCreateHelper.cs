@@ -9,6 +9,7 @@ namespace NoteCreating
         [field: SerializeField] public PoolManager PoolManager { get; private set; }
         [field: SerializeField] public NoteInput NoteInput { get; private set; }
         [field: SerializeField] public CameraMover CameraMover { get; private set; }
+        [field: SerializeField] public AudioWaveMeter WaveMeter { get; private set; }
 #if UNITY_EDITOR
         [field: SerializeField] public DebugSphere DebugCirclePrefab { get; private set; }
 #endif

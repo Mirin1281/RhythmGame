@@ -5,6 +5,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Splines;
+using Unity.Mathematics;
+using VertexType = NoteCreating.ArcCreateData.VertexType;
 
 namespace NoteCreating
 {
@@ -173,14 +175,28 @@ namespace NoteCreating
             {
                 var data = datas[i];
                 z += data.Wait.Time * speed;
-                var knot = new BezierKnot(new Unity.Mathematics.float3(mir.Conv(data.X), 0, z));
+                var knot = new BezierKnot(new float3(mir.Conv(data.X), 0, z));
                 TangentMode tangentMode = data.Vertex switch
                 {
-                    ArcCreateData.VertexType.Auto => TangentMode.AutoSmooth,
-                    ArcCreateData.VertexType.Linear => TangentMode.Linear,
-                    _ => throw new ArgumentOutOfRangeException(),
+                    VertexType.Auto => TangentMode.AutoSmooth,
+                    VertexType.Linear => TangentMode.Linear,
+                    VertexType.Detail => TangentMode.Broken,
+                    _ => throw new ArgumentOutOfRangeException(data.Vertex.ToString()),
                 };
+
                 spline.Add(knot, tangentMode);
+
+                if (data.Vertex == VertexType.Detail)
+                {
+                    var kn = spline[^1];
+                    kn.TangentIn.z = data.Option.y;
+                    kn.TangentOut.z = data.Option.z;
+                    spline.SetKnot(spline.Count - 1, new BezierKnot(
+                        kn.Position,
+                        kn.TangentIn,
+                        kn.TangentOut,
+                        quaternion.EulerXYZ(0, mir.Conv(data.Option.x * Mathf.Deg2Rad), 0)));
+                }
 
                 /*if (i % 3 == 0)
                 {
@@ -386,6 +402,7 @@ namespace NoteCreating
         {
             Auto,
             Linear,
+            Detail,
         }
 
         [SerializeField] float x;
@@ -395,6 +412,7 @@ namespace NoteCreating
         [SerializeField] bool isOverlappable;
         [SerializeField] Lpb behindJudgeRange;
         [SerializeField] Lpb aheadJudgeRange;
+        [SerializeField] Vector3 option;
 
         public readonly float X => x;
         public readonly Lpb Wait => wait;
@@ -403,8 +421,9 @@ namespace NoteCreating
         public readonly bool IsOverlappable => isOverlappable;
         public readonly Lpb BehindJudgeRange => behindJudgeRange;
         public readonly Lpb AheadJudgeRange => aheadJudgeRange;
+        public Vector3 Option => option;
 
-        public ArcCreateData(float x, Lpb wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, Lpb behindJudgeRange, Lpb aheadJudgeRange)
+        public ArcCreateData(float x, Lpb wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, Lpb behindJudgeRange, Lpb aheadJudgeRange, Vector3 option = default)
         {
             this.x = x;
             this.wait = wait;
@@ -413,6 +432,7 @@ namespace NoteCreating
             this.isOverlappable = isOverlappable;
             this.behindJudgeRange = behindJudgeRange;
             this.aheadJudgeRange = aheadJudgeRange;
+            this.option = option;
         }
 
         public ArcCreateData(bool _)
@@ -424,6 +444,7 @@ namespace NoteCreating
             this.isOverlappable = false;
             this.behindJudgeRange = new Lpb(0);
             this.aheadJudgeRange = new Lpb(4);
+            this.option = default;
         }
     }
 }

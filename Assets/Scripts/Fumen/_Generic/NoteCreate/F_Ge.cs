@@ -30,24 +30,6 @@ namespace NoteCreating
             }
 
 
-            // プラリザみたいな微細な揺れ + 角度 // 
-            float frequency = new System.Random(DateTime.Now.Millisecond).GetFloat(-3, 3);
-            float phase = new System.Random(DateTime.Now.Millisecond - 1).GetFloat(0, 2 * Mathf.PI);
-            WhileYield(lifeTime, t =>
-            {
-                if (note.IsActive == false) return;
-                var addX = 0.3f * Mathf.Sin(t * frequency + phase);
-                var pos = mirror.Conv(new Vector3(data.X + addX, (MoveTime - t) * Speed));
-                note.SetPos(pos);
-                //note.SetPos(mirror.Conv(new Vector3(data.X, StartBase - t * Speed)));
-                float rot = 5f * Mathf.Sin(t * frequency + phase);
-                if (data.Type == RegularNoteType.Hold) rot = 0;
-                note.SetRot(rot);
-            });
-            AddExpect();
-
-
-
             // グループ化のサンプル(点滅・振動・脈動) //
             // AddExpectはStaticにした方が安全かも
             /*AddExpect();

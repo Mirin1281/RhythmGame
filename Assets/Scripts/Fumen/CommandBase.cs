@@ -107,10 +107,10 @@ namespace NoteCreating
             return CurrentTime - baseTime - time;
         }
 
-        protected void WhileYield(Lpb time, Action<float> action, float delta = -1)
-            => WhileYieldAsync(time.Time, action, delta).Forget();
-        protected UniTask<float> WhileYieldAsync(Lpb time, Action<float> action, float delta = -1)
-            => WhileYieldAsync(time.Time, action, delta);
+        protected void WhileYield(Lpb time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+            => WhileYieldAsync(time.Time, action, delta, timing).Forget();
+        protected UniTask<float> WhileYieldAsync(Lpb time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+            => WhileYieldAsync(time.Time, action, delta, timing);
 
         protected async UniTask<float> WaitSeconds(float wait, float delta = -1)
         {

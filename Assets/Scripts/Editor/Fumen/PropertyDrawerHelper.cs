@@ -130,8 +130,17 @@ public class DrawerHelper
             }
         }
 
-        SetX(EditorGUIUtility.labelWidth + 5);
-        SetWidth(GetWidth() - EditorGUIUtility.labelWidth - 5);
+        if (drawLabel)
+        {
+            SetWidth(GetWidth() - EditorGUIUtility.labelWidth - 5);
+            SetX(EditorGUIUtility.labelWidth + 5);
+        }
+        else
+        {
+            SetWidth(GetWidth());
+            SetX(0);
+        }
+
         EditorGUI.PropertyField(position, vectorProperty, GUIContent.none);
         SetX(startX);
         SetWidth(GetWidth());
@@ -200,5 +209,11 @@ public class DrawerHelper
 
         Debug.LogError("Unknown Error");
         return -1;
+    }
+
+    public float GetPropertyHeight(string fieldName)
+    {
+        var prop = property.FindPropertyRelative(fieldName);
+        return EditorGUI.GetPropertyHeight(prop);
     }
 }

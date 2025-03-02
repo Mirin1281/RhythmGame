@@ -441,9 +441,13 @@ namespace NoteCreating
                     // ちょっと早めに表示
                     if (Metronome.CurrentTime > hold.EndTime - 0.02f)
                     {
-                        hold.SetActive(false);
                         holds.RemoveAt(i);
                         judge.PlayParticle(NoteGrade.Perfect, hold.GetLandingPos());
+                        UniTask.Void(async () =>
+                        {
+                            await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
+                            hold.SetActive(false);
+                        });
                     }
                 }
             }

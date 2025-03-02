@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using VertexType = NoteCreating.ArcCreateData.VertexType;
 
 namespace NoteCreating.Editor
 {
@@ -25,16 +26,25 @@ namespace NoteCreating.Editor
             h.PropertyField("x", false);
 
             h.SetX(width / 1.5f);
-            h.PropertyField("vertexType", false);
+            var vertexTypeProp = h.PropertyField("vertexType", false);
+
+            VertexType type = (VertexType)vertexTypeProp.enumValueIndex;
+            if (type == VertexType.Detail)
+            {
+                h.SetY();
+                h.PropertyField("option", false);
+            }
 
             h.SetY();
-            h.SetWidth(width / 2f);
-            var disableProp = h.PropertyField("isJudgeDisable", overrideName: "Disable");
+            h.SetX(width / 1.5f);
+            h.SetWidth(width / 4f);
+            h.SetX(0);
+            var disableProp = h.PropertyField("isJudgeDisable", false);
 
             using (new EditorGUI.DisabledGroupScope(disableProp.boolValue))
             {
-                h.SetX(width / 2f);
-                h.PropertyField("isOverlappable", overrideName: "Overlap");
+                h.SetX(width * 0.1f);
+                h.PropertyField("isOverlappable", overrideName: "Overrap");
 
                 h.SetY();
                 var w = width / 4f;
@@ -59,7 +69,7 @@ namespace NoteCreating.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 80;
+            return 100;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace NoteCreating.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var h = new DrawerHelper(position, property);
+            var startW = h.GetWidth();
             h.SetY(10);
 
             h.PropertyField("wait");
@@ -24,7 +25,7 @@ namespace NoteCreating.Editor
             using (new EditorGUI.DisabledGroupScope(isPosMove_p.boolValue == false))
             {
                 h.SetX(EditorGUIUtility.labelWidth);
-                h.PropertyField("pos", false);
+                h.PropertyField("pos", overrideName: string.Empty);
                 h.SetY();
             }
 
@@ -37,7 +38,7 @@ namespace NoteCreating.Editor
             using (new EditorGUI.DisabledGroupScope(isRotateMove_p.boolValue == false))
             {
                 h.SetX(EditorGUIUtility.labelWidth);
-                h.PropertyField("rotate", false);
+                h.PropertyField("rotate", overrideName: string.Empty);
                 h.SetY();
                 h.PropertyField("isRotateClamp", overrideName: "Rotate Clamp");
                 h.SetY();

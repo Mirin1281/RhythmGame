@@ -83,7 +83,7 @@ namespace NoteCreating
     {
         [SerializeField] float _value;
 #if UNITY_EDITOR
-        static readonly float DebugBPM = 200f;
+        static readonly float DebugBPM = 150f;
 #endif
 
         public Lpb(float lpb)
@@ -107,6 +107,9 @@ namespace NoteCreating
         }
 
         public readonly float GetLpbValue() => _value;
+
+        public static Lpb Zero => new Lpb(0);
+        public static Lpb Infinity => new Lpb(float.MinValue);
 
         #region Overrides & Interfaces
 

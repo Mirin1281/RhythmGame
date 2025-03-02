@@ -1,29 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6499c9e5f97f6048932ce06d2a22cf2, type: 3}
-  m_Name: F_H_Lampranthus
-  m_EditorClassIdentifier: 
-  musicSelectData: {fileID: 11400000, guid: f4d3af7f32c42f24897587804d38e0f4, type: 2}
-  noteCount: 1
-  <NormalPoolCount>k__BackingField: 20
-  <SlidePoolCount>k__BackingField: 20
-  <HoldPoolCount>k__BackingField: 20
-  <ArcPoolCount>k__BackingField: 20
-  <LinePoolCount>k__BackingField: 20
-  <CirclePoolCount>k__BackingField: 20
-  fumen:
-    commandDataList:
-    - {fileID: 5131079032742011396}
---- !u!114 &5131079032742011396
+--- !u!114 &-9208588329415787147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33,12 +10,470 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Lampranthus
+  m_Name: Command_F_H_Lampranthus (5)
   m_EditorClassIdentifier: 
   enable: 1
+  beatTiming: 24
+  command:
+    rid: 7519555101131800581
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800580
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        count: 7
+        trimStart: 1
+        noteType: 2
+        wait:
+          _value: 16
+        easeX: {x: 0, y: 7}
+        easeType: 3
+        easeTime: 4
+    - rid: 7519555101131800581
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 1
+        loopWait:
+          _value: 4
+        command:
+          rid: 7519555101131800580
+--- !u!114 &-8018337846083323759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (15)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 57
+  command:
+    rid: 7519555101131800586
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800586
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: 0
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -3.3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4.9
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 6
+          option: {x: 0, y: 0, z: 0}
+        - x: -5.7
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -1.2
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: -12
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0.5
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: -16
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+        - x: 2
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: -16
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &-7885400668054925821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (27)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 91
+  command:
+    rid: 7519555101131800599
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800599
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &-7425563332523960968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (37)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 127
+  command:
+    rid: 7519555146304192513
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555146304192513
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 90, y: 0, z: 1}
+        - x: 2
+          wait:
+            _value: 16
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 65, y: -2, z: 2}
+        - x: 6
+          wait:
+            _value: 5.333333
+          vertexType: 2
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: -1, z: 0}
+--- !u!114 &-7417451493606258949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (6)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 26
+  command:
+    rid: 7519555101131800581
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800580
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        count: 7
+        trimStart: 1
+        noteType: 2
+        wait:
+          _value: 16
+        easeX: {x: 0, y: 7}
+        easeType: 3
+        easeTime: 4
+    - rid: 7519555101131800581
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 1
+        loopWait:
+          _value: 4
+        command:
+          rid: 7519555101131800580
+--- !u!114 &-7373580821332666934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (21)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 75
+  command:
+    rid: 7519555101131800596
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800596
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &-6899008320935758999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (39)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 110
+  command:
+    rid: 7519555101131800607
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800607
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        isChainWait: 1
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 360}
+          isRotateClamp: 0
+          easeType: 18
+          lpb:
+            _value: 2.666667
+          moveType: 0
+--- !u!114 &-6278224517322814251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (1)
+  m_EditorClassIdentifier: 
+  enable: 0
   beatTiming: 0
   command:
-    rid: 7519555078521618434
+    rid: 7519555078521618435
   references:
     version: 2
     RefIds:
@@ -561,3 +996,3438 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 7519555078521618435
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 16
+        loopWait:
+          _value: 0.0625
+        command:
+          rid: 7519555078521618434
+--- !u!114 &-6250548301146907970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (28)
+  m_EditorClassIdentifier: 
+  enable: 0
+  beatTiming: 94
+  command:
+    rid: 7519555101131800600
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800600
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        count: 9
+        trimStart: 0
+        noteType: 2
+        wait:
+          _value: 16
+        easeX: {x: -4, y: 4}
+        easeType: 3
+        easeTime: 4
+--- !u!114 &-5982373467937697632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (17)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 64
+  command:
+    rid: 7519555101131800594
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800594
+      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        setRotate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4.5
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 6
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4.5
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+--- !u!114 &-5050597851360507479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (18)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 64
+  command:
+    rid: 7519555101131800584
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800584
+      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        moveLpb:
+          _value: 0
+        easeType: 3
+        deg: 80
+        pos: {x: -1, y: 5}
+        noteDatas:
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+--- !u!114 &-4753321263064047431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (26)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 89
+  command:
+    rid: 7519555101131800598
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800598
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: 0
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -3.8
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 3.8
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &-3774217170877664571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (19)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 64
+  command:
+    rid: 7519555101131800585
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800585
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.4444444
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: -1, y: 5}
+          posEaseDatas: []
+          startRot: 80
+          rotEaseDatas: []
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 1
+            easeTime:
+              _value: 4
+            easeType: 0
+          - from: 1
+            easeTime:
+              _value: 0.5714286
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0
+--- !u!114 &-1049535505958613160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (12)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 46
+  command:
+    rid: 7519555101131800584
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800584
+      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        moveLpb:
+          _value: 1
+        easeType: 3
+        deg: 30
+        pos: {x: 5, y: 1}
+        noteDatas:
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 0
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+--- !u!114 &-1046290909954266090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (40)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 125
+  command:
+    rid: 7519555146304192513
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555146304192513
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: 5
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 110, y: 0, z: -1}
+        - x: 0.5
+          wait:
+            _value: 8
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: -1.5, z: 1.5}
+        - x: 5
+          wait:
+            _value: 8
+          vertexType: 2
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 70, y: -1, z: 0}
+--- !u!114 &-492046024080322221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (36)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 106
+  command:
+    rid: 7519555101131800605
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800605
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: -5
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -5
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &-444128202557425452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (22)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 76
+  command:
+    rid: 7519555101131800596
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800596
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &-43055713913230048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (2)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 16
+  command:
+    rid: 7519555101131800577
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800577
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -8
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 0
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -6
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6499c9e5f97f6048932ce06d2a22cf2, type: 3}
+  m_Name: F_H_Lampranthus
+  m_EditorClassIdentifier: 
+  musicSelectData: {fileID: 11400000, guid: f4d3af7f32c42f24897587804d38e0f4, type: 2}
+  noteCount: 1
+  <NormalPoolCount>k__BackingField: 20
+  <SlidePoolCount>k__BackingField: 20
+  <HoldPoolCount>k__BackingField: 20
+  <ArcPoolCount>k__BackingField: 20
+  <LinePoolCount>k__BackingField: 20
+  <CirclePoolCount>k__BackingField: 20
+  fumen:
+    commandDataList:
+    - {fileID: -6278224517322814251}
+    - {fileID: 991668784186750568}
+    - {fileID: 8451286212147658089}
+    - {fileID: -43055713913230048}
+    - {fileID: 98517589586619745}
+    - {fileID: -9208588329415787147}
+    - {fileID: -7417451493606258949}
+    - {fileID: 6975254632150708641}
+    - {fileID: 5963017107531863400}
+    - {fileID: 4594159363464125267}
+    - {fileID: 5579168014871459574}
+    - {fileID: 251672980252720358}
+    - {fileID: -1049535505958613160}
+    - {fileID: 9106802142523505329}
+    - {fileID: 5219465600811955044}
+    - {fileID: -8018337846083323759}
+    - {fileID: 5506452178015892468}
+    - {fileID: -3774217170877664571}
+    - {fileID: -5050597851360507479}
+    - {fileID: -5982373467937697632}
+    - {fileID: 7282020329301721634}
+    - {fileID: -7373580821332666934}
+    - {fileID: -444128202557425452}
+    - {fileID: 7922569432164135487}
+    - {fileID: 1504207861451533500}
+    - {fileID: 8371691627284709596}
+    - {fileID: -4753321263064047431}
+    - {fileID: -7885400668054925821}
+    - {fileID: -6250548301146907970}
+    - {fileID: 5125659382856984427}
+    - {fileID: 4281495155176756303}
+    - {fileID: 6058447666286229271}
+    - {fileID: 4214675606555900052}
+    - {fileID: 385879882924617282}
+    - {fileID: -492046024080322221}
+    - {fileID: -6899008320935758999}
+    - {fileID: 14095545380740426}
+    - {fileID: 762603881716118441}
+    - {fileID: -1046290909954266090}
+    - {fileID: 1653869234361758729}
+    - {fileID: -7425563332523960968}
+    - {fileID: 6578550953959675575}
+--- !u!114 &14095545380740426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (38)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 111
+  command:
+    rid: 7519555101131800606
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800606
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &98517589586619745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (4)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 23
+  command:
+    rid: 7519555101131800579
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800579
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 0
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 6
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: 3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: 3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &251672980252720358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (11)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 41
+  command:
+    rid: 7519555101131800588
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800588
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2
+          type: 0
+          x: 4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 1
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 6
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -6
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -3
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+--- !u!114 &385879882924617282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (35)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 104
+  command:
+    rid: 7519555101131800604
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800604
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 6
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -3.5
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 5.333333
+          type: 0
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -6
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 1.5
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 5.333333
+          type: 2
+          x: 3
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: -6
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 64
+          type: 2
+          x: 4.5
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: -4
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 64
+          type: 2
+          x: 6
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 2
+          x: -2
+          length:
+            _value: 5.333333
+          option1: 0
+          option2: 0
+--- !u!114 &762603881716118441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (29)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 120
+  command:
+    rid: 7519555146304192512
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555146304192512
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 3
+          x: -2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: -4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -3.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 3
+          x: 2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 12
+          type: 0
+          x: 4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &991668784186750568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (3)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 12
+  command:
+    rid: 7519555101131800578
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800578
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 1
+        lifeCount: 32
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 0}
+--- !u!114 &1504207861451533500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (24)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 80
+  command:
+    rid: 7519555101131800584
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800584
+      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        moveLpb:
+          _value: 0
+        easeType: 3
+        deg: 80
+        pos: {x: -1, y: 5}
+        noteDatas:
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+--- !u!114 &1653869234361758729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (33)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 126
+  command:
+    rid: 7519555146304192513
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555146304192513
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: -5
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 90, y: 0, z: 1}
+        - x: 2
+          wait:
+            _value: 16
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 60, y: -2, z: 2}
+        - x: 5
+          wait:
+            _value: 5.333333
+          vertexType: 2
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: -8.56, y: -1, z: 0}
+--- !u!114 &4214675606555900052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (34)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 96
+  command:
+    rid: 7519555101131800604
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800604
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 2
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 32
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &4281495155176756303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (31)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 94
+  command:
+    rid: 7519555101131800602
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800602
+      type: {class: F_JaggedArc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        x: -4
+        jagInterval:
+          _value: 24
+        length:
+          _value: 2.666667
+        startWidth: 0
+        fromWidth: 4
+        easeType: 2
+        speedRate: 1.2
+--- !u!114 &4594159363464125267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (9)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 31
+  command:
+    rid: 7519555101131800585
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800585
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.4
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 5, y: 1}
+          posEaseDatas: []
+          startRot: 30
+          rotEaseDatas: []
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 1
+            easeTime:
+              _value: 4
+            easeType: 0
+          - from: 1
+            easeTime:
+              _value: 0.5
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0
+--- !u!114 &5125659382856984427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (30)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 94
+  command:
+    rid: 7519555101131800602
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800602
+      type: {class: F_JaggedArc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        x: -4
+        jagInterval:
+          _value: 24
+        length:
+          _value: 2.666667
+        startWidth: 0
+        fromWidth: 4
+        easeType: 2
+        speedRate: 1.2
+--- !u!114 &5219465600811955044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (14)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 57
+  command:
+    rid: 7519555101131800586
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800586
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: 6
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 2.7
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 1.1
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 6
+          option: {x: 0, y: 0, z: 0}
+        - x: 0.3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 4
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: -12
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: 6.1
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: -16
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+        - x: 6.5
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 6.4
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 6
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &5506452178015892468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (16)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 59
+  command:
+    rid: 7519555101131800589
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800589
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 2
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 4
+          length:
+            _value: 2.666
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 2.666
+          option1: 0
+          option2: 0
+--- !u!114 &5579168014871459574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (10)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 41
+  command:
+    rid: 7519555101131800586
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800586
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -3
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 16
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2.5
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -1
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2.5
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &5963017107531863400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (8)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 30
+  command:
+    rid: 7519555101131800584
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800584
+      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        moveLpb:
+          _value: 1
+        easeType: 3
+        deg: 30
+        pos: {x: 5, y: 1}
+        noteDatas:
+        - wait:
+            _value: 2
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: 3.4
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 0
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 8
+          option1: -1
+          option2: -1
+--- !u!114 &6058447666286229271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (32)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 96
+  command:
+    rid: 7519555101131800603
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800603
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        summary: "A\u30E1\u30ED - B\u30E1\u30ED"
+--- !u!114 &6578550953959675575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (41)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 128
+  command:
+    rid: 7519555146304192514
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555146304192514
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        summary: "\u30B5\u30D3"
+--- !u!114 &6975254632150708641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (7)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 32
+  command:
+    rid: 7519555101131800583
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800583
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        summary: "\u30A4\u30F3\u30C8\u30ED - A\u30E1\u30ED"
+--- !u!114 &7282020329301721634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (20)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 73
+  command:
+    rid: 7519555101131800595
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800595
+      type: {class: F_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        moveLpb:
+          _value: 4
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -7
+          length:
+            _value: 5.333333
+          option1: -3
+          option2: 0.8888889
+        - wait:
+            _value: 0
+          type: 3
+          x: -3
+          length:
+            _value: 5.333333
+          option1: -7
+          option2: 0.8888889
+        - wait:
+            _value: 4
+          type: 3
+          x: 3
+          length:
+            _value: 5.333333
+          option1: 7
+          option2: 0.8888889
+        - wait:
+            _value: 0
+          type: 3
+          x: 7
+          length:
+            _value: 5.333333
+          option1: 3
+          option2: 0.8888889
+--- !u!114 &7922569432164135487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (25)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 80
+  command:
+    rid: 7519555101131800585
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800585
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.4444444
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: -1, y: 5}
+          posEaseDatas: []
+          startRot: 80
+          rotEaseDatas: []
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 1
+            easeTime:
+              _value: 4
+            easeType: 0
+          - from: 1
+            easeTime:
+              _value: 0.5714286
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0
+--- !u!114 &8371691627284709596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (23)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 80
+  command:
+    rid: 7519555101131800594
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800594
+      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        setRotate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4.5
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 6
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2
+          length:
+            _value: 5.333333
+          option1: -5
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 4
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4.5
+          length:
+            _value: 5.333333
+          option1: -10
+          option2: 0
+--- !u!114 &8451286212147658089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 14
+  command:
+    rid: 7519555101131800576
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800576
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &9106802142523505329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (13)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 47
+  command:
+    rid: 7519555101131800585
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800585
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.4
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 5, y: 1}
+          posEaseDatas: []
+          startRot: 30
+          rotEaseDatas: []
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 1
+            easeTime:
+              _value: 4
+            easeType: 0
+          - from: 1
+            easeTime:
+              _value: 0.5
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0

@@ -15,6 +15,7 @@ namespace NoteCreating
         [SerializeField] bool isEarphone;
         [SerializeField] bool isMirror;
         [SerializeField] bool isDark;
+        [SerializeField] bool isNoteSeMute;
 #endif
         [SerializeField] TMP_Text titleTmpro;
         [SerializeField] Image darkImage;
@@ -73,6 +74,8 @@ namespace NoteCreating
                 negativeCameraMirror.IsInvert = isMirror;
 
                 darkImage.gameObject.SetActive(isDark);
+
+                if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
             }
 #endif
 

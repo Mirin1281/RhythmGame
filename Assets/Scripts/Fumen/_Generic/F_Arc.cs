@@ -8,7 +8,11 @@ namespace NoteCreating
     public class F_Arc : CommandBase
     {
         [SerializeField] Mirror mirror;
+        [SerializeField] float speedRate = 1f;
+        [Header("X座標の移動が大きい場所は頂点の分割数を増やすと上手くいきやすい")]
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
+
+        protected override float Speed => base.Speed * speedRate;
 
         protected override UniTaskVoid ExecuteAsync()
         {

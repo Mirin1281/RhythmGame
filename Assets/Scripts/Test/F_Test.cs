@@ -11,16 +11,10 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [SerializeField] bool guideLine = true;
         [SerializeField] Lpb guideInterval = new Lpb(4f);
-        [Space(20)]
-        [SerializeField] Vector2 pos;
-        [SerializeField] float scale = 1f;
-        [SerializeField] float width = 0.2f;
-        [SerializeField] Lpb lpb = new Lpb(2);
 
         protected override async UniTaskVoid ExecuteAsync()
         {
             await UniTask.CompletedTask;
-
 
             if (guideLine)
             {
@@ -32,30 +26,30 @@ namespace NoteCreating
                 }
             }
 
-            await WaitOnTiming();
-            var circle = Helper.GetCircle();
-            circle.SetPos(pos);
-            circle.SetScale(scale);
-            circle.SetWidth(width);
-            /*circle.SetScaleAsync(0, lpb.Time, EaseType.InCubic).Forget();
-            Helper.NoteInput.AddExpect(new NoteJudgeStatus(RegularNoteType.Normal, pos, lpb.Time - Delta));
-            await Wait(lpb / 2f);
-            circle.FadeAlphaAsync(0f, lpb.Time / 2f, EaseType.InQuad).Forget();*/
-            await Wait(new Lpb(2));
-            circle.SetScale(1);
-            circle.SetWidth(0.1f);
-            await Wait(new Lpb(2));
-            circle.SetWidth(0.1f);
-            circle.SetScale(1);
+            // PCM波形のサンプル
+            int samples = AudioWaveMeter.PcmSamples;
+            ItemBase[] items = new ItemBase[samples];
+            for (int i = 0; i < samples; i++)
+            {
+                var item = Helper.GetRegularNote(RegularNoteType.Slide);
+                items[i] = item;
+                item.SetRot(90);
+                item.SetPos(new Vector3((i - (samples / 2f)), 0));
+            }
 
-            await Wait(new Lpb(2));
-            circle.SetScale(2f);
-            await Wait(new Lpb(2));
-            circle.SetScale(1f);
-            await Wait(new Lpb(2));
+            float[] pcmData = new float[samples];
+            WhileYield(new Lpb(0.125f).Time, t =>
+            {
+                Helper.WaveMeter.GetPcmData(ref pcmData);
+                Debug.Log(pcmData.Length);
+                for (int i = 0; i < pcmData.Length; i++)
+                {
+                    var item = items[i];
+                    float v = pcmData[i];
+                    item.SetPos(new Vector3(item.GetPos().x, v * 5f + 5));
+                }
+            });
 
-
-            // これから来る譜面がカットインするやつ
 
             /*// 星型にノーツやレーンを //
             for (int i = 0; i < 5; i++)

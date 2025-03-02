@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    static readonly float MasterVolume = 0.8f; // 不変の音量
+    static readonly float MasterVolume = 1.5f; // 不変の音量
     public static readonly float DefaultSpeed = 14f; // 不変の音量
 
     // スクリプト上で変更可能なノーツスピード
@@ -33,8 +33,8 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     }
 
     public static float GetBGMVolume() => MasterVolume * setting.BGMVolume * 0.6f;
-    public static float GetSEVolume() => MasterVolume * setting.BGMVolume;
-    public static float GetNoteVolume() => MasterVolume * setting.BGMVolume;
+    public static float GetSEVolume() => MasterVolume * setting.SEVolume;
+    public static float GetNoteVolume() => MasterVolume * setting.NoteSEVolume;
 
 
     // setting.Speedは50~100程度を想定。ゲーム内では"7.0"のような表記で扱う

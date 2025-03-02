@@ -6,17 +6,22 @@ namespace NoteCreating
     [AddTypeMenu("◆ギザギザアーク", -40), System.Serializable]
     public class F_JaggedArc : CommandBase
     {
+        [Space(10)]
         [SerializeField] Mirror mirror;
+        [SerializeField] float x;
         [SerializeField] Lpb jagInterval = new Lpb(16f);
         [SerializeField] Lpb length = new Lpb(2);
         [Space(20)]
         [SerializeField] float startWidth;
         [SerializeField] float fromWidth = 6;
         [SerializeField] EaseType easeType = EaseType.Linear;
+        [SerializeField] float speedRate = 1f;
+
+        protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            int count = Mathf.RoundToInt(jagInterval / length);
+            int count = Mathf.RoundToInt(length / jagInterval);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
             ArcCreateData[] datas = new ArcCreateData[count + 1];
             for (int i = 0; i < count + 1; i++)
@@ -25,13 +30,13 @@ namespace NoteCreating
                 if (i == 0)
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), default,
+                        x + easing.Ease(i) * a, default,
                         ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
                 }
                 else
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), jagInterval,
+                        x + easing.Ease(i) * a, jagInterval,
                         ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
@@ -47,7 +52,6 @@ namespace NoteCreating
             }
             ArcNote arc = Helper.GetArc();
             arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
-
             DropAsync(arc, 0, delta).Forget();
             Helper.NoteInput.AddArc(arc);
             return arc;
@@ -81,15 +85,15 @@ namespace NoteCreating
 
         void Preview(bool beforeClear = true, int beatDelta = 1)
         {
-            var previewer = CommandEditorUtility.GetPreviewer();
+            var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
             if (beforeClear)
                 previewer.CreateGuideLine();
 
             var arc = Helper.GetArc();
-            arc.transform.SetParent(previewer.transform);
+            previewer.SetChild(arc);
             arc.SetPos(new Vector3(0, new Lpb(4).Time * beatDelta * Speed));
 
-            int count = Mathf.RoundToInt(jagInterval / length);
+            int count = Mathf.RoundToInt(length / jagInterval);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
             ArcCreateData[] datas = new ArcCreateData[count + 1];
             for (int i = 0; i < count + 1; i++)
@@ -98,13 +102,13 @@ namespace NoteCreating
                 if (i == 0)
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), default,
+                        x + easing.Ease(i) * a, default,
                         ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
                 }
                 else
                 {
                     datas[i] = new ArcCreateData(
-                        mirror.Conv(easing.Ease(i) * a), jagInterval,
+                        x + easing.Ease(i) * a, jagInterval,
                         ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
