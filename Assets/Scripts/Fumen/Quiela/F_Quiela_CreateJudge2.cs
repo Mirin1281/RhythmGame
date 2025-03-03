@@ -21,10 +21,10 @@ namespace NoteCreating
                 float y = ((i * 2.7f) % interval - (interval - 1) / 2f) * 1.2f;
                 Vector2 inputPos = (i % 4) switch
                 {
-                    0 => new Vector2(7, 4),
-                    1 => new Vector2(-7, 4),
-                    2 => new Vector2(0, 8),
-                    3 => new Vector2(0, 0),
+                    0 => new Vector2(6, 0),
+                    1 => new Vector2(2, 0),
+                    2 => new Vector2(-2, 0),
+                    3 => new Vector2(-6, 0),
                     _ => throw new ArithmeticException(),
                 };
                 EffectJudge(inputPos, new Vector2(x, y + 4), i % 2 == 0);
@@ -37,17 +37,17 @@ namespace NoteCreating
         /// </summary>
         void EffectJudge(Vector2 inputPos, Vector2 judgePos, bool isMute = false)
         {
-            var slide = Helper.GetRegularNote(RegularNoteType.Slide);
+            /*var slide = Helper.GetRegularNote(RegularNoteType.Slide);
             slide.SetWidth(5f);
             slide.IsVerticalRange = true;
             var dir = Mathf.Atan2(inputPos.y - judgePos.y, inputPos.x - judgePos.x) * Mathf.Rad2Deg + 90;
             slide.SetRot(dir);
             var judgeStatus = new NoteJudgeStatus(slide, judgePos, -Delta, expectType: NoteJudgeStatus.ExpectType.Static, isMute: isMute);
-            Helper.NoteInput.AddExpect(judgeStatus);
-            /*var dir = Mathf.Atan2(inputPos.y - judgePos.y, inputPos.x - judgePos.x) * Mathf.Rad2Deg + 90;
+            Helper.NoteInput.AddExpect(judgeStatus);*/
+            var dir = Mathf.Atan2(inputPos.y - judgePos.y, inputPos.x - judgePos.x) * Mathf.Rad2Deg + 90;
             var judgeStatus = new NoteJudgeStatus(RegularNoteType.Slide, judgePos, -Delta, true, dir);
             judgeStatus.IsMute = isMute;
-            Helper.NoteInput.AddExpect(judgeStatus);*/
+            Helper.NoteInput.AddExpect(judgeStatus);
         }
 
 #if UNITY_EDITOR

@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using ArcVertexMode = NoteCreating.ArcCreateData.VertexType;
 using System;
+using Random = System.Random;
 
 namespace NoteCreating
 {
@@ -9,8 +10,9 @@ namespace NoteCreating
     public class F_Test : CommandBase
     {
         [SerializeField] Mirror mirror;
-        [SerializeField] bool guideLine = true;
+        [SerializeField] bool guideLine = false;
         [SerializeField] Lpb guideInterval = new Lpb(4f);
+        [SerializeField] int zip = 4;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
@@ -27,28 +29,30 @@ namespace NoteCreating
             }
 
             // PCM波形のサンプル
-            int samples = AudioWaveMeter.PcmSamples;
-            ItemBase[] items = new ItemBase[samples];
-            for (int i = 0; i < samples; i++)
+            // 間隔をある程度詰める必要がある
+            /*int itemCount = Helper.WaveMeter.PcmSamples / zip;
+            ItemBase[] items = new ItemBase[itemCount];
+            for (int i = 0; i < items.Length; i++)
             {
                 var item = Helper.GetRegularNote(RegularNoteType.Slide);
                 items[i] = item;
+                float x = (i - ((itemCount - 1) / 2f)) / (itemCount / 32f * 1.5f);
+                item.SetPos(new Vector3(x, 0));
                 item.SetRot(90);
-                item.SetPos(new Vector3((i - (samples / 2f)), 0));
+                item.SetAlpha(0.3f);
             }
 
-            float[] pcmData = new float[samples];
-            WhileYield(new Lpb(0.125f).Time, t =>
+            float[] pcmData = new float[Helper.WaveMeter.PcmSamples];
+            WhileYield(100f, _ =>
             {
                 Helper.WaveMeter.GetPcmData(ref pcmData);
-                Debug.Log(pcmData.Length);
-                for (int i = 0; i < pcmData.Length; i++)
+                for (int i = 0; i < itemCount; i++)
                 {
                     var item = items[i];
-                    float v = pcmData[i];
-                    item.SetPos(new Vector3(item.GetPos().x, v * 5f + 5));
+                    float y = pcmData[i * zip] * 3f + 4;
+                    item.SetPos(new Vector3(item.GetPos().x, y));
                 }
-            });
+            });*/
 
 
             /*// 星型にノーツやレーンを //

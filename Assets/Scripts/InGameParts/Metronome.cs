@@ -63,9 +63,9 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
         bpm = SelectData.Bpm;
         atomSource.cueSheet = atomSource.cueName = SelectData.SheetName;
 
-        if (waveMeter != null)
+        if (waveMeter != null && fumenData.PcmAnalyzerSamples != -1)
         {
-            waveMeter.Init(atomSource);
+            waveMeter.Init(atomSource, fumenData.PcmAnalyzerSamples);
         }
 
 #if UNITY_EDITOR

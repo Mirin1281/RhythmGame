@@ -43,7 +43,8 @@ namespace NoteCreating
             {
                 var data = noteDatas[i];
                 delta = await Wait(data.Wait, delta);
-                Note(data, delta);
+                if (data.NoteType != RegularNoteType._None)
+                    Note(data, delta);
             }
         }
 

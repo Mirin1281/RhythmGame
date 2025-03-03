@@ -11,7 +11,7 @@ namespace NoteCreating
         Normal = 1 << 0,
         Slide = 1 << 1,
         Hold = 1 << 3,
-        Sky = 1 << 4,
+        Circle = 1 << 4,
         Arc = 1 << 5,
         Line = 1 << 6,
     }
@@ -48,6 +48,10 @@ namespace NoteCreating
             if (target.HasFlag(ItemTargets.Hold))
             {
                 items.AddRange(Helper.PoolManager.HoldPool.GetInstances());
+            }
+            if (target.HasFlag(ItemTargets.Circle))
+            {
+                items.AddRange(Helper.PoolManager.CirclePool.GetInstances());
             }
             if (target.HasFlag(ItemTargets.Arc))
             {

@@ -79,7 +79,7 @@ namespace NoteCreating
         {
             get
             {
-                if (spline == null || spline.Knots.Count() == 0) throw new Exception();
+                if (spline == null || spline.Knots.Count() == 0) return 1;
                 return GetPos().y + spline.Knots.First().Position.z;
             }
         }

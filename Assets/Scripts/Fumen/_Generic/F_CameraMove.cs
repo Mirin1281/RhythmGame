@@ -57,7 +57,7 @@ namespace NoteCreating
         protected override string GetSummary()
         {
             if (settings == null || settings.Length == 0) return null;
-            return $"Length: {settings.Length}";
+            return $"Length: {settings.Length}{mirror.GetStatusText()}";
         }
 #endif
     }

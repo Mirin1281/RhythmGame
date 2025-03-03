@@ -659,7 +659,7 @@ namespace NoteCreating.Editor
             {
                 var cmdBase = cmd.GetCommandBase();
                 if (cmdBase == null) continue;
-                cmdBase.OnSelect(new CommandSelectStatus(i, cmd.BeatTiming - minBeatTiming + 1));
+                cmdBase.OnSelect(new CommandSelectStatus(i, new Lpb(4) * (cmd.BeatTiming - minBeatTiming + 1)));
                 i++;
             }
         }

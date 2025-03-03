@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    public readonly struct CommandSelectStatus
+    public struct CommandSelectStatus
     {
-        public readonly int Index;
-        public readonly int BeatDelta;
-        public CommandSelectStatus(int index, int delay)
+        public int Index;
+        public Lpb Delay;
+        public CommandSelectStatus(int index, Lpb delay)
         {
             Index = index;
-            BeatDelta = delay;
+            Delay = delay;
         }
     }
 

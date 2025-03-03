@@ -91,6 +91,7 @@ namespace NoteCreating
         public override void OnSelect(CommandSelectStatus selectStatus)
         {
             var commandBase = command as CommandBase;
+            selectStatus.Delay += delay;
             commandBase?.OnSelect(selectStatus);
         }
         public override void OnPeriod()

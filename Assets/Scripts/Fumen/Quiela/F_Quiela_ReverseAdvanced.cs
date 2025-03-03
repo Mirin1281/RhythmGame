@@ -163,17 +163,17 @@ namespace NoteCreating
 
         public override void OnSelect(CommandSelectStatus selectStatus)
         {
-            DebugPreview(selectStatus.Index == 0, selectStatus.BeatDelta);
+            DebugPreview(selectStatus.Index == 0, selectStatus.Delay);
         }
         public override void OnPeriod()
         {
-            DebugPreview();
+            DebugPreview(true, delay: new Lpb(4));
         }
 
-        void DebugPreview(bool beforeClear = true, int beatDelta = 1)
+        void DebugPreview(bool beforeClear, Lpb delay)
         {
             var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
-            previewer.DebugPreview2DNotes(noteDatas, Helper.PoolManager, mirror, beforeClear, beatDelta);
+            previewer.DebugPreview2DNotes(noteDatas, Helper.PoolManager, mirror, beforeClear, delay);
         }
 #endif
     }

@@ -7,15 +7,16 @@ namespace NoteCreating
     {
         [SerializeField] int monitoredChannelId = 0;
         CriAtomExOutputAnalyzer analyzer;
-        public const int PcmSamples = 16;
+        public int PcmSamples { get; private set; }
 
-        public void Init(CriAtomSource source)
+        public void Init(CriAtomSource source, int samples)
         {
             CriAtomExOutputAnalyzer.Config config = new()
             {
                 enablePcmCapture = true,
-                numCapturedPcmSamples = PcmSamples
+                numCapturedPcmSamples = samples
             };
+            PcmSamples = samples;
             analyzer = new CriAtomExOutputAnalyzer(config);
             analyzer.AttachExPlayer(source.player);
         }
@@ -34,6 +35,10 @@ namespace NoteCreating
             if (analyzer != null)
             {
                 analyzer.GetPcmData(ref pcmData, monitoredChannelId);
+            }
+            else
+            {
+                Debug.LogWarning("Must Init Analyzer!");
             }
         }
     }

@@ -14,7 +14,7 @@ namespace NoteCreating.Editor
         {
             base.OnInspectorGUI();
 
-            EditorGUILayout.Space(10);
+            EditorGUILayout.Space(20);
 
             if (GUILayout.Button("フローチャートエディタを開く"))
             {
@@ -35,7 +35,12 @@ namespace NoteCreating.Editor
                 }
             }
 
+            // コマンド数を表示 //
+            EditorGUILayout.Space(20);
+            EditorGUILayout.LabelField($"Commands:   {(target as FumenData).Fumen.GetReadOnlyCommandDataList().Count}");
 
+
+            // Lpbの計算機 //
             EditorGUILayout.Space(20);
             EditorGUI.indentLevel++;
             EditorGUILayout.LabelField("LPB Culculate");

@@ -37,13 +37,13 @@ namespace NoteCreating
 
         public override void OnSelect(CommandSelectStatus selectStatus)
         {
-            Preview(selectStatus.Index == 0, selectStatus.BeatDelta);
+            Preview(selectStatus.Index == 0, selectStatus.Delay);
         }
         public override void OnPeriod()
         {
-            Preview();
+            Preview(true, delay: new Lpb(4));
         }
-        void Preview(bool beforeClear = true, int beatDelta = 1)
+        void Preview(bool beforeClear, Lpb delay)
         {
             var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
             if (beforeClear)
@@ -51,7 +51,7 @@ namespace NoteCreating
 
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewer.transform);
-            arc.SetPos(new Vector3(0, new Lpb(4).Time * beatDelta * Speed));
+            arc.SetPos(new Vector3(0, delay.Time * Speed));
             arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
         }
 #endif

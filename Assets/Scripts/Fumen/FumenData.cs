@@ -13,6 +13,7 @@ namespace NoteCreating
     {
         [SerializeField] MusicSelectData musicSelectData;
         [SerializeField, Min(1)] int noteCount = 1;
+        [field: SerializeField] public int PcmAnalyzerSamples { get; private set; } = -1;
 
         [field: Space(10), Header("プール数の設定")]
         [field: SerializeField] public int NormalPoolCount { get; private set; } = -1;

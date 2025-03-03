@@ -56,14 +56,14 @@ namespace NoteCreating
 
         public override void OnSelect(CommandSelectStatus selectStatus)
         {
-            DebugPreview(selectStatus.Index == 0, selectStatus.BeatDelta);
+            DebugPreview(selectStatus.Index == 0, selectStatus.Delay);
         }
         public override void OnPeriod()
         {
-            DebugPreview();
+            DebugPreview(true, delay: new Lpb(4));
         }
 
-        void DebugPreview(bool beforeClear = true, int beatDelta = 1)
+        void DebugPreview(bool beforeClear, Lpb delay)
         {
             if (noteType == RegularNoteType._None) return;
             var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
@@ -71,7 +71,7 @@ namespace NoteCreating
                 previewer.CreateGuideLine();
 
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            float y = new Lpb(4).Time * beatDelta * Speed;
+            float y = delay.Time * Speed;
             for (int i = 0; i < count; i++)
             {
                 if (i >= trimStart)

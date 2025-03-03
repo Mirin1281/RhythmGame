@@ -469,7 +469,10 @@ namespace NoteCreating
                     lightOperator.RemoveLink(arc);
                     continue;
                 }
-                else if (arc.TailY < 0) continue;　// アークの終端が通り過ぎた
+                else if (arc.TailY < 0) // アークの終端が通り過ぎた
+                {
+                    continue;
+                }
 
                 // 距離の近いアークがあったらオーバーラップ判定を有効にする
                 arc.SetOverlaped(arcs, arcOverlappableSqrDistance);
@@ -513,8 +516,11 @@ namespace NoteCreating
                 arc.IsHold = isHold;
 
                 var arcJ = arc.GetCurrentJudge();
-                if (arcJ == null) continue; // 最後の判定を終えた
-                else if (headY < -arcJ.EndPos.z) // 判定の終端を過ぎたらミス
+                if (arcJ == null)
+                {
+                    continue;
+                }
+                else if (headY < -arcJ.EndPos.z + 0.2f) // 判定の終端を過ぎたらミス(再終端のミス判定のためにバッファ)
                 {
                     arcJ.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;
@@ -532,7 +538,7 @@ namespace NoteCreating
                 }
                 else if (arcJ.State is ArcJudgeState.Idle && isHold)
                 {
-                    //if (arc.JudgeIndex == 0) PlayNoteSE(NoteType.Arc);
+                    if (arc.JudgeIndex == 0) PlayNoteSE(RegularNoteType.Normal);
                     arcJ.State = ArcJudgeState.Get;
                     judge.PlayParticle(NoteGrade.Perfect, landingPos);
                     judge.SetCombo(NoteGrade.Perfect);

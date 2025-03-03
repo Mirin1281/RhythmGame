@@ -50,7 +50,7 @@ namespace NoteCreating
         }
 
         public void DebugPreview2DNotes<TData>(IEnumerable<TData> noteDatas, PoolManager poolManager,
-            Mirror mirror, bool beforeClear, int beatDelta = 1) where TData : INoteData
+            Mirror mirror, bool beforeClear, Lpb delay) where TData : INoteData
         {
             if (beforeClear)
             {
@@ -62,7 +62,7 @@ namespace NoteCreating
             float beforeY = -1;
             RegularNote beforeNote = null;
 
-            float y = new Lpb(4).Time * beatDelta * RhythmGameManager.DefaultSpeed;
+            float y = delay.Time * RhythmGameManager.DefaultSpeed;
             foreach (var data in noteDatas)
             {
                 y += data.Wait.Time * RhythmGameManager.DefaultSpeed;
