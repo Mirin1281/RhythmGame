@@ -21,20 +21,21 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            float delta = await Wait(MoveLpb);
 
             Random randPos = new Random(seed);
             Random randRot = new Random(seed + 1);
             Random randAlpha = new Random(seed + 2);
             Random randWidth = new Random(seed + 3);
-            for (int i = 0; i < wholeLpb / interval; i++)
+            float count = (wholeLpb - MoveLpb) / interval;
+            for (int i = 0; i < count; i++)
             {
                 CreateLine(
                     randPos.GetVector2(new Vector2(xRange.x, yRange.x), new Vector2(xRange.y, yRange.y)),
                     randRot.GetFloat(rotRange.x, rotRange.y),
                     randAlpha.GetFloat(alphaRange.x, alphaRange.y),
                     randWidth.GetFloat(widthRange.x, widthRange.y)).Forget();
-                await Wait(interval);
+                delta = await Wait(interval, delta);
             }
 
             async UniTaskVoid CreateLine(Vector3 pos, float rot, float alpha, float width)

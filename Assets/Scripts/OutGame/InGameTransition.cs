@@ -3,7 +3,7 @@ using UnityEngine.AddressableAssets;
 
 public class InGameTransition : MonoBehaviour
 {
-    [SerializeField] AssetReference fumenReference;
+    /*[SerializeField] AssetReference fumenReference;
     [SerializeField] Difficulty difficulty = Difficulty.Normal;
 
     public static void Transition2InGame(AssetReference fumenReference, Difficulty difficulty)
@@ -17,5 +17,5 @@ public class InGameTransition : MonoBehaviour
     public void Transition2InGame()
     {
         Transition2InGame(fumenReference, difficulty);
-    }
+    }*/
 }

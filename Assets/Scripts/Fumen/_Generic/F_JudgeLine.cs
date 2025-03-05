@@ -15,8 +15,8 @@ namespace NoteCreating
         [Space(10)]
         [SerializeField] Lpb fadeInLpb = new Lpb(4);
         [Space(10)]
-        [SerializeField] Lpb lifeLpb = new Lpb(1);
-        [SerializeField] float lifeCount = 1;
+        [SerializeField] Lpb lifeLpb = new Lpb(4);
+        [SerializeField] float lifeCount = 32;
         [Space(10)]
         [SerializeField] Lpb fadeOutLpb = new Lpb(4);
 
@@ -52,7 +52,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            string status = $"Lpb: {lifeLpb.GetLpbValue()}";
+            string status = $"Length: {lifeLpb / new Lpb(4) * lifeCount}";
             return status + mirror.GetStatusText();
         }
 

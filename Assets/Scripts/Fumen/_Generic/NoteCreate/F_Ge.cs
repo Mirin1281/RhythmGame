@@ -15,14 +15,6 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-#pragma warning disable CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, data.Length, expectType));
-            }
-#pragma warning restore CS8321 // ローカル関数は宣言されていますが、一度も使用されていません
-
             float lifeTime = MoveTime + 0.5f;
             if (note.Type == RegularNoteType.Hold)
             {

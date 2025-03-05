@@ -136,9 +136,8 @@ namespace NoteCreating
 
         static readonly float defaultTolerance = 0.15f;
         static readonly float wideTolerance = 0.25f;
-        static readonly float arcOverlappableSqrDistance = 8f;
 
-        Metronome Metronome => Metronome.Instance;
+        float CurrentTime => Metronome.Instance.CurrentTime;
 
         void Start()
         {
@@ -166,14 +165,14 @@ namespace NoteCreating
         /// ノーツの打点情報を伝えます
         /// </summary>
         ///
-        /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか
+        /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか, 同時押しの検知をするか
         public void AddExpect(RegularNote note, float time, Lpb holdingTime = default, ExpectType expectType = ExpectType.Y_Static, bool isCheckSimultaneous = true)
         {
             AddExpect(new NoteJudgeStatus(note, new Vector2(default, 0), time, holdingTime, expectType), isCheckSimultaneous);
         }
         public void AddExpect(NoteJudgeStatus judgeStatus, bool isCheckSimultaneous = true)
         {
-            float absoluteTime = Metronome.CurrentTime + judgeStatus.Time;
+            float absoluteTime = CurrentTime + judgeStatus.Time;
             judgeStatus.Time = absoluteTime;
             judgeStatus.HoldEndTime += absoluteTime;
             if (isCheckSimultaneous)
@@ -182,7 +181,6 @@ namespace NoteCreating
                 {
                     if (Mathf.Approximately(absoluteTime, e.Time))
                     {
-                        //Debug.Log("同時押し");
                         poolManager.SetMultitapSprite(judgeStatus.Note);
                         poolManager.SetMultitapSprite(e.Note);
                     }
@@ -191,13 +189,11 @@ namespace NoteCreating
             allStatuses.Add(judgeStatus);
         }
 
-        HoldNote AddHold(NoteJudgeStatus status, bool isMiss = false)
+        void AddHold(HoldNote hold, float holdEndTime, bool missed = false)
         {
-            var hold = status.Note as HoldNote;
-            hold.State = isMiss ? HoldState.Missed : HoldState.Holding;
-            hold.EndTime = status.HoldEndTime;
+            hold.State = missed ? HoldState.Missed : HoldState.Holding;
+            hold.EndTime = holdEndTime;
             holds.Add(hold);
-            return hold;
         }
 
         public void AddArc(ArcNote arc)
@@ -207,9 +203,8 @@ namespace NoteCreating
 
         void PlayNoteSE(RegularNoteType noteType)
         {
-            if (RhythmGameManager.Setting.IsNoteMute) return;
             var volume = RhythmGameManager.GetNoteVolume();
-            if (volume == 0f) return;
+            if (volume == 0f || RhythmGameManager.Setting.IsNoteMute) return;
             if (noteType == RegularNoteType.Slide)
             {
                 SEManager.Instance.PlayNoteSE(SEType.my2_low);
@@ -231,17 +226,12 @@ namespace NoteCreating
             for (int i = 0; i < allStatuses.Count;)
             {
                 var status = allStatuses[i];
-                /*if (status.Note == null)
-                {
-                    i++;
-                    continue;
-                }*/
-                if (isAuto && Metronome.CurrentTime > status.Time)
+                if (isAuto && CurrentTime > status.Time)
                 {
                     // オート
                     if (status.NoteType == RegularNoteType.Hold)
                     {
-                        AddHold(status);
+                        AddHold(status.Note as HoldNote, status.HoldEndTime);
                     }
                     else
                     {
@@ -257,16 +247,19 @@ namespace NoteCreating
                     if (status.IsMute == false)
                         PlayNoteSE(status.NoteType);
                 }
-                else if (Metronome.CurrentTime > status.Time + 0.12f)
+                else if (CurrentTime > status.Time + 0.12f)
                 {
                     // 遅れたらノーツを除去
                     if (status.NoteType == RegularNoteType.Hold)
                     {
-                        AddHold(status, true);
+                        AddHold(status.Note as HoldNote, status.HoldEndTime, missed: true);
                     }
                     allStatuses.Remove(status);
                     judge.SetCombo(NoteGrade.Miss);
-                    if (status.Note != null) status.Note.OnMiss();
+                    if (status.Note != null)
+                    {
+                        status.Note.OnMiss();
+                    }
                 }
                 else
                 {
@@ -275,9 +268,9 @@ namespace NoteCreating
             }
         }
 
-        async UniTaskVoid OnDown(Input input)
+        void OnDown(Input input)
         {
-            (NoteJudgeStatus status, float delta) = FetchNearestNote(input.pos, Metronome.CurrentTime, RegularNoteType.Normal, RegularNoteType.Hold);
+            (NoteJudgeStatus status, float delta) = FetchNearestNote(input.pos, CurrentTime, RegularNoteType.Normal, RegularNoteType.Hold);
             if (status == null) return;
 
             NoteGrade grade = judge.GetGradeAndSetText(delta);
@@ -293,7 +286,7 @@ namespace NoteCreating
             allStatuses.Remove(status);
             if (status.NoteType == RegularNoteType.Hold)
             {
-                AddHold(status);
+                AddHold(status.Note as HoldNote, status.HoldEndTime);
             }
             else
             {
@@ -302,7 +295,6 @@ namespace NoteCreating
 
             if (status.IsMute == false)
                 PlayNoteSE(status.NoteType);
-            await UniTask.CompletedTask;
         }
 
         void OnHold(List<Input> inputs)
@@ -315,29 +307,27 @@ namespace NoteCreating
 
             foreach (var input in inputs)
             {
-                List<(NoteJudgeStatus, float)> statuses = FetchSomeNotes(input.pos, Metronome.CurrentTime, wideTolerance);
+                List<(NoteJudgeStatus, float)> statuses = FetchSomeNotes(input.pos, CurrentTime, wideTolerance);
                 if (statuses == null) continue;
 
                 foreach (var (status, delta) in statuses)
                 {
                     if (status.NoteType != RegularNoteType.Slide) continue;
-                    PickNote(status, delta).Forget();
+                    allStatuses.Remove(status);
+                    UniTask.Void(async () =>
+                    {
+                        if (delta < 0)
+                        {
+                            await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
+                        }
+                        judge.PlayParticle(NoteGrade.Perfect, status.Pos);
+                        if (status.IsMute == false)
+                            PlayNoteSE(status.NoteType);
+                        status.DisableActive();
+                        judge.SetCombo(NoteGrade.Perfect);
+                    });
                 }
             }
-        }
-
-        async UniTaskVoid PickNote(NoteJudgeStatus status, float delta)
-        {
-            allStatuses.Remove(status);
-            if (delta < 0)
-            {
-                await MyUtility.WaitSeconds(-delta, destroyCancellationToken);
-            }
-            judge.PlayParticle(NoteGrade.Perfect, status.Pos);
-            if (status.IsMute == false)
-                PlayNoteSE(status.NoteType);
-            status.DisableActive();
-            judge.SetCombo(NoteGrade.Perfect);
         }
 
         /// <summary>
@@ -400,18 +390,17 @@ namespace NoteCreating
             for (int i = 0; i < holds.Count; i++)
             {
                 var hold = holds[i];
-                if (hold.State is HoldState.None or HoldState.Idle)
+                if (hold.State is HoldState.Idle)
                 {
-                    throw new Exception();
+                    Debug.LogError("hold.State is HoldState.Idle");
                 }
                 else if (hold.State is HoldState.Holding)
                 {
-                    bool isInput = (inputs != null && inputs.Any(i => judge.IsNearPositionHold(hold, i.pos))) || isAuto;
-                    if (isInput)
+                    bool isInput = inputs != null && inputs.Any(input => judge.IsNearPositionHold(hold, input.pos));
+                    if (isInput || isAuto)
                     {
                         hold.NoInputTime = 0f;
-                        // ギリギリまで取らなくても判定されるように
-                        if (Metronome.CurrentTime > hold.EndTime - 0.2f)
+                        if (CurrentTime > hold.EndTime - 0.2f) // ギリギリまで取らなくても判定されるように
                         {
                             hold.State = HoldState.Get;
                             judge.SetCombo(NoteGrade.Perfect);
@@ -428,26 +417,30 @@ namespace NoteCreating
                         }
                     }
                 }
-                else if (hold.State is HoldState.Missed)
-                {
-                    if (Metronome.CurrentTime > hold.EndTime)
-                    {
-                        hold.SetActive(false);
-                        holds.RemoveAt(i);
-                    }
-                }
                 else if (hold.State is HoldState.Get)
                 {
                     // ちょっと早めに表示
-                    if (Metronome.CurrentTime > hold.EndTime - 0.02f)
+                    if (CurrentTime > hold.EndTime - 0.02f)
                     {
-                        holds.RemoveAt(i);
-                        judge.PlayParticle(NoteGrade.Perfect, hold.GetLandingPos());
-                        UniTask.Void(async () =>
+                        if (hold.State == HoldState.Get)
                         {
-                            await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
+                            judge.PlayParticle(NoteGrade.Perfect, hold.GetLandingPos());
+                            hold.State = HoldState.Final;
+                        }
+
+                        if (CurrentTime > hold.EndTime)
+                        {
                             hold.SetActive(false);
-                        });
+                            holds.RemoveAt(i);
+                        }
+                    }
+                }
+                else //if (hold.State is HoldState.Missed)
+                {
+                    if (CurrentTime > hold.EndTime)
+                    {
+                        hold.SetActive(false);
+                        holds.RemoveAt(i);
                     }
                 }
             }
@@ -458,10 +451,9 @@ namespace NoteCreating
             for (int i = 0; i < arcs.Count; i++)
             {
                 var arc = arcs[i];
-                float headY = arc.HeadY;
 
                 // アークの一部分が判定に入っていなければここで弾かれる
-                if (headY > 0) continue; // まだ到達していない
+                if (arc.IsReached() == false) continue; // まだ到達していない
                 else if (arc.TailY < -3) // アークが完全に通り過ぎた
                 {
                     arcs.RemoveAt(i);
@@ -474,8 +466,7 @@ namespace NoteCreating
                     continue;
                 }
 
-                // 距離の近いアークがあったらオーバーラップ判定を有効にする
-                arc.SetOverlaped(arcs, arcOverlappableSqrDistance);
+                bool isOverlappable = arc.IsOverlapped();
                 var landingPos = arc.GetPointOnYPlane(0) + arc.GetPos();
                 landingPos = new Vector3(landingPos.x, 0);
 
@@ -488,7 +479,7 @@ namespace NoteCreating
                         if (arc.IsInvalid) break; // 無効か
                         if (judge.IsNearPositionArc(input.pos, landingPos) == false) continue; // 入力と近いか
 
-                        if (arc.IsOverlaped) // オーバーラップだったら押下
+                        if (isOverlappable) // オーバーラップだったら押下
                         {
                             isHold = true;
                             arc.FingerIndex = -1;
@@ -516,11 +507,12 @@ namespace NoteCreating
                 arc.IsHold = isHold;
 
                 var arcJ = arc.GetCurrentJudge();
+                float headY = arc.HeadY;
                 if (arcJ == null)
                 {
                     continue;
                 }
-                else if (headY < -arcJ.EndPos.z + 0.2f) // 判定の終端を過ぎたらミス(再終端のミス判定のためにバッファ)
+                else if (headY < -arcJ.EndPos.z) // 判定の終端を過ぎたらミス(再終端のミス判定のためにバッファ)
                 {
                     arcJ.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;

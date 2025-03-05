@@ -9,6 +9,7 @@ public class MusicButtonManager : MonoBehaviour
     [SerializeField] MusicSelectManager sceneManager;
     [SerializeField] SelectMusicButton buttonPrefab;
     [SerializeField] MusicMasterManagerData managerData;
+    [SerializeField] InGameStarter gameStarter;
 
     SelectMusicButton[] buttons;
     MusicSelectData[] sortedDatas;
@@ -91,7 +92,7 @@ public class MusicButtonManager : MonoBehaviour
         RhythmGameManager.SelectedIndex = index;
         if (selectedIndex == index)
         {
-            sceneManager.StartGame(data, RhythmGameManager.Difficulty);
+            gameStarter.StartGame(data, RhythmGameManager.Difficulty);
             return;
         }
 

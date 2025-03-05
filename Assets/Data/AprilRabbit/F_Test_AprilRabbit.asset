@@ -200,6 +200,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         datas:
         - x: 4
           wait:
@@ -211,6 +212,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: -4
           wait:
             _value: 4
@@ -221,6 +223,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: 4
           wait:
             _value: 4
@@ -231,6 +234,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: -4
           wait:
             _value: 4
@@ -241,6 +245,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: 4
           wait:
             _value: 4
@@ -251,6 +256,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: -4
           wait:
             _value: 4
@@ -261,6 +267,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: 4
           wait:
             _value: 4
@@ -271,6 +278,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
         - x: -4
           wait:
             _value: 4
@@ -281,6 +289,7 @@ MonoBehaviour:
             _value: 0
           aheadJudgeRange:
             _value: 8
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-7721095844219570080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +325,9 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -464,6 +476,9 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 2
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -672,6 +687,9 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -1094,11 +1112,6 @@ MonoBehaviour:
         guideLine: 1
         guideInterval:
           _value: 4
-        pos: {x: 2, y: 4}
-        scale: 2
-        width: 0.15
-        lpb:
-          _value: 2
 --- !u!114 &-3537535442797948619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,54 +1194,6 @@ MonoBehaviour:
             _value: 0
           option1: 1
           option2: 0
---- !u!114 &-2755803422372496456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (32)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 0
-  command:
-    rid: 7519554920682881030
-  references:
-    version: 2
-    RefIds:
-    - rid: 7519554920682881030
-      type: {class: F_Quiela_CircleNote, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        size: 3
-        moveLpb:
-          _value: 2.4
-        basePos: {x: 0, y: 4}
-        noteDatas:
-        - wait:
-            _value: 0
-          pos: {x: 0, y: 0}
-        - wait:
-            _value: 2
-          pos: {x: 4, y: 4}
-        - wait:
-            _value: 2
-          pos: {x: -4, y: 4}
-        - wait:
-            _value: 4
-          pos: {x: -4, y: 0}
-        - wait:
-            _value: 4
-          pos: {x: 4, y: 0}
-        - wait:
-            _value: 4
-          pos: {x: 0, y: 3}
-        - wait:
-            _value: 4
-          pos: {x: 0, y: -3}
 --- !u!114 &-2719169315616620099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1256,6 +1221,9 @@ MonoBehaviour:
         loopCount: 32
         loopWait:
           _value: 4
+        alpha: 0.2
+        lifeLpb:
+          _value: 0.25
         moveDirection: 270
         isAdaptiveSpeed: 1
         speedRate: 1
@@ -1429,6 +1397,7 @@ MonoBehaviour:
         speedRate: 1
         moveLpb:
           _value: 0
+        easeType: 0
         deg: 180
         pos: {x: 0, y: 8}
         noteDatas:
@@ -1723,6 +1692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: 02450ed7bca928849921c12d2d898d0b, type: 2}
   noteCount: 1000
+  <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 10
   <SlidePoolCount>k__BackingField: 10
   <HoldPoolCount>k__BackingField: 10
@@ -1740,7 +1710,6 @@ MonoBehaviour:
     - {fileID: -531922129253689318}
     - {fileID: -1070567343851316695}
     - {fileID: -556178718664003899}
-    - {fileID: -2755803422372496456}
     - {fileID: 5395144988142241830}
     - {fileID: -3537535442797948619}
     - {fileID: 376893089787804339}

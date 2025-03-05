@@ -15,13 +15,6 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, data.Length, expectType));
-            }
-
-            AddExpect(new Vector2(data.X, -10), ExpectType.Static);
             float lifeTime = MoveTime + 0.5f;
             if (note.Type == RegularNoteType.Hold)
             {
@@ -35,6 +28,11 @@ namespace NoteCreating
                 if (note.IsActive == false) return;
                 note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
             });
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
+        {
+            base.AddExpect(note, pos - new Vector2(0, 10), length, ExpectType.Static);
         }
 
 #if UNITY_EDITOR

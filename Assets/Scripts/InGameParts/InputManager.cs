@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
     }
     readonly List<Input> inputs = new(10);
 
-    public event Func<Input, UniTaskVoid> OnDown;
+    public event Action<Input> OnDown;
     public event Action<List<Input>> OnHold;
     public event Func<Input, UniTaskVoid> OnUp;
 

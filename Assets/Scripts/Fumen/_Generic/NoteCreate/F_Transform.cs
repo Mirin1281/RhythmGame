@@ -17,14 +17,13 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, data.Length, expectType));
-            }
-
             var expectPos = EasingTransformGroupNote(note, data, deg, pos, moveLpb.Time, easeType);
-            AddExpect(expectPos, ExpectType.Static);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, expectPos, MoveTime - Delta, data.Length, ExpectType.Y_Static));
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
+        {
+            return;
         }
 
         Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float toDeg, Vector2 toPos, float easeTime, EaseType easeType)

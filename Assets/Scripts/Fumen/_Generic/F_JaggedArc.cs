@@ -51,7 +51,7 @@ namespace NoteCreating
                 delta = Delta;
             }
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
+            arc.CreateAsync(datas, Speed, mirror).Forget();
             DropAsync(arc, 0, delta).Forget();
             Helper.NoteInput.AddArc(arc);
             return arc;
@@ -112,7 +112,7 @@ namespace NoteCreating
                         ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
                 }
             }
-            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
+            arc.DebugCreateAsync(datas, Speed, mirror, Helper.DebugCirclePrefab, delay).Forget();
         }
 #endif
     }

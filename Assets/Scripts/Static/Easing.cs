@@ -73,16 +73,31 @@ public readonly struct Easing
 
     public async UniTask EaseAsync(CancellationToken token, float delta, Action<float> action, PlayerLoopTiming timing = PlayerLoopTiming.Update)
     {
-        float baseTime = Metronome.Instance.CurrentTime - delta;
-        float time = 0f;
-        while (time < 1f / inversedEaseTime)
+        if (Metronome.Instance == null)
         {
-            time = Metronome.Instance.CurrentTime - baseTime;
-            float t = time * inversedEaseTime;
-            action.Invoke(start + this.delta * GetPlaneValue(type, t)); // Mathf.Clamp01(t)
-            await UniTask.Yield(timing, token);
+            float time = 0f;
+            while (time < 1f / inversedEaseTime)
+            {
+                time += Time.deltaTime;
+                float t = time * inversedEaseTime;
+                action.Invoke(start + this.delta * GetPlaneValue(type, t)); // Mathf.Clamp01(t)
+                await UniTask.Yield(timing, token);
+            }
+            action.Invoke(start + this.delta * GetPlaneValue(type, 1));
         }
-        action.Invoke(start + this.delta * GetPlaneValue(type, 1));
+        else
+        {
+            float baseTime = Metronome.Instance.CurrentTime - delta;
+            float time = 0f;
+            while (time < 1f / inversedEaseTime)
+            {
+                time = Metronome.Instance.CurrentTime - baseTime;
+                float t = time * inversedEaseTime;
+                action.Invoke(start + this.delta * GetPlaneValue(type, t)); // Mathf.Clamp01(t)
+                await UniTask.Yield(timing, token);
+            }
+            action.Invoke(start + this.delta * GetPlaneValue(type, 1));
+        }
     }
 
     static float GetPlaneValue(EaseType type, float t)

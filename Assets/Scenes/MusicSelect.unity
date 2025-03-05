@@ -340,6 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 23060718}
   - component: {fileID: 23060717}
+  - component: {fileID: 23060719}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -361,7 +362,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicButtonManager: {fileID: 1798253311}
   difficultyGroup: {fileID: 528069092}
-  previewer: {fileID: 324187524}
 --- !u!4 &23060718
 Transform:
   m_ObjectHideFlags: 0
@@ -377,6 +377,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23060719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23060716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3e2061206ac264690404101bdb224a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previewer: {fileID: 324187524}
+  moveObjects:
+  - <Obj>k__BackingField: {fileID: 916949701}
+    <MoveX>k__BackingField: 1850
+  - <Obj>k__BackingField: {fileID: 187588475}
+    <MoveX>k__BackingField: 1600
+  - <Obj>k__BackingField: {fileID: 989284375}
+    <MoveX>k__BackingField: 900
+  - <Obj>k__BackingField: {fileID: 251953856}
+    <MoveX>k__BackingField: 600
+  jacketImage: {fileID: 1804080296}
 --- !u!1 &79323020
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +645,6 @@ RectTransform:
   m_Children:
   - {fileID: 1847310010}
   - {fileID: 2088077667}
-  - {fileID: 1804080292}
   - {fileID: 1764858934}
   - {fileID: 1992043211}
   - {fileID: 528069091}
@@ -1325,12 +1347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02e5c2efff865049ab4f8d0cc922caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fumenReference:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  difficulty: 1
 --- !u!1 &324187521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2332,6 +2348,7 @@ MonoBehaviour:
   sceneManager: {fileID: 23060717}
   buttonPrefab: {fileID: 8626911487037857679, guid: c1b04762d83d06f4aa5d3668a7b3df43, type: 3}
   buttonManager: {fileID: 1798253311}
+  gameStarter: {fileID: 23060719}
 --- !u!114 &528069093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7144,6 +7161,7 @@ MonoBehaviour:
   sceneManager: {fileID: 23060717}
   buttonPrefab: {fileID: 5633849086724724661, guid: ef43205cc9705664ab7c754f8c210528, type: 3}
   managerData: {fileID: 11400000, guid: 8e4a96f726f75a149a996a876dec8672, type: 2}
+  gameStarter: {fileID: 23060719}
 --- !u!222 &1798253312
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7247,11 +7265,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 187588476}
+  m_Father: {fileID: 2052650996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: -319.99997, y: 10.000001}
   m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804080293
@@ -7317,7 +7335,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d38bed0a2e38ab042805d398025ce0da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2971e667403c3a34a98b713d49eb95e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8491,6 +8509,7 @@ RectTransform:
   m_Children:
   - {fileID: 2014412264}
   - {fileID: 916949702}
+  - {fileID: 1804080292}
   - {fileID: 187588476}
   - {fileID: 989284376}
   - {fileID: 251953857}

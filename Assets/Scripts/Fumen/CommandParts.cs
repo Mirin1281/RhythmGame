@@ -99,10 +99,10 @@ namespace NoteCreating
 #if UNITY_EDITOR
                 if (EditorApplication.isPlaying == false || Metronome.Instance == null)
                 {
-                    return 240f / DebugBPM / _value;
+                    return 240f / (DebugBPM * _value);
                 }
 #endif
-                return 240f / Metronome.Instance.Bpm / _value;
+                return 240f / (Metronome.Instance.Bpm * _value);
             }
         }
 

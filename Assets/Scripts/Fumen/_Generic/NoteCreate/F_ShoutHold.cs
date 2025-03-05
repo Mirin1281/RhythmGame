@@ -18,21 +18,24 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, data.Length, expectType));
-            }
-
             if (data.Type != RegularNoteType.Hold)
             {
-                AddExpect();
                 DropAsync(note, mirror.Conv(data.X)).Forget();
                 return;
             }
 
-            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, default, MoveTime - Delta, judgeInterval, ExpectType.Y_Static));
             MoveAndJudge(note as HoldNote, data.X, data.Length, MoveTime + 0.1f, data.Option1).Forget();
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
+        {
+            if (note.Type != RegularNoteType.Hold)
+            {
+                base.AddExpect(note, pos, length, expectType);
+                return;
+            }
+
+            base.AddExpect(note, pos, judgeInterval, expectType);
         }
 
         async UniTaskVoid MoveAndJudge(HoldNote hold, float x, Lpb length, float lifeTime, float dir)

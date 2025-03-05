@@ -6,6 +6,7 @@ public class DifficultyGroup : MonoBehaviour
     [SerializeField] MusicSelectManager sceneManager;
     [SerializeField] DifficultyButton buttonPrefab;
     [SerializeField] MusicButtonManager buttonManager;
+    [SerializeField] InGameStarter gameStarter;
 
     DifficultyButton[] buttons;
     Difficulty selectedDiff = Difficulty.None;
@@ -67,7 +68,7 @@ public class DifficultyGroup : MonoBehaviour
         RhythmGameManager.Difficulty = difficulty;
         if (selectedDiff == difficulty)
         {
-            sceneManager.StartGame(selectData, difficulty);
+            gameStarter.StartGame(selectData, difficulty);
             return;
         }
 

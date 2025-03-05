@@ -28,14 +28,6 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-            void AddExpect(Vector2 pos = default, ExpectType expectType = ExpectType.Y_Static)
-            {
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, pos, MoveTime - Delta, data.Length, expectType));
-            }
-
-
-            AddExpect();
             float lifeTime = MoveTime + 0.5f;
             if (note.Type == RegularNoteType.Hold)
             {

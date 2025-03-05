@@ -91,7 +91,7 @@ namespace NoteCreating
                 var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);
                 var arc = arcPool.GetNote();
                 arc.SetPos(new Vector3(1000, 1000));
-                await arc.CreateNewArcAsync(new ArcCreateData[]
+                await arc.CreateAsync(new ArcCreateData[]
                     {
                     new(-2, new Lpb(0), VertexType.Auto, false, false, new Lpb(0), new Lpb(8)),
                     new(2, new Lpb(8), VertexType.Auto, false, false, new Lpb(0), new Lpb(8)),

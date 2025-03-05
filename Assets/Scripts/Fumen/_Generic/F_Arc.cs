@@ -17,7 +17,7 @@ namespace NoteCreating
         protected override UniTaskVoid ExecuteAsync()
         {
             ArcNote arc = Helper.GetArc();
-            arc.CreateNewArcAsync(datas, Speed, mirror).Forget();
+            arc.CreateAsync(datas, Speed, mirror).Forget();
             DropAsync(arc, 0, Delta).Forget();
             Helper.NoteInput.AddArc(arc);
             return default;
@@ -52,7 +52,7 @@ namespace NoteCreating
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewer.transform);
             arc.SetPos(new Vector3(0, delay.Time * Speed));
-            arc.DebugCreateNewArcAsync(datas, Speed, mirror, Helper.DebugCirclePrefab).Forget();
+            arc.DebugCreateAsync(datas, Speed, mirror, Helper.DebugCirclePrefab, delay).Forget();
         }
 #endif
     }

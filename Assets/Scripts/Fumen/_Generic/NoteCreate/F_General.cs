@@ -12,7 +12,6 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data)
         {
-            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, Vector2.zero, MoveTime - Delta, data.Length, ExpectType.Y_Static));
             DropAsync(note, mirror.Conv(data.X)).Forget();
         }
 

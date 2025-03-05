@@ -6448,76 +6448,6 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
---- !u!114 &-1846275012583414105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (1)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 66
-  command:
-    rid: 1232548170385588232
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548170385588232
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        datas:
-        - x: -6
-          wait:
-            _value: 8
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
-        - x: -2
-          wait:
-            _value: 8
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
-        - x: -6
-          wait:
-            _value: 8
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
-        - x: 0
-          wait:
-            _value: 8
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-1841517935492482987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8634,7 +8564,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6499c9e5f97f6048932ce06d2a22cf2, type: 3}
-  m_Name: F_E_Quela
+  m_Name: F_E_Quela 1
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: 921de1fa47584a149b99e49b853c3d8f, type: 2}
   noteCount: 1500
@@ -8647,7 +8577,6 @@ MonoBehaviour:
   <CirclePoolCount>k__BackingField: 6
   fumen:
     commandDataList:
-    - {fileID: 9148273461527129163}
     - {fileID: 8727801949665097626}
     - {fileID: 3782008271684467249}
     - {fileID: -4126984191045233973}
@@ -8668,7 +8597,7 @@ MonoBehaviour:
     - {fileID: -9083386017515291839}
     - {fileID: -1841517935492482987}
     - {fileID: 7838699510949843029}
-    - {fileID: -1846275012583414105}
+    - {fileID: 7285845489934200199}
     - {fileID: 766015267075374739}
     - {fileID: 9004744718070008519}
     - {fileID: 8773923256997728446}
@@ -8678,8 +8607,8 @@ MonoBehaviour:
     - {fileID: 4916920197723624028}
     - {fileID: 7788282926758277297}
     - {fileID: -7483437537200542435}
+    - {fileID: 6967008306081679286}
     - {fileID: 3284165892563716877}
-    - {fileID: 7285845489934200199}
     - {fileID: 7851204605406514011}
     - {fileID: 790197229071075116}
     - {fileID: -2133478100766325472}
@@ -14238,6 +14167,76 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &6967008306081679286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (156)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 98
+  command:
+    rid: 1232548170385588232
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548170385588232
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        datas:
+        - x: -6
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &7087538501876386318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14778,9 +14777,9 @@ MonoBehaviour:
   m_Name: Command_F_E_Quela (102)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 98
+  beatTiming: 66
   command:
-    rid: 1232548170385588232
+    rid: 1232548260416585729
   references:
     version: 2
     RefIds:
@@ -14788,7 +14787,7 @@ MonoBehaviour:
       type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
-          enabled: 1
+          enabled: 0
         speedRate: 1
         datas:
         - x: -6
@@ -14835,6 +14834,16 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 8
           option: {x: 0, y: 0, z: 0}
+    - rid: 1232548260416585729
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 8
+        loopCount: 1
+        loopWait:
+          _value: 4
+        command:
+          rid: 1232548170385588232
 --- !u!114 &7587907946701363235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16701,36 +16710,3 @@ MonoBehaviour:
           _value: 4
         command:
           rid: 1232548214306766848
---- !u!114 &9148273461527129163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (2)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 1
-  command:
-    rid: 7519554797642973187
-  references:
-    version: 2
-    RefIds:
-    - rid: 7519554797642973187
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        loopCount: 256
-        loopWait:
-          _value: 4
-        alpha: 0.2
-        lifeLpb:
-          _value: 0.5
-        moveDirection: 270
-        isAdaptiveSpeed: 1
-        speedRate: 1

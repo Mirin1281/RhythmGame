@@ -12,7 +12,7 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [SerializeField] bool guideLine = false;
         [SerializeField] Lpb guideInterval = new Lpb(4f);
-        [SerializeField] int zip = 4;
+        //[SerializeField] int zip = 4;
 
         protected override async UniTaskVoid ExecuteAsync()
         {

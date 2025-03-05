@@ -10,7 +10,7 @@ using VertexType = NoteCreating.ArcCreateData.VertexType;
 
 namespace NoteCreating
 {
-    public class ArcNote : ItemBase
+    public class NewAecNote : ItemBase
     {
         //[SerializeField] MySplineExtrude splineExtrude;
         [SerializeField] SplineExtrude splineExtrude;
@@ -31,12 +31,6 @@ namespace NoteCreating
         /// </summary>
         public bool IsInvalid { get; private set; }
 
-        public bool IsOverlapped()
-        {
-            var judge = GetCurrentJudge();
-            return judge == null || judge.IsOverlappable;
-        }
-
         /// <summary>
         /// 押された指のインデックス
         /// </summary>
@@ -47,7 +41,7 @@ namespace NoteCreating
         /// </summary>
         public int JudgeIndex { get; set; }
 
-        bool isHold;
+        [SerializeField] bool isHold;
 
         /// <summary>
         /// 入力されているか
@@ -57,20 +51,15 @@ namespace NoteCreating
             get => isHold || Time.time < holdEndTime;
             set
             {
-                if (value == true)
-                {
-                    notHoldTime = 0;
-                }
-                else
-                {
-                    if (isHold == true)
-                        holdEndTime = Time.time + 0.2f;
-                }
                 isHold = value;
+                if (value == false)
+                {
+                    holdEndTime = Time.time + 1f;
+                }
             }
         }
-        float holdEndTime = 0f;
-        float notHoldTime;
+        float notHoldTime2;
+        [SerializeField] float holdEndTime = 0f;
 
         /// <summary>
         /// 先端のワールドY座標
@@ -80,14 +69,8 @@ namespace NoteCreating
             get
             {
                 if (spline == null || spline.Knots.Count() == 0) return 1;
-                return GetPos().y/* + spline.Knots.First().Position.z*/;
+                return GetPos().y + spline.Knots.First().Position.z;
             }
-        }
-
-        public bool IsReached()
-        {
-            if (spline == null || spline.Knots.Count() == 0) return false;
-            return GetPos().y + spline.Knots.First().Position.z < 0;
         }
 
         /// <summary>
@@ -97,10 +80,12 @@ namespace NoteCreating
         {
             get
             {
-                if (spline == null || spline.Knots.Count() == 0) return 1;
+                if (spline == null || spline.Knots.Count() == 0) throw new Exception();
                 return GetPos().y + spline.Knots.Last().Position.z;
             }
         }
+
+        public float StartHeight;
 
         void Awake()
         {
@@ -109,33 +94,51 @@ namespace NoteCreating
 
         void Update()
         {
-            if (IsHold)
+            // 要するに指を離した後にも0.2秒くらいのバッファがほしい
+            /*if (IsHold)
             {
+                isHold2 = true;
                 notHoldTime = 0;
+                notHoldTime2 = 0;
+                if (IsInvalid)
+                {
+                    meshRenderer.sharedMaterial.color = new Color(0.9f, 0f, 0f, 0.9f);
+                    return;
+                }
             }
             else
             {
                 notHoldTime += Time.deltaTime;
+                notHoldTime2 += Time.deltaTime;
             }
 
-            if (IsInvalid)
+            if (notHoldTime < 0.2f)
             {
-                meshRenderer.material.color = new Color(0.5f, 0.2f, 0);
-                holdEndTime = 0;
+                isHold2 = true;
             }
             else
             {
-                meshRenderer.material.color = Color.black;
+                isHold2 = false;
             }
 
-            meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
+            bool isHold = IsHold || isHold2;
+            if (isHold)
+            {
+                notHoldTime2 = 0;
+            }
+            else
+            {
+                notHoldTime2 += Time.deltaTime;
+            }*/
+
+            meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime2 - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
             SetAlpha(IsHold ? 0.8f : 0.5f);
         }
 
         /// <summary>
         /// アークを作成します
         /// </summary>
-        public async UniTask CreateAsync(ArcCreateData[] datas, float speed, Mirror mir = default)
+        public async UniTask CreateArcAsync(ArcCreateData[] datas, float speed, Mirror mir = default)
         {
             // 初期化
             spline.Clear();
@@ -191,6 +194,7 @@ namespace NoteCreating
             }
 
             splineExtrude.Rebuild();
+            StartHeight = datas[0].Wait.Time * speed;
 
             // 判定を追加 //
             int k = 0;
@@ -217,10 +221,10 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
-        public async UniTask DebugCreateAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugCircle, Lpb delay)
+        public async UniTask CreateArcPreviewAsync(ArcCreateData[] datas, float speed, Mirror mirror, DebugSphere debugCircle, Lpb delay)
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
-            await CreateAsync(datas, speed, mirror);
+            await CreateArcAsync(datas, speed, mirror);
             foreach (var child in transform.OfType<Transform>().ToArray())
             {
                 DestroyImmediate(child.gameObject);
@@ -236,17 +240,17 @@ namespace NoteCreating
 
                 float behindDistance = knotY + data.BehindJudgeRange.Time * speed + baseL;
                 var startPos = GetPointOnYPlane(behindDistance, false);
-                var blueCircle = Instantiate(debugCircle, transform);
-                blueCircle.transform.localPosition = new Vector3(startPos.x, 1, startPos.z);
-                blueCircle.transform.localRotation = Quaternion.Euler(90, 0, 0);
-                blueCircle.SetColor(Color.blue.Alpha(0.5f));
+                var blueSphere = Instantiate(debugCircle, transform);
+                blueSphere.transform.localPosition = new Vector3(startPos.x, 1, startPos.z);
+                blueSphere.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                blueSphere.SetColor(new Color(0, 0, 1, 0.5f));
 
                 float aheadDistance = knotY + data.AheadJudgeRange.Time * speed + baseL;
                 var endPos = GetPointOnYPlane(aheadDistance, false);
-                var redCircle = Instantiate(debugCircle, transform);
-                redCircle.transform.localPosition = new Vector3(endPos.x, 1, endPos.z);
-                redCircle.transform.localRotation = Quaternion.Euler(90, 0, 0);
-                redCircle.SetColor(Color.red.Alpha(0.5f));
+                var redSphere = Instantiate(debugCircle, transform);
+                redSphere.transform.localPosition = new Vector3(endPos.x, 1, endPos.z);
+                redSphere.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                redSphere.SetColor(new Color(1, 0, 0, 0.5f));
             }
         }
 #endif
@@ -344,86 +348,68 @@ namespace NoteCreating
         }
     }
 
-    [Serializable]
-    public class ArcJudge
+    public readonly struct NewArcJudge
     {
         public enum InputState
         {
-            None,
             Idle,
             Get,
             Miss,
         }
 
-        public Vector3 StartPos;
-        public Vector3 EndPos;
-        public bool IsOverlappable;
-        public InputState State;
+        public readonly Vector2 StartPos;
+        public readonly float StartTime;
+        public readonly Vector2 EndPos;
+        public readonly float EndTime;
+        public readonly bool IsOverlappable;
+        public readonly InputState State;
 
-        public ArcJudge(Vector3 start, Vector3 end, bool isDuplicated)
+        public NewArcJudge(Vector2 startPos, float startTime, Vector2 endPos, float endTime, bool isOverlappable = false)
         {
-            StartPos = start;
-            EndPos = end;
-            IsOverlappable = isDuplicated;
+            StartPos = startPos;
+            StartTime = startTime;
+            EndPos = endPos;
+            EndTime = endTime;
+            IsOverlappable = isOverlappable;
             State = InputState.Idle;
         }
     }
 
-    // 設置範囲
-    // 0(下端) < y < 4(上端)
-    // y = 下端の時、-8 < x < 8
-    // 上端の時、-4 < x < 4
-    // zと手前判定、奥判定はLPB換算
     [Serializable]
-    public struct ArcCreateData
+    public struct NewArcCreateData
     {
         public enum VertexType
         {
             Auto,
             Linear,
-            Detail,
+            Detailed,
         }
 
         [SerializeField] float x;
         [SerializeField] Lpb wait;
+
         [SerializeField] VertexType vertexType;
+        [SerializeField] float rotation;
+        [SerializeField] float tangentIn;
+        [SerializeField] float tangentOut;
+
         [SerializeField] bool isJudgeDisable;
         [SerializeField] bool isOverlappable;
         [SerializeField] Lpb behindJudgeRange;
         [SerializeField] Lpb aheadJudgeRange;
-        [SerializeField] Vector3 option;
+
 
         public readonly float X => x;
         public readonly Lpb Wait => wait;
+
         public readonly VertexType Vertex => vertexType;
+        public readonly float Rotation => rotation;
+        public readonly float TangentIn => tangentIn;
+        public readonly float TangentOut => tangentOut;
+
         public readonly bool IsJudgeDisable => isJudgeDisable;
         public readonly bool IsOverlappable => isOverlappable;
         public readonly Lpb BehindJudgeRange => behindJudgeRange;
         public readonly Lpb AheadJudgeRange => aheadJudgeRange;
-        public Vector3 Option => option;
-
-        public ArcCreateData(float x, Lpb wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, Lpb behindJudgeRange, Lpb aheadJudgeRange, Vector3 option = default)
-        {
-            this.x = x;
-            this.wait = wait;
-            this.vertexType = vertexType;
-            this.isJudgeDisable = isJudgeDisable;
-            this.isOverlappable = isOverlappable;
-            this.behindJudgeRange = behindJudgeRange;
-            this.aheadJudgeRange = aheadJudgeRange;
-            this.option = option;
-        }
-
-        public ArcCreateData(bool _)
-        {
-            this.x = 0;
-            this.wait = new Lpb(0);
-            this.vertexType = VertexType.Auto;
-            this.isJudgeDisable = false;
-            this.isOverlappable = false;
-            this.behindJudgeRange = new Lpb(0);
-            this.aheadJudgeRange = new Lpb(4);
-            this.option = default;
-        }
     }
 }

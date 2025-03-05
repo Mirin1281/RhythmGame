@@ -6,11 +6,11 @@ namespace NoteCreating
     {
         public enum InputState
         {
-            None,
             Idle, // 待機中または落下中
             Holding, // 押されて判定中
             Missed, // ミスが確定している
             Get, // 終点を取得できている
+            Final, // Getの後
         }
 
         [SerializeField] Transform maskTs;
@@ -20,6 +20,7 @@ namespace NoteCreating
         public InputState State { get; set; }
         public float EndTime { get; set; }
         public float NoInputTime { get; set; }
+
         static readonly float BaseScaleX = 3f;
         static readonly Vector3 fixPos = new Vector3(0, -0.35f);
         static readonly float fixLength = 0.5f;
@@ -126,6 +127,23 @@ namespace NoteCreating
         public override void OnMiss()
         {
             SetAlpha(0.4f);
+        }
+
+        /// <summary>
+        /// RegularNoteをHoldNoteに変換します。isキャストよりも軽量です
+        /// </summary>
+        /// <param name="note"></param>
+        /// <param name="hold"></param>
+        /// <returns></returns>
+        public static bool TryParse(RegularNote note, out HoldNote hold)
+        {
+            hold = null;
+            if (note.Type == RegularNoteType.Hold)
+            {
+                hold = note as HoldNote;
+                return true;
+            }
+            return false;
         }
     }
 }
