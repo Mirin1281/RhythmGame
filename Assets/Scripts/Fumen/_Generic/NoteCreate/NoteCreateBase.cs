@@ -6,7 +6,7 @@ namespace NoteCreating
     public abstract class NoteCreateBase<T> : CommandBase where T : struct, INoteData
     {
         [SerializeField] protected Mirror mirror;
-        [SerializeField] float speedRate = 1f;
+        [SerializeField] protected float speedRate = 1f;
 
         /// <summary>
         /// NoteData内のWaitの加算

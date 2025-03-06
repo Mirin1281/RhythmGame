@@ -65,6 +65,7 @@ namespace NoteCreating
                         Debug.Log($"{delimiterLevel}  {field.FieldType}  {field.Name}  {v}");
                     }
                     sb.Append(v);
+
                 }
                 else if (field.FieldType.IsArray) // 配列なら中身を追加
                 {
@@ -246,7 +247,7 @@ namespace NoteCreating
                 var array = Array.CreateInstance(elementType, elementValues.Length);
                 for (int i = 0; i < elementValues.Length; i++)
                 {
-                    var element = Activator.CreateInstance(elementType);
+                    var element = CreateInstance(elementType);
                     array.SetValue(SetFieldGeneric(element, elementValues[i], fieldIndexList), i);
                     fieldIndexList[fieldIndexList.Count - 1]++;
                 }
@@ -261,7 +262,7 @@ namespace NoteCreating
 
                 string className = value[..endIndex];
                 string content = value[(endIndex + 1)..];
-                var instance = CreateInstance<object>(className);
+                var instance = CreateInstanceByClassName<object>(className);
 
                 if (instance != null)
                 {
@@ -303,7 +304,7 @@ namespace NoteCreating
                 }
             }
 
-            static T CreateInstance<T>(string className, string namespaceName = nameof(NoteCreating)) where T : class
+            static T CreateInstanceByClassName<T>(string className, string namespaceName = nameof(NoteCreating)) where T : class
             {
                 Type t = GetTypeByClassName(className, namespaceName);
                 if (t == null) return null;
@@ -327,6 +328,23 @@ namespace NoteCreating
                         $"タイポもしくは{className}クラスが名前空間{namespaceName}内に存在しない可能性があります");
                     return null;
                 }
+            }
+
+            static object CreateInstance(Type type)
+            {
+                object obj;
+                try
+                {
+                    obj = Activator.CreateInstance(type);
+                    // 引数無しコンストラクタが無い場合は引数情報を引っ張ってきてConstructorInfoから生成する
+                }
+                catch (MissingMethodException)
+                {
+                    var constructor = type.GetConstructors()[0];
+                    var parameters = constructor.GetParameters().Select(parInfo => CreateInstance(parInfo.ParameterType)).ToArray();
+                    obj = constructor.Invoke(parameters);
+                }
+                return obj;
             }
         }
 

@@ -61,7 +61,9 @@ namespace NoteCreating
         }
 
         [SerializeField] Mirror mirror;
+#if UNITY_EDITOR
         [SerializeField] string summary;
+#endif
 
         [SerializeField] ItemType itemType = ItemType.Line;
         [SerializeField] float option = 1; // Hold時に長さを設定する
@@ -148,7 +150,7 @@ namespace NoteCreating
                 {
                     if (datas[i].EaseType == EaseType.None)
                     {
-                        delta = await Wait(datas[i].EaseLpb);
+                        delta = await Wait(datas[i].EaseLpb, delta);
                         continue;
                     }
                     Vector2 start = GetBeforePos(i, datas);
@@ -197,7 +199,7 @@ namespace NoteCreating
                 {
                     if (datas[i].EaseType == EaseType.None)
                     {
-                        delta = await Wait(datas[i].EaseLpb);
+                        delta = await Wait(datas[i].EaseLpb, delta);
                         continue;
                     }
                     var d = datas[i];
@@ -222,11 +224,10 @@ namespace NoteCreating
                         return GetNormalizedAngle(datas[index - 1].From);
                     }
                 }
-            }
-
-            static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
-            {
-                return Mathf.Repeat(angle - min, max - min) + min;
+                static float GetNormalizedAngle(float angle, float min = -180, float max = 180)
+                {
+                    return Mathf.Repeat(angle - min, max - min) + min;
+                }
             }
 
             async UniTaskVoid AlphaEase(ItemBase item, float startAlpha, EaseData<float>[] datas, float delta)

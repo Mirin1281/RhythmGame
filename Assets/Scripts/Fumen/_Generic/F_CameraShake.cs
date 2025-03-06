@@ -16,14 +16,14 @@ namespace NoteCreating
         }
 
         [SerializeField] Mirror mirror;
-        [SerializeField, Min(0)] int loopCount = 1;
+        [SerializeField, Min(0)] int loopCount = 16;
         [SerializeField] Lpb loopWait = new Lpb(2);
 
         [Space(20)]
         [SerializeField] ShakeType shakeType = ShakeType.Rotate;
         [SerializeField] float intensity = 2f;
         [SerializeField] Lpb time = new Lpb(4);
-        [SerializeField] int option = 100; // Randomの場合シード値、Vibration_Horizontalの場合振動数を表す
+        [SerializeField, Tooltip("Randomの場合シード値、Vibration_Horizontalの場合振動数を表す")] int option = 100;
 
         protected override async UniTaskVoid ExecuteAsync()
         {

@@ -27,7 +27,7 @@ namespace NoteCreating
             Random randRot = new Random(seed + 1);
             Random randAlpha = new Random(seed + 2);
             Random randWidth = new Random(seed + 3);
-            float count = (wholeLpb - MoveLpb) / interval;
+            float count = wholeLpb / interval;
             for (int i = 0; i < count; i++)
             {
                 CreateLine(

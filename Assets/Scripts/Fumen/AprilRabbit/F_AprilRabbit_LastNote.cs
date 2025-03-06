@@ -48,7 +48,7 @@ namespace NoteCreating
             judgeLine2.SetPos(new Vector3(mirror.Conv(-11), 4));
             judgeLine2.SetAlpha(0.5f);
 
-            float judgeTime = 0.6f;
+            float judgeTime = 0.53f;
             var judgeEasing = new Easing(mirror.Conv(90), mirror.Conv(270), judgeTime, EaseType.InQuad);
             WhileYield(judgeTime, t =>
             {

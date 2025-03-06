@@ -71,6 +71,11 @@ namespace NoteCreating.Editor
 
                 var commandData = property.serializedObject.targetObject as CommandData;
                 var itemMove = commandData.GetCommandBase() as F_ItemMove;
+                if (itemMove == null)
+                {
+                    var loopDelay = commandData.GetCommandBase() as F_LoopDelay;
+                    itemMove = loopDelay.GetChildCommand() as F_ItemMove;
+                }
                 var datasInfo = itemMove.GetType().GetField("createDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 var createDatas = datasInfo.GetValue(itemMove) as F_ItemMove.CreateData[];
                 var alphaEaseDatasInfo = typeof(F_ItemMove.CreateData).GetField("alphaEaseDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);

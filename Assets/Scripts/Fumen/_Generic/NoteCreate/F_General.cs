@@ -13,6 +13,13 @@ namespace NoteCreating
         protected override void Move(RegularNote note, NoteData data)
         {
             DropAsync(note, mirror.Conv(data.X)).Forget();
+
+            /*WhileYield(lifeTime, t =>
+            {
+                if (note.IsActive == false) return;
+                note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
+            });
+            */
         }
 
 #if UNITY_EDITOR

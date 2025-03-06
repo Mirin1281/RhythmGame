@@ -102,7 +102,8 @@ namespace NoteCreating.Editor
             AssetDatabase.SaveAssets();
             var window = EditorWindow.GetWindow<FumenEditorWindow>();
             window.Init();
-            Debug.Log("<color=lightblue>CSVを読み込みました！</color>");
+            Debug.Log(
+                "<color=lightblue>CSVを読み込みました！再コンパイルをしてください</color>");
 
 
             // フォルダメニューを開き、CSVファイルを読み込みます

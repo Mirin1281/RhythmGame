@@ -10,7 +10,7 @@ namespace NoteCreating
     public class F_AprilRabbit_TutorialText : CommandBase
     {
         [SerializeField] Mirror mirror;
-        [SerializeField] TMP_Text tmproPrefab;
+        [SerializeField] RubyTextMeshProUGUI tmproPrefab;
         [SerializeField, TextArea] string text;
 
         [SerializeField] bool isMove;
@@ -25,13 +25,14 @@ namespace NoteCreating
         {
             await WaitOnTiming();
 
-            TMP_Text tmpro;
+            RubyTextMeshProUGUI tmpro;
             if (tmproPrefab != null)
             {
                 tmpro = GameObject.Instantiate(tmproPrefab);
                 tmpro.name = TmproName;
                 tmpro.transform.SetParent(GameObject.Find(CanvasName).transform);
-                tmpro.transform.localPosition = new Vector3(0, 250, 0);
+                tmpro.transform.localPosition = new Vector3(0, 150, 0);
+                tmpro.transform.localScale = Vector3.one;
                 tmpro.rectTransform.sizeDelta = new Vector2(700, 50);
             }
             else
@@ -42,15 +43,15 @@ namespace NoteCreating
                     Debug.Log("TMPが設定されていません");
                     return;
                 }
-                tmpro = o.GetComponent<TMP_Text>();
+                tmpro = o.GetComponent<RubyTextMeshProUGUI>();
             }
 
             Fade(tmpro, 1f, 0f);
             if (isMove)
             {
-                tmpro.transform.DOMove(mirror.Conv(pos), 0.3f).SetRelative(true);
+                tmpro.transform.DOLocalMove(mirror.Conv(pos), 0.3f).SetRelative(true);
             }
-            tmpro.SetText(text);
+            tmpro.uneditedText = text;
 
             if (isHide)
             {
