@@ -73,5 +73,11 @@ namespace NoteCreating
             });
             return expectPos;
         }
+#if UNITY_EDITOR
+        protected override string GetSummary()
+        {
+            return base.GetSummary() + "   Dir: " + deg;
+        }
+#endif
     }
 }

@@ -22,8 +22,8 @@ namespace NoteCreating
                 lifeTime += data.Length.Time;
             }
 
-            float radius = data.Option1 == -1 ? defaultRadius : data.Option1;
-            float height = data.Option2 == -1 ? defaultHeight : data.Option2;
+            float radius = data.Option1 is -1 or 0 ? defaultRadius : data.Option1;
+            float height = data.Option2 is -1 or 0 ? defaultHeight : data.Option2;
 
             WhileYield(lifeTime, t =>
             {

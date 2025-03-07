@@ -34,8 +34,8 @@ namespace NoteCreating
         {
             return new Color32(
                 255,
-                (byte)Mathf.Clamp(246 - count * 2, 96, 246),
-                (byte)Mathf.Clamp(230 - count * 2, 130, 230),
+                (byte)Mathf.Clamp(260 - count * 2, 96, 246),
+                (byte)Mathf.Clamp(247 - count * 2, 130, 230),
                 255);
         }
 

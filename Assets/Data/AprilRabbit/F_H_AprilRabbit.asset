@@ -691,24 +691,24 @@ MonoBehaviour:
           option1: 0
           option2: 0
         - wait:
+            _value: 12
+          type: 0
+          x: 4
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
             _value: 6
           type: 1
-          x: 0
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 0
-          x: 4
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 12
-          type: 1
           x: -4
           length:
             _value: 0
@@ -746,6 +746,126 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+--- !u!114 &-6911402384922471302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (86)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 79
+  command:
+    rid: 1232548296670314517
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548296670314516
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.25
+        isChainWait: 0
+        basePos: {x: 0, y: 8}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 14, y: 0}
+          posEaseDatas:
+          - from: {x: 10, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: 6, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: 2, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -2, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -6, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -10, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -14, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          startRot: 30
+          rotEaseDatas:
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 0.2
+            easeTime:
+              _value: 0.5
+            easeType: 0
+          - from: 0
+            easeTime:
+              _value: 1.33333
+            easeType: 0
+    - rid: 1232548296670314517
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 4
+        loopWait:
+          _value: 2
+        command:
+          rid: 1232548296670314516
 --- !u!114 &-6460461872335312695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,7 +1076,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 2
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -1248,7 +1368,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: -6
+          x: 6
           length:
             _value: 0
           option1: 0
@@ -1352,7 +1472,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 6
+          x: -6
           length:
             _value: 0
           option1: 0
@@ -1376,7 +1496,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: -6
+          x: 6
           length:
             _value: 0
           option1: 0
@@ -1464,7 +1584,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 6
+          x: -6
           length:
             _value: 0
           option1: 0
@@ -1477,6 +1597,40 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+--- !u!114 &-5663835182891223929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (89)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 125
+  command:
+    rid: 1232548277774188550
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548277774188550
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 0.2
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 32
+        fadeOutLpb:
+          _value: 4
+        deg: 90
+        pos: {x: 0, y: 0}
 --- !u!114 &-4980443211069801672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2116,7 +2270,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: -6
+          x: 6
           length:
             _value: 0
           option1: 0
@@ -2244,7 +2398,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 1
-          x: 6
+          x: -6
           length:
             _value: 0
           option1: 0
@@ -2268,7 +2422,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: -6
+          x: 6
           length:
             _value: 0
           option1: 0
@@ -2349,86 +2503,6 @@ MonoBehaviour:
             _value: 16
           type: 1
           x: -6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 2
-          x: 0
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 0
-          x: 0
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 1
-          x: -6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -3.5
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 3
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -1.5
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 0.5
           length:
             _value: 0
           option1: 0
@@ -2558,7 +2632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (77)
   m_EditorClassIdentifier: 
-  enable: 0
+  enable: 1
   beatTiming: 234
   command:
     rid: 1232548273671897091
@@ -2733,7 +2807,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 3
+          x: 2
           length:
             _value: 4
           option1: 0
@@ -2749,15 +2823,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: -1
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 1
-          x: 2.5
+          x: 0.5
           length:
             _value: 4
           option1: 0
@@ -2773,7 +2839,7 @@ MonoBehaviour:
         - wait:
             _value: 0
           type: 1
-          x: -1.5
+          x: -0.5
           length:
             _value: 4
           option1: 0
@@ -2781,7 +2847,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 0
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -2789,7 +2855,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 2
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -2797,7 +2863,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 4
+          x: 5
           length:
             _value: 4
           option1: 0
@@ -2805,7 +2871,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 6
+          x: 7
           length:
             _value: 4
           option1: 0
@@ -2813,7 +2879,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 4
+          x: 5
           length:
             _value: 4
           option1: 0
@@ -2821,7 +2887,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 2
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -2829,7 +2895,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: 0
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -2837,7 +2903,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: -2
+          x: -1
           length:
             _value: 4
           option1: 0
@@ -2845,7 +2911,7 @@ MonoBehaviour:
         - wait:
             _value: 16
           type: 2
-          x: -4
+          x: -3
           length:
             _value: 4
           option1: 0
@@ -2981,7 +3047,7 @@ MonoBehaviour:
           option2: 0
         - wait:
             _value: 8
-          type: 1
+          type: 0
           x: -6
           length:
             _value: 5.333333
@@ -4284,12 +4350,14 @@ MonoBehaviour:
     - {fileID: 5790460020239020914}
     - {fileID: 3342234825068800158}
     - {fileID: -6386566204128415334}
+    - {fileID: 7555251943830397471}
     - {fileID: 302018134437499415}
     - {fileID: -1676137826906530084}
     - {fileID: 3750076316373975172}
     - {fileID: 2892175907538498301}
     - {fileID: 3793402613370992386}
     - {fileID: -4653163391641123551}
+    - {fileID: -6911402384922471302}
     - {fileID: -836788986323939715}
     - {fileID: -1613365720070156802}
     - {fileID: -4009068432829432103}
@@ -4302,10 +4370,16 @@ MonoBehaviour:
     - {fileID: -1174825290416777116}
     - {fileID: 5066995649650505276}
     - {fileID: 7983528922177359580}
+    - {fileID: -5663835182891223929}
     - {fileID: 8094539120129822247}
+    - {fileID: 5350942564252086838}
+    - {fileID: 713729709789979980}
+    - {fileID: 3152258408657159425}
     - {fileID: 5910176855156506666}
     - {fileID: -6050158854588540150}
     - {fileID: -4108859746051277179}
+    - {fileID: 4804367739488897131}
+    - {fileID: 1333690871096281404}
     - {fileID: -4905826027611706765}
     - {fileID: -8972916508809641590}
     - {fileID: 7209112811972635955}
@@ -4447,6 +4521,70 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &713729709789979980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (91)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 127
+  command:
+    rid: 1232548296670314521
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548296670314520
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 4
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas:
+          - from: {x: 0, y: 2}
+            easeTime:
+              _value: 4
+            easeType: 0
+          startRot: 0
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0
+    - rid: 1232548296670314521
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 16
+        loopWait:
+          _value: 2
+        command:
+          rid: 1232548296670314520
 --- !u!114 &758066704433906256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,6 +4892,38 @@ MonoBehaviour:
         easeX: {x: 5, y: -7}
         easeType: 3
         easeTime: 12
+--- !u!114 &1333690871096281404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (88)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 155
+  command:
+    rid: 1232548260416585737
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548260416585737
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 1
+        loopWait:
+          _value: 2
+        shakeType: 0
+        intensity: -2
+        time:
+          _value: 4
+        option: 100
 --- !u!114 &1445762912844028676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4779,7 +4949,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         wholeLpb:
-          _value: 0.131
+          _value: 0.16666667
         interval:
           _value: 16
         xRange: {x: -15, y: 15}
@@ -5245,7 +5415,15 @@ MonoBehaviour:
           option1: 0
           option2: 0
         - wait:
-            _value: 6
+            _value: 12
+          type: 0
+          x: -3
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
           type: 2
           x: -2
           length:
@@ -5261,7 +5439,7 @@ MonoBehaviour:
           option1: 0
           option2: 0
         - wait:
-            _value: 8
+            _value: 12
           type: 0
           x: 5
           length:
@@ -5399,7 +5577,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         wholeLpb:
-          _value: 0.131
+          _value: 0.16666667
         interval:
           _value: 16
         xRange: {x: -15, y: 15}
@@ -5745,6 +5923,78 @@ MonoBehaviour:
       type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         summary: 
+--- !u!114 &3152258408657159425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (92)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 123
+  command:
+    rid: 1232548296670314522
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548296670314520
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.1176471
+        isChainWait: 0
+        basePos: {x: 0, y: 6}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 30
+          rotEaseDatas:
+          - from: 720
+            easeTime:
+              _value: 0.1176471
+            easeType: 1
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 0.1
+            easeTime:
+              _value: 4
+            easeType: 0
+          - from: 0
+            easeTime:
+              _value: 0.125
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 4
+            easeType: 0
+    - rid: 1232548296670314522
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 3
+        loopWait:
+          _value: 32
+        command:
+          rid: 1232548296670314520
 --- !u!114 &3342234825068800158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6664,6 +6914,96 @@ MonoBehaviour:
           _value: 2
         command:
           rid: 1232548273671897101
+--- !u!114 &4804367739488897131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (90)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 156
+  command:
+    rid: 8267576847255470144
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267576847255470144
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: -6
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 6
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -5
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 5
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -3.5
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 3
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: -1.5
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 1
+          x: 0.5
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
 --- !u!114 &5066995649650505276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6935,7 +7275,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.3
+          - from: 0.2
             easeTime:
               _value: 4
             easeType: 0
@@ -6956,7 +7296,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.3
             easeTime:
               _value: 4
             easeType: 0
@@ -6977,7 +7317,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.3
             easeTime:
               _value: 4
             easeType: 0
@@ -6998,7 +7338,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.3
             easeTime:
               _value: 4
             easeType: 0
@@ -7012,6 +7352,48 @@ MonoBehaviour:
           _value: 2
         command:
           rid: 1232548277774188547
+--- !u!114 &5350942564252086838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (87)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 127
+  command:
+    rid: 1232548296670314518
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548260416585737
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 2
+        loopWait:
+          _value: 2
+        shakeType: 0
+        intensity: -2
+        time:
+          _value: 4
+        option: 100
+    - rid: 1232548296670314518
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 1
+        loopCount: 3
+        loopWait:
+          _value: 0.5
+        command:
+          rid: 1232548260416585737
 --- !u!114 &5518611630785790565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7240,137 +7622,142 @@ MonoBehaviour:
   enable: 1
   beatTiming: 125
   command:
-    rid: 8267576847255470142
+    rid: 1232548296670314519
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470142
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314519
+      type: {class: F_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 3
+        moveLpb:
+          _value: 4
+        defaultMoveStartLpb:
+          _value: 1
+        easeType: 8
         noteDatas:
         - wait:
             _value: 2
           type: 2
-          x: -6
+          x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: -6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: -9
+          option2: 0.8
+        - wait:
+            _value: 2
+          type: 2
+          x: -6
+          length:
+            _value: 0
+          option1: -9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 2
-          type: 2
-          x: -6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: -6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: -9
+          option2: 0.8
+        - wait:
+            _value: 2
+          type: 2
+          x: -6
+          length:
+            _value: 0
+          option1: -9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 2
-          type: 2
-          x: -6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: -6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: -9
+          option2: 0.8
+        - wait:
+            _value: 2
+          type: 2
+          x: -6
+          length:
+            _value: 0
+          option1: -9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 2
-          type: 2
-          x: -6
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: 6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: 9
+          option2: 0.8
         - wait:
             _value: 2
           type: 2
           x: -6
           length:
             _value: 0
-          option1: 0
-          option2: 0
+          option1: -9
+          option2: 0.8
 --- !u!114 &5984184414670416816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7398,6 +7785,9 @@ MonoBehaviour:
         speedRate: 1
         moveLpb:
           _value: 4
+        defaultMoveStartLpb:
+          _value: 1
+        easeType: 3
         noteDatas:
         - wait:
             _value: 8
@@ -7661,7 +8051,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.3
+          - from: 0.2
             easeTime:
               _value: 4
             easeType: 0
@@ -7682,7 +8072,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.2
             easeTime:
               _value: 4
             easeType: 0
@@ -7703,7 +8093,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.2
             easeTime:
               _value: 4
             easeType: 0
@@ -7724,7 +8114,7 @@ MonoBehaviour:
             easeType: 0
           startAlpha: 0
           alphaEaseDatas:
-          - from: 0.5
+          - from: 0.2
             easeTime:
               _value: 4
             easeType: 0
@@ -8094,6 +8484,126 @@ MonoBehaviour:
             _value: 5.333333
           option1: 0
           option2: 0
+--- !u!114 &7555251943830397471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (85)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 63
+  command:
+    rid: 1232548296670314517
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548296670314516
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.25
+        isChainWait: 0
+        basePos: {x: 0, y: 8}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 14, y: 0}
+          posEaseDatas:
+          - from: {x: 10, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: 6, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: 2, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -2, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -6, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -10, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: {x: -14, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 6
+          startRot: 30
+          rotEaseDatas:
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: 30
+            easeTime:
+              _value: 2
+            easeType: 6
+          - from: -30
+            easeTime:
+              _value: 2
+            easeType: 6
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 0.2
+            easeTime:
+              _value: 0.5
+            easeType: 0
+          - from: 0
+            easeTime:
+              _value: 1
+            easeType: 0
+    - rid: 1232548296670314517
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 4
+        loopWait:
+          _value: 2
+        command:
+          rid: 1232548296670314516
 --- !u!114 &7983528922177359580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8140,10 +8650,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_AprilRabbit (42)
   m_EditorClassIdentifier: 
-  enable: 0
+  enable: 1
   beatTiming: 127
   command:
-    rid: 1232548260416585737
+    rid: 1232548296670314518
   references:
     version: 2
     RefIds:
@@ -8152,7 +8662,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
-        loopCount: 1
+        loopCount: 2
         loopWait:
           _value: 2
         shakeType: 0
@@ -8160,6 +8670,16 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+    - rid: 1232548296670314518
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 4
+        loopWait:
+          _value: 0.5
+        command:
+          rid: 1232548260416585737
 --- !u!114 &8340944664346698668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8396,7 +8916,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 2
-          x: 2
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -8412,7 +8932,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 2
-          x: 2
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -8428,7 +8948,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 2
-          x: -2
+          x: -1
           length:
             _value: 4
           option1: 0
@@ -8444,7 +8964,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 2
-          x: -2
+          x: -1
           length:
             _value: 4
           option1: 0

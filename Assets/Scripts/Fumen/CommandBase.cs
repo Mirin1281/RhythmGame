@@ -96,7 +96,7 @@ namespace NoteCreating
                 delta = Delta;
             }
             float baseTime = CurrentTime - delta;
-            while (true) // 新実装(Yieldもdelta返り値を用意したい)
+            while (true)
             {
                 float t = CurrentTime - baseTime;
                 action.Invoke(t);

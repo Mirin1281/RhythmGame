@@ -22,7 +22,7 @@ namespace NoteCreating
         public float NoInputTime { get; set; }
 
         static readonly float BaseScaleX = 3f;
-        static readonly Vector3 fixPos = new Vector3(0, -0.35f);
+        static readonly float fixedValue = -0.35f; // ノーツの見た目を調節するため
         static readonly float fixLength = 0.5f;
 
         public override void SetWidth(float width)
@@ -40,25 +40,29 @@ namespace NoteCreating
 
         public override Vector3 GetPos(bool isWorld = false)
         {
+            float r = (GetRot() + 90) * Mathf.Deg2Rad;
+            Vector3 fixedPos = fixedValue * new Vector3(Mathf.Cos(r), Mathf.Sin(r));
             if (isWorld)
             {
-                return spriteRenderer.transform.position - fixPos;
+                return spriteRenderer.transform.position - fixedPos;
             }
             else
             {
-                return spriteRenderer.transform.localPosition - fixPos;
+                return spriteRenderer.transform.localPosition - fixedPos;
             }
         }
 
         public override void SetPos(Vector3 pos, bool isWorld = false)
         {
+            float r = (GetRot() + 90) * Mathf.Deg2Rad;
+            Vector3 fixedPos = fixedValue * new Vector3(Mathf.Cos(r), Mathf.Sin(r));
             if (isWorld)
             {
-                spriteRenderer.transform.position = pos + fixPos;
+                spriteRenderer.transform.position = pos + fixedPos;
             }
             else
             {
-                spriteRenderer.transform.localPosition = pos + fixPos;
+                spriteRenderer.transform.localPosition = pos + fixedPos;
             }
         }
 

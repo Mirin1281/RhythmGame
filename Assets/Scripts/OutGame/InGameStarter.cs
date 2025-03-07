@@ -30,7 +30,7 @@ public class InGameStarter : MonoBehaviour
         }
         previewer.Stop(0.5f).Forget();
 
-        for (int i = 0; i < moveObjects.Length; i++)
+        /*for (int i = 0; i < moveObjects.Length; i++)
         {
             var moveObj = moveObjects[i];
             moveObj.Obj.transform.DOLocalMoveX(moveObj.MoveX, 0.5f).SetRelative(true).SetEase(Ease.OutQuart);
@@ -47,10 +47,10 @@ public class InGameStarter : MonoBehaviour
             var inGameScene = SceneManager.GetSceneByName(ConstContainer.InGameSceneName);
             var obj = inGameScene.GetRootGameObjects()[0];
             Debug.Log(obj.name);
-        });
+        });*/
 
 
-        //FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f);
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f);
 
     }
 

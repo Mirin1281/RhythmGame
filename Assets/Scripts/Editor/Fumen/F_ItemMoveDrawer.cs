@@ -79,11 +79,19 @@ namespace NoteCreating.Editor
                 var datasInfo = itemMove.GetType().GetField("createDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 var createDatas = datasInfo.GetValue(itemMove) as F_ItemMove.CreateData[];
                 var alphaEaseDatasInfo = typeof(F_ItemMove.CreateData).GetField("alphaEaseDatas", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                var first = (F_ItemMove.EaseData<float>[])alphaEaseDatasInfo.GetValue(createDatas[0]);
+                var firstEaseDatas = (F_ItemMove.EaseData<float>[])alphaEaseDatasInfo.GetValue(createDatas[0]);
 
                 for (int i = 1; i < datasProp.arraySize; i++)
                 {
-                    alphaEaseDatasInfo.SetValue(createDatas[i], first.Clone());
+                    alphaEaseDatasInfo.SetValue(createDatas[i], firstEaseDatas.Clone());
+                }
+
+                var startAlphaInfo = typeof(F_ItemMove.CreateData).GetField("startAlpha", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                var firstStartAlpha = (float)startAlphaInfo.GetValue(createDatas[0]);
+
+                for (int i = 1; i < datasProp.arraySize; i++)
+                {
+                    startAlphaInfo.SetValue(createDatas[i], firstStartAlpha);
                 }
             }
 

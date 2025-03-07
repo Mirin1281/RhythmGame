@@ -63,7 +63,7 @@ namespace NoteCreating
 
         protected override Color GetCommandColor()
         {
-            return CommandEditorUtility.GetNoteCommandColor();
+            return CommandEditorUtility.GetNoteCommandColor(NoteDatas);
         }
 
         protected override string GetSummary()

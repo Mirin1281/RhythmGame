@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
@@ -29,6 +28,10 @@ namespace NoteCreating
 
         [SerializeField] float acceleration = 3;
         [SerializeField] StopData[] stopDatas = new StopData[] { new(new Lpb(4) * 6, new Lpb(4)) };
+        [SerializeField] float amp = 0.5f;
+        [SerializeField] float frequency = 100;
+
+        [Header("オプション1: 振動係数(不要な場合は0)")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
@@ -40,10 +43,8 @@ namespace NoteCreating
                 lifeTime += data.Length.Time;
             }
 
-            Lpb w = WaitDelta;
-
-            float currentTiming = -w.Time;
-            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - w.Time;
+            float currentTiming = -WaitDelta.Time;
+            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - WaitDelta.Time;
             float stopWait = default;
 
             int i = 0;
@@ -76,9 +77,13 @@ namespace NoteCreating
                 }
 
                 float t2 = t;
+                float x = data.X;
                 if (status == MoveStatus.Stop)
                 {
                     t2 = currentTiming;
+                    float stopTime = t - currentTiming;
+                    Easing ampEasing = new Easing(0, amp, stopWait * (1f - 1f / acceleration) / 2f, EaseType.OutQuad);
+                    x += ampEasing.Ease(stopTime) * Mathf.Sin(stopTime * frequency) * data.Option1;
                     if (t >= currentTiming + stopWait * (1f - 1f / acceleration))
                     {
                         status = MoveStatus.Accel;
@@ -96,7 +101,7 @@ namespace NoteCreating
                     }
                 }
 
-                var pos = mirror.Conv(new Vector3(data.X, (MoveTime - t2) * Speed));
+                var pos = mirror.Conv(new Vector3(x, (MoveTime - t2) * Speed));
                 note.SetPos(pos);
             });
         }

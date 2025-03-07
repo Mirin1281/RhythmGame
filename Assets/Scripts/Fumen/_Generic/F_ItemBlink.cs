@@ -57,11 +57,21 @@ namespace NoteCreating
             {
                 items.AddRange(Helper.PoolManager.ArcPool.GetInstances());
             }
-
             if (target.HasFlag(ItemTargets.Line))
             {
                 items.AddRange(Helper.PoolManager.LinePool.GetInstances());
             }
+
+#if UNITY_EDITOR
+            if (items.Count > capacity)
+            {
+                Debug.LogWarning($"<color=red>アイテム数: {items.Count}, capacity: {capacity}</color>");
+            }
+            else
+            {
+                Debug.LogWarning($"アイテム数: {items.Count}");
+            }
+#endif
 
             if (isDelayOneFrame)
             {

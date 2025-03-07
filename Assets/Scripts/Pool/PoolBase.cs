@@ -69,7 +69,7 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
             if (showLog)
-                Debug.Log("Prepare‚ğ’´‚¦‚Ä" + typeof(T).Name + "‚ğ¶¬‚µ‚Ü‚·");
+                Debug.Log($"Prepare‚ğ’´‚¦‚Ä{typeof(T).Name}({index})‚ğ¶¬‚µ‚Ü‚·");
 #endif
             return NewInstantiate(status, true);
         }

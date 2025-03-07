@@ -849,16 +849,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 84
   command:
-    rid: 8267576847255470373
+    rid: 1232548296670314509
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470373
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314509
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: -200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 4
@@ -1036,6 +1039,111 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-7259823171462596346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_OsmanthusMarch (77)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 131
+  command:
+    rid: 1232548296670314497
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548296670314497
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 2
+        isChainWait: 0
+        basePos: {x: 0, y: 4}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 4, y: 0}
+          posEaseDatas:
+          - from: {x: 8, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 0
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.5
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 0
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: -4, y: 0}
+          posEaseDatas:
+          - from: {x: -8, y: 0}
+            easeTime:
+              _value: 2
+            easeType: 0
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.5
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 0
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 0
+          rotEaseDatas:
+          - from: 260
+            easeTime:
+              _value: 2
+            easeType: 0
+          startAlpha: 0.5
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 0
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 30
+          rotEaseDatas:
+          - from: 200
+            easeTime:
+              _value: 2
+            easeType: 0
+          startAlpha: 0.5
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 0
 --- !u!114 &-7176997796299646736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,16 +1835,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 12
   command:
-    rid: 8267576847255470347
+    rid: 1232548296670314503
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470347
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314503
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: -200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -1866,6 +1977,68 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+--- !u!114 &-4571476323043706918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_OsmanthusMarch (78)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 129
+  command:
+    rid: 1232548277774188553
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548277774188553
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: "\u30CE\u30FC\u30C4\u56DE\u8EE2\u76F4\u5730"
+        itemType: 0
+        option: 1
+        setJudge: 1
+        isMultitap: 0
+        lifeLpb:
+          _value: 2
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 6}
+          posEaseDatas:
+          - from: {x: 0, y: 8}
+            easeTime:
+              _value: 8
+            easeType: 3
+          - from: {x: 0, y: 0}
+            easeTime:
+              _value: 2.6666667
+            easeType: 2
+          startRot: 0
+          rotEaseDatas:
+          - from: 360
+            easeTime:
+              _value: 2
+            easeType: 6
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 1
+            easeTime:
+              _value: 0
+            easeType: 0
 --- !u!114 &-4519204493562421704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2012,16 +2185,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 148
   command:
-    rid: 8267576847255470373
+    rid: 1232548296670314512
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470373
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314512
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
+        defaultCurve: -200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 4
@@ -2214,16 +2390,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 76
   command:
-    rid: 8267576847255470372
+    rid: 1232548296670314508
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470372
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314508
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -2612,16 +2791,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 20
   command:
-    rid: 8267576847255470348
+    rid: 1232548296670314504
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470348
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314504
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -2784,7 +2966,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         summary: 
-        itemType: 1
+        itemType: 0
         option: 1
         setJudge: 1
         isMultitap: 0
@@ -2972,16 +3154,22 @@ MonoBehaviour:
   enable: 1
   beatTiming: 164
   command:
-    rid: 8267576847255470408
+    rid: 1232548296670314513
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470408
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314513
+      type: {class: F_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        isPosDistortion: 1
+        isRotDistortion: 0
+        frequency: 3
+        posAmp: 0.3
+        rotAmp: 5
+        seed: 333
         noteDatas:
         - wait:
             _value: 4
@@ -2989,7 +3177,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -2997,7 +3185,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3005,7 +3193,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3013,7 +3201,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3029,7 +3217,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 8
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3037,7 +3225,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 2
@@ -3045,7 +3233,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3053,7 +3241,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3061,7 +3249,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3069,7 +3257,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3077,7 +3265,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3085,7 +3273,7 @@ MonoBehaviour:
           x: -4.5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3093,7 +3281,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3101,7 +3289,7 @@ MonoBehaviour:
           x: -5.5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3109,7 +3297,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3117,7 +3305,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
 --- !u!114 &-731640584124685344
 MonoBehaviour:
@@ -3143,7 +3331,7 @@ MonoBehaviour:
       data:
         delay:
           _value: 0
-        loopCount: 16
+        loopCount: 8
         loopWait:
           _value: 1
         command:
@@ -3192,16 +3380,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 28
   command:
-    rid: 8267576847255470351
+    rid: 1232548296670314506
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470351
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314506
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: -100
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -3314,16 +3505,22 @@ MonoBehaviour:
   enable: 1
   beatTiming: 180
   command:
-    rid: 8267576847255470408
+    rid: 1232548296670314514
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470408
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314514
+      type: {class: F_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        isPosDistortion: 1
+        isRotDistortion: 0
+        frequency: 3
+        posAmp: 0.3
+        rotAmp: 5
+        seed: 333
         noteDatas:
         - wait:
             _value: 4
@@ -3331,7 +3528,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3339,7 +3536,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3347,7 +3544,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 0
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3355,7 +3552,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3371,7 +3568,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 8
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3379,7 +3576,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 8
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3387,7 +3584,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3395,7 +3592,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 8
@@ -3403,7 +3600,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3411,7 +3608,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3419,7 +3616,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3427,7 +3624,7 @@ MonoBehaviour:
           x: 4.5
           length:
             _value: 4
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3435,7 +3632,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 5.333333
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3443,7 +3640,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 5.333333
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3451,7 +3648,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 5.333333
-          option1: 0
+          option1: 1
           option2: 0
         - wait:
             _value: 4
@@ -3459,7 +3656,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 5.333333
-          option1: 0
+          option1: 1
           option2: 0
 --- !u!114 &-99741995995917056
 MonoBehaviour:
@@ -3476,16 +3673,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 140
   command:
-    rid: 8267576847255470396
+    rid: 1232548296670314511
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470396
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314511
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -3493,7 +3693,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 0
@@ -3501,7 +3701,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3509,7 +3709,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 8
@@ -3517,7 +3717,7 @@ MonoBehaviour:
           x: 2
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 0
@@ -3525,7 +3725,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3533,7 +3733,7 @@ MonoBehaviour:
           x: 0
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 8
@@ -3541,7 +3741,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 0
@@ -3549,7 +3749,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3557,7 +3757,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3565,7 +3765,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 0
@@ -3573,7 +3773,7 @@ MonoBehaviour:
           x: -2
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3581,7 +3781,7 @@ MonoBehaviour:
           x: 0
           length:
             _value: 0
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -3589,7 +3789,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 0
-          option1: 0
+          option1: 50
           option2: 0
         - wait:
             _value: 8
@@ -3597,7 +3797,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 80
           option2: 0
         - wait:
             _value: 8
@@ -3605,7 +3805,7 @@ MonoBehaviour:
           x: 0
           length:
             _value: 0
-          option1: 0
+          option1: 200
           option2: 0
         - wait:
             _value: 8
@@ -3613,7 +3813,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 0
-          option1: 0
+          option1: -80
           option2: 0
         - wait:
             _value: 8
@@ -3621,7 +3821,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 0
-          option1: 0
+          option1: -50
           option2: 0
         - wait:
             _value: 4
@@ -3629,7 +3829,7 @@ MonoBehaviour:
           x: -2
           length:
             _value: 4
-          option1: 0
+          option1: 200
           option2: 0
         - wait:
             _value: 0
@@ -3637,7 +3837,7 @@ MonoBehaviour:
           x: 2
           length:
             _value: 4
-          option1: 0
+          option1: -200
           option2: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -3713,6 +3913,8 @@ MonoBehaviour:
     - {fileID: 6095378410371292688}
     - {fileID: 3765161129883705920}
     - {fileID: 1396875659761959138}
+    - {fileID: -4571476323043706918}
+    - {fileID: -7259823171462596346}
     - {fileID: 794223630339693240}
     - {fileID: 1941131097738631600}
     - {fileID: -422747127569067125}
@@ -3868,16 +4070,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 132
   command:
-    rid: 8267576847255470396
+    rid: 1232548296670314510
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470396
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314510
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -3885,7 +4090,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3893,7 +4098,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3901,7 +4106,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3909,7 +4114,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3917,7 +4122,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3925,7 +4130,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3933,7 +4138,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3941,7 +4146,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3949,7 +4154,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3957,7 +4162,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3965,7 +4170,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3973,7 +4178,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: -60
           option2: 0
         - wait:
             _value: 16
@@ -3981,7 +4186,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3989,7 +4194,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -3997,7 +4202,7 @@ MonoBehaviour:
           x: -6
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -4005,7 +4210,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 0
-          option1: 0
+          option1: 60
           option2: 0
         - wait:
             _value: 16
@@ -4013,7 +4218,7 @@ MonoBehaviour:
           x: 6
           length:
             _value: 2
-          option1: 0
+          option1: -100
           option2: 0
         - wait:
             _value: 4
@@ -4029,7 +4234,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 2
-          option1: 0
+          option1: 100
           option2: 0
         - wait:
             _value: 8
@@ -4037,7 +4242,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 4
-          option1: 0
+          option1: 100
           option2: 0
 --- !u!114 &652879299629426179
 MonoBehaviour:
@@ -5102,16 +5307,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 28
   command:
-    rid: 8267576847255470349
+    rid: 1232548296670314505
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470349
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314505
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 100
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -6202,16 +6410,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 68
   command:
-    rid: 8267576847255470344
+    rid: 1232548296670314507
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470344
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314507
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 30
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -6219,7 +6430,7 @@ MonoBehaviour:
           x: -4
           length:
             _value: 2
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 0
@@ -6227,7 +6438,7 @@ MonoBehaviour:
           x: 4
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 4
@@ -6235,7 +6446,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 0
@@ -6243,7 +6454,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 4
@@ -6251,7 +6462,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 2
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 0
@@ -6259,7 +6470,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 4
@@ -6267,7 +6478,7 @@ MonoBehaviour:
           x: 2
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 0
@@ -6275,7 +6486,7 @@ MonoBehaviour:
           x: -2
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 4
@@ -6283,7 +6494,7 @@ MonoBehaviour:
           x: 0
           length:
             _value: 0
-          option1: 0
+          option1: 200
           option2: 0
         - wait:
             _value: 0
@@ -6299,7 +6510,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: -30
           option2: 0
         - wait:
             _value: 16
@@ -6307,7 +6518,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: 30
           option2: 0
         - wait:
             _value: 16
@@ -6315,7 +6526,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: -30
           option2: 0
         - wait:
             _value: 16
@@ -6331,7 +6542,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 30
           option2: 0
         - wait:
             _value: 16
@@ -6339,7 +6550,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 0
-          option1: 0
+          option1: -30
           option2: 0
         - wait:
             _value: 16
@@ -6347,7 +6558,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 30
           option2: 0
         - wait:
             _value: 16
@@ -6363,7 +6574,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 0
-          option1: 0
+          option1: -30
           option2: 0
         - wait:
             _value: 16
@@ -6371,7 +6582,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 0
-          option1: 0
+          option1: 30
           option2: 0
         - wait:
             _value: 16
@@ -6379,7 +6590,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 0
-          option1: 0
+          option1: -30
           option2: 0
 --- !u!114 &7793423864094660642
 MonoBehaviour:
@@ -6860,16 +7071,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 4
   command:
-    rid: 8267576847255470344
+    rid: 1232548296670314502
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470344
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548296670314502
+      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        defaultCurve: 200
+        isGroup: 0
+        dirSpeed: 40
         noteDatas:
         - wait:
             _value: 0
@@ -6957,7 +7171,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 16
@@ -6965,7 +7179,7 @@ MonoBehaviour:
           x: 1
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 16
@@ -6973,7 +7187,7 @@ MonoBehaviour:
           x: -1
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 16
@@ -6989,7 +7203,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 16
@@ -6997,7 +7211,7 @@ MonoBehaviour:
           x: -3
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 16
@@ -7005,7 +7219,7 @@ MonoBehaviour:
           x: 3
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 16
@@ -7021,7 +7235,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 16
@@ -7029,7 +7243,7 @@ MonoBehaviour:
           x: 5
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
         - wait:
             _value: 16
@@ -7037,7 +7251,7 @@ MonoBehaviour:
           x: -5
           length:
             _value: 0
-          option1: 0
+          option1: 40
           option2: 0
         - wait:
             _value: 8
@@ -7045,7 +7259,7 @@ MonoBehaviour:
           x: 0
           length:
             _value: 0
-          option1: 0
+          option1: -40
           option2: 0
 --- !u!114 &8456494289702894503
 MonoBehaviour:

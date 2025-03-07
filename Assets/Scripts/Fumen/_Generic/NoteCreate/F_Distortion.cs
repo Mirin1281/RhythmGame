@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
@@ -14,7 +13,7 @@ namespace NoteCreating
         [SerializeField] float rotAmp = 5;
         [SerializeField] int seed = 333;
 
-        [Header("オプション1 : 揺れの係数")]
+        [Header("オプション1 : 揺れの係数 デフォルト1")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option1: 1) };
         protected override NoteData[] NoteDatas => noteDatas;
 
@@ -52,16 +51,17 @@ namespace NoteCreating
 
                 if (isRotDistortion)
                 {
-                    float rot;
+                    float rot = rotAmp * data.Option1 * Mathf.Sin(t * randFrequency + phase);
                     if (data.Type == RegularNoteType.Hold)
                     {
-                        rot = 0;
+                        var hold = note as HoldNote;
+                        hold.SetRot(rot);
+                        hold.SetMaskRot(0);
                     }
                     else
                     {
-                        rot = rotAmp * data.Option1 * Mathf.Sin(t * randFrequency + phase);
+                        note.SetRot(rot);
                     }
-                    note.SetRot(rot);
                 }
             });
         }

@@ -7,7 +7,10 @@ namespace NoteCreating
     [AddTypeMenu(FumenPathContainer.NoteCreate + "途中で横移動", -60), System.Serializable]
     public class F_SideMove : NoteCreateBase<NoteData>
     {
+        [Space(10)]
         [SerializeField] Lpb moveLpb = new Lpb(4);
+        [SerializeField] Lpb defaultMoveStartLpb = new Lpb(1);
+        [SerializeField] EaseType easeType = EaseType.OutQuad;
 
         [Header("オプション1 : 移動前のx座標")]
         [Header("オプション2 : 生成されてから移動するまでの時間(LPB)")]
@@ -22,19 +25,20 @@ namespace NoteCreating
                 lifeTime += data.Length.Time;
             }
 
-            var easing = new Easing(data.Option1, data.X, moveLpb.Time, EaseType.OutQuad);
+            var easing = new Easing(data.Option1, data.X, moveLpb.Time, easeType);
+            Lpb moveStartLpb = data.Option2 is -1 or 0 ? defaultMoveStartLpb : new Lpb(data.Option2);
             WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;
 
                 float x;
-                if (t < new Lpb(data.Option2).Time)
+                if (t < moveStartLpb.Time)
                 {
                     x = data.Option1;
                 }
-                else if (t < new Lpb(data.Option2).Time + moveLpb.Time)
+                else if (t < moveStartLpb.Time + moveLpb.Time)
                 {
-                    float t2 = t - new Lpb(data.Option2).Time;
+                    float t2 = t - moveStartLpb.Time;
                     x = easing.Ease(t2);
                 }
                 else

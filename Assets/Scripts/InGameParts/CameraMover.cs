@@ -80,15 +80,15 @@ public class CameraMover : MonoBehaviour
         transform.SetLocalPositionAndRotation(toPos, toRot);
     }
 
-    public void SetPos(Vector3 pos)
+    /*public void SetPos(Vector3 pos)
     {
         basePos = pos;
     }
 
     public void SetRot(Quaternion rot)
     {
-        baseRot = rot;
-    }
+        baseRot *= rot;
+    }*/
 
     public void Move(Vector3? nullablePos, Vector3? nullableRot, CameraMoveType moveType,
         Lpb lpb, EaseType easeType, bool isRotateClamp = true, float delta = 0, Mirror mir = default)
@@ -141,7 +141,7 @@ public class CameraMover : MonoBehaviour
             }
             if (m.IsRotateMove)
             {
-                deltaRot = Quaternion.Euler(
+                deltaRot *= Quaternion.Euler(
                     t.Ease(0, m.Rotate.x, time, m.EaseType),
                     mir.Conv(t.Ease(0, m.Rotate.y, time, m.EaseType)),
                     mir.Conv(t.Ease(0, m.Rotate.z, time, m.EaseType)));
