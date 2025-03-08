@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    // 仮実装
     [AddTypeMenu("◇判定の発生"), System.Serializable]
     public class F_JudgeCreate : CommandBase
     {

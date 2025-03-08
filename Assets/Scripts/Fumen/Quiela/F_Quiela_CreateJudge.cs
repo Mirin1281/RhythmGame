@@ -39,7 +39,7 @@ namespace NoteCreating
             {
                 float d = i.Ease(0, rotate, count, EaseType.InQuad) - dir;
                 Vector2 pos = size * i * new Vector2(Mathf.Cos(d), Mathf.Sin(d));
-                EffectJudge(inputPos, startPos + pos, wideRange: false, isMute);
+                EffectJudge(startPos + inputPos, pos, wideRange: false, isMute);
                 await Wait(lpbInterval);
             }
         }

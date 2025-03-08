@@ -2,11 +2,12 @@ using CriWare;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Rendering.Universal;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
     static readonly float MasterVolume = 1.5f; // 不変の音量
-    public static readonly float DefaultSpeed = 14f; // 不変の音量
+    public static readonly float DefaultSpeed = 14f; // 不変のノーツスピード
 
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
@@ -24,7 +25,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     {
         get
         {
-            return status ?? new GameStatus();
+            return status ??= new GameStatus();
         }
         set
         {
@@ -121,10 +122,11 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 
     public static async UniTask SetDarkModeAsync(bool enabled, bool immediate = false)
     {
+        await UniTask.CompletedTask;
         setting.IsDark = enabled;
         FadeLoadSceneManager.Instance.FadeColor = enabled ? Color.black : Color.white;
 
-        Material invertMat;
+        /*Material invertMat;
         Material negativeMat;
         if (immediate)
         {
@@ -140,6 +142,6 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         invertMat.SetFloat("_Value", value);
         negativeMat.SetFloat("_BlendRate", value);
         Addressables.Release(invertMat);
-        Addressables.Release(negativeMat);
+        Addressables.Release(negativeMat);*/
     }
 }

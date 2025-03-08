@@ -36,7 +36,7 @@ namespace NoteCreating
 
         public Result Result => result;
         const float Range = 4.6f;
-        const float ArcRange = 5.3f;
+        const float ArcRange = 4.6f;
 
         public void Init(FumenData fumenData)
         {

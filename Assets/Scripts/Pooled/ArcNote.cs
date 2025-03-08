@@ -80,7 +80,7 @@ namespace NoteCreating
             get
             {
                 if (spline == null || spline.Knots.Count() == 0) return 1;
-                return GetPos().y/* + spline.Knots.First().Position.z*/;
+                return GetPos().y;
             }
         }
 
@@ -104,7 +104,12 @@ namespace NoteCreating
 
         void Awake()
         {
-            meshFilter.mesh = meshFilter.mesh.Duplicate();
+            meshFilter.mesh = meshFilter.sharedMesh.Duplicate();
+        }
+
+        void OnDestroy()
+        {
+            Destroy(meshFilter.mesh);
         }
 
         void Update()
@@ -120,7 +125,7 @@ namespace NoteCreating
 
             if (IsInvalid)
             {
-                meshRenderer.material.color = new Color(0.5f, 0.2f, 0);
+                //meshRenderer.material.color = new Color(0.5f, 0.2f, 0.3f);
                 holdEndTime = 0;
             }
             else
@@ -129,7 +134,7 @@ namespace NoteCreating
             }
 
             meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
-            SetAlpha(IsHold ? 0.8f : 0.5f);
+            SetAlpha(IsHold ? 0.7f : 0.4f);
         }
 
         /// <summary>

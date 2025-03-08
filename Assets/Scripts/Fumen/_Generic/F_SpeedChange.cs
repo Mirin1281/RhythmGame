@@ -8,22 +8,16 @@ namespace NoteCreating
     {
         [Header("通常を1として、全体のノーツスピードを変更します")]
         [SerializeField] float speed = 1f;
-        [SerializeField, Tooltip("何秒かけて変速するか設定します")] Lpb easeLpb;
+        [SerializeField] Lpb easeLpb;
         [SerializeField] EaseType easeType = EaseType.Linear;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float easeTime = easeLpb.Time;
-            var easing = new Easing(RhythmGameManager.SpeedBase, speed, easeTime, easeTime == 0 ? EaseType.End : easeType);
-            float baseTime = CurrentTime - Delta;
-            float t = 0f;
-            while (t < easeTime)
+            var easing = new Easing(RhythmGameManager.SpeedBase, speed, easeLpb.Time, easeType);
+            WhileYield(easeLpb.Time, t =>
             {
-                t = CurrentTime - baseTime;
                 RhythmGameManager.SpeedBase = easing.Ease(t);
-                await Yield(timing: PlayerLoopTiming.EarlyUpdate);
-            }
-            RhythmGameManager.SpeedBase = easing.Ease(easeTime);
+            });
             await UniTask.CompletedTask;
         }
 
@@ -41,7 +35,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return $"To  {speed}   :   EaseTime  {easeLpb}";
+            return $"To  {speed}   :   Lpb  {easeLpb.GetLpbValue()}";
         }
 #endif
     }

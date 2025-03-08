@@ -54,35 +54,22 @@ namespace NoteCreating
 
             RhythmGameManager.FumenName = MyUtility.GetFumenName(fumenData.MusicSelectData);
 
+            RhythmGameManager.SpeedBase = 1f;
+
             metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
 
-            darkImage.gameObject.SetActive(RhythmGameManager.Setting.IsDark);
+            SetDarkMode();
+            SetMirror();
 
 #if UNITY_EDITOR
-
             if (isEarphone) RhythmGameManager.Setting.Offset = -100;
-
-            {
-                RhythmGameManager.Setting.IsMirror = isMirror;
-                var cameraMirrors = FindObjectsByType<CameraMirror>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-                var mainCameraMirror = cameraMirrors.First(c => c.gameObject.name == "Main Camera");
-                var effectCameraMirror = cameraMirrors.First(c => c.gameObject.name == "EffectCamera");
-                var negativeCameraMirror = cameraMirrors.First(c => c.gameObject.name == "NegativeCamera");
-
-                mainCameraMirror.IsInvert = isMirror;
-                effectCameraMirror.IsInvert = isMirror;
-                negativeCameraMirror.IsInvert = isMirror;
-
-                darkImage.gameObject.SetActive(isDark);
-
-                if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
-            }
+            if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
 #endif
 
             // 音楽データをロード
             await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);
 
-            await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
+            //await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
             metronome.Play(fumenData);
 
             if (fumenData.ArcPoolCount != 0)
@@ -91,18 +78,56 @@ namespace NoteCreating
                 var arcPool = FindAnyObjectByType<ArcNotePool>(FindObjectsInactive.Exclude);
                 var arc = arcPool.GetNote();
                 arc.SetPos(new Vector3(1000, 1000));
-                await arc.CreateAsync(new ArcCreateData[]
-                    {
+                var datas = new ArcCreateData[]
+                {
                     new(-2, new Lpb(0), VertexType.Auto, false, false, new Lpb(0), new Lpb(8)),
                     new(2, new Lpb(8), VertexType.Auto, false, false, new Lpb(0), new Lpb(8)),
                     new(0, new Lpb(8), VertexType.Auto, false, false, new Lpb(0), new Lpb(8)),
-                    }, RhythmGameManager.Speed);
+                };
+                await arc.CreateAsync(datas, RhythmGameManager.Speed);
                 arc.SetActive(false);
             }
 
             titleTmpro = null;
             darkImage = null;
         }
+
+        void SetMirror()
+        {
+            var cameraMirrors = FindObjectsByType<CameraMirror>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            var mainCameraMirror = cameraMirrors.First(c => c.gameObject.name == "Main Camera");
+            var effectCameraMirror = cameraMirrors.First(c => c.gameObject.name == "EffectCamera");
+            var negativeCameraMirror = cameraMirrors.First(c => c.gameObject.name == "NegativeCamera");
+
+#if UNITY_EDITOR
+            RhythmGameManager.Setting.IsMirror = isMirror;
+            mainCameraMirror.IsInvert = isMirror;
+            effectCameraMirror.IsInvert = isMirror;
+            negativeCameraMirror.IsInvert = isMirror;
+#else
+            bool isMirror = RhythmGameManager.Setting.IsMirror;
+            mainCameraMirror.IsInvert = isMirror;
+            effectCameraMirror.IsInvert = isMirror;
+            negativeCameraMirror.IsInvert = isMirror;
+#endif
+        }
+
+        void SetDarkMode()
+        {
+            var clearCamera = GameObject.Find("ClearCamera").GetComponent<Camera>();
+            bool l_isDark = true;
+#if UNITY_EDITOR
+            l_isDark = isDark;
+            darkImage.gameObject.SetActive(l_isDark);
+            RhythmGameManager.Setting.IsDark = l_isDark;
+#else
+            l_isDark = RhythmGameManager.Setting.IsDark;
+            darkImage.gameObject.SetActive(l_isDark);
+#endif
+
+            clearCamera.backgroundColor = l_isDark ? Color.white : Color.black;
+        }
+
 #if UNITY_EDITOR
         public FumenData GetEditorFumenData() => editorFumenData;
 #endif

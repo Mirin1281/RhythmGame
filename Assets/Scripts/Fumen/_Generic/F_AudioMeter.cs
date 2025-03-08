@@ -13,6 +13,7 @@ namespace NoteCreating
         [SerializeField] int lifeCount = 32;
         [Space(20)]
         [SerializeField] float alpha = 0.2f;
+        [SerializeField] float fadeTime = 0.3f;
         [SerializeField] float amp = 3f;
         [SerializeField] float height = 4f;
 
@@ -28,7 +29,8 @@ namespace NoteCreating
                 float x = (i - ((itemCount - 1) / 2f)) / (itemCount / 32f * 1.5f);
                 item.SetPos(new Vector3(x, 0));
                 item.SetRot(90);
-                item.SetAlpha(alpha);
+                item.SetAlpha(0f);
+                item.FadeAlphaAsync(alpha, fadeTime).Forget();
             }
 
             float[] pcmData = new float[Helper.WaveMeter.PcmSamples];

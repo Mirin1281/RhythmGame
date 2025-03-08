@@ -362,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicButtonManager: {fileID: 1798253311}
   difficultyGroup: {fileID: 528069092}
+  darkSetter: {fileID: 581030571}
 --- !u!4 &23060718
 Transform:
   m_ObjectHideFlags: 0
@@ -2550,6 +2551,7 @@ GameObject:
   - component: {fileID: 581030570}
   - component: {fileID: 581030572}
   - component: {fileID: 581030571}
+  - component: {fileID: 581030573}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -2592,6 +2594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 581030572}
+  negativeMat: {fileID: 2100000, guid: b10e3ee2894950b418275e612a7e4b5d, type: 2}
+  invertMat: {fileID: 2100000, guid: 01a68af4dd6e67644844860eee5d3e28, type: 2}
 --- !u!114 &581030572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2652,6 +2656,58 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!212 &581030573
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581030569}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b10e3ee2894950b418275e612a7e4b5d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &590766064
 GameObject:
   m_ObjectHideFlags: 0
@@ -4445,7 +4501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110003105}
   m_Layer: 5
-  m_Name: Negative
+  m_Name: Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

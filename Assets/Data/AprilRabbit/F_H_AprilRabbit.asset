@@ -27,7 +27,7 @@ MonoBehaviour:
         isChainWait: 1
         settings:
         - wait:
-            _value: 6
+            _value: 0
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
             _value: 0
           moveType: 1
         - wait:
-            _value: 6
+            _value: 4.8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
             _value: 0
           moveType: 1
         - wait:
-            _value: 4
+            _value: 8
           isPosMove: 1
           pos: {x: -0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -116,6 +116,28 @@ MonoBehaviour:
           moveType: 1
         - wait:
             _value: 4
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 4
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
           isPosMove: 1
           pos: {x: 0.2, y: 0, z: 0}
           isRotateMove: 0
@@ -139,18 +161,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
+          pos: {x: 0.3, y: 0, z: 0}
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 0}
           isRotateClamp: 1
@@ -2620,6 +2631,186 @@ MonoBehaviour:
           _value: 1
         command:
           rid: 1232548273671897092
+--- !u!114 &-4002427680203597118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_AprilRabbit (93)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 16
+  command:
+    rid: 8267576847255470099
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267576847255470099
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        isChainWait: 1
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 6
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 4.8
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: -0.3, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 4
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 4
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: 0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: -0.2, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: 0.3, y: 0, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 1
+          pos: {x: 0, y: 4, z: -10}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 1
+          easeType: 3
+          lpb:
+            _value: 0
+          moveType: 0
 --- !u!114 &-3589205620100905118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4332,7 +4523,7 @@ MonoBehaviour:
     - {fileID: -619215705141571307}
     - {fileID: -6460461872335312695}
     - {fileID: 984670347850053290}
-    - {fileID: 5217158169241468903}
+    - {fileID: -4002427680203597118}
     - {fileID: -4497321431592147230}
     - {fileID: -6434474111336218708}
     - {fileID: 1445762912844028676}
@@ -7041,186 +7232,6 @@ MonoBehaviour:
           lpb:
             _value: 1
           moveType: 1
---- !u!114 &5217158169241468903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_AprilRabbit (9)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 16
-  command:
-    rid: 8267576847255470106
-  references:
-    version: 2
-    RefIds:
-    - rid: 8267576847255470106
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        isChainWait: 1
-        settings:
-        - wait:
-            _value: 0
-          isPosMove: 1
-          pos: {x: -0.1, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 6
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 6
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 6
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: -0.3, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 4
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 4
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: 0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: -0.2, y: 0, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 1
-        - wait:
-            _value: 8
-          isPosMove: 1
-          pos: {x: 0, y: 4, z: -10}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 1
-          easeType: 3
-          lpb:
-            _value: 0
-          moveType: 0
 --- !u!114 &5318877571292454113
 MonoBehaviour:
   m_ObjectHideFlags: 0
