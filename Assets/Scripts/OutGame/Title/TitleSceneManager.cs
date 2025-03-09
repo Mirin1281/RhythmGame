@@ -6,11 +6,17 @@ public class TitleSceneManager : MonoBehaviour
 {
     [SerializeField] SceneChanger sceneChanger;
     [SerializeField] TMP_Text startTmpro;
+    [SerializeField] Material invertMat;
     bool _onSceneTransition;
 
     public void SetTransitionFlag()
     {
         _onSceneTransition = true;
+    }
+
+    void Awake()
+    {
+        invertMat.SetFloat("_Value", RhythmGameManager.Setting.IsDark ? 1 : 0);
     }
 
     async UniTask Start()

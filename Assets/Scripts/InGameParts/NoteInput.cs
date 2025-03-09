@@ -123,11 +123,8 @@ namespace NoteCreating
         [SerializeField] Judgement judge;
         [SerializeField] ArcLightOperator lightOperator;
         [SerializeField] PoolManager poolManager;
-#if UNITY_EDITOR
         [SerializeField] bool isAuto;
-#else
-    bool isAuto = false;
-#endif
+        public bool IsAuto { set => isAuto = value; }
 
         readonly List<NoteJudgeStatus> allStatuses = new(63);
         readonly List<HoldNote> holds = new(4);
@@ -138,6 +135,9 @@ namespace NoteCreating
         static readonly float wideTolerance = 0.25f;
 
         float CurrentTime => Metronome.Instance.CurrentTime;
+#if UNITY_EDITOR
+        NoteJudgeStatus previousStatus;
+#endif
 
         void Start()
         {
@@ -186,6 +186,7 @@ namespace NoteCreating
                     }
                 }
             }
+
             allStatuses.Add(judgeStatus);
         }
 
@@ -238,10 +239,20 @@ namespace NoteCreating
                         status.DisableActive();
                     }
 
+
                     allStatuses.Remove(status);
                     judge.PlayParticle(NoteGrade.Perfect, status.Pos);
                     judge.SetCombo(NoteGrade.Perfect);
 #if UNITY_EDITOR
+                    // ノーツの重複チェック
+                    if (previousStatus != null
+                     && status.Time == previousStatus.Time
+                     && status.Pos == previousStatus.Pos
+                     && status.NoteType == RegularNoteType.Normal && previousStatus.NoteType == RegularNoteType.Normal)
+                    {
+                        Debug.LogWarning("ノーツ重複");
+                    }
+                    previousStatus = status;
                     judge.DebugShowRange(status);
 #endif
                     if (status.IsMute == false)

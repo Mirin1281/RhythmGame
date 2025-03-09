@@ -31,8 +31,21 @@ namespace NoteCreating
         {
             // インスタンスの取得 //
             var metronome = Metronome.Instance;
-            var poolManager = FindAnyObjectByType<PoolManager>();
-            var judgement = FindAnyObjectByType<Judgement>();
+
+            // 初期化(すぐできるもの) //
+            RhythmGameManager.SpeedBase = 1f;
+
+            metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
+
+            SetDarkMode();
+            SetMirror();
+
+#if UNITY_EDITOR
+            if (isEarphone) RhythmGameManager.Setting.Offset = -100;
+            if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
+#else
+            FindAnyObjectByType<NoteInput>().IsAuto = RhythmGameManager.Setting.IsAutoPlay;
+#endif
 
             if (RhythmGameManager.Instance != null && RhythmGameManager.FumenReference != null)
             {
@@ -45,31 +58,18 @@ namespace NoteCreating
 #endif
             }
 
-            // 初期化 //
-            poolManager.InitPools(fumenData);
+            // 初期化(fumenDataが必要なもの) //
+            FindAnyObjectByType<PoolManager>().InitPools(fumenData);
 
-            judgement.Init(fumenData);
+            FindAnyObjectByType<Judgement>().Init(fumenData);
 
             titleTmpro.SetText($"<size=30><b>♪</b></size>{fumenData.MusicSelectData.MusicName}");
 
             RhythmGameManager.FumenName = MyUtility.GetFumenName(fumenData.MusicSelectData);
 
-            RhythmGameManager.SpeedBase = 1f;
-
-            metronome.GetComponent<IVolumeChangable>().ChangeVolume(RhythmGameManager.GetBGMVolume());
-
-            SetDarkMode();
-            SetMirror();
-
-#if UNITY_EDITOR
-            if (isEarphone) RhythmGameManager.Setting.Offset = -100;
-            if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
-#endif
-
             // 音楽データをロード
             await MyUtility.LoadCueSheetAsync(fumenData.MusicSelectData.SheetName);
 
-            //await MyUtility.WaitSeconds(0.1f, destroyCancellationToken);
             metronome.Play(fumenData);
 
             if (fumenData.ArcPoolCount != 0)
@@ -126,6 +126,7 @@ namespace NoteCreating
 #endif
 
             clearCamera.backgroundColor = l_isDark ? Color.white : Color.black;
+            SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f;
         }
 
 #if UNITY_EDITOR

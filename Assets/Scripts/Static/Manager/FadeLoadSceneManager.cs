@@ -10,7 +10,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
     // フェード中ボタンの多重クリックを禁止するために使う
     public static bool IsSceneChanging { get; private set; }
 
-    public Color FadeColor = Color.white;
+    Color defaultColor => RhythmGameManager.Setting.IsDark ? Color.black : Color.white;
 
     /// <summary>
     /// シーン遷移させる関数
@@ -50,7 +50,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
     public async UniTask FadeIn(float interval, Color? fadeColor = null)
     {
         fadeImage.gameObject.SetActive(true);
-        var color = fadeColor ?? FadeColor;
+        var color = fadeColor ?? defaultColor;
         var clearColor = new Color(color.r, color.g, color.b, 0f);
         var easing = new Easing(0f, 1f, interval, EaseType.InCubic);
 
@@ -66,7 +66,7 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
 
     public async UniTask FadeOut(float interval, Color? fadeColor = null)
     {
-        var color = fadeColor ?? FadeColor;
+        var color = fadeColor ?? defaultColor;
         var clearColor = new Color(color.r, color.g, color.b, 0f);
         var easing = new Easing(0f, 1f, interval, EaseType.InCubic);
 

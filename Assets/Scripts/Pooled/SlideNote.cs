@@ -5,16 +5,16 @@ namespace NoteCreating
     public class SlideNote : RegularNote
     {
         public override RegularNoteType Type => RegularNoteType.Slide;
-        static readonly float baseAlpha = 0.4f;
+        public static float BaseAlpha = 0.3f;
 
         public override float GetAlpha()
         {
-            return spriteRenderer.color.a / baseAlpha;
+            return spriteRenderer.color.a / BaseAlpha;
         }
         public override void SetAlpha(float alpha)
         {
             var c = spriteRenderer.color;
-            spriteRenderer.color = new Color(c.r, c.g, c.b, alpha * baseAlpha);
+            spriteRenderer.color = new Color(c.r, c.g, c.b, alpha * BaseAlpha);
         }
     }
 }

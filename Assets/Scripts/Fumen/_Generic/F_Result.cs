@@ -13,7 +13,6 @@ namespace NoteCreating
 
             RhythmGameManager.Instance.Result = judge.Result;
             await FadeLoadSceneManager.Instance.LoadSceneAsync(1, "Result", 1, Color.white);
-            RhythmGameManager.SpeedBase = 1f;
         }
 
 #if UNITY_EDITOR

@@ -21,13 +21,10 @@ public class DarkSetter : MonoBehaviour
 
     public void OnToggle()
     {
-        UniTask.Void(async () =>
-        {
-            await RhythmGameManager.SetDarkModeAsync(toggle.isOn);
-            float value = toggle.isOn ? 1 : 0;
-            negativeMat.SetFloat("_BlendRate", value);
-            invertMat.SetFloat("_Value", value);
-            SEManager.Instance.PlaySE(SEType.ti);
-        });
+        RhythmGameManager.Setting.IsDark = toggle.isOn;
+        float value = toggle.isOn ? 1 : 0;
+        negativeMat.SetFloat("_BlendRate", value);
+        invertMat.SetFloat("_Value", value);
+        SEManager.Instance.PlaySE(SEType.ti);
     }
 }

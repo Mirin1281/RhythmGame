@@ -30,9 +30,15 @@ public class GameSetting
     [JsonProperty("ノーツ音量のミュート")]
     public bool IsNoteMute { get; set; } = false;
 
+    /// <summary>
+    /// 50-100の範囲を想定
+    /// </summary>
     [JsonProperty("スピード")]
     public int Speed { get; set; } = 70;
 
+    /// <summary>
+    /// -100-100の範囲を想定
+    /// </summary>
     [JsonProperty("オフセット")]
     public int Offset { get; set; } = 0;
 
@@ -46,7 +52,7 @@ public class GameSetting
     public bool IsStrictJudge { get; set; } = false;
 
     [JsonProperty("オートプレイ")]
-    public bool isAutoPlay { get; set; } = false;
+    public bool IsAutoPlay { get; set; } = false;
 }
 
 [Serializable]

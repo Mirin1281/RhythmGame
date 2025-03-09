@@ -2,12 +2,11 @@ using CriWare;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Rendering.Universal;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    static readonly float MasterVolume = 1.5f; // 不変の音量
-    public static readonly float DefaultSpeed = 14f; // 不変のノーツスピード
+    static readonly float MasterVolume = 1.5f; // 音量調整用(不変)
+    public static readonly float DefaultSpeed = 14f; // 基準のノーツスピード(不変)
 
     // スクリプト上で変更可能なノーツスピード
     public static float SpeedBase = 1f;
@@ -38,10 +37,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     public static float GetNoteVolume() => MasterVolume * setting.NoteSEVolume;
 
 
-    // setting.Speedは50~100程度を想定。ゲーム内では"7.0"のような表記で扱う
     public static float Speed => SpeedBase * setting.Speed / 5f;
-
-    // setting.Offsetは-100~100程度を想定。ゲーム内では"0.000"のような表記で扱う
     public static float Offset => setting.Offset / 1000f;
 
 
@@ -70,7 +66,6 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
     {
         Application.targetFrameRate = 60;
         FumenReference = null;
-        Application.quitting += OnQuit;
 
         if (useJsonData)
         {
@@ -95,12 +90,17 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         }
     }
 
-    // OnApplicationQuitはタスクキルすると呼ばれないっぽい
-    static void OnQuit()
+    void OnApplicationPause(bool goBack)
     {
-        SpeedBase = 1f;
-        SetDarkModeAsync(false, true).Forget();
+        if (goBack)
+        {
+            OnApplicationQuit();
+        }
+    }
 
+    // OnApplicationQuitはタスクキルすると呼ばれないっぽい
+    void OnApplicationQuit()
+    {
         if (useJsonData)
         {
             var gameData = new GameData
@@ -118,30 +118,5 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         setting = gameData.Setting ?? new GameSetting();
         Status = gameData.Status ?? new GameStatus();
         SaveLoadUtility.SetDataImmediately(gameData, ConstContainer.GameDataName);
-    }
-
-    public static async UniTask SetDarkModeAsync(bool enabled, bool immediate = false)
-    {
-        await UniTask.CompletedTask;
-        setting.IsDark = enabled;
-        FadeLoadSceneManager.Instance.FadeColor = enabled ? Color.black : Color.white;
-
-        /*Material invertMat;
-        Material negativeMat;
-        if (immediate)
-        {
-            invertMat = Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath).WaitForCompletion();
-            negativeMat = Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath).WaitForCompletion();
-        }
-        else
-        {
-            invertMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.InvertColorMaterialPath);
-            negativeMat = await Addressables.LoadAssetAsync<Material>(ConstContainer.NegativeMaterialPath);
-        }
-        float value = enabled ? 1 : 0;
-        invertMat.SetFloat("_Value", value);
-        negativeMat.SetFloat("_BlendRate", value);
-        Addressables.Release(invertMat);
-        Addressables.Release(negativeMat);*/
     }
 }
