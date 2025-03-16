@@ -27,6 +27,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
+            if (Delta > lifeLpb.Time * lifeCount + MoveLpb.Time) return;
             await Wait(MoveLpb);
             Line line = Helper.GetLine();
             line.SetRot(deg);

@@ -15,7 +15,8 @@ namespace NoteCreating
         [SerializeField] bool isEarphone;
         [SerializeField] bool isMirror;
         [SerializeField] bool isDark;
-        [SerializeField] bool isNoteSeMute;
+        [SerializeField] float noteSeRate = 1;
+        [SerializeField] int speed = 7;
 #endif
         [SerializeField] TMP_Text titleTmpro;
         [SerializeField] Image darkImage;
@@ -42,7 +43,9 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
             if (isEarphone) RhythmGameManager.Setting.Offset = -100;
-            if (isNoteSeMute) RhythmGameManager.Setting.NoteSEVolume = 0;
+            RhythmGameManager.Setting.NoteSEVolume = noteSeRate * RhythmGameManager.Setting.NoteSEVolume;
+            SEManager.Instance.SetCategoryVolume(ConstContainer.NoteSECategory, RhythmGameManager.GetNoteVolume());
+            RhythmGameManager.Setting.Speed = speed * 10;
 #else
             FindAnyObjectByType<NoteInput>().IsAuto = RhythmGameManager.Setting.IsAutoPlay;
 #endif
@@ -127,6 +130,9 @@ namespace NoteCreating
 
             clearCamera.backgroundColor = l_isDark ? Color.white : Color.black;
             SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f;
+            ArcNote.HoldingAlpha = l_isDark ? 0.7f : 0.6f;
+            ArcNote.NotHoldingAlpha = l_isDark ? 0.4f : 0.3f;
+            Line.BaseAlpha = l_isDark ? 1.2f : 1f;
         }
 
 #if UNITY_EDITOR

@@ -50,14 +50,8 @@ namespace NoteCreating
             Line(-20, new Vector3(-8, 1.5f));
         }
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
             int x = mirror.Conv(Mathf.RoundToInt(data.X));
 
             int dir = 10 * x;

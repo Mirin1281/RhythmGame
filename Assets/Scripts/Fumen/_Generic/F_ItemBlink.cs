@@ -34,7 +34,7 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             if (target == 0) return;
-            await WaitOnTiming();
+            await Wait(MoveLpb);
 
             List<ItemBase> items = new(capacity);
             if (target.HasFlag(ItemTargets.Normal))
@@ -69,7 +69,7 @@ namespace NoteCreating
             }
             else
             {
-                Debug.LogWarning($"アイテム数: {items.Count}");
+                Debug.Log($"アイテム数: {items.Count}, capacity: {capacity}");
             }
 #endif
 

@@ -13,10 +13,7 @@ namespace NoteCreating
 
         public void SetMultitapSprite(RegularNote note)
         {
-            if (note == null) return;
-            var sprite = RegularPool.GetMultitapSprite(note.Type);
-            if (sprite == null) return;
-            note.SetSprite(sprite);
+            RegularPool.SetMultitapSprite(note);
         }
 
         public void InitPools(FumenData fumen)

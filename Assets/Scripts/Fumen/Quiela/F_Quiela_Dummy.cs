@@ -16,7 +16,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await WaitOnTiming(Delta);
+            float delta = await Wait(MoveLpb);
 
             CreateNotes(noteDatas1, delta, 1);
             delta = await Wait(interval, delta);

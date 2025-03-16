@@ -6,6 +6,8 @@ namespace NoteCreating
     public class Line : ItemBase
     {
         [SerializeField] SpriteRenderer spriteRenderer;
+        public static float BaseAlpha = 1f;
+
         public void SetWidth(float width)
         {
             transform.localScale = new Vector3(width, transform.localScale.y);
@@ -22,39 +24,21 @@ namespace NoteCreating
 
         public override float GetAlpha()
         {
-            return spriteRenderer.color.a;
+            return spriteRenderer.color.a / BaseAlpha;
         }
         public override void SetAlpha(float alpha)
         {
             var c = spriteRenderer.color;
-            spriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
+            spriteRenderer.color = new Color(c.r, c.g, c.b, alpha * BaseAlpha);
         }
 
-        /*public async UniTask MoveAsync(Vector3 toPos, float time, float delta = 0)
+        public void Refresh()
         {
-            var xEasing = new Easing(GetPos().x, toPos.x, time, EaseType.OutQuad);
-            var yEasing = new Easing(GetPos().y, toPos.y, time, EaseType.OutQuad);
-            var zEasing = new Easing(GetPos().z, toPos.z, time, EaseType.OutQuad);
-
-            float t = delta;
-            while(t < time)
-            {
-                t += Time.deltaTime;
-                SetPos(new Vector3(xEasing.Ease(t), yEasing.Ease(t), zEasing.Ease(t)));
-                await UniTask.Yield(destroyCancellationToken);
-            }
+            SetWidth(50f);
+            SetHeight(0.1f);
+            transform.localRotation = default;
+            SetRendererEnabled(true);
+            SetAlpha(1);
         }
-        public async UniTask RotateAsync(float toRot, float time, float delta = 0)
-        {
-            var easing = new Easing(transform.eulerAngles.z, toRot, time, EaseType.OutQuad);
-
-            float t = delta;
-            while(t < time)
-            {
-                t += Time.deltaTime;
-                SetRotate(easing.Ease(t));
-                await UniTask.Yield(destroyCancellationToken);
-            }
-        }*/
     }
 }

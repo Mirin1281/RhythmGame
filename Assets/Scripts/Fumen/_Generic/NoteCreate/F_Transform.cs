@@ -15,9 +15,9 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option1: -1, option2: -1) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            var expectPos = EasingTransformGroupNote(note, data, deg, pos, moveLpb.Time, easeType);
+            var expectPos = EasingTransformGroupNote(note, data, lifeTime, deg, pos, moveLpb.Time, easeType);
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, expectPos, MoveTime - Delta, data.Length, ExpectType.Y_Static));
         }
 
@@ -26,25 +26,19 @@ namespace NoteCreating
             return;
         }
 
-        Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float toDeg, Vector2 toPos, float easeTime, EaseType easeType)
+        Vector2 EasingTransformGroupNote(RegularNote note, NoteData data, float lifeTime, float toDeg, Vector2 toPos, float easeTime, EaseType easeType)
         {
             var dEasing = new Easing(0, toDeg, easeTime, easeType);
             var pEasing = new EasingVector2(Vector2.zero, toPos, easeTime, easeType);
 
             // 先頭を基準とした着地時間、着地座標を求める
-            float a = Mathf.Clamp(WaitDelta.Time, 0, easeTime);
+            float a = Mathf.Clamp(Time, 0, easeTime);
             float d = dEasing.Ease(a);
             Vector2 p = pEasing.Ease(a);
 
             var expectPos = mirror.Conv(p + MyUtility.GetRotatedPos(new Vector2(data.X, 0), d));
 
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
-            float w = WaitDelta.Time - MoveTime;
+            float w = Time - MoveTime;
 
             // 移動
             WhileYield(lifeTime, t =>

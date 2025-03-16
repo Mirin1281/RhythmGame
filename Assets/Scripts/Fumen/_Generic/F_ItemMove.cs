@@ -88,7 +88,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await WaitOnTiming();
+            float delta = await Wait(MoveLpb);
             if (isChainWait)
             {
                 LoopCreate(createDatas, delta).Forget();
@@ -115,7 +115,7 @@ namespace NoteCreating
 
         async UniTaskVoid Create(CreateData data, float delta, bool isWait)
         {
-            if (data.Enabled == false) return;
+            if (data.Enabled == false || delta > lifeLpb.Time) return;
             if (isWait)
             {
                 delta = await Wait(data.DelayLPB, delta: delta);

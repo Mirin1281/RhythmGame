@@ -23,7 +23,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            await Wait(MoveLpb);
 
             RubyTextMeshProUGUI tmpro;
             if (tmproPrefab != null)

@@ -328,6 +328,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 0
           wait:
@@ -497,6 +498,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -791,6 +793,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -937,6 +941,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 7
           wait:
@@ -1035,6 +1040,8 @@ MonoBehaviour:
         easeX: {x: 7, y: -1}
         easeType: 1
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
 --- !u!114 &-8511205743909600364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1460,6 +1467,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1770,6 +1779,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1867,6 +1878,8 @@ MonoBehaviour:
         easeX: {x: 0, y: -8}
         easeType: 1
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548207515926547
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -2522,6 +2535,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -4
           wait:
@@ -2592,6 +2606,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3026,6 +3042,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -7
           wait:
@@ -3403,6 +3420,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -4047,6 +4065,8 @@ MonoBehaviour:
         easeX: {x: 7, y: 0}
         easeType: 3
         easeTime: 5
+        commandData: {fileID: 0}
+        option: 0
 --- !u!114 &-5509287212451200920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4386,6 +4406,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -4534,6 +4555,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -5060,6 +5083,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -7
           wait:
@@ -5272,6 +5296,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -8
           wait:
@@ -5397,6 +5422,8 @@ MonoBehaviour:
         easeX: {x: 8, y: -5}
         easeType: 3
         easeTime: 6
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548207515926548
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -5407,6 +5434,78 @@ MonoBehaviour:
           _value: 4
         command:
           rid: 1232548207515926542
+--- !u!114 &-4415699103586584374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (131)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 96
+  command:
+    rid: 1232548510700404776
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548510700404770
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        summary: "\u5224\u5B9A\u7DDA"
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.5
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 0
+          rotEaseDatas:
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          startAlpha: 0.7
+          alphaEaseDatas: []
+    - rid: 1232548510700404776
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 4
+        loopWait:
+          _value: 0.5
+        command:
+          rid: 1232548510700404770
 --- !u!114 &-4392602292516192365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5766,6 +5865,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -6775,6 +6875,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -7409,6 +7510,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -7483,6 +7586,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 4
           wait:
@@ -7613,6 +7717,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 3
           wait:
@@ -7934,6 +8039,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -8119,6 +8225,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -9122,6 +9230,8 @@ MonoBehaviour:
         easeX: {x: 2, y: 9}
         easeType: 1
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
 --- !u!114 &-1191838057043398917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9286,27 +9396,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 120
   command:
-    rid: 1232548324848959500
+    rid: 1232548510700404783
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959500
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404783
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        deg: 1
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404788
         noteDatas:
         - wait:
             _value: 0
@@ -9492,6 +9594,15 @@ MonoBehaviour:
             _value: 1
           option1: 1
           option2: 0
+    - rid: 1232548510700404788
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 1
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &-1174953054717111116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9517,6 +9628,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -9664,6 +9777,8 @@ MonoBehaviour:
         easeX: {x: -7, y: 5}
         easeType: 3
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548214306766849
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -9936,6 +10051,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 4
           wait:
@@ -10076,6 +10192,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -10729,6 +10847,8 @@ MonoBehaviour:
     - {fileID: 8536616987506704207}
     - {fileID: 3051515735458030219}
     - {fileID: 954748035025027912}
+    - {fileID: 3044645331239352984}
+    - {fileID: 7988414388626666081}
     - {fileID: 7838699510949843029}
     - {fileID: -1846275012583414105}
     - {fileID: 766015267075374739}
@@ -10745,6 +10865,8 @@ MonoBehaviour:
     - {fileID: 6312057286184334123}
     - {fileID: -2756160067641986518}
     - {fileID: 3591739685424621290}
+    - {fileID: 3450366354718586975}
+    - {fileID: -4415699103586584374}
     - {fileID: 3284165892563716877}
     - {fileID: 7285845489934200199}
     - {fileID: 7851204605406514011}
@@ -11115,6 +11237,8 @@ MonoBehaviour:
         easeX: {x: 5, y: -8}
         easeType: 1
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548214306766849
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -11284,6 +11408,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 7
           wait:
@@ -11376,6 +11501,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 2.6666667
@@ -11585,27 +11712,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 72
   command:
-    rid: 1232548324848959492
+    rid: 1232548510700404766
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959492
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404766
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404790
         noteDatas:
         - wait:
             _value: 8
@@ -11751,6 +11870,15 @@ MonoBehaviour:
             _value: 16
           option1: 0
           option2: 0
+    - rid: 1232548510700404790
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &767530812794240839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11816,6 +11944,8 @@ MonoBehaviour:
         easeX: {x: -4, y: -7}
         easeType: 3
         easeTime: 4
+        commandData: {fileID: 7851204605406514011}
+        option: 1
     - rid: 1232548170385588234
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -12029,6 +12159,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -8
           wait:
@@ -12215,6 +12346,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -12373,6 +12506,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -12640,6 +12775,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -12888,6 +13025,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -13018,6 +13157,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -13081,8 +13221,8 @@ MonoBehaviour:
           _value: 2
         dropLPB:
           _value: 2
-        easingRate: 0.5
-        acceleration: 1.5
+        easingRate: 0.3
+        acceleration: 2
         noteDatas:
         - wait:
             _value: 0
@@ -13284,6 +13424,116 @@ MonoBehaviour:
             _value: 1.142857
           option1: 0
           option2: 0
+--- !u!114 &3044645331239352984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (128)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 64
+  command:
+    rid: 1232548510700404770
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548510700404770
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: "\u5224\u5B9A\u7DDA"
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.1428571
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 0
+          rotEaseDatas:
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          startAlpha: 0.7
+          alphaEaseDatas: []
 --- !u!114 &3051515735458030219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13462,6 +13712,8 @@ MonoBehaviour:
         easeX: {x: -7, y: 7}
         easeType: 3
         easeTime: 6.6
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548207515926548
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -13497,6 +13749,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -13610,6 +13864,8 @@ MonoBehaviour:
         easeX: {x: -4, y: 3}
         easeType: 13
         easeTime: 5
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548207515926545
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -13740,27 +13996,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 80
   command:
-    rid: 1232548324848959493
+    rid: 1232548510700404768
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959493
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404768
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404791
         noteDatas:
         - wait:
             _value: 0
@@ -13906,6 +14154,15 @@ MonoBehaviour:
             _value: 16
           option1: 1
           option2: 0
+    - rid: 1232548510700404791
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &3284165892563716877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13921,27 +14178,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 96
   command:
-    rid: 1232548324848959497
+    rid: 1232548510700404777
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959497
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404777
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 1
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 32
-        lineAlpha: 0.6
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404785
         noteDatas:
         - wait:
             _value: 0
@@ -14103,6 +14352,15 @@ MonoBehaviour:
             _value: 16
           option1: 1
           option2: 0
+    - rid: 1232548510700404785
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &3350606053916133232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14129,6 +14387,78 @@ MonoBehaviour:
         easeLpb:
           _value: 0
         easeType: 1
+--- !u!114 &3450366354718586975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (130)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 96
+  command:
+    rid: 1232548510700404776
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548510700404770
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        summary: "\u5224\u5B9A\u7DDA"
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.5
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 0
+          rotEaseDatas:
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          startAlpha: 0.7
+          alphaEaseDatas: []
+    - rid: 1232548510700404776
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 0
+        loopCount: 4
+        loopWait:
+          _value: 0.5
+        command:
+          rid: 1232548510700404770
 --- !u!114 &3525221232630539531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14154,6 +14484,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -14647,6 +14979,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 5.5
           wait:
@@ -14754,6 +15087,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -4
           wait:
@@ -15226,6 +15560,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -15676,6 +16012,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -15893,6 +16230,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 0
           wait:
@@ -16007,27 +16345,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 112
   command:
-    rid: 1232548324848959499
+    rid: 1232548510700404781
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959499
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404781
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        deg: 1.5
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404787
         noteDatas:
         - wait:
             _value: 0
@@ -16173,6 +16503,15 @@ MonoBehaviour:
             _value: 16
           option1: 1
           option2: 0
+    - rid: 1232548510700404787
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &5254424206475190462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16672,6 +17011,8 @@ MonoBehaviour:
         easeX: {x: -3, y: 6}
         easeType: 13
         easeTime: 5
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548214306766849
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -17035,6 +17376,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -5
           wait:
@@ -17243,6 +17585,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -17604,6 +17947,8 @@ MonoBehaviour:
         easeX: {x: -1, y: 8}
         easeType: 3
         easeTime: 12
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548207515926548
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -17919,6 +18264,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -18177,6 +18524,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -18808,27 +19156,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 64
   command:
-    rid: 1232548324848959491
+    rid: 1232548510700404763
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959491
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404763
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 1
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 28
-        lineAlpha: 0.6
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404789
         noteDatas:
         - wait:
             _value: 0
@@ -18990,6 +19330,15 @@ MonoBehaviour:
             _value: 16
           option1: 1
           option2: 0
+    - rid: 1232548510700404789
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &7851204605406514011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19005,27 +19354,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 104
   command:
-    rid: 1232548324848959498
+    rid: 1232548510700404779
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959498
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404779
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404786
         noteDatas:
         - wait:
             _value: 8
@@ -19171,6 +19512,125 @@ MonoBehaviour:
             _value: 16
           option1: 0
           option2: 0
+    - rid: 1232548510700404786
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 2
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
+--- !u!114 &7988414388626666081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (129)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 64
+  command:
+    rid: 1232548510700404770
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548510700404770
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        summary: "\u5224\u5B9A\u7DDA"
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 0.1428571
+        isChainWait: 0
+        basePos: {x: 0, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 0
+          rotEaseDatas:
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: 2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          - from: -2
+            easeTime:
+              _value: 2
+            easeType: 3
+          - from: 0
+            easeTime:
+              _value: 2
+            easeType: 2
+          startAlpha: 0.7
+          alphaEaseDatas: []
 --- !u!114 &8052383538608698639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20013,27 +20473,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 88
   command:
-    rid: 1232548324848959496
+    rid: 1232548510700404773
   references:
     version: 2
     RefIds:
-    - rid: 1232548324848959496
-      type: {class: F_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404773
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        deg: 2
-        frequency:
-          _value: 1
-        phase:
-          _value: 2
-        easeType: 3
-        createLine: 0
-        lineLifeLpb:
-          _value: 4
-        lineLifeCount: 16
-        lineAlpha: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548510700404792
         noteDatas:
         - wait:
             _value: 0
@@ -20083,6 +20535,15 @@ MonoBehaviour:
             _value: 4
           option1: 1
           option2: 0
+    - rid: 1232548510700404792
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 1
+        frequency:
+          _value: 1
+        phase:
+          _value: 2
+        easeType: 3
 --- !u!114 &8727801949665097626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20142,6 +20603,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 4
           wait:
@@ -20240,6 +20702,8 @@ MonoBehaviour:
         easeX: {x: -4, y: -7}
         easeType: 3
         easeTime: 4
+        commandData: {fileID: 766015267075374739}
+        option: 1
     - rid: 1232548170385588234
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -20316,6 +20780,8 @@ MonoBehaviour:
         easeX: {x: -8, y: 8}
         easeType: 5
         easeTime: 12
+        commandData: {fileID: 0}
+        option: 0
     - rid: 1232548214306766849
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:

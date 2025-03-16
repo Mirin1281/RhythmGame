@@ -36,6 +36,8 @@ namespace NoteCreating
 
         async UniTaskVoid CreateLine()
         {
+            if (Delta > lifeLpb.Time) return;
+
             Line line = Helper.GetLine();
             line.SetAlpha(alpha);
             line.SetRot(mirror.Conv(moveDirection + 90));
@@ -49,12 +51,13 @@ namespace NoteCreating
         {
             float baseTime = CurrentTime - Delta;
             float time = 0f;
+
             if (isAdaptiveSpeed)
             {
                 while (item.IsActive && time < lifeLpb.Time)
                 {
                     time = CurrentTime - baseTime;
-                    item.SetPos(dirPos * Speed * (time - MoveTime));
+                    item.SetPos((time - MoveTime) * Speed * dirPos);
                     await Yield();
                 }
             }

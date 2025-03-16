@@ -16,11 +16,11 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(noteType: RegularNoteType.Hold, length: new Lpb(2)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
             if (data.Type != RegularNoteType.Hold)
             {
-                DropAsync(note, mirror.Conv(data.X)).Forget();
+                DropAsync(note, mirror.Conv(data.X), lifeTime).Forget();
                 return;
             }
 

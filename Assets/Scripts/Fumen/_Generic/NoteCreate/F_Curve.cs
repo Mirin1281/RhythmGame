@@ -13,32 +13,25 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option1: 30) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
             float curve = data.Option1 is -1 or 0 ? defaultCurve : data.Option1;
             if (isGroup)
             {
                 float rotateSpeed = Mathf.Abs(curve * dirSpeed * Mathf.Deg2Rad);
                 Vector3 centerPos = new Vector2(-curve, 0);
                 var dirEasing = new Easing(MoveTime * dirSpeed, 0, MoveTime, EaseType.OutQuad);
-                Lpb w = WaitDelta;
                 WhileYield(lifeTime, t =>
                 {
                     if (note.IsActive == false) return;
-                    if (t + w.Time < MoveTime)
+                    if (t + Time < MoveTime)
                     {
-                        float dir = (MoveTime - (t + w.Time)) * dirSpeed;
+                        float dir = (MoveTime - (t + Time)) * dirSpeed;
                         note.SetPos(mirror.Conv(MyUtility.GetRotatedPos(
                             new Vector3(data.X, (MoveTime - t) * Speed),
-                            dirEasing.Ease(t + w.Time),
+                            dirEasing.Ease(t + Time),
                             centerPos)));
-                        note.SetRot(mirror.Conv(dirEasing.Ease(t + w.Time)));
+                        note.SetRot(mirror.Conv(dirEasing.Ease(t + Time)));
                     }
                     else // ロングの場合、始点を取った後は真っ直ぐ落とす
                     {

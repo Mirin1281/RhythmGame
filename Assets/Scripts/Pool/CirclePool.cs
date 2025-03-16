@@ -6,14 +6,12 @@ namespace NoteCreating
     {
         public Circle GetCircle()
         {
-            var n = GetInstance();
+            var circle = GetInstance();
 
-            n.transform.localScale = Vector3.one;
-            n.SetRendererEnabled(true);
-            n.SetAlpha(0.7f);
-            n.transform.SetParent(this.transform);
+            circle.Refresh();
+            circle.transform.SetParent(this.transform);
 
-            return n;
+            return circle;
         }
     }
 }

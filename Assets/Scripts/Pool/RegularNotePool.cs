@@ -7,9 +7,6 @@ namespace NoteCreating
         [Space(20)]
         [SerializeField] Sprite normalSprite;
         [SerializeField] Sprite normalMultitapSprite;
-        [Space(10)]
-        [SerializeField] Sprite slideSprite;
-        [SerializeField] Sprite slideMultitapSprite;
 
         public RegularNote GetNote(RegularNoteType type, bool isMultitap = false)
         {
@@ -19,34 +16,28 @@ namespace NoteCreating
                 RegularNoteType.Slide => 1,
                 _ => -1
             };
-            if (index == -1) return null;
+            if (index == -1)
+            {
+                Debug.LogError("Invalid");
+                return null;
+            }
 
             var n = GetInstance(index);
-            n.SetRot(0);
-            n.SetWidth(1f);
-            n.transform.localScale = Vector3.one;
-            n.SetRendererEnabled(true);
-            n.SetSprite(isMultitap ? GetMultitapSprite(type) : GetDefaultSprite(type));
-            n.SetAlpha(1f);
+
+            n.Refresh();
+            if (type == RegularNoteType.Normal)
+            {
+                n.SetSprite(isMultitap ? normalMultitapSprite : normalSprite);
+            }
             n.transform.SetParent(this.transform);
-            n.IsVerticalRange = false;
+
             return n;
         }
 
-        Sprite GetDefaultSprite(RegularNoteType type) => type switch
+        public void SetMultitapSprite(RegularNote note)
         {
-            RegularNoteType.Normal => normalSprite,
-            RegularNoteType.Slide => slideSprite,
-            RegularNoteType.Hold => null,
-            _ => throw new System.Exception()
-        };
-
-        public Sprite GetMultitapSprite(RegularNoteType type) => type switch
-        {
-            RegularNoteType.Normal => normalMultitapSprite,
-            RegularNoteType.Slide => slideMultitapSprite,
-            RegularNoteType.Hold => null,
-            _ => throw new System.Exception()
-        };
+            if (note == null || note.Type != RegularNoteType.Normal) return;
+            note.SetSprite(normalMultitapSprite);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             var hold = Hold(_x, _length);
-            await WaitOnTiming();
+            await Wait(MoveLpb);
             for (int i = 0; i < _shakeCount; i++)
             {
                 MoveAsync(hold, _mirror.Conv(i % 2 == 0 ? _shakeX : -_shakeX)).Forget();
@@ -37,7 +37,7 @@ namespace NoteCreating
                     t = CurrentTime - baseTime;
                     hold.SetPos(new Vector3(easing.Ease(t), hold.GetPos().y));
                     hold.SetMaskPos(new Vector3(easing.Ease(t), 0));
-                    await Yield(timing: PlayerLoopTiming.PreLateUpdate);
+                    await Yield(PlayerLoopTiming.PreLateUpdate);
                 }
             }
             await UniTask.CompletedTask;

@@ -102,6 +102,10 @@ namespace NoteCreating
             }
         }
 
+        // 押下中の透明度
+        public static float HoldingAlpha = 0.6f;
+        public static float NotHoldingAlpha = 0.3f;
+
         void Awake()
         {
             meshFilter.mesh = meshFilter.sharedMesh.Duplicate();
@@ -125,7 +129,6 @@ namespace NoteCreating
 
             if (IsInvalid)
             {
-                //meshRenderer.material.color = new Color(0.5f, 0.2f, 0.3f);
                 holdEndTime = 0;
             }
             else
@@ -134,7 +137,7 @@ namespace NoteCreating
             }
 
             meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
-            SetAlpha(IsHold ? 0.7f : 0.4f);
+            SetAlpha(IsHold ? HoldingAlpha : NotHoldingAlpha);
         }
 
         /// <summary>
@@ -142,7 +145,7 @@ namespace NoteCreating
         /// </summary>
         public async UniTask CreateAsync(ArcCreateData[] datas, float speed, Mirror mir = default)
         {
-            // 初期化
+            // 初期化 //
             spline.Clear();
             if (judges == null)
             {
@@ -152,11 +155,6 @@ namespace NoteCreating
             {
                 judges.Clear();
             }
-            IsInvalid = false;
-            FingerIndex = -1;
-            JudgeIndex = 0;
-
-            transform.localRotation = Quaternion.Euler(-90, 0, 0);
 
             await UniTask.Yield(destroyCancellationToken);
 
@@ -347,88 +345,19 @@ namespace NoteCreating
             var c = meshRenderer.sharedMaterial.color;
             meshRenderer.sharedMaterial.color = new Color(c.r, c.g, c.b, alpha);
         }
-    }
 
-    [Serializable]
-    public class ArcJudge
-    {
-        public enum InputState
+        public void Refresh()
         {
-            None,
-            Idle,
-            Get,
-            Miss,
-        }
+            transform.localRotation = default;
+            SetRendererEnabled(true);
+            SetRadius(0.5f);
+            SetAlpha(NotHoldingAlpha);
 
-        public Vector3 StartPos;
-        public Vector3 EndPos;
-        public bool IsOverlappable;
-        public InputState State;
-
-        public ArcJudge(Vector3 start, Vector3 end, bool isDuplicated)
-        {
-            StartPos = start;
-            EndPos = end;
-            IsOverlappable = isDuplicated;
-            State = InputState.Idle;
-        }
-    }
-
-    // 設置範囲
-    // 0(下端) < y < 4(上端)
-    // y = 下端の時、-8 < x < 8
-    // 上端の時、-4 < x < 4
-    // zと手前判定、奥判定はLPB換算
-    [Serializable]
-    public struct ArcCreateData
-    {
-        public enum VertexType
-        {
-            Auto,
-            Linear,
-            Detail,
-        }
-
-        [SerializeField] float x;
-        [SerializeField] Lpb wait;
-        [SerializeField] VertexType vertexType;
-        [SerializeField] bool isJudgeDisable;
-        [SerializeField] bool isOverlappable;
-        [SerializeField] Lpb behindJudgeRange;
-        [SerializeField] Lpb aheadJudgeRange;
-        [SerializeField] Vector3 option;
-
-        public readonly float X => x;
-        public readonly Lpb Wait => wait;
-        public readonly VertexType Vertex => vertexType;
-        public readonly bool IsJudgeDisable => isJudgeDisable;
-        public readonly bool IsOverlappable => isOverlappable;
-        public readonly Lpb BehindJudgeRange => behindJudgeRange;
-        public readonly Lpb AheadJudgeRange => aheadJudgeRange;
-        public Vector3 Option => option;
-
-        public ArcCreateData(float x, Lpb wait, VertexType vertexType, bool isJudgeDisable, bool isOverlappable, Lpb behindJudgeRange, Lpb aheadJudgeRange, Vector3 option = default)
-        {
-            this.x = x;
-            this.wait = wait;
-            this.vertexType = vertexType;
-            this.isJudgeDisable = isJudgeDisable;
-            this.isOverlappable = isOverlappable;
-            this.behindJudgeRange = behindJudgeRange;
-            this.aheadJudgeRange = aheadJudgeRange;
-            this.option = option;
-        }
-
-        public ArcCreateData(bool _)
-        {
-            this.x = 0;
-            this.wait = new Lpb(0);
-            this.vertexType = VertexType.Auto;
-            this.isJudgeDisable = false;
-            this.isOverlappable = false;
-            this.behindJudgeRange = new Lpb(0);
-            this.aheadJudgeRange = new Lpb(4);
-            this.option = default;
+            transform.localRotation = Quaternion.Euler(-90, 0, 0);
+            IsInvalid = false;
+            FingerIndex = -1;
+            JudgeIndex = 0;
+            isHold = false;
         }
     }
 }

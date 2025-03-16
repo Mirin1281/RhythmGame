@@ -12,7 +12,7 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
             Direction dir = data.Option1 switch
             {
@@ -60,12 +60,6 @@ namespace NoteCreating
             }
 
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, toPos, MoveTime - Delta, data.Length, ExpectType.Static));
-
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
             WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;

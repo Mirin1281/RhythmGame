@@ -26,6 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSION
+  - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _
@@ -124,8 +125,8 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _BacklightTransmittance: 1
-    - _Blend: 1
-    - _BlendModePreserveSpecular: 1
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 0
     - _BlendOp: 0
     - _BlendingType: 0
     - _BumpScale: 1
@@ -171,7 +172,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _ReceivedShadowsStrength: 0.5
     - _SecondColorSmooth: 0.2
     - _ShadowStrength: 1
@@ -184,7 +185,7 @@ Material:
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _UVDistortionAdd: 0

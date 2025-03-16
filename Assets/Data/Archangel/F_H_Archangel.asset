@@ -15,20 +15,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 300
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404755
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404755
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 90
+        transformConvertables:
+        - rid: 1232548510700404756
         noteDatas:
         - wait:
             _value: 0
@@ -134,6 +132,13 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548510700404756
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 90
 --- !u!114 &-7661358634211543595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,20 +154,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 268
   command:
-    rid: 7519555163100020755
+    rid: 1232548510700404743
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020755
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404743
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 90
+        transformConvertables:
+        - rid: 1232548510700404745
         noteDatas:
         - wait:
             _value: 0
@@ -284,6 +287,13 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548510700404745
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 90
 --- !u!114 &-7621859329411381921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,20 +332,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 268
   command:
-    rid: 7519555163100020755
+    rid: 1232548510700404746
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020755
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404746
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 270
+        transformConvertables:
+        - rid: 1232548510700404748
         noteDatas:
         - wait:
             _value: 0
@@ -465,6 +473,13 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548510700404748
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 270
 --- !u!114 &-6375102031532689037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +505,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -545,20 +561,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 316
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404761
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404761
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 270
+        transformConvertables:
+        - rid: 1232548510700404762
         noteDatas:
         - wait:
             _value: 0
@@ -720,6 +734,13 @@ MonoBehaviour:
             _value: 2
           option1: 0
           option2: 0
+    - rid: 1232548510700404762
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 270
 --- !u!114 &-4573575925273526249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +766,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1084,20 +1106,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 284
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404752
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404752
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 270
+        transformConvertables:
+        - rid: 1232548510700404754
         noteDatas:
         - wait:
             _value: 0
@@ -1267,6 +1287,13 @@ MonoBehaviour:
             _value: 2
           option1: 0
           option2: 0
+    - rid: 1232548510700404754
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 270
 --- !u!114 &-2462347843035950430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,20 +1309,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 284
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404750
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404750
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 90
+        transformConvertables:
+        - rid: 1232548510700404751
         noteDatas:
         - wait:
             _value: 0
@@ -1489,6 +1514,13 @@ MonoBehaviour:
             _value: 2
           option1: 0
           option2: 0
+    - rid: 1232548510700404751
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 90
 --- !u!114 &-2182684015396970031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1514,6 +1546,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1698,6 +1731,40 @@ MonoBehaviour:
       type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         summary: 
+--- !u!114 &-1261674256066572964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Archangel (26)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 268
+  command:
+    rid: 1232548506963017728
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548506963017728
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 64
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 0}
 --- !u!114 &-1139853251797373877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1723,6 +1790,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -1810,6 +1878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: 1dc72a5ecacf8fe42aaf0a1be4ff6b07, type: 2}
   noteCount: 1
+  <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 20
   <SlidePoolCount>k__BackingField: 20
   <HoldPoolCount>k__BackingField: 20
@@ -1831,6 +1900,7 @@ MonoBehaviour:
     - {fileID: -1825096548681651103}
     - {fileID: 9190207160368165111}
     - {fileID: 2658016945962055453}
+    - {fileID: -1261674256066572964}
     - {fileID: 1105295731869841760}
     - {fileID: -7661358634211543595}
     - {fileID: -7127856507473986157}
@@ -1870,6 +1940,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -2038,20 +2109,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 316
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404759
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404759
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 90
+        transformConvertables:
+        - rid: 1232548510700404760
         noteDatas:
         - wait:
             _value: 0
@@ -2213,6 +2282,13 @@ MonoBehaviour:
             _value: 8
           option1: 0
           option2: 0
+    - rid: 1232548510700404760
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 90
 --- !u!114 &1044884552359522423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,6 +2314,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -2356,20 +2433,18 @@ MonoBehaviour:
   enable: 1
   beatTiming: 300
   command:
-    rid: 7519555163100020758
+    rid: 1232548510700404757
   references:
     version: 2
     RefIds:
-    - rid: 7519555163100020758
-      type: {class: F_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548510700404757
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        amp: 7
-        frequency:
-          _value: 0.25
-        phaseDeg: 270
+        transformConvertables:
+        - rid: 1232548510700404758
         noteDatas:
         - wait:
             _value: 0
@@ -2475,6 +2550,13 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548510700404758
+      type: {class: P_SinMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        amp: 7
+        frequency:
+          _value: 0.25
+        startDeg: 270
 --- !u!114 &2658016945962055453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2634,6 +2716,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3205,6 +3288,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3446,6 +3530,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConvertables: []
         noteDatas:
         - wait:
             _value: 0

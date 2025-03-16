@@ -25,14 +25,8 @@ namespace NoteCreating
             return base.ExecuteAsync();
         }
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
             // プラリザみたいな微細な揺れ + 角度 // 
             float randFrequency = random.GetFloat(-frequency, frequency);
             float phase = random.GetFloat(0, 2 * Mathf.PI);

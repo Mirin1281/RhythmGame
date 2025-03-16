@@ -16,21 +16,13 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option1: 1) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
             var easing = new Easing(0, 180 * data.Option1, rotateLpb.Time, EaseType.OutQuad);
             if (isGroup)
             {
-                Lpb w = WaitDelta;
-
-                float currentTiming = -w.Time;
-                float nextTiming = (rotateTimings.Length == 0 ? Lpb.Infinity : rotateTimings[0]).Time - w.Time;
+                float currentTiming = -Time;
+                float nextTiming = (rotateTimings.Length == 0 ? Lpb.Infinity : rotateTimings[0]).Time - Time;
 
                 int i = 0;
                 bool rotating = false;

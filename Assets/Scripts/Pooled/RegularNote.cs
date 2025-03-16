@@ -57,5 +57,15 @@ namespace NoteCreating
         {
             FadeOut(0.1f);
         }
+
+        public virtual void Refresh()
+        {
+            SetRot(0);
+            SetWidth(1f);
+            transform.localScale = Vector3.one;
+            SetRendererEnabled(true);
+            SetAlpha(1f);
+            IsVerticalRange = false;
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace NoteCreating
             }
 
             float[] pcmData = new float[Helper.WaveMeter.PcmSamples];
-            await WhileYieldAsync(lifeLpb * lifeCount, _ =>
+            await WhileYieldAsync(lifeLpb.Time * lifeCount, _ =>
             {
                 Helper.WaveMeter.GetPcmData(ref pcmData);
                 for (int i = 0; i < itemCount; i++)

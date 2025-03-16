@@ -24,7 +24,7 @@ namespace NoteCreating
         /// <summary>
         /// 発火された時間と理想の発火時間との誤差(通常は正の値を取る)
         /// </summary>
-        protected float Delta { get; set; }
+        protected float Delta { get; private set; }
 
         protected float CurrentTime => Metronome.Instance.CurrentTime;
 
@@ -70,23 +70,6 @@ namespace NoteCreating
             }
         }
 
-        /// <summary>
-        /// ノーツが生成されてから着地するまでの時間分待機します
-        /// </summary>
-        protected async UniTask<float> WaitOnTiming(float delta = -1)
-        {
-            if (delta == -1)
-            {
-                Delta = await Wait(MoveLpb, Delta/* - RhythmGameManager.Offset*/); // なぜオフセットを引いた？ 消して問題無ければ消す
-                return Delta;
-            }
-            else
-            {
-                delta = await Wait(MoveLpb, delta/* - RhythmGameManager.Offset*/);
-                return delta;
-            }
-        }
-
         protected void WhileYield(float time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
             => WhileYieldAsync(time, action, delta, timing).Forget();
         protected async UniTask<float> WhileYieldAsync(float time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
@@ -101,16 +84,11 @@ namespace NoteCreating
                 float t = CurrentTime - baseTime;
                 action.Invoke(t);
                 if (t >= time) break;
-                await Yield(timing: timing);
+                await Yield(timing);
             }
             action.Invoke(time);
             return CurrentTime - baseTime - time;
         }
-
-        protected void WhileYield(Lpb time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
-            => WhileYieldAsync(time.Time, action, delta, timing).Forget();
-        protected UniTask<float> WhileYieldAsync(Lpb time, Action<float> action, float delta = -1, PlayerLoopTiming timing = PlayerLoopTiming.Update)
-            => WhileYieldAsync(time.Time, action, delta, timing);
 
         protected async UniTask<float> WaitSeconds(float wait, float delta = -1)
         {
@@ -128,29 +106,12 @@ namespace NoteCreating
             return Metronome.Instance.CurrentTime - baseTime - wait;
         }
 
-        protected UniTask Yield(CancellationToken token = default, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+        protected UniTask Yield(PlayerLoopTiming timing = PlayerLoopTiming.Update)
         {
-            if (token == default)
-            {
-                token = Helper.Token;
-            }
-            return UniTask.Yield(timing, token);
-            /*
-            if (delta == -1) // deltaを組み込みたかったけど無理
-            {
-                delta = Delta;
-            }
-            float baseTime = Metronome.Instance.CurrentTime - delta;
-            if (token == default)
-            {
-                token = Helper.Token;
-            }
-            await UniTask.Yield(timing, token);
-            return Metronome.Instance.CurrentTime - baseTime;
-            */
+            return UniTask.Yield(timing, Helper.Token);
         }
 
-        protected async UniTask DropAsync(ItemBase item, float x, float delta = -1, bool isAdaptiveSpeed = true)
+        protected async UniTask DropAsync(ItemBase item, float x, float lifeTime = 8f, float delta = -1, bool isAdaptiveSpeed = true)
         {
             if (delta == -1)
             {
@@ -160,7 +121,7 @@ namespace NoteCreating
             float time = 0f;
             if (isAdaptiveSpeed)
             {
-                while (item.IsActive && time < 8f)
+                while (item.IsActive && time < lifeTime)
                 {
                     time = CurrentTime - baseTime;
                     item.SetPos(new Vector3(x, (MoveTime - time) * Speed));

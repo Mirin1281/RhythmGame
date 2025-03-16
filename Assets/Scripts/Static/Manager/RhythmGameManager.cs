@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
 {
-    static readonly float MasterVolume = 1.5f; // 音量調整用(不変)
+    static readonly float MasterVolume = 1.0f; // 音量調整用(不変)
     public static readonly float DefaultSpeed = 14f; // 基準のノーツスピード(不変)
 
     // スクリプト上で変更可能なノーツスピード

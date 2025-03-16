@@ -17,14 +17,8 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4), option2: 1) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
             var easing = new Easing(data.Option1, data.X, moveLpb.Time, easeType);
             Lpb moveStartLpb = data.Option2 is -1 or 0 ? defaultMoveStartLpb : new Lpb(data.Option2);
             WhileYield(lifeTime, t =>

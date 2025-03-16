@@ -77,8 +77,8 @@ namespace NoteCreating
             circle.SetScale(circleSize);
             circle.SetAlpha(0.2f);
             circle.SetWidth(0.15f);
-            circle.SetScaleAsync(-0.1f, moveLpb.Time, easeType).Forget();
-            circle.FadeAlphaAsync(0.9f, moveLpb.Time, easeType).Forget();
+            circle.SetScaleAsync(-0.1f, moveLpb.Time, easeType, Delta).Forget();
+            circle.FadeAlphaAsync(0.9f, moveLpb.Time, easeType, Delta).Forget();
             await Wait(moveLpb);
             circle.SetActive(false);
         }

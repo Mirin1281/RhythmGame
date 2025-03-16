@@ -9,6 +9,8 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 1f;
+        [SerializeField, CommandSelect] CommandData commandData;
+
         [Header("X座標の移動が大きい場所は頂点の分割数を増やすと上手くいきやすい")]
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
@@ -18,7 +20,42 @@ namespace NoteCreating
         {
             ArcNote arc = Helper.GetArc();
             arc.CreateAsync(datas, Speed, mirror).Forget();
-            DropAsync(arc, 0, Delta).Forget();
+
+
+            IFollowableCommand followable = null;
+            if (commandData != null)
+            {
+                followable = commandData.GetCommand() as IFollowableCommand;
+#if UNITY_EDITOR
+                if (followable == null)
+                {
+
+                    Debug.LogWarning($"{commandData.GetName()} を{nameof(IFollowableCommand)}に変換できませんでした");
+                }
+#endif
+            }
+
+            float lifeTime = MoveTime + 0.5f + 4f;
+            for (int i = 0; i < datas.Length; i++)
+            {
+                lifeTime += datas[i].Wait.Time;
+            }
+            WhileYield(lifeTime, t =>
+            {
+                if (arc.IsActive == false) return;
+                var basePos = new Vector3(0, (MoveTime - t) * Speed);
+                if (followable == null)
+                {
+                    arc.SetPos(basePos);
+                }
+                else
+                {
+                    var (pos, rot) = followable.ConvertTransform(basePos);
+                    arc.SetPos(pos);
+                    //arc.SetRot(rot); アークのZ軸回転できない
+                }
+            });
+
             Helper.NoteInput.AddArc(arc);
             return default;
         }

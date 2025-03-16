@@ -44,15 +44,12 @@ namespace NoteCreating
             await UniTask.CompletedTask;
         }
 
-        ArcNote Arc(ArcCreateData[] datas, float delta = -1)
+        ArcNote Arc(ArcCreateData[] datas)
         {
-            if (delta == -1)
-            {
-                delta = Delta;
-            }
             ArcNote arc = Helper.GetArc();
             arc.CreateAsync(datas, Speed, mirror).Forget();
-            DropAsync(arc, 0, delta).Forget();
+            float lifeTime = MoveTime + 0.5f + length.Time;
+            DropAsync(arc, 0, lifeTime, Delta).Forget();
             Helper.NoteInput.AddArc(arc);
             return arc;
         }

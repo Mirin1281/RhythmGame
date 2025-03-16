@@ -133,6 +133,20 @@ namespace NoteCreating
             SetAlpha(0.4f);
         }
 
+        new public void Refresh()
+        {
+            State = HoldNote.InputState.Idle;
+            SetRot(0);
+            transform.SetLocalPositionAndRotation(default, default);
+            SetWidth(1f);
+            SetMaskLength(5f);
+            SetMaskPos(Vector2.zero);
+            transform.localScale = Vector3.one;
+            SetRendererEnabled(true);
+            SetAlpha(1f);
+            IsVerticalRange = false;
+        }
+
         /// <summary>
         /// RegularNoteをHoldNoteに変換します。isキャストよりも軽量です
         /// </summary>

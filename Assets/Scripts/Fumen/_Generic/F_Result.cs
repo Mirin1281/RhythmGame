@@ -8,7 +8,7 @@ namespace NoteCreating
     {
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            await Wait(MoveLpb);
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);
 
             RhythmGameManager.Instance.Result = judge.Result;

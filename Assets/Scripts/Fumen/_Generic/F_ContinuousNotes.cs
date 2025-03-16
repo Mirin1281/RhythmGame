@@ -16,25 +16,94 @@ namespace NoteCreating
         [SerializeField] Vector2 easeX = new Vector2(-5f, 5f);
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField] float easeTime = 16;
+        [Space(10)]
+        [SerializeField, CommandSelect] CommandData commandData;
+        [SerializeField] float option;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
+            IFollowableCommand followable = null;
+            if (commandData != null)
+            {
+                followable = commandData.GetCommand() as IFollowableCommand;
+#if UNITY_EDITOR
+                if (followable == null)
+                {
+                    Debug.LogWarning($"{commandData.GetName()} を{nameof(IFollowableCommand)}に変換できませんでした");
+                }
+#endif
+            }
+
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
             for (int i = 0; i < count; i++)
             {
                 if (i >= trimStart)
                 {
-                    CreateDropNote(easing.Ease(i * ((float)(count + 1) / count)), noteType);
+                    float x = easing.Ease(i * ((float)(count + 1) / count));
+                    CreateDropNote(mirror.Conv(x), noteType, default, followable, option);
                 }
                 await Wait(wait);
             }
         }
 
-        void CreateDropNote(float x, RegularNoteType type)
+        void CreateDropNote(float x, RegularNoteType type, Lpb holdLength, IFollowableCommand followable = null, float option = 0)
         {
             RegularNote note = Helper.GetRegularNote(type);
-            DropAsync(note, mirror.Conv(x), Delta).Forget();
-            Helper.NoteInput.AddExpect(note, MoveTime - Delta);
+
+            if (followable == null)
+            {
+                Helper.NoteInput.AddExpect(note, MoveTime - Delta, holdLength);
+            }
+            else
+            {
+                var pos = followable.ConvertTransform(new Vector3(x, 0), option, time: MoveTime).pos;
+                var judgeStatus = new NoteJudgeStatus(note, pos, MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
+                Helper.NoteInput.AddExpect(judgeStatus);
+            }
+
+            float lifeTime = MoveTime + 0.5f;
+            if (type == RegularNoteType.Hold)
+            {
+                lifeTime += holdLength.Time;
+            }
+
+            if (HoldNote.TryParse(note, out var hold))
+            {
+                WhileYield(lifeTime, t =>
+                {
+                    if (hold.IsActive == false) return;
+                    var basePos = new Vector3(x, (MoveTime - t) * Speed);
+                    if (followable == null)
+                    {
+                        hold.SetPos(basePos);
+                    }
+                    else
+                    {
+                        var (pos, rot) = followable.ConvertTransform(basePos, option);
+                        hold.SetPos(pos);
+                        hold.SetRot(rot);
+                        hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
+                    }
+                });
+            }
+            else
+            {
+                WhileYield(lifeTime, t =>
+                {
+                    if (note.IsActive == false) return;
+                    var basePos = new Vector3(x, (MoveTime - t) * Speed);
+                    if (followable == null)
+                    {
+                        note.SetPos(basePos);
+                    }
+                    else
+                    {
+                        var (pos, rot) = followable.ConvertTransform(basePos, option);
+                        note.SetPos(pos);
+                        note.SetRot(rot);
+                    }
+                });
+            }
         }
 
 #if UNITY_EDITOR

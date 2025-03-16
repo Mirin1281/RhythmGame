@@ -10,7 +10,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            await Wait(MoveLpb);
 
             RegularNote note = Helper.GetRegularNote(RegularNoteType.Normal);
             Vector3 pos = new Vector3(0, 4);
@@ -36,7 +36,7 @@ namespace NoteCreating
                 line2.SetRot(easing.Ease(t) + 90);
             });
 
-            await WaitOnTiming();
+            await Wait(MoveLpb);
 
             var judgeLine = Helper.GetLine();
             judgeLine.SetWidth(100);

@@ -30,7 +30,7 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             if (target == 0) return;
-            await WaitOnTiming();
+            await Wait(MoveLpb);
             await Yield(); // 同カウントだと取り逃がすことがあるので1フレーム待つ
 
             List<ItemBase> items = new(capacity);
@@ -62,7 +62,7 @@ namespace NoteCreating
             }
             else
             {
-                Debug.LogWarning($"アイテム数: {items.Count}");
+                Debug.Log($"アイテム数: {items.Count}, capacity: {capacity}");
             }
 #endif
 

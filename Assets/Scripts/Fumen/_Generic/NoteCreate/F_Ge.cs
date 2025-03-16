@@ -13,15 +13,8 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas;
         protected override NoteData[] NoteDatas => noteDatas; // インスペクタで一番後ろにしたい
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
-
             // グループ化のサンプル(点滅・振動・脈動) //
             // AddExpectはStaticにした方が安全かも
             /*AddExpect();

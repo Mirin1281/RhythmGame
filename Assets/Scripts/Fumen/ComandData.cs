@@ -23,6 +23,8 @@ namespace NoteCreating
             command.Execute(helper, delta);
         }
 
+        public ICommand GetCommand() => command;
+
 #if UNITY_EDITOR
 
         /// <summary>
@@ -64,6 +66,12 @@ namespace NoteCreating
 
         public void SetEnable(bool e) => enable = e;
         public void SetBeatTiming(int t) => beatTiming = t;
+
+        public FumenData GetFumenData()
+        {
+            var path = UnityEditor.AssetDatabase.GetAssetPath(this);
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<FumenData>(path);
+        }
 #endif
     }
 }

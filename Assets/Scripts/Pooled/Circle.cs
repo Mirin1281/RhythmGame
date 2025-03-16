@@ -50,17 +50,25 @@ namespace NoteCreating
             maskTs.gameObject.SetActive(enabled);
         }
 
-        public async UniTask SetScaleAsync(float endScale, float time, EaseType easeType = EaseType.InQuad)
+        public async UniTask SetScaleAsync(float endScale, float time, EaseType easeType = EaseType.InQuad, float delta = 0)
         {
             var easing = new Easing(GetScale(), endScale, time, easeType);
-            var t = 0f;
-            while (t < time)
+            float baseTime = Metronome.Instance.CurrentTime - delta;
+            while (true)
             {
+                float t = Metronome.Instance.CurrentTime - baseTime;
                 SetScale(easing.Ease(t));
-                t += Time.deltaTime;
+                if (t >= time) break;
                 await UniTask.Yield(destroyCancellationToken);
             }
             SetScale(endScale);
+        }
+
+        public void Refresh()
+        {
+            transform.localScale = Vector3.one;
+            SetRendererEnabled(true);
+            SetAlpha(0.7f);
         }
     }
 }

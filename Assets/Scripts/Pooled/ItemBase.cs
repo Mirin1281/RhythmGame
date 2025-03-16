@@ -92,11 +92,12 @@ namespace NoteCreating
         public async UniTask FadeAlphaAsync(float endAlpha, float time, EaseType easeType = EaseType.OutQuad, float delta = 0)
         {
             var easing = new Easing(GetAlpha(), endAlpha, time, easeType);
-            var t = delta;
-            while (t < time)
+            float baseTime = Metronome.Instance.CurrentTime - delta;
+            while (true)
             {
+                float t = Metronome.Instance.CurrentTime - baseTime;
                 SetAlpha(easing.Ease(t));
-                t += Time.deltaTime;
+                if (t >= time) break;
                 await UniTask.Yield(destroyCancellationToken);
             }
             SetAlpha(endAlpha);

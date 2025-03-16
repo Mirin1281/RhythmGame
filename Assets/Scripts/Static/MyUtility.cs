@@ -52,6 +52,7 @@ public static class MyUtility
 
     public static Vector2 GetRotatedPos(Vector2 pos, float deg, Vector2 centerPos = default)
     {
+        if (deg == 0f) return pos;
         var cos = Mathf.Cos(deg * Mathf.Deg2Rad);
         var sin = Mathf.Sin(deg * Mathf.Deg2Rad);
         return new Vector2(

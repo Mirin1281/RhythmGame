@@ -15,12 +15,13 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 {
     [SerializeField] CriAtomSource atomSource;
     [SerializeField] AudioWaveMeter waveMeter;
+    [SerializeField] float speedRate = 1;
 
 #if UNITY_EDITOR
     [Space(20)]
     [SerializeField] bool skipOnStart;
     [SerializeField, HideInInspector] float timeRate;
-    [SerializeField, HideInInspector] int estimatedBeatCount;
+    [SerializeField, HideInInspector] int estimatedBeatCount; // エディタ上で使用
     static readonly int skipExecuteTolerance = 10; // 途中再生時、値x4分音符前のコマンドを発火します
 #endif
 
@@ -29,9 +30,11 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     int beatCount;
     float bpm;
     bool isAddTime;
+    float speedRateOffset;
 
 
     CriAtomExPlayback playback;
+    CriAtomExVoicePool voicePool;
     int bpmChangeIndex;
 
     double BeatInterval => 60d / bpm;
@@ -51,8 +54,8 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
                 return (float)EditorApplication.timeSinceStartup;
             }
 #endif
-            if (fumenData == null) return (float)currentTime + RhythmGameManager.Offset;
-            return (float)currentTime + SelectData.Offset + RhythmGameManager.Offset;
+            if (fumenData == null) return (float)currentTime + RhythmGameManager.Offset + speedRateOffset;
+            return (float)currentTime + SelectData.Offset + RhythmGameManager.Offset + speedRateOffset;
         }
     }
     public float Bpm => bpm;
@@ -79,6 +82,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
             beatCount = Mathf.Clamp(Mathf.RoundToInt(skipTime / (float)BeatInterval) - skipExecuteTolerance, 0, int.MaxValue);
 
             int startBeatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - skipExecuteTolerance - SelectData.StartBeatOffset;
+            var helper = GameObject.FindAnyObjectByType<NoteCreateHelper>();
             foreach (var commandData in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
                 if (startBeatCount > commandData.BeatTiming)
@@ -87,12 +91,21 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
                     || commandData.GetCommandBase() is F_LoopDelay loopDelay && loopDelay.GetChildCommand() is INotSkipCommand)
                     {
                         float delta = skipTime - (SelectData.StartBeatOffset + 1 + commandData.BeatTiming) * (float)BeatInterval + SelectData.Offset;
-                        commandData.Execute(GameObject.FindAnyObjectByType<NoteCreateHelper>(), delta);
+                        commandData.Execute(helper, delta);
                     }
                 }
             }
         }
 #endif
+
+        if (speedRate != 1)
+        {
+            voicePool = new CriAtomExStandardVoicePool(1, 2, 96000, false, 100);
+            voicePool.AttachDspTimeStretch();
+            atomSource.player.SetVoicePoolIdentifier(voicePool.identifier);
+            atomSource.player.SetDspTimeStretchRatio(1 / speedRate);
+            speedRateOffset = -0.1f;
+        }
 
         playback = atomSource.Play();
         UpdateTimerAsync(beatCount).Forget();
@@ -102,6 +115,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     {
         Stop();
         OnBeat = null;
+        voicePool?.Dispose();
 #if UNITY_EDITOR
         EditorApplication.pauseStateChanged -= SwitchMusic;
 #endif
@@ -111,11 +125,11 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     {
         beatCount = startBeatCount;
         isAddTime = true;
-        double baseTime = Time.timeAsDouble - currentTime;
+        double baseTime = Time.timeAsDouble * speedRate - currentTime;
         double nextBeatTime = BeatInterval * (beatCount + 1);
         while (isAddTime)
         {
-            currentTime = Time.timeAsDouble - baseTime;
+            currentTime = Time.timeAsDouble * speedRate - baseTime;
             if (CurrentTime > nextBeatTime)
             {
                 int offsetedBeatCount = beatCount - SelectData.StartBeatOffset;

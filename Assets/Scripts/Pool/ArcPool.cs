@@ -8,10 +8,7 @@ namespace NoteCreating
         {
             var n = GetInstance();
 
-            n.transform.localRotation = default;
-            n.SetRendererEnabled(true);
-            n.SetRadius(0.5f);
-            n.SetAlpha(0.8f);
+            n.Refresh();
 
             return n;
         }

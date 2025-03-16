@@ -11,7 +11,7 @@ namespace NoteCreating
     public class F_StopAndGo : NoteCreateBase<NoteData>
     {
         [System.Serializable]
-        struct StopData
+        public struct StopData
         {
             [SerializeField] Lpb timing;
             [SerializeField] Lpb stopWait;
@@ -35,16 +35,10 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        protected override void Move(RegularNote note, NoteData data)
+        protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            float lifeTime = MoveTime + 0.5f;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
-            float currentTiming = -WaitDelta.Time;
-            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - WaitDelta.Time;
+            float currentTiming = -Time;
+            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - Time;
             float stopWait = default;
 
             int i = 0;

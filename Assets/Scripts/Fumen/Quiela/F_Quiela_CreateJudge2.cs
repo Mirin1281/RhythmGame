@@ -12,7 +12,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            await Wait(MoveLpb);
 
             int interval = 12;
             for (int i = Mathf.RoundToInt(time / lpbInterval); i >= 0; i--)

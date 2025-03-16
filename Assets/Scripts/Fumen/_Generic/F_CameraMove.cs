@@ -15,7 +15,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await WaitOnTiming();
+            float delta = await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
             if (isChainWait)
             {
                 LoopMove(settings, delta).Forget();

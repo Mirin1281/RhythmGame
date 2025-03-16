@@ -27,7 +27,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await WaitOnTiming();
+            await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
             for (int i = 0; i < loopCount; i++)
             {
                 ShakeCamera();
