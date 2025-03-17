@@ -8,13 +8,12 @@ namespace NoteCreating
     {
         [SerializeField] protected Mirror mirror;
         [SerializeField] protected float speedRate = 1f;
-
         float baseTime;
+
         /// <summary>
         /// コマンドがExecuteされてから経過した時間
         /// </summary>
         protected float Time => CurrentTime - baseTime;
-
         protected override float Speed => base.Speed * speedRate;
 
         protected abstract T[] NoteDatas { get; }
@@ -66,18 +65,18 @@ namespace NoteCreating
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, MoveTime - Delta, length, expectType));
         }
 
-        protected void CreateDropNote(RegularNote note, NoteData data, TransformConverter transformConverter)
+        /// <summary>
+        /// 設定した軌道、角度でノーツを移動させます
+        /// </summary>
+        protected void MoveNote(RegularNote note, NoteData data, TransformConverter transformConverter, Func<float, (Vector3 pos, float rot)> moveFunc, bool autoExpect = true)
         {
-            if (transformConverter.IsEmpty)
+            if (autoExpect)
             {
-                Helper.NoteInput.AddExpect(note, MoveTime - Delta, data.Length);
-            }
-            else
-            {
-                var basePos = new Vector3(mirror.Conv(data.X), 0);
-                var pos = transformConverter.ConvertTransform(basePos, data.Option1, MoveTime).pos;
-                var judgeStatus = new NoteJudgeStatus(note, pos, MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static);
-                Helper.NoteInput.AddExpect(judgeStatus);
+                // 着弾地点を設定 //
+                var baseExpectPos = moveFunc.Invoke(MoveTime).pos;
+                var expectPos = transformConverter.ConvertTransform(baseExpectPos, data.Option1, Time + MoveTime - Delta).pos;
+                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                    note, expectPos, MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
             }
 
             float lifeTime = MoveTime + 0.5f;
@@ -86,23 +85,18 @@ namespace NoteCreating
                 lifeTime += data.Length.Time;
             }
 
-            if (HoldNote.TryParse(note, out var hold))
+            if (note is HoldNote hold)
             {
                 WhileYield(lifeTime, t =>
                 {
-                    if (hold.IsActive == false) return;
-                    var basePos = new Vector3(mirror.Conv(data.X), (MoveTime - t) * Speed);
-                    if (transformConverter.IsEmpty)
-                    {
-                        hold.SetPos(basePos);
-                    }
-                    else
-                    {
-                        var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
-                        hold.SetPos(pos);
-                        hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
-                        hold.SetRot(rot);
-                    }
+                    if (note.IsActive == false) return;
+                    var (basePos, baseRot) = moveFunc.Invoke(t);
+                    var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
+                    pos = mirror.Conv(pos);
+                    rot = mirror.Conv(baseRot + rot);
+                    note.SetPos(pos);
+                    note.SetRot(rot);
+                    hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
                 });
             }
             else
@@ -110,17 +104,12 @@ namespace NoteCreating
                 WhileYield(lifeTime, t =>
                 {
                     if (note.IsActive == false) return;
-                    var basePos = new Vector3(mirror.Conv(data.X), (MoveTime - t) * Speed);
-                    if (transformConverter.IsEmpty)
-                    {
-                        note.SetPos(basePos);
-                    }
-                    else
-                    {
-                        var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
-                        note.SetPos(pos);
-                        note.SetRot(rot);
-                    }
+                    var (basePos, baseRot) = moveFunc.Invoke(t);
+                    var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
+                    pos = mirror.Conv(pos);
+                    rot = mirror.Conv(baseRot + rot);
+                    note.SetPos(pos);
+                    note.SetRot(rot);
                 });
             }
         }

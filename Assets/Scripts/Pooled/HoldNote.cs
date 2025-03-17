@@ -148,7 +148,7 @@ namespace NoteCreating
         }
 
         /// <summary>
-        /// RegularNoteをHoldNoteに変換します。isキャストよりも軽量です
+        /// RegularNoteをHoldNoteに変換します。isキャストよりも軽量ですが、こんなことしなくても良いと思います
         /// </summary>
         /// <param name="note"></param>
         /// <param name="hold"></param>

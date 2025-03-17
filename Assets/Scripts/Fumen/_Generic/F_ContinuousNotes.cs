@@ -56,7 +56,7 @@ namespace NoteCreating
             }
             else
             {
-                var pos = followable.ConvertTransform(new Vector3(x, 0), option, time: MoveTime).pos;
+                var pos = followable.ConvertTransform(new Vector3(x, 0), option, time: MoveTime - Delta).pos;
                 var judgeStatus = new NoteJudgeStatus(note, pos, MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
                 Helper.NoteInput.AddExpect(judgeStatus);
             }

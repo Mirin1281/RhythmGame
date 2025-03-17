@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace NoteCreating
@@ -5,6 +6,7 @@ namespace NoteCreating
     [AddTypeMenu(FumenPathContainer.NoteCreate + "カーブ", -60), System.Serializable]
     public class F_Curve : NoteCreateBase<NoteData>
     {
+        [SerializeField] TransformConverter transformConverter;
         [SerializeField] float defaultCurve = 30;
         [SerializeField] bool isGroup;
         [SerializeField] float dirSpeed = 40f;
@@ -16,48 +18,72 @@ namespace NoteCreating
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
             float curve = data.Option1 is -1 or 0 ? defaultCurve : data.Option1;
-            if (isGroup)
+            if (isGroup) // 実装が甘い
             {
-                float rotateSpeed = Mathf.Abs(curve * dirSpeed * Mathf.Deg2Rad);
                 Vector3 centerPos = new Vector2(-curve, 0);
                 var dirEasing = new Easing(MoveTime * dirSpeed, 0, MoveTime, EaseType.OutQuad);
-                WhileYield(lifeTime, t =>
+                float time = Time;
+
+                MoveNote(note, data, transformConverter, t =>
                 {
-                    if (note.IsActive == false) return;
-                    if (t + Time < MoveTime)
+                    Vector3 pos = default;
+                    float rot = default;
+                    /*if (t + time < MoveTime)
                     {
-                        float dir = (MoveTime - (t + Time)) * dirSpeed;
-                        note.SetPos(mirror.Conv(MyUtility.GetRotatedPos(
-                            new Vector3(data.X, (MoveTime - t) * Speed),
-                            dirEasing.Ease(t + Time),
-                            centerPos)));
-                        note.SetRot(mirror.Conv(dirEasing.Ease(t + Time)));
+                        rot = dirEasing.Ease(t + time);
+                        pos = MyUtility.GetRotatedPos(
+                            new Vector3(data.X, (MoveTime - t) * Speed), rot, centerPos);
                     }
                     else // ロングの場合、始点を取った後は真っ直ぐ落とす
                     {
-                        note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
-                        note.SetRot(0);
+                        pos = new Vector3(data.X, (MoveTime - t) * Speed);
+                        rot = 0;
+                    }*/
+                    if (t + time < 2 * MoveTime)
+                    {
+                        float dir = (MoveTime - t) * Speed / curve;
+                        pos = new Vector3(data.X - curve, 0) + curve * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir));
+                        rot = t.Ease(MoveTime * Speed / curve, 0, MoveTime, EaseType.OutQuad) * Mathf.Rad2Deg;
                     }
+                    else
+                    {
+                        Debug.Log(t + time);
+                        pos = new Vector3(data.X, (MoveTime - t) * Speed);
+                        rot = 0;
+                    }
+                    return (pos, rot);
                 });
             }
             else
             {
-                WhileYield(lifeTime, t =>
+                MoveNote(note, data, transformConverter, t =>
                 {
-                    if (note.IsActive == false) return;
+                    Vector3 pos = default;
+                    float rot = default;
                     if (t < MoveTime)
                     {
                         float dir = (MoveTime - t) * Speed / curve;
-                        note.SetPos(mirror.Conv(new Vector3(data.X - curve, 0) + curve * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir))));
-                        note.SetRot(mirror.Conv(t.Ease(MoveTime * Speed / curve, 0, MoveTime, EaseType.OutQuad) * Mathf.Rad2Deg));
+                        pos = new Vector3(data.X - curve, 0) + curve * new Vector3(Mathf.Cos(dir), Mathf.Sin(dir));
+                        rot = t.Ease(MoveTime * Speed / curve, 0, MoveTime, EaseType.OutQuad) * Mathf.Rad2Deg;
                     }
-                    else // ロングの場合、始点を取った後は真っ直ぐ落とす
+                    else
                     {
-                        note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
-                        note.SetRot(0);
+                        pos = new Vector3(data.X, (MoveTime - t) * Speed);
+                        rot = 0;
                     }
+                    return (pos, rot);
                 });
             }
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, NoteJudgeStatus.ExpectType expectType = NoteJudgeStatus.ExpectType.Y_Static)
+        {
+            return;
+        }
+
+        protected override string GetSummary()
+        {
+            return NoteDatas?.Length + "    " + transformConverter.GetStatus() + mirror.GetStatusText();
         }
     }
 }

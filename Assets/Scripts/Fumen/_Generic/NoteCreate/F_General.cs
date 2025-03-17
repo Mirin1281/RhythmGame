@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
@@ -18,7 +18,8 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            CreateDropNote(note, data, transformConverter);
+            MoveNote(note, data, transformConverter, t => (new Vector3(data.X, (MoveTime - t) * Speed), 0));
+
 
             /*WhileYield(lifeTime, t =>
             {

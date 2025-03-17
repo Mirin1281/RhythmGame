@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     /// <summary>
-    /// ノーツに動きを加えるSerializeすることを前提としたインターフェース
+    /// ノーツに動きを加える、Serializeすることを前提としたインターフェース
     /// </summary>
     public interface ITransformConvertable
     {
@@ -74,7 +74,7 @@ namespace NoteCreating
         [SerializeField] Lpb frequency = new Lpb(0.25f);
         [SerializeField] float startDeg = 0;
 
-        public (Vector3 pos, float rot) ConvertTransform(Vector3 basePos, float option = 0, float time = 0f)
+        (Vector3 pos, float rot) ITransformConvertable.ConvertTransform(Vector3 basePos, float option, float time)
         {
             float x = basePos.x + amp * Mathf.Sin(time * (2f / frequency.Time) * Mathf.PI + startDeg * Mathf.Deg2Rad);
             float y = basePos.y;
@@ -90,10 +90,10 @@ namespace NoteCreating
         [SerializeField] public Lpb phase = new Lpb(2);
         [SerializeField] public EaseType easeType = EaseType.OutQuad;
 
-        public (Vector3 pos, float rot) ConvertTransform(Vector3 basePos, float option = 0, float time = 0)
+        (Vector3 pos, float rot) ITransformConvertable.ConvertTransform(Vector3 basePos, float option, float time)
         {
             float dir = GetDir(time, option != 0);
-            var pos = MyUtility.GetRotatedPos(basePos, dir);
+            Vector3 pos = MyUtility.GetRotatedPos(basePos, dir);
             return (pos, dir);
         }
 
