@@ -26,6 +26,7 @@ namespace NoteCreating
 
         enum MoveStatus { Default, Stop, Accel }
 
+        [SerializeField] TransformConverter transformConverter;
         [SerializeField] float acceleration = 3;
         [SerializeField] StopData[] stopDatas = new StopData[] { new(new Lpb(4) * 6, new Lpb(4)) };
         [SerializeField] float amp = 0.5f;
@@ -37,6 +38,15 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
+            // 着弾地点を設定 //
+            var (expectPos, _) = transformConverter.Convert(
+                new Vector3(data.X, 0),
+                Time + MoveTime, MoveTime,
+                data.Option1, data.Option2);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+
+
             float currentTiming = -Time;
             float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - Time;
             float stopWait = default;
@@ -95,9 +105,22 @@ namespace NoteCreating
                     }
                 }
 
-                var pos = mirror.Conv(new Vector3(x, (MoveTime - t2) * Speed));
+                var basePos = mirror.Conv(new Vector3(x, (MoveTime - t2) * Speed));
+                var (pos, rot) = transformConverter.Convert(
+                    basePos,
+                    Time, t,
+                    data.Option1, data.Option2);
+
+                pos = mirror.Conv(pos);
+                rot = mirror.Conv(rot);
                 note.SetPos(pos);
+                note.SetRot(rot);
             });
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, NoteJudgeStatus.ExpectType expectType = NoteJudgeStatus.ExpectType.Y_Static)
+        {
+            return;
         }
 
 #if UNITY_EDITOR

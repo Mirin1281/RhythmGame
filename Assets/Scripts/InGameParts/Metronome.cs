@@ -104,7 +104,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
             voicePool.AttachDspTimeStretch();
             atomSource.player.SetVoicePoolIdentifier(voicePool.identifier);
             atomSource.player.SetDspTimeStretchRatio(1 / speedRate);
-            speedRateOffset = -0.1f;
+            speedRateOffset = -0.07f;
         }
 
         playback = atomSource.Play();

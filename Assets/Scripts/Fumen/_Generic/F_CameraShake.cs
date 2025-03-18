@@ -27,30 +27,30 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
+            var delta = await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
             for (int i = 0; i < loopCount; i++)
             {
-                ShakeCamera();
-                await Wait(loopWait);
+                ShakeCamera(delta);
+                delta = await Wait(loopWait, delta);
             }
         }
 
-        void ShakeCamera()
+        void ShakeCamera(float delta)
         {
             if (shakeType == ShakeType.Rotate)
             {
-                Helper.CameraMover.Move(null, new Vector3(0, 0, intensity), CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: Delta, mir: mirror);
-                Helper.CameraMover.Move(null, new Vector3(0, 0, -intensity), CameraMoveType.Relative, time, EaseType.OutQuad, delta: Delta, mir: mirror);
+                Helper.CameraMover.Move(null, new Vector3(0, 0, intensity), CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: delta, mir: mirror);
+                Helper.CameraMover.Move(null, new Vector3(0, 0, -intensity), CameraMoveType.Relative, time, EaseType.OutQuad, delta: delta, mir: mirror);
             }
             else if (shakeType == ShakeType.Vertical)
             {
-                Helper.CameraMover.Move(new Vector3(0, intensity), null, CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: Delta, mir: mirror);
-                Helper.CameraMover.Move(new Vector3(0, -intensity), null, CameraMoveType.Relative, time, EaseType.OutQuad, delta: Delta, mir: mirror);
+                Helper.CameraMover.Move(new Vector3(0, intensity), null, CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: delta, mir: mirror);
+                Helper.CameraMover.Move(new Vector3(0, -intensity), null, CameraMoveType.Relative, time, EaseType.OutQuad, delta: delta, mir: mirror);
             }
             else if (shakeType == ShakeType.Horizontal)
             {
-                Helper.CameraMover.Move(new Vector3(-intensity, 0), null, CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: Delta, mir: mirror);
-                Helper.CameraMover.Move(new Vector3(intensity, 0), null, CameraMoveType.Relative, time, EaseType.OutQuad, delta: Delta, mir: mirror);
+                Helper.CameraMover.Move(new Vector3(-intensity, 0), null, CameraMoveType.Relative, new Lpb(0), EaseType.OutQuad, delta: delta, mir: mirror);
+                Helper.CameraMover.Move(new Vector3(intensity, 0), null, CameraMoveType.Relative, time, EaseType.OutQuad, delta: delta, mir: mirror);
             }
             else if (shakeType == ShakeType.Random)
             {
@@ -60,7 +60,7 @@ namespace NoteCreating
                 {
                     Vector3 pos = ampEasing.Ease(t) * new Vector3(rand.GetFloat(-intensity, intensity), rand.GetFloat(-intensity, intensity));
                     Helper.CameraMover.MoveRelative(pos, default);
-                }, Delta, PlayerLoopTiming.PreLateUpdate);
+                }, delta, PlayerLoopTiming.PreLateUpdate);
             }
             else if (shakeType == ShakeType.Vibration_Horizontal)
             {
@@ -69,7 +69,7 @@ namespace NoteCreating
                 {
                     float x = Mathf.Cos(t * option) * ampEasing.Ease(t);
                     Helper.CameraMover.MoveRelative(new Vector3(x, 0), default);
-                }, Delta, PlayerLoopTiming.PreLateUpdate);
+                }, delta, PlayerLoopTiming.PreLateUpdate);
             }
         }
 

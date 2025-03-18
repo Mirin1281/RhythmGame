@@ -34,11 +34,11 @@ namespace NoteCreating
                     randPos.GetVector2(new Vector2(xRange.x, yRange.x), new Vector2(xRange.y, yRange.y)),
                     randRot.GetFloat(rotRange.x, rotRange.y),
                     randAlpha.GetFloat(alphaRange.x, alphaRange.y),
-                    randWidth.GetFloat(widthRange.x, widthRange.y)).Forget();
+                    randWidth.GetFloat(widthRange.x, widthRange.y), delta).Forget();
                 delta = await Wait(interval, delta);
             }
 
-            async UniTaskVoid CreateLine(Vector3 pos, float rot, float alpha, float width)
+            async UniTaskVoid CreateLine(Vector3 pos, float rot, float alpha, float width, float delta)
             {
                 var line = Helper.GetLine();
                 line.SetPos(pos);
@@ -48,7 +48,7 @@ namespace NoteCreating
                 await WhileYieldAsync(0.3f, t =>
                 {
                     line.SetAlpha(alpha - t);
-                });
+                }, delta);
                 line.SetActive(false);
             }
         }

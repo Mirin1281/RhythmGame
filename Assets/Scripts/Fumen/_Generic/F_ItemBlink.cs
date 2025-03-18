@@ -22,11 +22,16 @@ namespace NoteCreating
     {
         [Space(20)]
         [SerializeField] ItemTargets target = ItemTargets.Normal | ItemTargets.Slide | ItemTargets.Hold;
-        [SerializeField] int capacity = 32;
-        [SerializeField] int blinkCount = 20;
+        [SerializeField] int capacity = 16;
+        [Space(10)]
+        [SerializeField] int blinkCount = 16;
+        [SerializeField] Lpb interval = new Lpb(32);
+        [Space(10)]
+        [SerializeField] bool useRandom = true;
         [SerializeField] int seed = 222;
         [SerializeField] Vector2Int hideWaitRange = new Vector2Int(1, 5);
         [SerializeField] Vector2Int showWaitRange = new Vector2Int(1, 3);
+
 
         [SerializeField, Tooltip("アイテムの取得後、1フレーム待ってから振動を開始します\n処理時間のスパイクを緩和することができます")]
         bool isDelayOneFrame = true;
@@ -78,14 +83,27 @@ namespace NoteCreating
                 await UniTask.DelayFrame(1, cancellationToken: Helper.Token);
             }
 
-            var rand = new System.Random(seed);
-            float interval = 1 / 120f;
-            for (int i = 0; i < blinkCount; i++)
+            if (useRandom)
             {
-                await WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
-                SetRendererEnableds(items, false);
-                await WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
-                SetRendererEnableds(items, true);
+                var rand = new System.Random(seed);
+                float interval = 1 / 120f;
+                for (int i = 0; i < blinkCount; i++)
+                {
+                    await WaitSeconds(interval * rand.Next(hideWaitRange.x, hideWaitRange.y));
+                    SetRendererEnableds(items, false);
+                    await WaitSeconds(interval * rand.Next(showWaitRange.x, showWaitRange.y));
+                    SetRendererEnableds(items, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < blinkCount; i++)
+                {
+                    SetRendererEnableds(items, false);
+                    await Wait(interval);
+                    SetRendererEnableds(items, true);
+                    await Wait(interval);
+                }
             }
         }
 

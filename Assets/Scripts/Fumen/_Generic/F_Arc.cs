@@ -50,7 +50,7 @@ namespace NoteCreating
                 }
                 else
                 {
-                    var (pos, rot) = followable.ConvertTransform(basePos);
+                    var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: 0);
                     arc.SetPos(pos);
                     //arc.SetRot(rot); アークのZ軸回転できない
                 }

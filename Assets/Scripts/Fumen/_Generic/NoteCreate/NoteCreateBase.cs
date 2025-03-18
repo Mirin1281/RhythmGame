@@ -73,10 +73,14 @@ namespace NoteCreating
             if (autoExpect)
             {
                 // 着弾地点を設定 //
-                var baseExpectPos = moveFunc.Invoke(MoveTime).pos;
-                var expectPos = transformConverter.ConvertTransform(baseExpectPos, data.Option1, Time + MoveTime - Delta).pos;
+                var (baseExpectPos, baseExpectRot) = moveFunc.Invoke(MoveTime);
+                var (expectPos, _) = transformConverter.Convert(
+                    baseExpectPos,
+                    Time + MoveTime, MoveTime,
+                    data.Option1, data.Option2);
+
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, expectPos, MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+                    note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
             }
 
             float lifeTime = MoveTime + 0.5f;
@@ -91,7 +95,12 @@ namespace NoteCreating
                 {
                     if (note.IsActive == false) return;
                     var (basePos, baseRot) = moveFunc.Invoke(t);
-                    var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
+
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t,
+                        data.Option1, data.Option2);
+
                     pos = mirror.Conv(pos);
                     rot = mirror.Conv(baseRot + rot);
                     note.SetPos(pos);
@@ -105,7 +114,12 @@ namespace NoteCreating
                 {
                     if (note.IsActive == false) return;
                     var (basePos, baseRot) = moveFunc.Invoke(t);
-                    var (pos, rot) = transformConverter.ConvertTransform(basePos, data.Option1, Time);
+
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t,
+                        data.Option1, data.Option2);
+
                     pos = mirror.Conv(pos);
                     rot = mirror.Conv(baseRot + rot);
                     note.SetPos(pos);

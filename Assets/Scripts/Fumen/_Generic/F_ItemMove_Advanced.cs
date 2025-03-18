@@ -72,7 +72,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await Wait(MoveLpb);
+            float delta = await Wait(MoveLpb, Delta);
             if (isChainWait)
             {
                 LoopCreate(createDatas, delta).Forget();

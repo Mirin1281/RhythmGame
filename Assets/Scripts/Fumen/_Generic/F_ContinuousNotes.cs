@@ -56,7 +56,8 @@ namespace NoteCreating
             }
             else
             {
-                var pos = followable.ConvertTransform(new Vector3(x, 0), option, time: MoveTime - Delta).pos;
+                var pos = followable.ConvertTransform(
+                    new Vector3(x, 0), groupTime: MoveTime - Delta, unGroupTime: MoveTime - Delta, option1: option).pos;
                 var judgeStatus = new NoteJudgeStatus(note, pos, MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
                 Helper.NoteInput.AddExpect(judgeStatus);
             }
@@ -79,7 +80,7 @@ namespace NoteCreating
                     }
                     else
                     {
-                        var (pos, rot) = followable.ConvertTransform(basePos, option);
+                        var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: t, option1: option);
                         hold.SetPos(pos);
                         hold.SetRot(rot);
                         hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
@@ -98,7 +99,7 @@ namespace NoteCreating
                     }
                     else
                     {
-                        var (pos, rot) = followable.ConvertTransform(basePos, option);
+                        var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: t, option1: option);
                         note.SetPos(pos);
                         note.SetRot(rot);
                     }

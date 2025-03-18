@@ -3,9 +3,10 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [AddTypeMenu("◇波形"), System.Serializable]
+    [AddTypeMenu("◇オーディオ波形"), System.Serializable]
     public class F_AudioMeter : CommandBase
     {
+        [Header(nameof(FumenData) + "からPcmAnalyzerSamplesを予め設定してください")]
         [SerializeField] Mirror mirror;
         [SerializeField] int zip = 4;
         [Space(20)]

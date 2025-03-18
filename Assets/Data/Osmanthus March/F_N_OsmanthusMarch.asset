@@ -22,6 +22,7 @@ MonoBehaviour:
     - rid: 1232548282981679129
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: "\u25C7"
@@ -161,6 +162,7 @@ MonoBehaviour:
     - rid: 1232548282981679132
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 
@@ -224,6 +226,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -376,18 +380,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 204
   command:
-    rid: 1232548296670314515
+    rid: 1232548553852453041
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314515
-      type: {class: F_JumpDrop, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453041
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 0.5
-        defaultRadius: 10
-        defaultHeight: 12
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453042
         noteDatas:
         - wait:
             _value: 0
@@ -429,6 +434,11 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548553852453042
+      type: {class: P_Curve/F_JumpDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        radius: 14
+        height: 15
 --- !u!114 &-8474102898908988248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +504,8 @@ MonoBehaviour:
         easeX: {x: -6, y: 4}
         easeType: 3
         easeTime: 8
+        commandData: {fileID: 0}
+        option: 0
 --- !u!114 &-8019466898045871951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +528,7 @@ MonoBehaviour:
     - rid: 1232548282981679134
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -659,6 +672,7 @@ MonoBehaviour:
     - rid: 1232548282981679135
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -944,6 +958,7 @@ MonoBehaviour:
     - rid: 1232548282981679130
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -1010,19 +1025,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 84
   command:
-    rid: 1232548296670314509
+    rid: 1232548553852452942
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314509
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452942
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: -200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452943
         noteDatas:
         - wait:
             _value: 4
@@ -1216,6 +1231,12 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548553852452943
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &-7259823171462596346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,6 +1259,7 @@ MonoBehaviour:
     - rid: 1232548296670314497
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -1368,6 +1390,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1472,17 +1496,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 180
   command:
-    rid: 1232548282981679105
+    rid: 1232548553852452952
   references:
     version: 2
     RefIds:
-    - rid: 1232548282981679105
-      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452952
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        setRotate: 0
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452953
         noteDatas:
         - wait:
             _value: 0
@@ -1524,6 +1550,11 @@ MonoBehaviour:
             _value: 2.666667
           option1: 5
           option2: 0
+    - rid: 1232548553852452953
+      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        useDefault: 1
+        defaultDir: 5
 --- !u!114 &-6346425851466813954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,6 +1760,7 @@ MonoBehaviour:
     - rid: 1232548282981679118
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -1847,6 +1879,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1972,19 +2006,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 12
   command:
-    rid: 1232548296670314503
+    rid: 1232548553852453035
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314503
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453035
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: -200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453036
         noteDatas:
         - wait:
             _value: 0
@@ -2074,6 +2108,12 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548553852453036
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 40
 --- !u!114 &-4519204493562421704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2154,19 +2194,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 148
   command:
-    rid: 1232548296670314509
+    rid: 1232548553852452948
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314509
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452948
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        defaultCurve: -200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452949
         noteDatas:
         - wait:
             _value: 4
@@ -2360,6 +2400,12 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548553852452949
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &-3986878848448134320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,6 +2431,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -2499,19 +2547,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 76
   command:
-    rid: 1232548296670314508
+    rid: 1232548553852452940
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314508
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452940
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452941
         noteDatas:
         - wait:
             _value: 0
@@ -2649,6 +2697,12 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548553852452941
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &-2517254851948128655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2736,6 +2790,7 @@ MonoBehaviour:
     - rid: 1232548282981679118
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 
@@ -2844,19 +2899,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 20
   command:
-    rid: 1232548296670314504
+    rid: 1232548553852453037
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314504
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453037
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453038
         noteDatas:
         - wait:
             _value: 4
@@ -2930,6 +2985,12 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548553852453038
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 40
 --- !u!114 &-1148775274264019366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,6 +3013,7 @@ MonoBehaviour:
     - rid: 1232548282981679136
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -3021,6 +3083,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 4
@@ -3227,6 +3291,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3347,19 +3413,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 140
   command:
-    rid: 1232548296670314511
+    rid: 1232548553852452946
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314511
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452946
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 30
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452947
         noteDatas:
         - wait:
             _value: 0
@@ -3481,6 +3547,12 @@ MonoBehaviour:
             _value: 4
           option1: -200
           option2: 0
+    - rid: 1232548553852452947
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3631,17 +3703,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 164
   command:
-    rid: 1232548282981679105
+    rid: 1232548553852452950
   references:
     version: 2
     RefIds:
-    - rid: 1232548282981679105
-      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452950
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        setRotate: 0
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452951
         noteDatas:
         - wait:
             _value: 0
@@ -3683,6 +3757,11 @@ MonoBehaviour:
             _value: 2.6666667
           option1: -5
           option2: 0
+    - rid: 1232548553852452951
+      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        useDefault: 1
+        defaultDir: -5
 --- !u!114 &794223630339693240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3728,6 +3807,7 @@ MonoBehaviour:
     - rid: 1232548282981679120
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 
@@ -3840,6 +3920,7 @@ MonoBehaviour:
     - rid: 1232548282981679132
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -3900,6 +3981,7 @@ MonoBehaviour:
     - rid: 1232548282981679109
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: "\u67A0"
@@ -4031,6 +4113,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -4123,6 +4207,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 4
@@ -4445,19 +4531,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 28
   command:
-    rid: 1232548296670314505
+    rid: 1232548553852453039
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314505
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453039
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 100
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453040
         noteDatas:
         - wait:
             _value: 0
@@ -4515,6 +4601,12 @@ MonoBehaviour:
             _value: 2.666667
           option1: 0
           option2: 0
+    - rid: 1232548553852453040
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 40
 --- !u!114 &4039563648087726036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4621,19 +4713,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 132
   command:
-    rid: 1232548296670314507
+    rid: 1232548553852452944
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314507
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452944
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        defaultCurve: 30
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452945
         noteDatas:
         - wait:
             _value: 4
@@ -4683,6 +4775,12 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548553852452945
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &4707782100985899361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4705,6 +4803,7 @@ MonoBehaviour:
     - rid: 1232548282981679120
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -4784,6 +4883,7 @@ MonoBehaviour:
     - rid: 1232548282981679121
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 
@@ -4901,6 +5001,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -5036,6 +5138,7 @@ MonoBehaviour:
     - rid: 1232548282981679121
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: "\u5224\u5B9A\u7DDA\u30A8\u30D5\u30A7\u30AF\u30C8"
@@ -5211,6 +5314,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -5373,6 +5478,7 @@ MonoBehaviour:
     - rid: 1232548282981679123
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -5447,19 +5553,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 68
   command:
-    rid: 1232548296670314507
+    rid: 1232548553852452938
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314507
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852452938
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 30
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452939
         noteDatas:
         - wait:
             _value: 4
@@ -5509,6 +5615,12 @@ MonoBehaviour:
             _value: 0
           option1: 0
           option2: 0
+    - rid: 1232548553852452939
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 50
 --- !u!114 &7831117582718132478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5717,6 +5829,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -5842,19 +5956,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 4
   command:
-    rid: 1232548296670314502
+    rid: 1232548553852453033
   references:
     version: 2
     RefIds:
-    - rid: 1232548296670314502
-      type: {class: F_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453033
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        defaultCurve: 200
-        isGroup: 0
-        dirSpeed: 40
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453034
         noteDatas:
         - wait:
             _value: 0
@@ -5936,6 +6050,12 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 1232548553852453034
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        centerX: 0
+        dirSpeed: 40
 --- !u!114 &8456494289702894503
 MonoBehaviour:
   m_ObjectHideFlags: 0

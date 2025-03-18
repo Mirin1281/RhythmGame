@@ -1,249 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7598910636735641559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (1)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 0
-  command:
-    rid: 1232548324848959489
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548324848959489
-      type: {class: F_JudgeCreate, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        judgeNoteType: 2
-        pos: {x: 0, y: 0}
-        isVerticalRange: 0
-        rotate: 0
-        delayAfter:
-          _value: 0
---- !u!114 &-6960284979912852750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (9)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 0
-  command:
-    rid: 7519554553902792708
-  references:
-    version: 2
-    RefIds:
-    - rid: 7519554553902792708
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        delay:
-          _value: 0
-        loopCount: 4
-        loopWait:
-          _value: 0.5
-        command:
-          rid: 7519554757273321480
-    - rid: 7519554757273321480
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        transformConvertables: []
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -10
-          length:
-            _value: 0
-          option1: 0
-          option2: 0
---- !u!114 &-3537535442797948619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (29)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 0
-  command:
-    rid: 7519554713306005505
-  references:
-    version: 2
-    RefIds:
-    - rid: 7519554713306005505
-      type: {class: F_Ge, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 1
-          x: 5
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -5
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -1
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 1
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -3
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 3
-          length:
-            _value: 0
-          option1: 1
-          option2: 0
---- !u!114 &-2719169315616620099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (2)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 0
-  command:
-    rid: 8267577178362478598
-  references:
-    version: 2
-    RefIds:
-    - rid: 8267577178362478598
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        loopCount: 32
-        loopWait:
-          _value: 4
-        alpha: 0.2
-        lifeLpb:
-          _value: 0.25
-        moveDirection: 270
-        isAdaptiveSpeed: 1
-        speedRate: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +23,123 @@ MonoBehaviour:
   <CirclePoolCount>k__BackingField: 10
   fumen:
     commandDataList:
-    - {fileID: -2719169315616620099}
-    - {fileID: -6960284979912852750}
-    - {fileID: -3537535442797948619}
-    - {fileID: -7598910636735641559}
+    - {fileID: 4879790254752827649}
+--- !u!114 &4879790254752827649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_Test_AprilRabbit
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 0
+  command:
+    rid: 1232548553852453013
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548553852453013
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        delay:
+          _value: 1
+        loopCount: 2
+        loopWait:
+          _value: 3
+        command:
+          rid: 1232548553852453014
+    - rid: 1232548553852453014
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 4
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453015
+          - rid: 1232548553852453016
+        noteDatas:
+        - wait:
+            _value: 10
+          type: 3
+          x: 11
+          length:
+            _value: 12
+          option1: 13
+          option2: 14
+        - wait:
+            _value: 15
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -10
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+    - rid: 1232548553852453015
+      type: {class: P_2ShakeLoop, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        deg: 5
+        frequency:
+          _value: 6
+        phase:
+          _value: 7
+        easeType: 3
+    - rid: 1232548553852453016
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        centerX: 8
+        dirSpeed: 9

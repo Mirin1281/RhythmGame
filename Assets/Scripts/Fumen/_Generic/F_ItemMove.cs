@@ -88,7 +88,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await Wait(MoveLpb);
+            float delta = await Wait(MoveLpb, Delta);
             if (isChainWait)
             {
                 LoopCreate(createDatas, delta).Forget();
@@ -139,7 +139,7 @@ namespace NoteCreating
                     Helper.NoteInput.AddExpect(item as RegularNote, lifeTime);
             }
 
-            await WaitSeconds(lifeLpb.Time);
+            await WaitSeconds(lifeLpb.Time, delta);
             item.SetActive(false);
 
 

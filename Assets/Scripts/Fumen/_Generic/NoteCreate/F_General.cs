@@ -1,4 +1,4 @@
-using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
@@ -11,9 +11,13 @@ namespace NoteCreating
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
-        public (Vector3 pos, float rot) ConvertTransform(Vector3 basePos, float option = 0, float time = 0)
+        public (Vector3 pos, float rot) ConvertTransform(
+            Vector3 basePos, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0)
         {
-            return transformConverter.ConvertTransform(basePos, option, Time);
+            return transformConverter.Convert(
+                basePos,
+                Time + groupTime, unGroupTime,
+                option1, option2);
         }
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)

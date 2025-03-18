@@ -32,6 +32,8 @@ MonoBehaviour:
         easeX: {x: 0, y: 7}
         easeType: 3
         easeTime: 4
+        commandData: {fileID: 0}
+        option: 0
     - rid: 7519555101131800581
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -67,6 +69,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 0
           wait:
@@ -181,6 +184,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -255,6 +260,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -321,6 +327,8 @@ MonoBehaviour:
         easeX: {x: 0, y: 7}
         easeType: 3
         easeTime: 4
+        commandData: {fileID: 0}
+        option: 0
     - rid: 7519555101131800581
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -356,6 +364,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -483,6 +493,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1038,6 +1050,8 @@ MonoBehaviour:
         easeX: {x: -4, y: 4}
         easeType: 3
         easeTime: 4
+        commandData: {fileID: 0}
+        option: 0
 --- !u!114 &-5982373467937697632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,17 +1067,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 64
   command:
-    rid: 7519555101131800594
+    rid: 1232548553852453024
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800594
-      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453024
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        setRotate: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453026
         noteDatas:
         - wait:
             _value: 0
@@ -1193,6 +1209,11 @@ MonoBehaviour:
             _value: 5.333333
           option1: -10
           option2: 0
+    - rid: 1232548553852453026
+      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        useDefault: 0
+        defaultDir: 10
 --- !u!114 &-5050597851360507479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,21 +1229,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 64
   command:
-    rid: 7519555101131800584
+    rid: 1232548553852453022
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800584
-      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453022
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        moveLpb:
-          _value: 0
-        easeType: 3
-        deg: 80
-        pos: {x: -1, y: 5}
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453023
         noteDatas:
         - wait:
             _value: 2
@@ -1256,6 +1275,17 @@ MonoBehaviour:
             _value: 4
           option1: -1
           option2: -1
+    - rid: 1232548553852453023
+      type: {class: P_Curve/P_Revolute, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 1
+        easeLpb:
+          _value: 0
+        easeType: 0
+        toDeg: 80
+        toPos: {x: 1, y: 5}
 --- !u!114 &-4753321263064047431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,6 +1311,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 0
           wait:
@@ -1403,6 +1434,7 @@ MonoBehaviour:
     - rid: 7519555101131800585
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -1454,21 +1486,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 46
   command:
-    rid: 7519555101131800584
+    rid: 1232548553852453020
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800584
-      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453020
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        moveLpb:
-          _value: 1
-        easeType: 3
-        deg: 30
-        pos: {x: 5, y: 1}
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453021
         noteDatas:
         - wait:
             _value: 2
@@ -1614,6 +1644,17 @@ MonoBehaviour:
             _value: 8
           option1: -1
           option2: -1
+    - rid: 1232548553852453021
+      type: {class: P_Curve/P_Revolute, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 1
+        easeLpb:
+          _value: 1
+        easeType: 0
+        toDeg: 30
+        toPos: {x: 5, y: 1}
 --- !u!114 &-1046290909954266090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,6 +1680,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 5
           wait:
@@ -1698,6 +1740,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -5
           wait:
@@ -1757,6 +1800,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -1847,6 +1892,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -2022,6 +2069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: f4d3af7f32c42f24897587804d38e0f4, type: 2}
   noteCount: 1
+  <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 20
   <SlidePoolCount>k__BackingField: 20
   <HoldPoolCount>k__BackingField: 20
@@ -2097,6 +2145,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -2299,6 +2349,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -2517,6 +2569,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -2615,6 +2669,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -2785,6 +2841,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3011,21 +3069,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 80
   command:
-    rid: 7519555101131800584
+    rid: 1232548553852453031
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800584
-      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453031
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        moveLpb:
-          _value: 0
-        easeType: 3
-        deg: 80
-        pos: {x: -1, y: 5}
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453032
         noteDatas:
         - wait:
             _value: 2
@@ -3059,6 +3115,17 @@ MonoBehaviour:
             _value: 4
           option1: -1
           option2: -1
+    - rid: 1232548553852453032
+      type: {class: P_Curve/P_Revolute, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 1
+        easeLpb:
+          _value: 0
+        easeType: 0
+        toDeg: 80
+        toPos: {x: 1, y: 5}
 --- !u!114 &1653869234361758729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3084,6 +3151,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -5
           wait:
@@ -3143,6 +3211,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
@@ -3367,6 +3437,7 @@ MonoBehaviour:
     - rid: 7519555101131800585
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 0
         summary: 
@@ -3461,6 +3532,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: 6
           wait:
@@ -3597,6 +3669,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -3671,6 +3745,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        commandData: {fileID: 0}
         datas:
         - x: -6
           wait:
@@ -3797,21 +3872,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 30
   command:
-    rid: 7519555101131800584
+    rid: 1232548553852453018
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800584
-      type: {class: F_Transform, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453018
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        moveLpb:
-          _value: 1
-        easeType: 3
-        deg: 30
-        pos: {x: 5, y: 1}
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453019
         noteDatas:
         - wait:
             _value: 2
@@ -3957,6 +4030,17 @@ MonoBehaviour:
             _value: 8
           option1: -1
           option2: -1
+    - rid: 1232548553852453019
+      type: {class: P_Curve/P_Revolute, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 1
+        easeLpb:
+          _value: 1
+        easeType: 0
+        toDeg: 30
+        toPos: {x: 5, y: 1}
 --- !u!114 &6058447666286229271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4041,18 +4125,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 73
   command:
-    rid: 7519555101131800595
+    rid: 1232548553852453029
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800595
-      type: {class: F_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453029
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        moveLpb:
-          _value: 4
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453030
         noteDatas:
         - wait:
             _value: 0
@@ -4086,6 +4171,15 @@ MonoBehaviour:
             _value: 5.333333
           option1: 3
           option2: 0.8888889
+    - rid: 1232548553852453030
+      type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        moveLpb:
+          _value: 4
+        moveStartLpb:
+          _value: 1
+        easeType: 3
 --- !u!114 &7922569432164135487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,6 +4202,7 @@ MonoBehaviour:
     - rid: 7519555101131800585
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 
@@ -4159,17 +4254,19 @@ MonoBehaviour:
   enable: 1
   beatTiming: 80
   command:
-    rid: 7519555101131800594
+    rid: 1232548553852453027
   references:
     version: 2
     RefIds:
-    - rid: 7519555101131800594
-      type: {class: F_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548553852453027
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 1
         speedRate: 1
-        setRotate: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852453028
         noteDatas:
         - wait:
             _value: 0
@@ -4299,6 +4396,11 @@ MonoBehaviour:
             _value: 5.333333
           option1: -10
           option2: 0
+    - rid: 1232548553852453028
+      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        useDefault: 0
+        defaultDir: 10
 --- !u!114 &8451286212147658089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4324,6 +4426,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 8
@@ -4395,6 +4499,7 @@ MonoBehaviour:
     - rid: 7519555101131800585
       type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
+        debug: 0
         mirror:
           enabled: 1
         summary: 

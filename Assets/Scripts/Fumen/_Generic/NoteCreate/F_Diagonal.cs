@@ -4,10 +4,10 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu(FumenPathContainer.NoteCreate + "角度をつけて落下", -60), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "角度をつけて落下(Obsolute)", -60), System.Serializable]
     public class F_Diagonal : NoteCreateBase<NoteData>
     {
-        [SerializeField] bool setRotate;
+        [Header("ノーツに角度をつけない場合はP_Diagonalを使用してください")]
 
         [Header("オプション1 : ノーツのやって来る角度")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
@@ -15,28 +15,12 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
+            note.SetRot(mirror.Conv(data.Option1));
+            if (note is HoldNote hold)
+            {
+                hold.SetMaskRot(0); // マスクの角度はつけなくていい
+            }
             float xSpeed = Mathf.Cos((data.Option1 + 90) * Mathf.Deg2Rad);
-            if (setRotate)
-            {
-                note.SetRot(mirror.Conv(data.Option1));
-                if (note is HoldNote hold)
-                {
-                    hold.SetMaskRot(0); // マスクの角度はつけなくていい
-                }
-            }
-            else
-            {
-                if (note is HoldNote hold)
-                {
-                    WhileYield(lifeTime, t =>
-                    {
-                        if (note.IsActive == false) return;
-                        hold.SetPos(mirror.Conv(new Vector3(data.X + xSpeed * (MoveTime - t) * Speed, (MoveTime - t) * Speed)));
-                        hold.SetMaskPos(mirror.Conv(new Vector3(data.X + xSpeed * (MoveTime - t) * Speed, 0)));
-                    });
-                    return;
-                }
-            }
             WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;

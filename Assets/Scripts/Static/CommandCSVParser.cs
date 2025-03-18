@@ -65,7 +65,6 @@ namespace NoteCreating
                         Debug.Log($"{delimiterLevel}  {field.FieldType}  {field.Name}  {v}");
                     }
                     sb.Append(v);
-
                 }
                 else if (field.FieldType.IsArray) // 配列なら中身を追加
                 {
@@ -118,17 +117,37 @@ namespace NoteCreating
 
 
             // 配列の中身を取得
-            static StringBuilder GetContentFromArray(Array array, int separateLevel)
+            static StringBuilder GetContentFromArray(Array array, int delimiterLevel)
             {
                 if (array == null) return null;
-                separateLevel++;
+                delimiterLevel++;
                 StringBuilder sb = new();
+
                 for (int i = 0; i < array.Length; i++)
                 {
-                    var elementContent = GetFieldContentGeneric(array.GetValue(i), separateLevel);
+                    var v = array.GetValue(i);
+                    if (array.GetType().GetElementType().IsInterface)
+                    {
+                        if (v == null)
+                        {
+                            sb.Append("Null");
+                        }
+                        else
+                        {
+                            // インターフェースがアタッチされているクラス名を取得
+                            int index = v.ToString().LastIndexOf('.');
+                            string className = v.ToString().Substring(index + 1, v.ToString().Length - index - 1);
+                            sb.Append(className);
+                        }
+                        sb.Append(InterfaceDelimiter);
+                        //var content = GetFieldContentGeneric(v, delimiterLevel);
+                        //sb.Append(content);
+                    }
+
+                    var elementContent = GetFieldContentGeneric(v, delimiterLevel);
                     sb.Append(elementContent);
                     if (i == array.Length - 1) break;
-                    sb.Append(GetDelimiter(separateLevel));
+                    sb.Append(GetDelimiter(delimiterLevel));
                 }
                 return sb;
             }
@@ -145,7 +164,6 @@ namespace NoteCreating
 
         static object SetFieldGeneric(object obj, string content, List<int> fieldIndexList = null)
         {
-
             if (string.IsNullOrWhiteSpace(content) || obj == null) return null;
 
             fieldIndexList ??= new();
@@ -154,12 +172,10 @@ namespace NoteCreating
             List<string> fieldValues = content.Split(GetDelimiter(fieldIndexList.Count - 1)).ToList();
             if (ShowDebugLog)
             {
-                //Debug.LogWarning(content + "  " + GetDelimiter(fieldIndexList.Count - 1));
-                fieldInfos.ForEach(v => Debug.Log(v.FieldType));
-                fieldValues.ForEach(v => Debug.LogWarning(v));
+                //fieldInfos.ForEach(v => Debug.Log(v.FieldType));
+                //fieldValues.ForEach(v => Debug.LogWarning(v));
+                Debug.Log($"{content}  Delimiter: {GetDelimiter(fieldIndexList.Count - 1)}");
             }
-            //Debug.Log("aaaaa");
-            //fieldValues.ForEach(v => Debug.LogWarning(v));
 
             AdjustFieldsAndValuesOrder(obj, fieldInfos, fieldValues);
 
@@ -247,8 +263,30 @@ namespace NoteCreating
                 var array = Array.CreateInstance(elementType, elementValues.Length);
                 for (int i = 0; i < elementValues.Length; i++)
                 {
-                    var element = CreateInstance(elementType);
-                    array.SetValue(SetFieldGeneric(element, elementValues[i], fieldIndexList), i);
+                    if (elementType.IsInterface)
+                    {
+                        var val = elementValues[i];
+                        int endIndex = val.IndexOf(InterfaceDelimiter);
+                        if (endIndex < 0) return;
+
+                        string className = val[..endIndex];
+                        string content = val[(endIndex + 1)..];
+                        var instance = CreateInstanceByClassName<object>(className);
+
+                        if (instance != null)
+                        {
+                            instance = SetFieldGeneric(instance, content, fieldIndexList);
+                            if (instance != null)
+                            {
+                                array.SetValue(instance, i);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var element = CreateInstance(elementType);
+                        array.SetValue(SetFieldGeneric(element, elementValues[i], fieldIndexList), i);
+                    }
                     fieldIndexList[fieldIndexList.Count - 1]++;
                 }
                 arrayField.SetValue(obj, array);
@@ -340,6 +378,7 @@ namespace NoteCreating
                 }
                 catch (MissingMethodException)
                 {
+                    var constructorInfos = type.GetConstructors();
                     var constructor = type.GetConstructors()[0];
                     var parameters = constructor.GetParameters().Select(parInfo => CreateInstance(parInfo.ParameterType)).ToArray();
                     obj = constructor.Invoke(parameters);
