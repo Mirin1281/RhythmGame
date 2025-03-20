@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
@@ -22,8 +21,76 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
-            MoveNote(note, data, transformConverter, t => (new Vector3(data.X, (MoveTime - t) * Speed), 0));
+            // 座標と回転の関数を定義
+            (Vector3 pos, float rot) moveFunc(float t) => (new Vector3(data.X, (MoveTime - t) * Speed), 0);
 
+
+            // 着弾地点を設定 //
+            var baseExpectPos = moveFunc(MoveTime).pos;
+            var (expectPos, _) = transformConverter.Convert(
+                baseExpectPos,
+                Time + MoveTime - Delta, MoveTime,
+                data.Option1, data.Option2);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+
+
+            // 移動 //
+            WhileYield(lifeTime, t =>
+            {
+                if (note.IsActive == false) return;
+                var (basePos, baseRot) = moveFunc(t);
+
+                // 座標変換 //
+                var (pos, rot) = transformConverter.Convert(
+                    basePos,
+                    Time, t,
+                    data.Option1, data.Option2);
+                note.SetPos(mirror.Conv(pos));
+                note.SetRot(mirror.Conv(baseRot + rot));
+                if (note is HoldNote hold)
+                {
+                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
+                }
+            });
+
+            /*if (note is HoldNote hold)
+            {
+                WhileYield(lifeTime, t =>
+                {
+                    if (note.IsActive == false) return;
+                    var (basePos, baseRot) = moveFunc(t);
+
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t,
+                        data.Option1, data.Option2);
+
+                    pos = mirror.Conv(pos);
+                    rot = mirror.Conv(baseRot + rot);
+                    note.SetPos(pos);
+                    note.SetRot(rot);
+                    hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
+                });
+            }
+            else
+            {
+                WhileYield(lifeTime, t =>
+                {
+                    if (note.IsActive == false) return;
+                    var (basePos, baseRot) = moveFunc(t);
+
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t,
+                        data.Option1, data.Option2);
+
+                    pos = mirror.Conv(pos);
+                    rot = mirror.Conv(baseRot + rot);
+                    note.SetPos(pos);
+                    note.SetRot(rot);
+                });
+            }*/
 
             /*WhileYield(lifeTime, t =>
             {

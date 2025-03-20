@@ -12,6 +12,7 @@ using System.Linq;
 ]*/
 public class MusicMasterManagerData : ScriptableObject
 {
+    [Header("データを追加した後はContextMenuからスコアデータを初期化してください")]
     [SerializeField] MusicSelectData[] selectDatas;
     /// <summary>
     /// 分離してもいいかも

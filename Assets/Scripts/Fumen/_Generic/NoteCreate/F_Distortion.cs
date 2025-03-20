@@ -6,6 +6,7 @@ namespace NoteCreating
     [AddTypeMenu(FumenPathContainer.NoteCreate + "微細な揺れ", -60), System.Serializable]
     public class F_Distortion : NoteCreateBase<NoteData>
     {
+        [SerializeField] TransformConverter transformConverter;
         [SerializeField] bool isPosDistortion = true;
         [SerializeField] bool isRotDistortion;
         [SerializeField] float frequency = 3f;
@@ -29,35 +30,59 @@ namespace NoteCreating
         {
             // プラリザみたいな微細な揺れ + 角度 // 
             float randFrequency = random.GetFloat(-frequency, frequency);
-            float phase = random.GetFloat(0, 2 * Mathf.PI);
+            float randPhase = random.GetFloat(0, 2 * Mathf.PI);
+
+            (Vector3 pos, float rot) moveFunc(float t)
+            {
+                float addX = 0;
+                if (isPosDistortion)
+                {
+                    addX = posAmp * data.Option1 * Mathf.Sin(t * randFrequency + randPhase);
+                }
+                Vector3 pos = new Vector3(data.X + addX, (MoveTime - t) * Speed);
+
+                float rot = 0;
+                if (isRotDistortion)
+                {
+                    rot = rotAmp * data.Option1 * Mathf.Sin(t * randFrequency + randPhase);
+                }
+                return (pos, rot);
+            }
+
+
+            // 着弾地点を設定 //
+            var baseExpectPos = moveFunc(MoveTime).pos;
+            var (expectPos, _) = transformConverter.Convert(
+                baseExpectPos,
+                Time + MoveTime - Delta, MoveTime,
+                data.Option1, data.Option2);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+
+
             WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;
-                if (isPosDistortion)
-                {
-                    var addX = posAmp * data.Option1 * Mathf.Sin(t * randFrequency + phase);
-                    note.SetPos(mirror.Conv(new Vector3(data.X + addX, (MoveTime - t) * Speed)));
-                }
-                else
-                {
-                    note.SetPos(mirror.Conv(new Vector3(data.X, (MoveTime - t) * Speed)));
-                }
+                var (basePos, baseRot) = moveFunc(t);
 
-                if (isRotDistortion)
+                // 座標変換 //
+                var (pos, rot) = transformConverter.Convert(
+                    basePos,
+                    Time, t,
+                    data.Option1, data.Option2);
+                note.SetPos(mirror.Conv(pos));
+                note.SetRot(mirror.Conv(baseRot + rot));
+                if (note is HoldNote hold)
                 {
-                    float rot = rotAmp * data.Option1 * Mathf.Sin(t * randFrequency + phase);
-                    if (data.Type == RegularNoteType.Hold)
-                    {
-                        var hold = note as HoldNote;
-                        hold.SetRot(rot);
-                        hold.SetMaskRot(0);
-                    }
-                    else
-                    {
-                        note.SetRot(rot);
-                    }
+                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
+                    hold.SetMaskRot(0);
                 }
             });
+        }
+
+        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, NoteJudgeStatus.ExpectType expectType = NoteJudgeStatus.ExpectType.Y_Static)
+        {
+            return;
         }
     }
 }

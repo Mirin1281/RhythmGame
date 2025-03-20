@@ -123,7 +123,7 @@ namespace NoteCreating
         [SerializeField] Judgement judge;
         [SerializeField] ArcLightOperator lightOperator;
         [SerializeField] PoolManager poolManager;
-        [SerializeField] bool isAuto;
+        bool isAuto;
         public bool IsAuto { set => isAuto = value; }
 
         readonly List<NoteJudgeStatus> allStatuses = new(63);
@@ -255,7 +255,7 @@ namespace NoteCreating
                     previousStatus = status;
                     judge.DebugShowRange(status);
 #endif
-                    if (status.IsMute == false)
+                    if (status.IsMute == false && CurrentTime - 0.5f < status.Time)
                         PlayNoteSE(status.NoteType);
                 }
                 else if (CurrentTime > status.Time + 0.12f)

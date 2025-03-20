@@ -24,10 +24,11 @@ namespace NoteCreating
         [SerializeField] float intensity = 2f;
         [SerializeField] Lpb time = new Lpb(4);
         [SerializeField, Tooltip("Randomの場合シード値、Vibration_Horizontalの場合振動数を表す")] int option = 100;
+        [SerializeField] bool offset = true;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            var delta = await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
+            var delta = await Wait(MoveLpb, offset ? Delta - RhythmGameManager.Offset : Delta);
             for (int i = 0; i < loopCount; i++)
             {
                 ShakeCamera(delta);

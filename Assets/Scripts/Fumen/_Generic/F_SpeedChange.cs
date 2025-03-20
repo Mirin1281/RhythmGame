@@ -7,6 +7,7 @@ namespace NoteCreating
     public class F_SpeedChange : CommandBase
     {
         [Header("通常を1として、全体のノーツスピードを変更します")]
+        [Header("多用はおすすめしません")]
         [SerializeField] float speed = 1f;
         [SerializeField] Lpb easeLpb;
         [SerializeField] EaseType easeType = EaseType.Linear;

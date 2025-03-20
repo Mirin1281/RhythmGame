@@ -13,71 +13,90 @@ namespace NoteCreating
         [SerializeField, Tooltip("落下に使う時間")] Lpb dropLPB = new Lpb(2f);
         [SerializeField, Tooltip("落下に使う時間のうち、加速する時間の割合")] float easingRate = 0.5f;
         [SerializeField, Tooltip("加速度")] float acceleration = 2f;
+        [SerializeField] TransformConverter transformConverter;
+        [SerializeField] bool isGroupTransform;
         [SerializeField] NoteData[] noteDatas;
+        float baseTime;
+
+        float Time => CurrentTime - baseTime;
 
         protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            // 全体のWaitの和を求める
-            float wholeWait = 0;
+            baseTime = CurrentTime - Delta;
+            // 全体の時間の和を求める
+            float wholeTime = 0;
             foreach (var data in noteDatas)
             {
-                wholeWait += data.Wait.Time;
+                wholeTime += data.Wait.Time;
             }
 
             // 逆走時間内で全てのノーツを生成する+加速する分の距離を確保するために生成を速める
-            float createSpeedRate = (wholeWait + dropLPB.Time) / reverseLPB.Time;
+            float createSpeedRate = (wholeTime + dropLPB.Time) / reverseLPB.Time;
 
             float waitDelta = 0;
             float delta = Delta;
             for (int i = noteDatas.Length - 1; i >= 0; i--) // 後ろから生成
             {
                 var data = noteDatas[i];
-                float expectTime = wholeWait - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
                 if (data.Type != RegularNoteType._None)
-                    Helper.NoteInput.AddExpect(CreateNote(data, delta, createSpeedRate, wholeWait - waitDelta), expectTime, data.Length);
+                {
+                    float expectTime = wholeTime - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
+                    var note = CreateNote(data, delta, createSpeedRate, wholeTime - waitDelta);
+
+                    var baseExpectPos = new Vector3(data.X, 0);
+                    var (expectPos, _) = transformConverter.Convert(
+                        baseExpectPos,
+                        Time + expectTime - Delta, dropLPB.Time + (MoveLpb - dropLPB).Time,
+                        data.Option1, data.Option2);
+                    Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                        note, mirror.Conv(expectPos), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));
+                }
+
                 if (float.IsInfinity(createSpeedRate) == false)
+                {
                     delta = await Wait(data.Wait / createSpeedRate, delta);
+                }
                 waitDelta += data.Wait.Time;
             }
         }
 
-        RegularNote CreateNote(in NoteData noteData, float delta, float createSpeedRate, float w)
+        RegularNote CreateNote(in NoteData data, float delta, float createSpeedRate, float w)
         {
-            var type = noteData.Type;
+            var type = data.Type;
             if (type is RegularNoteType.Normal or RegularNoteType.Slide)
             {
                 RegularNote note = Helper.GetRegularNote(type);
-                Move(note, noteData.X, delta, createSpeedRate, w).Forget();
+                Move(note, data, delta, createSpeedRate, w).Forget();
                 return note;
             }
             else if (type is RegularNoteType.Hold)
             {
-                if (noteData.Length == default)
+                if (data.Length == default)
                 {
                     Debug.LogWarning("ホールドの長さが0です");
                     return null;
                 }
-                HoldNote hold = Helper.GetHold(noteData.Length * Speed);
-                hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
-                Move(hold, noteData.X, delta, createSpeedRate, w).Forget();
+                HoldNote hold = Helper.GetHold(data.Length * Speed);
+                hold.SetMaskPos(new Vector2(mirror.Conv(data.X), 0));
+                Move(hold, data, delta, createSpeedRate, w).Forget();
                 return hold;
             }
             return null;
         }
 
-        async UniTaskVoid Move(RegularNote note, float x, float delta, float createSpeedRate, float w)
+        async UniTaskVoid Move(RegularNote note, NoteData data, float delta, float createSpeedRate, float w)
         {
             float peakY = dropLPB.Time * (easingRate / acceleration - easingRate + 1);
 
             // 逆走
             float reverseTime = (w + dropLPB.Time) / createSpeedRate;
-            Reverse(note, x, peakY, reverseTime, delta).Forget();
+            Reverse(note, data.X, peakY, reverseTime, delta).Forget();
             delta = await WaitSeconds(reverseTime, delta);
 
             // 落下
-            Drop(note, x, peakY, dropLPB.Time, easingRate, acceleration, delta).Forget();
+            Drop(note, data, peakY, dropLPB.Time, easingRate, acceleration, delta).Forget();
 
 
             async UniTaskVoid Reverse(RegularNote note, float x, float toY, float reverseTime, float delta)
@@ -88,12 +107,24 @@ namespace NoteCreating
                 while (t < reverseTime)
                 {
                     t = CurrentTime - baseTime;
-                    note.SetPos(new Vector3(mirror.Conv(x), easing.Ease(t) * Speed));
+                    var basePos = new Vector3(mirror.Conv(x), easing.Ease(t) * Speed);
+
+                    // 座標変換 //
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t - reverseTime + (MoveLpb - dropLPB).Time + (isGroupTransform ? 0 : -w),
+                        data.Option1, data.Option2);
+                    note.SetPos(mirror.Conv(pos));
+                    note.SetRot(mirror.Conv(rot));
+                    if (note is HoldNote hold)
+                    {
+                        hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
+                    }
                     await Yield();
                 }
             }
 
-            async UniTaskVoid Drop(RegularNote note, float baseX, float startY, float dropTime, float easingRate, float acceleration, float delta)
+            async UniTaskVoid Drop(RegularNote note, NoteData data, float startY, float dropTime, float easingRate, float acceleration, float delta)
             {
                 float easeTime = dropTime * easingRate;
 
@@ -112,7 +143,19 @@ namespace NoteCreating
                     {
                         y = dropTime - t;
                     }
-                    note.SetPos(new Vector3(mirror.Conv(baseX), (y + w) * Speed));
+                    var basePos = new Vector3(mirror.Conv(data.X), (y + w) * Speed);
+
+                    // 座標変換 //
+                    var (pos, rot) = transformConverter.Convert(
+                        basePos,
+                        Time, t + (MoveLpb - dropLPB).Time + (isGroupTransform ? 0 : -w),
+                        data.Option1, data.Option2);
+                    note.SetPos(mirror.Conv(pos));
+                    note.SetRot(mirror.Conv(rot));
+                    if (note is HoldNote hold)
+                    {
+                        hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
+                    }
 
                     await Yield();
                 }
@@ -162,6 +205,7 @@ namespace NoteCreating
 
         void DebugPreview(bool beforeClear, Lpb delay)
         {
+            delay += reverseLPB - new Lpb(2);
             var previewer = CommandEditorUtility.GetPreviewer(beforeClear);
             previewer.DebugPreview2DNotes(noteDatas, Helper.PoolManager, mirror, beforeClear, delay);
         }

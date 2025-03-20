@@ -110,11 +110,8 @@ namespace NoteCreating
                     basePos,
                     Time, t,
                     data.Option1, data.Option2);
-
-                pos = mirror.Conv(pos);
-                rot = mirror.Conv(rot);
-                note.SetPos(pos);
-                note.SetRot(rot);
+                note.SetPos(mirror.Conv(pos));
+                note.SetRot(mirror.Conv(rot));
             });
         }
 

@@ -22,7 +22,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     [SerializeField] bool skipOnStart;
     [SerializeField, HideInInspector] float timeRate;
     [SerializeField, HideInInspector] int estimatedBeatCount; // エディタ上で使用
-    static readonly int skipExecuteTolerance = 10; // 途中再生時、値x4分音符前のコマンドを発火します
+    static readonly int skipExecuteTolerance = 20; // 途中再生時、値x4分音符前のコマンドを発火します
 #endif
 
     FumenData fumenData;

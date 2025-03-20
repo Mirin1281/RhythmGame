@@ -135,8 +135,18 @@ namespace NoteCreating
             }
             else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote)
             {
+                var pos = basePos;
+                foreach (var d in data.PosEaseDatas)
+                {
+                    pos += d.From;
+                }
+                pos = MyUtility.GetRotatedPos(pos, rotateFromPos, centerPos);
+
                 if (lifeTime > 0)
-                    Helper.NoteInput.AddExpect(item as RegularNote, lifeTime);
+                {
+                    var judgeStatus = new NoteJudgeStatus(item as RegularNote, pos, lifeTime, expectType: NoteJudgeStatus.ExpectType.Static);
+                    Helper.NoteInput.AddExpect(judgeStatus);
+                }
             }
 
             await WaitSeconds(lifeLpb.Time, delta);

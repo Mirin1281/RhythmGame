@@ -24,11 +24,12 @@ namespace NoteCreating
         [SerializeField] TMP_Text scoreText;
         [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
-        [SerializeField] bool showDebugRange;
+        bool showDebugRange;
         [SerializeField] GameObject debugNoteRangePrefab;
 #else
-    bool showDebugRange = false;
+        bool showDebugRange = false;
 #endif
+        public bool ShowDebugRange { set => showDebugRange = value; }
 
         Result result;
         float showScore;

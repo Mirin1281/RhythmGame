@@ -12,7 +12,6 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [SerializeField] bool guideLine = false;
         [SerializeField] Lpb guideInterval = new Lpb(4f);
-        //[SerializeField] int zip = 4;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
@@ -27,32 +26,6 @@ namespace NoteCreating
                     line.SetPos(new Vector3(0, i * guideInterval.Time * Speed));
                 }
             }
-
-            // PCM波形のサンプル
-            // 間隔をある程度詰める必要がある
-            /*int itemCount = Helper.WaveMeter.PcmSamples / zip;
-            ItemBase[] items = new ItemBase[itemCount];
-            for (int i = 0; i < items.Length; i++)
-            {
-                var item = Helper.GetRegularNote(RegularNoteType.Slide);
-                items[i] = item;
-                float x = (i - ((itemCount - 1) / 2f)) / (itemCount / 32f * 1.5f);
-                item.SetPos(new Vector3(x, 0));
-                item.SetRot(90);
-                item.SetAlpha(0.3f);
-            }
-
-            float[] pcmData = new float[Helper.WaveMeter.PcmSamples];
-            WhileYield(100f, _ =>
-            {
-                Helper.WaveMeter.GetPcmData(ref pcmData);
-                for (int i = 0; i < itemCount; i++)
-                {
-                    var item = items[i];
-                    float y = pcmData[i * zip] * 3f + 4;
-                    item.SetPos(new Vector3(item.GetPos().x, y));
-                }
-            });*/
 
 
             /*// 星型にノーツやレーンを //

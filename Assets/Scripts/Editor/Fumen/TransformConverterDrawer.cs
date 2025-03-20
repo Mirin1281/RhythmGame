@@ -15,7 +15,7 @@ namespace NoteCreating.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("transformConvertables")) + EditorGUIUtility.singleLineHeight;
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("transformConvertables"));
         }
     }
 }

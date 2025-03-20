@@ -39,6 +39,8 @@ namespace NoteCreating
                     lifeTime += noteData.Length.Time;
                 }
 
+                if (Delta > lifeTime) return;
+
                 if (type is RegularNoteType.Normal or RegularNoteType.Slide)
                 {
                     RegularNote note = Helper.GetRegularNote(type);
@@ -65,68 +67,6 @@ namespace NoteCreating
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, MoveTime - Delta, length, expectType));
         }
 
-        /// <summary>
-        /// 設定した軌道、角度でノーツを移動させます
-        /// </summary>
-        protected void MoveNote(RegularNote note, NoteData data, TransformConverter transformConverter, Func<float, (Vector3 pos, float rot)> moveFunc, bool autoExpect = true)
-        {
-            if (autoExpect)
-            {
-                // 着弾地点を設定 //
-                var (baseExpectPos, baseExpectRot) = moveFunc.Invoke(MoveTime);
-                var (expectPos, _) = transformConverter.Convert(
-                    baseExpectPos,
-                    Time + MoveTime, MoveTime,
-                    data.Option1, data.Option2);
-
-                Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
-            }
-
-            float lifeTime = MoveTime + 0.5f;
-            if (data.Type == RegularNoteType.Hold)
-            {
-                lifeTime += data.Length.Time;
-            }
-
-            if (note is HoldNote hold)
-            {
-                WhileYield(lifeTime, t =>
-                {
-                    if (note.IsActive == false) return;
-                    var (basePos, baseRot) = moveFunc.Invoke(t);
-
-                    var (pos, rot) = transformConverter.Convert(
-                        basePos,
-                        Time, t,
-                        data.Option1, data.Option2);
-
-                    pos = mirror.Conv(pos);
-                    rot = mirror.Conv(baseRot + rot);
-                    note.SetPos(pos);
-                    note.SetRot(rot);
-                    hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
-                });
-            }
-            else
-            {
-                WhileYield(lifeTime, t =>
-                {
-                    if (note.IsActive == false) return;
-                    var (basePos, baseRot) = moveFunc.Invoke(t);
-
-                    var (pos, rot) = transformConverter.Convert(
-                        basePos,
-                        Time, t,
-                        data.Option1, data.Option2);
-
-                    pos = mirror.Conv(pos);
-                    rot = mirror.Conv(baseRot + rot);
-                    note.SetPos(pos);
-                    note.SetRot(rot);
-                });
-            }
-        }
 
 #if UNITY_EDITOR
 

@@ -10,12 +10,13 @@ namespace NoteCreating
 
         [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと基準の時間からの差で発火します")]
         bool isChainWait = true;
+        [SerializeField] bool offset = true;
 
         [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            float delta = await Wait(MoveLpb, Delta - RhythmGameManager.Offset);
+            float delta = await Wait(MoveLpb, offset ? Delta - RhythmGameManager.Offset : Delta);
             if (isChainWait)
             {
                 LoopMove(settings, delta).Forget();
