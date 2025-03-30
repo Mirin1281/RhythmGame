@@ -9,7 +9,6 @@ namespace NoteCreating
 {
     using HoldState = HoldNote.InputState;
     using ArcJudgeState = ArcJudge.InputState;
-    using ExpectType = NoteJudgeStatus.ExpectType;
 
     public class NoteJudgeStatus
     {
@@ -164,12 +163,6 @@ namespace NoteCreating
         /// <summary>
         /// ノーツの打点情報を伝えます
         /// </summary>
-        ///
-        /// ノーツ, 何秒後に打点するか, ホールド時間(ホールドのみ), 同時押しの検知をするか, 同時押しの検知をするか
-        public void AddExpect(RegularNote note, float time, Lpb holdingTime = default, ExpectType expectType = ExpectType.Y_Static, bool isCheckSimultaneous = true)
-        {
-            AddExpect(new NoteJudgeStatus(note, new Vector2(default, 0), time, holdingTime, expectType), isCheckSimultaneous);
-        }
         public void AddExpect(NoteJudgeStatus judgeStatus, bool isCheckSimultaneous = true)
         {
             float absoluteTime = CurrentTime + judgeStatus.Time;
@@ -519,7 +512,7 @@ namespace NoteCreating
 
                 var arcJ = arc.GetCurrentJudge();
                 float headY = arc.HeadY;
-                if (arcJ == null)
+                if (arcJ.State == ArcJudgeState.None)
                 {
                     continue;
                 }
@@ -535,11 +528,7 @@ namespace NoteCreating
                     continue;
                 }
 
-                if (arcJ.State is ArcJudgeState.None)
-                {
-                    throw new Exception();
-                }
-                else if (arcJ.State is ArcJudgeState.Idle && isHold)
+                if (arcJ.State is ArcJudgeState.Idle && isHold)
                 {
                     if (arc.JudgeIndex == 0) PlayNoteSE(RegularNoteType.Normal);
                     arcJ.State = ArcJudgeState.Get;

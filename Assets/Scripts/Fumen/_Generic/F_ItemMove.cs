@@ -125,8 +125,6 @@ namespace NoteCreating
             RotEase(item, data.StartRot, data.RotEaseDatas, delta).Forget();
             AlphaEase(item, data.StartAlpha, data.AlphaEaseDatas, delta).Forget();
 
-            float lifeTime = lifeLpb.Time - delta;
-
             if (itemType == ItemType.HoldNote)
             {
                 var hold = item as HoldNote;
@@ -135,15 +133,16 @@ namespace NoteCreating
             }
             else if (setJudge && itemType is ItemType.NormalNote or ItemType.SlideNote)
             {
-                var pos = basePos;
-                foreach (var d in data.PosEaseDatas)
-                {
-                    pos += d.From;
-                }
-                pos = MyUtility.GetRotatedPos(pos, rotateFromPos, centerPos);
-
+                float lifeTime = lifeLpb.Time - delta;
                 if (lifeTime > 0)
                 {
+                    var pos = basePos;
+                    foreach (var d in data.PosEaseDatas)
+                    {
+                        pos += d.From;
+                    }
+                    pos = MyUtility.GetRotatedPos(pos, rotateFromPos, centerPos);
+
                     var judgeStatus = new NoteJudgeStatus(item as RegularNote, pos, lifeTime, expectType: NoteJudgeStatus.ExpectType.Static);
                     Helper.NoteInput.AddExpect(judgeStatus);
                 }
@@ -155,7 +154,15 @@ namespace NoteCreating
 
             async UniTaskVoid PosEase(ItemBase item, Vector2 startPos, EaseData<Vector2>[] datas, float delta)
             {
-                item.SetPos(mirror.Conv(startPos + basePos));
+                if (isRotateFromPos)
+                {
+                    item.SetPos(mirror.Conv(MyUtility.GetRotatedPos(startPos + basePos, rotateFromPos, centerPos)));
+                }
+                else
+                {
+                    item.SetPos(mirror.Conv(startPos + basePos));
+                }
+                //item.SetPos(mirror.Conv(startPos + basePos));
                 for (int i = 0; i < datas.Length; i++)
                 {
                     if (datas[i].EaseType == EaseType.None)

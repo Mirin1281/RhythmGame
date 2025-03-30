@@ -22,7 +22,6 @@ namespace NoteCreating
 
         [Space(20)]
         [SerializeField] float deg;
-
         [SerializeField] Vector2 pos;
 
         protected override async UniTaskVoid ExecuteAsync()

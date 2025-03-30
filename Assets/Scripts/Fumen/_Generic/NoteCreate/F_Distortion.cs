@@ -51,32 +51,31 @@ namespace NoteCreating
 
 
             // 着弾地点を設定 //
-            var baseExpectPos = moveFunc(MoveTime).pos;
-            var (expectPos, _) = transformConverter.Convert(
-                baseExpectPos,
+            note.SetPos(mirror.Conv(moveFunc(MoveTime).pos));
+            transformConverter.Convert(
+                note, mirror,
                 Time + MoveTime - Delta, MoveTime,
                 data.Option1, data.Option2);
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+                note, note.GetPos(), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
 
 
             WhileYield(lifeTime, t =>
             {
                 if (note.IsActive == false) return;
-                var (basePos, baseRot) = moveFunc(t);
-
-                // 座標変換 //
-                var (pos, rot) = transformConverter.Convert(
-                    basePos,
-                    Time, t,
-                    data.Option1, data.Option2);
-                note.SetPos(mirror.Conv(pos));
-                note.SetRot(mirror.Conv(baseRot + rot));
+                var ts = moveFunc(t);
+                note.SetPosAndRot(ts);
                 if (note is HoldNote hold)
                 {
-                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
+                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(ts.pos.x, 0), ts.rot)));
                     hold.SetMaskRot(0);
                 }
+
+                // 座標変換 //
+                transformConverter.Convert(
+                    note, mirror,
+                    Time, t,
+                    data.Option1, data.Option2);
             });
         }
 

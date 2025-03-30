@@ -261,7 +261,14 @@ namespace NoteCreating
         /// </summary>
         public Vector3 GetPointOnYPlane(float target, bool showLog = true)
         {
-            float headY = HeadY;
+            SplineUtility.GetNearestPoint(
+                spline,
+                new Ray(new Vector3(30, target, 0), new Vector3(-1, 0, 0)),
+                out var nearest,
+                out var t
+            );
+            return nearest;
+            /*float headY = HeadY;
             float tailY = TailY;
             if (spline == null
              || (target < headY && Mathf.Approximately(headY, target) == false)
@@ -300,7 +307,7 @@ namespace NoteCreating
             Vector3 arcPos = rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
             //Debug.Log($"Head: {headY}, Tail: {tailY}, JudgeNum: {debug_i}\n"
             //        + $"target: {target}, value: {arcPos}");
-            return arcPos;
+            return arcPos;*/
         }
 
         /// <summary>
@@ -308,7 +315,7 @@ namespace NoteCreating
         /// </summary>
         public ArcJudge GetCurrentJudge()
         {
-            if (JudgeIndex >= judges.Count) return null;
+            if (JudgeIndex >= judges.Count) return ArcJudge.Empty;
             return judges[JudgeIndex];
         }
 

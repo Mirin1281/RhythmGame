@@ -20,5 +20,5 @@ public static class ConstContainer
 public static class FumenPathContainer
 {
     public const string NoteCreate = "Genericノーツ/";
-    public const string SpecificRoot = ""; // 専用譜面ギミックが増えた際にまとめられるように予めパスを挟む
+    public const string SpecificRoot = "--特殊/";
 }

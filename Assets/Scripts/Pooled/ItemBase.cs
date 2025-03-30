@@ -84,6 +84,17 @@ namespace NoteCreating
             }
         }
 
+        public virtual void SetPosAndRot(Vector2 pos, float deg, bool isWorld = false)
+        {
+            SetPos(pos, isWorld);
+            SetRot(deg, isWorld);
+        }
+
+        public virtual void SetPosAndRot((Vector2 pos, float deg) ts, bool isWorld = false)
+        {
+            SetPosAndRot(ts.pos, ts.deg, isWorld);
+        }
+
         public abstract void SetRendererEnabled(bool enabled);
 
         public abstract float GetAlpha();

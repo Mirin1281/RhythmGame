@@ -4,7 +4,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu(FumenPathContainer.NoteCreate + "座標移動", -60), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "座標移動(Obsolute)", -60), System.Serializable]
     public class F_Transform : NoteCreateBase<NoteData>
     {
         [SerializeField] Lpb moveLpb = new Lpb(1);

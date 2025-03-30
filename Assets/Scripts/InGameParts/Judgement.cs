@@ -22,6 +22,8 @@ namespace NoteCreating
         [SerializeField] TMP_Text deltaText;
         [SerializeField] TMP_Text judgeText;
         [SerializeField] TMP_Text scoreText;
+        [SerializeField] TMP_Text meanDeltaText;
+
         [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
         bool showDebugRange;
@@ -33,9 +35,12 @@ namespace NoteCreating
 
         Result result;
         float showScore;
+        float totalDelta;
+        int getCount;
         CancellationTokenSource cts = new();
 
         public Result Result => result;
+        public float MeanDelta => totalDelta / getCount;
         const float Range = 4.6f;
         const float ArcRange = 4.6f;
 
@@ -89,6 +94,8 @@ namespace NoteCreating
             int beforeScore = result.Score;
             result.SetComboAndScore(grade);
             comboText.SetText("{0}", result.Combo);
+            if (grade != NoteGrade.Miss)
+                getCount++;
             SetScoreTextAsync(beforeScore, result.Score).Forget();
 
 
@@ -118,6 +125,8 @@ namespace NoteCreating
             if (grade != NoteGrade.Perfect)
                 SetJudgeText(grade).Forget();
             deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
+            totalDelta += delta;
+            meanDeltaText.SetText("{0}", Mathf.RoundToInt(MeanDelta * 1000f));
             return grade;
 
 
@@ -176,17 +185,6 @@ namespace NoteCreating
             obj.transform.localRotation = Quaternion.AngleAxis(judgeStatus.Rot, Vector3.forward);
             obj.transform.localScale = Range * new Vector3(
                 judgeStatus.Note == null ? 1 : judgeStatus.Note.Width, judgeStatus.IsVerticalRange ? 10f : 1f);
-            UniTask.Void(async () =>
-            {
-                await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);
-                Destroy(obj);
-            });
-        }
-        public void DebugShowRange(Vector2 pos)
-        {
-            var obj = Instantiate(debugNoteRangePrefab, transform);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(2f, 2f);
             UniTask.Void(async () =>
             {
                 await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);

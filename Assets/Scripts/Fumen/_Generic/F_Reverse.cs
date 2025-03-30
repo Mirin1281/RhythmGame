@@ -45,13 +45,13 @@ namespace NoteCreating
                     float expectTime = wholeTime - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
                     var note = CreateNote(data, delta, createSpeedRate, wholeTime - waitDelta);
 
-                    var baseExpectPos = new Vector3(data.X, 0);
-                    var (expectPos, _) = transformConverter.Convert(
-                        baseExpectPos,
+                    note.SetPos(new Vector3(mirror.Conv(data.X), 0));
+                    transformConverter.Convert(
+                        note, mirror,
                         Time + expectTime - Delta, dropLPB.Time + (MoveLpb - dropLPB).Time,
                         data.Option1, data.Option2);
                     Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                        note, mirror.Conv(expectPos), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));
+                        note, note.GetPos(), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));
                 }
 
                 if (float.IsInfinity(createSpeedRate) == false)
@@ -108,18 +108,13 @@ namespace NoteCreating
                 {
                     t = CurrentTime - baseTime;
                     var basePos = new Vector3(mirror.Conv(x), easing.Ease(t) * Speed);
+                    note.SetPos(basePos);
 
                     // 座標変換 //
-                    var (pos, rot) = transformConverter.Convert(
-                        basePos,
+                    transformConverter.Convert(
+                        note, mirror,
                         Time, t - reverseTime + (MoveLpb - dropLPB).Time + (isGroupTransform ? 0 : -w),
                         data.Option1, data.Option2);
-                    note.SetPos(mirror.Conv(pos));
-                    note.SetRot(mirror.Conv(rot));
-                    if (note is HoldNote hold)
-                    {
-                        hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
-                    }
                     await Yield();
                 }
             }
@@ -144,19 +139,13 @@ namespace NoteCreating
                         y = dropTime - t;
                     }
                     var basePos = new Vector3(mirror.Conv(data.X), (y + w) * Speed);
+                    note.SetPos(basePos);
 
                     // 座標変換 //
-                    var (pos, rot) = transformConverter.Convert(
-                        basePos,
+                    transformConverter.Convert(
+                        note, mirror,
                         Time, t + (MoveLpb - dropLPB).Time + (isGroupTransform ? 0 : -w),
                         data.Option1, data.Option2);
-                    note.SetPos(mirror.Conv(pos));
-                    note.SetRot(mirror.Conv(rot));
-                    if (note is HoldNote hold)
-                    {
-                        hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
-                    }
-
                     await Yield();
                 }
             }

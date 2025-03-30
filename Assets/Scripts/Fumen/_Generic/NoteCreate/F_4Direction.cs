@@ -49,7 +49,7 @@ namespace NoteCreating
 
             var vec = new Vector3(Mathf.Cos((deg + 90) * Mathf.Deg2Rad), Mathf.Sin((deg + 90) * Mathf.Deg2Rad));
             var toPos = basePos + inverse * data.X * new Vector3(Mathf.Cos(deg * Mathf.Deg2Rad), Mathf.Sin(deg * Mathf.Deg2Rad));
-            if (HoldNote.TryParse(note, out var hold))
+            if (note is HoldNote hold)
             {
                 hold.SetRot(deg);
                 hold.SetMaskPos(toPos);

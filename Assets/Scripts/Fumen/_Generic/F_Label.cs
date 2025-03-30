@@ -13,6 +13,17 @@ namespace NoteCreating
 
 #if UNITY_EDITOR
 
+        enum LabelType
+        {
+            [InspectorName("なし")] None,
+            [InspectorName("ビルドアップ")] BuildUp,
+            [InspectorName("サビ")] Drop,
+            [InspectorName("ヴァース")] Verse,
+            [InspectorName("アウトロ")] Out,
+        }
+
+        [Space(20)]
+        [SerializeField] LabelType labelType = LabelType.None;
         [SerializeField] string summary;
 
         protected override Color GetCommandColor()
@@ -22,7 +33,25 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return summary;
+            string type = labelType switch
+            {
+                LabelType.None => string.Empty,
+                LabelType.BuildUp => "ビルドアップ",
+                LabelType.Drop => "サビ",
+                LabelType.Verse => "ヴァース",
+                LabelType.Out => "アウトロ",
+                _ => string.Empty
+            };
+            string join;
+            if (string.IsNullOrEmpty(summary) || labelType == LabelType.None)
+            {
+                join = string.Empty;
+            }
+            else
+            {
+                join = " : ";
+            }
+            return type + join + summary;
         }
 #endif
     }

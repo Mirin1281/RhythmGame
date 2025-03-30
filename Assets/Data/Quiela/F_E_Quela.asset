@@ -32,6 +32,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
     - rid: 1232548214306766856
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -67,6 +68,8 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         isPosDistortion: 1
         isRotDistortion: 1
         frequency: 2
@@ -615,6 +618,7 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+        offset: 1
 --- !u!114 &-8807339398697533318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,6 +1100,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 0
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -1982,6 +1987,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -2590,6 +2596,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
     - rid: 1232548214306766856
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -2909,6 +2916,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -3633,6 +3641,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
     - rid: 1232548214306766856
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -4174,6 +4183,8 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        transformConverter:
+          transformConvertables: []
         isPosDistortion: 1
         isRotDistortion: 1
         frequency: 2
@@ -5307,6 +5318,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -6346,6 +6358,7 @@ MonoBehaviour:
         time:
           _value: 16
         option: 50
+        offset: 1
 --- !u!114 &-3219831617960675511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6568,6 +6581,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -7647,6 +7661,7 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+        offset: 1
 --- !u!114 &-1871004599126482417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7957,6 +7972,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
 --- !u!114 &-1715486425929869506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8361,188 +8377,6 @@ MonoBehaviour:
           _value: 24
         command:
           rid: 7519554964215562254
---- !u!114 &-1486621495960863645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (20)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 566
-  command:
-    rid: 1232548553852452883
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548553852452883
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        transformConverter:
-          transformConvertables:
-          - rid: 1232548553852452884
-        noteDatas:
-        - wait:
-            _value: 8
-          type: 1
-          x: -7
-          length:
-            _value: 4
-          option1: -3
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 1
-          x: -3
-          length:
-            _value: 4
-          option1: -3
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 1
-          x: -6
-          length:
-            _value: 4
-          option1: -3
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 3
-          x: -2
-          length:
-            _value: 4
-          option1: -3
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 0
-          x: -1
-          length:
-            _value: 4
-          option1: -3
-          option2: 1
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: -3
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: -2
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: -4
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: -2
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 1
-          x: 7
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: 5
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: 3
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: 5
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: -1.5
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: 1
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 2
-          x: -1.5
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 2
-          option2: 1.333333
-    - rid: 1232548553852452884
-      type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isGroup: 0
-        moveLpb:
-          _value: 4
-        moveStartLpb:
-          _value: 1
-        easeType: 3
 --- !u!114 &-1406719126744685051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9025,6 +8859,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
 --- !u!114 &-1221230814563491553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9988,6 +9823,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -10494,6 +10330,76 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &-266179422878242123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (220)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 570
+  command:
+    rid: 1232548553852452885
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548553852452885
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        transformConverter:
+          transformConvertables:
+          - rid: 1232548553852452886
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 3
+          x: 6
+          length:
+            _value: 8
+          option1: 3
+          option2: 1.333333
+        - wait:
+            _value: 2
+          type: 3
+          x: -6
+          length:
+            _value: 8
+          option1: -3
+          option2: 1.333333
+        - wait:
+            _value: 2
+          type: 3
+          x: 7
+          length:
+            _value: 8
+          option1: 4
+          option2: 1.333333
+        - wait:
+            _value: 4
+          type: 1
+          x: 1
+          length:
+            _value: 8
+          option1: 1
+          option2: 1
+    - rid: 1232548553852452886
+      type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 0
+        moveLpb:
+          _value: 4
+        moveStartLpb:
+          _value: 1
+        easeType: 3
 --- !u!114 &-106367610419081988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10924,9 +10830,14 @@ MonoBehaviour:
     - {fileID: 5042925082436417157}
     - {fileID: 3350606053916133232}
     - {fileID: 6466472963602254683}
-    - {fileID: -1486621495960863645}
-    - {fileID: 56171267886606761}
     - {fileID: -743319806879955139}
+    - {fileID: 120821001311420916}
+    - {fileID: 1723195771873452617}
+    - {fileID: 832159707197546094}
+    - {fileID: 19686101328229088}
+    - {fileID: 3948160182335010668}
+    - {fileID: 4468825091163442510}
+    - {fileID: -266179422878242123}
     - {fileID: -3179576851086817915}
     - {fileID: -1307373311222866797}
     - {fileID: -3954630431654531391}
@@ -10979,7 +10890,7 @@ MonoBehaviour:
     - {fileID: -5169696979393038138}
     - {fileID: 1003777712455723323}
     - {fileID: 5138170214870976526}
---- !u!114 &56171267886606761
+--- !u!114 &19686101328229088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10989,66 +10900,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (182)
+  m_Name: Command_F_E_Quela (216)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 570
+  beatTiming: 571
   command:
-    rid: 1232548553852452885
+    rid: 1232548665077792768
   references:
     version: 2
     RefIds:
-    - rid: 1232548553852452885
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 1232548665077792768
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
-          enabled: 0
+          enabled: 1
         speedRate: 1
-        transformConverter:
-          transformConvertables:
-          - rid: 1232548553852452886
-        noteDatas:
-        - wait:
+        commandData: {fileID: 0}
+        datas:
+        - x: -2
+          wait:
             _value: 8
-          type: 3
-          x: 2
-          length:
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
             _value: 8
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 2
-          type: 3
-          x: -6
-          length:
+          option: {x: 0, y: 0, z: 0}
+        - x: 2
+          wait:
             _value: 8
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 2
-          type: 3
-          x: 7
-          length:
-            _value: 8
-          option1: 2
-          option2: 1.333333
-        - wait:
-            _value: 2
-          type: 0
-          x: -3
-          length:
-            _value: 8
-          option1: 2
-          option2: 1
-    - rid: 1232548553852452886
-      type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        isGroup: 0
-        moveLpb:
-          _value: 4
-        moveStartLpb:
-          _value: 1
-        easeType: 3
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 1, z: 0}
 --- !u!114 &104341171747479077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11137,6 +11027,66 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &120821001311420916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (219)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 566
+  command:
+    rid: 1232548553852452883
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548553852452883
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: -3
+          option2: 1.333333
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: -3
+          option2: 1.333333
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: -3
+          option2: 1.333333
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 4
+          option1: -3
+          option2: 1.333333
 --- !u!114 &140927518694381192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11911,6 +11861,77 @@ MonoBehaviour:
           _value: 4
         command:
           rid: 1232548170385588233
+--- !u!114 &832159707197546094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (214)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 571
+  command:
+    rid: 1232548665077792768
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548665077792768
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        datas:
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: -90, y: 0, z: 2}
+        - x: -6
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 2, z: 0}
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 90, y: 0, z: 3}
+        - x: 2
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 3, z: 0}
 --- !u!114 &882143751921246617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11943,6 +11964,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
 --- !u!114 &954748035025027912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12397,6 +12419,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -12746,6 +12769,77 @@ MonoBehaviour:
         alphaRange: {x: 0, y: 0.2}
         widthRange: {x: 0, y: 0.4}
         seed: 200
+--- !u!114 &1723195771873452617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (21)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 569
+  command:
+    rid: 1232548665077792768
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548665077792768
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        datas:
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: -90, y: 0, z: 2}
+        - x: -6
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 2, z: 0}
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 90, y: 0, z: 3}
+        - x: 2
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 3, z: 0}
 --- !u!114 &1848400723453267956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13322,6 +13416,9 @@ MonoBehaviour:
           _value: 2
         easingRate: 0.3
         acceleration: 2
+        transformConverter:
+          transformConvertables: []
+        isGroupTransform: 0
         noteDatas:
         - wait:
             _value: 0
@@ -15161,6 +15258,77 @@ MonoBehaviour:
         easeLpb:
           _value: 0
         easeType: 3
+--- !u!114 &3948160182335010668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (182)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 573
+  command:
+    rid: 1232548665077792768
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548665077792768
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        datas:
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: -90, y: 0, z: 2}
+        - x: -7.5
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 2, z: 0}
+        - x: -7.5
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 90, y: 0, z: 1.7}
+        - x: -3
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 1.7, z: 0}
 --- !u!114 &3964802756772673214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15961,6 +16129,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -15984,6 +16153,55 @@ MonoBehaviour:
           lpb:
             _value: 4
           moveType: 1
+--- !u!114 &4468825091163442510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (217)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 573
+  command:
+    rid: 1232548665077792768
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548665077792768
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        datas:
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 2
+          wait:
+            _value: 8
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 180, y: 1, z: 0}
 --- !u!114 &4495231475164698064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16019,6 +16237,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -16792,6 +17011,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 100
+        offset: 1
     - rid: 1232548214306766856
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -16868,6 +17088,7 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+        offset: 1
 --- !u!114 &5678722022726762363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16893,6 +17114,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -17647,6 +17869,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
+        offset: 1
         settings:
         - wait:
             _value: 0
@@ -18975,8 +19198,7 @@ MonoBehaviour:
           enabled: 0
         speedRate: 1
         transformConverter:
-          transformConvertables:
-          - rid: 1232548553852452870
+          transformConvertables: []
         acceleration: 3
         stopDatas:
         - timing:
@@ -19142,11 +19364,6 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
-    - rid: 1232548553852452870
-      type: {class: P_Curve/F_JumpDrop, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        radius: 14
-        height: 15
 --- !u!114 &7798045116942980280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20441,6 +20658,7 @@ MonoBehaviour:
         time:
           _value: 8
         option: 110
+        offset: 1
     - rid: 1232548214306766856
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -20483,6 +20701,7 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+        offset: 1
     - rid: 1232548214306766860
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
       data:
@@ -20803,6 +21022,7 @@ MonoBehaviour:
         time:
           _value: 4
         option: 100
+        offset: 1
 --- !u!114 &9004744718070008519
 MonoBehaviour:
   m_ObjectHideFlags: 0

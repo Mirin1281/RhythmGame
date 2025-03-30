@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NoteCreating
 {
     [Serializable]
-    public class ArcJudge
+    public struct ArcJudge
     {
         public enum InputState
         {
@@ -26,6 +26,8 @@ namespace NoteCreating
             IsOverlappable = isDuplicated;
             State = InputState.Idle;
         }
+
+        public static ArcJudge Empty => new ArcJudge();
     }
 
     // 設置範囲

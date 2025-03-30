@@ -105,7 +105,7 @@ namespace NoteCreating
                 delta = await Wait(data.DelayLPB, delta: delta);
             }
 
-            var item = GetItem(itemType, delta);
+            var item = GetItem(itemType, data, delta);
 
             Vector2 startPos = data.StartPos;
             int posIndex = data.PosEaseDatas.Length != 0 ? 0 : int.MaxValue;
@@ -340,7 +340,7 @@ namespace NoteCreating
             }
         }
 
-        ItemBase GetItem(ItemType itemType, float delta)
+        ItemBase GetItem(ItemType itemType, CreateData data, float delta)
         {
             ItemBase item = itemType switch
             {
@@ -360,7 +360,22 @@ namespace NoteCreating
             {
                 float lifeTime = lifeLpb.Time - delta;
                 if (lifeTime > 0)
-                    Helper.NoteInput.AddExpect(item as RegularNote, lifeTime);
+                {
+                    var pos = basePos;
+                    foreach (var d in data.PosEaseDatas)
+                    {
+                        pos += d.From;
+                    }
+                    var totalRevolute = 0f;
+                    foreach (var d in data.RevoluteEaseDatas)
+                    {
+                        totalRevolute += d.From;
+                    }
+                    pos = MyUtility.GetRotatedPos(pos, totalRevolute, revoluteCenterPos);
+
+                    var judgeStatus = new NoteJudgeStatus(item as RegularNote, pos, lifeTime, expectType: NoteJudgeStatus.ExpectType.Static);
+                    Helper.NoteInput.AddExpect(judgeStatus);
+                }
             }
 
             if (isMultitap && itemType == ItemType.NormalNote)

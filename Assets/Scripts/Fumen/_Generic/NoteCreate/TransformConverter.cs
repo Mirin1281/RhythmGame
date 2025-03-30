@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace NoteCreating
@@ -9,7 +7,7 @@ namespace NoteCreating
     /// </summary>
     interface ITransformConvertable
     {
-        (Vector3 pos, float rot) ConvertTransform(Vector3 basePos, float option, float time);
+        void ConvertNote(RegularNote note, float option, float time);
         bool IsGroup { get; }
         void Init() { }
     }
@@ -26,24 +24,25 @@ namespace NoteCreating
         ITransformConvertable[] transformConvertables;
         bool initialized = false;
 
-        public (Vector3 pos, float rot) Convert(Vector3 basePos, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0)
+        public void Convert(RegularNote note, Mirror mirror, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0)
         {
             if (initialized == false)
             {
                 Init();
             }
-            if (transformConvertables == null) return (basePos, 0);
-            var pos = basePos;
-            float rot = 0;
+            if (transformConvertables == null) return;
             for (int i = 0; i < transformConvertables.Length; i++)
             {
                 var convertable = transformConvertables[i];
                 if (convertable == null) continue;
-                var ts = convertable.ConvertTransform(pos, i == 0 ? option1 : option2, convertable.IsGroup ? groupTime : unGroupTime);
-                pos = ts.pos;
-                rot += ts.rot;
+                convertable.ConvertNote(note, i == 0 ? option1 : option2, convertable.IsGroup ? groupTime : unGroupTime);
             }
-            return (pos, rot);
+
+            note.SetPos(mirror.Conv(note.GetPos()));
+            if (note is HoldNote hold)
+            {
+                hold.SetMaskPos(mirror.Conv(hold.GetMaskPos()));
+            }
         }
 
         void Init()
@@ -86,7 +85,7 @@ namespace NoteCreating
     /// </summary>
     public interface IFollowableCommand
     {
-        (Vector3 pos, float rot) ConvertTransform(
-            Vector3 basePos, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0);
+        void ConvertNote(
+            RegularNote note, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0);
     }
 }

@@ -7,8 +7,6 @@ namespace NoteCreating
     [AddTypeMenu(FumenPathContainer.NoteCreate + "角度をつけて落下(Obsolute)", -60), System.Serializable]
     public class F_Diagonal : NoteCreateBase<NoteData>
     {
-        [Header("ノーツに角度をつけない場合はP_Diagonalを使用してください")]
-
         [Header("オプション1 : ノーツのやって来る角度")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;

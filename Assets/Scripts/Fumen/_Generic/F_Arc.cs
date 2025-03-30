@@ -11,7 +11,6 @@ namespace NoteCreating
         [SerializeField] float speedRate = 1f;
         [SerializeField, CommandSelect] CommandData commandData;
 
-        [Header("X座標の移動が大きい場所は頂点の分割数を増やすと上手くいきやすい")]
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
         protected override float Speed => base.Speed * speedRate;
@@ -44,16 +43,16 @@ namespace NoteCreating
             {
                 if (arc.IsActive == false) return;
                 var basePos = new Vector3(0, (MoveTime - t) * Speed);
-                if (followable == null)
-                {
-                    arc.SetPos(basePos);
-                }
+                //if (followable == null)
+                //{
+                arc.SetPos(basePos);
+                /*}
                 else
                 {
-                    var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: 0);
+                    var (pos, rot) = followable.ConvertTransform(arc, groupTime: 0, unGroupTime: 0);
                     arc.SetPos(pos);
                     //arc.SetRot(rot); アークのZ軸回転できない
-                }
+                }*/
             });
 
             Helper.NoteInput.AddArc(arc);

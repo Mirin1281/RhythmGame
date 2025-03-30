@@ -66,7 +66,7 @@ namespace NoteCreating
                 _ => throw new System.ArgumentOutOfRangeException($"value: {x}")
             };
 
-            if (HoldNote.TryParse(note, out var hold))
+            if (note is HoldNote hold)
             {
                 hold.SetMaskPos(toPos);
                 hold.SetMaskRot(dir);

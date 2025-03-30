@@ -27,7 +27,7 @@ namespace NoteCreating
             Random randRot = new Random(seed + 1);
             Random randAlpha = new Random(seed + 2);
             Random randWidth = new Random(seed + 3);
-            float count = wholeLpb / interval;
+            int count = Mathf.RoundToInt(wholeLpb / interval);
             for (int i = 0; i < count; i++)
             {
                 CreateLine(

@@ -34,7 +34,7 @@ namespace NoteCreating
         public bool IsOverlapped()
         {
             var judge = GetCurrentJudge();
-            return judge == null || judge.IsOverlappable;
+            return judge.State == ArcJudge.InputState.None || judge.IsOverlappable;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NoteCreating
         }
 
         // 押下中の透明度
-        public static float HoldingAlpha = 0.6f;
+        public static float HoldingAlpha = 0.55f;
         public static float NotHoldingAlpha = 0.3f;
 
         void Awake()
@@ -130,10 +130,6 @@ namespace NoteCreating
             if (IsInvalid)
             {
                 holdEndTime = 0;
-            }
-            else
-            {
-                meshRenderer.material.color = Color.black;
             }
 
             meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
@@ -195,6 +191,8 @@ namespace NoteCreating
 
             splineExtrude.Rebuild();
 
+            if (this == null) return;
+
             // 判定を追加 //
             int k = 0;
             foreach (var knot in spline)
@@ -224,6 +222,7 @@ namespace NoteCreating
         {
             meshFilter.sharedMesh = meshFilter.sharedMesh.Duplicate();
             await CreateAsync(datas, speed, mirror);
+            if (this == null) return;
             foreach (var child in transform.OfType<Transform>().ToArray())
             {
                 DestroyImmediate(child.gameObject);
@@ -256,7 +255,6 @@ namespace NoteCreating
 
         /// <summary>
         /// Y=target平面上におけるアークの座標を返します
-        /// TODO: 仕組みが不完全なので要改善
         /// </summary>
         public Vector3 GetPointOnYPlane(float target, bool showLog = true)
         {
@@ -271,7 +269,16 @@ namespace NoteCreating
                 return default;
             }
 
-            BezierKnot behindKnot, aheadKnot;
+            // YとZがいれかわっていることに注意
+            SplineUtility.GetNearestPoint(
+                spline,
+                new Ray(new Vector3(30, 0, target - GetPos().y), new Vector3(-1, 0, 0)),
+                out var nearest,
+                out var _
+            );
+            return nearest;
+
+            /*BezierKnot behindKnot, aheadKnot;
             aheadKnot = behindKnot = spline[0];
             float relativeCut = target - headY; // アークの先端Y座標から切り出すY座標までの長さ
             int debug_i = 0;
@@ -299,7 +306,7 @@ namespace NoteCreating
             Vector3 arcPos = rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
             //Debug.Log($"Head: {headY}, Tail: {tailY}, JudgeNum: {debug_i}\n"
             //        + $"target: {target}, value: {arcPos}");
-            return arcPos;
+            return arcPos;*/
         }
 
         /// <summary>
@@ -307,7 +314,7 @@ namespace NoteCreating
         /// </summary>
         public ArcJudge GetCurrentJudge()
         {
-            if (JudgeIndex >= judges.Count) return null;
+            if (JudgeIndex >= judges.Count) return ArcJudge.Empty;
             return judges[JudgeIndex];
         }
 
@@ -350,14 +357,14 @@ namespace NoteCreating
         {
             transform.localRotation = default;
             SetRendererEnabled(true);
-            SetRadius(0.5f);
-            SetAlpha(NotHoldingAlpha);
+            SetRadius(0.45f);
+            SetAlpha(HoldingAlpha);
 
             transform.localRotation = Quaternion.Euler(-90, 0, 0);
             IsInvalid = false;
             FingerIndex = -1;
             JudgeIndex = 0;
-            isHold = false;
+            isHold = true;
         }
     }
 }

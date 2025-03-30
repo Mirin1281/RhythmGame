@@ -10,7 +10,7 @@ public class Result
     int lateFar;
     int miss;
 
-    int noteCount;
+    readonly int noteCount;
     int combo;
     int maxCombo;
     double score;
@@ -39,11 +39,30 @@ public class Result
 
     public void SetComboAndScore(NoteGrade grade)
     {
-        if (grade == NoteGrade.Miss)
+        switch (grade)
         {
-            combo = 0;
-            miss++;
-            return;
+            case NoteGrade.Perfect:
+                perfect++;
+                break;
+            case NoteGrade.FastGreat:
+                fastGreat++;
+                break;
+            case NoteGrade.LateGreat:
+                lateGreat++;
+                break;
+            case NoteGrade.FastFar:
+                fastFar++;
+                break;
+            case NoteGrade.LateFar:
+                lateFar++;
+                break;
+            case NoteGrade.Miss:
+                combo = 0;
+                miss++;
+                return; // Missの場合ここでreturn
+            default:
+                Debug.LogError("Invalid: " + grade);
+                break;
         }
 
         combo++;
@@ -52,38 +71,13 @@ public class Result
             maxCombo = combo;
         }
 
-        if (grade == NoteGrade.Perfect)
-        {
-            perfect++;
-        }
-        else if (grade == NoteGrade.FastGreat)
-        {
-            fastGreat++;
-        }
-        else if (grade == NoteGrade.LateGreat)
-        {
-            lateGreat++;
-        }
-        else if (grade == NoteGrade.FastFar)
-        {
-            fastFar++;
-        }
-        else if (grade == NoteGrade.LateFar)
-        {
-            lateFar++;
-        }
-        else
-        {
-            throw new System.Exception();
-        }
-
         double rate = grade switch
         {
             NoteGrade.Perfect => 1d,
             NoteGrade.FastGreat or NoteGrade.LateGreat => 0.5d,
             NoteGrade.FastFar or NoteGrade.LateFar => 0.3d,
             NoteGrade.Miss => 0,
-            _ => throw new System.Exception()
+            _ => 0,
         };
         double baseScore = (double)MaxScore / noteCount;
         score += baseScore * rate;

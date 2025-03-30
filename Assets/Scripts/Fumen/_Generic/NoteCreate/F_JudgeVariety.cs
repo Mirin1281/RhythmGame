@@ -34,12 +34,13 @@ namespace NoteCreating
             {
                 // 着弾地点を設定 //
                 var baseExpectPos = moveFunc(MoveTime).pos + (actionType == ActionType.InvisibleJudge ? -new Vector3(0, 10) : Vector3.zero);
-                var (expectPos, _) = transformConverter.Convert(
-                    baseExpectPos,
+                note.SetPos(mirror.Conv(baseExpectPos));
+                transformConverter.Convert(
+                    note, mirror,
                     Time + MoveTime - Delta, MoveTime,
                     data.Option1, data.Option2);
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, mirror.Conv(expectPos), MoveTime - Delta, actionType == ActionType.TouchHold ? Lpb.Zero : data.Length, NoteJudgeStatus.ExpectType.Static));
+                    note, note.GetPos(), MoveTime - Delta, actionType == ActionType.TouchHold ? Lpb.Zero : data.Length, NoteJudgeStatus.ExpectType.Static));
             }
 
 
@@ -48,18 +49,13 @@ namespace NoteCreating
             {
                 if (note.IsActive == false) return;
                 var (basePos, baseRot) = moveFunc(t);
+                note.SetPos(basePos);
 
                 // 座標変換 //
-                var (pos, rot) = transformConverter.Convert(
-                    basePos,
+                transformConverter.Convert(
+                    note, mirror,
                     Time, t,
                     data.Option1, data.Option2);
-                note.SetPos(mirror.Conv(pos));
-                note.SetRot(mirror.Conv(baseRot + rot));
-                if (note is HoldNote hold)
-                {
-                    hold.SetMaskPos(mirror.Conv(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot)));
-                }
             });
 
             if (actionType == ActionType.NonJudge)

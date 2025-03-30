@@ -80,7 +80,7 @@ public class UIMover : MonoBehaviour
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         foreach (var t in tmpros5)
         {
-            FadeAlphaAsync(t, 1, 0.4f).Forget();
+            FadeAlphaAsync(t, 0.6f, 0.4f).Forget();
             MoveAnimAsync(t, 40, 0.5f).Forget();
         }
 

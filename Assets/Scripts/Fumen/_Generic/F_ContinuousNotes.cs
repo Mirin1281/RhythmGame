@@ -52,13 +52,15 @@ namespace NoteCreating
 
             if (followable == null)
             {
-                Helper.NoteInput.AddExpect(note, MoveTime - Delta, holdLength);
+                var judgeStatus = new NoteJudgeStatus(note, default, MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Y_Static);
+                Helper.NoteInput.AddExpect(judgeStatus);
             }
             else
             {
-                var pos = followable.ConvertTransform(
-                    new Vector3(x, 0), groupTime: MoveTime - Delta, unGroupTime: MoveTime - Delta, option1: option).pos;
-                var judgeStatus = new NoteJudgeStatus(note, pos, MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
+                note.SetPos(new Vector3(x, 0));
+                followable.ConvertNote(
+                    note, groupTime: MoveTime - Delta, unGroupTime: MoveTime - Delta, option1: option);
+                var judgeStatus = new NoteJudgeStatus(note, note.GetPos(), MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
                 Helper.NoteInput.AddExpect(judgeStatus);
             }
 
@@ -68,43 +70,20 @@ namespace NoteCreating
                 lifeTime += holdLength.Time;
             }
 
-            if (HoldNote.TryParse(note, out var hold))
+            WhileYield(lifeTime, t =>
             {
-                WhileYield(lifeTime, t =>
+                if (note.IsActive == false) return;
+                var pos = new Vector3(x, (MoveTime - t) * Speed);
+                note.SetPosAndRot(pos, 0);
+                if (followable == null)
                 {
-                    if (hold.IsActive == false) return;
-                    var basePos = new Vector3(x, (MoveTime - t) * Speed);
-                    if (followable == null)
-                    {
-                        hold.SetPos(basePos);
-                    }
-                    else
-                    {
-                        var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: t, option1: option);
-                        hold.SetPos(pos);
-                        hold.SetRot(rot);
-                        hold.SetMaskPos(MyUtility.GetRotatedPos(new Vector2(pos.x, 0), rot));
-                    }
-                });
-            }
-            else
-            {
-                WhileYield(lifeTime, t =>
+                    note.SetPos(pos);
+                }
+                else
                 {
-                    if (note.IsActive == false) return;
-                    var basePos = new Vector3(x, (MoveTime - t) * Speed);
-                    if (followable == null)
-                    {
-                        note.SetPos(basePos);
-                    }
-                    else
-                    {
-                        var (pos, rot) = followable.ConvertTransform(basePos, groupTime: 0, unGroupTime: t, option1: option);
-                        note.SetPos(pos);
-                        note.SetRot(rot);
-                    }
-                });
-            }
+                    followable.ConvertNote(note, groupTime: 0, unGroupTime: t, option1: option);
+                }
+            });
         }
 
 #if UNITY_EDITOR

@@ -70,7 +70,8 @@ namespace NoteCreating
             hold.SetPos(startPos);
 
             float expectTime = startPos.y / Speed - Delta;
-            Helper.NoteInput.AddExpect(hold, expectTime, length);
+            var judgeStatus = new NoteJudgeStatus(hold, default, expectTime, length, NoteJudgeStatus.ExpectType.Y_Static);
+            Helper.NoteInput.AddExpect(judgeStatus);
             return hold;
         }
 

@@ -37,7 +37,11 @@ namespace NoteCreating
                 var data = noteDatas[i];
                 float expectTime = wholeWait - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
                 if (data.Type != RegularNoteType._None)
-                    Helper.NoteInput.AddExpect(CreateNote(data, delta, createSpeedRate, wholeWait - waitDelta), expectTime, data.Length);
+                {
+                    var note = CreateNote(data, delta, createSpeedRate, wholeWait - waitDelta);
+                    var judgeStatus = new NoteJudgeStatus(note, default, expectTime, data.Length, NoteJudgeStatus.ExpectType.Y_Static);
+                    Helper.NoteInput.AddExpect(judgeStatus);
+                }
                 if (float.IsInfinity(createSpeedRate) == false)
                     delta = await Wait(data.Wait / createSpeedRate, delta);
                 waitDelta += data.Wait.Time;

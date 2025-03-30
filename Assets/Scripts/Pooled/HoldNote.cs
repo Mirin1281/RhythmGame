@@ -32,16 +32,20 @@ namespace NoteCreating
             maskTs.localScale = new Vector3(maskTs.localScale.x, spriteRenderer.size.y);
         }
 
+        public float GetLength() => spriteRenderer.size.y - fixLength;
         public void SetLength(Lpb length)
         {
-            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length.Time + fixLength);
+            SetLength(length.Time);
+        }
+        public void SetLength(float length)
+        {
+            spriteRenderer.size = new Vector2(spriteRenderer.size.x, length + fixLength);
             maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y + fixLength);
         }
 
         public override Vector3 GetPos(bool isWorld = false)
         {
-            float r = (GetRot() + 90) * Mathf.Deg2Rad;
-            Vector3 fixedPos = fixedValue * new Vector3(Mathf.Cos(r), Mathf.Sin(r));
+            Vector3 fixedPos = GetFixedPos();
             if (isWorld)
             {
                 return spriteRenderer.transform.position - fixedPos;
@@ -54,8 +58,7 @@ namespace NoteCreating
 
         public override void SetPos(Vector3 pos, bool isWorld = false)
         {
-            float r = (GetRot() + 90) * Mathf.Deg2Rad;
-            Vector3 fixedPos = fixedValue * new Vector3(Mathf.Cos(r), Mathf.Sin(r));
+            Vector3 fixedPos = GetFixedPos();
             if (isWorld)
             {
                 spriteRenderer.transform.position = pos + fixedPos;
@@ -69,9 +72,22 @@ namespace NoteCreating
         /// <summary>
         /// ホールドの着地地点の座標
         /// </summary>
-        public Vector2 GetLandingPos() => maskTs.position;
+        public Vector2 GetLandingPos()
+        {
+            return maskTs.position;
+        }
 
-
+        public Vector2 GetMaskPos(bool isWorld = false)
+        {
+            if (isWorld)
+            {
+                return maskTs.position;
+            }
+            else
+            {
+                return maskTs.localPosition;
+            }
+        }
         public void SetMaskPos(Vector2 pos, bool isWorld = false)
         {
             if (isWorld)
@@ -81,6 +97,18 @@ namespace NoteCreating
             else
             {
                 maskTs.localPosition = pos;
+            }
+        }
+
+        public float GetMaskRot(bool isWorld = false)
+        {
+            if (isWorld)
+            {
+                return maskTs.transform.eulerAngles.z;
+            }
+            else
+            {
+                return maskTs.transform.localEulerAngles.z;
             }
         }
         public void SetMaskRot(float deg, bool isWorld = false)
@@ -128,6 +156,12 @@ namespace NoteCreating
             }
         }
 
+        public Vector3 GetFixedPos()
+        {
+            float r = (GetRot() + 90) * Mathf.Deg2Rad;
+            return fixedValue * new Vector3(Mathf.Cos(r), Mathf.Sin(r));
+        }
+
         public override void OnMiss()
         {
             SetAlpha(0.4f);
@@ -145,23 +179,6 @@ namespace NoteCreating
             SetRendererEnabled(true);
             SetAlpha(1f);
             IsVerticalRange = false;
-        }
-
-        /// <summary>
-        /// RegularNoteをHoldNoteに変換します。isキャストよりも軽量ですが、こんなことしなくても良いと思います
-        /// </summary>
-        /// <param name="note"></param>
-        /// <param name="hold"></param>
-        /// <returns></returns>
-        public static bool TryParse(RegularNote note, out HoldNote hold)
-        {
-            hold = null;
-            if (note.Type == RegularNoteType.Hold)
-            {
-                hold = note as HoldNote;
-                return true;
-            }
-            return false;
         }
     }
 }

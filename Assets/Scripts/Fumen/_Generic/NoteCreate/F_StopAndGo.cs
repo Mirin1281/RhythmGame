@@ -39,12 +39,13 @@ namespace NoteCreating
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
             // 着弾地点を設定 //
-            var (expectPos, _) = transformConverter.Convert(
-                new Vector3(data.X, 0),
-                Time + MoveTime, MoveTime,
+            note.SetPosAndRot(new Vector3(data.X, 0), 0);
+            transformConverter.Convert(
+                note, mirror,
+                Time + MoveTime - Delta, MoveTime,
                 data.Option1, data.Option2);
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                note, mirror.Conv(expectPos), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+                note, mirror.Conv(note.GetPos()), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
 
 
             float currentTiming = -Time;
@@ -105,13 +106,17 @@ namespace NoteCreating
                     }
                 }
 
-                var basePos = mirror.Conv(new Vector3(x, (MoveTime - t2) * Speed));
-                var (pos, rot) = transformConverter.Convert(
-                    basePos,
+                var pos = new Vector3(x, (MoveTime - t2) * Speed);
+                note.SetPosAndRot(pos, 0);
+                if (note is HoldNote hold)
+                {
+                    hold.SetMaskPos(new Vector2(pos.x, 0));
+                }
+
+                transformConverter.Convert(
+                    note, mirror,
                     Time, t,
                     data.Option1, data.Option2);
-                note.SetPos(mirror.Conv(pos));
-                note.SetRot(mirror.Conv(rot));
             });
         }
 

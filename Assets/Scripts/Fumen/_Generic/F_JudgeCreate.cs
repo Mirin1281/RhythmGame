@@ -7,6 +7,7 @@ namespace NoteCreating
     [AddTypeMenu("◇判定の発生"), System.Serializable]
     public class F_JudgeCreate : CommandBase
     {
+        [Space(20)]
         [SerializeField] RegularNoteType judgeNoteType = RegularNoteType.Slide;
         [SerializeField] Vector2 pos;
         [SerializeField] bool isVerticalRange;

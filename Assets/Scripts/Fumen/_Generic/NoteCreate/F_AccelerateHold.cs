@@ -4,7 +4,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
-    [AddTypeMenu(FumenPathContainer.NoteCreate + "加速するホールド", -100), System.Serializable]
+    [AddTypeMenu(FumenPathContainer.NoteCreate + "加速するホールド(Obsolute)", -100), System.Serializable]
     public class F_AccelerateHold : NoteCreateBase<NoteData>
     {
         [SerializeField] EaseType easeType = EaseType.InQuad;
