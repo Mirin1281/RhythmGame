@@ -8,6 +8,7 @@ namespace NoteCreating
     {
         [SerializeField] protected Mirror mirror;
         [SerializeField] protected float speedRate = 1f;
+        [SerializeField] bool isVerticalRange;
         float baseTime;
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace NoteCreating
             {
                 var type = noteData.Type;
 
-                float lifeTime = MoveTime + 0.5f;
+                float lifeTime = MoveTime + 0.2f;
                 if (type == RegularNoteType.Hold)
                 {
                     lifeTime += noteData.Length.Time;
@@ -44,6 +45,7 @@ namespace NoteCreating
                 if (type is RegularNoteType.Normal or RegularNoteType.Slide)
                 {
                     RegularNote note = Helper.GetRegularNote(type);
+                    note.IsVerticalRange = isVerticalRange;
                     Move(note, noteData, lifeTime);
                     AddExpect(note);
                 }
@@ -55,6 +57,7 @@ namespace NoteCreating
                         return;
                     }
                     HoldNote hold = Helper.GetHold(noteData.Length * Speed);
+                    hold.IsVerticalRange = isVerticalRange;
                     hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
                     Move(hold, noteData, lifeTime);
                     AddExpect(hold, length: noteData.Length);

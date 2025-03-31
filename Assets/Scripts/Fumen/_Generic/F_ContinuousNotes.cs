@@ -7,6 +7,7 @@ namespace NoteCreating
     public class F_ContinuousNotes : CommandBase
     {
         [SerializeField] Mirror mirror;
+        [SerializeField] protected float speedRate = 1f;
         [Space(10)]
         [SerializeField] int count = 16;
         [SerializeField] int trimStart = 0;
@@ -19,6 +20,8 @@ namespace NoteCreating
         [Space(10)]
         [SerializeField, CommandSelect] CommandData commandData;
         [SerializeField] float option;
+
+        protected override float Speed => base.Speed * speedRate;
 
         protected override async UniTaskVoid ExecuteAsync()
         {
@@ -120,7 +123,7 @@ namespace NoteCreating
                 previewer.CreateGuideLine();
 
             var easing = new Easing(easeX.x, easeX.y, easeTime, easeType);
-            float y = delay.Time * Speed;
+            float y = delay.Time * RhythmGameManager.DefaultSpeed;
             for (int i = 0; i < count; i++)
             {
                 if (i >= trimStart)
@@ -131,7 +134,7 @@ namespace NoteCreating
                     note.SetPos(mirror.Conv(new Vector3(x, y)));
                 }
 
-                y += wait.Time * Speed;
+                y += wait.Time * RhythmGameManager.DefaultSpeed;
             }
         }
 #endif

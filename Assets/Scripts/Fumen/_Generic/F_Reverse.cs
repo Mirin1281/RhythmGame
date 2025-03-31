@@ -8,6 +8,7 @@ namespace NoteCreating
     {
         [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 1f;
+        [SerializeField] bool isVerticalRange;
         [Space(10)]
         [SerializeField, Tooltip("逆走に使う時間")] Lpb reverseLPB = new Lpb(2f);
         [SerializeField, Tooltip("落下に使う時間")] Lpb dropLPB = new Lpb(2f);
@@ -68,6 +69,7 @@ namespace NoteCreating
             if (type is RegularNoteType.Normal or RegularNoteType.Slide)
             {
                 RegularNote note = Helper.GetRegularNote(type);
+                note.IsVerticalRange = isVerticalRange;
                 Move(note, data, delta, createSpeedRate, w).Forget();
                 return note;
             }
@@ -79,6 +81,7 @@ namespace NoteCreating
                     return null;
                 }
                 HoldNote hold = Helper.GetHold(data.Length * Speed);
+                hold.IsVerticalRange = isVerticalRange;
                 hold.SetMaskPos(new Vector2(mirror.Conv(data.X), 0));
                 Move(hold, data, delta, createSpeedRate, w).Forget();
                 return hold;

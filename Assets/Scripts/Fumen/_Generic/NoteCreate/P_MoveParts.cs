@@ -116,7 +116,9 @@ namespace NoteCreating
             [SerializeField] Lpb moveStartLpb = new Lpb(4) * 6f;
             [SerializeField] Lpb easeLpb = new Lpb(1);
             [SerializeField] EaseType easeType = EaseType.Default;
+            [SerializeField] float startDeg;
             [SerializeField] float toDeg;
+            [SerializeField] Vector2 startPos;
             [SerializeField] Vector2 toPos;
 
             bool ITransformConvertable.IsGroup => isGroup;
@@ -124,8 +126,8 @@ namespace NoteCreating
             void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
             {
                 var easeTime = easeLpb.Time;
-                var dEasing = new Easing(0, toDeg, easeTime, easeType);
-                var pEasing = new EasingVector2(Vector2.zero, toPos, easeTime, easeType);
+                var dEasing = new Easing(startDeg, toDeg, easeTime, easeType);
+                var pEasing = new EasingVector2(startPos, toPos, easeTime, easeType);
 
                 time -= moveStartLpb.Time;
 
