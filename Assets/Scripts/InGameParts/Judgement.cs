@@ -65,7 +65,7 @@ namespace NoteCreating
         public bool IsNearPosition(NoteJudgeStatus judgeStatus, Vector2 inputPos)
         {
             float width = judgeStatus.Note == null ? 1 : judgeStatus.Note.Width;
-            float height = judgeStatus.IsVerticalRange ? 10f : 1f;
+            float height = judgeStatus.IsVerticalRange ? 10f : 1.5f;
             return MyUtility.IsPointInsideRectangle(
                 new Rect(judgeStatus.Pos, Range * new Vector2(width, height)),
                 inputPos,
@@ -74,7 +74,7 @@ namespace NoteCreating
         public bool IsNearPositionHold(HoldNote hold, Vector2 inputPos)
         {
             return MyUtility.IsPointInsideRectangle(
-                new Rect(hold.GetLandingPos(), Range * new Vector2(hold.Width, hold.IsVerticalRange ? 10f : 1)),
+                new Rect(hold.GetLandingPos(), Range * new Vector2(hold.Width, hold.IsVerticalRange ? 10f : 1.5f)),
                 inputPos,
                 hold.GetRot());
         }
@@ -184,7 +184,7 @@ namespace NoteCreating
             obj.transform.localPosition = judgeStatus.Pos;
             obj.transform.localRotation = Quaternion.AngleAxis(judgeStatus.Rot, Vector3.forward);
             obj.transform.localScale = Range * new Vector3(
-                judgeStatus.Note == null ? 1 : judgeStatus.Note.Width, judgeStatus.IsVerticalRange ? 10f : 1f);
+                judgeStatus.Note == null ? 1 : judgeStatus.Note.Width, judgeStatus.IsVerticalRange ? 10f : 1.5f);
             UniTask.Void(async () =>
             {
                 await MyUtility.WaitSeconds(0.15f, destroyCancellationToken);

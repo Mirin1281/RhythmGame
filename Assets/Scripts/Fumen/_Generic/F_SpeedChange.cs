@@ -18,7 +18,7 @@ namespace NoteCreating
             WhileYield(easeLpb.Time, t =>
             {
                 RhythmGameManager.SpeedBase = easing.Ease(t);
-            });
+            }, timing: PlayerLoopTiming.PreUpdate);
             await UniTask.CompletedTask;
         }
 

@@ -43,6 +43,7 @@ namespace NoteCreating
             Auto,
             Linear,
             Detail,
+            JudgeOnly,
         }
 
         [SerializeField] float x;

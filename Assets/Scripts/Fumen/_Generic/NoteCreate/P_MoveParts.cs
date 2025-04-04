@@ -144,7 +144,7 @@ namespace NoteCreating
                     d = toDeg;
                     p = toPos;
                 }
-                note.SetRot(d);
+                note.SetRot(note.GetRot() + d);
                 note.SetPos(MyUtility.GetRotatedPos(note.GetPos(), d) + p);
                 if (note is HoldNote hold)
                 {
@@ -158,8 +158,8 @@ namespace NoteCreating
         {
             [Header("オプション : 移動前のx座標")]
             [SerializeField] bool isGroup = false;
-            [SerializeField] Lpb moveLpb = new Lpb(4);
             [SerializeField] Lpb moveStartLpb = new Lpb(1);
+            [SerializeField] Lpb moveLpb = new Lpb(4);
             [SerializeField] EaseType easeType = EaseType.OutQuad;
 
             bool ITransformConvertable.IsGroup => isGroup;
@@ -182,11 +182,12 @@ namespace NoteCreating
                 {
                     x = basePos.x;
                 }
+
                 note.SetPos(new Vector3(x, basePos.y));
             }
         }
 
-        [AddTypeMenu("ノーツ回転(Group = false)", -60), System.Serializable]
+        [AddTypeMenu("ノーツ回転", -60), System.Serializable]
         public class P_RotateNote : ITransformConvertable
         {
             [Header("オプション : 回転係数(1で半回転)")]
@@ -264,6 +265,176 @@ namespace NoteCreating
                         float t2 = time - moveTime;
                         note.SetPos(note.GetPos() + new Vector3(0, -t2 * speedEasing.Ease(t2)));
                     }
+                }
+            }
+        }
+
+        [AddTypeMenu("量子化", -60), System.Serializable]
+        public class F_Quantization : ITransformConvertable
+        {
+            [Header("オプション : なし")]
+            [SerializeField] Lpb startLpb = new Lpb(0);
+            [SerializeField] Lpb endLpb = new Lpb(4) * 6f;
+            [Space(10)]
+            [SerializeField] Lpb sampling = new Lpb(32);
+            [SerializeField] float speedRate = 1;
+
+            bool ITransformConvertable.IsGroup => false;
+            float Speed => speedRate * RhythmGameManager.Speed;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                if (time > startLpb.Time && time < endLpb.Time)
+                {
+                    var pos = note.GetPos();
+                    var l_space = Speed * sampling.Time;
+                    var snippedY = Mathf.Round(pos.y / l_space) * l_space;
+                    note.SetPos(new Vector3(pos.x, snippedY));
+                }
+
+
+                /*var moveTime = new Lpb(4) * 6f;
+                float l_interval = RhythmGameManager.DefaultSpeed / (new Lpb(4).Time * interval);
+                var t = Mathf.Round(time * l_interval) / l_interval;
+                var x = note.GetPos().x;
+                note.SetPos(new Vector3(x, (moveTime.Time - t) * RhythmGameManager.DefaultSpeed));*/
+            }
+        }
+
+        [AddTypeMenu("上下反転", -60), System.Serializable]
+        public class F_TopBottomInvert : ITransformConvertable
+        {
+            [Header("IsVerticalRangeをtrueにしてください")]
+            [Header("オプション : 反転するか(0 or 1)")]
+            [SerializeField] Lpb startLpb = new Lpb(0);
+            [SerializeField] Lpb endLpb = new Lpb(1);
+
+            bool ITransformConvertable.IsGroup => false;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                if (option == 1 && time > startLpb.Time && time < endLpb.Time)
+                {
+                    var pos = note.GetPos();
+                    note.SetPos(MyUtility.GetRotatedPos(pos, 180) + new Vector2(2 * pos.x, 8));
+                    note.SetRot(180);
+
+                    if (note is HoldNote hold)
+                    {
+                        var maskPos = hold.GetMaskPos();
+                        hold.SetMaskPos(MyUtility.GetRotatedPos(maskPos, 180) + new Vector2(2 * pos.x, 8));
+                    }
+                }
+            }
+        }
+
+        [AddTypeMenu("微細な揺れ", -60), System.Serializable]
+        public class P_Distortion : ITransformConvertable
+        {
+            [SerializeField] bool useDefault;
+            [Header("オプション1 : 揺れの係数 デフォルト1")]
+            [SerializeField] bool isPosDistortion = true;
+            [SerializeField] bool isRotDistortion;
+            [SerializeField] float frequency = 3f;
+            [SerializeField] float posAmp = 0.3f;
+            [SerializeField] float rotAmp = 5;
+            [SerializeField] int baseSeed = 774932;
+
+            bool ITransformConvertable.IsGroup => false;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                if (useDefault)
+                    option = 1;
+                // new Unity.Mathematics.Random((uint)(baseSeed + note.GetHashCode()));
+                var random = Unity.Mathematics.Random.CreateFromIndex((uint)(baseSeed + note.GetHashCode()));
+                float randFrequency = random.NextFloat(-frequency, frequency);
+                float randPhase = random.NextFloat(0, 2 * Mathf.PI);
+
+                (Vector3 pos, float rot) moveFunc(float t)
+                {
+                    float addX = 0;
+                    if (isPosDistortion)
+                    {
+                        addX = posAmp * option * Mathf.Sin(t * randFrequency + randPhase);
+                    }
+                    Vector3 pos = new Vector3(addX, 0);
+
+                    float rot = 0;
+                    if (isRotDistortion)
+                    {
+                        rot = rotAmp * option * Mathf.Sin(t * randFrequency + randPhase);
+                    }
+                    return (pos, rot);
+                }
+
+                var ts = moveFunc(time);
+                note.SetPosAndRot(ts.pos + note.GetPos(), ts.rot);
+                if (note is HoldNote hold)
+                {
+                    //var maskPos = hold.GetMaskPos();
+                    //hold.SetMaskPos(MyUtility.GetRotatedPos(maskPos + new Vector2(ts.pos.x, 0), ts.rot));
+                    hold.SetMaskRot(0);
+                }
+            }
+        }
+
+        [AddTypeMenu("角度変更(静的)", -60), System.Serializable]
+        public class P_4Direction : ITransformConvertable
+        {
+            [Header("オプション: 角度")]
+            [SerializeField] bool _;
+
+            bool ITransformConvertable.IsGroup => true;
+
+            static Vector3 ConvertPos(Vector3 pos, float dir)
+            {
+                pos = MyUtility.GetRotatedPos(pos, dir);
+                var rad = (dir - 90) * Mathf.Deg2Rad;
+                var deltaPos = new Vector3(8 * Mathf.Cos(rad), 4 * Mathf.Sin(rad) + 4f);
+                return pos + deltaPos;
+            }
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                float dir = option;
+                note.SetRot(dir);
+                if (note is HoldNote hold)
+                {
+                    hold.SetMaskPos(ConvertPos(hold.GetMaskPos(), dir));
+                    hold.SetPos(ConvertPos(hold.GetPos(), dir));
+                }
+                else
+                {
+                    note.SetPos(ConvertPos(note.GetPos(), dir));
+                }
+            }
+        }
+
+        [AddTypeMenu("半透明化(リバース専用)", -60), System.Serializable]
+        public class P_Reverse_Transparent : ITransformConvertable
+        {
+            [Header("オプション: なし")]
+            [SerializeField] float preAlpha = 0.3f;
+
+            bool ITransformConvertable.IsGroup => false;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                var fadeLpb = new Lpb(2);
+                var moveTime = new Lpb(4).Time * 6;
+                if (time < 0)
+                {
+                    note.SetAlpha(preAlpha);
+                }
+                else if (time < fadeLpb.Time)
+                {
+                    var alpha = time.Ease(preAlpha, 1, fadeLpb.Time, EaseType.Default);
+                    note.SetAlpha(alpha);
+                }
+                else
+                {
+                    note.SetAlpha(1);
                 }
             }
         }

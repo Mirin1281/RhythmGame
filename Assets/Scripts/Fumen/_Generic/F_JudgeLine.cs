@@ -29,8 +29,9 @@ namespace NoteCreating
             if (Delta > lifeLpb.Time * lifeCount + MoveLpb.Time) return;
             await Wait(MoveLpb);
             Line line = Helper.GetLine();
-            line.SetRot(deg);
             line.SetPos(pos);
+            line.SetRot(deg);
+
             line.SetAlpha(0);
             line.FadeAlphaAsync(alpha, fadeInLpb.Time, delta: Delta).Forget();
             await Wait(lifeLpb * lifeCount - fadeOutLpb);

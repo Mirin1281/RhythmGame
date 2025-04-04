@@ -39,6 +39,7 @@ namespace NoteCreating
             }
 
             note.SetPos(mirror.Conv(note.GetPos()));
+            note.SetRot(mirror.Conv(note.GetRot()));
             if (note is HoldNote hold)
             {
                 hold.SetMaskPos(mirror.Conv(hold.GetMaskPos()));

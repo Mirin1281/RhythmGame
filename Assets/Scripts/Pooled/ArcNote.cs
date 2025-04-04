@@ -159,6 +159,7 @@ namespace NoteCreating
             for (int i = 0; i < datas.Length; i++)
             {
                 var data = datas[i];
+                if (data.Vertex == VertexType.JudgeOnly) continue;
                 z += data.Wait.Time * speed;
                 var knot = new BezierKnot(new float3(mir.Conv(data.X), 0, z));
                 TangentMode tangentMode = data.Vertex switch
@@ -194,18 +195,19 @@ namespace NoteCreating
             if (this == null) return;
 
             // 判定を追加 //
-            int k = 0;
-            foreach (var knot in spline)
+            int deltaIndex = 0;
+            for (int i = 0; i < datas.Length; i++)
             {
-                ArcCreateData data = datas[k];
-                // 判定が無効であったり、最後尾の場合はスキップ
-                if (data.IsJudgeDisable || k == spline.Knots.Count() - 1)
-                {
-                    k++;
-                    continue;
-                }
+                ArcCreateData data = datas[i];
+                if (data.IsJudgeDisable || i == datas.Length - 1) continue;
 
-                float knotY = GetPos().y + knot.Position.z; // 頂点のワールドY座標
+                // targetData.Vertex == JudgeOnlyの場合1つ前のスプライン座標を参照する
+                // 1つ前のdataもJudgeOnlyの場合は2つ前……と遡る
+                if (data.Vertex == VertexType.JudgeOnly)
+                {
+                    deltaIndex++;
+                }
+                float knotY = GetPos().y + spline[i - deltaIndex].Position.z; // ある頂点のワールドY座標
 
                 float behindJudgeY = knotY + data.BehindJudgeRange.Time * speed;
                 var startPos = GetPointOnYPlane(behindJudgeY);
@@ -213,7 +215,6 @@ namespace NoteCreating
                 var endPos = GetPointOnYPlane(aheadJudgeY);
 
                 judges.Add(new ArcJudge(startPos, endPos, data.IsOverlappable));
-                k++;
             }
         }
 
@@ -229,12 +230,17 @@ namespace NoteCreating
             }
 
             float baseL = datas[0].Wait.Time * speed;
-            for (int i = 0; i < spline.Count; i++)
+            int deltaIndex = 0;
+            for (int i = 0; i < datas.Length; i++)
             {
                 var data = datas[i];
-                if (data.IsJudgeDisable || i == spline.Knots.Count() - 1) continue;
+                if (data.IsJudgeDisable || i == datas.Length - 1) continue;
 
-                float knotY = GetPos().y + spline[i].Position.z; // ある頂点のワールドY座標
+                if (data.Vertex == VertexType.JudgeOnly)
+                {
+                    deltaIndex++;
+                }
+                float knotY = GetPos().y + spline[i - deltaIndex].Position.z; // ある頂点のワールドY座標
 
                 float behindDistance = knotY + data.BehindJudgeRange.Time * speed + baseL;
                 var startPos = GetPointOnYPlane(behindDistance, false);

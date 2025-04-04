@@ -24,10 +24,15 @@ namespace NoteCreating.Editor
             h.SetWidth(h.GetWidth() / 2f);
             var isDetailedProp = h.PropertyField("isDetailed");
 
-            h.SetX(h.GetWidth() * 1.2f);
+            h.SetX(h.GetWidth() * 0.95f);
             h.LabelField("Overlap");
-            h.SetX(h.GetWidth() * 1.6f);
+            h.SetX(h.GetWidth() * 1.25f);
             h.PropertyField("isOverlappable", false);
+
+            h.SetX(h.GetWidth() * 1.5f);
+            h.LabelField("2Judge");
+            h.SetX(h.GetWidth() * 1.8f);
+            h.PropertyField("twoJudge", false);
 
             if (isDetailedProp.boolValue)
             {

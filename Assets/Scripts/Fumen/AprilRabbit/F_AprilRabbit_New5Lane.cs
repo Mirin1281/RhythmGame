@@ -84,11 +84,6 @@ namespace NoteCreating
             });
         }
 
-        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
-        {
-            return;
-        }
-
 #if UNITY_EDITOR
 
         protected override string GetName()

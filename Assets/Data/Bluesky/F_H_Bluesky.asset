@@ -48,6 +48,38 @@ MonoBehaviour:
       data:
         labelType: 2
         summary: 2-1
+--- !u!114 &-7010978829767735431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (2)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: -4
+  command:
+    rid: 4848304253928210444
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304253928210444
+      type: {class: F_ItemBlink, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        target: 11
+        capacity: 32
+        blinkCount: 13
+        interval:
+          _value: 16
+        useRandom: 1
+        seed: 1243
+        hideWaitRange: {x: 1, y: 10}
+        showWaitRange: {x: 1, y: 2}
+        isDelayOneFrame: 1
 --- !u!114 &-6888999813834538337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +128,75 @@ MonoBehaviour:
       data:
         labelType: 1
         summary: 2-2
+--- !u!114 &-5478003715374155822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 2
+  command:
+    rid: 4848304253928210438
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304253928210438
+      type: {class: F_Reverse, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 2
+        isVerticalRange: 0
+        reverseLPB:
+          _value: 4
+        dropLPB:
+          _value: 1.333333
+        easingRate: 1
+        acceleration: 3
+        transformConverter:
+          transformConvertables:
+          - rid: 4848304253928210445
+          - rid: 4848304253928210446
+        isGroupTransform: 0
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: 2
+          option2: 3
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 8
+          option1: 2
+          option2: 3
+    - rid: 4848304253928210445
+      type: {class: P_Curve/F_Quantization, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        startLpb:
+          _value: 0
+        endLpb:
+          _value: 0.6666667
+        sampling:
+          _value: 48
+        speedRate: 2
+    - rid: 4848304253928210446
+      type: {class: P_Curve/F_AccelerateHold, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        easeType: 5
+        speedRate: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +221,8 @@ MonoBehaviour:
   fumen:
     commandDataList:
     - {fileID: 7854152155230304259}
+    - {fileID: -5478003715374155822}
+    - {fileID: -7010978829767735431}
     - {fileID: 8223878517243175496}
     - {fileID: -6888999813834538337}
     - {fileID: -8498005150278557537}
@@ -312,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_Awakening (1)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 0
   command:
     rid: 1232548802731704326
@@ -325,8 +428,10 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
-          transformConvertables: []
+          transformConvertables:
+          - rid: 4848304253928210441
         noteDatas:
         - wait:
             _value: 0
@@ -339,7 +444,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: 0
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -355,7 +460,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: 0
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -371,7 +476,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: 0
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -387,7 +492,7 @@ MonoBehaviour:
         - wait:
             _value: 4
           type: 1
-          x: 0
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -1352,6 +1457,16 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+    - rid: 4848304253928210441
+      type: {class: P_Curve/F_Quantization, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        startLpb:
+          _value: 1
+        endLpb:
+          _value: 0.6666667
+        sampling:
+          _value: 16
+        speedRate: 1
 --- !u!114 &8788009891631661267
 MonoBehaviour:
   m_ObjectHideFlags: 0

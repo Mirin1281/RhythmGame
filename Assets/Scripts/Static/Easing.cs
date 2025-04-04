@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using NoteCreating;
 using UnityEngine;
 
 // UnityではないC#の場合はMathf.Pow()をMath.Pow()などに置き換えてください
@@ -19,6 +20,10 @@ static class ValueEaseExtension
     public static float Ease(this float self, float start, float from, float easeTime, EaseType type)
     {
         return Easing.Ease(start, from, easeTime, type, self);
+    }
+    public static float Ease(this float self, EasingStatus_Lpb easingStatus)
+    {
+        return Easing.Ease(easingStatus, self);
     }
 }
 
@@ -51,6 +56,11 @@ public readonly struct Easing
         }
     }
 
+    public Easing(EasingStatus_Lpb easingStatus) : this(easingStatus.Start, easingStatus.From, easingStatus.EaseLpb.Time, easingStatus.EaseType)
+    {
+
+    }
+
     public static float Ease(float start, float from, float easeTime, EaseType type, float time)
     {
         if (easeTime == 0)
@@ -63,6 +73,21 @@ public readonly struct Easing
         }
         float t = time / easeTime;
         return start + (from - start) * GetPlaneValue(type, t);
+    }
+
+    public static float Ease(in EasingStatus_Lpb easingStatus, float time)
+    {
+        EaseType type = easingStatus.EaseType;
+        if (easingStatus.EaseLpb.Time == 0)
+        {
+            type = EaseType.End;
+        }
+        else if (type == EaseType.Default)
+        {
+            type = DefaultEaseType;
+        }
+        float t = time / easingStatus.EaseLpb.Time;
+        return easingStatus.Start + (easingStatus.From - easingStatus.Start) * GetPlaneValue(type, t);
     }
 
     public float Ease(float time)
@@ -235,5 +260,27 @@ public readonly struct EasingVector2
     {
         easingX.WriteStatus();
         easingY.WriteStatus();
+    }
+}
+
+[Serializable]
+public struct EasingStatus_Lpb
+{
+    [SerializeField] float start;
+    [SerializeField] float from;
+    [SerializeField] EaseType easeType;
+    [SerializeField] Lpb easeLpb;
+
+    public readonly float Start => start;
+    public readonly float From => from;
+    public readonly EaseType EaseType => easeType;
+    public readonly Lpb EaseLpb => easeLpb;
+
+    public EasingStatus_Lpb(float start, float from, EaseType easeType = EaseType.Default, Lpb easeLpb = default)
+    {
+        this.start = start;
+        this.from = from;
+        this.easeType = easeType;
+        this.easeLpb = easeLpb;
     }
 }

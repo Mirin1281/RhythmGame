@@ -16,6 +16,7 @@ namespace NoteCreating
             [SerializeField] Lpb length;
             [SerializeField] bool isOverlappable;
             [SerializeField] bool isDetailed;
+            [SerializeField] bool twoJudge;
 
             [SerializeField] float dir;
             [SerializeField] float curve;
@@ -26,6 +27,7 @@ namespace NoteCreating
             public readonly Lpb Length => length;
             public readonly bool IsOverlappable => isOverlappable;
             public readonly bool IsDetailed => isDetailed;
+            public readonly bool TwoJudge => twoJudge;
 
             public readonly float Dir => dir;
             public readonly float Curve => curve;
@@ -37,10 +39,12 @@ namespace NoteCreating
                 length = new Lpb(8);
                 isOverlappable = false;
                 isDetailed = false;
+                twoJudge = false;
                 dir = 20;
                 curve = 2;
             }
         }
+
         [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 1f;
         //[SerializeField, CommandSelect] CommandData commandData;
@@ -94,8 +98,9 @@ namespace NoteCreating
                 vertexType,
                 false,
                 data.IsOverlappable,
-                Lpb.Zero, data.Length,
+                Lpb.Zero, data.TwoJudge ? data.Length / 2f : data.Length,
                 new Vector3(startDir, 0, data.Curve));
+
             ArcCreateData endData = new ArcCreateData(
                 endX,
                 data.Length,
@@ -105,7 +110,23 @@ namespace NoteCreating
                 default, default,
                 new Vector3(endDir, data.Curve, 0));
 
-            return new ArcCreateData[] { startData, endData };
+            if (data.TwoJudge)
+            {
+                ArcCreateData judgeData = new ArcCreateData(
+                    default,
+                    default,
+                    ArcCreateData.VertexType.JudgeOnly,
+                    false,
+                    data.IsOverlappable,
+                    data.Length / 2f, data.Length
+                );
+                return new ArcCreateData[] { startData, judgeData, endData };
+            }
+            else
+            {
+                return new ArcCreateData[] { startData, endData };
+            }
+
         }
 
         void MoveArc(ArcNote arc, Lpb length)

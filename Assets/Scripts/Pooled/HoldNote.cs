@@ -22,8 +22,10 @@ namespace NoteCreating
         public float NoInputTime { get; set; }
 
         static readonly float BaseScaleX = 3f;
-        static readonly float fixedValue = -0.35f; // ノーツの見た目を調節するため
+        static readonly float fixedValue = -0.3f; // ノーツの見た目を調節するため
         static readonly float fixLength = 0.5f;
+
+        Vector3 position;
 
         public override void SetWidth(float width)
         {
@@ -40,33 +42,33 @@ namespace NoteCreating
         public void SetLength(float length)
         {
             spriteRenderer.size = new Vector2(spriteRenderer.size.x, length + fixLength);
-            maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y + fixLength);
+            maskTs.localScale = new Vector3(spriteRenderer.size.x, maskTs.localScale.y);
         }
 
         public override Vector3 GetPos(bool isWorld = false)
         {
-            Vector3 fixedPos = GetFixedPos();
             if (isWorld)
             {
-                return spriteRenderer.transform.position - fixedPos;
+                return spriteRenderer.transform.position;
             }
             else
             {
-                return spriteRenderer.transform.localPosition - fixedPos;
+                return position;
             }
         }
 
         public override void SetPos(Vector3 pos, bool isWorld = false)
         {
-            Vector3 fixedPos = GetFixedPos();
             if (isWorld)
             {
-                spriteRenderer.transform.position = pos + fixedPos;
+                Debug.Log("未実装");
+                position = pos;
             }
             else
             {
-                spriteRenderer.transform.localPosition = pos + fixedPos;
+                position = pos;
             }
+            ApplyPos();
         }
 
         /// <summary>
@@ -154,6 +156,12 @@ namespace NoteCreating
                 spriteRenderer.transform.localEulerAngles = new Vector3(angles.x, angles.y, deg);
                 maskTs.transform.localEulerAngles = new Vector3(angles.x, angles.y, deg);
             }
+            ApplyPos();
+        }
+
+        void ApplyPos()
+        {
+            spriteRenderer.transform.localPosition = position + GetFixedPos();
         }
 
         public Vector3 GetFixedPos()

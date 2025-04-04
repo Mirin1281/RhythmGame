@@ -43,8 +43,8 @@ namespace NoteCreating
                 note.SetPosAndRot(pos, 0);
                 if (note is HoldNote hold)
                 {
-                    hold.SetMaskPos(new Vector2(pos.x, 0));
                     hold.SetLength(data.Length * Speed);
+                    hold.SetMaskPos(new Vector2(pos.x, 0));
                 }
 
                 // 座標変換 //
@@ -53,11 +53,6 @@ namespace NoteCreating
                     Time, t,
                     data.Option1, data.Option2);
             });
-        }
-
-        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
-        {
-            return;
         }
 
 #if UNITY_EDITOR

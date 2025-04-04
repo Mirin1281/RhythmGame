@@ -106,10 +106,18 @@ namespace NoteCreating
 
             var clearCamera = GameObject.Find("ClearCamera").GetComponent<Camera>();
             clearCamera.backgroundColor = l_isDark ? Color.white : Color.black;
-            SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
+
+            // ガンマ用
+            /*SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
             ArcNote.HoldingAlpha = l_isDark ? 0.7f : 0.55f;
             ArcNote.NotHoldingAlpha = l_isDark ? 0.4f : 0.3f;
-            Line.BaseAlpha = l_isDark ? 1.2f : 1f;
+            Line.BaseAlpha = l_isDark ? 1.2f : 1f;*/
+
+            // リニア用
+            SlideNote.BaseAlpha = l_isDark ? 0.2f : 0.4f; // ダークモードだと色が薄くなるので調整
+            ArcNote.HoldingAlpha = l_isDark ? 0.4f : 0.55f;
+            ArcNote.NotHoldingAlpha = l_isDark ? 0.2f : 0.3f;
+            Line.BaseAlpha = l_isDark ? 0.8f : 1f;
         }
     }
 }

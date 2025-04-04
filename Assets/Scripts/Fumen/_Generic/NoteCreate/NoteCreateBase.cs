@@ -30,7 +30,7 @@ namespace NoteCreating
             }
 
 
-            void CreateNote(in T noteData)
+            void CreateNote(T noteData)
             {
                 var type = noteData.Type;
 
@@ -47,7 +47,6 @@ namespace NoteCreating
                     RegularNote note = Helper.GetRegularNote(type);
                     note.IsVerticalRange = isVerticalRange;
                     Move(note, noteData, lifeTime);
-                    AddExpect(note);
                 }
                 else if (type is RegularNoteType.Hold)
                 {
@@ -60,14 +59,8 @@ namespace NoteCreating
                     hold.IsVerticalRange = isVerticalRange;
                     hold.SetMaskPos(new Vector2(mirror.Conv(noteData.X), 0));
                     Move(hold, noteData, lifeTime);
-                    AddExpect(hold, length: noteData.Length);
                 }
             }
-        }
-
-        protected virtual void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, NoteJudgeStatus.ExpectType expectType = NoteJudgeStatus.ExpectType.Y_Static)
-        {
-            Helper.NoteInput.AddExpect(new NoteJudgeStatus(note, pos, MoveTime - Delta, length, expectType));
         }
 
 

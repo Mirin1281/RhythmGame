@@ -44,15 +44,15 @@ namespace NoteCreating
                 if (data.Type != RegularNoteType._None)
                 {
                     float expectTime = wholeTime - waitDelta - waitDelta / createSpeedRate + reverseLPB.Time + dropLPB.Time - delta;
-                    var note = CreateNote(data, delta, createSpeedRate, wholeTime - waitDelta);
+                    var note = CreateNote(data, delta, createSpeedRate, wholeTime - waitDelta, expectTime);
 
-                    note.SetPos(new Vector3(mirror.Conv(data.X), 0));
+                    /*note.SetPos(new Vector3(mirror.Conv(data.X), 0));
                     transformConverter.Convert(
                         note, mirror,
                         Time + expectTime - Delta, dropLPB.Time + (MoveLpb - dropLPB).Time,
                         data.Option1, data.Option2);
                     Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                        note, note.GetPos(), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));
+                        note, note.GetPos(), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));*/
                 }
 
                 if (float.IsInfinity(createSpeedRate) == false)
@@ -63,15 +63,13 @@ namespace NoteCreating
             }
         }
 
-        RegularNote CreateNote(in NoteData data, float delta, float createSpeedRate, float w)
+        RegularNote CreateNote(in NoteData data, float delta, float createSpeedRate, float w, float expectTime)
         {
             var type = data.Type;
+            RegularNote note = null;
             if (type is RegularNoteType.Normal or RegularNoteType.Slide)
             {
-                RegularNote note = Helper.GetRegularNote(type);
-                note.IsVerticalRange = isVerticalRange;
-                Move(note, data, delta, createSpeedRate, w).Forget();
-                return note;
+                note = Helper.GetRegularNote(type);
             }
             else if (type is RegularNoteType.Hold)
             {
@@ -81,12 +79,20 @@ namespace NoteCreating
                     return null;
                 }
                 HoldNote hold = Helper.GetHold(data.Length * Speed);
-                hold.IsVerticalRange = isVerticalRange;
                 hold.SetMaskPos(new Vector2(mirror.Conv(data.X), 0));
-                Move(hold, data, delta, createSpeedRate, w).Forget();
-                return hold;
+                note = hold;
             }
-            return null;
+
+            note.IsVerticalRange = isVerticalRange;
+            note.SetPos(new Vector3(mirror.Conv(data.X), 0));
+            transformConverter.Convert(
+                note, mirror,
+                Time + expectTime - Delta, dropLPB.Time + (MoveLpb - dropLPB).Time,
+                data.Option1, data.Option2);
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                note, note.GetPos(), expectTime, data.Length, NoteJudgeStatus.ExpectType.Static));
+            Move(note, data, delta, createSpeedRate, w).Forget();
+            return note;
         }
 
         async UniTaskVoid Move(RegularNote note, NoteData data, float delta, float createSpeedRate, float w)
@@ -112,6 +118,13 @@ namespace NoteCreating
                     t = CurrentTime - baseTime;
                     var basePos = new Vector3(mirror.Conv(x), easing.Ease(t) * Speed);
                     note.SetPos(basePos);
+                    note.SetRot(0);
+
+                    if (note is HoldNote hold)
+                    {
+                        hold.SetMaskPos(new Vector2(basePos.x, 0));
+                        hold.SetLength(data.Length * Speed);
+                    }
 
                     // 座標変換 //
                     transformConverter.Convert(
@@ -143,6 +156,13 @@ namespace NoteCreating
                     }
                     var basePos = new Vector3(mirror.Conv(data.X), (y + w) * Speed);
                     note.SetPos(basePos);
+                    note.SetRot(0);
+
+                    if (note is HoldNote hold)
+                    {
+                        hold.SetMaskPos(new Vector2(basePos.x, 0));
+                        hold.SetLength(data.Length * Speed);
+                    }
 
                     // 座標変換 //
                     transformConverter.Convert(

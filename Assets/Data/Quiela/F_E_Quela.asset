@@ -58,144 +58,27 @@ MonoBehaviour:
   enable: 1
   beatTiming: 156
   command:
-    rid: 1232548305017241621
+    rid: 4848304253928210470
   references:
     version: 2
     RefIds:
-    - rid: 1232548305017241621
-      type: {class: F_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304253928210470
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
-          enabled: 1
+          enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
-        isPosDistortion: 1
-        isRotDistortion: 1
-        frequency: 2
-        posAmp: 0.1
-        rotAmp: 2
-        seed: 2134
         noteDatas:
         - wait:
-            _value: 8
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 2
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
+            _value: 0
           type: 1
           x: 0
           length:
             _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 0
-          type: 0
-          x: 5
-          length:
-            _value: 4
           option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 1.5
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 2.5
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -2
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -1
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -1
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -6
-          length:
-            _value: 4
-          option1: 1
           option2: 0
 --- !u!114 &-9060121980007128728
 MonoBehaviour:
@@ -688,6 +571,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -927,6 +811,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 4
         trimStart: 1
         noteType: 2
@@ -1363,6 +1248,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -1675,6 +1561,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -1766,6 +1653,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 4
         trimStart: 1
         noteType: 2
@@ -2503,6 +2391,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -3032,176 +2921,6 @@ MonoBehaviour:
           _value: 4
         command:
           rid: 1232548214306766850
---- !u!114 &-6220828537915304044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (234)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 206
-  command:
-    rid: 1232548305017241629
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548305017241629
-      type: {class: F_4Direction, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 3
-          x: -3
-          length:
-            _value: 0.5714286
-          option1: 2
-          option2: 0
-        - wait:
-            _value: 2
-          type: 3
-          x: 3
-          length:
-            _value: 0.5714286
-          option1: 3
-          option2: 0
-        - wait:
-            _value: 1
-          type: 0
-          x: 3
-          length:
-            _value: 0.5714286
-          option1: 2
-          option2: 0
-        - wait:
-            _value: 2
-          type: 3
-          x: -3
-          length:
-            _value: 0.4444444
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 0
-          x: 3
-          length:
-            _value: 0.4444444
-          option1: 2
-          option2: 0
-        - wait:
-            _value: 8
-          type: 3
-          x: 3
-          length:
-            _value: 0.5333334
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 0
-          x: -3
-          length:
-            _value: 0.5333334
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 0.5
-          type: 3
-          x: 6
-          length:
-            _value: 0.6666667
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 3
-          x: -6
-          length:
-            _value: 0.6666667
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 0.5
-          type: 3
-          x: 3
-          length:
-            _value: 0.6666667
-          option1: 2
-          option2: 0
-        - wait:
-            _value: 0
-          type: 3
-          x: -3
-          length:
-            _value: 0.6666667
-          option1: 3
-          option2: 0
-        - wait:
-            _value: 1
-          type: 0
-          x: -3
-          length:
-            _value: 0.6666667
-          option1: 3
-          option2: 0
-        - wait:
-            _value: 2
-          type: 3
-          x: -3
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 3
-          x: 3
-          length:
-            _value: 1
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 4
-          type: 3
-          x: 0
-          length:
-            _value: 0.6666667
-          option1: 2
-          option2: 0
-        - wait:
-            _value: 1
-          type: 3
-          x: 0
-          length:
-            _value: 0.6666667
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 1
-          type: 3
-          x: 3
-          length:
-            _value: 0.5
-          option1: 3
-          option2: 0
-        - wait:
-            _value: 1
-          type: 3
-          x: -3
-          length:
-            _value: 1
-          option1: 3
-          option2: 0
 --- !u!114 &-6090550742709551286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3403,6 +3122,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452892
@@ -3721,6 +3441,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452876
@@ -3825,10 +3546,10 @@ MonoBehaviour:
       type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 0
-        moveLpb:
-          _value: 4
         moveStartLpb:
           _value: 1.3333334
+        moveLpb:
+          _value: 4
         easeType: 3
 --- !u!114 &-5615359514722454810
 MonoBehaviour:
@@ -3988,6 +3709,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 9
         trimStart: 1
         noteType: 2
@@ -4175,144 +3897,27 @@ MonoBehaviour:
   enable: 1
   beatTiming: 140
   command:
-    rid: 1232548305017241620
+    rid: 4848304253928210469
   references:
     version: 2
     RefIds:
-    - rid: 1232548305017241620
-      type: {class: F_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304253928210469
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
-        isPosDistortion: 1
-        isRotDistortion: 1
-        frequency: 2
-        posAmp: 0.1
-        rotAmp: 2
-        seed: 124
         noteDatas:
         - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -8
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -14
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -10
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -14
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
             _value: 0
-          type: 0
-          x: 5
+          type: 1
+          x: 0
           length:
             _value: 4
           option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -10.5
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -9.5
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -14
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -10
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -10
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -15
-          length:
-            _value: 4
-          option1: 1
           option2: 0
 --- !u!114 &-5169696979393038138
 MonoBehaviour:
@@ -4488,6 +4093,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -4644,6 +4250,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452878
@@ -5357,6 +4964,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 12
         trimStart: 1
         noteType: 2
@@ -5965,6 +5573,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452890
@@ -7336,6 +6945,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -7691,6 +7301,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452894
@@ -8065,6 +7676,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -8891,6 +8503,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 4
         trimStart: 1
         noteType: 2
@@ -8926,6 +8539,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452882
@@ -9081,6 +8695,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404788
@@ -9303,6 +8918,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -9444,6 +9060,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 8
         trimStart: 1
         noteType: 2
@@ -9701,6 +9318,192 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &-784283100060656800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_E_Quela (20)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 206
+  command:
+    rid: 4848304253928210471
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304253928210471
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables:
+          - rid: 4848304266582163457
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 0.5714286
+          option1: -90
+          option2: 0
+        - wait:
+            _value: 2
+          type: 3
+          x: 3
+          length:
+            _value: 0.5714286
+          option1: 90
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: -3
+          length:
+            _value: 1
+          option1: 3
+          option2: 0
+        - wait:
+            _value: 1
+          type: 0
+          x: 3
+          length:
+            _value: 0.5714286
+          option1: 2
+          option2: 0
+        - wait:
+            _value: 2
+          type: 3
+          x: 3
+          length:
+            _value: 0.4444444
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: 3
+          length:
+            _value: 0.4444444
+          option1: 2
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 0.5333334
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -3
+          length:
+            _value: 0.5333334
+          option1: 1
+          option2: 0
+        - wait:
+            _value: 0.5
+          type: 3
+          x: 6
+          length:
+            _value: 0.6666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -6
+          length:
+            _value: 0.6666667
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 0.5
+          type: 3
+          x: 3
+          length:
+            _value: 0.6666667
+          option1: -90
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -3
+          length:
+            _value: 0.6666667
+          option1: 90
+          option2: 0
+        - wait:
+            _value: 1
+          type: 0
+          x: -3
+          length:
+            _value: 0.6666667
+          option1: 3
+          option2: 0
+        - wait:
+            _value: 2
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 3
+          length:
+            _value: 1
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 0
+          length:
+            _value: 0.6666667
+          option1: -90
+          option2: 0
+        - wait:
+            _value: 1
+          type: 3
+          x: 0
+          length:
+            _value: 0.6666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 1
+          type: 3
+          x: 3
+          length:
+            _value: 0.5
+          option1: 90
+          option2: 0
+        - wait:
+            _value: 1
+          type: 3
+          x: -3
+          length:
+            _value: 1
+          option1: 90
+          option2: 0
+    - rid: 4848304266582163457
+      type: {class: P_Curve/P_4Direction, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        _: 0
 --- !u!114 &-743319806879955139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9868,6 +9671,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -10000,6 +9804,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548545167097872
@@ -10362,6 +10167,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452886
@@ -10402,10 +10208,10 @@ MonoBehaviour:
       type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 0
-        moveLpb:
-          _value: 4
         moveStartLpb:
           _value: 1
+        moveLpb:
+          _value: 4
         easeType: 3
 --- !u!114 &-106367610419081988
 MonoBehaviour:
@@ -10772,7 +10578,7 @@ MonoBehaviour:
     - {fileID: -7993736171422225689}
     - {fileID: -5615359514722454810}
     - {fileID: 4014998264232929784}
-    - {fileID: -6220828537915304044}
+    - {fileID: -784283100060656800}
     - {fileID: -4003373242416028218}
     - {fileID: -8277911000889893192}
     - {fileID: 7272060674473863671}
@@ -11059,6 +10865,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -11142,6 +10949,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 8
         trimStart: 0
         noteType: 2
@@ -11414,6 +11222,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -11635,6 +11444,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548545167097867
@@ -11849,6 +11659,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 1
+        speedRate: 1
         count: 8
         trimStart: 1
         noteType: 2
@@ -12284,6 +12095,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452899
@@ -12389,10 +12201,10 @@ MonoBehaviour:
       type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 0
-        moveLpb:
-          _value: 4
         moveStartLpb:
           _value: 1.333333
+        moveLpb:
+          _value: 4
         easeType: 3
     - rid: 1232548553852452899
       type: {class: P_Curve/P_RotateNote, ns: NoteCreating, asm: Assembly-CSharp}
@@ -12477,6 +12289,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -12637,6 +12450,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -12977,6 +12791,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -13227,6 +13042,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -13419,6 +13235,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         reverseLPB:
           _value: 2
         dropLPB:
@@ -13909,6 +13726,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 12
         trimStart: 1
         noteType: 2
@@ -13954,6 +13772,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -14061,6 +13880,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 13
         trimStart: 1
         noteType: 2
@@ -14211,6 +14031,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404791
@@ -14393,6 +14214,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404785
@@ -14689,6 +14511,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -15837,6 +15660,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -16683,6 +16507,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404787
@@ -17335,6 +17160,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 12
         trimStart: 0
         noteType: 2
@@ -18033,6 +17859,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452880
@@ -18137,10 +17964,10 @@ MonoBehaviour:
       type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 0
-        moveLpb:
-          _value: 4
         moveStartLpb:
           _value: 1.333333
+        moveLpb:
+          _value: 4
         easeType: 3
 --- !u!114 &7087538501876386318
 MonoBehaviour:
@@ -18279,6 +18106,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 9
         trimStart: 1
         noteType: 2
@@ -18414,6 +18242,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452874
@@ -18510,10 +18339,10 @@ MonoBehaviour:
       type: {class: P_Curve/P_SideMove, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 0
-        moveLpb:
-          _value: 4
         moveStartLpb:
           _value: 1.3333334
+        moveLpb:
+          _value: 4
         easeType: 3
 --- !u!114 &7247562475535619933
 MonoBehaviour:
@@ -18611,6 +18440,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -19208,6 +19038,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables: []
         acceleration: 3
@@ -19515,6 +19346,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548532298973190
@@ -19713,6 +19545,7 @@ MonoBehaviour:
         mirror:
           enabled: 1
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404786
@@ -20005,6 +19838,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1.1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452896
@@ -20467,6 +20301,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852452888
@@ -20846,6 +20681,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548510700404792
@@ -21058,6 +20894,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 8
         trimStart: 1
         noteType: 2
@@ -21136,6 +20973,7 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
+        speedRate: 1
         count: 12
         trimStart: 1
         noteType: 2

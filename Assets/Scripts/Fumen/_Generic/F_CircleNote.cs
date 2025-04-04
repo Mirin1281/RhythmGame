@@ -87,7 +87,12 @@ namespace NoteCreating
 
         protected override string GetName()
         {
-            return "Circle";
+            return "CircleNote";
+        }
+
+        protected override Color GetCommandColor()
+        {
+            return CommandEditorUtility.CommandColor_Other;
         }
 #endif
     }

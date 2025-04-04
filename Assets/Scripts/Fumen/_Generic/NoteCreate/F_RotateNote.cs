@@ -18,6 +18,8 @@ namespace NoteCreating
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
         {
+            Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                note, new Vector2(data.X, 0), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Y_Static));
             var easing = new Easing(0, 180 * data.Option1, rotateLpb.Time, EaseType.OutQuad);
             if (isGroup)
             {

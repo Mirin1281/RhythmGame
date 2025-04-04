@@ -33,14 +33,13 @@ namespace NoteCreating
             if (actionType != ActionType.NonJudge)
             {
                 // 着弾地点を設定 //
-                var baseExpectPos = moveFunc(MoveTime).pos + (actionType == ActionType.InvisibleJudge ? -new Vector3(0, 10) : Vector3.zero);
-                note.SetPos(mirror.Conv(baseExpectPos));
+                note.SetPosAndRot(moveFunc(MoveTime));
                 transformConverter.Convert(
                     note, mirror,
                     Time + MoveTime - Delta, MoveTime,
                     data.Option1, data.Option2);
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                    note, note.GetPos(), MoveTime - Delta, actionType == ActionType.TouchHold ? Lpb.Zero : data.Length, NoteJudgeStatus.ExpectType.Static));
+                    note, note.GetPos() + (actionType == ActionType.InvisibleJudge ? -new Vector3(0, 10) : Vector3.zero), MoveTime - Delta, actionType == ActionType.TouchHold ? Lpb.Zero : data.Length, NoteJudgeStatus.ExpectType.Static));
             }
 
 
@@ -49,7 +48,12 @@ namespace NoteCreating
             {
                 if (note.IsActive == false) return;
                 var (basePos, baseRot) = moveFunc(t);
-                note.SetPos(basePos);
+                note.SetPosAndRot(basePos, baseRot);
+                if (note is HoldNote hold)
+                {
+                    hold.SetLength(data.Length * Speed);
+                    hold.SetMaskPos(new Vector2(basePos.x, 0));
+                }
 
                 // 座標変換 //
                 transformConverter.Convert(
@@ -71,11 +75,6 @@ namespace NoteCreating
                     note.SetActive(false);
                 });
             }
-        }
-
-        protected override void AddExpect(RegularNote note, Vector2 pos = default, Lpb length = default, ExpectType expectType = ExpectType.Y_Static)
-        {
-            return;
         }
 
 #if UNITY_EDITOR

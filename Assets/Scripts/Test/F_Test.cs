@@ -105,37 +105,35 @@ namespace NoteCreating
             DummyDropAsync(RegularNoteType.Slide, 4, 4).Forget();*/
 
 
-            /*// ロング分割 (2 => 16, 8, 16, 4に分割) //
+            // ロング分割 (2 => 16, 8, 16, 4に分割) //
 
-            SplitHoldSample(new Vector3(0, 1f), 2, new int[] { 16, 8, 16, 4 }).Forget();
+            SplitHoldSample(new Vector3(0, 1f), new Lpb(1), new int[] { 8, 4, 8, 2 }).Forget();
 
-            async UniTaskVoid SplitHoldSample(Vector3 toPos, float baseLength, int[] splitLengthes)
+            async UniTaskVoid SplitHoldSample(Vector3 toPos, Lpb baseLength, int[] splitLengthes)
             {
+                HoldNote baseHold = Helper.GetHold(baseLength * Speed);
+                var easing = new Easing(MoveTime * Speed, 0, MoveTime, EaseType.OutQuad);
+                var delta = await WhileYieldAsync(MoveTime, t =>
                 {
-                    HoldNote baseHold = Helper.GetHold(Helper.GetTimeInterval(baseLength) * Speed);
-                    var easing = new Easing(StartBase, 0, Helper.GetTimeInterval(4, 6), EaseType.OutQuad);
-                    await WhileYieldAsync(Helper.GetTimeInterval(4, 6), t =>
-                    {
-                        baseHold.SetPos(new Vector3(0, easing.Ease(t)) + toPos);
-                    });
-                    baseHold.SetActive(false);
-                }
+                    baseHold.SetPos(new Vector3(0, easing.Ease(t)) + toPos);
+                }, Delta);
+                baseHold.SetActive(false);
 
                 Vector3 pos = Vector3.zero;
                 for (int i = 0; i < splitLengthes.Length; i++)
                 {
-                    float len = Helper.GetTimeInterval(splitLengthes[i]) * Speed;
+                    Lpb len = new Lpb(splitLengthes[i]) * Speed;
                     pos += i == 0 ?
                         toPos :
-                        new Vector3(0, Helper.GetTimeInterval(splitLengthes[i - 1]) * Speed);
+                        new Vector3(0, new Lpb(splitLengthes[i - 1]).Time * Speed);
                     HoldNote hold = Helper.GetHold(len);
                     hold.SetPos(pos);
                     hold.SetMaskPos(100 * Vector2.one);
-                    MoveChildHold(hold, i, pos).Forget();
+                    MoveChildHold(hold, i, pos, delta).Forget();
                 }
 
 
-                async UniTaskVoid MoveChildHold(HoldNote hold, int i, Vector3 pos)
+                async UniTaskVoid MoveChildHold(HoldNote hold, int i, Vector3 pos, float delta)
                 {
                     float time = 1 + i * 0.3f;
                     int a = i % 2 == 0 ? 1 : -1;
@@ -143,13 +141,25 @@ namespace NoteCreating
                     {
                         hold.SetPos(new Vector3(
                             toPos.x + t.Ease(0, a * 2f, time, EaseType.Linear),
-                            pos.y + t.Ease(0, -30f, time, EaseType.InCubic)
+                            pos.y + t.Ease(0, -60f, time, EaseType.InCubic)
                         ));
                         hold.SetRot(t.Ease(0, a * -60f, time, EaseType.InQuad));
-                    });
+                    }, delta);
                     hold.SetActive(false);
+
+                    /*float time = 1 + i * 0.3f;
+                    int a = i % 2 == 0 ? 1 : -1;
+                    await WhileYieldAsync(time, t =>
+                    {
+                        hold.SetPos(new Vector3(
+                            toPos.x + t.Ease(0, a * 20f, time, EaseType.OutCubic),
+                            pos.y
+                        ));
+                        //hold.SetRot(t.Ease(0, a * -60f, time, EaseType.InQuad));
+                    }, delta);
+                    hold.SetActive(false);*/
                 }
-            }*/
+            }
         }
     }
 }

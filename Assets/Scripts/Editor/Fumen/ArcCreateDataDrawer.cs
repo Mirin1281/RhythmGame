@@ -16,19 +16,28 @@ namespace NoteCreating.Editor
 
             h.SetWidth(width / 4f);
 
-            h.LabelField("待:");
-            h.SetX(width / 16f);
-            h.PropertyField("wait", false);
+            var vertexTypeProp = property.FindPropertyRelative("vertexType");
+            VertexType type = (VertexType)vertexTypeProp.enumValueIndex;
+            bool isJudgeOnly = type == VertexType.JudgeOnly;
 
-            h.SetX(width / 3.1f);
-            h.LabelField("X:");
-            h.SetX(width / 2.6f);
-            h.PropertyField("x", false);
+            using (new EditorGUI.DisabledGroupScope(isJudgeOnly))
+            {
+
+                h.LabelField("待:");
+                h.SetX(width / 16f);
+                h.PropertyField("wait", false);
+
+                h.SetX(width / 3.1f);
+                h.LabelField("X:");
+                h.SetX(width / 2.6f);
+                h.PropertyField("x", false);
+
+            }
 
             h.SetX(width / 1.5f);
-            var vertexTypeProp = h.PropertyField("vertexType", false);
+            h.PropertyField(vertexTypeProp, false);
 
-            VertexType type = (VertexType)vertexTypeProp.enumValueIndex;
+
             if (type == VertexType.Detail)
             {
                 h.SetY();
