@@ -30,10 +30,11 @@ namespace NoteCreating
     public class P_2ShakeLoop : ITransformConvertable
     {
         [Header("オプション: 2軸のどちらに属するか (0 or 1)")]
-        [SerializeField] public float deg = 3f;
-        [SerializeField] public Lpb frequency = new Lpb(1f);
-        [SerializeField] public Lpb phase = new Lpb(2);
-        [SerializeField] public EaseType easeType = EaseType.OutQuad;
+        [SerializeField] float deg = 3f;
+        [SerializeField] Lpb frequency = new Lpb(1f);
+        [SerializeField] Lpb phase = new Lpb(2);
+        [SerializeField] Lpb deltaLpb = Lpb.Zero;
+        [SerializeField] EaseType easeType = EaseType.OutQuad;
 
         bool ITransformConvertable.IsGroup => true;
 
@@ -55,7 +56,8 @@ namespace NoteCreating
         float GetDir(float time, bool pair)
         {
             bool isUp = pair ^ ((int)((time + phase.Time) / frequency.Time) % 2) == 0;
-            float theta = (time + phase.Time) % frequency.Time;
+            float delta = isUp ? 0 : deltaLpb.Time;
+            float theta = (time + phase.Time + delta) % frequency.Time;
             return (isUp ? 1 : -1) * theta.Ease(0, deg, frequency.Time / 2f, easeType);
         }
     }
@@ -195,17 +197,29 @@ namespace NoteCreating
             [SerializeField] Lpb timing = new Lpb(4) * 5;
             [SerializeField] Lpb rotateLpb = new Lpb(8);
             [SerializeField] EaseType easeType = EaseType.OutQuad;
+            [SerializeField] float speedRate = 1f;
 
             bool ITransformConvertable.IsGroup => isGroup;
+            float Speed => RhythmGameManager.Speed * speedRate;
 
             void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
             {
+                if (option == 0) return;
+
                 float toRot = 180 * option;
                 var easing = new Easing(0, toRot, rotateLpb.Time, easeType);
                 if (time > timing.Time)
                 {
                     float t2 = time - timing.Time;
-                    note.SetRot(easing.Ease(Mathf.Clamp(t2, 0, rotateLpb.Time)));
+                    float rot = easing.Ease(Mathf.Clamp(t2, 0, rotateLpb.Time));
+                    note.SetRot(rot);
+
+                    if (note is HoldNote hold)
+                    {
+                        var vec = Speed * new Vector3(Mathf.Sin(rot * Mathf.Deg2Rad), -Mathf.Cos(rot * Mathf.Deg2Rad));
+                        note.SetPos(new Vector3(note.GetPos().x, 0) + t2 * vec);
+                        hold.SetMaskLength(20f);
+                    }
                 }
             }
         }
@@ -214,8 +228,8 @@ namespace NoteCreating
         public class F_JumpDrop : ITransformConvertable
         {
             [Header("オプション : 軌道の反転 (0 or 1)")]
-            [SerializeField] float radius = 14;
-            [SerializeField] float height = 15;
+            [SerializeField] float radius = 16.5f;
+            [SerializeField] float height = 17;
 
             bool ITransformConvertable.IsGroup => false;
 
@@ -398,7 +412,7 @@ namespace NoteCreating
             void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
             {
                 float dir = option;
-                note.SetRot(dir);
+                note.SetRot(dir + note.GetRot());
                 if (note is HoldNote hold)
                 {
                     hold.SetMaskPos(ConvertPos(hold.GetMaskPos(), dir));
@@ -435,6 +449,64 @@ namespace NoteCreating
                 else
                 {
                     note.SetAlpha(1);
+                }
+            }
+        }
+
+        [AddTypeMenu("ノーツ出現 & 消失", -60), System.Serializable]
+        public class P_Appear : ITransformConvertable
+        {
+            [Header("オプション : 0:消失、1:出現、-1:無視\n消失させたい場合はNonJudgeと併用してください")]
+            [SerializeField] bool isGroup = true;
+            [SerializeField] Lpb timing = new Lpb(4) * 6;
+
+            bool ITransformConvertable.IsGroup => isGroup;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                if (option == -1) return;
+
+                bool appear = option == 1;
+
+                if (time > timing.Time)
+                {
+                    note.SetRendererEnabled(appear);
+                }
+                else
+                {
+                    note.SetRendererEnabled(!appear);
+                }
+            }
+        }
+
+        [AddTypeMenu("Lanota", -60), System.Serializable]
+        public class P_Lanota : ITransformConvertable
+        {
+            [SerializeField] Vector2 centerPos = new Vector2(0, 14);
+            [SerializeField] Vector2 degRange = new Vector2(-45, 45);
+            [SerializeField] float size = 0.5f;
+
+            bool ITransformConvertable.IsGroup => true;
+
+            // -8をdegRange.x、8をdegRange.yにスケーリングしています
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                float rotFunc(float x) => (degRange.y - degRange.x) / 16f * x + (degRange.y + degRange.x) / 2f;
+                Vector3 posFunc(float y, float rot) => MyUtility.GetRotatedPos(new Vector2(0, y - size), rot, centerPos);
+
+                var basePos = note.GetPos();
+                float rot = rotFunc(basePos.x);
+                note.SetRot(rot + note.GetRot());
+                var pos = posFunc(basePos.y, rot);
+                note.SetPos(pos);
+
+                if (note is HoldNote hold)
+                {
+                    var baseMaskPos = hold.GetMaskPos();
+                    float maskRot = rotFunc(baseMaskPos.x);
+                    hold.SetMaskRot(maskRot);
+                    var maskPos = posFunc(baseMaskPos.y, rot);
+                    hold.SetMaskPos(maskPos);
                 }
             }
         }

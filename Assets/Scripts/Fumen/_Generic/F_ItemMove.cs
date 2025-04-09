@@ -74,7 +74,7 @@ namespace NoteCreating
         Lpb lifeLpb = new Lpb(0.5f);
 
         [SerializeField, Tooltip("trueにするとdelayがリストの順で加算されます\nfalseだと元の時間からの差で発火します")]
-        bool isChainWait = false;
+        bool isChainWait = true;
 
         [SerializeField, Tooltip("基準の座標\n初期ではカメラの高さを設定しています")]
         Vector2 basePos = new Vector2(0, 4);

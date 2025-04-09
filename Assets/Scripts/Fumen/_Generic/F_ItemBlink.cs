@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Unity.Collections;
 using UnityEngine;
 
 namespace NoteCreating
@@ -17,7 +18,7 @@ namespace NoteCreating
     }
 
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
-    [AddTypeMenu("◇アイテム点滅"), System.Serializable]
+    [AddTypeMenu("◇アイテム 点滅"), System.Serializable]
     public class F_ItemBlink : CommandBase
     {
         [Space(20)]

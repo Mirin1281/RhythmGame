@@ -31,8 +31,8 @@ namespace NoteCreating
             for (int i = 0; i < count; i++)
             {
                 CreateLine(
-                    randPos.GetVector2(new Vector2(xRange.x, yRange.x), new Vector2(xRange.y, yRange.y)),
-                    randRot.GetFloat(rotRange.x, rotRange.y),
+                    mirror.Conv(randPos.GetVector2(new Vector2(xRange.x, yRange.x), new Vector2(xRange.y, yRange.y))),
+                    mirror.Conv(randRot.GetFloat(rotRange.x, rotRange.y)),
                     randAlpha.GetFloat(alphaRange.x, alphaRange.y),
                     randWidth.GetFloat(widthRange.x, widthRange.y), delta).Forget();
                 delta = await Wait(interval, delta);
@@ -61,6 +61,11 @@ namespace NoteCreating
         protected override Color GetCommandColor()
         {
             return CommandEditorUtility.CommandColor_Line;
+        }
+
+        protected override string GetSummary()
+        {
+            return mirror.GetStatusText();
         }
 #endif
     }

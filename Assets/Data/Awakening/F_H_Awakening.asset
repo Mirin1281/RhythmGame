@@ -6362,7 +6362,7 @@ MonoBehaviour:
             _value: 2
           moveType: 1
         - wait:
-            _value: 2
+            _value: 1.3333334
           isPosMove: 1
           pos: {x: 0, y: 29.5, z: 0}
           isRotateMove: 0
@@ -12111,18 +12111,16 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 1232548841851977728
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
-        speedRate: 7
+        speedRate: 2
         isVerticalRange: 1
         transformConverter:
           transformConvertables:
-          - rid: -2
+          - rid: 4848304380132982784
         noteDatas:
         - wait:
             _value: 16
@@ -12636,6 +12634,19 @@ MonoBehaviour:
             _value: 1.777778
           option1: 0
           option2: 0
+    - rid: 4848304380132982784
+      type: {class: P_Curve/P_Revolute, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 0
+        easeLpb:
+          _value: 0
+        easeType: 0
+        startDeg: 180
+        toDeg: 180
+        startPos: {x: 0, y: 0}
+        toPos: {x: 0, y: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12649,7 +12660,7 @@ MonoBehaviour:
   m_Name: F_H_Awakening
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: fd27b9515a39a6446aa60aad592cef81, type: 2}
-  noteCount: 1282
+  noteCount: 1266
   <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 26
   <SlidePoolCount>k__BackingField: 50
@@ -12702,6 +12713,7 @@ MonoBehaviour:
     - {fileID: -5642741375804084655}
     - {fileID: 8942676431832588416}
     - {fileID: 8017540705519454282}
+    - {fileID: 8954188042903436823}
     - {fileID: 4426739026521870189}
     - {fileID: 4640845289541266132}
     - {fileID: 6868045726096106356}
@@ -13504,7 +13516,7 @@ MonoBehaviour:
         summary: "\u6D41\u308C\u661F\u30CE\u30FC\u30C4"
         itemType: 1
         option: 1
-        setJudge: 1
+        setJudge: 0
         isMultitap: 0
         lifeLpb:
           _value: 1
@@ -17028,6 +17040,7 @@ MonoBehaviour:
         rotateLpb:
           _value: 6
         easeType: 6
+        speedRate: 1
 --- !u!114 &4225646445731031337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19850,7 +19863,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
-        isVerticalRange: 0
+        isVerticalRange: 1
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -20612,7 +20625,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
-        offset: 1
+        offset: 0
         settings:
         - wait:
             _value: 0
@@ -20643,7 +20656,7 @@ MonoBehaviour:
           isRotateMove: 0
           rotate: {x: 0, y: 0, z: 5760}
           isRotateClamp: 0
-          easeType: 21
+          easeType: 8
           lpb:
             _value: 0
           moveType: 1
@@ -22304,17 +22317,6 @@ MonoBehaviour:
           lpb:
             _value: 2
           moveType: 1
-        - wait:
-            _value: 2
-          isPosMove: 1
-          pos: {x: 0, y: 10, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 0
-          easeType: 0
-          lpb:
-            _value: 0
-          moveType: 1
 --- !u!114 &8029731041540767258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23016,7 +23018,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         isChainWait: 1
-        offset: 1
+        offset: 0
         settings:
         - wait:
             _value: 0
@@ -23647,6 +23649,44 @@ MonoBehaviour:
         easeType: 6
         option: 100
         offset: 1
+--- !u!114 &8954188042903436823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Awakening (256)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 100
+  command:
+    rid: 4848304291551641613
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304291551641613
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        isChainWait: 1
+        offset: 0
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 1
+          pos: {x: 0, y: 10, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 0
+          moveType: 1
 --- !u!114 &9160009637274310404
 MonoBehaviour:
   m_ObjectHideFlags: 0

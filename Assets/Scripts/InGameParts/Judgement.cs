@@ -41,7 +41,7 @@ namespace NoteCreating
 
         public Result Result => result;
         public float MeanDelta => totalDelta / getCount;
-        const float Range = 4.6f;
+        const float Range = 4.8f;
         const float ArcRange = 4.6f;
 
         public void Init(FumenData fumenData)

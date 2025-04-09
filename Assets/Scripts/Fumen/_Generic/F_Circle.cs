@@ -49,11 +49,11 @@ namespace NoteCreating
             foreach (var data in circleDatas)
             {
                 delta = await Wait(data.Wait, delta);
-                CreateCircle(data, delta);
+                CreateCircle(data, delta).Forget();
             }
         }
 
-        async Task CreateCircle(CircleData data, float delta)
+        async UniTaskVoid CreateCircle(CircleData data, float delta)
         {
             var circle = Helper.GetCircle();
             circle.SetPos(mirror.Conv(data.Pos + basePos));

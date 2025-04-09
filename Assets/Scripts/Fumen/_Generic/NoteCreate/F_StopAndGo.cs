@@ -29,10 +29,6 @@ namespace NoteCreating
         [SerializeField] TransformConverter transformConverter;
         [SerializeField] float acceleration = 3;
         [SerializeField] StopData[] stopDatas = new StopData[] { new(new Lpb(4) * 6, new Lpb(4)) };
-        [SerializeField] float amp = 0.5f;
-        [SerializeField] float frequency = 100;
-
-        [Header("オプション1: 振動係数(不要な場合は0)")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(length: new Lpb(4)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
@@ -45,11 +41,11 @@ namespace NoteCreating
                 Time + MoveTime - Delta, MoveTime,
                 data.Option1, data.Option2);
             Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                note, mirror.Conv(note.GetPos()), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+                note, note.GetPos(), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
 
 
-            float currentTiming = -Time;
-            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time - Time;
+            float currentTiming = -Time + Delta;
+            float nextTiming = (stopDatas.Length == 0 ? Lpb.Infinity : stopDatas[0].Timing).Time + currentTiming;
             float stopWait = default;
 
             int i = 0;
@@ -82,13 +78,10 @@ namespace NoteCreating
                 }
 
                 float t2 = t;
-                float x = data.X;
                 if (status == MoveStatus.Stop)
                 {
                     t2 = currentTiming;
                     float stopTime = t - currentTiming;
-                    Easing ampEasing = new Easing(0, amp, stopWait * (1f - 1f / acceleration) / 2f, EaseType.OutQuad);
-                    x += ampEasing.Ease(stopTime) * Mathf.Sin(stopTime * frequency) * data.Option1;
                     if (t >= currentTiming + stopWait * (1f - 1f / acceleration))
                     {
                         status = MoveStatus.Accel;
@@ -106,16 +99,17 @@ namespace NoteCreating
                     }
                 }
 
-                var pos = new Vector3(x, (MoveTime - t2) * Speed);
+                var pos = new Vector3(data.X, (MoveTime - t2) * Speed);
                 note.SetPosAndRot(pos, 0);
                 if (note is HoldNote hold)
                 {
+                    hold.SetLength(data.Length * Speed);
                     hold.SetMaskPos(new Vector2(pos.x, 0));
                 }
 
                 transformConverter.Convert(
                     note, mirror,
-                    Time, t,
+                    Time, t2,
                     data.Option1, data.Option2);
             });
         }
