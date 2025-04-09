@@ -10,10 +10,12 @@ public class Result
     int lateFar;
     int miss;
 
-    readonly int noteCount;
     int combo;
     int maxCombo;
     double score;
+    int accuracyCount; // 叩けた精度があるノーツの数
+    float totalDelta; // 精度の合計
+    readonly int noteCount;
     readonly MusicSelectData musicData;
 
     static readonly int MaxScore = 10000000;
@@ -28,6 +30,12 @@ public class Result
     public int Combo => combo;
     public int MaxCombo => maxCombo;
     public int Score => Mathf.RoundToInt((float)score);
+    public void AddTotalDelta(float delta)
+    {
+        accuracyCount++;
+        totalDelta += delta;
+    }
+    public float AverageDelta => totalDelta / accuracyCount;
     public MusicSelectData MusicData => musicData;
     public bool IsFullCombo => miss == 0;
 

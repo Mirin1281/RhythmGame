@@ -28,15 +28,15 @@ public class SelectMusicButton : MonoBehaviour
         nameTmpro.SetText(data.MusicName.ToString());
         illustImage.sprite = data.Illust;
         musicName = data.MusicName;
-        plateImage.color = GetDifficultyColor();
+        plateImage.color = GetDifficultyColor(150);
     }
 
-    Color GetDifficultyColor(byte alpha = 150)
+    Color GetDifficultyColor(byte alpha)
     {
         return diff switch
         {
-            Difficulty.Normal => new Color32(0, 160, 140, alpha),
-            Difficulty.Hard => new Color32(0, 60, 160, alpha),
+            Difficulty.Normal => new Color32(0, 170, 150, alpha),
+            Difficulty.Hard => new Color32(30, 120, 210, alpha),
             Difficulty.Extra => new Color32(160, 0, 100, alpha),
             _ => throw new System.Exception()
         };
@@ -57,7 +57,12 @@ public class SelectMusicButton : MonoBehaviour
 
     public void Deselect()
     {
-        plateImage.color = GetDifficultyColor();
+        plateImage.color = GetDifficultyColor(150);
         transform.DOLocalMoveX(460f, 0.2f).SetEase(Ease.OutBack).SetLink(gameObject);
+    }
+
+    public void SetDark(bool enable)
+    {
+        levelTmpro.color = enable ? Color.black : Color.white;
     }
 }

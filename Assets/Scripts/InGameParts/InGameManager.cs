@@ -9,6 +9,7 @@ namespace NoteCreating
     {
         [SerializeField] DevelopmentInitializer developmentInitializer;
         [SerializeField] TMP_Text titleTmpro;
+        [SerializeField] GameObject DebugUIGroup;
         FumenData fumenData;
         public FumenData FumenData => fumenData;
 
@@ -68,6 +69,8 @@ namespace NoteCreating
 #if UNITY_EDITOR
 #else
             Destroy(this.gameObject);
+            Destroy(DebugUIGroup);
+            DebugUIGroup = null;
 #endif
         }
 

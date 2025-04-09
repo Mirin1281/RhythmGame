@@ -188,6 +188,10 @@ namespace NoteCreating
             hold.State = missed ? HoldState.Missed : HoldState.Holding;
             hold.EndTime = holdEndTime;
             holds.Add(hold);
+            if (hold.State == HoldState.Missed)
+            {
+                judge.SetCombo(NoteGrade.Miss);
+            }
         }
 
         public void AddArc(ArcNote arc)
@@ -458,15 +462,18 @@ namespace NoteCreating
 
                 // アークの一部分が判定に入っていなければここで弾かれる
                 if (arc.IsReached() == false) continue; // まだ到達していない
-                else if (arc.TailY < -3) // アークが完全に通り過ぎた
-                {
-                    arcs.RemoveAt(i);
-                    arc.SetActive(false);
-                    lightOperator.RemoveLink(arc);
-                    continue;
-                }
                 else if (arc.TailY < 0) // アークの終端が通り過ぎた
                 {
+                    arcs.RemoveAt(i);
+                    arc.FadeOutAndInActive().Forget();
+                    lightOperator.RemoveLink(arc);
+                    var arcJ2 = arc.GetCurrentJudge();
+                    if (arcJ2.State == ArcJudgeState.Idle) // 判定の終端を過ぎたらミス
+                    {
+                        arcJ2.State = ArcJudgeState.Miss;
+                        arc.JudgeIndex++;
+                        judge.SetCombo(NoteGrade.Miss);
+                    }
                     continue;
                 }
 
@@ -516,7 +523,7 @@ namespace NoteCreating
                 {
                     continue;
                 }
-                else if (headY < -arcJ.EndPos.z) // 判定の終端を過ぎたらミス(再終端のミス判定のためにバッファ)
+                else if (headY < -arcJ.EndPos.z) // 判定の終端を過ぎたらミス
                 {
                     arcJ.State = ArcJudgeState.Miss;
                     arc.JudgeIndex++;

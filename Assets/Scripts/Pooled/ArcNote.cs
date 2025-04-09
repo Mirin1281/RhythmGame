@@ -283,36 +283,6 @@ namespace NoteCreating
                 out var _
             );
             return nearest;
-
-            /*BezierKnot behindKnot, aheadKnot;
-            aheadKnot = behindKnot = spline[0];
-            float relativeCut = target - headY; // アークの先端Y座標から切り出すY座標までの長さ
-            int debug_i = 0;
-            foreach (BezierKnot knot in spline)
-            {
-                if (knot.Position.z < relativeCut)
-                {
-                    behindKnot = knot;
-                }
-                else
-                {
-                    aheadKnot = knot;
-                    break;
-                }
-                debug_i++;
-            }
-
-            float knotsYInterval = aheadKnot.Position.z - behindKnot.Position.z;
-            if (Mathf.Approximately(knotsYInterval, 0f))
-            {
-                return aheadKnot.Position;
-            }
-            float delta = relativeCut - behindKnot.Position.z; // 一つ前の頂点Y座標から切り出すY座標までの差
-            float rate = delta / knotsYInterval;
-            Vector3 arcPos = rate * aheadKnot.Position + (1 - rate) * behindKnot.Position;
-            //Debug.Log($"Head: {headY}, Tail: {tailY}, JudgeNum: {debug_i}\n"
-            //        + $"target: {target}, value: {arcPos}");
-            return arcPos;*/
         }
 
         /// <summary>
@@ -357,6 +327,19 @@ namespace NoteCreating
         {
             var c = meshRenderer.sharedMaterial.color;
             meshRenderer.sharedMaterial.color = new Color(c.r, c.g, c.b, alpha);
+        }
+
+        public async UniTaskVoid FadeOutAndInActive(float time = 0.5f)
+        {
+            float t = 0;
+            var alphaEasing = new Easing(GetAlpha(), 0f, time, EaseType.Default);
+            while (t < time)
+            {
+                SetAlpha(alphaEasing.Ease(t));
+                t += Time.deltaTime;
+                await UniTask.Yield(PlayerLoopTiming.PreLateUpdate, destroyCancellationToken);
+            }
+            SetActive(false);
         }
 
         public void Refresh()

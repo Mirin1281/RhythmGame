@@ -1,6 +1,8 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Linq;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -136,12 +138,10 @@ namespace NoteCreating
                 float lifeTime = lifeLpb.Time - delta;
                 if (lifeTime > 0)
                 {
-                    var pos = basePos;
-                    foreach (var d in data.PosEaseDatas)
-                    {
-                        pos += d.From;
-                    }
-                    pos = MyUtility.GetRotatedPos(pos, rotateFromPos, centerPos);
+                    var pos = data.StartPos;
+                    if (data.PosEaseDatas.Length > 0)
+                        pos = data.PosEaseDatas.Last().From;
+                    pos = MyUtility.GetRotatedPos(pos + basePos, rotateFromPos, centerPos);
 
                     var judgeStatus = new NoteJudgeStatus(item as RegularNote, pos, lifeTime, expectType: NoteJudgeStatus.ExpectType.Static);
                     Helper.NoteInput.AddExpect(judgeStatus);

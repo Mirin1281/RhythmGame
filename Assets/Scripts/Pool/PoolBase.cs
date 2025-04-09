@@ -151,11 +151,7 @@ namespace NoteCreating
             "PoolManagerの\"Apply PoolCount\"を実行することで譜面データに使用数を反映させることができます")]
         public int MaxUseCount;
 
-        void Awake()
-        {
-            LoopCheckPoolCount().Forget();
-        }
-        async UniTaskVoid LoopCheckPoolCount()
+        public async UniTaskVoid LoopCheckPoolCount()
         {
             await MyUtility.WaitSeconds(0.5f, destroyCancellationToken);
             while (this)

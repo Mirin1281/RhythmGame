@@ -1,5 +1,6 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -16,9 +17,14 @@ namespace NoteCreating
         bool developmentMode = false;
 #endif
         [SerializeField] Image darkImage;
+        [SerializeField] TMP_Text deltaTmpro;
+        [SerializeField] TMP_Text judgeTmpro;
+        [SerializeField] TMP_Text comboTmpro;
         [Space(20)]
         [SerializeField] bool isMirror;
         [SerializeField] bool isDark;
+        [SerializeField] bool isShowAccuracy = true;
+        [SerializeField] bool isComboAbove;
         [SerializeField] float noteSeRate = 1;
         [SerializeField, Tooltip("5～10の範囲")] int speed = 7;
         [SerializeField] float offset;
@@ -43,10 +49,14 @@ namespace NoteCreating
                 if (isEarphone) RhythmGameManager.Setting.Offset -= 100;
                 FindAnyObjectByType<NoteInput>().IsAuto = isAuto;
                 FindAnyObjectByType<Judgement>().ShowDebugRange = showDebugRange;
+                SetTmproPos(isComboAbove);
+                SetAccuracy(isShowAccuracy);
             }
             else
             {
                 FindAnyObjectByType<NoteInput>().IsAuto = RhythmGameManager.Setting.IsAutoPlay;
+                SetTmproPos(RhythmGameManager.Setting.IsComboAbove);
+                SetAccuracy(RhythmGameManager.Setting.IsShowAccuracy);
             }
             darkImage = null;
         }
@@ -108,16 +118,36 @@ namespace NoteCreating
             clearCamera.backgroundColor = l_isDark ? Color.white : Color.black;
 
             // ガンマ用
-            /*SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
-            ArcNote.HoldingAlpha = l_isDark ? 0.7f : 0.55f;
+            SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
+            ArcNote.HoldingAlpha = l_isDark ? 0.7f : 0.5f;
             ArcNote.NotHoldingAlpha = l_isDark ? 0.4f : 0.3f;
-            Line.BaseAlpha = l_isDark ? 1.2f : 1f;*/
+            Line.BaseAlpha = l_isDark ? 1.2f : 1f;
 
-            // リニア用
-            SlideNote.BaseAlpha = l_isDark ? 0.2f : 0.4f; // ダークモードだと色が薄くなるので調整
+            // リニア用 (スライドの周りに縁ができて変)
+            /*SlideNote.BaseAlpha = l_isDark ? 0.2f : 0.4f; // ダークモードだと色が薄くなるので調整
             ArcNote.HoldingAlpha = l_isDark ? 0.4f : 0.55f;
             ArcNote.NotHoldingAlpha = l_isDark ? 0.2f : 0.3f;
-            Line.BaseAlpha = l_isDark ? 0.8f : 1f;
+            Line.BaseAlpha = l_isDark ? 0.8f : 1f;*/
+        }
+
+        void SetAccuracy(bool enable)
+        {
+            if (enable == false)
+            {
+                Destroy(deltaTmpro.gameObject);
+                Destroy(judgeTmpro.gameObject);
+            }
+        }
+
+        void SetTmproPos(bool isAbove)
+        {
+            if (isAbove)
+            {
+                float y = 475;
+                comboTmpro.transform.localPosition = new Vector3(comboTmpro.transform.localPosition.x, y);
+                deltaTmpro.transform.localPosition = new Vector3(deltaTmpro.transform.localPosition.x, y);
+                judgeTmpro.transform.localPosition = new Vector3(judgeTmpro.transform.localPosition.x, y);
+            }
         }
     }
 }

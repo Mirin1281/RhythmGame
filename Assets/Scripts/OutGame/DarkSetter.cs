@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class DarkSetter : MonoBehaviour
 {
     [SerializeField] Toggle toggle;
+    [SerializeField] MusicButtonManager musicButtonManager;
     [SerializeField] Material negativeMat;
     [SerializeField] Material invertMat;
 
@@ -15,16 +16,21 @@ public class DarkSetter : MonoBehaviour
 
     public void InitOnAwake()
     {
-        float value = RhythmGameManager.Setting.IsDark ? 1 : 0;
-        negativeMat.SetFloat("_BlendRate", value);
+        SetDark(RhythmGameManager.Setting.IsDark);
     }
 
     public void OnToggle()
     {
-        RhythmGameManager.Setting.IsDark = toggle.isOn;
-        float value = toggle.isOn ? 1 : 0;
+        SetDark(toggle.isOn);
+        SEManager.Instance.PlaySE(SEType.ti);
+    }
+
+    void SetDark(bool enable)
+    {
+        RhythmGameManager.Setting.IsDark = enable;
+        float value = enable ? 1 : 0;
         negativeMat.SetFloat("_BlendRate", value);
         invertMat.SetFloat("_Value", value);
-        SEManager.Instance.PlaySE(SEType.ti);
+        musicButtonManager.SetDark(enable);
     }
 }

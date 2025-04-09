@@ -16,13 +16,6 @@ public class PauseButton : MonoBehaviour, IPointerDownHandler
     Sprite tmpSprite;
     bool isClicked;
 
-    public event Action OnInput;
-
-    void OnDestroy()
-    {
-        OnInput = null;
-    }
-
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
         CancellationTokenSource cts = new();
@@ -33,7 +26,6 @@ public class PauseButton : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            OnInput?.Invoke();
             unityEvent?.Invoke();
             cts.Cancel();
             image.sprite = tmpSprite;

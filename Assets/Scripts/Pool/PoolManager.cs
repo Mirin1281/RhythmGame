@@ -10,6 +10,21 @@ namespace NoteCreating
         [field: SerializeField] public ArcNotePool ArcPool { get; private set; }
         [field: SerializeField] public LinePool LinePool { get; private set; }
         [field: SerializeField] public CirclePool CirclePool { get; private set; }
+#if UNITY_EDITOR
+        [SerializeField] bool checkPoolCount;
+
+        void Start()
+        {
+            if (checkPoolCount)
+            {
+                RegularPool.LoopCheckPoolCount().Forget();
+                HoldPool.LoopCheckPoolCount().Forget();
+                ArcPool.LoopCheckPoolCount().Forget();
+                LinePool.LoopCheckPoolCount().Forget();
+                CirclePool.LoopCheckPoolCount().Forget();
+            }
+        }
+#endif
 
         public void SetMultitapSprite(RegularNote note)
         {

@@ -12,7 +12,7 @@ namespace NoteCreating
             var judge = GameObject.FindAnyObjectByType<Judgement>(FindObjectsInactive.Include);
 
             RhythmGameManager.Instance.Result = judge.Result;
-            await FadeLoadSceneManager.Instance.LoadSceneAsync(1, "Result", 1, Color.white);
+            await FadeLoadSceneManager.Instance.LoadSceneAsync(1, "Result", 1);
         }
 
 #if UNITY_EDITOR

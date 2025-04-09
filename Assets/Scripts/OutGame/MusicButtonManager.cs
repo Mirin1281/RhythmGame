@@ -104,4 +104,12 @@ public class MusicButtonManager : MonoBehaviour
         OnOtherSelect?.Invoke(data);
         selectedIndex = index;
     }
+
+    public void SetDark(bool enable)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].SetDark(enable);
+        }
+    }
 }

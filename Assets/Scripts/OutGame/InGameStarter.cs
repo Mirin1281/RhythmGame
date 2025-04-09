@@ -2,9 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
-using DG.Tweening;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
+using NoteCreating;
 
 public class InGameStarter : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class InGameStarter : MonoBehaviour
     }
 
     [SerializeField] MusicPreviewer previewer;
+    [SerializeField] MusicSelectData tutorialData;
     [SerializeField] MoveObject[] moveObjects;
     [SerializeField] Image jacketImage;
 
@@ -23,6 +22,7 @@ public class InGameStarter : MonoBehaviour
     {
         Debug.Log($"楽曲名: {selectData.MusicName}\n" +
             $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
+        SEManager.Instance.PlaySE(SEType.start_freeze);
         RhythmGameManager.FumenReference = selectData.GetFumenReference(difficulty);
         if (difficulty != Difficulty.None)
         {
@@ -54,10 +54,8 @@ public class InGameStarter : MonoBehaviour
 
     }
 
-    public void StartGame(AssetReference reference)
+    public void StartTutorial()
     {
-        RhythmGameManager.FumenReference = reference;
-        previewer.Stop(0.5f).Forget();
-        FadeLoadSceneManager.Instance.LoadScene(0.5f, ConstContainer.InGameSceneName, 0.5f);
+        StartGame(tutorialData, Difficulty.Normal);
     }
 }

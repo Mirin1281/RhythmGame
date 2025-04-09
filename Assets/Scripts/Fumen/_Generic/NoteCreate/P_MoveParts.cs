@@ -108,6 +108,13 @@ namespace NoteCreating
                         hold.SetMaskRot(0);
                     }
                 }
+                else
+                {
+                    if (note is HoldNote hold)
+                    {
+                        hold.SetMaskPos(hold.GetMaskPos() + new Vector2(xSpeed * basePos.y, 0));
+                    }
+                }
             }
         }
 
@@ -315,33 +322,6 @@ namespace NoteCreating
             }
         }
 
-        [AddTypeMenu("上下反転", -60), System.Serializable]
-        public class F_TopBottomInvert : ITransformConvertable
-        {
-            [Header("IsVerticalRangeをtrueにしてください")]
-            [Header("オプション : 反転するか(0 or 1)")]
-            [SerializeField] Lpb startLpb = new Lpb(0);
-            [SerializeField] Lpb endLpb = new Lpb(1);
-
-            bool ITransformConvertable.IsGroup => false;
-
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
-            {
-                if (option == 1 && time > startLpb.Time && time < endLpb.Time)
-                {
-                    var pos = note.GetPos();
-                    note.SetPos(MyUtility.GetRotatedPos(pos, 180) + new Vector2(2 * pos.x, 8));
-                    note.SetRot(180);
-
-                    if (note is HoldNote hold)
-                    {
-                        var maskPos = hold.GetMaskPos();
-                        hold.SetMaskPos(MyUtility.GetRotatedPos(maskPos, 180) + new Vector2(2 * pos.x, 8));
-                    }
-                }
-            }
-        }
-
         [AddTypeMenu("微細な揺れ", -60), System.Serializable]
         public class P_Distortion : ITransformConvertable
         {
@@ -507,6 +487,24 @@ namespace NoteCreating
                     hold.SetMaskRot(maskRot);
                     var maskPos = posFunc(baseMaskPos.y, rot);
                     hold.SetMaskPos(maskPos);
+                }
+            }
+        }
+
+        [AddTypeMenu("ノーツの設定", -60), System.Serializable]
+        public class P_NoteSetting : ITransformConvertable
+        {
+            [SerializeField] float holdMaskLength = 5f;
+
+            bool ITransformConvertable.IsGroup => true;
+
+            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            {
+                if (option == -1) return;
+
+                if (note is HoldNote hold)
+                {
+                    hold.SetMaskLength(holdMaskLength);
                 }
             }
         }

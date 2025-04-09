@@ -22,7 +22,6 @@ namespace NoteCreating
         [SerializeField] TMP_Text deltaText;
         [SerializeField] TMP_Text judgeText;
         [SerializeField] TMP_Text scoreText;
-        [SerializeField] TMP_Text meanDeltaText;
 
         [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
@@ -36,11 +35,9 @@ namespace NoteCreating
         Result result;
         float showScore;
         float totalDelta;
-        int getCount;
         CancellationTokenSource cts = new();
 
         public Result Result => result;
-        public float MeanDelta => totalDelta / getCount;
         const float Range = 4.8f;
         const float ArcRange = 4.6f;
 
@@ -94,8 +91,6 @@ namespace NoteCreating
             int beforeScore = result.Score;
             result.SetComboAndScore(grade);
             comboText.SetText("{0}", result.Combo);
-            if (grade != NoteGrade.Miss)
-                getCount++;
             SetScoreTextAsync(beforeScore, result.Score).Forget();
 
 
@@ -124,9 +119,10 @@ namespace NoteCreating
             var grade = GetGrade(delta);
             if (grade != NoteGrade.Perfect)
                 SetJudgeText(grade).Forget();
+            else if (grade != NoteGrade.Miss)
+                result.AddTotalDelta(delta);
             deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
             totalDelta += delta;
-            meanDeltaText.SetText("{0}", Mathf.RoundToInt(MeanDelta * 1000f));
             return grade;
 
 
@@ -144,7 +140,7 @@ namespace NoteCreating
 
         public static NoteGrade GetGrade(float delta)
         {
-            if (Mathf.Abs(delta) < 0.05f)
+            if (Mathf.Abs(delta) < 0.06f)
             {
                 return NoteGrade.Perfect;
             }

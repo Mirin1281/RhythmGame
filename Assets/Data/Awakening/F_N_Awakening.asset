@@ -1518,7 +1518,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
-        isVerticalRange: 0
+        isVerticalRange: 1
         transformConverter:
           transformConvertables:
           - rid: 4848304410512588806
@@ -2303,10 +2303,11 @@ MonoBehaviour:
       type: {class: P_Reverse_Transparent, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 1
-        amp: 0.1
+        amp: 0.15
         frequency:
-          _value: 2
+          _value: 4
         startDeg: 0
+        shakeY: 0
 --- !u!114 &-6835334017175377326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5178,7 +5179,7 @@ MonoBehaviour:
   m_Name: Command_F_N_Awakening (14)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 0
+  beatTiming: -1
   command:
     rid: 4848304410512588808
   references:
@@ -5194,7 +5195,7 @@ MonoBehaviour:
           _value: 4
         lifeLpb:
           _value: 4
-        lifeCount: 32
+        lifeCount: 33
         fadeOutLpb:
           _value: 4
         deg: 0
@@ -5682,7 +5683,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
-        isVerticalRange: 0
+        isVerticalRange: 1
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -6581,7 +6582,8 @@ MonoBehaviour:
         speedRate: 1
         isVerticalRange: 1
         transformConverter:
-          transformConvertables: []
+          transformConvertables:
+          - rid: 4848304432360980480
         noteDatas:
         - wait:
             _value: 0
@@ -6735,6 +6737,10 @@ MonoBehaviour:
             _value: 1
           option1: 0
           option2: 0
+    - rid: 4848304432360980480
+      type: {class: P_Curve/P_NoteSetting, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        holdMaskLength: 15
 --- !u!114 &-2431714863976462579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8397,10 +8403,11 @@ MonoBehaviour:
       type: {class: P_Reverse_Transparent, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 1
-        amp: 0.1
+        amp: 0.15
         frequency:
-          _value: 2
+          _value: 4
         startDeg: 0
+        shakeY: 0
 --- !u!114 &-470972937439454138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9977,6 +9984,7 @@ MonoBehaviour:
     - {fileID: -5642741375804084655}
     - {fileID: 8942676431832588416}
     - {fileID: 8017540705519454282}
+    - {fileID: 6774510134951807239}
     - {fileID: 4426739026521870189}
     - {fileID: 4640845289541266132}
     - {fileID: 6868045726096106356}
@@ -17544,6 +17552,44 @@ MonoBehaviour:
         easeType: 3
         option: 100
         offset: 1
+--- !u!114 &6774510134951807239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Awakening (263)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 100
+  command:
+    rid: 4848304291551641613
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304291551641613
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        isChainWait: 1
+        offset: 0
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 1
+          pos: {x: 0, y: 10, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 0}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 0
+          moveType: 1
 --- !u!114 &6782138799354263936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19102,17 +19148,6 @@ MonoBehaviour:
           easeType: 8
           lpb:
             _value: 2
-          moveType: 1
-        - wait:
-            _value: 2
-          isPosMove: 1
-          pos: {x: 0, y: 10, z: 0}
-          isRotateMove: 0
-          rotate: {x: 0, y: 0, z: 0}
-          isRotateClamp: 0
-          easeType: 0
-          lpb:
-            _value: 0
           moveType: 1
 --- !u!114 &8029731041540767258
 MonoBehaviour:

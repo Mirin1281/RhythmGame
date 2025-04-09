@@ -48,11 +48,14 @@ public class GameSetting
     [JsonProperty("ダークモード")]
     public bool IsDark { get; set; } = false;
 
-    [JsonProperty("厳しめ判定")]
-    public bool IsStrictJudge { get; set; } = false;
-
     [JsonProperty("オートプレイ")]
     public bool IsAutoPlay { get; set; } = false;
+
+    [JsonProperty("コンボ数を上に表示")]
+    public bool IsComboAbove { get; set; } = false;
+
+    [JsonProperty("精度を表示")]
+    public bool IsShowAccuracy { get; set; } = true;
 }
 
 [Serializable]

@@ -70,6 +70,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         if (useJsonData)
         {
             var gameData = SaveLoadUtility.GetDataImmediately<GameData>(ConstContainer.GameDataName);
+            gameData ??= new GameData();
             setting = gameData.Setting ?? new GameSetting();
             Status = gameData.Status ?? new GameStatus();
         }
@@ -88,6 +89,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
         {
             CriAtom.AddCueSheet("SESheet", "SESheet.acb", "");
         }
+        SEManager.Instance.SetCategoryVolume(ConstContainer.SECategory, GetSEVolume());
     }
 
     void OnApplicationPause(bool goBack)

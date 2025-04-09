@@ -8,6 +8,12 @@ using Cysharp.Threading.Tasks;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
+    [SerializeField] bool enableInput = true;
+    public bool EnableInput
+    {
+        get => enableInput;
+        set => enableInput = value;
+    }
 
     public readonly struct Input : IEquatable<Input>
     {
@@ -46,24 +52,25 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
-        Input input = GetInput(finger);
-        OnDown?.Invoke(input);
+        //if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
+        if (enableInput == false) return;
+        OnDown?.Invoke(GetInput(finger));
     }
     void OnFingerUp(Finger finger)
     {
-        if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
+        //if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
+        if (enableInput == false) return;
         OnUp?.Invoke(GetInput(finger));
     }
 
     void Update()
     {
         inputs.Clear();
+        if (enableInput == false) return;
         foreach (var touch in Touch.activeTouches)
         {
-            if (touch.screenPosition.x > 10000 || touch.screenPosition.x < -10000) continue;
-            var input = GetInput(touch.finger);
-            inputs.Add(input);
+            //if (touch.screenPosition.x > 10000 || touch.screenPosition.x < -10000) continue;
+            inputs.Add(GetInput(touch.finger));
         }
         OnHold?.Invoke(inputs);
     }

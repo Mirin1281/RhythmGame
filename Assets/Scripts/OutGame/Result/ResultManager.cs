@@ -25,6 +25,8 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] Image illustImage;
     [SerializeField] TMP_Text illustratorTmpro;
+    [SerializeField] TMP_Text debugAverageAccuracyTmpro;
+    [SerializeField] Material negativeMat;
 
 #if UNITY_EDITOR
     [SerializeField] bool isSavable;
@@ -35,6 +37,9 @@ public class ResultManager : MonoBehaviour
     void Awake()
     {
         Show().Forget();
+
+        float value = RhythmGameManager.Setting.IsDark ? 1 : 0;
+        negativeMat.SetFloat("_BlendRate", value);
     }
 
     async UniTask Show()
@@ -44,15 +49,23 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if (result == null) return;
 
+#if DEBUG
+        debugAverageAccuracyTmpro.SetText("{0}", Mathf.RoundToInt(result.AverageDelta * 1000f));
+#else
+        Destroy(debugAverageAccuracyTmpro.gameObject);
+#endif
         string fumenName = RhythmGameManager.FumenName;
         SetUI(result, fumenName);
         if (isSavable == false) return;
 
-        var gameScore = new GameScore(
-            fumenName,
-            result.Score,
-            result.IsFullCombo);
-        masterManagerData.SetScoreJsonAsync(gameScore).Forget();
+        if (RhythmGameManager.Setting.IsAutoPlay == false)
+        {
+            var gameScore = new GameScore(
+                fumenName,
+                result.Score,
+                result.IsFullCombo);
+            masterManagerData.SetScoreJsonAsync(gameScore).Forget();
+        }
 
         await MyUtility.WaitSeconds(0.2f, destroyCancellationToken);
         RhythmGameManager.Instance.Result = null;
