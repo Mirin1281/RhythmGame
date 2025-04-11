@@ -10,6 +10,7 @@ namespace NoteCreating
         [SerializeField] Mirror mirror;
         [SerializeField] float speedRate = 1f;
         [SerializeField, CommandSelect] CommandData commandData;
+        [SerializeField] float option;
 
         [SerializeField] ArcCreateData[] datas = new ArcCreateData[] { new(default) };
 
@@ -34,7 +35,7 @@ namespace NoteCreating
 #endif
             }
 
-            float lifeTime = MoveTime + 0.5f + 4f;
+            float lifeTime = MoveTime + 0.2f;
             for (int i = 0; i < datas.Length; i++)
             {
                 lifeTime += datas[i].Wait.Time;
@@ -43,16 +44,11 @@ namespace NoteCreating
             {
                 if (arc.IsActive == false) return;
                 var basePos = new Vector3(0, (MoveTime - t) * Speed);
-                //if (followable == null)
-                //{
                 arc.SetPos(basePos);
-                /*}
-                else
+                if (followable != null)
                 {
-                    var (pos, rot) = followable.ConvertTransform(arc, groupTime: 0, unGroupTime: 0);
-                    arc.SetPos(pos);
-                    //arc.SetRot(rot); アークのZ軸回転できない
-                }*/
+                    followable.ConvertItem(arc, groupTime: -Delta, unGroupTime: t, option);
+                }
             });
 
             Helper.NoteInput.AddArc(arc);

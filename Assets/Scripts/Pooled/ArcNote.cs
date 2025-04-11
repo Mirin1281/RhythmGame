@@ -141,6 +141,7 @@ namespace NoteCreating
         /// </summary>
         public async UniTask CreateAsync(ArcCreateData[] datas, float speed, Mirror mir = default)
         {
+            await UniTask.CompletedTask;
             // 初期化 //
             spline.Clear();
             if (judges == null)
@@ -152,7 +153,7 @@ namespace NoteCreating
                 judges.Clear();
             }
 
-            await UniTask.Yield(destroyCancellationToken);
+            //await UniTask.Yield(destroyCancellationToken);
 
             // 頂点を追加 //
             float z = 0;
@@ -344,7 +345,6 @@ namespace NoteCreating
 
         public void Refresh()
         {
-            transform.localRotation = default;
             SetRendererEnabled(true);
             SetRadius(0.45f);
             SetAlpha(HoldingAlpha);

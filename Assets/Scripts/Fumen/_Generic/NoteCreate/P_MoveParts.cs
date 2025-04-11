@@ -12,13 +12,13 @@ namespace NoteCreating
 
         bool ITransformConvertable.IsGroup => isGroup;
 
-        public void ConvertNote(RegularNote note, float option, float time)
+        public void ConvertItem(ItemBase item, float option, float time)
         {
             var addX = amp * Mathf.Sin(time * (2f / frequency.Time) * Mathf.PI + startDeg * Mathf.Deg2Rad);
-            var pos = note.GetPos() + new Vector3(addX, 0);
-            note.SetPos(pos);
+            var pos = item.GetPos() + new Vector3(addX, 0);
+            item.SetPos(pos);
 
-            if (note is HoldNote hold)
+            if (item is HoldNote hold)
             {
                 var maskPos = hold.GetMaskPos() + new Vector2(addX, 0);
                 hold.SetMaskPos(maskPos);
@@ -38,14 +38,14 @@ namespace NoteCreating
 
         bool ITransformConvertable.IsGroup => true;
 
-        void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+        void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
         {
             float dir = GetDir(time, option != 0);
-            note.SetRot(dir);
-            var pos = MyUtility.GetRotatedPos(note.GetPos(), dir);
-            note.SetPos(pos);
+            item.SetRot(dir);
+            var pos = MyUtility.GetRotatedPos(item.GetPos(), dir);
+            item.SetPos(pos);
 
-            if (note is HoldNote hold)
+            if (item is HoldNote hold)
             {
                 var maskPos = MyUtility.GetRotatedPos(hold.GetMaskPos(), dir);
                 hold.SetMaskRot(dir);
@@ -71,7 +71,7 @@ namespace NoteCreating
 
         bool ITransformConvertable.IsGroup => isGroup;
 
-        void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+        void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
         {
             float moveTime = new Lpb(4).Time * 6f;
             if (time <= moveTime)
@@ -80,8 +80,8 @@ namespace NoteCreating
                 Vector3 centerPos = new Vector2(centerX, 0);
                 var dirEasing = new Easing(moveTime * dirSpeed, 0, moveTime, EaseType.OutQuad);
                 var rot = dirEasing.Ease(time);
-                note.SetRot(rot);
-                note.SetPos(MyUtility.GetRotatedPos(note.GetPos(), rot, centerPos));
+                item.SetRot(rot);
+                item.SetPos(MyUtility.GetRotatedPos(item.GetPos(), rot, centerPos));
             }
         }
 
@@ -94,23 +94,23 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => false;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 float dir = useDefault ? defaultDir : option;
                 float xSpeed = Mathf.Cos((dir + 90) * Mathf.Deg2Rad);
-                var basePos = note.GetPos();
-                note.SetPos(new Vector3(basePos.x + xSpeed * basePos.y, basePos.y));
+                var basePos = item.GetPos();
+                item.SetPos(new Vector3(basePos.x + xSpeed * basePos.y, basePos.y));
                 if (setRotate)
                 {
-                    note.SetRot(dir);
-                    if (note is HoldNote hold)
+                    item.SetRot(dir);
+                    if (item is HoldNote hold)
                     {
                         hold.SetMaskRot(0);
                     }
                 }
                 else
                 {
-                    if (note is HoldNote hold)
+                    if (item is HoldNote hold)
                     {
                         hold.SetMaskPos(hold.GetMaskPos() + new Vector2(xSpeed * basePos.y, 0));
                     }
@@ -132,7 +132,7 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => isGroup;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 var easeTime = easeLpb.Time;
                 var dEasing = new Easing(startDeg, toDeg, easeTime, easeType);
@@ -153,9 +153,9 @@ namespace NoteCreating
                     d = toDeg;
                     p = toPos;
                 }
-                note.SetRot(note.GetRot() + d);
-                note.SetPos(MyUtility.GetRotatedPos(note.GetPos(), d) + p);
-                if (note is HoldNote hold)
+                item.SetRot(item.GetRot() + d);
+                item.SetPos(MyUtility.GetRotatedPos(item.GetPos(), d) + p);
+                if (item is HoldNote hold)
                 {
                     hold.SetMaskPos(MyUtility.GetRotatedPos(hold.GetMaskPos(), d) + p);
                 }
@@ -173,9 +173,9 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => isGroup;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
-                var basePos = note.GetPos();
+                var basePos = item.GetPos();
                 var easing = new Easing(option, basePos.x, moveLpb.Time, easeType);
                 float x;
                 if (time < moveStartLpb.Time)
@@ -192,7 +192,12 @@ namespace NoteCreating
                     x = basePos.x;
                 }
 
-                note.SetPos(new Vector3(x, basePos.y));
+                item.SetPos(new Vector3(x, basePos.y));
+
+                if (item is HoldNote hold)
+                {
+                    hold.SetMaskPos(new Vector2(x, hold.GetMaskPos().y));
+                }
             }
         }
 
@@ -209,7 +214,7 @@ namespace NoteCreating
             bool ITransformConvertable.IsGroup => isGroup;
             float Speed => RhythmGameManager.Speed * speedRate;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 if (option == 0) return;
 
@@ -219,12 +224,12 @@ namespace NoteCreating
                 {
                     float t2 = time - timing.Time;
                     float rot = easing.Ease(Mathf.Clamp(t2, 0, rotateLpb.Time));
-                    note.SetRot(rot);
+                    item.SetRot(rot);
 
-                    if (note is HoldNote hold)
+                    if (item is HoldNote hold)
                     {
                         var vec = Speed * new Vector3(Mathf.Sin(rot * Mathf.Deg2Rad), -Mathf.Cos(rot * Mathf.Deg2Rad));
-                        note.SetPos(new Vector3(note.GetPos().x, 0) + t2 * vec);
+                        item.SetPos(new Vector3(item.GetPos().x, 0) + t2 * vec);
                         hold.SetMaskLength(20f);
                     }
                 }
@@ -240,10 +245,10 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => false;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 float moveTime = new Lpb(4).Time * 6f;
-                var basePos = note.GetPos();
+                var basePos = item.GetPos();
                 if (time < moveTime)
                 {
                     bool reverse = option == 1;
@@ -251,7 +256,7 @@ namespace NoteCreating
                     float dir = reverse
                         ? -basePos.y / radius + Mathf.PI
                         : basePos.y / radius;
-                    note.SetPos(new Vector3(basePos.x * Mathf.Cos(dir) + centerX, height * Mathf.Sin(dir)));
+                    item.SetPos(new Vector3(basePos.x * Mathf.Cos(dir) + centerX, height * Mathf.Sin(dir)));
                 }
             }
         }
@@ -266,11 +271,10 @@ namespace NoteCreating
             bool ITransformConvertable.IsGroup => false;
             float Speed => speedRate * RhythmGameManager.Speed;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
-                if (note.Type == RegularNoteType.Hold)
+                if (item is HoldNote hold)
                 {
-                    var hold = note as HoldNote;
                     var length = hold.GetLength();
                     hold.SetLength(length * option);
 
@@ -284,7 +288,7 @@ namespace NoteCreating
                     else
                     {
                         float t2 = time - moveTime;
-                        note.SetPos(note.GetPos() + new Vector3(0, -t2 * speedEasing.Ease(t2)));
+                        item.SetPos(item.GetPos() + new Vector3(0, -t2 * speedEasing.Ease(t2)));
                     }
                 }
             }
@@ -303,14 +307,14 @@ namespace NoteCreating
             bool ITransformConvertable.IsGroup => false;
             float Speed => speedRate * RhythmGameManager.Speed;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 if (time > startLpb.Time && time < endLpb.Time)
                 {
-                    var pos = note.GetPos();
+                    var pos = item.GetPos();
                     var l_space = Speed * sampling.Time;
                     var snippedY = Mathf.Round(pos.y / l_space) * l_space;
-                    note.SetPos(new Vector3(pos.x, snippedY));
+                    item.SetPos(new Vector3(pos.x, snippedY));
                 }
 
 
@@ -336,12 +340,12 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => false;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 if (useDefault)
                     option = 1;
                 // new Unity.Mathematics.Random((uint)(baseSeed + note.GetHashCode()));
-                var random = Unity.Mathematics.Random.CreateFromIndex((uint)(baseSeed + note.GetHashCode()));
+                var random = Unity.Mathematics.Random.CreateFromIndex((uint)(baseSeed + item.GetHashCode()));
                 float randFrequency = random.NextFloat(-frequency, frequency);
                 float randPhase = random.NextFloat(0, 2 * Mathf.PI);
 
@@ -363,8 +367,8 @@ namespace NoteCreating
                 }
 
                 var ts = moveFunc(time);
-                note.SetPosAndRot(ts.pos + note.GetPos(), ts.rot);
-                if (note is HoldNote hold)
+                item.SetPosAndRot(ts.pos + item.GetPos(), ts.rot);
+                if (item is HoldNote hold)
                 {
                     //var maskPos = hold.GetMaskPos();
                     //hold.SetMaskPos(MyUtility.GetRotatedPos(maskPos + new Vector2(ts.pos.x, 0), ts.rot));
@@ -389,18 +393,18 @@ namespace NoteCreating
                 return pos + deltaPos;
             }
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 float dir = option;
-                note.SetRot(dir + note.GetRot());
-                if (note is HoldNote hold)
+                item.SetRot(dir + item.GetRot());
+                if (item is HoldNote hold)
                 {
                     hold.SetMaskPos(ConvertPos(hold.GetMaskPos(), dir));
                     hold.SetPos(ConvertPos(hold.GetPos(), dir));
                 }
                 else
                 {
-                    note.SetPos(ConvertPos(note.GetPos(), dir));
+                    item.SetPos(ConvertPos(item.GetPos(), dir));
                 }
             }
         }
@@ -413,22 +417,22 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => false;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 var fadeLpb = new Lpb(2);
                 var moveTime = new Lpb(4).Time * 6;
                 if (time < 0)
                 {
-                    note.SetAlpha(preAlpha);
+                    item.SetAlpha(preAlpha);
                 }
                 else if (time < fadeLpb.Time)
                 {
                     var alpha = time.Ease(preAlpha, 1, fadeLpb.Time, EaseType.Default);
-                    note.SetAlpha(alpha);
+                    item.SetAlpha(alpha);
                 }
                 else
                 {
-                    note.SetAlpha(1);
+                    item.SetAlpha(1);
                 }
             }
         }
@@ -442,7 +446,7 @@ namespace NoteCreating
 
             bool ITransformConvertable.IsGroup => isGroup;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 if (option == -1) return;
 
@@ -450,11 +454,11 @@ namespace NoteCreating
 
                 if (time > timing.Time)
                 {
-                    note.SetRendererEnabled(appear);
+                    item.SetRendererEnabled(appear);
                 }
                 else
                 {
-                    note.SetRendererEnabled(!appear);
+                    item.SetRendererEnabled(!appear);
                 }
             }
         }
@@ -469,18 +473,18 @@ namespace NoteCreating
             bool ITransformConvertable.IsGroup => true;
 
             // -8をdegRange.x、8をdegRange.yにスケーリングしています
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 float rotFunc(float x) => (degRange.y - degRange.x) / 16f * x + (degRange.y + degRange.x) / 2f;
                 Vector3 posFunc(float y, float rot) => MyUtility.GetRotatedPos(new Vector2(0, y - size), rot, centerPos);
 
-                var basePos = note.GetPos();
+                var basePos = item.GetPos();
                 float rot = rotFunc(basePos.x);
-                note.SetRot(rot + note.GetRot());
+                item.SetRot(rot + item.GetRot());
                 var pos = posFunc(basePos.y, rot);
-                note.SetPos(pos);
+                item.SetPos(pos);
 
-                if (note is HoldNote hold)
+                if (item is HoldNote hold)
                 {
                     var baseMaskPos = hold.GetMaskPos();
                     float maskRot = rotFunc(baseMaskPos.x);
@@ -491,18 +495,18 @@ namespace NoteCreating
             }
         }
 
-        [AddTypeMenu("ノーツの設定", -60), System.Serializable]
+        [AddTypeMenu("ノーツの設定(仮)", -60), System.Serializable]
         public class P_NoteSetting : ITransformConvertable
         {
             [SerializeField] float holdMaskLength = 5f;
 
             bool ITransformConvertable.IsGroup => true;
 
-            void ITransformConvertable.ConvertNote(RegularNote note, float option, float time)
+            void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
             {
                 if (option == -1) return;
 
-                if (note is HoldNote hold)
+                if (item is HoldNote hold)
                 {
                     hold.SetMaskLength(holdMaskLength);
                 }

@@ -90,6 +90,7 @@ public class RhythmGameManager : SingletonMonoBehaviour<RhythmGameManager>
             CriAtom.AddCueSheet("SESheet", "SESheet.acb", "");
         }
         SEManager.Instance.SetCategoryVolume(ConstContainer.SECategory, GetSEVolume());
+        SEManager.Instance.SetCategoryVolume(ConstContainer.NoteSECategory, GetNoteVolume());
     }
 
     void OnApplicationPause(bool goBack)

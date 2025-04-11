@@ -8355,6 +8355,40 @@ MonoBehaviour:
           _value: 2
         command:
           rid: 4848304291551641632
+--- !u!114 &-2284028963947045047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Awakening (265)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 372
+  command:
+    rid: 4848304314620313646
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304314620313646
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 7
+        loopWait:
+          _value: 4
+        shakeType: 1
+        intensity: 0.3
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
 --- !u!114 &-2249483338204998449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12867,10 +12901,11 @@ MonoBehaviour:
     - {fileID: 4516346125179389995}
     - {fileID: -4263328480810129808}
     - {fileID: 4225646445731031337}
+    - {fileID: -2284028963947045047}
     - {fileID: -1220375204723833077}
     - {fileID: -2874962212185601305}
     - {fileID: 1236476947414061721}
-    - {fileID: 7968211187073890921}
+    - {fileID: 1130605178114370127}
     - {fileID: -2485096999543412998}
     - {fileID: -8679954840627450950}
     - {fileID: 260024753346715355}
@@ -13628,6 +13663,311 @@ MonoBehaviour:
       data:
         labelType: 1
         summary: 5
+--- !u!114 &1130605178114370127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Awakening (264)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 354
+  command:
+    rid: 4848304314620313635
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304314620313635
+      type: {class: F_Reverse, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        reverseLPB:
+          _value: 0.2857143
+        dropLPB:
+          _value: 2
+        easingRate: 0.5
+        acceleration: 2
+        transformConverter:
+          transformConvertables:
+          - rid: 4848304314620313638
+        isGroupTransform: 0
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 7
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2.5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -2.5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -7
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -7
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2.5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -2.5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -5
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 0
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 7
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 2
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -1
+          length:
+            _value: 16
+          option1: 0
+          option2: 0
+    - rid: 4848304314620313638
+      type: {class: P_Curve/P_Reverse_Transparent, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        preAlpha: 0.3
 --- !u!114 &1236476947414061721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17067,11 +17407,11 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
-        loopCount: 12
+        loopCount: 16
         loopWait:
-          _value: 4
+          _value: 8
         shakeType: 1
-        intensity: 0.2
+        intensity: 0.3
         time:
           _value: 4
         easeType: 3
@@ -21960,327 +22300,6 @@ MonoBehaviour:
           _value: 4
         deg: 0
         pos: {x: 0, y: 0}
---- !u!114 &7968211187073890921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Awakening (210)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 354
-  command:
-    rid: 4848304314620313635
-  references:
-    version: 2
-    RefIds:
-    - rid: 4848304314620313635
-      type: {class: F_Reverse, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        isVerticalRange: 0
-        reverseLPB:
-          _value: 0.2857143
-        dropLPB:
-          _value: 2
-        easingRate: 0.5
-        acceleration: 2
-        transformConverter:
-          transformConvertables:
-          - rid: 4848304314620313638
-        isGroupTransform: 0
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 0
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: 5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 1
-          x: -5
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 0
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 0
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: 2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 16
-          type: 3
-          x: -2
-          length:
-            _value: 32
-          option1: 0
-          option2: 0
-    - rid: 4848304314620313638
-      type: {class: P_Curve/P_Reverse_Transparent, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        preAlpha: 0.3
 --- !u!114 &8017540705519454282
 MonoBehaviour:
   m_ObjectHideFlags: 0

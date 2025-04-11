@@ -61,7 +61,7 @@ namespace NoteCreating
             else
             {
                 note.SetPos(new Vector3(x, 0));
-                followable.ConvertNote(
+                followable.ConvertItem(
                     note, groupTime: MoveTime - Delta, unGroupTime: MoveTime - Delta, option1: option);
                 var judgeStatus = new NoteJudgeStatus(note, note.GetPos(), MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static);
                 Helper.NoteInput.AddExpect(judgeStatus);
@@ -78,13 +78,9 @@ namespace NoteCreating
                 if (note.IsActive == false) return;
                 var pos = new Vector3(x, (MoveTime - t) * Speed);
                 note.SetPosAndRot(pos, 0);
-                if (followable == null)
+                if (followable != null)
                 {
-                    note.SetPos(pos);
-                }
-                else
-                {
-                    followable.ConvertNote(note, groupTime: 0, unGroupTime: t, option1: option);
+                    followable.ConvertItem(note, groupTime: -Delta, unGroupTime: t, option1: option);
                 }
             });
         }

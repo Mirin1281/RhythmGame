@@ -7,7 +7,7 @@ namespace NoteCreating
     /// </summary>
     interface ITransformConvertable
     {
-        void ConvertNote(RegularNote note, float option, float time);
+        void ConvertItem(ItemBase item, float option, float time);
         bool IsGroup { get; }
         void Init() { }
     }
@@ -24,7 +24,7 @@ namespace NoteCreating
         ITransformConvertable[] transformConvertables;
         bool initialized = false;
 
-        public void Convert(RegularNote note, Mirror mirror, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0)
+        public void Convert(ItemBase item, Mirror mirror, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0)
         {
             if (initialized == false)
             {
@@ -35,12 +35,12 @@ namespace NoteCreating
             {
                 var convertable = transformConvertables[i];
                 if (convertable == null) continue;
-                convertable.ConvertNote(note, i == 0 ? option1 : option2, convertable.IsGroup ? groupTime : unGroupTime);
+                convertable.ConvertItem(item, i == 0 ? option1 : option2, convertable.IsGroup ? groupTime : unGroupTime);
             }
 
-            note.SetPos(mirror.Conv(note.GetPos()));
-            note.SetRot(mirror.Conv(note.GetRot()));
-            if (note is HoldNote hold)
+            item.SetPos(mirror.Conv(item.GetPos()));
+            item.SetRot(mirror.Conv(item.GetRot()));
+            if (item is HoldNote hold)
             {
                 hold.SetMaskPos(mirror.Conv(hold.GetMaskPos()));
             }
@@ -86,7 +86,6 @@ namespace NoteCreating
     /// </summary>
     public interface IFollowableCommand
     {
-        void ConvertNote(
-            RegularNote note, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0);
+        void ConvertItem(ItemBase item, float groupTime, float unGroupTime, float option1 = 0, float option2 = 0);
     }
 }
