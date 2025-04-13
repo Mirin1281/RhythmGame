@@ -96,7 +96,7 @@ namespace NoteCreating
 
             void DebugHold(float x, float y, Lpb length)
             {
-                var hold = poolManager.HoldPool.GetNote(length * RhythmGameManager.Speed);
+                var hold = poolManager.HoldPool.GetNote(length * RhythmGameManager.DefaultSpeed);
                 hold.SetMaskPos(new Vector2(mirror.Conv(x), 0));
                 var startPos = new Vector3(mirror.Conv(x), y);
                 hold.SetPos(startPos);

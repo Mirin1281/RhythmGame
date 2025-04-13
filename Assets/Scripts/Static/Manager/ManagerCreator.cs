@@ -20,7 +20,7 @@ public class ManagerCreator : SingletonMonoBehaviour<ManagerCreator>
     static void InitBeforeAwake()
     {
         var handle = Addressables.LoadAssetAsync<GameObject>(nameof(ManagerCreator));
-        GameObject managerPrefab = handle.WaitForCompletion(); // 同期的にロード
+        GameObject managerPrefab = handle.WaitForCompletion(); // 同期的にロード 
         ManagerCreator instance = Instantiate(managerPrefab).GetComponent<ManagerCreator>();
 
         if (managerPrefab == null)

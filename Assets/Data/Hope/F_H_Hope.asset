@@ -1819,6 +1819,73 @@ MonoBehaviour:
             _value: 2.666667
           option1: 0
           option2: 0
+--- !u!114 &-6593023132350935136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (97)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 352
+  command:
+    rid: 4848304497950982144
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304497950982144
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 5
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 0}
+--- !u!114 &-6394700425053086829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (100)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 356
+  command:
+    rid: 4848304503404625923
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625923
+      type: {class: F_Hope_FakeNote, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        noteType: 3
+        x: -3
+        length:
+          _value: 4
+        toPos: {x: -3, y: 8}
+        rotate: -180
+        rotEaseType: 3
+        actionLpb:
+          _value: 1
 --- !u!114 &-6217418213858763129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2283,6 +2350,88 @@ MonoBehaviour:
       data:
         easeType: 2
         speedRate: 1
+--- !u!114 &-5753724840621665111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (104)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 360
+  command:
+    rid: 4848304503404625920
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625920
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables:
+          - rid: 4848304503404625926
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 0
+          x: -4
+          length:
+            _value: 4
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -6
+          length:
+            _value: 4
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 6
+          length:
+            _value: 4
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -5
+          length:
+            _value: 8
+          option1: 180
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 5
+          length:
+            _value: 8
+          option1: 180
+          option2: 0
+    - rid: 4848304503404625926
+      type: {class: P_Curve/P_4Direction, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        _: 0
 --- !u!114 &-5596321070226889825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2849,6 +2998,55 @@ MonoBehaviour:
           _value: 0.5
         command:
           rid: 4848304380132982800
+--- !u!114 &-4543947968233622786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (103)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 356
+  command:
+    rid: 4848304503404625921
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625921
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        isChainWait: 1
+        offset: 1
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 180}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 1
+          moveType: 1
+        - wait:
+            _value: 0
+          isPosMove: 0
+          pos: {x: 0, y: -8, z: 0}
+          isRotateMove: 0
+          rotate: {x: 0, y: 0, z: 180}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 1
+          moveType: 1
 --- !u!114 &-4369735996086197727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5452,6 +5650,138 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+--- !u!114 &-1263109853325794957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (105)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 372
+  command:
+    rid: 4848304521431220225
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304521431220225
+      type: {class: F_Reverse, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        reverseLPB:
+          _value: 0
+        dropLPB:
+          _value: 2
+        easingRate: 0.5
+        acceleration: 2
+        transformConverter:
+          transformConvertables: []
+        isGroupTransform: 0
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.666667
+          type: 3
+          x: -3
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+--- !u!114 &-1224673107766914476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (106)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 364
+  command:
+    rid: 4848304503404625930
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625930
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables:
+          - rid: 4848304503404625932
+          - rid: 4848304503404625933
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 0
+          length:
+            _value: 4
+          option1: 20
+          option2: 180
+    - rid: 4848304503404625932
+      type: {class: P_Curve/F_AccelerateHold, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        easeType: 2
+        speedRate: 1
+    - rid: 4848304503404625933
+      type: {class: P_Curve/P_4Direction, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        _: 0
 --- !u!114 &-1211776331251003916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5797,6 +6127,39 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &-401544738026025591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (102)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 356
+  command:
+    rid: 4848304503404625923
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625923
+      type: {class: F_Hope_FakeNote, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        noteType: 3
+        x: 3
+        length:
+          _value: 4
+        toPos: {x: 3, y: 8}
+        rotate: -180
+        rotEaseType: 3
+        actionLpb:
+          _value: 1
 --- !u!114 &-240326782852571261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6010,6 +6373,19 @@ MonoBehaviour:
     - {fileID: 2995147569756506242}
     - {fileID: 6363128182166873003}
     - {fileID: -5964781533566301997}
+    - {fileID: -6593023132350935136}
+    - {fileID: 4294626138871277210}
+    - {fileID: 1302066088244567985}
+    - {fileID: -4543947968233622786}
+    - {fileID: -6394700425053086829}
+    - {fileID: -401544738026025591}
+    - {fileID: -5753724840621665111}
+    - {fileID: -1224673107766914476}
+    - {fileID: 4934909859787620212}
+    - {fileID: 5054264695537593965}
+    - {fileID: 2522419096885134000}
+    - {fileID: -1263109853325794957}
+    - {fileID: 2595070451606427697}
     - {fileID: -8954483411863292157}
     - {fileID: -8647449339363580441}
     - {fileID: -6686369120045829834}
@@ -6286,7 +6662,7 @@ MonoBehaviour:
         actionType: 1
         transformConverter:
           transformConvertables:
-          - rid: 4848304459156029443
+          - rid: 4848304523727339688
         noteDatas:
         - wait:
             _value: 0
@@ -6296,8 +6672,8 @@ MonoBehaviour:
             _value: 2.6666667
           option1: 0
           option2: 0
-    - rid: 4848304459156029443
-      type: {class: P_Curve/P_Appear, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304523727339688
+      type: {class: P_Appear, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 1
         timing:
@@ -7413,6 +7789,40 @@ MonoBehaviour:
         moveLpb:
           _value: 8
         easeType: 18
+--- !u!114 &1302066088244567985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (101)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 356
+  command:
+    rid: 4848304497950982144
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304497950982144
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 10
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 8}
 --- !u!114 &1502502556907344038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8269,6 +8679,40 @@ MonoBehaviour:
             _value: 2.666667
           option1: 0
           option2: 0
+--- !u!114 &2522419096885134000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (107)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 367
+  command:
+    rid: 4848304497950982144
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304497950982144
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 16
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 0}
 --- !u!114 &2541339999931514597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8387,6 +8831,115 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &2595070451606427697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (110)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 372
+  command:
+    rid: 4848304521431220227
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304521431220227
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -3
+          length:
+            _value: 2.6666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 3
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2
+          type: 1
+          x: 4
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: 1
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: 6
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: 3
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: -1
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: -6
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 24
+          type: 1
+          x: -3
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
 --- !u!114 &2995147569756506242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9229,6 +9782,83 @@ MonoBehaviour:
           _value: 4
         command:
           rid: 4848304448049512485
+--- !u!114 &4294626138871277210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (98)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 352
+  command:
+    rid: 4848304503404625920
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625920
+      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
 --- !u!114 &4336201831354463199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9579,6 +10209,171 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 4
           option: {x: -20, y: -3, z: 0}
+--- !u!114 &4934909859787620212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (108)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 365
+  command:
+    rid: 4848304521431220224
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304521431220224
+      type: {class: F_JudgeCreateAdvanced, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        judgeNoteType: 2
+        isVerticalRange: 1
+        basePos: {x: 0, y: 8}
+        addDelay:
+          _value: 0
+        judgeDatas:
+        - wait:
+            _value: 0
+          pos: {x: -7, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -6, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -5, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -4, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -3, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -2, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: -1, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 0, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 1, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 2, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 3, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 4, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 5, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 6, y: 0}
+          rotate: 90
+          width: 1
+        - wait:
+            _value: 128
+          pos: {x: 7, y: 0}
+          rotate: 90
+          width: 1
+--- !u!114 &5054264695537593965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Hope (99)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 366
+  command:
+    rid: 4848304503404625921
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304503404625921
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      data:
+        mirror:
+          enabled: 0
+        isChainWait: 1
+        offset: 1
+        settings:
+        - wait:
+            _value: 0
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 180}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: 135}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 0
+          moveType: 1
+        - wait:
+            _value: 8
+          isPosMove: 0
+          pos: {x: 0, y: 0, z: 0}
+          isRotateMove: 1
+          rotate: {x: 0, y: 0, z: -135}
+          isRotateClamp: 0
+          easeType: 0
+          lpb:
+            _value: 0
+          moveType: 1
 --- !u!114 &5069745576214118989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10310,7 +11105,7 @@ MonoBehaviour:
         isVerticalRange: 0
         transformConverter:
           transformConvertables:
-          - rid: 4848304459156029447
+          - rid: 4848304523727339689
         noteDatas:
         - wait:
             _value: 0
@@ -10320,8 +11115,8 @@ MonoBehaviour:
             _value: 2.6666667
           option1: 0
           option2: 0
-    - rid: 4848304459156029447
-      type: {class: P_Curve/P_Appear, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304523727339689
+      type: {class: P_Appear, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         isGroup: 1
         timing:

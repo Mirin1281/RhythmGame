@@ -25,6 +25,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548713305210904
@@ -46,8 +47,6 @@ MonoBehaviour:
             _value: 4
           stopWait:
             _value: 4
-        amp: 0.1
-        frequency: 100
         noteDatas:
         - wait:
             _value: 0
@@ -199,40 +198,6 @@ MonoBehaviour:
         setRotate: 0
         useDefault: 1
         defaultDir: 10
---- !u!114 &-598325327842272039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_Test_AprilRabbit (1)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 158
-  command:
-    rid: 1232548713305210883
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548713305210883
-      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
-      data:
-        mirror:
-          enabled: 0
-        alpha: 1
-        fadeInLpb:
-          _value: 4
-        lifeLpb:
-          _value: 4
-        lifeCount: 32
-        fadeOutLpb:
-          _value: 4
-        deg: 0
-        pos: {x: 0, y: 0}
 --- !u!114 &-290289453628745122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +226,9 @@ MonoBehaviour:
         easeLpb:
           _value: 0.5
         easeType: 0
+        startDeg: 0
         toDeg: 180
+        startPos: {x: 0, y: 0}
         toPos: {x: 0, y: 8}
     - rid: 8267576847255470149
       type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
@@ -269,6 +236,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 1
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548713305210895
@@ -513,7 +481,6 @@ MonoBehaviour:
   fumen:
     commandDataList:
     - {fileID: 4879790254752827649}
-    - {fileID: -598325327842272039}
     - {fileID: -290289453628745122}
     - {fileID: -1157798423581051634}
     - {fileID: 6604426001422110070}
@@ -552,6 +519,7 @@ MonoBehaviour:
         mirror:
           enabled: 0
         speedRate: 4
+        isVerticalRange: 0
         transformConverter:
           transformConvertables:
           - rid: 1232548553852453015
@@ -629,6 +597,8 @@ MonoBehaviour:
           _value: 6
         phase:
           _value: 7
+        deltaLpb:
+          _value: 0
         easeType: 3
     - rid: 1232548553852453016
       type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
@@ -651,272 +621,24 @@ MonoBehaviour:
   enable: 1
   beatTiming: 150
   command:
-    rid: 1232548802731704320
+    rid: 4848304473831899136
   references:
     version: 2
     RefIds:
-    - rid: 1232548802731704320
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304473831899136
+      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly-CSharp}
       data:
         mirror:
           enabled: 0
         speedRate: 1
-        transformConverter:
-          transformConvertables: []
-        noteDatas:
+        datas:
         - wait:
-            _value: 0
-          type: 1
-          x: 0
+            _value: -4
+          point: {x: 0, y: 5}
           length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: 0
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
+            _value: 2
+          isOverlappable: 0
+          isDetailed: 1
+          twoJudge: 0
+          dir: 10
+          curve: 3
