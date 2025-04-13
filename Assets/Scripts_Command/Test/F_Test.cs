@@ -6,7 +6,7 @@ using Random = System.Random;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
+    //[UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("テスト用"), System.Serializable]
     public class F_Test : CommandBase
     {

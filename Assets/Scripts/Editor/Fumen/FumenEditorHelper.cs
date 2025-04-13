@@ -8,23 +8,6 @@ using UnityEngine.SceneManagement;
 
 namespace NoteCreating.Editor
 {
-    public class F_LoopDelay : CommandBase
-    {
-        protected override async Cysharp.Threading.Tasks.UniTaskVoid ExecuteAsync()
-        {
-
-        }
-
-        public ICommand GetChildCommand()
-        {
-            return null;
-        }
-
-        public void SetChildCommand(ICommand command)
-        {
-
-        }
-    }
     [Serializable]
     public class FumenEditorHelper
     {
