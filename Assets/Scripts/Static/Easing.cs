@@ -11,7 +11,7 @@ using UnityEngine;
 // 2. var easing = new Easing(float start, float from, float easeTime, EaseType type) // 構造体をつくって
 //    easing.Ease(float time) //使う
 
-static class ValueEaseExtension
+public static class ValueEaseExtension
 {
     public static float Ease(this int self, float start, float from, float easeTime, EaseType type)
     {

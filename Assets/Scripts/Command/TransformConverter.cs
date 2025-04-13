@@ -5,7 +5,7 @@ namespace NoteCreating
     /// <summary>
     /// ノーツに動きを加えるインターフェース
     /// </summary>
-    interface ITransformConvertable
+    public interface ITransformConvertable
     {
         void ConvertItem(ItemBase item, float option, float time);
         bool IsGroup { get; }

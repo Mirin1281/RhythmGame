@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Curve/P_Diagonal")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/P_Diagonal")]
     [AddTypeMenu("角度をつけて落下", -60), System.Serializable]
     public class P_Diagonal : ITransformConvertable
     {

@@ -3,7 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    // 右クリックメニューから呼び出すことを前提にしている特別なコマンドです
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
+    // 右クリックメニューから呼び出すことを前提にしている特別なコマンドです 
     //[AddTypeMenu("◇ループ＆遅延", 100), System.Serializable]
     public class F_LoopDelay : CommandBase
     {

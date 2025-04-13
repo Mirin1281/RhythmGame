@@ -4,6 +4,7 @@ using System;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Osmanthus/昇るホールド"), System.Serializable]
     public class F_Osmanthus_UpHold : CommandBase
     {

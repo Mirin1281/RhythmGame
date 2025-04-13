@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_AccelerateHold")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/F_AccelerateHold")]
     [AddTypeMenu("加速するホールド", -60), System.Serializable]
     public class P_AccelerateHold : ITransformConvertable
     {

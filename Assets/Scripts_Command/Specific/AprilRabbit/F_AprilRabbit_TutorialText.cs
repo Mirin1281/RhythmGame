@@ -6,6 +6,7 @@ using DG.Tweening;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/チュートリアルのテキスト"), System.Serializable]
     public class F_AprilRabbit_TutorialText : CommandBase
     {

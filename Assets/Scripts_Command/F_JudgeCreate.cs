@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 namespace NoteCreating
 {
     // 仮実装
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇判定の発生"), System.Serializable]
     public class F_JudgeCreate : CommandBase
     {

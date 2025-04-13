@@ -17,7 +17,7 @@ namespace NoteCreating
         Line = 1 << 6,
     }
 
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_ObjectsBlink")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇アイテム 点滅"), System.Serializable]
     public class F_ItemBlink : CommandBase
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇アイテム 振動"), System.Serializable]
     public class F_ItemVibrate : CommandBase
     {

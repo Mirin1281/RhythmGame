@@ -5,6 +5,7 @@ using UnityEngine.Scripting.APIUpdating; // UnityEngine.Scripting.APIUpdating.Mo
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆ラインを降らせる", -70), System.Serializable]
     public class F_LineDrop : CommandBase, INotSkipCommand
     {

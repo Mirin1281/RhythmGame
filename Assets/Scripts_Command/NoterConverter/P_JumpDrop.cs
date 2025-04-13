@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_JumpDrop")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/F_JumpDrop")]
     [AddTypeMenu("飛び上がる", -60), System.Serializable]
     public class P_JumpDrop : ITransformConvertable
     {

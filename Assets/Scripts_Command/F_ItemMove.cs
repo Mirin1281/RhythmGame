@@ -10,6 +10,7 @@ using UnityEditor;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆判定線やノーツを生成して制御", -70), System.Serializable]
     public class F_ItemMove : CommandBase, INotSkipCommand
     {

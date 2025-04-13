@@ -4,6 +4,7 @@ using System;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/シャウト判定2"), System.Serializable]
     public class F_Quiela_CreateJudge2 : CommandBase
     {

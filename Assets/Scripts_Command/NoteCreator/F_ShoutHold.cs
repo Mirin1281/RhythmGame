@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     // ホールドが着地すると停止し、その後縦方向に判定が発生します
     [AddTypeMenu(FumenPathContainer.NoteCreate + "シャウトホールド", -60), System.Serializable]
     public class F_ShoutHold : NoteCreateBase<NoteData>

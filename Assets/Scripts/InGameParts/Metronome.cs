@@ -83,7 +83,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 
             int startBeatCount = Mathf.RoundToInt(skipTime / (float)BeatInterval) - skipExecuteTolerance - SelectData.StartBeatOffset;
             var helper = GameObject.FindAnyObjectByType<NoteCreateHelper>();
-            foreach (var commandData in fumenData.Fumen.GetReadOnlyCommandDataList())
+            /*foreach (var commandData in fumenData.Fumen.GetReadOnlyCommandDataList())
             {
                 if (startBeatCount > commandData.BeatTiming)
                 {
@@ -94,7 +94,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
                         commandData.Execute(helper, delta);
                     }
                 }
-            }
+            }*/
         }
 #endif
 

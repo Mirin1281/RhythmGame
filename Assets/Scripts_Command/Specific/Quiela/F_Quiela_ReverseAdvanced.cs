@@ -3,7 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/逆走ノーツ", 50), System.Serializable]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
+    [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/逆走ノーツ(Obsolute)", 50), System.Serializable]
     public class F_Quiela_ReverseAdvanced : CommandBase
     {
         [SerializeField] Mirror mirror;
@@ -20,7 +21,7 @@ namespace NoteCreating
 
         protected override async UniTaskVoid ExecuteAsync()
         {
-            // 全体のWaitの和を求める
+            // 全体のWaitの和を求める 
             float wholeWait = 0;
             foreach (var data in noteDatas)
             {

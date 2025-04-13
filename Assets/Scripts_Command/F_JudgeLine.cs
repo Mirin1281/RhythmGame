@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆判定線", -50), System.Serializable]
     public class F_JudgeLine : CommandBase, INotSkipCommand
     {

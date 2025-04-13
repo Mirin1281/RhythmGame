@@ -3,6 +3,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.NoteCreate + "デフォルト", -100), System.Serializable]
     public class F_General : NoteCreateBase<NoteData>, IFollowableCommand
     {

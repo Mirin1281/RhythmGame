@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("ノーツ出現 & 消失", -60), System.Serializable]
     public class P_Appear : ITransformConvertable
     {

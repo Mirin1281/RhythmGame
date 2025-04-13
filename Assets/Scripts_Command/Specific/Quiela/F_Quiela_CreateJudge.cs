@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Quiela/シャウト判定"), System.Serializable]
     public class F_Quiela_CreateJudge : CommandBase
     {

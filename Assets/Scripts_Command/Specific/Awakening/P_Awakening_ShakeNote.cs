@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Reverse_Transparent")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Reverse_Transparent")]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Awakening 揺れるノーツ"), System.Serializable]
     public class P_Awakening_ShakeNote : ITransformConvertable
     {

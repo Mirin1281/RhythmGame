@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Curve/P_Lanota")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("Lanota", -60), System.Serializable]
     public class P_Lanota : ITransformConvertable
     {

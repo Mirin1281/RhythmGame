@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇オーディオ波形"), System.Serializable]
     public class F_AudioMeter : CommandBase
     {

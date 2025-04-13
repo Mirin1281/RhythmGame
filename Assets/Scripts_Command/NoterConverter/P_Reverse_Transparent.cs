@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Curve/P_Reverse_Transparent")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/P_Reverse_Transparent")]
     [AddTypeMenu("半透明化(リバース専用)", -60), System.Serializable]
     public class P_Reverse_Transparent : ITransformConvertable
     {

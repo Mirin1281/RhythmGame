@@ -4,6 +4,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/5レーン(新)"), System.Serializable]
     public class F_AprilRabbit_New5Lane : NoteCreateBase<NoteData>
     {

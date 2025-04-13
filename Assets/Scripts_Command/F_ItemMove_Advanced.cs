@@ -11,6 +11,7 @@ using UnityEditor;
 namespace NoteCreating
 {
     // 回転(revolute)のイージングに対応
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆判定線やノーツを生成して制御(拡張)", -70), System.Serializable]
     public class F_ItemMove_Advanced : CommandBase, INotSkipCommand
     {

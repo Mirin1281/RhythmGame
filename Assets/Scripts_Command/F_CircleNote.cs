@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆円ノーツ"), System.Serializable]
     public class F_CircleNote : CommandBase
     {

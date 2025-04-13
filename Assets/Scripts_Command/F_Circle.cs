@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆円を制御"), System.Serializable]
     public class F_Circle : CommandBase
     {

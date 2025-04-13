@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "AprilRabbit/律動するホールド"), System.Serializable]
     public class F_AprilRabbit_RhythmHold : CommandBase
     {

@@ -5,6 +5,7 @@ using ExpectType = NoteCreating.NoteJudgeStatus.ExpectType;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     //[MovedFrom(false, null, null, "F_InvisibleJudgeEffect")] 
     [AddTypeMenu(FumenPathContainer.NoteCreate + "判定3種盛り", -60), System.Serializable]
     public class F_JudgeVariety : NoteCreateBase<NoteData>

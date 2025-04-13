@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇カメラを揺らす"), System.Serializable]
     public class F_CameraShake : CommandBase
     {

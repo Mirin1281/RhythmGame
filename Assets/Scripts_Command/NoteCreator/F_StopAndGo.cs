@@ -7,6 +7,7 @@ namespace NoteCreating
     // 1. 非同期ループin非同期ループは使わない
     // 2. 状態をenumなどで管理し、都度振る舞いを設定する
     // 3. インデックス変数は0スタート、最後にインクリメントする(インクリメントは忘れやすいので注意)
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.NoteCreate + "急停止 & 急加速", -50), System.Serializable]
     public class F_StopAndGo : NoteCreateBase<NoteData>
     {

@@ -4,6 +4,7 @@ using Random = System.Random;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇ランダム線"), System.Serializable]
     public class F_RandomLinePulse : CommandBase
     {

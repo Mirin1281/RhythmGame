@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "F_Quantization")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/F_Quantization")]
     [AddTypeMenu("量子化", -60), System.Serializable]
     public class P_Quantization : ITransformConvertable
     {

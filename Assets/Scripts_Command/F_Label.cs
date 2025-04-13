@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇ラベル"), System.Serializable]
     public class F_Label : CommandBase
     {

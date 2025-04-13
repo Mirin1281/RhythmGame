@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Curve/P_Distortion")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/P_Distortion")]
     [AddTypeMenu("微細な揺れ", -60), System.Serializable]
     public class P_Microtremors : ITransformConvertable
     {

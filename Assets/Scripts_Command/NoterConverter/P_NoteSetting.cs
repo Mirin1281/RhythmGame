@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, null, "P_Curve/P_NoteSetting")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", "P_Curve/P_NoteSetting")]
     [AddTypeMenu("ノーツの設定(仮)", -60), System.Serializable]
     public class P_NoteSetting : ITransformConvertable
     {

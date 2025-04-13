@@ -4,6 +4,7 @@ using System;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇判定の発生(拡張)"), System.Serializable]
     public class F_JudgeCreateAdvanced : CommandBase
     {

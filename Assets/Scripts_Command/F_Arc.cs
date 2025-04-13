@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◆アーク", -50), System.Serializable]
     public class F_Arc : CommandBase
     {

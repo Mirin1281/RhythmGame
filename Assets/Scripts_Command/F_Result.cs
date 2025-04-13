@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NoteCreating
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu("◇リザルト移行", 100), System.Serializable]
     public class F_Result : CommandBase
     {
