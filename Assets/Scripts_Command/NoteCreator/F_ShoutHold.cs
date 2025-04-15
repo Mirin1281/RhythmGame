@@ -12,19 +12,19 @@ namespace NoteCreating
         [SerializeField] int judgeCount = 6;
         [SerializeField] Lpb judgeInterval = new Lpb(64);
         [SerializeField] bool createSlide;
+        [SerializeField] float deg;
 
         [SerializeField] TransformConverter transformConverter;
 
-        [Header("オプション1 : 角度")]
         [SerializeField] NoteData[] noteDatas = new NoteData[] { new(noteType: RegularNoteType.Hold, length: new Lpb(2)) };
         protected override NoteData[] NoteDatas => noteDatas;
 
         (Vector3, float) PosAndRotFunc(float t, NoteData data)
         {
-            float dirX = Mathf.Cos((data.Option1 + 90) * Mathf.Deg2Rad);
-            var pos = new Vector3(data.X + dirX * (MoveTime - t) * Speed, (MoveTime - t) * Speed);
-            var rot = dirX;
-            return (pos, rot);
+            var dir = (deg + 90) * Mathf.Deg2Rad;
+            var vec = new Vector3(Mathf.Cos(dir), Mathf.Sin(dir));
+            var pos = new Vector3(data.X, 0) + (MoveTime - t) * Speed * vec;
+            return (pos, deg);
         }
 
         protected override void Move(RegularNote note, NoteData data, float lifeTime)
@@ -33,8 +33,6 @@ namespace NoteCreating
 
             if (note is HoldNote hold)
             {
-                MoveAndJudge(hold, data).Forget();
-
                 var holdLength = note.Type == RegularNoteType.Hold ? startLpb : data.Length;
                 note.SetPosAndRot(PosAndRotFunc(MoveTime, data));
                 transformConverter.Convert(
@@ -43,11 +41,11 @@ namespace NoteCreating
                     data.Option1, data.Option2);
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
                     note, note.GetPos(), MoveTime - Delta, holdLength, NoteJudgeStatus.ExpectType.Static));
+
+                MoveAndJudge(hold, data).Forget();
             }
             else
             {
-                MoveNote(note, data);
-
                 // 着弾地点を設定 //
                 note.SetPosAndRot(posAndRotFunc(MoveTime));
                 transformConverter.Convert(
@@ -56,6 +54,8 @@ namespace NoteCreating
                     data.Option1, data.Option2);
                 Helper.NoteInput.AddExpect(new NoteJudgeStatus(
                     note, note.GetPos(), MoveTime - Delta, data.Length, NoteJudgeStatus.ExpectType.Static));
+
+                MoveNote(note, data);
             }
         }
 
@@ -90,40 +90,42 @@ namespace NoteCreating
 
         async UniTaskVoid MoveAndJudge(HoldNote hold, NoteData data)
         {
-            float x = data.X;
-            Lpb length = data.Length;
-            float dir = data.Option1;
-
-            hold.SetRot(dir);
+            hold.SetRot(deg);
             hold.SetMaskRot(0);
 
             MoveNote(hold, data).Forget();
-            await Wait(MoveLpb);
+            float delta = await Wait(MoveLpb, Delta);
 
             if (createSlide)
             {
-                float dirY = Mathf.Sin((dir + 90) * Mathf.Deg2Rad);
                 for (int i = 0; i < judgeCount; i++)
                 {
-                    float y = i * length.Time * Speed / judgeCount * dirY;
+                    var (pos, expectTime) = GetPosAndExpectTime(i, data, delta);
                     var slide = Helper.GetRegularNote(RegularNoteType.Slide);
-                    Vector2 pos = mirror.Conv(MyUtility.GetRotatedPos(new Vector2(x, y), dir, new Vector2(x, 0)));
                     slide.SetPos(pos);
-                    slide.SetRot(dir);
+                    slide.SetRot(deg);
                     slide.IsVerticalRange = true;
-                    Helper.NoteInput.AddExpect(new NoteJudgeStatus(slide, pos, judgeInterval.Time * i + startLpb.Time - Delta));
+                    Helper.NoteInput.AddExpect(new NoteJudgeStatus(
+                        slide, pos, expectTime));
                 }
             }
             else
             {
                 for (int i = 0; i < judgeCount; i++)
                 {
-                    float y = i * length.Time * Speed / judgeCount;
-                    Vector2 pos = mirror.Conv(MyUtility.GetRotatedPos(new Vector2(x, y), dir, new Vector2(x, 0)));
+                    var (pos, expectTime) = GetPosAndExpectTime(i, data, delta);
                     Helper.NoteInput.AddExpect(new NoteJudgeStatus(
-                        RegularNoteType.Slide, pos, judgeInterval.Time * i + startLpb.Time - Delta, isVerticalRange: true, dir));
+                        RegularNoteType.Slide, pos, expectTime, isVerticalRange: true, deg));
                 }
             }
+        }
+
+        (Vector2, float) GetPosAndExpectTime(int i, NoteData data, float delta)
+        {
+            float y = i * data.Length.Time * Speed / judgeCount;
+            Vector2 pos = mirror.Conv(MyUtility.GetRotatedPos(new Vector2(data.X, y), deg, new Vector2(data.X, 0)));
+            float expectTime = judgeInterval.Time * i + startLpb.Time - delta;
+            return (pos, expectTime);
         }
     }
 }

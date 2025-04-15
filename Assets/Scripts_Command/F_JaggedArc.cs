@@ -9,7 +9,7 @@ namespace NoteCreating
     {
         [Space(10)]
         [SerializeField] Mirror mirror;
-        [SerializeField] float x;
+        [SerializeField] float baseX;
         [SerializeField] Lpb jagInterval = new Lpb(16f);
         [SerializeField] Lpb length = new Lpb(2);
         [Space(20)]
@@ -20,7 +20,18 @@ namespace NoteCreating
 
         protected override float Speed => base.Speed * speedRate;
 
-        protected override async UniTaskVoid ExecuteAsync()
+        protected override UniTaskVoid ExecuteAsync()
+        {
+            ArcNote arc = Helper.GetArc();
+            ArcCreateData[] datas = CreateArcDatas();
+            arc.CreateAsync(datas, Speed, mirror).Forget();
+            float lifeTime = MoveTime + 0.5f + length.Time;
+            DropAsync(arc, 0, lifeTime, Delta).Forget();
+            Helper.NoteInput.AddArc(arc);
+            return default;
+        }
+
+        ArcCreateData[] CreateArcDatas()
         {
             int count = Mathf.RoundToInt(length / jagInterval);
             var easing = new Easing(startWidth, fromWidth, count, easeType);
@@ -28,31 +39,39 @@ namespace NoteCreating
             for (int i = 0; i < count + 1; i++)
             {
                 int a = i % 2 == 0 ? -1 : 1;
+                float x = baseX + easing.Ease(i) * a;
+                ArcCreateData d;
                 if (i == 0)
                 {
-                    datas[i] = new ArcCreateData(
-                        x + easing.Ease(i) * a, default,
-                        ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
+                    d = new ArcCreateData(
+                        x, default, ArcCreateData.VertexType.Linear,
+                        true, true,
+                        default, jagInterval);
+                }
+                else if (i == 1)
+                {
+                    d = new ArcCreateData(
+                        x, jagInterval, ArcCreateData.VertexType.Linear,
+                        false, true,
+                        -jagInterval, jagInterval);
+                }
+                else if (i == count - 1)
+                {
+                    d = new ArcCreateData(
+                        x, jagInterval, ArcCreateData.VertexType.Linear,
+                        true, true,
+                        default, jagInterval);
                 }
                 else
                 {
-                    datas[i] = new ArcCreateData(
-                        x + easing.Ease(i) * a, jagInterval,
-                        ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
+                    d = new ArcCreateData(
+                        x, jagInterval, ArcCreateData.VertexType.Linear,
+                        false, true,
+                        default, jagInterval);
                 }
+                datas[i] = d;
             }
-            Arc(datas);
-            await UniTask.CompletedTask;
-        }
-
-        ArcNote Arc(ArcCreateData[] datas)
-        {
-            ArcNote arc = Helper.GetArc();
-            arc.CreateAsync(datas, Speed, mirror).Forget();
-            float lifeTime = MoveTime + 0.5f + length.Time;
-            DropAsync(arc, 0, lifeTime, Delta).Forget();
-            Helper.NoteInput.AddArc(arc);
-            return arc;
+            return datas;
         }
 
 #if UNITY_EDITOR
@@ -91,25 +110,7 @@ namespace NoteCreating
             previewer.SetChild(arc);
             arc.SetPos(new Vector3(0, delay.Time * Speed));
 
-            int count = Mathf.RoundToInt(length / jagInterval);
-            var easing = new Easing(startWidth, fromWidth, count, easeType);
-            ArcCreateData[] datas = new ArcCreateData[count + 1];
-            for (int i = 0; i < count + 1; i++)
-            {
-                int a = i % 2 == 0 ? -1 : 1;
-                if (i == 0)
-                {
-                    datas[i] = new ArcCreateData(
-                        x + easing.Ease(i) * a, default,
-                        ArcCreateData.VertexType.Linear, true, true, default, jagInterval);
-                }
-                else
-                {
-                    datas[i] = new ArcCreateData(
-                        x + easing.Ease(i) * a, jagInterval,
-                        ArcCreateData.VertexType.Linear, false, true, default, jagInterval);
-                }
-            }
+            ArcCreateData[] datas = CreateArcDatas();
             arc.DebugCreateAsync(datas, Speed, mirror, Helper.DebugCirclePrefab, delay).Forget();
         }
 #endif

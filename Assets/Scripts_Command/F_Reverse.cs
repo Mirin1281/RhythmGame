@@ -76,6 +76,7 @@ namespace NoteCreating
                 note = hold;
             }
 
+            // Expect後にMoveする
             note.IsVerticalRange = isVerticalRange;
             note.SetPos(new Vector3(mirror.Conv(data.X), 0));
             transformConverter.Convert(

@@ -103,8 +103,8 @@ namespace NoteCreating
         }
 
         // 押下中の透明度
-        public static float HoldingAlpha = 0.55f;
-        public static float NotHoldingAlpha = 0.3f;
+        public static float HoldingAlpha = 0.5f;
+        public static float NotHoldingAlpha = 0.7f;
 
         void Awake()
         {
@@ -133,7 +133,8 @@ namespace NoteCreating
             }
 
             meshRenderer.material.SetFloat(yThresholdID, -Mathf.Clamp(notHoldTime - 0.02f, 0f, 5f) * RhythmGameManager.Speed);
-            SetAlpha(IsHold ? HoldingAlpha : NotHoldingAlpha);
+            //SetAlpha(IsHold ? HoldingAlpha : NotHoldingAlpha);
+            SetGray(IsHold ? HoldingAlpha : NotHoldingAlpha);
         }
 
         /// <summary>
@@ -330,6 +331,12 @@ namespace NoteCreating
             meshRenderer.sharedMaterial.color = new Color(c.r, c.g, c.b, alpha);
         }
 
+        void SetGray(float gray)
+        {
+            var c = meshRenderer.sharedMaterial.color;
+            meshRenderer.sharedMaterial.color = new Color(gray, gray, gray, c.a);
+        }
+
         public async UniTaskVoid FadeOutAndInActive(float time = 0.5f)
         {
             float t = 0;
@@ -347,7 +354,8 @@ namespace NoteCreating
         {
             SetRendererEnabled(true);
             SetRadius(0.45f);
-            SetAlpha(HoldingAlpha);
+            SetAlpha(1);
+            SetGray(HoldingAlpha);
 
             transform.localRotation = Quaternion.Euler(-90, 0, 0);
             IsInvalid = false;

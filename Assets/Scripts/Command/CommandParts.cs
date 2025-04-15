@@ -151,6 +151,7 @@ namespace NoteCreating
 
         public static Lpb operator +(Lpb left, Lpb right) => new Lpb(AddLpb(left._value, right._value));
         public static Lpb operator -(Lpb left, Lpb right) => new Lpb(SubtractLpb(left._value, right._value));
+        public static Lpb operator -(Lpb lpb) => new Lpb(SubtractLpb(0, lpb._value));
         public static Lpb operator *(Lpb left, float right)
         {
             if (right == 0)

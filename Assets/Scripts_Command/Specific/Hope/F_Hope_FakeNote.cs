@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
+    //[UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Hope/フェイクノーツ"), System.Serializable]
     public class F_Hope_FakeNote : CommandBase
     {
@@ -18,14 +18,13 @@ namespace NoteCreating
         [SerializeField] EaseType rotEaseType = EaseType.OutBack;
         [SerializeField] Lpb actionLpb = new Lpb(1);
 
-        protected override async UniTaskVoid ExecuteAsync()
+        protected override UniTaskVoid ExecuteAsync()
         {
-            Note(noteType, mirror.Conv(x), length, mirror.Conv(toPos), mirror.Conv(rotate), Delta).Forget();
-
-            await UniTask.CompletedTask;
+            CreateNote(noteType, mirror.Conv(x), length, mirror.Conv(toPos), mirror.Conv(rotate), Delta).Forget();
+            return default;
         }
 
-        async UniTaskVoid Note(RegularNoteType noteType, float x, Lpb length, Vector2 toPos, float rotate, float delta)
+        async UniTaskVoid CreateNote(RegularNoteType noteType, float x, Lpb length, Vector2 toPos, float rotate, float delta)
         {
             RegularNote note;
             if (noteType is RegularNoteType.Normal or RegularNoteType.Slide)
@@ -46,13 +45,13 @@ namespace NoteCreating
                 note, toPos, MoveTime + actionLpb.Time - delta, length, NoteJudgeStatus.ExpectType.Static);
             Helper.NoteInput.AddExpect(judgeStatus);
 
-            // 普通に落下
+            // 普通に落下 
             delta = await WhileYieldAsync(MoveTime, t =>
             {
                 note.SetPos(new Vector3(x, (MoveTime - t) * Speed));
             }, delta);
 
-            MoveNote(note, toPos, delta).Forget();
+            MoveNote(note, toPos, actionLpb, delta).Forget();
 
             var rotEasing = new Easing(0, rotate, actionLpb.Time, rotEaseType);
             WhileYield(actionLpb.Time, t =>
@@ -68,7 +67,7 @@ namespace NoteCreating
             }
         }
 
-        async UniTaskVoid MoveNote(RegularNote note, Vector3 toPos, float delta)
+        async UniTaskVoid MoveNote(RegularNote note, Vector3 toPos, Lpb actionLpb, float delta)
         {
             // InQuadの終端速度は2 * (endPos - startPos).magnitude / wholeTime
             // よって easeTime = 2 * (endPos - startPos).magnitude / Speedとするとキレイに繋がる
@@ -77,13 +76,13 @@ namespace NoteCreating
             float easeTime = 2f * (toPos - startPos).magnitude / Speed;
             delta = await WaitSeconds(actionLpb.Time - easeTime, delta);
 
-            float toDir = GetRad(toPos - startPos);
             var posEasing = new EasingVector2(note.GetPos(), toPos, easeTime, EaseType.InQuad);
             delta = await WhileYieldAsync(easeTime, t =>
             {
                 note.SetPos(posEasing.Ease(t));
             }, delta);
 
+            float toDir = GetRad(toPos - startPos);
             var vec = new Vector3(Mathf.Cos(toDir), Mathf.Sin(toDir));
             float lifeTime = 0.3f;
             if (note is HoldNote hold)

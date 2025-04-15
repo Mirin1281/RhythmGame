@@ -28,6 +28,30 @@ namespace NoteCreating
                 }
             }
 
+            await Wait(MoveLpb);
+
+            var basePos = new Vector2(0, 4);
+            var points = DrawPolygonCulculator.GetPolygonPoses(//DrawPolygonCulculator.GetPolygonInNothingPoses(
+                corner: 5,
+                sideCount: 2,
+                size: 1,
+                density: 2
+            );
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                var point = points[i];
+                CreateNote(basePos, point);
+            }
+
+            void CreateNote(Vector2 basePos, Vector2 pos)
+            {
+                //var item = Helper.GetLine();
+                var item = Helper.GetRegularNote(RegularNoteType.Slide);
+                item.SetPos(basePos + pos / 2.3f);
+                item.SetRot(DrawPolygonCulculator.GetAim(Vector2.zero, pos) + 90);
+            }
+
 
             /*// 星型にノーツやレーンを //
             for (int i = 0; i < 5; i++)

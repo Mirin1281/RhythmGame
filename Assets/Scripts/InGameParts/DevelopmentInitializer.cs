@@ -119,8 +119,8 @@ namespace NoteCreating
 
             // ガンマ用
             SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
-            ArcNote.HoldingAlpha = l_isDark ? 0.7f : 0.4f;
-            ArcNote.NotHoldingAlpha = l_isDark ? 0.4f : 0.2f;
+            ArcNote.HoldingAlpha = l_isDark ? 0.45f : 0.5f;
+            ArcNote.NotHoldingAlpha = l_isDark ? 0.7f : 0.75f;
             Line.BaseAlpha = l_isDark ? 1.2f : 1f;
 
             // リニア用 (スライドの周りに縁ができて変)

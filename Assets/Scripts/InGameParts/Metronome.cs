@@ -18,6 +18,7 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
     [SerializeField] float speedRate = 1;
 
 #if UNITY_EDITOR
+    [SerializeField] float editorVolumeRate = 1f;
     [Space(20)]
     [SerializeField] bool skipOnStart;
     [SerializeField, HideInInspector] float timeRate;
@@ -171,7 +172,11 @@ public class Metronome : SingletonMonoBehaviour<Metronome>, IVolumeChangable
 
     void IVolumeChangable.ChangeVolume(float value)
     {
+#if UNITY_EDITOR
+        atomSource.volume = value * editorVolumeRate;
+#else
         atomSource.volume = value;
+#endif
     }
 
 #if UNITY_EDITOR
