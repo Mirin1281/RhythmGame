@@ -84,8 +84,8 @@ namespace NoteCreating
 
             var arc = Helper.GetArc();
             arc.transform.SetParent(previewer.transform);
-            arc.SetPos(new Vector3(0, delay.Time * Speed));
-            arc.DebugCreateAsync(datas, Speed, mirror, Helper.DebugCirclePrefab, delay).Forget();
+            arc.SetPos(new Vector3(0, delay.Time * RhythmGameManager.DefaultSpeed));
+            arc.DebugCreateAsync(datas, RhythmGameManager.DefaultSpeed, mirror, Helper.DebugCirclePrefab, delay).Forget();
         }
 #endif
     }

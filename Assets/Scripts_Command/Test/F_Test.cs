@@ -30,27 +30,14 @@ namespace NoteCreating
 
             await Wait(MoveLpb);
 
-            var basePos = new Vector2(0, 4);
-            var points = DrawPolygonCulculator.GetPolygonPoses(//DrawPolygonCulculator.GetPolygonInNothingPoses(
-                corner: 5,
-                sideCount: 2,
-                size: 1,
-                density: 2
-            );
+            var circle1 = Helper.GetCircle();
+            circle1.SetScale(3);
+            circle1.SetWidth(0.1f);
 
-            for (int i = 0; i < points.Count; i++)
-            {
-                var point = points[i];
-                CreateNote(basePos, point);
-            }
+            var circle2 = Helper.GetCircle();
+            circle2.SetWidth(0.1f);
+            circle2.SetScale(3);
 
-            void CreateNote(Vector2 basePos, Vector2 pos)
-            {
-                //var item = Helper.GetLine();
-                var item = Helper.GetRegularNote(RegularNoteType.Slide);
-                item.SetPos(basePos + pos / 2.3f);
-                item.SetRot(DrawPolygonCulculator.GetAim(Vector2.zero, pos) + 90);
-            }
 
 
             /*// 星型にノーツやレーンを //

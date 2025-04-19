@@ -7,6 +7,8 @@ namespace NoteCreating
     public class P_AccelerateHold : ITransformConvertable
     {
         [Header("オプション : ホールド終端時の速度(デフォルト1)")]
+        [SerializeField] bool useDefault;
+        [SerializeField] float defaultAccelerate = 2f;
         [SerializeField] EaseType easeType = EaseType.InQuad;
         [SerializeField] float speedRate = 1f;
 
@@ -17,6 +19,8 @@ namespace NoteCreating
         {
             if (item is HoldNote hold)
             {
+                if (useDefault)
+                    option = defaultAccelerate;
                 var length = hold.GetLength();
                 hold.SetLength(length * option);
 

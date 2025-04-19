@@ -7,7 +7,8 @@ namespace NoteCreating
     public class P_Direction : ITransformConvertable
     {
         [Header("オプション: 角度")]
-        [SerializeField] bool _;
+        [SerializeField] bool useDefault;
+        [SerializeField] float defaultRotate;
 
         bool ITransformConvertable.IsGroup => true;
 
@@ -21,7 +22,7 @@ namespace NoteCreating
 
         void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
         {
-            float dir = option;
+            float dir = useDefault ? defaultRotate : option;
             item.SetRot(dir + item.GetRot());
             if (item is HoldNote hold)
             {

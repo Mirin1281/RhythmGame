@@ -268,9 +268,16 @@ namespace NoteCreating
         {
             float headY = HeadY;
             float tailY = TailY;
-            if (spline == null
-             || (target < headY && Mathf.Approximately(headY, target) == false)
-             || (tailY < target) && Mathf.Approximately(tailY, target) == false)
+            if (Approximately(headY, target))
+            {
+                target = headY;
+            }
+            else if (Approximately(tailY, target))
+            {
+                target = tailY;
+            }
+
+            if (spline == null || (target < headY) || (tailY < target))
             {
                 if (showLog)
                     Debug.LogError($"Head: {headY}, Tail: {tailY}, \ntarget: {target}");
@@ -285,6 +292,11 @@ namespace NoteCreating
                 out var _
             );
             return nearest;
+
+            static bool Approximately(float a, float b)
+            {
+                return Mathf.Abs(b - a) < Mathf.Max(1E-06f * Mathf.Max(Mathf.Abs(a), Mathf.Abs(b)), 0.01f);
+            }
         }
 
         /// <summary>

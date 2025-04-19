@@ -20,7 +20,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 2
         summary: 2
@@ -44,12 +44,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -104,7 +105,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 2
         summary: 1-1
@@ -128,12 +129,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359489
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -221,12 +223,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -281,7 +284,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -402,12 +405,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -462,7 +466,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359488
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -531,7 +535,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 1
         summary: "A\u30E1\u30ED"
@@ -555,7 +559,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977750
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -628,6 +632,62 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-4924823360099131040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (42)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 226
+  command:
+    rid: 4848304586674667540
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667540
+      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - wait:
+            _value: 0
+          point: {x: 2, y: 6}
+          length:
+            _value: 1.142857
+          isOverlappable: 0
+          isDetailed: 1
+          twoJudge: 1
+          dir: 20
+          curve: 4
+        - wait:
+            _value: 1.142857
+          point: {x: 0, y: -4}
+          length:
+            _value: 2
+          isOverlappable: 0
+          isDetailed: 1
+          twoJudge: 1
+          dir: 20
+          curve: 2
+        - wait:
+            _value: 1
+          point: {x: -4, y: -8}
+          length:
+            _value: 0.5714286
+          isOverlappable: 0
+          isDetailed: 1
+          twoJudge: 1
+          dir: 20
+          curve: 2
 --- !u!114 &-4682952137220869078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,7 +708,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -845,12 +905,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -905,7 +966,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690689
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -1046,7 +1107,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359491
-      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1080,12 +1141,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977751
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -1206,12 +1268,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -1246,6 +1309,78 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 4
           option: {x: 110, y: 2, z: 0}
+--- !u!114 &-1350222786769298597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (47)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 261
+  command:
+    rid: 1232548848920690688
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548848920690688
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 5
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 70, y: 0, z: 2}
+        - x: 2
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 16
+          aheadJudgeRange:
+            _value: 3.555556
+          option: {x: 110, y: 2, z: 0}
+        - x: 7
+          wait:
+            _value: 4.571429
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 16
+          aheadJudgeRange:
+            _value: 4.571429
+          option: {x: 0, y: -2.5, z: 2.5}
+        - x: 2
+          wait:
+            _value: 4.571429
+          vertexType: 2
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 110, y: 2, z: 0}
 --- !u!114 &-1059957314518286677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,12 +1401,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 5
           wait:
@@ -1370,12 +1506,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359489
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -1443,6 +1580,147 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 8
           option: {x: 0, y: 0, z: 0}
+--- !u!114 &-655640737954851811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (48)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 261
+  command:
+    rid: 1232548848920690689
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548848920690689
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 8
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 0
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &-512075620894921738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,7 +1741,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359490
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1526,12 +1804,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359489
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -1704,7 +1983,14 @@ MonoBehaviour:
     - {fileID: -512075620894921738}
     - {fileID: 2258943328461535387}
     - {fileID: 7206764785944046806}
+    - {fileID: -4924823360099131040}
+    - {fileID: 624938888460471781}
+    - {fileID: 3383219242497482471}
+    - {fileID: 9179124427624290845}
     - {fileID: -9066251973704508346}
+    - {fileID: -655640737954851811}
+    - {fileID: -1350222786769298597}
+    - {fileID: 8360777919878518704}
 --- !u!114 &355551339999348304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,7 +2011,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 2
         summary: 1-2
@@ -1749,12 +2035,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 5
           wait:
@@ -1833,6 +2120,165 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 2
           option: {x: 110, y: 0, z: 0}
+--- !u!114 &624938888460471781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (44)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 231
+  command:
+    rid: 4848304586674667543
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667542
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 2
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: -60, y: 0, z: 2}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: -2, z: 0}
+        - x: 0
+          wait:
+            _value: 2
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -2, z: 4}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: -2, z: 0}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -2, z: 0}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: -2, z: 0}
+        - x: 2
+          wait:
+            _value: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -2, z: 0}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: -2, z: 0}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -2, z: 0}
+        - x: -2
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: -2, z: 0}
+        - x: 2
+          wait:
+            _value: 2
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -2, z: 0}
+    - rid: 4848304586674667543
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
+      data:
+        delay:
+          _value: 8
+        loopCount: 1
+        loopWait:
+          _value: 4
+        command:
+          rid: 4848304586674667542
 --- !u!114 &1029375042837866098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1853,7 +2299,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977750
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1914,7 +2360,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690689
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -2055,7 +2501,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977750
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2116,12 +2562,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -2176,7 +2623,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 1
         summary: "B\u30E1\u30ED 1"
@@ -2200,7 +2647,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -2363,7 +2810,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2484,7 +2931,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -2605,7 +3052,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359490
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2733,7 +3180,7 @@ MonoBehaviour:
               _value: 0
             easeType: 0
     - rid: 1232548850775359492
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -2762,12 +3209,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977751
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -2888,7 +3336,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3025,7 +3473,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -3142,6 +3590,99 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
+--- !u!114 &3383219242497482471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (43)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 226
+  command:
+    rid: 4848304586674667541
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667541
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 2
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &3871211694389494117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,7 +3703,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977750
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3391,12 +3932,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977751
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -3484,7 +4026,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3605,7 +4147,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977749
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3782,12 +4324,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 5
           wait:
@@ -3864,12 +4407,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -3924,12 +4468,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 5
           wait:
@@ -4028,7 +4573,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690689
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4169,12 +4714,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548850775359489
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -4295,7 +4841,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 2
         summary: "\u7D42\u308F\u308A \u30F4\u30A1\u30FC\u30B9"
@@ -4319,12 +4865,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977751
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: -5
           wait:
@@ -4445,7 +4992,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690689
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4586,12 +5133,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548848920690688
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
         speedRate: 1
         commandData: {fileID: 0}
+        option: 0
         datas:
         - x: 0
           wait:
@@ -4646,7 +5194,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 1
         summary: "B\u30E1\u30ED 2"
@@ -4670,10 +5218,82 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548802731704325
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 3
         summary: 
+--- !u!114 &8360777919878518704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (46)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 263
+  command:
+    rid: 1232548848920690688
+  references:
+    version: 2
+    RefIds:
+    - rid: 1232548848920690688
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -2
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 70, y: 0, z: 2}
+        - x: -5
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 16
+          aheadJudgeRange:
+            _value: 3.555556
+          option: {x: 110, y: 2, z: 0}
+        - x: 0
+          wait:
+            _value: 4.571429
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 16
+          aheadJudgeRange:
+            _value: 4.571429
+          option: {x: 0, y: -2.5, z: 2.5}
+        - x: -5
+          wait:
+            _value: 4.571429
+          vertexType: 2
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 110, y: 2, z: 0}
 --- !u!114 &9138938323635338751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4694,7 +5314,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548841851977750
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -4733,5 +5353,162 @@ MonoBehaviour:
           x: 6
           length:
             _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &9179124427624290845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Dreamadv (45)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 242
+  command:
+    rid: 4848304586674667544
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667544
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 2.666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 0.5
           option1: 0
           option2: 0

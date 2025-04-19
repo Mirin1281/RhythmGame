@@ -88,6 +88,10 @@ namespace NoteCreating
 
         public void SetCombo(NoteGrade grade)
         {
+            /*if (grade == NoteGrade.Miss)
+            {
+                Debug.Log(0);
+            }*/
             int beforeScore = result.Score;
             result.SetComboAndScore(grade);
             comboText.SetText("{0}", result.Combo);

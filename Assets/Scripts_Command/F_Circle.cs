@@ -56,7 +56,7 @@ namespace NoteCreating
 
         async UniTaskVoid CreateCircle(CircleData data, float delta)
         {
-            var circle = Helper.GetCircle();
+            Circle circle = Helper.GetCircle();
             circle.SetPos(mirror.Conv(data.Pos + basePos));
 
             var sizeEasing = new Easing(data.SizeStatus);

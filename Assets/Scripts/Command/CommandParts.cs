@@ -110,6 +110,10 @@ namespace NoteCreating
 
         public static Lpb Zero => new Lpb(0);
         public static Lpb Infinity => new Lpb(float.MinValue);
+        public static Lpb Abs(Lpb lpb)
+        {
+            return Mathf.Sign(lpb.Time) * lpb;
+        }
 
         #region Overrides & Interfaces
 

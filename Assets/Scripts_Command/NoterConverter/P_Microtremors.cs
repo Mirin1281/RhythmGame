@@ -44,7 +44,7 @@ namespace NoteCreating
             }
 
             var ts = moveFunc(time);
-            item.SetPosAndRot(ts.pos + item.GetPos(), ts.rot);
+            item.SetPosAndRot(ts.pos + item.GetPos(), ts.rot + item.GetRot());
             if (item is HoldNote hold)
             {
                 //var maskPos = hold.GetMaskPos();

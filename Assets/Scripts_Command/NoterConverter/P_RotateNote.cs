@@ -6,9 +6,13 @@ namespace NoteCreating
     [AddTypeMenu("ノーツ回転", -60), System.Serializable]
     public class P_RotateNote : ITransformConvertable
     {
-        [Header("オプション : 回転係数(1で半回転)")]
+        enum TimingType { Once, Detailed }
+
+        [Header("オプション : 回転係数(1で半回転)\nタイミングを負の値にすると回転が反対になります")]
         [SerializeField] bool isGroup;
+        [SerializeField] TimingType timingType = TimingType.Once;
         [SerializeField] Lpb timing = new Lpb(4) * 5;
+        [SerializeField] Lpb[] timings = new Lpb[] { new Lpb(4) * 5 };
         [SerializeField] Lpb rotateLpb = new Lpb(8);
         [SerializeField] EaseType easeType = EaseType.OutQuad;
         [SerializeField] float speedRate = 1f;
@@ -20,18 +24,46 @@ namespace NoteCreating
         {
             if (option == 0) return;
 
-            float toRot = 180 * option;
-            var easing = new Easing(0, toRot, rotateLpb.Time, easeType);
-            if (time > timing.Time)
+            float t;
+            bool reverse = false;
+            if (timingType == TimingType.Once)
             {
-                float t2 = time - timing.Time;
-                float rot = easing.Ease(Mathf.Clamp(t2, 0, rotateLpb.Time));
+                t = time - timing.Time;
+                if (timing.Time < 0)
+                {
+                    reverse = true;
+                }
+            }
+            else
+            {
+                Lpb tim = Lpb.Zero;
+                for (int i = 0; i < timings.Length; i++)
+                {
+                    Lpb val = Lpb.Abs(timings[i]);
+                    tim += val;
+                    if (time < tim.Time)
+                    {
+                        tim -= val;
+                        if (i - 1 > 0 && timings[i - 1].Time < 0)
+                        {
+                            reverse = true;
+                        }
+                        break;
+                    }
+                }
+                t = time - tim.Time;
+            }
+
+            if (0 < t && t < rotateLpb.Time)
+            {
+                var easing = new Easing(0, 180 * option * (reverse ? -1 : 1), rotateLpb.Time, easeType);
+                float rot = easing.Ease(t);
                 item.SetRot(rot);
 
                 if (item is HoldNote hold)
                 {
                     var vec = Speed * new Vector3(Mathf.Sin(rot * Mathf.Deg2Rad), -Mathf.Cos(rot * Mathf.Deg2Rad));
-                    item.SetPos(new Vector3(item.GetPos().x, 0) + t2 * vec);
+                    item.SetPos(new Vector3(item.GetPos().x, 0) + t * vec);
                     hold.SetMaskLength(20f);
                 }
             }

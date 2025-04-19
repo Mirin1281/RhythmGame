@@ -30,7 +30,7 @@ namespace NoteCreating
         }
 
         [SerializeField] Mirror mirror;
-        [SerializeField] float circleSize = 1f;
+        [SerializeField] float circleSize = 2.5f;
         [SerializeField] Lpb moveLpb = new Lpb(2);
         [SerializeField] Vector2 basePos = new Vector2(0, 4);
         [SerializeField] EaseType easeType = EaseType.InBack;
