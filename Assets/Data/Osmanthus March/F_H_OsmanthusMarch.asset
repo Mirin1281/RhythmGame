@@ -20,7 +20,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679129
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679132
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -190,7 +190,7 @@ MonoBehaviour:
           startAlpha: 0.2
           alphaEaseDatas: []
     - rid: 1232548282981679133
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548545167097881
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -270,11 +270,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548545167097882
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 30
+        easeType: 3
 --- !u!114 &-8474102898908988248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +296,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470406
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -328,7 +329,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470376
-      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -363,7 +364,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679134
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -506,7 +507,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679135
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -608,7 +609,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679127
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -762,7 +763,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679128
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -791,7 +792,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679130
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -835,7 +836,7 @@ MonoBehaviour:
           startAlpha: 0.2
           alphaEaseDatas: []
     - rid: 1232548282981679131
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -864,7 +865,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452932
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1051,11 +1052,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452933
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-7259823171462596346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,7 +1078,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548296670314497
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1176,12 +1178,12 @@ MonoBehaviour:
   enable: 1
   beatTiming: 218
   command:
-    rid: 8267576847255470421
+    rid: 4848304683621548048
   references:
     version: 2
     RefIds:
-    - rid: 8267576847255470421
-      type: {class: F_Result, ns: NoteCreating, asm: Assembly-CSharp}
+    - rid: 4848304683621548048
+      type: {class: F_Result, ns: NoteCreating, asm: Assembly_Test}
       data: 
 --- !u!114 &-6826650631831859990
 MonoBehaviour:
@@ -1203,7 +1205,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470364
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1344,7 +1346,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548545167097879
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1395,7 +1397,7 @@ MonoBehaviour:
           option1: 10
           option2: 0
     - rid: 1232548545167097880
-      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Diagonal, ns: NoteCreating, asm: Assembly_Test}
       data:
         setRotate: 0
         useDefault: 1
@@ -1420,7 +1422,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679127
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1574,7 +1576,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679128
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -1603,7 +1605,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679118
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -1689,7 +1691,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679119
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -1718,7 +1720,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470417
-      type: {class: F_ItemBlink, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemBlink, ns: NoteCreating, asm: Assembly_Test}
       data:
         target: 2
         capacity: 5
@@ -1750,7 +1752,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470360
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -1875,7 +1877,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452920
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2014,11 +2016,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452921
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-4571476323043706918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2039,7 +2042,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548277774188553
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2101,7 +2104,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679117
-      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2135,7 +2138,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470340
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2168,7 +2171,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 4848304253928210448
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2315,7 +2318,7 @@ MonoBehaviour:
           option1: 1
           option2: 0
     - rid: 4848304253928210449
-      type: {class: P_Curve/P_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Microtremors, ns: NoteCreating, asm: Assembly_Test}
       data:
         useDefault: 0
         isPosDistortion: 1
@@ -2344,7 +2347,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679111
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2358,7 +2361,7 @@ MonoBehaviour:
         isAdaptiveSpeed: 1
         speedRate: 6
     - rid: 1232548282981679112
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 8
@@ -2387,7 +2390,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470354
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 0
         summary: "1\u756A"
@@ -2411,7 +2414,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548545167097875
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -2598,11 +2601,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548545167097883
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 40
+        easeType: 3
 --- !u!114 &-2991833311896090649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2623,7 +2627,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452930
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2794,11 +2798,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452931
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-2517254851948128655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,7 +2824,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470406
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2852,7 +2857,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679104
-      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2887,7 +2892,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679115
-      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -2921,7 +2926,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679118
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -3007,7 +3012,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679119
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -3036,7 +3041,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452922
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3183,11 +3188,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452923
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-1202919768736212291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3208,7 +3214,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679135
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3296,7 +3302,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679136
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3362,7 +3368,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548545167097889
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3463,7 +3469,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548277774188551
-      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3497,7 +3503,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679116
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -3507,7 +3513,7 @@ MonoBehaviour:
         command:
           rid: 8267576847255470380
     - rid: 8267576847255470380
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3556,7 +3562,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452926
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3631,11 +3637,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452927
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-422747127569067125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3656,7 +3663,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679117
-      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3690,7 +3697,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 4848304253928210465
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -3837,7 +3844,7 @@ MonoBehaviour:
           option1: 1
           option2: 0
     - rid: 4848304253928210466
-      type: {class: P_Curve/P_Distortion, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Microtremors, ns: NoteCreating, asm: Assembly_Test}
       data:
         useDefault: 0
         isPosDistortion: 1
@@ -3866,7 +3873,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452936
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4029,11 +4036,12 @@ MonoBehaviour:
           option1: -50
           option2: 0
     - rid: 1232548553852452937
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4160,7 +4168,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470409
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4198,7 +4206,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548277774188553
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4272,7 +4280,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452934
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4443,11 +4451,12 @@ MonoBehaviour:
           option1: 100
           option2: 0
     - rid: 1232548553852452935
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &652879299629426179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4468,7 +4477,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548545167097877
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4519,7 +4528,7 @@ MonoBehaviour:
           option1: -10
           option2: 0
     - rid: 1232548545167097878
-      type: {class: P_Curve/P_Diagonal, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Diagonal, ns: NoteCreating, asm: Assembly_Test}
       data:
         setRotate: 0
         useDefault: 1
@@ -4544,7 +4553,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470391
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 0
         summary: "2\u756A\u30B5\u30D3"
@@ -4568,7 +4577,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679120
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -4647,7 +4656,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470364
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4780,7 +4789,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470395
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4813,7 +4822,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679132
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4844,7 +4853,7 @@ MonoBehaviour:
           startAlpha: 0.2
           alphaEaseDatas: []
     - rid: 1232548282981679133
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -4873,7 +4882,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679109
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -4978,7 +4987,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470366
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 0
         summary: "1\u756A\u30B5\u30D3"
@@ -5002,7 +5011,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470360
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5127,7 +5136,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679110
-      type: {class: F_RandomLinePulse, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_RandomLinePulse, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5161,7 +5170,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470375
-      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ContinuousNotes, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5196,7 +5205,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470374
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5289,7 +5298,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679110
-      type: {class: F_RandomLinePulse, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_RandomLinePulse, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5323,7 +5332,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470369
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5356,7 +5365,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679127
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -5510,7 +5519,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679128
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -5539,7 +5548,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452924
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5614,11 +5623,12 @@ MonoBehaviour:
           option1: 0
           option2: 0
     - rid: 1232548553852452925
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &3765161129883705920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5639,7 +5649,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470384
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -5764,7 +5774,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470359
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5797,7 +5807,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679113
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -5807,7 +5817,7 @@ MonoBehaviour:
         command:
           rid: 8267576847255470342
     - rid: 8267576847255470342
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5856,7 +5866,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470384
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -5997,7 +6007,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679120
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6076,7 +6086,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679121
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 1
@@ -6128,7 +6138,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679122
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -6157,7 +6167,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470383
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6190,7 +6200,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679121
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6242,7 +6252,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679122
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -6271,7 +6281,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679114
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -6281,7 +6291,7 @@ MonoBehaviour:
         command:
           rid: 8267576847255470356
     - rid: 8267576847255470356
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6330,7 +6340,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470406
-      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LineDrop, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6363,7 +6373,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470385
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6496,7 +6506,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470402
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 0
         summary: "\u30A2\u30A6\u30C8\u30ED"
@@ -6520,7 +6530,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470353
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6558,7 +6568,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470377
-      type: {class: F_Label, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_Label, ns: NoteCreating, asm: Assembly_Test}
       data:
         labelType: 0
         summary: "2\u756A"
@@ -6582,7 +6592,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679123
-      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6634,7 +6644,7 @@ MonoBehaviour:
               _value: 4
             easeType: 0
     - rid: 1232548282981679124
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -6663,7 +6673,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452928
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -6842,11 +6852,12 @@ MonoBehaviour:
           option1: -30
           option2: 0
     - rid: 1232548553852452929
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &7793423864094660642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6867,7 +6878,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470361
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7016,7 +7027,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679127
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7170,7 +7181,7 @@ MonoBehaviour:
               _value: 2
             easeType: 0
     - rid: 1232548282981679128
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
           _value: 0
@@ -7199,7 +7210,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679106
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7300,7 +7311,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470404
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7338,7 +7349,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548553852452918
-      type: {class: F_General, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7525,11 +7536,12 @@ MonoBehaviour:
           option1: -40
           option2: 0
     - rid: 1232548553852452919
-      type: {class: P_Curve, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: P_Curve, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &8456494289702894503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7550,7 +7562,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8267576847255470413
-      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_CameraMove, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
@@ -7588,7 +7600,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 1232548282981679108
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly-CSharp}
+      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0

@@ -4164,6 +4164,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: -50
+        easeType: 3
 --- !u!114 &-6143130367685994552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4793,6 +4794,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: -50
+        easeType: 3
 --- !u!114 &-5774580679711579403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5538,6 +5540,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: -120
+        easeType: 3
     - rid: 4848304274982305814
       type: {class: P_AccelerateHold, ns: NoteCreating, asm: Assembly_Test}
       data:
@@ -11896,6 +11899,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-155170248840183701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17386,8 +17390,11 @@ MonoBehaviour:
       type: {class: P_RotateNote, ns: NoteCreating, asm: Assembly_Test}
       data:
         isGroup: 0
+        timingType: 0
         timing:
           _value: 1
+        timings:
+        - _value: 0.8
         rotateLpb:
           _value: 6
         easeType: 6
@@ -18820,6 +18827,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 8
         dirSpeed: 120
+        easeType: 3
 --- !u!114 &5094877406968973586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19949,6 +19957,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: -8
         dirSpeed: -120
+        easeType: 3
 --- !u!114 &6035011992152642398
 MonoBehaviour:
   m_ObjectHideFlags: 0

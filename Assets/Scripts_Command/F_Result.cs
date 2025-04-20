@@ -16,6 +16,7 @@ namespace NoteCreating
             await FadeLoadSceneManager.Instance.LoadSceneAsync(1, "Result", 1);
         }
 
+
 #if UNITY_EDITOR
 
         protected override Color GetCommandColor()

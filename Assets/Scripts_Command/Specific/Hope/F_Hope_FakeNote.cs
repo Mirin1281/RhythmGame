@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 
 namespace NoteCreating
 {
-    //[UnityEngine.Scripting.APIUpdating.MovedFrom(false, null, "Assembly-CSharp", null)]
     [AddTypeMenu(FumenPathContainer.SpecificRoot + "Hope/フェイクノーツ"), System.Serializable]
     public class F_Hope_FakeNote : CommandBase
     {
