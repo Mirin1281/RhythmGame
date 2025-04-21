@@ -17,6 +17,7 @@ namespace NoteCreating
         void ITransformConvertable.ConvertItem(ItemBase item, float option, float time)
         {
             if (option == 0) return;
+            time -= RhythmGameManager.Offset;
 
             bool reverse = false;
             Lpb timing = Lpb.Zero;

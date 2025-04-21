@@ -177,8 +177,8 @@ namespace NoteCreating
                 if (data.Vertex == VertexType.Detail)
                 {
                     var kn = spline[^1];
-                    kn.TangentIn.z = data.Option.y;
-                    kn.TangentOut.z = data.Option.z;
+                    kn.TangentIn.z = data.Option.y * speed / RhythmGameManager.DefaultSpeed;
+                    kn.TangentOut.z = data.Option.z * speed / RhythmGameManager.DefaultSpeed;
                     spline.SetKnot(spline.Count - 1, new BezierKnot(
                         kn.Position,
                         kn.TangentIn,

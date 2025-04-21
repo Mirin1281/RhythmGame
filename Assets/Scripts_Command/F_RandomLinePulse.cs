@@ -16,7 +16,7 @@ namespace NoteCreating
         [SerializeField] Vector2 yRange = new Vector2(-8f, 8f);
         [SerializeField] Vector2 rotRange = new Vector2(0, 360);
         [SerializeField] Vector2 alphaRange = new Vector2(0, 0.2f);
-        [SerializeField] Vector2 widthRange = new Vector2(0, 0.2f);
+        [SerializeField] Vector2 widthRange = new Vector2(0.1f, 0.1f);
         [Space(20)]
         [SerializeField] int seed = 200;
 
