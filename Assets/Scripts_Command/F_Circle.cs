@@ -90,6 +90,11 @@ namespace NoteCreating
         {
             return CommandEditorUtility.CommandColor_Other;
         }
+
+        protected override string GetSummary()
+        {
+            return $"Length: {circleDatas.Length}{mirror.GetStatusText()}";
+        }
 #endif
     }
 }

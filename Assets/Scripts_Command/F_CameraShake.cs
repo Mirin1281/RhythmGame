@@ -85,7 +85,7 @@ namespace NoteCreating
 
         protected override string GetSummary()
         {
-            return $"{loopCount} - {loopWait.GetLpbValue()} :  {shakeType}";
+            return $"{loopCount} - {loopWait.GetLpbValue()} :  {shakeType}{mirror.GetStatusText()}";
         }
 #endif
     }
