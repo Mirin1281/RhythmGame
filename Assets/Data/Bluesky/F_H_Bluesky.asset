@@ -559,6 +559,74 @@ MonoBehaviour:
       data:
         labelType: 2
         summary: 1-1
+--- !u!114 &-8191586304814558160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (95)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 40
+  command:
+    rid: 216941389019611180
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611180
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 4
+        loopWait:
+          _value: 2
+        shakeType: 0
+        intensity: 2
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
+--- !u!114 &-7940377211987518645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (94)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 32
+  command:
+    rid: 216941389019611180
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611180
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 4
+        loopWait:
+          _value: 2
+        shakeType: 0
+        intensity: -2
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
 --- !u!114 &-7859984406429182619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +710,40 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 2
           option: {x: 120, y: 4, z: 0}
+--- !u!114 &-7719301635946540309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (98)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 56
+  command:
+    rid: 216941389019611180
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611180
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 4
+        loopWait:
+          _value: 4
+        shakeType: 1
+        intensity: 0.3
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
 --- !u!114 &-7683924182504055736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,7 +780,7 @@ MonoBehaviour:
             easeLpb:
               _value: 1
           alphaStatus:
-            start: 0.5
+            start: 0.3
             from: 0
             easeType: 2
             easeLpb:
@@ -699,7 +801,7 @@ MonoBehaviour:
             easeLpb:
               _value: 1
           alphaStatus:
-            start: 0.3
+            start: 0.15
             from: 0
             easeType: 2
             easeLpb:
@@ -720,7 +822,7 @@ MonoBehaviour:
             easeLpb:
               _value: 2
           alphaStatus:
-            start: 0.1
+            start: 0.05
             from: 0
             easeType: 2
             easeLpb:
@@ -741,7 +843,7 @@ MonoBehaviour:
             easeLpb:
               _value: 2
           alphaStatus:
-            start: 0.1
+            start: 0.05
             from: 0
             easeType: 2
             easeLpb:
@@ -1310,6 +1412,78 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-6932571262505428574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (85)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 308
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 5
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+        - x: 2
+          wait:
+            _value: 4
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+        - x: 8
+          wait:
+            _value: 4
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
+        - x: 3
+          wait:
+            _value: 4
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-6924855272209591618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,6 +1958,343 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-6472211258133750010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (93)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 47
+  command:
+    rid: 216941389019611179
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611179
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 2
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 4
+        isChainWait: 1
+        basePos: {x: 7, y: 0}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: -55
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 16
+          enabled: 1
+          startPos: {x: 0.5, y: 0}
+          posEaseDatas: []
+          startRot: -65
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 16
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: -45
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 16
+          enabled: 1
+          startPos: {x: -0.5, y: 0}
+          posEaseDatas: []
+          startRot: -60
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+--- !u!114 &-5822303630155324156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (91)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 40
+  command:
+    rid: 216941389019611178
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611178
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        summary: "\u904A\u3073\u30A8\u30D5\u30A7\u30AF\u30C8\u30CE\u30FC\u30C4"
+        itemType: 1
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 2.285714
+        isChainWait: 1
+        basePos: {x: -10, y: 4}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 4}
+          posEaseDatas:
+          - from: {x: 0, y: 3}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 0, y: 2}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 0, y: 1}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 0, y: 0}
+            easeTime:
+              _value: 32
+            easeType: 20
+          - from: {x: 0, y: -1}
+            easeTime:
+              _value: 32
+            easeType: 20
+          startRot: 0
+          rotEaseDatas: []
+          startAlpha: 1
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 1
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 1
+            easeTime:
+              _value: 32
+            easeType: 20
+          - from: 0
+            easeTime:
+              _value: 32
+            easeType: 20
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 20, y: -4}
+          posEaseDatas:
+          - from: {x: 20, y: -3}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 20, y: -2}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 20, y: -1}
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: {x: 20, y: 0}
+            easeTime:
+              _value: 32
+            easeType: 20
+          - from: {x: 20, y: 1}
+            easeTime:
+              _value: 32
+            easeType: 20
+          startRot: 0
+          rotEaseDatas: []
+          startAlpha: 1
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 1
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 20
+          - from: 1
+            easeTime:
+              _value: 32
+            easeType: 20
+          - from: 0
+            easeTime:
+              _value: 32
+            easeType: 20
+--- !u!114 &-5639055553227572944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (92)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 42
+  command:
+    rid: 216941389019611179
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611179
+      type: {class: F_ItemMove, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        summary: 
+        itemType: 3
+        option: 1
+        setJudge: 0
+        isMultitap: 0
+        lifeLpb:
+          _value: 4
+        isChainWait: 1
+        basePos: {x: 0, y: 4}
+        isRotateFromPos: 0
+        rotateFromPos: 0
+        centerPos: {x: 0, y: 0}
+        createDatas:
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 55
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 65
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 45
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas: []
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 0
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 0
+        - delayLPB:
+            _value: 5.3333335
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 0
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 0
+        - delayLPB:
+            _value: 8
+          enabled: 1
+          startPos: {x: -1, y: 0}
+          posEaseDatas: []
+          startRot: 90
+          rotEaseDatas: []
+          startAlpha: 0.2
+          alphaEaseDatas:
+          - from: 0
+            easeTime:
+              _value: 16
+            easeType: 0
 --- !u!114 &-5598959024921348869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,6 +2319,91 @@ MonoBehaviour:
       data:
         labelType: 1
         summary: 2-2
+--- !u!114 &-5161254476005528604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (66)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 224
+  command:
+    rid: 216941389019611165
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611165
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &-4999647981437338209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,6 +2838,78 @@ MonoBehaviour:
       data:
         useDefault: 1
         defaultRotate: 90
+--- !u!114 &-4254153709391663833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (78)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 320
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 1
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 3}
+        - x: -6
+          wait:
+            _value: 2.6666667
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: -8
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 90, y: 3, z: 0}
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 8
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 90, y: 0, z: 3}
+        - x: 0.5
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 15, y: -3, z: 0}
 --- !u!114 &-4103417663797535776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2694,6 +3362,91 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-3642075419204181712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (69)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 228
+  command:
+    rid: 216941389019611165
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611165
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 0
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &-3405205398463130537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2899,6 +3652,172 @@ MonoBehaviour:
             _value: 2
           option1: 0
           option2: 0
+--- !u!114 &-3375730932494581861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (82)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 312
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -5
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 2.666667
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 2.6666667
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 2.666667
+          option: {x: 0, y: 0, z: 0}
+        - x: -3
+          wait:
+            _value: 2.666667
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -7
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+--- !u!114 &-3210993171464268282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (81)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 316
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -5
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 2.666667
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 2.6666667
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 2.666667
+          option: {x: 0, y: 0, z: 0}
+        - x: -3
+          wait:
+            _value: 2.666667
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: 0, z: 0}
+        - x: -7
+          wait:
+            _value: 16
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-3099825066712985660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3441,6 +4360,231 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-2377700818994999913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (70)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 232
+  command:
+    rid: 216941389019611166
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611166
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -8
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -5
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2
+          type: 0
+          x: -5
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 8
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 5
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 2
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -1
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -4
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -1
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+--- !u!114 &-2175474443747352757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (44)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 224
+  command:
+    rid: 216941389019611164
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611164
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 5.3333335
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 5.3333335
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-2141866883817794964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3764,6 +4908,156 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-1419893724561956570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (96)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 48
+  command:
+    rid: 216941389019611180
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611180
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 4
+        loopWait:
+          _value: 4
+        shakeType: 0
+        intensity: -2
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
+--- !u!114 &-1244143433880615163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (67)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 228
+  command:
+    rid: 216941389019611164
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611164
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: -6
+          wait:
+            _value: 5.3333335
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 8
+          vertexType: 1
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 5.3333335
+          vertexType: 1
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-818238835804550842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3944,6 +5238,7 @@ MonoBehaviour:
         isGroup: 0
         centerX: 0
         dirSpeed: 50
+        easeType: 3
 --- !u!114 &-773155533641707218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3976,6 +5271,299 @@ MonoBehaviour:
         hideWaitRange: {x: 1, y: 4}
         showWaitRange: {x: 1, y: 2}
         isDelayOneFrame: 1
+--- !u!114 &-616867887624257583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (90)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 352
+  command:
+    rid: 216941389019611176
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611176
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 2
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 2
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &-585454119617011654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4069,6 +5657,310 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &-240675310727662124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (75)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 328
+  command:
+    rid: 4848304586674667527
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667527
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &-169461976306004923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (79)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 320
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 3}
+        - x: 0
+          wait:
+            _value: 2.6666667
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: -8
+          aheadJudgeRange:
+            _value: 8
+          option: {x: 90, y: 3, z: 0}
+        - x: 0
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 8
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 90, y: 0, z: 3}
+        - x: 6
+          wait:
+            _value: 2
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 16
+          option: {x: 0, y: -4, z: 0}
+--- !u!114 &-69711603567167447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (77)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 324
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 60, y: 0, z: 4}
+        - x: -6
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 120, y: 4, z: 0}
+        - x: 1
+          wait:
+            _value: 2
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: -4, z: 4}
+        - x: -6
+          wait:
+            _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 120, y: 4, z: 0}
+        - x: -6
+          wait:
+            _value: 2
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 8
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 120, y: 4, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4085,7 +5977,7 @@ MonoBehaviour:
   noteCount: 1
   <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 24
-  <SlidePoolCount>k__BackingField: 20
+  <SlidePoolCount>k__BackingField: 30
   <HoldPoolCount>k__BackingField: 20
   <ArcPoolCount>k__BackingField: 20
   <LinePoolCount>k__BackingField: 20
@@ -4104,8 +5996,16 @@ MonoBehaviour:
     - {fileID: 6450752109164295299}
     - {fileID: -7683924182504055736}
     - {fileID: -6888999813834538337}
+    - {fileID: -7940377211987518645}
+    - {fileID: -8191586304814558160}
+    - {fileID: -1419893724561956570}
+    - {fileID: 5667994687517834283}
+    - {fileID: -7719301635946540309}
     - {fileID: 7825363114218887370}
     - {fileID: 4732823596628259228}
+    - {fileID: -5822303630155324156}
+    - {fileID: -5639055553227572944}
+    - {fileID: -6472211258133750010}
     - {fileID: -7374676559101480899}
     - {fileID: -4637125850609662033}
     - {fileID: 9185158688655825195}
@@ -4120,7 +6020,6 @@ MonoBehaviour:
     - {fileID: 3704465378311862085}
     - {fileID: -6627444555868017226}
     - {fileID: 1490478630783912523}
-    - {fileID: 1271183893826172680}
     - {fileID: -4999647981437338209}
     - {fileID: 975628358222299136}
     - {fileID: 4714767130572836428}
@@ -4161,15 +6060,113 @@ MonoBehaviour:
     - {fileID: -1995473989428552239}
     - {fileID: -2578197471289974166}
     - {fileID: -5598959024921348869}
+    - {fileID: 4691053667188200720}
+    - {fileID: -2175474443747352757}
+    - {fileID: -5161254476005528604}
+    - {fileID: -1244143433880615163}
+    - {fileID: -3642075419204181712}
+    - {fileID: -2377700818994999913}
+    - {fileID: 2699190208909682369}
+    - {fileID: 6616448256575127920}
     - {fileID: 7455884570502793141}
     - {fileID: 8157211051260737466}
     - {fileID: 4221241922976721465}
     - {fileID: 3468379508207327852}
     - {fileID: 8788009891631661267}
-    - {fileID: 761290146156473550}
     - {fileID: 5756837817618977474}
+    - {fileID: 6480774538856525243}
+    - {fileID: 6091983428993335789}
+    - {fileID: 2922948107972253245}
     - {fileID: 1308075150683410537}
+    - {fileID: 541237929708176853}
+    - {fileID: -6932571262505428574}
+    - {fileID: 7243242643245119793}
+    - {fileID: 6510709494588388398}
+    - {fileID: -3375730932494581861}
+    - {fileID: -3210993171464268282}
+    - {fileID: 7196523933186341405}
+    - {fileID: -169461976306004923}
+    - {fileID: -4254153709391663833}
+    - {fileID: -69711603567167447}
+    - {fileID: 6465329885787799572}
+    - {fileID: -240675310727662124}
     - {fileID: 7080959673275693705}
+    - {fileID: 3758746015336309392}
+    - {fileID: 866780377063846677}
+    - {fileID: -616867887624257583}
+    - {fileID: 4190320799270603892}
+--- !u!114 &541237929708176853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (86)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 305
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: -5
+          wait:
+            _value: 0
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: -2
+          wait:
+            _value: 5.3333335
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: -8
+          wait:
+            _value: 5.333333
+          vertexType: 0
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.333333
+          option: {x: 0, y: 0, z: 0}
+        - x: -4
+          wait:
+            _value: 5.333333
+          vertexType: 0
+          isJudgeDisable: 1
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 0, y: 0, z: 0}
 --- !u!114 &642090116053766288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4415,7 +6412,7 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
---- !u!114 &761290146156473550
+--- !u!114 &866780377063846677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4425,16 +6422,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Bluesky (64)
+  m_Name: Command_F_H_Bluesky (88)
   m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 272
+  enable: 1
+  beatTiming: 344
   command:
-    rid: 4848304586674667537
+    rid: 216941389019611176
   references:
     version: 2
     RefIds:
-    - rid: 4848304586674667537
+    - rid: 216941389019611176
       type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
@@ -4442,80 +6439,152 @@ MonoBehaviour:
         speedRate: 1
         isVerticalRange: 0
         transformConverter:
-          transformConvertables:
-          - rid: 4848304586674667538
+          transformConvertables: []
         noteDatas:
         - wait:
             _value: 0
-          type: 3
-          x: 6
-          length:
-            _value: 32
-          option1: 20
-          option2: 0
-        - wait:
-            _value: 4
-          type: 3
-          x: -4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
           type: 1
-          x: 0
-          length:
-            _value: 32
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 3
-          x: 4
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 0
-          length:
-            _value: 32
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 32
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 0
-          x: -4
-          length:
-            _value: 32
-          option1: 1
-          option2: 0
-        - wait:
-            _value: 8
-          type: 3
           x: -6
           length:
-            _value: 32
-          option1: 1
+            _value: 4
+          option1: 0
           option2: 0
-    - rid: 4848304586674667538
-      type: {class: P_AccelerateHold, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        useDefault: 0
-        defaultAccelerate: 2
-        easeType: 2
-        speedRate: 1
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &975628358222299136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4588,52 +6657,6 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 4
           option: {x: 0, y: 0, z: 0}
---- !u!114 &1271183893826172680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Bluesky (44)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 96
-  command:
-    rid: 4848304586674667523
-  references:
-    version: 2
-    RefIds:
-    - rid: 4848304586674667523
-      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        datas:
-        - wait:
-            _value: 0
-          point: {x: -6, y: 0}
-          length:
-            _value: 1.3333334
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 1
-          dir: 20
-          curve: 5
-        - wait:
-            _value: 0
-          point: {x: 6, y: 4}
-          length:
-            _value: 8
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 1
 --- !u!114 &1308075150683410537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5763,6 +7786,42 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &2699190208909682369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (71)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 234
+  command:
+    rid: 216941389019611167
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611167
+      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - wait:
+            _value: 0
+          point: {x: 1, y: 1}
+          length:
+            _value: 2.6666667
+          isOverlappable: 0
+          isDetailed: 0
+          twoJudge: 0
+          dir: 20
+          curve: 2
 --- !u!114 &2837771751117947141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5988,6 +8047,275 @@ MonoBehaviour:
             _value: 16
           type: 1
           x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &2922948107972253245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (64)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 288
+  command:
+    rid: 4848304582315474965
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304582315474965
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 3
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: -5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 8
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -8
           length:
             _value: 4
           option1: 0
@@ -6888,6 +9216,171 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 16
           option: {x: 15, y: -3, z: 0}
+--- !u!114 &3758746015336309392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (87)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 336
+  command:
+    rid: 216941389019611176
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611176
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &3991321621870943631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6912,6 +9405,52 @@ MonoBehaviour:
       data:
         labelType: 1
         summary: 2-1
+--- !u!114 &4190320799270603892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (89)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 367
+  command:
+    rid: 216941389019611177
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611177
+      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        datas:
+        - wait:
+            _value: 0
+          point: {x: -3, y: -3}
+          length:
+            _value: 4
+          isOverlappable: 1
+          isDetailed: 0
+          twoJudge: 0
+          dir: 20
+          curve: 2
+        - wait:
+            _value: 0
+          point: {x: 3, y: 3}
+          length:
+            _value: 4
+          isOverlappable: 1
+          isDetailed: 0
+          twoJudge: 0
+          dir: 20
+          curve: 2
 --- !u!114 &4221241922976721465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7143,6 +9682,40 @@ MonoBehaviour:
             _value: 4
           option1: 0
           option2: 0
+--- !u!114 &4691053667188200720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (68)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 224
+  command:
+    rid: 216941389019611160
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611160
+      type: {class: F_JudgeLine, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        alpha: 1
+        fadeInLpb:
+          _value: 4
+        lifeLpb:
+          _value: 4
+        lifeCount: 32
+        fadeOutLpb:
+          _value: 4
+        deg: 0
+        pos: {x: 0, y: 0}
 --- !u!114 &4714767130572836428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7729,6 +10302,41 @@ MonoBehaviour:
         isGroup: 1
         centerX: 0
         dirSpeed: 15
+        easeType: 3
+--- !u!114 &5667994687517834283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (97)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 52
+  command:
+    rid: 216941389019611180
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611180
+      type: {class: F_CameraShake, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        loopCount: 4
+        loopWait:
+          _value: 4
+        shakeType: 0
+        intensity: 2
+        time:
+          _value: 4
+        easeType: 3
+        option: 100
+        offset: 1
 --- !u!114 &5756837817618977474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7741,7 +10349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_Bluesky (65)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 272
   command:
     rid: 4848304586674667537
@@ -7838,6 +10446,163 @@ MonoBehaviour:
             _value: 32
           option1: 1
           option2: 0
+--- !u!114 &6091983428993335789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (72)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 275
+  command:
+    rid: 4848304582315474965
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304582315474965
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 4
+          type: 1
+          x: 7
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 3
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 1
+          x: -5
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -8
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: -3
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 3
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 6
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 8
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 8
+          length:
+            _value: 1
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
 --- !u!114 &6450752109164295299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7927,6 +10692,543 @@ MonoBehaviour:
             easeType: 2
             easeLpb:
               _value: 2
+--- !u!114 &6465329885787799572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (76)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 324
+  command:
+    rid: 4848304586674667524
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667524
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 0
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 65, y: 0, z: 2}
+        - x: 4.5
+          wait:
+            _value: 4
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: 20, y: -2, z: 4}
+--- !u!114 &6480774538856525243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (74)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 272
+  command:
+    rid: 216941389019611174
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941389019611174
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -6
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 6
+          length:
+            _value: 8
+          option1: -15
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 5
+          length:
+            _value: 8
+          option1: -15
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -3
+          length:
+            _value: 8
+          option1: -15
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -8
+          length:
+            _value: 1
+          option1: -15
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 8
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+--- !u!114 &6510709494588388398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (83)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 312
+  command:
+    rid: 4848304586674667525
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667525
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.6666667
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2.666667
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -8
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &6616448256575127920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (73)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 240
+  command:
+    rid: 4848304586674667529
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667529
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 0
+          length:
+            _value: 0
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: -4
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -6
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: 2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 4
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 0
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: -2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 0
+          x: -2
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 4
+          length:
+            _value: 2.6666667
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 2
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 3
+          x: 2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 3
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &6933170593034362896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8212,6 +11514,296 @@ MonoBehaviour:
       data:
         labelType: 4
         summary: 
+--- !u!114 &7196523933186341405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (80)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 320
+  command:
+    rid: 4848304586674667527
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667527
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 1.3333334
+          type: 0
+          x: 0
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 0
+          x: 1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 5.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 4.6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: 5.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+--- !u!114 &7243242643245119793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Bluesky (84)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 304
+  command:
+    rid: 4848304586674667522
+  references:
+    version: 2
+    RefIds:
+    - rid: 4848304586674667522
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 3
+          x: -5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 0
+          type: 3
+          x: 5
+          length:
+            _value: 8
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 4
+          type: 1
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: 8
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 5.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: 0.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 0
+          x: -1
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 2
+          x: -2
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -7
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 8
+          type: 1
+          x: -8
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -5.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -3
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 32
+          type: 2
+          x: -0.5
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &7455884570502793141
 MonoBehaviour:
   m_ObjectHideFlags: 0

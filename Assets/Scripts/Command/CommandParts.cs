@@ -30,7 +30,7 @@ namespace NoteCreating
 
         /// <summary>
         /// enabledがtrueの時、-1倍して返します
-        /// </summary>s
+        /// </summary>
         public readonly float Conv(float x) => x * (enabled ? -1 : 1);
         public readonly int Conv(int x) => x * (enabled ? -1 : 1);
         public readonly Vector3 Conv(Vector3 pos) => new Vector3(Conv(pos.x), pos.y, pos.z);
