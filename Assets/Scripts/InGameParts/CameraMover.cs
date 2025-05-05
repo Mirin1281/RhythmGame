@@ -53,6 +53,19 @@ public class CameraMoveSetting
         this.easeType = easeType;
         this.moveType = moveType;
     }
+
+    public CameraMoveSetting(bool _)
+    {
+        this.wait = default;
+        this.isPosMove = false;
+        this.pos = default;
+        this.isRotateMove = false;
+        this.rotate = default;
+        this.isRotateClamp = true;
+        this.lpb = new Lpb(1);
+        this.easeType = EaseType.Default;
+        this.moveType = CameraMoveType.Relative;
+    }
 }
 
 public class CameraMover : MonoBehaviour

@@ -13,7 +13,7 @@ namespace NoteCreating
         bool isChainWait = true;
         [SerializeField] bool offset = true;
 
-        [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1];
+        [SerializeField] CameraMoveSetting[] settings = new CameraMoveSetting[1] { new CameraMoveSetting(false) };
 
         protected override async UniTaskVoid ExecuteAsync()
         {
