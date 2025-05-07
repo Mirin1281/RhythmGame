@@ -546,19 +546,19 @@ MonoBehaviour:
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
-            _value: 8
-          option: {x: -70, y: 0, z: 4}
-        - x: 4
-          wait:
             _value: 4
+          option: {x: -70, y: 0, z: 4}
+        - x: 3
+          wait:
+            _value: 2.6666667
           vertexType: 3
           isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 8
+            _value: 4
           aheadJudgeRange:
-            _value: 3.2
-          option: {x: -40, y: -3, z: 0}
+            _value: 2
+          option: {x: -40, y: -6, z: 0}
         - x: 0
           wait:
             _value: 2
@@ -566,18 +566,18 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 16
+            _value: 0
           aheadJudgeRange:
-            _value: 4
+            _value: 5.3333335
           option: {x: 0, y: -4, z: 0}
         - x: 0
           wait:
             _value: 0
           vertexType: 2
-          isJudgeDisable: 1
+          isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 8
+            _value: 5.333333
           aheadJudgeRange:
             _value: 2.666667
           option: {x: 70, y: 0, z: 2}
@@ -1119,67 +1119,6 @@ MonoBehaviour:
             easeTime:
               _value: 4
             easeType: 0
---- !u!114 &-7744689968329950396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_N_Lampranthus (18)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 136
-  command:
-    rid: 216941420617400327
-  references:
-    version: 2
-    RefIds:
-    - rid: 216941420617400327
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        commandData: {fileID: 0}
-        option: 0
-        datas:
-        - x: 3
-          wait:
-            _value: 0
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 5.333335
-          option: {x: 0, y: 0, z: 0}
-        - x: -1
-          wait:
-            _value: 10.666667
-          vertexType: 1
-          isJudgeDisable: 1
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
-        - x: -1
-          wait:
-            _value: 10.66667
-          vertexType: 0
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 4
-          option: {x: 0, y: 0, z: 0}
 --- !u!114 &-7571169497042667218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,7 +1368,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -1440,7 +1379,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -1451,7 +1390,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -1462,7 +1401,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -1484,7 +1423,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -2115,7 +2054,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -2126,7 +2065,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -2137,7 +2076,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -2148,7 +2087,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -2159,7 +2098,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -4266,89 +4205,6 @@ MonoBehaviour:
           lpb:
             _value: 1
           moveType: 1
---- !u!114 &-2260265095786676714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Lampranthus (141)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 208
-  command:
-    rid: 7519555101131800586
-  references:
-    version: 2
-    RefIds:
-    - rid: 7519555101131800586
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 1
-        speedRate: 1
-        commandData: {fileID: 0}
-        option: 0
-        datas:
-        - x: 6
-          wait:
-            _value: 0
-          vertexType: 2
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: -70, y: 0, z: 4}
-        - x: 4
-          wait:
-            _value: 4
-          vertexType: 3
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 8
-          aheadJudgeRange:
-            _value: 3.2
-          option: {x: -40, y: -3, z: 0}
-        - x: 0
-          wait:
-            _value: 2
-          vertexType: 2
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 16
-          aheadJudgeRange:
-            _value: 4
-          option: {x: 0, y: -4, z: 0}
-        - x: 0
-          wait:
-            _value: 0
-          vertexType: 2
-          isJudgeDisable: 1
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 8
-          aheadJudgeRange:
-            _value: 2.666667
-          option: {x: 70, y: 0, z: 2}
-        - x: 3
-          wait:
-            _value: 2.6666667
-          vertexType: 2
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: -40, y: -6, z: 0}
 --- !u!114 &-2125445564838613077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5278,6 +5134,89 @@ MonoBehaviour:
             easeTime:
               _value: 4
             easeType: 0
+--- !u!114 &-709207972788660012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_H_Lampranthus (142)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 208
+  command:
+    rid: 7519555101131800586
+  references:
+    version: 2
+    RefIds:
+    - rid: 7519555101131800586
+      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        commandData: {fileID: 0}
+        option: 0
+        datas:
+        - x: 6
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 4
+          option: {x: -70, y: 0, z: 4}
+        - x: 3
+          wait:
+            _value: 2.6666667
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 4
+          aheadJudgeRange:
+            _value: 2
+          option: {x: -40, y: -6, z: 0}
+        - x: 0
+          wait:
+            _value: 2
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 5.3333335
+          option: {x: 0, y: -4, z: 0}
+        - x: 0
+          wait:
+            _value: 0
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 5.333333
+          aheadJudgeRange:
+            _value: 2.666667
+          option: {x: 70, y: 0, z: 2}
+        - x: 3
+          wait:
+            _value: 2.6666667
+          vertexType: 2
+          isJudgeDisable: 0
+          isOverlappable: 0
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 8
+          option: {x: -40, y: -6, z: 0}
 --- !u!114 &-452916709155299009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5792,11 +5731,9 @@ MonoBehaviour:
     - {fileID: 6055171876429867945}
     - {fileID: 5152886077898393902}
     - {fileID: -7183032707230414264}
-    - {fileID: -7744689968329950396}
     - {fileID: 4150368450830515143}
     - {fileID: -9054631659702658992}
     - {fileID: -6147757873298082735}
-    - {fileID: 4211490440195366046}
     - {fileID: -8051186450409432022}
     - {fileID: 8212560687107215506}
     - {fileID: -2407621463238173820}
@@ -5835,7 +5772,7 @@ MonoBehaviour:
     - {fileID: 525855737705050528}
     - {fileID: -452916709155299009}
     - {fileID: 3256179156455933701}
-    - {fileID: -2260265095786676714}
+    - {fileID: -709207972788660012}
     - {fileID: 7568778001842502106}
     - {fileID: 916826445531961842}
     - {fileID: -5866520669556698780}
@@ -7228,7 +7165,7 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 4
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 50, y: -3, z: 0}
@@ -7547,7 +7484,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 0
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7558,7 +7495,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7569,7 +7506,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7580,7 +7517,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7871,7 +7808,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7882,7 +7819,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7893,7 +7830,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7904,7 +7841,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -8096,67 +8033,6 @@ MonoBehaviour:
           vertexType: 0
           isJudgeDisable: 0
           isOverlappable: 1
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 4
-          option: {x: 0, y: 0, z: 0}
---- !u!114 &4211490440195366046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_N_Lampranthus (23)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 140
-  command:
-    rid: 216941420617400327
-  references:
-    version: 2
-    RefIds:
-    - rid: 216941420617400327
-      type: {class: F_Arc, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        commandData: {fileID: 0}
-        option: 0
-        datas:
-        - x: -2
-          wait:
-            _value: 0
-          vertexType: 1
-          isJudgeDisable: 0
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 5.333335
-          option: {x: 0, y: 0, z: 0}
-        - x: -6
-          wait:
-            _value: 10.666667
-          vertexType: 1
-          isJudgeDisable: 1
-          isOverlappable: 0
-          behindJudgeRange:
-            _value: 0
-          aheadJudgeRange:
-            _value: 8
-          option: {x: 0, y: 0, z: 0}
-        - x: -6
-          wait:
-            _value: 10.66667
-          vertexType: 0
-          isJudgeDisable: 0
-          isOverlappable: 0
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -9120,18 +8996,18 @@ MonoBehaviour:
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
-            _value: 2.666667
+            _value: 5.333333
           option: {x: 60, y: -8, z: 0}
         - x: 6
           wait:
             _value: 0
           vertexType: 2
-          isJudgeDisable: 1
+          isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 0
+            _value: 5.333333
           aheadJudgeRange:
-            _value: 4
+            _value: 2.6666667
           option: {x: -60, y: 0, z: 8}
         - x: 4.5
           wait:
@@ -9727,7 +9603,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -9738,7 +9614,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -9749,7 +9625,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -9760,7 +9636,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -10254,18 +10130,18 @@ MonoBehaviour:
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
-            _value: 2.666667
+            _value: 5.3333335
           option: {x: 60, y: -8, z: 0}
         - x: 6
           wait:
             _value: 0
           vertexType: 2
-          isJudgeDisable: 1
+          isJudgeDisable: 0
           isOverlappable: 0
           behindJudgeRange:
-            _value: 0
+            _value: 5.333333
           aheadJudgeRange:
-            _value: 4
+            _value: 2.6666667
           option: {x: -60, y: 0, z: 8}
         - x: 4.5
           wait:
@@ -10443,7 +10319,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -10454,7 +10330,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -10465,7 +10341,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -10476,7 +10352,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:

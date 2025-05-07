@@ -39,7 +39,8 @@ namespace NoteCreating
             float lifeTime = MoveTime + 0.2f;
             for (int i = 0; i < datas.Length; i++)
             {
-                lifeTime += datas[i].Wait.Time;
+                if (datas[i].Vertex != ArcCreateData.VertexType.JudgeOnly)
+                    lifeTime += datas[i].Wait.Time;
             }
             WhileYield(lifeTime, t =>
             {
@@ -48,7 +49,7 @@ namespace NoteCreating
                 arc.SetPos(basePos);
                 if (followable != null)
                 {
-                    followable.ConvertItem(arc, groupTime: -Delta, unGroupTime: t, option);
+                    followable.ConvertItem(arc, groupTime: 0, unGroupTime: t, option);
                 }
             });
 

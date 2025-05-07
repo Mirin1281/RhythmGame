@@ -23,10 +23,10 @@ namespace NoteCreating
                 float dir = i * 2 * Mathf.PI / curveCount;
                 Vector2 inputPos = (i % 4) switch
                 {
-                    0 => new Vector2(0, 4),
-                    1 => new Vector2(0, -4),
-                    2 => new Vector2(-7, 0),
-                    3 => new Vector2(7, 0),
+                    0 => new Vector2(-6, 0),
+                    1 => new Vector2(-2, 0),
+                    2 => new Vector2(2, 0),
+                    3 => new Vector2(6, 0),
                     _ => throw new System.ArithmeticException(),
                 };
                 CurveJudges(dir, inputPos, i != 0).Forget();
@@ -40,7 +40,7 @@ namespace NoteCreating
             {
                 float d = i.Ease(0, rotate, count, EaseType.InQuad) - dir;
                 Vector2 pos = size * i * new Vector2(Mathf.Cos(d), Mathf.Sin(d));
-                EffectJudge(startPos + inputPos, startPos + pos, wideRange: false, isMute);
+                EffectJudge(inputPos, startPos + pos, wideRange: false, isMute);
                 await Wait(lpbInterval);
             }
         }
