@@ -42,6 +42,17 @@ MonoBehaviour:
         - x: 0
           wait:
             _value: 2
+          vertexType: 3
+          isJudgeDisable: 0
+          isOverlappable: 1
+          behindJudgeRange:
+            _value: 0
+          aheadJudgeRange:
+            _value: 2
+          option: {x: 0, y: 0, z: 0}
+        - x: 0
+          wait:
+            _value: 2
           vertexType: 0
           isJudgeDisable: 1
           isOverlappable: 0
@@ -5904,14 +5915,14 @@ MonoBehaviour:
   m_Name: F_N_Archangel
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: 1dc72a5ecacf8fe42aaf0a1be4ff6b07, type: 2}
-  noteCount: 567
+  noteCount: 391
   <PcmAnalyzerSamples>k__BackingField: -1
-  <NormalPoolCount>k__BackingField: 20
+  <NormalPoolCount>k__BackingField: 16
   <SlidePoolCount>k__BackingField: 27
-  <HoldPoolCount>k__BackingField: 9
-  <ArcPoolCount>k__BackingField: 4
-  <LinePoolCount>k__BackingField: 30
-  <CirclePoolCount>k__BackingField: 9
+  <HoldPoolCount>k__BackingField: 5
+  <ArcPoolCount>k__BackingField: 5
+  <LinePoolCount>k__BackingField: 23
+  <CirclePoolCount>k__BackingField: 2
   fumen:
     commandDataList:
     - {fileID: -4372613348595208195}
@@ -6679,7 +6690,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 0
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -9679,7 +9690,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 0
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -10314,7 +10325,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 1
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:

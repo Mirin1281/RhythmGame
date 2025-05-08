@@ -47,9 +47,10 @@ namespace NoteCreating
 
         async UniTaskVoid MoveNote(RegularNote note, Vector2 startPos, float delta, int index)
         {
+            var speed = Speed;
             delta = await WhileYieldAsync(interval.Time, t =>
             {
-                note.SetPos(new Vector3(startPos.x, deltaY - (startPos.y - t * Speed)));
+                note.SetPos(new Vector3(startPos.x, deltaY - (startPos.y - t * speed)));
             }, delta);
 
             if (index == 1)
@@ -94,7 +95,6 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
-
         protected override string GetName()
         {
             return "Q_Dummy";

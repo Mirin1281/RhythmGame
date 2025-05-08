@@ -117,6 +117,10 @@ namespace NoteCreating
         }
 
 #if UNITY_EDITOR
+        protected override string GetSummary()
+        {
+            return target.ToString();
+        }
 
         protected override Color GetCommandColor()
         {

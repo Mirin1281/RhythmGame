@@ -833,112 +833,6 @@ MonoBehaviour:
           aheadJudgeRange:
             _value: 4
           option: {x: -20, y: -3, z: 0}
---- !u!114 &-7661212365983814243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Hope (125)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 336
-  command:
-    rid: 4848304545626062849
-  references:
-    version: 2
-    RefIds:
-    - rid: 4848304545626062849
-      type: {class: F_SimpleArc, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        datas:
-        - wait:
-            _value: 0
-          point: {x: -6, y: -3}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 0, y: 3}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 0, y: -3}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 6, y: 3}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 0, y: 4}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 0, y: -4}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: 6, y: 2}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
-        - wait:
-            _value: 4
-          point: {x: -6, y: -2}
-          length:
-            _value: 5.3333335
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 0
-          dir: 20
-          curve: 2
 --- !u!114 &-7641200877471891900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2928,7 +2822,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 5
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -2944,7 +2838,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 3
+          x: -1
           length:
             _value: 4
           option1: 0
@@ -2960,7 +2854,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: 1
+          x: -3
           length:
             _value: 4
           option1: 0
@@ -2992,7 +2886,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: -5
+          x: -1
           length:
             _value: 4
           option1: 0
@@ -3008,7 +2902,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: -3
+          x: 1
           length:
             _value: 4
           option1: 0
@@ -3024,7 +2918,7 @@ MonoBehaviour:
         - wait:
             _value: 8
           type: 1
-          x: -1
+          x: 3
           length:
             _value: 4
           option1: 0
@@ -10026,14 +9920,14 @@ MonoBehaviour:
   m_Name: F_N_Hope
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: c41d8a71e97877c40a0a7a45840c3a00, type: 2}
-  noteCount: 1029
+  noteCount: 651
   <PcmAnalyzerSamples>k__BackingField: -1
-  <NormalPoolCount>k__BackingField: 21
+  <NormalPoolCount>k__BackingField: 16
   <SlidePoolCount>k__BackingField: 20
-  <HoldPoolCount>k__BackingField: 20
-  <ArcPoolCount>k__BackingField: 13
-  <LinePoolCount>k__BackingField: 30
-  <CirclePoolCount>k__BackingField: 20
+  <HoldPoolCount>k__BackingField: 10
+  <ArcPoolCount>k__BackingField: 7
+  <LinePoolCount>k__BackingField: 60
+  <CirclePoolCount>k__BackingField: 5
   fumen:
     commandDataList:
     - {fileID: 7854152155230304259}
@@ -10170,12 +10064,9 @@ MonoBehaviour:
     - {fileID: 8824685870995922622}
     - {fileID: -5701245941745203282}
     - {fileID: -7029141615518842199}
-    - {fileID: 3441275469479464443}
     - {fileID: -1167344881377567519}
     - {fileID: -3805553414446203990}
     - {fileID: 4511937938451791857}
-    - {fileID: -7661212365983814243}
-    - {fileID: 6230337394258406829}
     - {fileID: -5882897900696648311}
     - {fileID: 1012038669747283496}
     - {fileID: 1739406432200898343}
@@ -10870,7 +10761,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: 7.5, y: 0}
+          startPos: {x: 11, y: 0}
           posEaseDatas: []
           startRot: 0
           rotEaseDatas:
@@ -10887,7 +10778,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: 7.5, y: 0}
+          startPos: {x: 11, y: 0}
           posEaseDatas: []
           startRot: 90
           rotEaseDatas:
@@ -10904,7 +10795,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 4
           enabled: 1
-          startPos: {x: -1, y: 0}
+          startPos: {x: -11, y: 0}
           posEaseDatas: []
           startRot: -90
           rotEaseDatas:
@@ -10921,7 +10812,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: -1, y: 0}
+          startPos: {x: -11, y: 0}
           posEaseDatas: []
           startRot: 0
           rotEaseDatas:
@@ -10938,7 +10829,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 4
           enabled: 1
-          startPos: {x: 3, y: 0}
+          startPos: {x: 11, y: 0}
           posEaseDatas: []
           startRot: 0
           rotEaseDatas:
@@ -10955,7 +10846,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: 3, y: 0}
+          startPos: {x: 11, y: 0}
           posEaseDatas: []
           startRot: -90
           rotEaseDatas:
@@ -10972,7 +10863,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 4
           enabled: 1
-          startPos: {x: -5, y: 0}
+          startPos: {x: -11, y: 0}
           posEaseDatas: []
           startRot: 0
           rotEaseDatas:
@@ -10989,7 +10880,7 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: -5, y: 0}
+          startPos: {x: -11, y: 0}
           posEaseDatas: []
           startRot: 90
           rotEaseDatas:
@@ -11788,30 +11679,30 @@ MonoBehaviour:
         datas:
         - wait:
             _value: 0
-          point: {x: 5, y: -3}
-          length:
-            _value: 2
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 1
-          dir: 20
-          curve: 5
-        - wait:
-            _value: 2
-          point: {x: 5, y: -4}
-          length:
-            _value: 2
-          isOverlappable: 0
-          isDetailed: 1
-          twoJudge: 1
-          dir: 20
-          curve: 5
-        - wait:
-            _value: 2
           point: {x: 5, y: -5}
           length:
             _value: 2
           isOverlappable: 0
+          isDetailed: 1
+          twoJudge: 1
+          dir: 20
+          curve: 5
+        - wait:
+            _value: 2
+          point: {x: -5, y: 3}
+          length:
+            _value: 2
+          isOverlappable: 1
+          isDetailed: 1
+          twoJudge: 1
+          dir: 20
+          curve: 5
+        - wait:
+            _value: 2
+          point: {x: -7, y: 2}
+          length:
+            _value: 2
+          isOverlappable: 1
           isDetailed: 1
           twoJudge: 1
           dir: 20
@@ -13302,13 +13193,13 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
-        summary: "\u30B9\u30E9\u30A4\u30C9"
-        itemType: 1
+        summary: "\u56DE\u8EE2\u30E9\u30A4\u30F3"
+        itemType: 3
         option: 4
         setJudge: 0
         isMultitap: 0
         lifeLpb:
-          _value: 0.25
+          _value: 0.125
         isChainWait: 1
         basePos: {x: 0, y: 4}
         isRotateFromPos: 0
@@ -13318,28 +13209,53 @@ MonoBehaviour:
         - delayLPB:
             _value: 0
           enabled: 1
-          startPos: {x: 0, y: 8}
-          posEaseDatas:
-          - from: {x: 0, y: 0}
-            easeTime:
-              _value: 0.5
-            easeType: 0
-          - from: {x: 0, y: -12}
-            easeTime:
-              _value: 0.5
-            easeType: 8
-          startRot: 0
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 45
           rotEaseDatas:
-          - from: 680
+          - from: 225
             easeTime:
-              _value: 0.5
+              _value: 0.125
+            easeType: 1
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 0.1
+            easeTime:
+              _value: 1
             easeType: 0
-          - from: 360
+          - from: 0
             easeTime:
-              _value: 0.5
-            easeType: 8
-          startAlpha: 1
-          alphaEaseDatas: []
+              _value: 0.1666667
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 1
+            easeType: 0
+        - delayLPB:
+            _value: 0
+          enabled: 1
+          startPos: {x: 0, y: 0}
+          posEaseDatas: []
+          startRot: 135
+          rotEaseDatas:
+          - from: 315
+            easeTime:
+              _value: 0.125
+            easeType: 1
+          startAlpha: 0
+          alphaEaseDatas:
+          - from: 0.1
+            easeTime:
+              _value: 1
+            easeType: 0
+          - from: 0
+            easeTime:
+              _value: 0.1666667
+            easeType: 22
+          - from: 0
+            easeTime:
+              _value: 1
+            easeType: 0
 --- !u!114 &1737139635109630925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15417,285 +15333,6 @@ MonoBehaviour:
             easeTime:
               _value: 2
             easeType: 0
---- !u!114 &3441275469479464443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Hope (121)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 320
-  command:
-    rid: 4848304541995368456
-  references:
-    version: 2
-    RefIds:
-    - rid: 4848304541995368456
-      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        isVerticalRange: 0
-        transformConverter:
-          transformConvertables:
-          - rid: 4848304613486231556
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 3
-          x: -4
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 4
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -6
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 2
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -2
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 6
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -7
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 1
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -7
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 1
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -2
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 6
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 1
-          x: -4
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 8
-          type: 1
-          x: 4
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 4
-          type: 3
-          x: -4
-          length:
-            _value: 16
-          option1: -2
-          option2: 1
-        - wait:
-            _value: 0
-          type: 3
-          x: 4
-          length:
-            _value: 16
-          option1: 2
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -2
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 6
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -6
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 2
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -1
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 7
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -1
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 7
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 3
-          x: -6
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 0
-          type: 3
-          x: 2
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 4
-          type: 1
-          x: 4
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 16
-          option1: -4
-          option2: -1
-        - wait:
-            _value: 8
-          type: 1
-          x: 4
-          length:
-            _value: 16
-          option1: 4
-          option2: 1
-    - rid: 4848304613486231556
-      type: {class: P_SideMove, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        isGroup: 0
-        moveStartLpb:
-          _value: 1.066667
-        moveLpb:
-          _value: 4
-        easeType: 3
 --- !u!114 &3478172797037224655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17829,18 +17466,17 @@ MonoBehaviour:
   enable: 1
   beatTiming: 272
   command:
-    rid: 216941442158034948
+    rid: 216941532210003968
   references:
     version: 2
     RefIds:
-    - rid: 216941442158034948
-      type: {class: F_JudgeVariety, ns: NoteCreating, asm: Assembly_Test}
+    - rid: 216941532210003968
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
       data:
         mirror:
           enabled: 0
-        speedRate: 1
+        speedRate: 0.8
         isVerticalRange: 0
-        actionType: 0
         transformConverter:
           transformConvertables: []
         noteDatas:
@@ -19296,155 +18932,6 @@ MonoBehaviour:
             easeTime:
               _value: 1
             easeType: 0
---- !u!114 &6230337394258406829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_H_Hope (126)
-  m_EditorClassIdentifier: 
-  enable: 0
-  beatTiming: 336
-  command:
-    rid: 4848304545626062850
-  references:
-    version: 2
-    RefIds:
-    - rid: 4848304545626062850
-      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        speedRate: 1
-        isVerticalRange: 0
-        transformConverter:
-          transformConvertables: []
-        noteDatas:
-        - wait:
-            _value: 0
-          type: 1
-          x: 4
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 4
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 3
-          x: -4
-          length:
-            _value: 5.3333335
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 0
-          type: 0
-          x: -2
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 4
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -4
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: 6
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -2
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 1
-          x: -2
-          length:
-            _value: 4
-          option1: 0
-          option2: 0
-        - wait:
-            _value: 8
-          type: 3
-          x: 4
-          length:
-            _value: 5.333333
-          option1: 0
-          option2: 0
 --- !u!114 &6332198205093243143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21776,7 +21263,7 @@ MonoBehaviour:
           curve: 4
         - wait:
             _value: 2.6666667
-          point: {x: 5, y: -3}
+          point: {x: -3, y: 7}
           length:
             _value: 2.666667
           isOverlappable: 0
@@ -21786,9 +21273,9 @@ MonoBehaviour:
           curve: 4
         - wait:
             _value: 2.6666667
-          point: {x: 5, y: -1}
+          point: {x: -3, y: 3}
           length:
-            _value: 5.333333
+            _value: 4
           isOverlappable: 0
           isDetailed: 1
           twoJudge: 1
@@ -21796,7 +21283,7 @@ MonoBehaviour:
           curve: 2
         - wait:
             _value: 4
-          point: {x: 5, y: -5}
+          point: {x: 3, y: -5}
           length:
             _value: 2
           isOverlappable: 1
@@ -23173,32 +22660,128 @@ MonoBehaviour:
           option2: 0
         - wait:
             _value: 4
-          type: 1
-          x: 6
+          type: 2
+          x: 4
           length:
             _value: 4
           option1: 0
           option2: 0
         - wait:
-            _value: 4
-          type: 1
-          x: -6
+            _value: 16
+          type: 2
+          x: -4
           length:
             _value: 4
           option1: 0
           option2: 0
         - wait:
-            _value: 4
-          type: 1
-          x: 6
+            _value: 16
+          type: 2
+          x: 4
           length:
             _value: 4
           option1: 0
           option2: 0
         - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
             _value: 4
-          type: 1
-          x: -6
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: 4
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 16
+          type: 2
+          x: -4
           length:
             _value: 4
           option1: 0

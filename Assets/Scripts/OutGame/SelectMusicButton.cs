@@ -12,6 +12,7 @@ public class SelectMusicButton : MonoBehaviour
     int index;
     string musicName;
     Difficulty diff;
+    bool selected;
 
     public string MusicName => musicName;
 
@@ -47,6 +48,8 @@ public class SelectMusicButton : MonoBehaviour
         var creator = transform.parent.GetComponent<MusicButtonManager>();
         creator.NotifyInput(index);
         Pop();
+        selected = true;
+        UpdateTextsColor();
     }
 
     public void Pop()
@@ -58,11 +61,30 @@ public class SelectMusicButton : MonoBehaviour
     public void Deselect()
     {
         plateImage.color = GetDifficultyColor(150);
-        transform.DOLocalMoveX(460f, 0.2f).SetEase(Ease.OutBack).SetLink(gameObject);
+        transform.DOLocalMoveX(451.5f, 0.2f).SetEase(Ease.OutBack).SetLink(gameObject);
+        selected = false;
+        UpdateTextsColor();
+    }
+
+    public void UpdateTextsColor()
+    {
+        levelTmpro.color = GetColor();
+        nameTmpro.color = GetColor();
     }
 
     public void SetDark(bool enable)
     {
-        levelTmpro.color = enable ? Color.black : Color.white;
+        UpdateTextsColor();
+    }
+
+    Color GetColor()
+    {
+        return (RhythmGameManager.Setting.IsDark, selected) switch
+        {
+            (false, false) => Color.white,
+            (false, true) => Color.white,
+            (true, true) => Color.black,
+            (true, false) => new Color(0.1f, 0.1f, 0.1f, 1),
+        };
     }
 }

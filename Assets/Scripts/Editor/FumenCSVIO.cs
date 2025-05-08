@@ -19,7 +19,9 @@ namespace NoteCreating.Editor
 
             string dataPath = AssetDatabase.GetAssetPath(fumenData);
             string folderPath = FumenEditorUtility.AbsoluteToAssetsPath(Path.GetDirectoryName(dataPath));
-            string sheetName = $"{exportName}Åü {DateTime.Now.ToString().Replace('/', '-').Replace(':', '-')[2..]}.csv";
+            string sheetName =
+                $"{exportName} {DateTime.Now.ToString().Replace('/', '-').Replace(':', '-')[2..]}.csv";
+            //$"{exportName}Åü {DateTime.Now.ToString().Replace('/', '-').Replace(':', '-')[2..]}.csv";
             string sheetPath = $"{folderPath}/{sheetName}";
 
             using StreamWriter sw = new(sheetPath, false, Encoding.GetEncoding("shift_jis"));

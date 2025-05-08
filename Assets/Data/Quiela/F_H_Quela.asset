@@ -979,7 +979,7 @@ MonoBehaviour:
   enable: 1
   beatTiming: 352
   command:
-    rid: 7519554939406516225
+    rid: 7519554920682881031
   references:
     version: 2
     RefIds:
@@ -988,11 +988,11 @@ MonoBehaviour:
       data:
         mirror:
           enabled: 0
-        isChainWait: 0
+        isChainWait: 1
         offset: 1
         settings:
         - wait:
-            _value: 0
+            _value: 2.666667
           isPosMove: 1
           pos: {x: 0, y: -4, z: -10}
           isRotateMove: 1
@@ -1003,7 +1003,7 @@ MonoBehaviour:
             _value: 0
           moveType: 0
         - wait:
-            _value: 1.5
+            _value: 1.333333
           isPosMove: 1
           pos: {x: 0, y: 10, z: 0}
           isRotateMove: 1
@@ -1014,7 +1014,7 @@ MonoBehaviour:
             _value: 1
           moveType: 1
         - wait:
-            _value: 1.5
+            _value: 0
           isPosMove: 1
           pos: {x: 0, y: -2, z: 0}
           isRotateMove: 0
@@ -1024,16 +1024,6 @@ MonoBehaviour:
           lpb:
             _value: 1
           moveType: 1
-    - rid: 7519554939406516225
-      type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
-      data:
-        delay:
-          _value: 3
-        loopCount: 1
-        loopWait:
-          _value: 4
-        command:
-          rid: 7519554920682881031
 --- !u!114 &-8289299713765560020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3285,7 +3275,7 @@ MonoBehaviour:
         centerPos: {x: -4, y: 2}
         createDatas:
         - delayLPB:
-            _value: 1
+            _value: 0.888889
           enabled: 1
           startPos: {x: 0, y: -4}
           posEaseDatas: []
@@ -3503,10 +3493,10 @@ MonoBehaviour:
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
-          _value: 3
+          _value: 2.666667
         loopCount: 2
         loopWait:
-          _value: 3
+          _value: 2.666667
         command:
           rid: 7519554982807601152
 --- !u!114 &-5720556722372450706
@@ -7126,7 +7116,7 @@ MonoBehaviour:
         setJudge: 0
         isMultitap: 0
         lifeLpb:
-          _value: 3
+          _value: 2.666667
         isChainWait: 1
         basePos: {x: 0, y: -4}
         isRotateFromPos: 0
@@ -7134,25 +7124,25 @@ MonoBehaviour:
         centerPos: {x: -4, y: 2}
         createDatas:
         - delayLPB:
-            _value: 1.5
+            _value: 1.3333334
           enabled: 1
           startPos: {x: 7, y: 0}
           posEaseDatas:
           - from: {x: 9, y: -5}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 0
           startRot: 90
           rotEaseDatas:
           - from: 110
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 0
           startAlpha: 0.6
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -7161,19 +7151,19 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: -9, y: 5}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 90
           rotEaseDatas:
           - from: 110
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 0
           startAlpha: 0.6
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -7182,19 +7172,19 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: 8, y: -13}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 60
           rotEaseDatas:
           - from: 80
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 0
           startAlpha: 0.6
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -7203,19 +7193,19 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: -8, y: 13}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 60
           rotEaseDatas:
           - from: 80
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 0
           startAlpha: 0.6
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -7226,13 +7216,13 @@ MonoBehaviour:
           rotEaseDatas:
           - from: -45
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 2
           startAlpha: 0.3
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -7243,13 +7233,13 @@ MonoBehaviour:
           rotEaseDatas:
           - from: -135
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 2
           startAlpha: 0.3
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
 --- !u!114 &-2756160067641986518
 MonoBehaviour:
@@ -7454,7 +7444,7 @@ MonoBehaviour:
   m_Name: Command_F_E_Quela (47)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 360
+  beatTiming: 359
   command:
     rid: 7519554943794020366
   references:
@@ -7470,7 +7460,7 @@ MonoBehaviour:
           _value: 4
         lifeLpb:
           _value: 4
-        lifeCount: 65
+        lifeCount: 66
         fadeOutLpb:
           _value: 2
         deg: 0
@@ -7837,7 +7827,7 @@ MonoBehaviour:
         centerPos: {x: -4, y: 2}
         createDatas:
         - delayLPB:
-            _value: 1
+            _value: 0.888889
           enabled: 1
           startPos: {x: 0, y: 0}
           posEaseDatas: []
@@ -8330,7 +8320,7 @@ MonoBehaviour:
   m_Name: Command_F_E_Quela (56)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 360
+  beatTiming: 359
   command:
     rid: 7519554943794020366
   references:
@@ -8346,7 +8336,7 @@ MonoBehaviour:
           _value: 4
         lifeLpb:
           _value: 4
-        lifeCount: 65
+        lifeCount: 66
         fadeOutLpb:
           _value: 2
         deg: 0
@@ -9424,7 +9414,7 @@ MonoBehaviour:
   m_Name: Command_F_E_Quela (155)
   m_EditorClassIdentifier: 
   enable: 1
-  beatTiming: 0
+  beatTiming: 32
   command:
     rid: 1232548255570591744
   references:
@@ -9438,7 +9428,7 @@ MonoBehaviour:
         zip: 4
         lifeLpb:
           _value: 4
-        lifeCount: 128
+        lifeCount: 96
         alpha: 0.15
         fadeTime: 0.3
         amp: 3
@@ -11041,16 +11031,15 @@ MonoBehaviour:
   musicSelectData: {fileID: 11400000, guid: 921de1fa47584a149b99e49b853c3d8f, type: 2}
   noteCount: 1108
   <PcmAnalyzerSamples>k__BackingField: 256
-  <NormalPoolCount>k__BackingField: 30
+  <NormalPoolCount>k__BackingField: 20
   <SlidePoolCount>k__BackingField: 80
-  <HoldPoolCount>k__BackingField: 10
+  <HoldPoolCount>k__BackingField: 8
   <ArcPoolCount>k__BackingField: 6
-  <LinePoolCount>k__BackingField: 55
+  <LinePoolCount>k__BackingField: 61
   <CirclePoolCount>k__BackingField: 6
   fumen:
     commandDataList:
     - {fileID: 8727801949665097626}
-    - {fileID: -1014234171361633613}
     - {fileID: -5502664252499008834}
     - {fileID: -5315159834030744073}
     - {fileID: -7325129850200189799}
@@ -11069,6 +11058,7 @@ MonoBehaviour:
     - {fileID: -9060121980007128728}
     - {fileID: 2479569732279837872}
     - {fileID: -3169199041781516660}
+    - {fileID: -1014234171361633613}
     - {fileID: 6656729721433896905}
     - {fileID: -4607180698743997374}
     - {fileID: -6378641092692642925}
@@ -19262,7 +19252,7 @@ MonoBehaviour:
       type: {class: F_Quiela_Dummy, ns: NoteCreating, asm: Assembly_Test}
       data:
         interval:
-          _value: 3
+          _value: 2.666667
         speedRate: 0.3
         deltaY: 0
         noteDatas1:
@@ -19431,7 +19421,7 @@ MonoBehaviour:
       type: {class: F_LoopDelay, ns: NoteCreating, asm: Assembly_Mirin_General}
       data:
         delay:
-          _value: 3
+          _value: 2.666667
         loopCount: 1
         loopWait:
           _value: 3
@@ -19557,7 +19547,7 @@ MonoBehaviour:
     - rid: 1232548237686079489
       type: {class: F_ItemVibrate, ns: NoteCreating, asm: Assembly_Test}
       data:
-        target: 11
+        target: 9
         capacity: 32
         time:
           _value: 6
@@ -20031,7 +20021,7 @@ MonoBehaviour:
         setJudge: 0
         isMultitap: 0
         lifeLpb:
-          _value: 3
+          _value: 2.666667
         isChainWait: 1
         basePos: {x: 0, y: 4}
         isRotateFromPos: 0
@@ -20039,25 +20029,25 @@ MonoBehaviour:
         centerPos: {x: -4, y: 2}
         createDatas:
         - delayLPB:
-            _value: 3
+            _value: 2.666667
           enabled: 1
           startPos: {x: -2, y: -12}
           posEaseDatas:
           - from: {x: -4, y: -15}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 45
           rotEaseDatas:
           - from: 30
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startAlpha: 0.3
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -20066,19 +20056,19 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: 4, y: -15}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: -45
           rotEaseDatas:
           - from: -30
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startAlpha: 0.3
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -20087,7 +20077,7 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: 8, y: 0}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 90
           rotEaseDatas: []
@@ -20095,7 +20085,7 @@ MonoBehaviour:
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
         - delayLPB:
             _value: 0
@@ -20104,7 +20094,7 @@ MonoBehaviour:
           posEaseDatas:
           - from: {x: -8, y: 0}
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
           startRot: 90
           rotEaseDatas: []
@@ -20112,7 +20102,7 @@ MonoBehaviour:
           alphaEaseDatas:
           - from: 0
             easeTime:
-              _value: 3
+              _value: 2.666667
             easeType: 3
 --- !u!114 &7142956289650439440
 MonoBehaviour:
@@ -22803,15 +22793,15 @@ MonoBehaviour:
           option1: -20
           option2: 0
         - wait:
-            _value: 2.4
+            _value: 2.6666667
           type: 3
           x: -3
           length:
-            _value: 4.8
+            _value: 4
           option1: 20
           option2: 0
         - wait:
-            _value: 12
+            _value: 8
           type: 0
           x: -2
           length:

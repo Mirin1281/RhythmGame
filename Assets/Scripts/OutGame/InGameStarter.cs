@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
-using UnityEngine.AddressableAssets;
-using NoteCreating;
 
 public class InGameStarter : MonoBehaviour
 {
