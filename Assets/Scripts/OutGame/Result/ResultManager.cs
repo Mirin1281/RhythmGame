@@ -49,11 +49,15 @@ public class ResultManager : MonoBehaviour
         var result = RhythmGameManager.Instance.Result;
         if (result == null) return;
 
-#if DEBUG
-        debugAverageAccuracyTmpro.SetText("{0}", Mathf.RoundToInt(result.AverageDelta * 1000f));
-#else
-        Destroy(debugAverageAccuracyTmpro.gameObject);
-#endif
+        if (RhythmGameManager.Setting.IsShowAccuracy)
+        {
+            debugAverageAccuracyTmpro.SetText($"Average: {Mathf.RoundToInt(result.AverageDelta * 1000f)}");
+        }
+        else
+        {
+            Destroy(debugAverageAccuracyTmpro.gameObject);
+        }
+
         string fumenName = RhythmGameManager.FumenName;
         SetUI(result, fumenName);
         if (isSavable == false) return;

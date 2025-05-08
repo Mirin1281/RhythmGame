@@ -508,6 +508,10 @@ namespace NoteCreating
                         }
                         else // 指が一致しなかったら一定時間判定無効(ミス)
                         {
+                            if (judge.IsNearPositionArc(input.pos, landingPos, 2) == false) // めっちゃ指が近くなければ容赦
+                            {
+                                continue;
+                            }
                             arc.InvalidArcJudgeAsync().Forget();
                             break;
                         }

@@ -6,7 +6,8 @@ public class SettingCanvas : MonoBehaviour
 {
     [SerializeField] Canvas canvas;
     [SerializeField] CanvasGroup canvasGroup;
-    [SerializeField] Image negativeImage;
+    [SerializeField] CanvasGroup panel1;
+    [SerializeField] CanvasGroup panel2;
     bool isFading;
 
     public void Toggle()
@@ -27,8 +28,6 @@ public class SettingCanvas : MonoBehaviour
         gameObject.SetActive(true);
         canvas.enabled = true;
         FadeAlphaAsync(1, 0.3f, EaseType.OutCubic).Forget();
-        if (negativeImage != null)
-            negativeImage.gameObject.SetActive(true);
     }
 
     public void Close()
@@ -39,8 +38,14 @@ public class SettingCanvas : MonoBehaviour
             await FadeAlphaAsync(0, 0.3f, EaseType.OutCubic);
             gameObject.SetActive(false);
             canvas.enabled = false;
-            if (negativeImage != null)
-                negativeImage.gameObject.SetActive(false);
+
+            // ページをリセット
+            panel1.transform.localPosition = new Vector3(0, 0);
+            panel2.transform.localPosition = new Vector3(1920, 0);
+            panel1.gameObject.SetActive(true);
+            panel2.gameObject.SetActive(false);
+            panel1.alpha = 1;
+            panel2.alpha = 1;
         });
     }
 

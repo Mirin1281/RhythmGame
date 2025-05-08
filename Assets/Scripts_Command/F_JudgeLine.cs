@@ -28,15 +28,17 @@ namespace NoteCreating
         protected override async UniTaskVoid ExecuteAsync()
         {
             if (Delta > lifeLpb.Time * lifeCount + MoveLpb.Time) return;
-            await Wait(MoveLpb);
+            var delta = await Wait(MoveLpb);
             Line line = Helper.GetLine();
             line.SetPos(pos);
             line.SetRot(deg);
 
             line.SetAlpha(0);
-            line.FadeAlphaAsync(alpha, fadeInLpb.Time, delta: Delta).Forget();
-            await Wait(lifeLpb * lifeCount - fadeOutLpb);
-            line.FadeAlphaAsync(0, fadeOutLpb.Time, delta: Delta).Forget();
+            line.FadeAlphaAsync(alpha, fadeInLpb.Time, delta: delta).Forget();
+            delta = await Wait(lifeLpb * lifeCount - fadeOutLpb, delta: delta);
+            line.FadeAlphaAsync(0, fadeOutLpb.Time, delta: delta).Forget();
+            await Wait(fadeOutLpb, delta: delta);
+            line.SetActive(false);
         }
 
 

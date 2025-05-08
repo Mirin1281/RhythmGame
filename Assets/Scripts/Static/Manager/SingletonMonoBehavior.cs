@@ -12,10 +12,12 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
             if (instance != null) return instance;
             instance = FindAnyObjectByType<T>();
 
+#if UNITY_EDITOR
             if (instance == null)
             {
-                Debug.LogWarning(typeof(T).Name + " is nothing");
+                //Debug.LogWarning(typeof(T).Name + " is nothing");
             }
+#endif
             return instance;
         }
     }

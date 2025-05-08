@@ -121,13 +121,16 @@ namespace NoteCreating
             SlideNote.BaseAlpha = l_isDark ? 0.5f : 0.3f; // ダークモードだと色が薄くなるので調整
             ArcNote.HoldingAlpha = l_isDark ? 0.45f : 0.5f;
             ArcNote.NotHoldingAlpha = l_isDark ? 0.7f : 0.75f;
-            Line.BaseAlpha = l_isDark ? 1.2f : 1f;
+            Line.BaseAlpha = l_isDark ? 1.3f : 1f;
 
             // リニア用 (スライドの周りに縁ができて変)
             /*SlideNote.BaseAlpha = l_isDark ? 0.2f : 0.4f; // ダークモードだと色が薄くなるので調整
             ArcNote.HoldingAlpha = l_isDark ? 0.4f : 0.55f;
             ArcNote.NotHoldingAlpha = l_isDark ? 0.2f : 0.3f;
             Line.BaseAlpha = l_isDark ? 0.8f : 1f;*/
+
+            deltaTmpro.color = l_isDark ? new Color32(155, 155, 155, 255) : new Color32(185, 185, 185, 255);
+            judgeTmpro.color = l_isDark ? new Color32(155, 155, 155, 255) : new Color32(185, 185, 185, 255);
         }
 
         void SetAccuracy(bool enable)
@@ -143,7 +146,7 @@ namespace NoteCreating
         {
             if (isAbove)
             {
-                float y = 475;
+                float y = 460;
                 comboTmpro.transform.localPosition = new Vector3(comboTmpro.transform.localPosition.x, y);
                 deltaTmpro.transform.localPosition = new Vector3(deltaTmpro.transform.localPosition.x, y);
                 judgeTmpro.transform.localPosition = new Vector3(judgeTmpro.transform.localPosition.x, y);

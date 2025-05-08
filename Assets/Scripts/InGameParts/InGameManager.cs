@@ -30,6 +30,8 @@ namespace NoteCreating
 
             developmentInitializer.Init();
 
+            Application.targetFrameRate = 60;
+
 
             // 譜面データのロード //
             fumenData = await developmentInitializer.LoadFumenData();

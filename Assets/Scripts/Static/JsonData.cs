@@ -52,7 +52,7 @@ public class GameSetting
     public bool IsAutoPlay { get; set; } = false;
 
     [JsonProperty("コンボ数を上に表示")]
-    public bool IsComboAbove { get; set; } = false;
+    public bool IsComboAbove { get; set; } = true;
 
     [JsonProperty("精度を表示")]
     public bool IsShowAccuracy { get; set; } = true;

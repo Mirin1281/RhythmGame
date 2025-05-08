@@ -22,6 +22,7 @@ namespace NoteCreating
         [SerializeField] TMP_Text deltaText;
         [SerializeField] TMP_Text judgeText;
         [SerializeField] TMP_Text scoreText;
+        [SerializeField] TMP_Text fullComboStatusText;
 
         [SerializeField] ParticlePool particlePool;
 #if UNITY_EDITOR
@@ -34,12 +35,13 @@ namespace NoteCreating
 
         Result result;
         float showScore;
-        float totalDelta;
+        bool isFullCombo = true;
+        bool isAllPerfect = true;
         CancellationTokenSource cts = new();
 
         public Result Result => result;
         const float Range = 4.8f;
-        const float ArcRange = 4.6f;
+        const float ArcRange = 3.5f;
 
         public void Init(FumenData fumenData)
         {
@@ -75,10 +77,10 @@ namespace NoteCreating
                 inputPos,
                 hold.GetRot());
         }
-        public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2)
+        public bool IsNearPositionArc(Vector2 pos1, Vector2 pos2, float range = ArcRange)
         {
             var distance = Vector2.Distance(pos1, pos2);
-            return distance < ArcRange / 2f;
+            return distance < range / 2f;
         }
 
         public void PlayParticle(NoteGrade grade, Vector2 pos)
@@ -96,6 +98,17 @@ namespace NoteCreating
             result.SetComboAndScore(grade);
             comboText.SetText("{0}", result.Combo);
             SetScoreTextAsync(beforeScore, result.Score).Forget();
+
+            if (isAllPerfect && grade != NoteGrade.Perfect)
+            {
+                isAllPerfect = false;
+                fullComboStatusText.SetText("[F]");
+            }
+            if (isFullCombo && grade == NoteGrade.Miss)
+            {
+                isFullCombo = false;
+                fullComboStatusText.gameObject.SetActive(false);
+            }
 
 
             async UniTaskVoid SetScoreTextAsync(float beforeScore, float toScore)
@@ -126,7 +139,6 @@ namespace NoteCreating
             else if (grade != NoteGrade.Miss)
                 result.AddTotalDelta(delta);
             deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
-            totalDelta += delta;
             return grade;
 
 

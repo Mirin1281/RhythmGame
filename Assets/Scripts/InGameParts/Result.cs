@@ -37,7 +37,8 @@ public class Result
     }
     public float AverageDelta => totalDelta / accuracyCount;
     public MusicSelectData MusicData => musicData;
-    public bool IsFullCombo => miss == 0;
+    public bool IsFullCombo => combo == noteCount && miss == 0; // 最後まで叩ききらないとfalse
+    public bool IsAllPerfect => noteCount == perfect;
 
     public Result(FumenData fumenData)
     {
