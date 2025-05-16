@@ -12,6 +12,12 @@ public class FadeLoadSceneManager : SingletonMonoBehaviour<FadeLoadSceneManager>
 
     Color defaultColor => RhythmGameManager.Setting.IsDark ? Color.black : Color.white;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        IsSceneChanging = false;
+    }
+
     /// <summary>
     /// ƒV[ƒ“‘JˆÚ‚³‚¹‚éŠÖ”
     /// </summary>

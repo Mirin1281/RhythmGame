@@ -16,17 +16,21 @@ public class PageTransitioner : MonoBehaviour
         {
             if (toPageIndex == 1) // ページ2からページ1に遷移するとする
             {
+                panel2.interactable = false;
                 FadeAlphaAsync(panel1, 1).Forget();
                 await FadeAlphaAsync(panel2, 0);
                 ShowPanelAsync(panel1.gameObject, chank).Forget();
                 HidePanelAsync(panel2.gameObject, chank).Forget();
+                panel2.interactable = true;
             }
             else if (toPageIndex == 2)
             {
+                panel1.interactable = false;
                 FadeAlphaAsync(panel2, 1).Forget();
                 await FadeAlphaAsync(panel1, 0);
                 ShowPanelAsync(panel2.gameObject, -chank).Forget();
                 HidePanelAsync(panel1.gameObject, -chank).Forget();
+                panel1.interactable = true;
             }
         });
     }

@@ -52,14 +52,14 @@ public class InputManager : MonoBehaviour
 
     void OnFingerDown(Finger finger)
     {
-        //if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
-        if (enableInput == false) return;
+        if (finger.screenPosition.x is float.PositiveInfinity or float.NegativeInfinity
+         || enableInput == false) return;
         OnDown?.Invoke(GetInput(finger));
     }
     void OnFingerUp(Finger finger)
     {
-        //if (finger.screenPosition.x > 10000 || finger.screenPosition.x < -10000) return;
-        if (enableInput == false) return;
+        if (finger.screenPosition.x is float.PositiveInfinity or float.NegativeInfinity
+         || enableInput == false) return;
         OnUp?.Invoke(GetInput(finger));
     }
 
@@ -69,7 +69,8 @@ public class InputManager : MonoBehaviour
         if (enableInput == false) return;
         foreach (var touch in Touch.activeTouches)
         {
-            //if (touch.screenPosition.x > 10000 || touch.screenPosition.x < -10000) continue;
+            // なぜか入力とは別に無限の値が入力されるバグ
+            if (touch.screenPosition.x is float.PositiveInfinity or float.NegativeInfinity) continue;
             inputs.Add(GetInput(touch.finger));
         }
         OnHold?.Invoke(inputs);

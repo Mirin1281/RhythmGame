@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using NoteCreating;
 
 public class InGameStarter : MonoBehaviour
 {
@@ -13,13 +15,14 @@ public class InGameStarter : MonoBehaviour
 
     [SerializeField] MusicPreviewer previewer;
     [SerializeField] MusicSelectData tutorialData;
+    [SerializeField] AssetReferenceT<FumenData> tutorialFumenDataReference;
     [SerializeField] MoveObject[] moveObjects;
     [SerializeField] Image jacketImage;
 
     public void StartGame(MusicSelectData selectData, Difficulty difficulty = Difficulty.None)
     {
-        Debug.Log($"楽曲名: {selectData.MusicName}\n" +
-            $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
+        //Debug.Log($"楽曲名: {selectData.MusicName}\n" +
+        //    $"難易度: {RhythmGameManager.Difficulty} {selectData.GetFumenLevel(RhythmGameManager.Difficulty)}");
         SEManager.Instance.PlaySE(SEType.start_freeze);
         RhythmGameManager.FumenReference = selectData.GetFumenReference(difficulty);
         if (difficulty != Difficulty.None)
@@ -54,6 +57,10 @@ public class InGameStarter : MonoBehaviour
 
     public void StartTutorial()
     {
-        StartGame(tutorialData, Difficulty.Normal);
+        SEManager.Instance.PlaySE(SEType.start_freeze);
+        RhythmGameManager.FumenReference = tutorialFumenDataReference;
+        RhythmGameManager.Difficulty = Difficulty.Normal;
+        previewer.Stop(0.5f).Forget();
+        FadeLoadSceneManager.Instance.LoadScene(0.5f, "InGame", 0.5f);
     }
 }

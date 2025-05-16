@@ -359,7 +359,7 @@ namespace NoteCreating
                 }
                 if (isMatch == false) continue;
 
-                if (i != 0 && Judgement.GetGrade(inputTime - status.Time) is NoteGrade.FastGreat or NoteGrade.FastFar or NoteGrade.Miss) continue;
+                if (i != 0 && Judgement.GetGrade(inputTime - status.Time) is /*NoteGrade.FastGreat or*/ NoteGrade.FastFar or NoteGrade.Miss) continue;
 
                 fetchedStatus ??= status;
                 if (status.Time <= fetchedStatus.Time
@@ -368,7 +368,10 @@ namespace NoteCreating
                     fetchedStatus = status;
                 }
             }
-            if (fetchedStatus == null) return default;
+            if (fetchedStatus == null)
+            {
+                return default;
+            }
             return (fetchedStatus, inputTime - fetchedStatus.Time);
         }
 
@@ -508,7 +511,7 @@ namespace NoteCreating
                         }
                         else // 指が一致しなかったら一定時間判定無効(ミス)
                         {
-                            if (judge.IsNearPositionArc(input.pos, landingPos, 2) == false) // めっちゃ指が近くなければ容赦
+                            if (judge.IsNearPositionArc(input.pos, landingPos, 1f) == false) // めっちゃ指が近くなければ容赦
                             {
                                 continue;
                             }

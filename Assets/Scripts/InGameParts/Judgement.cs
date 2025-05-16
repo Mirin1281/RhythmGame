@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System.Threading;
 
 namespace NoteCreating
 {
@@ -37,11 +36,11 @@ namespace NoteCreating
         float showScore;
         bool isFullCombo = true;
         bool isAllPerfect = true;
-        CancellationTokenSource cts = new();
+        int judgeRequestId = 0;
 
         public Result Result => result;
-        const float Range = 4.8f;
-        const float ArcRange = 3.5f;
+        const float Range = 5.4f;
+        const float ArcRange = 4f;
 
         public void Init(FumenData fumenData)
         {
@@ -54,9 +53,6 @@ namespace NoteCreating
         }
         void OnDestroy()
         {
-            cts?.Cancel();
-            cts?.Dispose();
-            cts = null;
             result = null;
         }
 
@@ -138,11 +134,20 @@ namespace NoteCreating
                 SetJudgeText(grade).Forget();
             else if (grade != NoteGrade.Miss)
                 result.AddTotalDelta(delta);
-            deltaText.SetText("{0}", Mathf.RoundToInt(delta * 1000f));
+
+            int miliDelta = Mathf.RoundToInt(delta * 1000f);
+            if (miliDelta > 0)
+            {
+                deltaText.SetText("+{0}", miliDelta);
+            }
+            else
+            {
+                deltaText.SetText("{0}", miliDelta);
+            }
             return grade;
 
 
-            async UniTask SetJudgeText(NoteGrade grade)
+            /*async UniTask SetJudgeText(NoteGrade grade)
             {
                 cts.Cancel();
                 cts = new();
@@ -150,6 +155,26 @@ namespace NoteCreating
 
                 judgeText.SetText(grade.ToString());
                 await MyUtility.WaitSeconds(1f, token);
+                judgeText.SetText(string.Empty);
+            }*/
+
+            async UniTask SetJudgeText(NoteGrade grade)
+            {
+                judgeRequestId++;
+                int currentId = judgeRequestId;
+
+                string judgeStr = grade switch
+                {
+                    NoteGrade.FastGreat => "<voffset=-0.15em><size=140%>-</size></voffset> Great",
+                    NoteGrade.LateGreat => "<voffset=-0.15em><size=140%>+</size></voffset> Great",
+                    NoteGrade.FastFar => "<voffset=-0.15em><size=140%>-</size></voffset> Far",
+                    NoteGrade.LateFar => "<voffset=-0.15em><size=140%>+</size></voffset> Far",
+                    _ => string.Empty
+                };
+
+                judgeText.SetText(judgeStr);
+                await MyUtility.WaitSeconds(1f, destroyCancellationToken);
+                if (currentId != judgeRequestId) return;
                 judgeText.SetText(string.Empty);
             }
         }

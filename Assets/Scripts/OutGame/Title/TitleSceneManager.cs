@@ -46,5 +46,6 @@ public class TitleSceneManager : MonoBehaviour
             t += Time.deltaTime;
             await UniTask.Yield(destroyCancellationToken);
         }
+        startTmpro.color = new Color(0, 0, 0, 0);
     }
 }

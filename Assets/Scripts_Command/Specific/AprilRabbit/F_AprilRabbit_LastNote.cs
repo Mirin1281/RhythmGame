@@ -69,12 +69,13 @@ namespace NoteCreating
             var circle = Helper.PoolManager.CirclePool.GetCircle();
             circle.SetPos(startPos);
             circle.SetAlpha(0.2f);
+            circle.SetWidth(0.2f);
             float baseTime = CurrentTime - Delta;
             float t = 0f;
             while (circle.IsActive && t < 3f)
             {
                 t = CurrentTime - baseTime;
-                circle.SetScale(t.Ease(4f, 0f, new Lpb(4).Time, EaseType.InQuad));
+                circle.SetScale(t.Ease(10f, 0f, new Lpb(4).Time, EaseType.InQuad));
                 await Yield();
             }
             circle.SetActive(false);

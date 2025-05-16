@@ -539,7 +539,7 @@ MonoBehaviour:
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 16
+            _value: 0
           option: {x: 90, y: -4, z: 0}
         - x: 8
           wait:
@@ -559,7 +559,7 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 1
           behindJudgeRange:
-            _value: 16
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -798,7 +798,7 @@ MonoBehaviour:
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 16
+            _value: 0
           option: {x: 90, y: -4, z: 0}
         - x: 5
           wait:
@@ -818,7 +818,7 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 1
           behindJudgeRange:
-            _value: 16
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -1232,7 +1232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
   m_Name: Command_F_H_Hope (181)
   m_EditorClassIdentifier: 
-  enable: 1
+  enable: 0
   beatTiming: 225
   command:
     rid: 4848304545626062881
@@ -1606,7 +1606,7 @@ MonoBehaviour:
         fadeOutLpb:
           _value: 4
         deg: 0
-        pos: {x: 0, y: 8}
+        pos: {x: 0, y: 7}
 --- !u!114 &-6981278420194442246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3258,7 +3258,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 1
         isChainWait: 1
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -4265,7 +4265,7 @@ MonoBehaviour:
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 16
+            _value: 0
           option: {x: 90, y: -4, z: 0}
         - x: 5
           wait:
@@ -4285,7 +4285,7 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 1
           behindJudgeRange:
-            _value: 16
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -4872,7 +4872,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 1
         isChainWait: 1
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -5276,11 +5276,11 @@ MonoBehaviour:
             _value: 2
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 32
+            _value: 0
           option: {x: 90, y: 5, z: 0}
         - x: -2
           wait:
@@ -5298,9 +5298,9 @@ MonoBehaviour:
             _value: 4
           vertexType: 3
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
-            _value: 32
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -6199,18 +6199,11 @@ MonoBehaviour:
           transformConvertables:
           - rid: 216941442158034966
           - rid: 216941442158034965
+          - rid: 216941570397044737
         noteDatas:
         - wait:
-            _value: 0
-          type: 2
-          x: 6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
             _value: 2
-          type: 1
+          type: 0
           x: 6
           length:
             _value: 4
@@ -6254,6 +6247,19 @@ MonoBehaviour:
         easeType: 5
         moveLpb:
           _value: 0.6666667
+    - rid: 216941570397044737
+      type: {class: P_Transform, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 0
+        easeLpb:
+          _value: 0
+        easeType: 0
+        startDeg: 0
+        toDeg: 0
+        startPos: {x: 0, y: 0}
+        toPos: {x: 0, y: -1}
 --- !u!114 &-2788287086015890937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7570,11 +7576,11 @@ MonoBehaviour:
             _value: 2
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 32
+            _value: 0
           option: {x: 90, y: 5, z: 0}
         - x: -2
           wait:
@@ -7592,9 +7598,9 @@ MonoBehaviour:
             _value: 4
           vertexType: 3
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
-            _value: 32
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -7839,18 +7845,11 @@ MonoBehaviour:
           transformConvertables:
           - rid: 216941442158034966
           - rid: 216941442158034965
+          - rid: 216941570397044736
         noteDatas:
         - wait:
-            _value: 0
-          type: 2
-          x: 6
-          length:
-            _value: 4
-          option1: 1
-          option2: 0
-        - wait:
             _value: 2
-          type: 1
+          type: 0
           x: 6
           length:
             _value: 4
@@ -7894,6 +7893,19 @@ MonoBehaviour:
         easeType: 5
         moveLpb:
           _value: 0.6666667
+    - rid: 216941570397044736
+      type: {class: P_Transform, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        isGroup: 1
+        moveStartLpb:
+          _value: 0
+        easeLpb:
+          _value: 0
+        easeType: 0
+        startDeg: 0
+        toDeg: 0
+        startPos: {x: 0, y: 0}
+        toPos: {x: 0, y: -1}
 --- !u!114 &-1837606804492161632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8205,11 +8217,11 @@ MonoBehaviour:
             _value: 2
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 32
+            _value: 0
           option: {x: 90, y: 5, z: 0}
         - x: -2
           wait:
@@ -8227,9 +8239,9 @@ MonoBehaviour:
             _value: 4
           vertexType: 3
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
-            _value: 32
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -8340,7 +8352,7 @@ MonoBehaviour:
           option2: 0
         - wait:
             _value: 0
-          type: 2
+          type: 0
           x: 6
           length:
             _value: 2.666667
@@ -9920,7 +9932,7 @@ MonoBehaviour:
   m_Name: F_N_Hope
   m_EditorClassIdentifier: 
   musicSelectData: {fileID: 11400000, guid: c41d8a71e97877c40a0a7a45840c3a00, type: 2}
-  noteCount: 651
+  noteCount: 649
   <PcmAnalyzerSamples>k__BackingField: -1
   <NormalPoolCount>k__BackingField: 16
   <SlidePoolCount>k__BackingField: 20
@@ -10103,6 +10115,7 @@ MonoBehaviour:
     - {fileID: 5250284058598442714}
     - {fileID: 5746684132787944133}
     - {fileID: -7029056696207756054}
+    - {fileID: 492174447772864269}
     - {fileID: -1877024002929545212}
     - {fileID: 6674352408227007906}
     - {fileID: 3979758599761548996}
@@ -10110,6 +10123,7 @@ MonoBehaviour:
     - {fileID: -4993406946005041201}
     - {fileID: 8047794110026639312}
     - {fileID: 6729121606834911428}
+    - {fileID: 8985741828991226223}
     - {fileID: -2813618768644639777}
     - {fileID: 8401737302052748999}
     - {fileID: 2295019804135517046}
@@ -10191,7 +10205,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 0.6666667
         isChainWait: 0
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -10975,6 +10989,51 @@ MonoBehaviour:
           _value: 1
         command:
           rid: 4848304613486231558
+--- !u!114 &492174447772864269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_N_Hope (16)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 400
+  command:
+    rid: 216941442158034963
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941442158034963
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 0
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &496920852854187629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12551,7 +12610,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 1
         isChainWait: 1
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -12809,7 +12868,7 @@ MonoBehaviour:
           option2: 0
         - wait:
             _value: 0
-          type: 2
+          type: 0
           x: 6
           length:
             _value: 2.666667
@@ -15448,11 +15507,11 @@ MonoBehaviour:
             _value: 2
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 32
+            _value: 0
           option: {x: 90, y: 5, z: 0}
         - x: -2
           wait:
@@ -15470,9 +15529,9 @@ MonoBehaviour:
             _value: 4
           vertexType: 3
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
-            _value: 32
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -17190,7 +17249,7 @@ MonoBehaviour:
           behindJudgeRange:
             _value: -16
           aheadJudgeRange:
-            _value: 16
+            _value: 0
           option: {x: 90, y: -4, z: 0}
         - x: 8
           wait:
@@ -17210,7 +17269,7 @@ MonoBehaviour:
           isJudgeDisable: 0
           isOverlappable: 1
           behindJudgeRange:
-            _value: 16
+            _value: 0
           aheadJudgeRange:
             _value: 4
           option: {x: 20, y: -3, z: 0}
@@ -19881,7 +19940,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 0.6666667
         isChainWait: 0
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -21465,7 +21524,7 @@ MonoBehaviour:
         lifeLpb:
           _value: 1
         isChainWait: 1
-        basePos: {x: 5, y: 8}
+        basePos: {x: 5, y: 7}
         isRotateFromPos: 0
         rotateFromPos: 0
         centerPos: {x: 0, y: 0}
@@ -22522,6 +22581,51 @@ MonoBehaviour:
           _value: 0.5
         command:
           rid: 4848304613486231582
+--- !u!114 &8985741828991226223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
+  m_Name: Command_F_N_Hope (17)
+  m_EditorClassIdentifier: 
+  enable: 1
+  beatTiming: 416
+  command:
+    rid: 216941442158034963
+  references:
+    version: 2
+    RefIds:
+    - rid: 216941442158034963
+      type: {class: F_General, ns: NoteCreating, asm: Assembly_Test}
+      data:
+        mirror:
+          enabled: 1
+        speedRate: 1
+        isVerticalRange: 0
+        transformConverter:
+          transformConvertables: []
+        noteDatas:
+        - wait:
+            _value: 0
+          type: 2
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
+        - wait:
+            _value: 2
+          type: 1
+          x: 6
+          length:
+            _value: 4
+          option1: 0
+          option2: 0
 --- !u!114 &9009739396076733280
 MonoBehaviour:
   m_ObjectHideFlags: 0

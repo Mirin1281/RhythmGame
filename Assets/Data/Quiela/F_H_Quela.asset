@@ -3529,7 +3529,7 @@ MonoBehaviour:
           _value: 0
         dropLPB:
           _value: 1
-        easingRate: 1
+        easingRate: 0.5
         acceleration: 2
         transformConverter:
           transformConvertables:
@@ -3647,7 +3647,7 @@ MonoBehaviour:
         moveStartLpb:
           _value: 4
         moveLpb:
-          _value: 1.3333334
+          _value: 1.6
         easeType: 3
 --- !u!114 &-5697378900725192754
 MonoBehaviour:
@@ -7761,7 +7761,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 1
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -7772,7 +7772,7 @@ MonoBehaviour:
             _value: 8
           vertexType: 1
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -11031,11 +11031,11 @@ MonoBehaviour:
   musicSelectData: {fileID: 11400000, guid: 921de1fa47584a149b99e49b853c3d8f, type: 2}
   noteCount: 1108
   <PcmAnalyzerSamples>k__BackingField: 256
-  <NormalPoolCount>k__BackingField: 20
+  <NormalPoolCount>k__BackingField: 19
   <SlidePoolCount>k__BackingField: 80
   <HoldPoolCount>k__BackingField: 8
   <ArcPoolCount>k__BackingField: 6
-  <LinePoolCount>k__BackingField: 61
+  <LinePoolCount>k__BackingField: 43
   <CirclePoolCount>k__BackingField: 6
   fumen:
     commandDataList:
@@ -11271,7 +11271,6 @@ MonoBehaviour:
     - {fileID: 5678769324822687440}
     - {fileID: 1863231434726721215}
     - {fileID: -2573901902714056605}
-    - {fileID: 8277409829842941089}
     - {fileID: -3713525454373343378}
     - {fileID: 140927518694381192}
     - {fileID: -8092481373738835375}
@@ -16856,7 +16855,7 @@ MonoBehaviour:
             _value: 4
           vertexType: 2
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -22359,289 +22358,6 @@ MonoBehaviour:
         centerX: 0
         dirSpeed: 40
         easeType: 3
---- !u!114 &8277409829842941089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c649bbf1a7b5f02418fa861014189f01, type: 3}
-  m_Name: Command_F_E_Quela (67)
-  m_EditorClassIdentifier: 
-  enable: 1
-  beatTiming: 456
-  command:
-    rid: 1232548207515926530
-  references:
-    version: 2
-    RefIds:
-    - rid: 1232548207515926530
-      type: {class: F_ItemMove_Advanced, ns: NoteCreating, asm: Assembly_Test}
-      data:
-        mirror:
-          enabled: 0
-        summary: "\u5186Revolute"
-        itemType: 3
-        option: 1
-        setJudge: 0
-        isMultitap: 0
-        lifeLpb:
-          _value: 1.25
-        isChainWait: 0
-        basePos: {x: 0, y: 0}
-        revoluteCenterPos: {x: 0, y: 4}
-        createDatas:
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 0
-          revoluteEaseDatas:
-          - from: 720
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 45
-          revoluteEaseDatas:
-          - from: 765
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 90
-          revoluteEaseDatas:
-          - from: 810
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 135
-          revoluteEaseDatas:
-          - from: 855
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 180
-          revoluteEaseDatas:
-          - from: 900
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 225
-          revoluteEaseDatas:
-          - from: 945
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 270
-          revoluteEaseDatas:
-          - from: 990
-            easeTime:
-              _value: 1.25
-            easeType: 4
-        - delayLPB:
-            _value: 0
-          enabled: 1
-          startPos: {x: 0, y: 4}
-          posEaseDatas:
-          - from: {x: 0, y: 10}
-            easeTime:
-              _value: 1.25
-            easeType: 0
-          startRot: 0
-          rotEaseDatas: []
-          startAlpha: 0
-          alphaEaseDatas:
-          - from: 0.2
-            easeTime:
-              _value: 4
-            easeType: 0
-          - from: 0.1
-            easeTime:
-              _value: 3.333333
-            easeType: 22
-          - from: 0
-            easeTime:
-              _value: 4
-            easeType: 0
-          startRevolute: 315
-          revoluteEaseDatas:
-          - from: 1035
-            easeTime:
-              _value: 1.25
-            easeType: 4
 --- !u!114 &8323214686132766713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23181,7 +22897,7 @@ MonoBehaviour:
             _value: 0
           vertexType: 1
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
@@ -23192,7 +22908,7 @@ MonoBehaviour:
             _value: 8
           vertexType: 1
           isJudgeDisable: 0
-          isOverlappable: 0
+          isOverlappable: 1
           behindJudgeRange:
             _value: 0
           aheadJudgeRange:
